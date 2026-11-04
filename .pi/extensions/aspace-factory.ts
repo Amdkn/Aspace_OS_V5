@@ -56,7 +56,7 @@ export default function (pi: ExtensionAPI) {
         else if (params.task) act = "run";
         else if (params.to && params.message) act = "send";
       }
-      const args = ["-File", "factory/factory.ps1", "subagents", "-Action", act];
+      const args = ["-File", "02_Factory/factory.ps1", "subagents", "-Action", act];
       if (params.agent) args.push("-Agent", params.agent);
       if (params.harness) args.push("-Harness", params.harness);
       if (params.task) args.push("-Task", params.task);
@@ -84,7 +84,7 @@ export default function (pi: ExtensionAPI) {
       note: Type.String({ description: "Structured handoff note summarizing state, completed checkpoints, and next Mandate" }),
     }),
     async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
-      const out = runPwsh(["-File", "factory/factory.ps1", "subagents", "-Action", "handoff", "-Note", params.note], ctx.cwd);
+      const out = runPwsh(["-File", "02_Factory/factory.ps1", "subagents", "-Action", "handoff", "-Note", params.note], ctx.cwd);
       return { content: [{ type: "text", text: out.trim() }], details: {} };
     },
   });
@@ -97,7 +97,7 @@ export default function (pi: ExtensionAPI) {
       text: Type.String({ description: "Substring or keyword to search in durable history" }),
     }),
     async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
-      const out = runPwsh(["-File", "factory/factory.ps1", "subagents", "-Action", "search-history", "-Query", params.text], ctx.cwd);
+      const out = runPwsh(["-File", "02_Factory/factory.ps1", "subagents", "-Action", "search-history", "-Query", params.text], ctx.cwd);
       return { content: [{ type: "text", text: out.trim() }], details: {} };
     },
   });
@@ -109,7 +109,7 @@ export default function (pi: ExtensionAPI) {
     description: "Get the Aspace Software Factory Mission Control status (DeepSeek 3-Question Panel + Pi Durable Workflows)",
     parameters: Type.Object({}),
     async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
-      const out = runPwsh(["-File", "factory/factory.ps1", "status"], ctx.cwd);
+      const out = runPwsh(["-File", "02_Factory/factory.ps1", "status"], ctx.cwd);
       return { content: [{ type: "text", text: out.trim() }], details: {} };
     },
   });
@@ -117,10 +117,10 @@ export default function (pi: ExtensionAPI) {
   pi.registerTool({
     name: "factory_gate",
     label: "Factory Deterministic Gate",
-    description: "Run the 6 deterministic quality, security, DOX, and WikiLLM checks (factory/checks.ps1)",
+    description: "Run the 6 deterministic quality, security, DOX, and WikiLLM checks (02_Factory/checks.ps1)",
     parameters: Type.Object({}),
     async execute(_toolCallId, _params, _signal, _onUpdate, ctx) {
-      const out = runPwsh(["-File", "factory/checks.ps1"], ctx.cwd);
+      const out = runPwsh(["-File", "02_Factory/checks.ps1"], ctx.cwd);
       return { content: [{ type: "text", text: out.trim() }], details: {} };
     },
   });
@@ -138,7 +138,7 @@ export default function (pi: ExtensionAPI) {
     async execute(_toolCallId, params, _signal, _onUpdate, ctx) {
       const args = [
         "-File",
-        "factory/factory.ps1",
+        "02_Factory/factory.ps1",
         "intake",
         "-Title",
         params.title,
@@ -158,7 +158,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("factory", {
     description: "Run Aspace Software Factory status & gate check",
     handler: async (_args, ctx) => {
-      const out = runPwsh(["-File", "factory/factory.ps1", "status"], ctx.cwd);
+      const out = runPwsh(["-File", "02_Factory/factory.ps1", "status"], ctx.cwd);
       ctx.ui.notify(out.split("\n").slice(0, 5).join(" | "), "info");
     },
   });
@@ -166,7 +166,7 @@ export default function (pi: ExtensionAPI) {
   pi.registerCommand("subagents", {
     description: "List durable subagents workflows & writer locks",
     handler: async (_args, ctx) => {
-      const out = runPwsh(["-File", "factory/factory.ps1", "subagents", "-Action", "status"], ctx.cwd);
+      const out = runPwsh(["-File", "02_Factory/factory.ps1", "subagents", "-Action", "status"], ctx.cwd);
       ctx.ui.notify(out.slice(0, 300), "info");
     },
   });
