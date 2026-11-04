@@ -9,7 +9,7 @@ Ce skill rend l'architecture **Pi Durable** (`https://earendil.com/posts/pi-dura
 ## 1. Les 6 Garanties Fondamentales (Pi Durable + `pi-durable-subagents`)
 
 1. **Idempotence & Zéro Perte (`requestId` + Checkpoints SQLite)** :
-   - Chaque tâche, appel d'outil ou workflow enregistre son intention et son `requestId` dans `factory/factory.sqlite` **avant** exécution.
+   - Chaque tâche, appel d'outil ou workflow enregistre son intention et son `requestId` dans `02_Factory/factory.sqlite` **avant** exécution.
    - Si un flux coupe, qu'un processus crashe ou que la machine redémarre, `resume` reprend exactement au dernier checkpoint sans jamais exécuter deux fois une étape terminée (`replay: "safe"` vs effets externes non rejouables).
 2. **Verrou d'Écriture par Worktree (`writerLock`)** :
    - Un seul sous-agent écrivain (`writer: true`, utilisant `edit`/`write`) peut modifier un worktree Git donné à la fois (`waiting for writer lock: <root> held by <wid>/<key>`).
@@ -29,26 +29,26 @@ Ce skill rend l'architecture **Pi Durable** (`https://earendil.com/posts/pi-dura
 
 ```powershell
 # Lister les agents, templates hc, harnesses et le pool de modèles
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action agents
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action agents
 
 # Lancer un sous-agent durable (idempotent via -RequestId, avec writerLock automatique)
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action run -Agent "builder" -Harness "dsh" -Task "Implémenter la spec" -RequestId "job-01"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action run -Agent "builder" -Harness "dsh" -Task "Implémenter la spec" -RequestId "job-01"
 
 # Lancer une chaîne séquentielle durable (avec interpolation automatique de {previous})
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action chain -ChainJson '[{"agent":"builder","task":"Coder la feature"},{"agent":"reviewer-code","task":"Auditer: {previous}","writer":false}]'
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action chain -ChainJson '[{"agent":"builder","task":"Coder la feature"},{"agent":"reviewer-code","task":"Auditer: {previous}","writer":false}]'
 
 # Steer (remplace les steers précédents) ou Notify un sous-agent en cours
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action send -To "<wid>/step-1" -Kind steer -Message "Vérifie d'abord les logs"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action send -To "<wid>/step-1" -Kind steer -Message "Vérifie d'abord les logs"
 
 # Voir le statut global ou filtrer la sortie d'un workflow (tail + grep regex borné)
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action status -Wid "<wid>" -Tail 20 -Grep "PASS|ERROR"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action status -Wid "<wid>" -Tail 20 -Grep "PASS|ERROR"
 
 # Reprendre tous les workflows interrompus après un crash ou un quit
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action resume
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action resume
 
 # Effectuer un Handoff de contexte ou fouiller l'historique avant handoff
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action handoff -Note "Phase 1 terminée, prêt pour review"
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action search-history -Query "Phase 1"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action handoff -Note "Phase 1 terminée, prêt pour review"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action search-history -Query "Phase 1"
 ```
 
 ## 3. Utilisation Native dans Pi 1.5.0

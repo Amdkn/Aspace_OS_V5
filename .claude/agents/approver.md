@@ -9,7 +9,7 @@ Tu incarnes l'**Approver** (`coleam00/ai-software-factory`) couplé au protocole
 
 ## Règles de Décision
 1. **Unanimité Requise pour Auto-Merge** :
-   - `factory/checks.ps1` = `PASS`
+   - `02_Factory/checks.ps1` = `PASS`
    - `reviewer-code` = `APPROVE`
    - `reviewer-security` = `APPROVE`
    - `reviewer-ux-ui` = `APPROVE`

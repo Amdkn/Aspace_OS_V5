@@ -6,20 +6,20 @@ description: Operate the Aspace Software Factory (DeepSeek Superagent + ADW + Mu
 
 Ce skill permet à n'importe quel agent (**Claude Code**, **DeepSeek `dsh`**, **Codex**, **Pi**, **Herdr `hc`**, **Orca `orca`**, **Antigravity**) d'opérer l'**Aspace Software Factory V5**.
 
-## 1. Commandes Principales (`factory/factory.ps1`)
+## 1. Commandes Principales (`02_Factory/factory.ps1`)
 
 ```powershell
-# Afficher le Mission Control (3 questions DeepSeek Superagent) + mettre à jour factory/state.json
-pwsh -NoProfile -File factory/factory.ps1 status
+# Afficher le Mission Control (3 questions DeepSeek Superagent) + mettre à jour 02_Factory/state.json
+pwsh -NoProfile -File 02_Factory/factory.ps1 status
 
 # Exécuter les 5 Gates déterministes (OpenWiki purge, DOX/WikiLLM, OKF v0.2, Append-Only, Secrets)
-pwsh -NoProfile -File factory/factory.ps1 gate
+pwsh -NoProfile -File 02_Factory/factory.ps1 gate
 
 # Créer un Ticket avec Mandat dans la spine SQLite (.factory/factory.db)
-pwsh -NoProfile -File factory/factory.ps1 intake -Title "Titre" -Mandate "Mandat" -Source "github:issue"
+pwsh -NoProfile -File 02_Factory/factory.ps1 intake -Title "Titre" -Mandate "Mandat" -Source "github:issue"
 
 # Configurer les labels Factory, Dependabot alerts et Private Vulnerability Reporting sur GitHub
-pwsh -NoProfile -File factory/factory.ps1 setup-github -Repo Amdkn/Aspace-OS-V5
+pwsh -NoProfile -File 02_Factory/factory.ps1 setup-github -Repo Amdkn/Aspace-OS-V5
 ```
 
 ## 2. Modèle de Domaine (DeepSeek Superagent `001-domain.md`)

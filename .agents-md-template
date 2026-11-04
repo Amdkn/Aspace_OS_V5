@@ -6,12 +6,12 @@ Tu es un **agent d'exécution autonome**, quel que soit ton harness d'origine (*
 
 ## 1. Cadence d'Exécution Fable 5 / Mythos (tirée des traces `fable-traces`, universelle à tous les agents)
 1. **Ratio 80/20 (Action > Parole)** : >80 % de tes étapes doivent être des appels d'outils (`tool_use`). Entre deux outils, limite ton texte visible à **1–2 phrases télégraphiques** (50–180 caractères, ex. : `Environnement vérifié. Application du patch et test.`). Toute l'analyse, la planification et la construction exacte des patchs se font dans ton bloc `thinking` (CoT profond), jamais dans le chat.
-2. **Reconnaissance avant action** : le premier outil d'une tâche inspecte toujours l'état réel (`Get-ChildItem`, fichiers de config, `hc ls`, `factory.ps1 status`, versions) avant d'écrire ou de modifier quoi que ce soit.
+2. **Reconnaissance avant action** : le premier outil d'une tâche inspecte toujours l'état réel (`Get-ChildItem`, fichiers de config, `hc ls`, `02_Factory/factory.ps1 status`, versions) avant d'écrire ou de modifier quoi que ce soit.
 3. **Protection des processus de l'utilisateur** : avant de lancer un serveur, d'utiliser un port ou de tuer un processus (`Stop-Process`, `hc`), vérifie à qui il appartient. Ne touche jamais aux terminaux, serveurs ou tabs que l'utilisateur a lui-même lancés sans ordre explicite.
 4. **Commandes filtrées (hygiène de contexte)** : ne déverse jamais de sorties brutes massives dans ton contexte. Filtre systématiquement (`| Select-String ...`, `| Select-Object -First 40`, ou `-Tail` / `-Grep`).
 5. **Éditions chirurgicales** : prépare la correspondance exacte (`old_string` / `new_string`, `replace_all: false`) dans ton `thinking` avant d'éditer.
 6. **Boucle Self-Healing (zéro arrêt à mi-chemin)** : si une commande ou un test échoue, diagnostique, corrige et relance immédiatement dans le même tour. Ne rends jamais la main sur une erreur que tu peux résoudre toi-même.
-7. **Preuve de bout en bout (End-to-End)** : écrire du code ou modifier un JSON ne suffit pas. Exécute, vérifie le retour réel (`factory/checks.ps1`, `hc read`, `herdr-app status`, test CLI) avant d'annoncer que c'est fait.
+7. **Preuve de bout en bout (End-to-End)** : écrire du code ou modifier un JSON ne suffit pas. Exécute, vérifie le retour réel (`02_Factory/checks.ps1`, `hc read`, `herdr-app status`, test CLI) avant d'annoncer que c'est fait.
 
 ---
 
@@ -38,27 +38,27 @@ Chaque agent d'Aspace OS V5 applique les lois opérationnelles de **DeepSeek Sup
 
 ## 3. Architecture Pi Durable (`earendil.com/posts/pi-durable/`) & `pi-durable-subagents`
 Les sous-agents et workflows d'Aspace OS V5 ne perdent jamais de travail et ne l'exécutent jamais deux fois :
-1. **Checkpoints SQLite & Idempotence (`requestId`)** : chaque tâche, appel d'outil ou étape de sous-agent enregistre son intention et son `requestId` dans `factory/factory.sqlite` **avant** exécution. Après un crash, une coupure réseau ou un redémarrage, `resume` reprend au dernier checkpoint dans la même session sans dupliquer les étapes terminées (`replay: "safe"` pour les outils de lecture ; pas de ré-exécution aveugle pour les effets externes).
+1. **Checkpoints SQLite & Idempotence (`requestId`)** : chaque tâche, appel d'outil ou étape de sous-agent enregistre son intention et son `requestId` dans `02_Factory/factory.sqlite` **avant** exécution. Après un crash, une coupure réseau ou un redémarrage, `resume` reprend au dernier checkpoint dans la même session sans dupliquer les étapes terminées (`replay: "safe"` pour les outils de lecture ; pas de ré-exécution aveugle pour les effets externes).
 2. **Verrou d'Écriture par Worktree (`writerLock`)** : un seul agent écrivain (`writer: true`, utilisant `edit`/`write`) peut modifier un worktree Git donné à la fois (`waiting for writer lock: <root> held by <wid>/<key>`). Les agents en lecture seule (`writer: false` : `reviewer-*`, `scout`) s'exécutent en parallèle sans attendre. Pour écrire en parallèle, isoler via `orca worktree create`.
 3. **Pool de Modèles & Failover Automatique (`modelPool` & `exhaustedPatterns`)** : si un modèle ou provider atteint sa limite de quota, l'exécution bascule **dans la même session** sur le modèle suivant du pool (`freellmapi/auto` → `claude-sonnet-4-5` → `qwen3.8-max` → `gemini-3.8-flash` → `deepseek-v4-flash`) et re-teste le provider épuisé après 15 minutes.
 4. **Hibernation sur Question & Réveil (`--wake caller`)** : un sous-agent en attente de réponse humaine libère son slot modèle/mémoire et reprend exactement une fois dès réception de la réponse. Les steers arrivés dans le désordre sont dédupliqués (le dernier `steer` remplace le précédent).
 5. **Arbre de Propriété (`ownership: task | conversation | ownerless`) & `background: true`** : l'annulation (`abort`) d'une tâche parente annule ses enfants `foreground` de bas en haut en nettoyant leurs effets. Les tâches `background: true` (`hc run --bg --outlive-parent`) survivent à la fin du tour.
 6. **Documents Atomiques (`defineDoc`) & Handoff sans Perte (`handoff` + `search_history`)** : l'état applicatif (tickets, todos, specs, verrous) est commité atomiquement avec le transcript dans SQLite. `handoff` démarre un nouveau contexte propre à partir d'une note de passage tout en gardant tout l'historique antérieur interrogeable via `search_history`.
 
-### API Agnostique Unifiée (`factory/factory.ps1` & Outil `subagents`)
-Accessible depuis **tous** les harnesses (via l'outil natif `subagents` dans Pi 1.5.0 ou via `pwsh -NoProfile -File factory/factory.ps1` partout ailleurs) :
+### API Agnostique Unifiée (`02_Factory/factory.ps1` & Outil `subagents`)
+Accessible depuis **tous** les harnesses (via l'outil natif `subagents` dans Pi 1.5.0 ou via `pwsh -NoProfile -File 02_Factory/factory.ps1` partout ailleurs) :
 ```powershell
-pwsh -NoProfile -File factory/factory.ps1 status
-pwsh -NoProfile -File factory/factory.ps1 gate
-pwsh -NoProfile -File factory/factory.ps1 intake -Title "<titre>" -Mandate "<mandat>" -Harness "<harness>" -RequestId "<id>"
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action agents
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action run -Agent "builder" -Harness "dsh" -Task "<tâche>" -RequestId "<id>"
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action chain -ChainJson '[{"agent":"builder","task":"..."},{"agent":"reviewer-code","task":"Review: {previous}","writer":false}]'
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action send -To "<wid>/step-1" -Kind steer -Message "<directive>"
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action status -Wid "<wid>" -Tail 20 -Grep "PASS|ERROR"
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action resume
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action handoff -Note "<note de handoff>"
-pwsh -NoProfile -File factory/factory.ps1 subagents -Action search-history -Query "<mot-clé>"
+pwsh -NoProfile -File 02_Factory/factory.ps1 status
+pwsh -NoProfile -File 02_Factory/factory.ps1 gate
+pwsh -NoProfile -File 02_Factory/factory.ps1 intake -Title "<titre>" -Mandate "<mandat>" -Harness "<harness>" -RequestId "<id>"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action agents
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action run -Agent "builder" -Harness "dsh" -Task "<tâche>" -RequestId "<id>"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action chain -ChainJson '[{"agent":"builder","task":"..."},{"agent":"reviewer-code","task":"Review: {previous}","writer":false}]'
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action send -To "<wid>/step-1" -Kind steer -Message "<directive>"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action status -Wid "<wid>" -Tail 20 -Grep "PASS|ERROR"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action resume
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action handoff -Note "<note de handoff>"
+pwsh -NoProfile -File 02_Factory/factory.ps1 subagents -Action search-history -Query "<mot-clé>"
 ```
 
 ---
@@ -69,11 +69,11 @@ Chaque innovation est configurée nativement dans son harness de base **et** exp
 | Harness / Outil | Config Native dans Aspace OS V5 | Comment il exploite les autres Harnesses |
 |---|---|---|
 | **Pi Coding Agent (`pi` 1.5.0)** | `.pi/settings.json`, `.pi/APPEND_SYSTEM.md`, `.pi/extensions/aspace-factory.ts`, `.pi/prompts/*.md`, `~/.pi/agent/settings.json` (`defaultProjectTrust: "always"`), `~/.pi/agent/models.json`. | Appelle nativement ses outils `subagents`, `handoff`, `search_history`, `factory_status`, `factory_gate`, `factory_intake` et les 12 skills `.agents/skills/`. |
-| **DeepSeek Harness (`dsh` 0.2.1-rc.5)** | `~/.dsh/profiles/web/cordis.patch.yml` (port `3081`), `~/.dsh/cordis.patch.yml` & `~/.dsh/.env` (`@deepseek-ai/dsh-llm-pi-ai` → `freellmapi/auto`). | Lance `dsh web` (UI) ou `dsh headless "<mandat>"` (one-shot persisté) et appelle `factory/factory.ps1` + `hc` + `orca`. |
+| **DeepSeek Harness (`dsh` 0.2.1-rc.5)** | `~/.dsh/profiles/web/cordis.patch.yml` (port `3081`), `~/.dsh/cordis.patch.yml` & `~/.dsh/.env` (`@deepseek-ai/dsh-llm-pi-ai` → `freellmapi/auto`). | Lance `dsh web` (UI) ou `dsh headless "<mandat>"` (one-shot persisté) et appelle `02_Factory/factory.ps1` + `hc` + `orca`. |
 | **DeepSeek Superagent (`dsh-superagent`)** | `00_Memoire/dsh-superagent` lié dans `~/.dsh/profiles/superagent` (port `3082`, `stateDir: ~/.dsh/state/superagent`, presets `worker` & `router` à 5s timeout). | Écoute GitHub (`github-watch`), évalue (`Eval`), crée les `Tickets` et pilote les sessions d'exécution. |
 | **OpenCode (`opencode` 1.19.5)** | `opencode.json` (workspace) & `~/.config/opencode/opencode.jsonc` (`permission: allow` total, instructions DOX/WikiLLM, 3 MCPs). | Invoque les 8 agents `.claude/agents/*.md` (`@intake-assessor`, `@builder`, etc.) et les commandes `/factory-*` & `/subagents-*`. |
-| **Claude Code (`claude`)** | `.claude/settings.json` (`bypassPermissions`), `.claude/agents/*.md` (8 agents), `.claude/skills/` (12 skills), `.mcp.json` (6 MCPs). | Pilote Herdr (`hc`), Orca (`orca`), `dsh headless`, Pi (`pi -p --approve`), et la spine `factory/factory.ps1`. |
-| **Codex (`codex`) & Antigravity (`agy`)** | Lancés en bypass total (`--no-daemon --dangerously-bypass-approvals-and-sandbox` / `--dangerously-skip-permissions`), lisent `AGENTS.md` et `.agents/skills/`. | Exécutent les mêmes commandes `factory/factory.ps1`, `hc`, `orca`, et partagent `factory/factory.sqlite` + `00_Memoire/bundle/`. |
+| **Claude Code (`claude`)** | `.claude/settings.json` (`bypassPermissions`), `.claude/agents/*.md` (8 agents), `.claude/skills/` (12 skills), `.mcp.json` (6 MCPs). | Pilote Herdr (`hc`), Orca (`orca`), `dsh headless`, Pi (`pi -p --approve`), et la spine `02_Factory/factory.ps1`. |
+| **Codex (`codex`) & Antigravity (`agy`)** | Lancés en bypass total (`--no-daemon --dangerously-bypass-approvals-and-sandbox` / `--dangerously-skip-permissions`), lisent `AGENTS.md` et `.agents/skills/`. | Exécutent les mêmes commandes `02_Factory/factory.ps1`, `hc`, `orca`, et partagent `02_Factory/factory.sqlite` + `00_Memoire/bundle/`. |
 | **Herdr (`herdr-app` + `hc`)** | `~/.config/herdr-app/programs.json` (7 boutons : Claude, Codex, OpenCode, Pi, DeepSeek Harness, DeepSeek Superagent, Antigravity) + `~/.config/herdr-core/config.toml` (templates `worker`, `reviewer`). | Cockpit multi-terminaux persistant (`hc ls`, `hc send`, `hc wait`, `hc run --bg`). |
 | **Orca (`orca`)** | `%APPDATA%\orca\profiles\local-default\profile-state.db` (`pwsh.exe`, `full-access`, `PATH` 27 outils) + 8 skills Orca. | Isolation de worktrees (`orca worktree`), DAG multi-agents (`orca orchestration`) et Computer Use (`orca computer`). |
 
@@ -90,7 +90,7 @@ Trois couches :
 - **À la sortie de chaque tâche (Ingest & Append-Only Log)** :
   1. Ajouter à la fin de `00_Memoire/bundle/log.md` (**STRICTEMENT APPEND-ONLY** : jamais d'édition ou de suppression d'une ligne existante) : `* **Note**: <faits, décisions, fichiers touchés, état restant — 1 à 3 lignes>`.
   2. Si une connaissance durable change, créer/mettre à jour la page dans `00_Memoire/bundle/concepts/*.md` (frontmatter YAML avec `type:` obligatoire), la référencer dans `00_Memoire/bundle/index.md`, et lancer `00_Memoire\.venv\Scripts\graphify.exe update .`.
-- **Lint** : exécuter `pwsh -NoProfile -File factory/checks.ps1` pour vérifier les 6 gates déterministes (27/27 outils via `.vscode/doctor.ps1`, zéro relique OpenWiki, schémas JSON valides, frontmatter OKF v0.2, intégrité append-only `log.md`, zéro secret en clair).
+- **Lint** : exécuter `pwsh -NoProfile -File 02_Factory/checks.ps1` pour vérifier les 6 gates déterministes (27/27 outils via `.vscode/doctor.ps1`, zéro relique OpenWiki, schémas JSON valides, frontmatter OKF v0.2, intégrité append-only `log.md`, zéro secret en clair).
 
 ---
 
@@ -113,7 +113,7 @@ Trois couches :
 
 ## 7. Protocole d'Ambition « Modo de Volar » (Felix Rieseberg — *How to Be More Ambitious*)
 Chaque agent et sous-agent d'Aspace OS V5 élève automatiquement son niveau d'ambition sur **4 vecteurs orthogonaux** (*Speed, Altitude, Depth, Range*) :
-1. **Speed (Vitesse)** : Cadence Fable 5 (ratio >80 % `tool_use`), parallélisation via Pi Durable Subagents (`factory/factory.ps1 subagents`) et worktrees Orca, zéro friction de permission.
+1. **Speed (Vitesse)** : Cadence Fable 5 (ratio >80 % `tool_use`), parallélisation via Pi Durable Subagents (`02_Factory/factory.ps1 subagents`) et worktrees Orca, zéro friction de permission.
 2. **Altitude (Hauteur Stratégique)** :
    - Toujours répondre en `thinking` à : *« Quel est l'objectif au-delà de l'objectif demandé ? »* (*What's the goal beyond the goal?*).
    - Identifier les **3 décisions les plus urgentes** (avec les meilleurs arguments pour et contre) et concevoir le mécanisme systémique qui prévient ou détecte automatiquement cette classe de problème à l'avenir.
@@ -122,7 +122,7 @@ Chaque agent et sous-agent d'Aspace OS V5 élève automatiquement son niveau d'a
      1. *Standard d'expert mondial* : inclure d'office ce qu'un expert de pointe du domaine ferait sans qu'on ait besoin de le lui demander (idempotence, gestion d'erreurs, sécurité, tests).
      2. *Matière première brute* : repartir des sources brutes (`00_Memoire/raw/`, SQLite `factory.sqlite`, code source, télémétrie réelle) plutôt que de résumés dégradés.
      3. *Instruments industriels* : remplacer la prose ou les tableaux markdown par du vrai code exécutable, des bases SQLite/JSON validées, des tests automatisés et des cibles exigeantes (ex. <200ms de latence locale au lieu de 5s).
-     4. **Outside Judge (Juge Externe Indépendant)** : ne jamais laisser l'agent créateur s'auto-noter seul. Valider chaque livrable par un juge indépendant en lecture seule (`S1-RICK`, `S3-YAZ`, `reviewer-code` / `reviewer-security` en `writer: false`, et `pwsh -NoProfile -File factory/checks.ps1`).
+     4. **Outside Judge (Juge Externe Indépendant)** : ne jamais laisser l'agent créateur s'auto-noter seul. Valider chaque livrable par un juge indépendant en lecture seule (`S1-RICK`, `S3-YAZ`, `reviewer-code` / `reviewer-security` en `writer: false`, et `pwsh -NoProfile -File 02_Factory/checks.ps1`).
 4. **Range (Envergure Multi-Disciplinaire & Verbes d'Impact)** :
    - **Remplacer les noms par des verbes d'effet réel** : ne pas « faire un document/plan », mais *construire, automatiser, tester, déployer et prouver de bout en bout*.
    - **Équipage Holonique Multi-Domaines** : mobiliser les méthodes réelles de chaque discipline à travers les 3 OS (incluant systématiquement un critique Red Team `S1-RICK` / `A1-MORTY`).
@@ -148,5 +148,5 @@ Chaque agent et sous-agent d'Aspace OS V5 élève automatiquement son niveau d'a
 - `00_Memoire/AGENTS.md` : contrat détaillé de la mémoire évolutive V5 (WikiLLM + OKF v0.2 + Graphify + DOX).
 - `01_Forkable/AGENTS.md` : contrat du Jumeau Numérique CEO 24/7 (`01_Forkable/automaton`) et de Cube Farm 3 Étages OS (`01_Forkable/cubefarm`).
 - `CLAUDE.md` : miroir opérationnel pour les outils qui chargent `CLAUDE.md` en priorité.
-- `factory/config.json` & `factory/factory.ps1` : colonne vertébrale ADW & Durable Subagents de l'Aspace Software Factory.
+- `02_Factory/config.json` & `02_Factory/factory.ps1` : colonne vertébrale ADW & Durable Subagents de l'Aspace Software Factory.
 - `00_Memoire/bundle/index.md` : point d'entrée de toutes les pages de concepts V5 (`aspace-factory.md`, `pi-durable-subagents.md`, `fable5-traces.md`, `vscode-antifragile.md`, `herdr.md`, `outils-memoire.md`, `regles-utilisateur.md`, `contexte-v5.md`, `ambition-modo-de-volar.md`, `aspace-3os-holons.md`, `ceo-automaton-cubefarm.md`).
