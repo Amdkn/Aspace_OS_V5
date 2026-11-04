@@ -43,7 +43,7 @@
       "prompt": "{file:.claude/agents/spec-writer.md}"
     },
     "builder": {
-      "description": "Autonomous Code Builder & Executor (implements Mandate and runs factory/checks.ps1)",
+      "description": "Autonomous Code Builder & Executor (implements Mandate and runs 02_Factory/checks.ps1)",
       "prompt": "{file:.claude/agents/builder.md}"
     },
     "reviewer-code": {
@@ -70,27 +70,27 @@
   "command": {
     "factory-status": {
       "description": "Show Aspace Software Factory Mission Control (DeepSeek 3-Question Panel)",
-      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File factory/factory.ps1 status` and summarize the result concisely in French."
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 status` and summarize the result concisely in French."
     },
     "factory-gate": {
       "description": "Run the 6 deterministic Aspace Factory checks",
-      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File factory/checks.ps1` and fix any failure automatically."
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/checks.ps1` and fix any failure automatically."
     },
     "factory-intake": {
       "description": "Create a new Ticket with Mandate in the Aspace Software Factory",
-      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File factory/factory.ps1 intake -Title \"$ARGUMENTS\" -Mandate \"$ARGUMENTS\"` and report the created ticket ID."
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 intake -Title \"$ARGUMENTS\" -Mandate \"$ARGUMENTS\"` and report the created ticket ID."
     },
     "subagents-status": {
       "description": "List all Pi Durable Subagent workflows and active Worktree Writer Locks",
-      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File factory/factory.ps1 subagents -Action status` and summarize active workflows and locks."
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 subagents -Action status` and summarize active workflows and locks."
     },
     "subagents-run": {
       "description": "Launch a crash-safe, idempotent durable subagent workflow",
-      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File factory/factory.ps1 subagents -Action run -Agent builder -Task \"$ARGUMENTS\"` and report the workflow ID (wid)."
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 subagents -Action run -Agent builder -Task \"$ARGUMENTS\"` and report the workflow ID (wid)."
     },
     "subagents-resume": {
       "description": "Resume any paused or interrupted durable subagent workflows from their last SQLite checkpoint",
-      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File factory/factory.ps1 subagents -Action resume` and report resumed workflows."
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 subagents -Action resume` and report resumed workflows."
     }
   }
 }

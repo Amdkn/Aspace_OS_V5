@@ -3,7 +3,7 @@
 Lire d'abord : `AGENTS.md`, `00_Memoire/bundle/index.md`, fin de `00_Memoire/bundle/log.md`, `00_Memoire/bundle/concepts/sakana-fugu-inference.md`.
 
 ## État vérifié
-- `pwsh -NoProfile -File factory/checks.ps1` → 6/6 PASS.
+- `pwsh -NoProfile -File 02_Factory/checks.ps1` → 6/6 PASS.
 - Étage 3 de Cube Farm = `Areas OS` (522 Holons), total 3 OS = 578. Modules `holon-topology.ts` et `aspaceHolons.ts` importables sous Node 24 (578 ok).
 - `codex-chatgpt-web` : bouclier télémétrie branché, MAJ GitHub off, `start-aspace-codex-web.ps1 -VerifyOnly` OK.
 - Source brute : `00_Memoire/raw/sakana-fugu-10d-architecture-2026.md`.
