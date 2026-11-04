@@ -39,18 +39,18 @@ jobs:
           ISSUE_NUMBER: ${{ github.event.issue.number }}
           ACTOR: ${{ github.actor }}
         run: |
-          ALLOWED=$(jq -r '.authorization.allowed_actors[]' factory/config.json)
+          ALLOWED=$(jq -r '.authorization.allowed_actors[]' 02_Factory/config.json)
           if ! echo "$ALLOWED" | grep -qx "$ACTOR"; then
-            echo "Actor $ACTOR is not in factory/config.json allowed_actors. Ignoring trigger."
+            echo "Actor $ACTOR is not in 02_Factory/config.json allowed_actors. Ignoring trigger."
             exit 0
           fi
           gh issue edit "$ISSUE_NUMBER" --add-label "factory:claimed" || true
           gh issue comment "$ISSUE_NUMBER" --body "This is by an automated agent, not a human.
 
-          **Aspace Factory — Ticket Claimed** (\`#$ISSUE_NUMBER\`)
-          - **Stage**: \`working / queued\`
-          - **Pipeline**: \`Intake → Spec → Builder (Worktree) → Gate (factory/checks.ps1) → 4 Reviewers → Approver\`
-          - Exécution locale/hybride prête via \`pwsh factory/factory.ps1 run --issue $ISSUE_NUMBER\`."
+          **Aspace Factory — Ticket Claimed** (`#$ISSUE_NUMBER`)
+          - **Stage**: `working / queued`
+          - **Pipeline**: `Intake → Spec → Builder (Worktree) → Gate (02_Factory/checks.ps1) → 4 Reviewers → Approver`
+          - Exécution locale/hybride prête via `pwsh 02_Factory/factory.ps1 run --issue $ISSUE_NUMBER`."
 
   auto-merge-approved:
     name: "Approver Auto-Merge (Low/Medium Risk PRs)"
