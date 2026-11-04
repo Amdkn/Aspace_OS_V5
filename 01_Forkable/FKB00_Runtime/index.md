@@ -24,3 +24,12 @@
 ### Noyau-Perpétuel-A0
 - Le noyau qui doit lancer l'inférence locale et évoluer en Fugu.
 - Règle : local d'abord, cloud en renfort, jamais l'inverse.
+
+### Principes-Fusion-Runtime (2026-11-04)
+- Fichier : `01_Forkable/FKB00_Runtime/principes-fusion-runtime.md`.
+- Contenu : un principe extrait par outil (Infinity, Scion, SuperAgent DeepSeek,
+  DSH + Cordis, Pi Durable, Hermes, Prime Agent, OpenClaw, OpenBot, OpenMuse,
+  OpenDots, OpenDuet, Jev / System One) + 7 règles du Runtime vivant
+  (daemon + événements, pas cron aveugle) + Scion dans le bridge BusinessOS.
+- Règle : présence = daemon qui hiberne entre événements et reprend
+  au checkpoint après un crash. Un cron 30 min n'est pas une présence.
