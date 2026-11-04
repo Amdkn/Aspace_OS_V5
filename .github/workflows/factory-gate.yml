@@ -1,0 +1,66 @@
+name: "Aspace Factory — Gate & Security"
+
+on:
+  pull_request:
+    branches: ["main", "master"]
+  push:
+    branches: ["main", "master"]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write
+  pull-requests: write
+  issues: write
+
+jobs:
+  factory-gate:
+    name: "Deterministic Gate (WikiLLM + DOX + Secrets + Syntax)"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Verify OpenWiki is purged
+        run: |
+          if [ -f ".github/workflows/openwiki-update.yml" ] || [ -d "00_Memoire/openwiki" ]; then
+            echo "::error::OpenWiki residue detected! WikiLLM is the sole wiki standard in V5."
+            exit 1
+          fi
+
+      - name: Verify DOX & WikiLLM Schema Integrity
+        run: |
+          for f in AGENTS.md CLAUDE.md 00_Memoire/AGENTS.md 00_Memoire/bundle/index.md 00_Memoire/bundle/log.md factory/config.json; do
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing required V5 Factory file: $f"
+              exit 1
+            fi
+          done
+          python3 -m json.tool factory/config.json > /dev/null
+          python3 -m json.tool .claude/settings.json > /dev/null
+          python3 -m json.tool .mcp.json > /dev/null
+
+      - name: Verify OKF v0.2 Concept Frontmatter
+        run: |
+          for c in 00_Memoire/bundle/concepts/*.md; do
+            head -n 1 "$c" | grep -q "^---$" || { echo "::error::Missing YAML frontmatter in $c"; exit 1; }
+            grep -q "^type:" "$c" || { echo "::error::Missing required OKF 'type:' key in $c"; exit 1; }
+          done
+
+      - name: Secret & Credential Leak Guard
+        run: |
+          if git grep -I -E '(ghp_[A-Za-z0-9]{30,}|sk-ant-[A-Za-z0-9\-_]{20,}|AIza[0-9A-Za-z\-_]{35}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY)' -- ':!00_Memoire/ledger.jsonl' ':!.github/workflows/*'; then
+            echo "::error::Potential secret or private key detected in tracked files!"
+            exit 1
+          fi
+
+      - name: Append-Only Log Verification (on PRs)
+        if: github.event_name == 'pull_request'
+        run: |
+          DEL=$(git diff "origin/${{ github.base_ref }}...HEAD" -- 00_Memoire/bundle/log.md | grep -E '^-[^-]' | wc -l)
+          if [ "$DEL" -gt 0 ]; then
+            echo "::error::00_Memoire/bundle/log.md is APPEND-ONLY! Detected $DEL deleted/modified lines."
+            exit 1
+          fi

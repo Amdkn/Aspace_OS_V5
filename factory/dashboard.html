@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<title>Aspace OS V5 — Factory Mission Control</title>
+<style>
+  body { background:#090d16; color:#e2e8f0; font-family:system-ui,sans-serif; margin:0; padding:24px; }
+  h1 { margin:0 0 8px; color:#38bdf8; font-size:22px; }
+  .sub { color:#94a3b8; font-size:13px; margin-bottom:20px; }
+  .grid { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-bottom:24px; }
+  .card { background:#111827; border:1px solid #1e293b; border-radius:10px; padding:16px; }
+  .card h2 { margin:0 0 10px; font-size:14px; text-transform:uppercase; letter-spacing:.08em; color:#7dd3fc; }
+  .pill { display:inline-block; padding:3px 8px; border-radius:999px; font-size:11px; font-weight:700; background:#064e3b; color:#6ee7b7; margin:2px; }
+  .lanes { display:grid; grid-template-columns:repeat(6,1fr); gap:10px; }
+  .lane { background:#0f172a; border:1px solid #1e293b; border-radius:8px; padding:12px; }
+  .lane h3 { margin:0 0 8px; font-size:13px; color:#f8fafc; }
+  .lane p { margin:0; font-size:12px; color:#94a3b8; line-height:1.4; }
+</style>
+</head>
+<body>
+  <h1>🏭 Aspace OS V5 — Autonomous Software Factory (Mission Control)</h1>
+  <div class="sub">Principe DeepSeek Superagent : « Take as little human attention as possible, and give as much value as possible. Agent proposes, code disposes. »</div>
+  <div class="grid">
+    <div class="card">
+      <h2>1. Does anything need me now?</h2>
+      <p>Stages <code>person/delivery</code> · <code>person/answer</code> · <code>person/review</code> · <code>person/blocked</code></p>
+      <span class="pill">0 Bloqué</span> <span class="pill">Auto-Merge Actif (&lt;400 lignes)</span>
+    </div>
+    <div class="card">
+      <h2>2. Is the system healthy?</h2>
+      <p>26/26 Outils CLI · 10 Skills · 6 MCP · Gate Déterministe PASS · OpenWiki Purgé</p>
+      <span class="pill">Claude Code</span><span class="pill">DeepSeek dsh</span><span class="pill">Herdr hc</span><span class="pill">Orca</span><span class="pill">VS Code</span><span class="pill">Pi</span>
+    </div>
+    <div class="card">
+      <h2>3. GitHub Full-Spectrum Surfaces</h2>
+      <p>Issues · PRs · Discussions · Actions · Projects · WikiLLM · Security &amp; Quality · Insights</p>
+      <span class="pill">SECURITY.md</span><span class="pill">Dependabot</span><span class="pill">Secret Guard</span>
+    </div>
+  </div>
+  <div class="lanes">
+    <div class="lane"><h3>1. Source &amp; Eval</h3><p>Trigger GitHub (Issue <code>factory</code>, Discussion, Security Alert) → Eval d'autorisation → Ticket + Mandate + Label <code>factory:claimed</code>.</p></div>
+    <div class="lane"><h3>2. Spec-Writer</h3><p>Rédige <code>factory/jobs/&lt;id&gt;/spec.md</code> avec critères vérifiables ou pose 1 seule question (<code>factory:needs-info</code>).</p></div>
+    <div class="lane"><h3>3. Builder</h3><p>Travaille dans un worktree isolé (Orca / Herdr / dsh) sur la branche <code>factory/&lt;id&gt;</code> et ouvre une PR Draft <code>Closes #n</code>.</p></div>
+    <div class="lane"><h3>4. Deterministic Gate</h3><p>Exécute <code>pwsh factory/checks.ps1</code>. Aucun Reviewer ne tourne si le Gate échoue (Self-Heal immédiat).</p></div>
+    <div class="lane"><h3>5. 4 Reviewers</h3><p>Audit parallèle indépendant : <code>reviewer-code</code>, <code>reviewer-security</code> (OWASP), <code>reviewer-ux-ui</code>, <code>reviewer-drift</code> (WikiLLM/DOX).</p></div>
+    <div class="lane"><h3>6. Approver</h3><p>Si 4 PASS + Gate PASS + diff &lt; 400 lignes : rebase + <code>gh pr merge --squash</code>. Sinon escalade <code>factory:needs-human</code>.</p></div>
+  </div>
+</body>
+</html>

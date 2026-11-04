@@ -1,0 +1,41 @@
+name: "🏭 Factory Task (Autonomous Agent Build)"
+description: "Confier une fonctionnalité ou une refonte à l'Aspace Software Factory (Intake → Spec → Build → Gate → 4 Reviewers → Auto-Merge)"
+title: "[FACTORY] "
+labels: ["factory"]
+body:
+  - type: textarea
+    id: outcome
+    attributes:
+      label: "Objectif & Résultat attendu (Mandate)"
+      description: "Décris exactement ce qui doit exister une fois la PR mergée."
+      placeholder: "Ex: Ajouter un endpoint /health et son test d'intégration."
+    validations:
+      required: true
+  - type: textarea
+    id: acceptance
+    attributes:
+      label: "Critères d'acceptation & Preuves (Verify Commands)"
+      description: "Comment le Gate déterministe et les Reviewers prouvent que ça marche ?"
+      placeholder: "- [ ] pwsh factory/checks.ps1 passe à 100%\n- [ ] Capture ou test end-to-end joint"
+    validations:
+      required: false
+  - type: dropdown
+    id: risk
+    attributes:
+      label: "Niveau de risque & Politique de Merge"
+      options:
+        - "low (Auto-merge par l'Approver si Gate + 4 Reviewers = PASS)"
+        - "medium (Auto-merge si diff < 400 lignes et 0 alerte sécurité)"
+        - "high (Escalade vers factory:needs-human pour validation finale)"
+      default: 0
+  - type: dropdown
+    id: harness
+    attributes:
+      label: "Harness / Orchestrateur préféré"
+      options:
+        - "auto (Claude Code / Herdr / Orca / DeepSeek dsh)"
+        - "claude-code (Herdr / Orca worktree)"
+        - "deepseek-dsh (dsh --profile headless)"
+        - "codex (codex --no-daemon)"
+        - "pi (pi durable subagent)"
+      default: 0

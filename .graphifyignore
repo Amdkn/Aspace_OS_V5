@@ -1,0 +1,12 @@
+00_Memoire/graphify/
+00_Memoire/wikillm/
+00_Memoire/knowledge-catalog/
+00_Memoire/dox/
+00_Memoire/dsh-superagent/
+00_Memoire/.venv/
+graphify-out/
+.git/
+01_Forkable/*/node_modules/
+01_Forkable/*/dist/
+01_Forkable/*/dist-server/
+01_Forkable/*/.swarm-home/

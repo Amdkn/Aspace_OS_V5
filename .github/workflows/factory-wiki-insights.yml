@@ -1,0 +1,37 @@
+name: "Aspace Factory — WikiLLM Sync & Insights"
+
+on:
+  push:
+    branches: ["main", "master"]
+    paths:
+      - "00_Memoire/bundle/**"
+      - "graphify-out/GRAPH_REPORT.md"
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: read
+
+jobs:
+  wiki-and-insights:
+    name: "Sync 00_Memoire/bundle to GitHub Wiki & Compute Insights"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Generate Factory Telemetry & Insights Summary
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "## 🏭 Aspace Software Factory — Insights" >> "$GITHUB_STEP_SUMMARY"
+          CONCEPTS=$(ls -1 00_Memoire/bundle/concepts/*.md 2>/dev/null | wc -l)
+          LOG_ENTRIES=$(grep -c "^\* \*\*" 00_Memoire/bundle/log.md 2>/dev/null || echo 0)
+          echo "- **Concepts WikiLLM (OKF v0.2)** : $CONCEPTS" >> "$GITHUB_STEP_SUMMARY"
+          echo "- **Entrées Journal Append-Only** : $LOG_ENTRIES" >> "$GITHUB_STEP_SUMMARY"
+          if [ -f "graphify-out/GRAPH_REPORT.md" ]; then
+            head -n 15 graphify-out/GRAPH_REPORT.md >> "$GITHUB_STEP_SUMMARY"
+          fi
