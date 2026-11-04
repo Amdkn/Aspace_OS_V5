@@ -276,6 +276,8 @@ comme workers. OpenBot, OpenMuse, OpenDots, OpenDuet sont des workers
 incarnés au service du Runtime, pas des jouets parallèles.
 Le noyau perpétuel de A0 évolue en Fugu : il orchestre de plus gros
 modèles via Needle, LFM, GLiNER + décisions et scripts déterministes.
+Base : la pile inference-locale (§6). Fugu n'orchestre pas dans le vide,
+il orchestre par-dessus une fondation locale qui décide déjà.
 
 ## 4. Scion dans le bridge BusinessOS : l'évolution concrète
 
@@ -325,10 +327,117 @@ la file globale de merge. Le bridge reste le bridge.
   le rebuild git (Scion), les prototypes vendus comme production
   (SuperAgent, DSH, Cordis, OpenMuse, OpenDots, OpenDuet en preview/alpha).
 
+## 6. La base de fondation : inference-locale intégrée au Runtime
+
+C'était le manque de ce document : les principes ci-dessus
+décrivaient un Runtime vivant, sans sa base de fondation.
+La base est `01_Forkable/FKB00_Runtime/inference-locale/`,
+les 2 synthèses préservées. Elle ne s'ajoute pas au Runtime,
+elle le fonde : le signal brut y devient tokens, les tokens
+y deviennent décisions, les décisions y deviennent actions,
+avant tout modèle lointain.
+
+### 6.1. Des formats multiples vers l'encodeur de tokens pour Transformers
+
+Tout signal entrant — voix, texte — est d'abord transformé
+en tokens discrets, jamais traité brut :
+- Audio : codec Mimi (Kyutai), streaming 24 kHz, flux discret
+  12.5 Hz / 1.1 kbps. Une voix devient une séquence de tokens,
+  pas une onde. La fenêtre de contexte n'est pas saturée par du brut.
+- Parole vers texte : Whistle (Cactus), ASR locale, compagnon de Needle.
+- Le principe est général : chaque format d'entrée passe par un
+  encodeur qui le rend tokenisable par un Transformer, puis fusionnable.
+
+### 6.2. Fusionnable avec le modèle de base local, en adaptateur LoRA
+
+Le modèle de base local est LFM3-Omni-2B (Liquid AI), multimodal,
+2 milliards de paramètres, servi en local (127.0.0.1:9931 dans les docs V5).
+On ne le réentraîne pas. On le gèle, et on l'adapte :
+- Adaptateurs LoRA (rank decomposition matrices) sur les connecteurs
+  audio — la passerelle entre les tokens Mimi et l'espace latent du modèle —
+  et sur les têtes d'attention qui lient tokens de texte et tokens audio
+  discrets à 12.5 Hz.
+- Quelques millions de paramètres entraînables seulement. Entraînement
+  réalisable en local ou sur un VPS modeste, sans cluster de GPUs.
+- Plan en 3 étapes, déjà consigné : extraction par rustymimi (Moshi),
+  entraînement PEFT/LoRA sur les modules d'encodage et décodage audio
+  du processeur multimodal, ancrage identitaire — les lots audio associés
+  aux métadonnées textuelles, pour que l'adaptateur relie le flow vocal,
+  le timbre, le paralinguistique, aux balises du SOUL.md du jumeau.
+- Résultat : la voix du jumeau, son style, son identité, vivent dans
+  un adaptateur versionné, pas dans un poids monolithe réentraîné.
+
+### 6.3. Fine-tuning Needle : le tool calling local, déterministe
+
+Cactus Needle, 8–29 Mo quantifié 2-bit, est le moteur d'exécution edge :
+- Il prend un texte ou un flux audio et renvoie un objet JSON structuré
+  de function_calls, avec un score de confiance calibré et un décodage
+  contraint par grammaire. Zéro hallucination par construction :
+  il ne génère pas de prose, il mappe vers des outils.
+- Fine-tuning LoRA local, sur la machine, pour les propres jeux d'outils
+  métier : commandes de l'OS, scripts de gestion, interactions de la SOB.
+  Les adaptateurs s'exportent en local, sans quitter l'environnement.
+- Rôle dans la fusion : Needle est l'incarnation locale de la règle R3.
+  La couche décision rapide n'est pas seulement Jev dans le cloud,
+  c'est Needle sur l'appareil : millisecondes, typé, calibré.
+
+### 6.4. Intégration native de GLiNER Decision, multilingue
+
+GLiNER2.5-multi-Decide, 287M paramètres, mDeBERTa-v3-base, est
+la barrière d'entrée cognitive et linguistique :
+- Classification et extraction multilingues, ensembles de labels
+  dynamiques évalués à la volée : intention, langue, priorité,
+  politique, tags multi-labels. Sans générer de prose inutile.
+- Zéro hallucination : il classe, il n'invente pas.
+- Sur CPU ou GPU, sans latence superflue. Bilinguisme natif,
+  dont le français du Capitaine.
+- Rôle dans la fusion : GLiNER est le premier étage de R3, avant Needle.
+  Il dit ce que le signal veut dire, dans quelle langue, avec quelle
+  urgence. Needle dit ensuite quel outil appeler.
+
+### 6.5. Le pipeline complet, du signal brut à l'action souveraine
+
+Voix / texte entrant
+→ 1. GLiNER2.5-multi-Decide : intention, langue, classification multi-labels
+→ 2. Cactus Needle (LoRA local) : mapping déterministe vers les tool calls JSON
+→ 3. Exécution système + rétro-alimentation (Airtable / Supabase
+   via orchestration locale)
+→ 4. LFM3-Omni-2B + LoRA Mimi : synthèse, style, identité vocale (SOUL.md)
+→ 5. Fugu (Sakana) : orchestration des plus gros modèles par-dessus.
+
+Sobriété absolue : aucune consommation de GPU massif pour des tâches
+logiques simples. Précision chirurgicale sur l'intention, le multilingue
+et le déclenchement d'outils. Le local décide d'abord, le lointain
+n'intervient que pour ce que le local ne peut pas porter.
+
+### 6.6. Fugu, chef d'orchestre : FreeLLMAPI + Codex-GPT-Web + API Anything
+
+Fugu (Sakana, et non Fubu) est le chef d'orchestre au-dessus
+de la pile locale. Il orchestre trois couches d'inférence :
+- La pile locale (§6.1–6.5) : GLiNER, Needle, LFM3+LoRA-Mimi. D'abord.
+- FreeLLMAPI : le pool de modèles en rotation de quota, routeur
+  local, modèles frontières à la demande quand la tâche dépasse le local.
+- Codex-GPT-Web (fork) + API Anything : la façade zéro télémétrie
+  et la couche d'interface universelle pour toutes les interfaces
+  d'inférence. Constitution, ligne 21 : le hub web et CLI
+  multi-plateformes zéro télémétrie, combiné à api-anything,
+  CLI-Anything et rea, orchestre la rotation intelligente de quota
+  sur 8 plateformes (ChatGPT, Google Gemini, Muse AI, Claude,
+  DeepSeek, Z.ai, Qwen, Sakana AI).
+- Ordre de repli : local, puis pool FreeLLMAPI, puis rotation
+  Codex-GPT-Web / API Anything. FKB04 améliore d'abord
+  (API Anything, CLI Anything, REA comme couche d'optimisation),
+  la Factory réplique ensuite. Jamais l'inverse.
+- Fugu ne remplace pas la pile locale, il la prolonge : Thinker
+  (raisonnement), Worker (exécution, dont les bots frontières
+  incarnés de R7), Verifier (juge extérieur, jamais auto-jugement).
+
 ## Sources (lues 2026-11-04)
 
 - Automaton, Conway Research : pattern déjà consigné (boucle ReAct,
   heartbeat, mémoire 5 tiers, politique en code, holons).
+- `01_Forkable/FKB00_Runtime/inference-locale/` : index, mimi-lora-lfm3-omni.md,
+  needle-gliner-edge.md (synthèses préservées, base de fondation §6).
 - https://github.com/hydro-project/infinity
 - https://www.anthropic.com/research/redesigning-source-control
 - https://github.com/deepseek-ai/dsh-superagent-prototype

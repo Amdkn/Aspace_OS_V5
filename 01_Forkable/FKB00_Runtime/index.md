@@ -30,6 +30,8 @@
 - Contenu : un principe extrait par outil (Infinity, Scion, SuperAgent DeepSeek,
   DSH + Cordis, Pi Durable, Hermes, Prime Agent, OpenClaw, OpenBot, OpenMuse,
   OpenDots, OpenDuet, Jev / System One) + 7 règles du Runtime vivant
-  (daemon + événements, pas cron aveugle) + Scion dans le bridge BusinessOS.
+  (daemon + événements, pas cron aveugle) + Scion dans le bridge BusinessOS
+  + §6 base de fondation inference-locale (Mimi → tokens, LoRA sur LFM3-Omni-2B,
+  Needle tool calling, GLiNER Decision multilingue, Fugu chef d'orchestre).
 - Règle : présence = daemon qui hiberne entre événements et reprend
   au checkpoint après un crash. Un cron 30 min n'est pas une présence.
