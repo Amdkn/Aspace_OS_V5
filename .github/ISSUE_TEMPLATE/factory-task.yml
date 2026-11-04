@@ -16,7 +16,7 @@ body:
     attributes:
       label: "Critères d'acceptation & Preuves (Verify Commands)"
       description: "Comment le Gate déterministe et les Reviewers prouvent que ça marche ?"
-      placeholder: "- [ ] pwsh factory/checks.ps1 passe à 100%\n- [ ] Capture ou test end-to-end joint"
+      placeholder: "- [ ] pwsh 02_Factory/checks.ps1 passe à 100%\n- [ ] Capture ou test end-to-end joint"
     validations:
       required: false
   - type: dropdown
