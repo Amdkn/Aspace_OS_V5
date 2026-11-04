@@ -32,19 +32,19 @@ jobs:
 
       - name: Verify DOX & WikiLLM Schema Integrity
         run: |
-          for f in AGENTS.md CLAUDE.md 00_Memoire/AGENTS.md 00_Memoire/bundle/index.md 00_Memoire/bundle/log.md factory/config.json; do
+          for f in AGENTS.md CLAUDE.md 00_Memoire/AGENTS.md 00_Memoire/bundle/index.md 00_Memoire/bundle/log.md 02_Factory/config.json; do
             if [ ! -f "$f" ]; then
               echo "::error::Missing required V5 Factory file: $f"
               exit 1
             fi
           done
-          python3 -m json.tool factory/config.json > /dev/null
+          python3 -m json.tool 02_Factory/config.json > /dev/null
           python3 -m json.tool .claude/settings.json > /dev/null
           python3 -m json.tool .mcp.json > /dev/null
 
       - name: Execute Level 5 Semantic Gate (AST Taint + CAS Holons + OKF v0.2)
         run: |
-          python3 factory/semantic_gate.py
+          python3 02_Factory/semantic_gate.py
 
       - name: Append-Only Log Verification (on PRs)
         if: github.event_name == 'pull_request'
