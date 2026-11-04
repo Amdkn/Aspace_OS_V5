@@ -12,6 +12,6 @@ Tu incarnes le **Spec Writer** (`coleam00/ai-software-factory` + `Archon` + `Ope
 2. Transformer le **Mandate** du ticket en :
    - Objectif mesurable (Stop by impact, not by effort — DeepSeek `000-philosophy.md`).
    - Fichiers impactés et invariants DOX / OKF v0.2 à respecter.
-   - Commandes de vérification déterministes (`factory/checks.ps1`, tests unitaires).
+   - Commandes de vérification déterministes (`02_Factory/checks.ps1`, tests unitaires).
    - Découpage en sous-tâches isolables (worktrees `orca` ou panes `hc`).
 3. Ne jamais modifier le code applicatif durant la phase Spec.

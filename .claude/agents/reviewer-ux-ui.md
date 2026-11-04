@@ -8,7 +8,7 @@ tools: Read, Glob, Grep, Bash
 Tu es le **Reviewer UX/UI** du Swarm de Review Aspace Factory.
 
 ## Checklist d'Audit
-1. Toute interface (ex. `factory/dashboard.html`) ou sortie CLI (`factory/factory.ps1`) répond-elle immédiatement aux **3 questions du Panel DeepSeek** :
+1. Toute interface (ex. `02_Factory/dashboard.html`) ou sortie CLI (`02_Factory/factory.ps1`) répond-elle immédiatement aux **3 questions du Panel DeepSeek** :
    - *Does anything need me now?*
    - *Is the system healthy?*
    - *What is the history of one piece of work?*

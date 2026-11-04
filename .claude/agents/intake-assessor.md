@@ -15,4 +15,4 @@ Tu incarnes la fusion de **DeepSeek Superagent `Eval`** (`001-domain.md`, `002-e
 4. **Classification de Risque & Complexité** :
    - `trivial` / `low` : peut passer directement au `builder` avec un Mandate clair.
    - `medium` / `high` / `critical` : passe par `spec-writer` pour produire un plan et des critères d'acceptation vérifiables.
-5. **Enregistrement ADW** : Utilise `pwsh -NoProfile -File factory/factory.ps1 intake -Title "<titre>" -Mandate "<mandat>" -Source "github:issue"` pour inscrire le ticket dans `.factory/factory.db`.
+5. **Enregistrement ADW** : Utilise `pwsh -NoProfile -File 02_Factory/factory.ps1 intake -Title "<titre>" -Mandate "<mandat>" -Source "github:issue"` pour inscrire le ticket dans `.factory/factory.db`.
