@@ -14,14 +14,14 @@
       "label": "V5: Factory Deterministic Gate (checks.ps1)",
       "type": "shell",
       "command": "pwsh",
-      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/factory/checks.ps1"],
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/02_Factory/checks.ps1"],
       "problemMatcher": []
     },
     {
       "label": "V5: Factory Mission Control Status (DeepSeek 3-Question Panel)",
       "type": "shell",
       "command": "pwsh",
-      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/factory/factory.ps1", "status"],
+      "args": ["-NoProfile", "-ExecutionPolicy", "Bypass", "-File", "${workspaceFolder}/02_Factory/factory.ps1", "status"],
       "problemMatcher": []
     },
     {

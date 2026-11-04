@@ -26,7 +26,7 @@ Le dépôt `Conway-Research/automaton` a été forké et refondu pour remplacer 
   - `A0_CEO_HOLON` & `ASPACE_3OS_FLOORS` (Floor 1 `tech-os` 13 Holons, Floor 2 `life-os` 43 Holons, Floor 3 `business-os` 137 Holons).
   - `upgradeTaskWithAmbition()` : élève toute tâche sur les 4 vecteurs (*Speed, Altitude, Depth, Range*).
   - `evaluateWithOutsideJudge()` : valide le livrable par le Juge Externe Indépendant (`S1-RICK`, `S3-YAZ`, `A1-BETH`, `A1-MORTY`, `B1-JERRY`).
-  - Ponts directs `runAspaceFactoryCommand()` (`factory/factory.ps1`) et `readAspaceWikiPage()` (`00_Memoire/`).
+  - Ponts directs `runAspaceFactoryCommand()` (`02_Factory/factory.ps1`) et `readAspaceWikiPage()` (`00_Memoire/`).
 - **5 Outils Natifs ajoutés à Automaton (`src/agent/aspace-holon-tools.ts` & `src/agent/tools.ts`)** :
   - `aspace_3os_holon_map`, `aspace_ambition_upgrade`, `aspace_outside_judge`, `aspace_factory_spine`, `aspace_wiki_memory`.
 - **Continuité 24/7 sans mort à 0 USDC (`src/heartbeat/tasks.ts`)** :
