@@ -4,7 +4,7 @@
  * Exposes the 3-OS Holon Topology (578 Holons: Tech OS 13, Life OS 43, Areas OS 522),
  * Loop Hierarchy (S0..S3), Dimensional Ladder (0D..10D), Sakana AI Fugu Inference,
  * the 4-Vector Ambition Engine ("Modo de Volar"), the Outside Judge evaluator,
- * Aspace Software Factory (`factory/factory.ps1`), and WikiLLM (`00_Memoire/`) directly to Automaton.
+ * Aspace Software Factory (`02_Factory/factory.ps1`), and WikiLLM (`00_Memoire/`) directly to Automaton.
  */
 
 import type { AutomatonTool } from "../types.ts";
@@ -153,7 +153,7 @@ export function createAspaceHolonTools(): AutomatonTool[] {
     {
       name: "aspace_factory_spine",
       description:
-        "Execute an Aspace Software Factory & Pi Durable Subagents operation via factory/factory.ps1 (status, gate, intake, subagents).",
+        "Execute an Aspace Software Factory & Pi Durable Subagents operation via 02_Factory/factory.ps1 (status, gate, intake, subagents).",
       category: "vm",
       riskLevel: "caution",
       parameters: {

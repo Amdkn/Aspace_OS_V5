@@ -74,17 +74,17 @@ export const ASPACE_3OS_FLOORS: readonly CubeFarmOsFloorSpec[] = [
     ],
     summary: 'L0 Tech OS · Aspace Software Factory, Pi Durable Subagents, DeepSeek Superagent, WikiLLM OKF v0.2 & Graphify (13 Holons)',
     mission:
-      'Maintain 100% deterministic gates (factory/checks.ps1 6/6, 27/27 CLI tools), crash-safe Pi Durable SQLite checkpoints (writerLock + modelPool failover), and R10 Canary Receipts across all 8 harnesses (dsh, pi, opencode, claude, codex, agy, hc, orca).',
+      'Maintain 100% deterministic gates (02_Factory/checks.ps1 6/6, 27/27 CLI tools), crash-safe Pi Durable SQLite checkpoints (writerLock + modelPool failover), and R10 Canary Receipts across all 8 harnesses (dsh, pi, opencode, claude, codex, agy, hc, orca).',
     qaBrief: [
       '- S1-Rick Gate: Verify zero proprietary cloud lock-in, zero plaintext secrets, and valid R10 receipt.',
-      '- S3-Yaz Gate: Run pwsh -NoProfile -File factory/checks.ps1 (all 6 deterministic gates must PASS).',
+      '- S3-Yaz Gate: Run pwsh -NoProfile -File 02_Factory/checks.ps1 (all 6 deterministic gates must PASS).',
       '- S3-Graham Gate: Confirm SQLite idempotency (requestId) and strictly append-only 00_Memoire/bundle/log.md.',
       '- Outside Judge (Modo de Volar Depth Step 4): All unit tests and TypeScript checks pass with <200ms local latency target.',
     ].join('\n'),
     seedIssues: [
       [
         'Enforce R10 Canary Receipt verification in S1-Rick & S3-Yaz pipeline',
-        'Bind Sheet_Rgt_CANARY_RECEIPTS and Sheet_Rgt_CANARY_EVENTS into factory/checks.ps1 and S3-Yaz LiDAR telemetry.',
+        'Bind Sheet_Rgt_CANARY_RECEIPTS and Sheet_Rgt_CANARY_EVENTS into 02_Factory/checks.ps1 and S3-Yaz LiDAR telemetry.',
       ],
       [
         'Pi Durable writerLock & multi-model failover across dsh, pi, claude, codex, opencode',

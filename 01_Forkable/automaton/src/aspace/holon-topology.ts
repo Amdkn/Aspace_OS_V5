@@ -349,7 +349,7 @@ export const ASPACE_3OS_FLOORS: readonly AspaceOsFloorSpec[] = [
         tier: "S3",
         os: "tech-os",
         floor: 1,
-        role: "LiDAR, Télémétrie locale, Gates déterministes factory/checks.ps1 & Canary Drift",
+        role: "LiDAR, Télémétrie locale, Gates déterministes 02_Factory/checks.ps1 & Canary Drift",
         frameworkOrCore: "Kernel Core",
         preferredHarness: "pi",
         writer: false,
@@ -834,7 +834,7 @@ export function upgradeTaskWithAmbition(
         "First concrete tool call executes immediately in the current turn (Picard Project bound).",
       bethVitalState: bethState,
       mortyEdgeCaseFallback:
-        "Native read-back after every write + deterministic rollback checkpoint in factory/factory.sqlite.",
+        "Native read-back after every write + deterministic rollback checkpoint in 02_Factory/factory.sqlite.",
       ld00ScaleElevation:
         "LD00 (Beth & Morty scale elevation in Areas OS) coordinates Life OS (L1) aligned with Tech OS (L0).",
       roryMiroFishWargame:
@@ -868,7 +868,7 @@ export function upgradeTaskWithAmbition(
           },
         ],
         systemicPreventionMechanism:
-          "Register deterministic regression check in factory/checks.ps1 + Rory MiroFish wargame scenario + append provenance trace to 00_Memoire/bundle/log.md and Graphify.",
+          "Register deterministic regression check in 02_Factory/checks.ps1 + Rory MiroFish wargame scenario + append provenance trace to 00_Memoire/bundle/log.md and Graphify.",
       },
       depth: {
         step1DomainExpertStandard:
@@ -878,12 +878,12 @@ export function upgradeTaskWithAmbition(
           "00_Memoire/raw/felix-rieseberg-ambition-2026.md",
           "00_Memoire/raw/sakana-fugu-10d-architecture-2026.md",
           "00_Memoire/bundle/index.md",
-          "factory/factory.sqlite",
+          "02_Factory/factory.sqlite",
         ],
         step3IndustryGradeInstruments: [
           "SQLite WAL state & Pi Durable checkpoints",
           "Sakana AI Fugu TRINITY + LFM3-Omni-2B (:9931) + FreeLLMAPI (:31415) + Zero-Telemetry codex-chatgpt-web",
-          "pwsh -NoProfile -File factory/checks.ps1 (6 deterministic gates)",
+          "pwsh -NoProfile -File 02_Factory/checks.ps1 (6 deterministic gates)",
           "Graphify knowledge graph (00_Memoire/.venv/Scripts/graphify.exe)",
         ],
         step4OutsideJudgeProtocol:
@@ -969,17 +969,17 @@ export function resolveAspaceRoot(explicitRoot?: string): string {
     return process.env.ASPACE_OS_ROOT;
   }
   const candidate = path.resolve(process.cwd(), "..", "..");
-  if (fs.existsSync(path.join(candidate, "factory", "factory.ps1"))) {
+  if (fs.existsSync(path.join(candidate, "02_Factory", "factory.ps1"))) {
     return candidate;
   }
-  if (fs.existsSync(path.join(process.cwd(), "factory", "factory.ps1"))) {
+  if (fs.existsSync(path.join(process.cwd(), "02_Factory", "factory.ps1"))) {
     return process.cwd();
   }
   return "C:\\Users\\amado\\Aspace OS V5";
 }
 
 /**
- * Execute an Aspace OS V5 factory.ps1 command from the CEO Digital Twin.
+ * Execute an Aspace OS V5 02_Factory/factory.ps1 command from the CEO Digital Twin.
  */
 export async function runAspaceFactoryCommand(
   args: string[],
@@ -987,7 +987,7 @@ export async function runAspaceFactoryCommand(
   timeoutMs = 15000,
 ): Promise<{ ok: boolean; stdout: string; stderr: string }> {
   const root = resolveAspaceRoot(aspaceRoot);
-  const scriptPath = path.join(root, "factory", "factory.ps1");
+  const scriptPath = path.join(root, "02_Factory", "factory.ps1");
   try {
     const { stdout, stderr } = await execFileAsync(
       "pwsh",
