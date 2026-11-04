@@ -64,3 +64,7 @@ if ($failures.Count -gt 0) {
 }
 Write-Host "=== GATE RESULT: PASS (Ready for Independent Reviewers) ===" -ForegroundColor Green
 exit 0
+
+
+# Level 5 Semantic Gate Integration
+python3 factory/semantic_gate.py
