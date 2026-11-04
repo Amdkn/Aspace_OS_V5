@@ -15,7 +15,7 @@ permissions:
 
 jobs:
   factory-gate:
-    name: "Deterministic Gate (WikiLLM + DOX + Secrets + Syntax)"
+    name: "Deterministic Gate (5D Semantic AST + CAS Holons + 7R + OKF)"
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -42,24 +42,14 @@ jobs:
           python3 -m json.tool .claude/settings.json > /dev/null
           python3 -m json.tool .mcp.json > /dev/null
 
-      - name: Verify OKF v0.2 Concept Frontmatter
+      - name: Execute Level 5 Semantic Gate (AST Taint + CAS Holons + OKF v0.2)
         run: |
-          for c in 00_Memoire/bundle/concepts/*.md; do
-            head -n 1 "$c" | grep -q "^---$" || { echo "::error::Missing YAML frontmatter in $c"; exit 1; }
-            grep -q "^type:" "$c" || { echo "::error::Missing required OKF 'type:' key in $c"; exit 1; }
-          done
-
-      - name: Secret & Credential Leak Guard
-        run: |
-          if git grep -I -E '(ghp_[A-Za-z0-9]{30,}|sk-ant-[A-Za-z0-9\-_]{20,}|AIza[0-9A-Za-z\-_]{35}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY)' -- ':!00_Memoire/ledger.jsonl' ':!.github/workflows/*'; then
-            echo "::error::Potential secret or private key detected in tracked files!"
-            exit 1
-          fi
+          python3 factory/semantic_gate.py
 
       - name: Append-Only Log Verification (on PRs)
         if: github.event_name == 'pull_request'
         run: |
-          DEL=$(git diff "origin/${{ github.base_ref }}...HEAD" -- 00_Memoire/bundle/log.md | grep -E '^-[^-]' | wc -l)
+          DEL=$(git diff "origin/${{ github.base_ref }}...HEAD" -- 00_Memoire/bundle/log.md | grep -E '^-([^-]|$)' | wc -l)
           if [ "$DEL" -gt 0 ]; then
             echo "::error::00_Memoire/bundle/log.md is APPEND-ONLY! Detected $DEL deleted/modified lines."
             exit 1
