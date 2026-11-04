@@ -47,10 +47,10 @@ jobs:
           gh issue edit "$ISSUE_NUMBER" --add-label "factory:claimed" || true
           gh issue comment "$ISSUE_NUMBER" --body "This is by an automated agent, not a human.
 
-          **Aspace Factory — Ticket Claimed** (`#$ISSUE_NUMBER`)
-          - **Stage**: `working / queued`
-          - **Pipeline**: `Intake → Spec → Builder (Worktree) → Gate (02_Factory/checks.ps1) → 4 Reviewers → Approver`
-          - Exécution locale/hybride prête via `pwsh 02_Factory/factory.ps1 run --issue $ISSUE_NUMBER`."
+**Aspace Factory — Ticket Claimed** (`#$ISSUE_NUMBER`)
+- **Stage**: `working / queued`
+- **Pipeline**: `Intake → Spec → Builder (Worktree) → Gate (02_Factory/checks.ps1) → 4 Reviewers → Approver`
+- Exécution locale/hybride prête via `pwsh 02_Factory/factory.ps1 run --issue $ISSUE_NUMBER`."
 
   auto-merge-approved:
     name: "Approver Auto-Merge (Low/Medium Risk PRs)"
