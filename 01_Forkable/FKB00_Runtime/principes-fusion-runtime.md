@@ -121,6 +121,23 @@ Apport à Automaton : déjà en partie dans le contrat V5 (checkpoints
 SQLite, requestId, writerLock). Pi Durable en est la forme aboutie :
 la reprise n'est pas une fonction, c'est la structure.
 
+### OpenRig (mvschwarz)
+Principe : « A harness wraps a model. A rig wraps your harnesses. »
+- Organiser les agents de codage en équipes persistantes plutôt qu'en une pile
+  désordonnée de sessions terminales. Définition déclarative d'équipes en YAML
+  (`rigs.yaml` avec `seats`, rôles `lead`, `worker`, `reviewer`, `kernel operator`).
+- Coordonne Claude Code, Codex, Pi et OpenCode dans le même espace de travail,
+  managés comme un système unique persistant.
+- Daemon local en tâche de fond + TUI interactive pour observer l'arbre des agents,
+  l'état des sièges, la consommation de contexte et les métriques d'exécution.
+- Intégration native avec Herdr (`hc`) et tmux : s'appuie directement sur le cockpit
+  de terminaux de l'OS pour orchestrer les sessions sans réinventer de multiplexeur.
+- Adresses persistantes des contextes et des tâches pour les passages de relais
+  sans perte d'information.
+Apport à Automaton & Infinity : le corps opérationnel d'équipe. Automaton commande
+en 7D, Infinity gère la concurrence et l'hibernation réactive, OpenRig équipe
+et pilote les harnais réels de dev dans des sièges assignés. Voir `tryptyque-runtime-core-fusion.md`.
+
 ### Hermes Agent (Nous Research)
 Principe : la boucle d'apprentissage fermée.
 - Le seul agent avec une boucle d'apprentissage intégrée : il crée
@@ -237,7 +254,21 @@ qui génère des phrases. Ils passent par des décisions typées,
 calibrées, en millisecondes. Le LLM reste le System 2 :
 raisonnement lent, strings, création.
 
-## 3. La fusion : 7 règles du Runtime vivant
+## 2.bis. Le Triptyque Core Fusion : Automaton + Infinity + OpenRig
+
+Pour que le Runtime vive sans dérive, trois couches forment un triptyque indissociable
+(documenté en détail dans `tryptyque-runtime-core-fusion.md`) :
+1. **Automaton (Conway Research)** = **L'Âme & La Doctrine** (Posture 7D, CEO 24/7
+   A0 Amadeus, Constitution, Sanctuarisation E-Myth Beth/Morty/Rick, Mémoire 5-tiers).
+2. **Infinity (Hydro Project)** = **Le Système Nerveux & L'Échelle** (Pure Data Between Turns,
+   hibernation à 0 coût pour héberger les 578 Holons sans saturer la RAM,
+   Reactive Agent Protocol pour l'outillage asynchrone, sandboxes Infinity Code).
+3. **OpenRig (mvschwarz)** = **Le Corps Opérationnel & L'Atelier Multi-Harness**
+   (« A harness wraps a model. A rig wraps your harnesses », Teams déclaratives
+   en YAML, orchestration conjointe de Claude Code, Codex, Pi et OpenCode
+   dans un workspace persistant branché sur le cockpit Herdr `hc`).
+
+## 3. La fusion : 8 règles du Runtime vivant
 
 R1. Présence = daemon + événements, pas cron aveugle.
 Le heartbeat est une checklist avec décision (OpenClaw, SuperAgent).
@@ -278,6 +309,12 @@ Le noyau perpétuel de A0 évolue en Fugu : il orchestre de plus gros
 modèles via Needle, LFM, GLiNER + décisions et scripts déterministes.
 Base : la pile inference-locale (§6). Fugu n'orchestre pas dans le vide,
 il orchestre par-dessus une fondation locale qui décide déjà.
+
+R8. Rigs unifiés pour les équipes de développement (OpenRig + Herdr).
+Définition des équipes en YAML, coordination des harnais de code hétérogènes
+(Claude Code pour l'architecture, Codex pour l'exécution massive, Pi pour la durabilité),
+exécution supervisée dans Herdr (`hc`), zéro session orpheline. Les 578 Holons
+s'appuient sur des rigs spécialisés selon l'étage (Tech OS, Life OS, Areas OS).
 
 ## 4. Scion dans le bridge BusinessOS : l'évolution concrète
 
@@ -439,6 +476,7 @@ de la pile locale. Il orchestre trois couches d'inférence :
 - `01_Forkable/FKB00_Runtime/inference-locale/` : index, mimi-lora-lfm3-omni.md,
   needle-gliner-edge.md (synthèses préservées, base de fondation §6).
 - https://github.com/hydro-project/infinity
+- https://github.com/mvschwarz/openrig
 - https://www.anthropic.com/research/redesigning-source-control
 - https://github.com/deepseek-ai/dsh-superagent-prototype
 - https://github.com/deepseek-ai/deepseek-harness

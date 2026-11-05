@@ -7,7 +7,7 @@ Les dossiers vendorisés existants NE SONT PAS déplacés (voir Règle de placem
 
 | Catégorie | Sous-catégories | Contenu | Statut |
 |---|---|---|---|
-| FKB00_Runtime | Automaton, Harnesses, Agents-Durables, Inference-Locale, Noyau-Perpétuel-A0 | Runtime du jumeau + inférence locale | Index créé, automaton mappé |
+| FKB00_Runtime | Triptyque Core (Automaton, Infinity, OpenRig), Harnesses, Agents-Durables, Inference-Locale | Runtime vivant du jumeau + moteur d'hibernation + rigs de dév | Index créé, Automaton mappé, Infinity et OpenRig clonés |
 | FKB01_Inference | Codex-GPT-Web, FreeLLMAPI, Fusion | Inférence souveraine multi-plateformes | Index créé, codex-web mappé |
 | FKB02_Video_SaaS | Repos-8, Fusion-8 | 8 repos vidéo + fusion vers 03_Videaste | Index créé, repos indexés seulement |
 | FKB03_3DWorlds | Cubefarm, Agent-Office, Fusion | Mondes 3D | Index créé, cubefarm mappé, agent-office à cloner |
@@ -23,8 +23,8 @@ Les dossiers vendorisés existants NE SONT PAS déplacés (voir Règle de placem
 
 ## Clonage sur PC
 
-- `pwsh 01_Forkable/clone-forkables.ps1` clone les 7 forks vers leurs destinations FKB :
-  agent-office → FKB03, api-anything / CLI-Anything / rea → FKB04,
+- `pwsh 01_Forkable/clone-forkables.ps1` clone les 9 forks vers leurs destinations FKB :
+  infinity et openrig → FKB00, agent-office → FKB03, api-anything / CLI-Anything / rea → FKB04,
   needle → FKB00 inference-locale, elephant-goldfish-model et MiroFish inchangés
   (non assignés par cet ordre).
 - `.gitignore` mis à jour avec les nouvelles destinations.

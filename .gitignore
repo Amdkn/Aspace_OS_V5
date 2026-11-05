@@ -15,6 +15,8 @@ graphify-out/cache/
 # Aspace V5 vendoring: historique upstream des 3 forks modifies conserve localement, non versionne
 01_Forkable/*/.git.upstream/
 # 7 clones non modifies: re-clonables via 01_Forkable/clone-forkables.ps1
+01_Forkable/FKB00_Runtime/infinity/
+01_Forkable/FKB00_Runtime/openrig/
 01_Forkable/FKB03_3DWorlds/agent-office/
 01_Forkable/FKB04_Tools_Anything/api-anything/
 01_Forkable/FKB04_Tools_Anything/CLI-Anything/
