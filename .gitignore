@@ -23,6 +23,12 @@ graphify-out/cache/
 01_Forkable/elephant-goldfish-model/
 01_Forkable/MiroFish/
 01_Forkable/FKB00_Runtime/inference-locale/needle/
+01_Forkable/FKB00_Runtime/inference-locale/moshi/
+01_Forkable/FKB00_Runtime/inference-locale/LoRA/
+01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide/
+01_Forkable/FKB00_Runtime/inference-locale/mimi/
+01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B/
+01_Forkable/FKB02_Video_SaaS/*/
 01_Forkable/FKB04_Tools_Anything/rea/
 
 02_Factory/factory.sqlite*
