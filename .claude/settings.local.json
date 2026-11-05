@@ -7,5 +7,13 @@
     ],
     "defaultMode": "bypassPermissions"
   },
-  "skipDangerousModePermissionPrompt": true
+  "skipDangerousModePermissionPrompt": true,
+  "enabledMcpjsonServers": [
+    "memory",
+    "desktop-commander",
+    "playwright",
+    "chrome-devtools",
+    "context7",
+    "jules"
+  ]
 }
