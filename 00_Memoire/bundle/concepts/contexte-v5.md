@@ -1,4 +1,4 @@
----
+﻿---
 type: Project Context
 title: Contexte courant de V5
 description: État évolutif de Aspace OS V5, décisions durables et préférences.
@@ -9,7 +9,7 @@ status: active
 
 # Projet
 - Dossier : `C:\Users\amado\Aspace OS V5`. Multi-Harnesses Omnipotent & Antifragile (`claude`, `codex`, `opencode`, `pi` 1.5.0, `dsh`, `dsh-superagent`, `agy`, `hc`, `orca`).
-- Objectif actif : autonomie complète « out of loop » 24/7 orchestrée par le Jumeau Numérique CEO **A0 Amadeus** (`aspace:a0:amadeus` dans `01_Forkable/automaton`) supervisant les **3 Étages OS Holoniques** (`Tech OS`, `Life OS 2026`, `Areas OS` = 578 Holons) dans **Cube Farm** (`01_Forkable/cubefarm`).
+- Objectif actif : autonomie complète « out of loop » 24/7 orchestrée par le Jumeau Numérique CEO **A0 Amadeus** (`aspace:a0:amadeus` dans `01_Forkable/FKB00_Runtime/automaton`) supervisant les **3 Étages OS Holoniques** (`Tech OS`, `Life OS 2026`, `Areas OS` = 578 Holons) dans **Cube Farm** (`01_Forkable/FKB03_3DWorlds/cubefarm`).
 
 # Décisions durables
 - Bypass permissions par défaut sur l'ensemble des 8 harnesses.

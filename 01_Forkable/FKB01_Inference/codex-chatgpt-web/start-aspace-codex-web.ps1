@@ -1,6 +1,6 @@
-<#
+﻿<#
 .SYNOPSIS
-    Lance le fork souverain Aspace OS V5 de Codex Web GPT (`01_Forkable/codex-chatgpt-web`)
+    Lance le fork souverain Aspace OS V5 de Codex Web GPT (`01_Forkable/FKB01_Inference/codex-chatgpt-web`)
     avec le bouclier Zero-Telemetry (`aspace-telemetry-shield.cjs`), phone-home GitHub désactivé,
     et support Multi-Plateformes (ChatGPT, Gemini, Muse, Claude, DeepSeek, Z.ai, Qwen, Sakana Fugu, LFM3 :9931, FreeLLMAPI :31415).
 #>

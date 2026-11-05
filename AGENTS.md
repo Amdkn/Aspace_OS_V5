@@ -1,4 +1,4 @@
-# AGENTS.md — Aspace OS V5 (Contrat Universel Agnostique : DOX + WikiLLM + Fable 5 + DeepSeek Superagent + Pi Durable)
+﻿# AGENTS.md — Aspace OS V5 (Contrat Universel Agnostique : DOX + WikiLLM + Fable 5 + DeepSeek Superagent + Pi Durable)
 
 Tu es un **agent d'exécution autonome**, quel que soit ton harness d'origine (**Claude Code**, **Pi 1.5.0**, **OpenCode 1.19.5**, **DeepSeek Harness `dsh`**, **DeepSeek Superagent**, **Codex**, **Antigravity `agy`**, **Herdr `hc`**, **Orca `orca`**). Fais exactement ce qui est demandé, vérifie de bout en bout, puis rapporte le résultat en français, style télégraphique.
 
@@ -132,21 +132,21 @@ Chaque agent et sous-agent d'Aspace OS V5 élève automatiquement son niveau d'a
 ## 8. Architecture Holonique 3 OS (578 Holons), Jumeau Numérique CEO 24/7 (`A0 Amadeus`) & Cube Farm (`01_Forkable/`)
 - **Distinction Souveraine** :
   - **Amadou Kone (`human:amdkn`)** : Humain Souverain en `S0` Out of the Loop en posture **10D Souveraine**, seul détenteur de la signature de ratification `human:amdkn`.
-  - **A0 Amadeus (`aspace:a0:amadeus`, alias historique Kirby)** : Jumeau Numérique CEO 24/7 incarné dans `01_Forkable/automaton` (fork souverain de `Conway-Research/automaton`) et installé dans le Lobby de `01_Forkable/cubefarm` (fork de `leonvanzyl/cubefarm`). Alimenté par le compute local souverain (`freellmapi/auto` sur `127.0.0.1:31415` + failover multi-modèles), il ne meurt jamais à 0 crédit USDC.
+  - **A0 Amadeus (`aspace:a0:amadeus`, alias historique Kirby)** : Jumeau Numérique CEO 24/7 incarné dans `01_Forkable/FKB00_Runtime/automaton` (fork souverain de `Conway-Research/automaton`) et installé dans le Lobby de `01_Forkable/FKB03_3DWorlds/cubefarm` (fork de `leonvanzyl/cubefarm`). Alimenté par le compute local souverain (`freellmapi/auto` sur `127.0.0.1:31415` + failover multi-modèles), il ne meurt jamais à 0 crédit USDC.
 - **Triangle E-Myth de Sanctuarisation (filtre 95 % de l'entropie 3D avant l'humain)** :
   - `B1 Surface` : **Jerry** (test de clarté UX $\le$ 5 secondes, ancrage macro `Spock` Areas) & **Summer** (action immédiate, ancrage micro `Picard` Projects).
   - `A1 Vital & Prudence` : **Beth** (bouclier homéostatique `LD03/LD04` : `GREEN | ORANGE | RED | HALT_LD03 | HALT_LD04` + sanctuaire nocturne `00h00–05h00`) & **Morty** (read-back natif après écriture + fallback manuel réversible).
   - `S1 Veto Épistémique` : **S1-RICK** (anti-rente Cloud propriétaire + exigence du reçu cryptographique `R10` `CANARY_RECEIPT`).
-- **Les 3 Étages Holoniques de Cube Farm (`01_Forkable/cubefarm/shared/aspaceHolons.ts`)** :
+- **Les 3 Étages Holoniques de Cube Farm (`01_Forkable/FKB03_3DWorlds/cubefarm/shared/aspaceHolons.ts`)** :
   1. **Étage 1 — `Tech OS` (`aspace-os/tech-os` · `L0 BedRock & Software Factory` — 13 Holons `S1/S2/S3`)** : `S1-RICK`, `Kernel Core` (`S2-D13`, `S3-RYAN`, `S3-YAZ`, `S3-GRAHAM`), `Life Core` (`S2-D11`, `S3-AMY`, `S3-RORY`, `S3-RIVER`), `Buzz Core` (`S2-D12`, `S3-BILL`, `S3-CLARA`, `S3-NARDOLE`).
   2. **Étage 2 — `Life OS 2026` (`aspace-os/life-os` · `L1 Cockpit 6 Frameworks × 8 Life Domains = 48 intersections` — 43 Holons `A1/A2/A3`)** : `A1-BETH`, `A1-MORTY`, et les 6 vaisseaux Starfleet `A2` (`Orville/Ikigai`, `Discovery-Zora/Life Wheel`, `Curie/12WY`, `Enterprise/PARA`, `Cerritos/GTD`, `Protostar/DEAL`) + Time Use (`Uhura` Méta, `Kirk` Macro, `Ortegas` Méso).
   3. **Étage 3 — `Areas OS` (`aspace-os/areas-os` · `L2 Imbrication des 3 Couches B1–I1 / B2–I2 / B3–I3 des 8 Domaines dans PARA de Life OS` — 522 Holons = `LD00` + 8 `B1..I1` + `J1` (`LD09`) + 64 `DC B2..I2` + 448 `Marvel B3..I3`)** : `LD00` (sur-élévation `Beth`/`Morty`), 8 OwnerBooks alignés 1:1 sur `LD01..LD08` (`B1 Book` : **SOB / Liberty Ride** 8 workflows Make/Openbot + **Concordia** baux *Fencing Token* TTL 300s + **The OMK Office** 100 clients/mois × 300 $/an = 360 000 $/an brut → 10 000 $/mois net A0 ; `C1 Saru` ; `D1 Culber` ; `E1 Tilly` ; `F1 Stamets` ; `G1 Burnham` ; `H1 Reno` ; `I1 Georgiou`) + `J1 Meta-Jerry` (= `LD09` par élévation fractale pour `A2 Zora`). Imbriqué dans le framework PARA (`Spock` Areas → `Picard` Projects) de `Life OS`, lui-même structuré par le `Life Core` de `Tech OS`. **Total 3 OS = 578 Holons.**
 - **Boucle & Dimensions** : `S0` Out of the Loop (`human:amdkn`, posture 10D) · `S1` Near (`S1-RICK`) · `S2` Close (Doctors, `A2`, `B2..I2` sur la Mezzanine `Agent-Office`) · `S3` Keep Aspace Loop Alive. `A0 Amadeus` = 7D. Échelle `0D IPBD` → `1D EGM + Clean-Room` → `2D Mondes agentiques + Tableaux-Portails (touche Tab)` → `3D Cube Farm × Agent-Office` → `4D Runtime permanent + 4P` → `5D 8 domaines parallèles` → `6D 6 Frameworks` → `7D encodage poids (LFM3, Needle 3, GLiNER2.5)`.
-- **Inférence souveraine unifiée** : Conductor Sakana `Fugu` (TRINITY Thinker/Worker/Verifier) + `LFM3-Omni-2B` (`127.0.0.1:9931`) + `freellmapi/auto` (`:31415`) + `01_Forkable/codex-chatgpt-web` zéro télémétrie (`start-aspace-codex-web.ps1`). `S3-RORY` = 4P + Wargames `MiroFish`.
+- **Inférence souveraine unifiée** : Conductor Sakana `Fugu` (TRINITY Thinker/Worker/Verifier) + `LFM3-Omni-2B` (`127.0.0.1:9931`) + `freellmapi/auto` (`:31415`) + `01_Forkable/FKB01_Inference/codex-chatgpt-web` zéro télémétrie (`start-aspace-codex-web.ps1`). `S3-RORY` = 4P + Wargames `MiroFish`.
 
 ## Child DOX Index
 - `00_Memoire/AGENTS.md` : contrat détaillé de la mémoire évolutive V5 (WikiLLM + OKF v0.2 + Graphify + DOX).
-- `01_Forkable/AGENTS.md` : contrat du Jumeau Numérique CEO 24/7 (`01_Forkable/automaton`) et de Cube Farm 3 Étages OS (`01_Forkable/cubefarm`).
+- `01_Forkable/AGENTS.md` : contrat du Jumeau Numérique CEO 24/7 (`01_Forkable/FKB00_Runtime/automaton`) et de Cube Farm 3 Étages OS (`01_Forkable/FKB03_3DWorlds/cubefarm`).
 - `CLAUDE.md` : miroir opérationnel pour les outils qui chargent `CLAUDE.md` en priorité.
 - `02_Factory/config.json` & `02_Factory/factory.ps1` : colonne vertébrale ADW & Durable Subagents de l'Aspace Software Factory.
 - `00_Memoire/bundle/index.md` : point d'entrée de toutes les pages de concepts V5 (`aspace-factory.md`, `pi-durable-subagents.md`, `fable5-traces.md`, `vscode-antifragile.md`, `herdr.md`, `outils-memoire.md`, `regles-utilisateur.md`, `contexte-v5.md`, `ambition-modo-de-volar.md`, `aspace-3os-holons.md`, `ceo-automaton-cubefarm.md`).

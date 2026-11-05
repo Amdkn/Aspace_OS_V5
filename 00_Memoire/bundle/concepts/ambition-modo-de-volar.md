@@ -1,4 +1,4 @@
----
+﻿---
 type: concept
 id: ambition-modo-de-volar
 title: "Protocole d'Ambition « Modo de Volar » (Felix Rieseberg — 4 Vecteurs & Outside Judge)"
@@ -7,8 +7,8 @@ updated: "2026-11-03"
 sources:
   - "../../raw/felix-rieseberg-ambition-2026.md"
   - "../../../AGENTS.md"
-  - "../../../01_Forkable/automaton/src/aspace/holon-topology.ts"
-  - "../../../01_Forkable/cubefarm/shared/aspaceHolons.ts"
+  - "../../../01_Forkable/FKB00_Runtime/automaton/src/aspace/holon-topology.ts"
+  - "../../../01_Forkable/FKB03_3DWorlds/cubefarm/shared/aspaceHolons.ts"
 tags:
   - ambition
   - modo-de-volar

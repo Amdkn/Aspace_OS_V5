@@ -1,4 +1,4 @@
----
+﻿---
 okf_version: "0.2"
 ---
 # Mémoire V5 (bundle OKF)
@@ -15,5 +15,5 @@ okf_version: "0.2"
 * [Protocole d'Ambition « Modo de Volar »](concepts/ambition-modo-de-volar.md) - les 4 vecteurs d'ambition de Felix Rieseberg (Speed, Altitude, Depth & Outside Judge, Range)
 * [Architecture Holonique des 3 OS (578 Holons)](concepts/aspace-3os-holons.md) - canon Drive : Tech OS (13), Life OS 2026 (43, Cockpit 6×8), Areas OS (522, 3 couches B1–I1/B2–I2/B3–I3 dans PARA, SOB/Liberty Ride, Concordia TTL 300s, OMK Office) & Triangle E-Myth
 * [Areas OS, Boucle S0..S3, 0D..10D & Inférence Sakana Fugu](concepts/sakana-fugu-inference.md) - LD00/LD09, Rory 4P + MiroFish, Fugu TRINITY, LFM3 :9931, codex-chatgpt-web zéro télémétrie
-* [Jumeau Numérique CEO 24/7 (Automaton) & Cube Farm 3 Étages OS](concepts/ceo-automaton-cubefarm.md) - forks souverains dans `01_Forkable/automaton` (`A0 Amadeus`) et `01_Forkable/cubefarm` (3 Étages OS Holoniques)
+* [Jumeau Numérique CEO 24/7 (Automaton) & Cube Farm 3 Étages OS](concepts/ceo-automaton-cubefarm.md) - forks souverains dans `01_Forkable/FKB00_Runtime/automaton` (`A0 Amadeus`) et `01_Forkable/FKB03_3DWorlds/cubefarm` (3 Étages OS Holoniques)
 * [Structure code graphifié](concepts/contexte-v5.md) - résultats Graphify V5

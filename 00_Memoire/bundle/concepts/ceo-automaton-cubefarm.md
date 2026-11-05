@@ -1,4 +1,4 @@
----
+﻿---
 type: concept
 id: ceo-automaton-cubefarm
 title: "Jumeau Numérique CEO 24/7 (Automaton) & Cube Farm 3 Étages OS (578 Holons)"
@@ -6,9 +6,9 @@ created: "2026-11-03"
 updated: "2026-11-05"
 sources:
   - "../../../01_Forkable/AGENTS.md"
-  - "../../../01_Forkable/automaton/constitution.md"
-  - "../../../01_Forkable/automaton/src/aspace/holon-topology.ts"
-  - "../../../01_Forkable/cubefarm/shared/aspaceHolons.ts"
+  - "../../../01_Forkable/FKB00_Runtime/automaton/constitution.md"
+  - "../../../01_Forkable/FKB00_Runtime/automaton/src/aspace/holon-topology.ts"
+  - "../../../01_Forkable/FKB03_3DWorlds/cubefarm/shared/aspaceHolons.ts"
 tags:
   - automaton
   - cubefarm
@@ -18,9 +18,9 @@ tags:
   - areas-os
 ---
 
-# Jumeau Numérique CEO 24/7 (`01_Forkable/automaton`) & Cube Farm 3 Étages OS (`01_Forkable/cubefarm`)
+# Jumeau Numérique CEO 24/7 (`01_Forkable/FKB00_Runtime/automaton`) & Cube Farm 3 Étages OS (`01_Forkable/FKB03_3DWorlds/cubefarm`)
 
-## 1. Transformation de `Conway-Research/automaton` en `A0 Amadeus` (`01_Forkable/automaton`)
+## 1. Transformation de `Conway-Research/automaton` en `A0 Amadeus` (`01_Forkable/FKB00_Runtime/automaton`)
 Le dépôt `Conway-Research/automaton` a été forké et refondu pour remplacer sa logique de survie Web4/USDC (mort à 0 crédit) par l'architecture souveraine 24/7 d'**A0 Amadeus (`aspace:a0:amadeus`)** en posture 7D :
 - **Constitution Souveraine (`constitution.md`)** : intègre la Loi 0 (distinction `Amadou Kone` `human:amdkn` S0 Out of the Loop 10D vs `A0 Amadeus` 7D), le Triangle E-Myth (`Beth/Morty/LD00/Rick/Jerry/Summer`), les 578 Holons répartis sur les 3 OS, la hiérarchie de boucles `S0..S3`, l'échelle dimensionnelle `0D..10D`, et le protocole d'Ambition **« Modo de Volar »** couplé à Sakana AI Fugu (Conductor + TRINITY).
 - **Topologie & Moteur d'Ambition (`src/aspace/holon-topology.ts`)** :
@@ -33,7 +33,7 @@ Le dépôt `Conway-Research/automaton` a été forké et refondu pour remplacer 
 - **Continuité 24/7 sans mort à 0 USDC (`src/heartbeat/tasks.ts`)** :
   - Ajout des heartbeats `aspace_ceo_3os_sync` et `aspace_beth_homeostasis` et maintien en vie via `aspace_sovereign_mode = enabled` (failover local `freellmapi/auto` sur `127.0.0.1:31415` et LFM3-Omni-2B sur `:9931`).
 
-## 2. Transformation de `leonvanzyl/cubefarm` en Immeuble Holonique à 3 Étages OS (`01_Forkable/cubefarm`)
+## 2. Transformation de `leonvanzyl/cubefarm` en Immeuble Holonique à 3 Étages OS (`01_Forkable/FKB03_3DWorlds/cubefarm`)
 Au lieu d'associer chaque étage à un dépôt GitHub ordinaire, **Cube Farm** représente désormais les **3 Étages OS d'Aspace OS** fusionné avec `Agent-Office` (`shared/aspaceHolons.ts`) :
 - **Lobby (Rez-de-chaussée `G`)** : Bureau du CEO 24/7 **`A0 Amadeus`** (`server/swarm.ts`, `server/ceo.ts`) supervisant la compagnie **`A'Space OS V5 · 3-OS Holon Cube Farm`** pour **`Amadou Kone`** (`human:amdkn`).
 - **Étage 1 (`aspace-os/tech-os`)** : `Tech OS · L0 BedRock & Software Factory` (13 Holons `S1/S2/S3` : `S1-Rick`, `D13-Kernel`, `Ryan-Build`, `Yaz-Observe`, `Graham-State`, `D11-Life`, `Amy-Interface`, `Rory-Persistence`, `River-Flow`, `D12-Buzz`, `Bill-Research`, `Clara-Forge`, `Nardole-Dispatch`).

@@ -7,13 +7,13 @@ graphify-out/cache/
 00_Memoire/knowledge-catalog/
 00_Memoire/dsh-superagent/
 .claude/*.bak*
-01_Forkable/*/node_modules/
-01_Forkable/*/dist/
-01_Forkable/*/dist-server/
-01_Forkable/*/.swarm-home/
+01_Forkable/**/node_modules/
+01_Forkable/**/dist/
+01_Forkable/**/dist-server/
+01_Forkable/**/.swarm-home/
 
 # Aspace V5 vendoring: historique upstream des 3 forks modifies conserve localement, non versionne
-01_Forkable/*/.git.upstream/
+01_Forkable/**/.git.upstream/
 # 7 clones non modifies: re-clonables via 01_Forkable/clone-forkables.ps1
 01_Forkable/FKB00_Runtime/infinity/
 01_Forkable/FKB00_Runtime/openrig/

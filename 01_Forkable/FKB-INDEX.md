@@ -13,13 +13,20 @@ Les dossiers vendorisés existants NE SONT PAS déplacés (voir Règle de placem
 | FKB03_3DWorlds | Cubefarm, Agent-Office, Fusion | Mondes 3D | Index créé, cubefarm mappé, agent-office à cloner |
 | FKB04_Tools_Anything | API-Anything, CLI-Anything, REA, Optimisation | Couche d'optimisation universelle | Index créé, 3 repos à cloner |
 
-## Règle de placement (décision consignée 2026-11-04)
+## Règle de placement (décision alignée 2026-11-05)
 
-- `automaton`, `cubefarm`, `codex-chatgpt-web` restent à `01_Forkable/` racine.
-- Raison : 90+ références chemin dans le repo (AGENTS.md, concepts, HANDOFF, holon-topology.ts).
-  Un déplacement silencieux les rendrait toutes obsolètes sans gain.
-- Les index FKB les mappent (lien logique, pas déplacement physique).
-- Un déplacement physique = refactor séparé, avec mise à jour des références, pas ici.
+- `automaton` est physiquement placé dans `01_Forkable/FKB00_Runtime/automaton/` (aux côtés d'Infinity, OpenRig et Needle).
+- `cubefarm` est physiquement placé dans `01_Forkable/FKB03_3DWorlds/cubefarm/` (aux côtés d'Agent-Office).
+- `codex-chatgpt-web` est physiquement placé dans `01_Forkable/FKB01_Inference/codex-chatgpt-web/` (façade zéro-télémétrie).
+- Toutes les références de chemins (AGENTS.md, concepts WikiLLM, HANDOFF, tests et topologie) ont été mises à jour de façon cohérente.
+
+
+
+
+
+
+
+
 
 ## Clonage sur PC
 

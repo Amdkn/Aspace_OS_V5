@@ -1,4 +1,4 @@
----
+﻿---
 type: concept
 id: aspace-3os-holons
 title: "Architecture Holonique des 3 OS d'Aspace OS (578 Holons, 20 IPBDs & Triangle E-Myth)"
@@ -7,8 +7,8 @@ updated: "2026-11-05"
 sources:
   - "../../raw/aspace-os-drive-canon-2026.md"
   - "../../raw/sakana-fugu-10d-architecture-2026.md"
-  - "../../../01_Forkable/automaton/src/aspace/holon-topology.ts"
-  - "../../../01_Forkable/cubefarm/shared/aspaceHolons.ts"
+  - "../../../01_Forkable/FKB00_Runtime/automaton/src/aspace/holon-topology.ts"
+  - "../../../01_Forkable/FKB03_3DWorlds/cubefarm/shared/aspaceHolons.ts"
 tags:
   - holons
   - tech-os

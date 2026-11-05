@@ -1,4 +1,4 @@
-# Architecture Souveraine A'Space OS V5 — Boucle S0..S3, Échelle 0D..10D, Areas OS (522 Holons), Rory × MiroFish & Orchestrateur Sakana Fugu / LFM3 / Codex-ChatGPT-Web (Zéro Télémétrie)
+﻿# Architecture Souveraine A'Space OS V5 — Boucle S0..S3, Échelle 0D..10D, Areas OS (522 Holons), Rory × MiroFish & Orchestrateur Sakana Fugu / LFM3 / Codex-ChatGPT-Web (Zéro Télémétrie)
 
 Source brute immuable consolidant les directives architecturales d'**Amadou Kone (`human:amdkn`)** du 2026-11-04.
 
@@ -22,9 +22,9 @@ Source brute immuable consolidant les directives architecturales d'**Amadou Kone
    - **Expérience 2 (Village d'Agents de Tristen O'Brien — 67 % des tâches déléguées)** : 7 étapes (1. Carte + maisons par fonction + Mairie ; 2. Chef de cabinet *Matt* qui suit le directeur partout ; 3. 7 directeurs spécialisés + dossiers + assistants ; 4. Zones de marche & collisions ; 5. Connexion aux vrais outils Gmail/Calendar/PDF ; 6. Réunions à la Mairie ; 7. Garde-fous Human-in-the-loop : brouillons email, zéro dépense sans validation).
    - **Expérience 3 (Salle de Développement de Spellthorn — Tableaux-Portails 2D/3D)** : salle dédiée où chaque projet (et chaque projet `L2 Areas OS` ou projet client) est représenté par un **tableau / cadre mural interactif** ; appuyer sur `Tab` dans Cube Farm bascule entre la vue 3D et la vue de dessus 2D regroupant les tableaux, et entrer dans un tableau ouvre directement l'interface vivante du projet sur la même page pour le développer de l'intérieur.
 4. **3D — `Fusion Cube Farm × Agent-Office (`01_Forkable/agent-office`)`** :
-   - Fusion de `01_Forkable/cubefarm` avec `AgentSystemLabs/agent-office` offrant **l'extérieur du bâtiment** (village/campus) et la **Mezzanine des Managers (`S2 / A2 / B2`)** surplombant chaque étage.
+   - Fusion de `01_Forkable/FKB03_3DWorlds/cubefarm` avec `AgentSystemLabs/agent-office` offrant **l'extérieur du bâtiment** (village/campus) et la **Mezzanine des Managers (`S2 / A2 / B2`)** surplombant chaque étage.
 5. **4D — `Runtime Permanent 24/7 Automaton & Structuration Temporelle des 4P`** :
-   - Runtime permanent d'`01_Forkable/automaton` + Heartbeats + structuration temporelle dans les **4P** (*Prévision, Prévoyance, Préparation, Postérité*) de Libération **DEAL** des cycles **12WY** de `Rory`, `River` et `Amy` avec les Doctors `D11`, `D12`, `D13` et leurs Compagnons au service des Ricks (`S1`).
+   - Runtime permanent d'`01_Forkable/FKB00_Runtime/automaton` + Heartbeats + structuration temporelle dans les **4P** (*Prévision, Prévoyance, Préparation, Postérité*) de Libération **DEAL** des cycles **12WY** de `Rory`, `River` et `Amy` avec les Doctors `D11`, `D12`, `D13` et leurs Compagnons au service des Ricks (`S1`).
 6. **5D — `Développement Parallèle des 8 Domaines & Transcendance PARA`** :
    - Développement parallèle des 8 Domaines de la Roue de la Vie (`LD01..LD08`), extension dans les `Areas` (`Spock`) et transcendance dans les `Projects` (`Picard`) concrétisant les `IPBD` via les `PRD` des Doctors `S2` supervisant les Compagnons `S3` en coordonnant les 3 Cores du `Tech OS`.
 7. **6D — `Singularité Coordonnée des 6 Frameworks Life OS`** :
@@ -63,6 +63,6 @@ Le 3e étage de Cube Farm n'est **pas** `Business OS` (car le Business `LD01` n'
 2. **Pool d'Inférence Souverain Unifié (Rotation Automatique & Zéro Télémétrie)** :
    - **Tier 0 — Local Edge & Decision Models (`127.0.0.1:9931`)** : `ggml-org/LFM3-Omni-2B-GGUF:Q8_0` (`llama.exe` actif sur port `9931`), `LiquidAI/LFM3` Decision Models, `cactus-compute/needle` (`01_Forkable/needle`), `fastino/GLiNER2.5-multi-Decide`.
    - **Tier 1 — Routeur API Local (`127.0.0.1:31415`)** : `FreeLLMAPI` (`freellmapi/auto`, `freellmapi/fusion`, `claude-opus-4-5`, `claude-sonnet-4-5`, `qwen3.8-max`, `gemini-3.8-flash`, `deepseek-v4-flash`).
-   - **Tier 2 — Hub Multi-Plateforme Web & CLI Souverain (`01_Forkable/codex-chatgpt-web` + `api-anything` + `CLI-Anything` + `rea`)** :
+   - **Tier 2 — Hub Multi-Plateforme Web & CLI Souverain (`01_Forkable/FKB01_Inference/codex-chatgpt-web` + `api-anything` + `CLI-Anything` + `rea`)** :
      - **Purge Totale de Télémétrie (Loi S1-RICK)** : suppression de Sentry, Amplitude, Segment, Datadog, Intercom, Statsig, LaunchDarkly, Google Analytics, `/ces/v1/t`, `/backend-api/lat/`, `oai-telemetry` et blocage réseau Electron `session.webRequest.onBeforeRequest` de tous les domaines de tracking avant toute connexion de compte Google/Gmail.
      - **Extension Multi-Plateforme** : ChatGPT (`chatgpt.com`), Google Gemini (`gemini.google.com`), Claude (`claude.ai`), Muse AI (`muse.ai`), DeepSeek (`chat.deepseek.com`), Z.ai / GLM (`chat.z.ai`), Qwen (`chat.qwen.ai`), et Sakana AI (`chat.sakana.ai`), avec rotation intelligente des quotas et export unifié de contexte.

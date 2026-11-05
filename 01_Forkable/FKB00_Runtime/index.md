@@ -1,16 +1,16 @@
-# FKB00_Runtime — Runtime du jumeau, noyau perpétuel de A0 & Triptyque Core
+﻿# FKB00_Runtime — Runtime du jumeau, noyau perpétuel de A0 & Triptyque Core
 
 ## Sous-catégories & Triptyque Core Fusion
 
 ### 1. Triptyque Core Fusion (2026-11-05)
 - Document de référence : `01_Forkable/FKB00_Runtime/tryptyque-runtime-core-fusion.md`
 - Trinité fondamentale :
-  - **Automaton** (`01_Forkable/automaton`) : Âme & Doctrine (CEO 24/7, Posture 7D, Constitution).
+  - **Automaton** (`01_Forkable/FKB00_Runtime/automaton`) : Âme & Doctrine (CEO 24/7, Posture 7D, Constitution).
   - **Infinity** (`01_Forkable/FKB00_Runtime/infinity`) : Système Nerveux & Concurrence (Pure Data, 0-cost hibernation, RAP, 75k agents).
   - **OpenRig** (`01_Forkable/FKB00_Runtime/openrig`) : Corps Opérationnel & Rigs (Coordination Claude Code + Codex + Pi + Herdr `hc`).
 
 ### 2. Automaton (mappé)
-- Emplacement : `01_Forkable/automaton` (non déplacé, voir FKB-INDEX).
+- Emplacement : `01_Forkable/FKB00_Runtime/automaton` (non déplacé, voir FKB-INDEX).
 - Rôle : Holon CEO 24/7, A0 Amadeus, constitution souveraine, heartbeat, mémoire.
 - Ponts : `runAspaceFactoryCommand` vers 02_Factory, `readAspaceWikiPage` vers 00_Memoire.
 

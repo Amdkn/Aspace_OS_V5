@@ -1,9 +1,9 @@
-# FKB01_Inference — Inférence souveraine multi-plateformes
+﻿# FKB01_Inference — Inférence souveraine multi-plateformes
 
 ## Sous-catégories
 
 ### Codex-GPT-Web (mappé)
-- Emplacement : `01_Forkable/codex-chatgpt-web` (non déplacé).
+- Emplacement : `01_Forkable/FKB01_Inference/codex-chatgpt-web` (non déplacé).
 - Rôle : hub web et CLI multi-plateformes zéro télémétrie (shield `aspace-telemetry-shield.cjs`).
 - Constitution (ligne 21) : combiné à api-anything, CLI-Anything et rea, rotation intelligente sur quota.
 

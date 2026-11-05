@@ -1,4 +1,4 @@
-/**
+﻿/**
  * Aspace OS V5 — Holon Topology, 3-OS Floor Architecture (578 Holons),
  * Loop Hierarchy (S0..S3), Dimensional Ladder (0D..10D), Sakana AI Fugu Inference,
  * & Ambition Engine ("Modo de Volar")
@@ -103,7 +103,7 @@ export const ASPACE_DIMENSIONAL_LADDER = [
     dimension: "3D",
     name: "Cube Farm × Agent-Office",
     summary:
-      "Fusion of 01_Forkable/cubefarm and 01_Forkable/agent-office providing building exterior and Managers' Mezzanine (S2/A2/B2) on every floor.",
+      "Fusion of 01_Forkable/FKB03_3DWorlds/cubefarm and 01_Forkable/agent-office providing building exterior and Managers' Mezzanine (S2/A2/B2) on every floor.",
   },
   {
     dimension: "4D",
@@ -157,8 +157,8 @@ export const ASPACE_SAKANA_FUGU_INFERENCE = {
     freeLlmApi: "http://127.0.0.1:31415/v1 (freellmapi/auto)",
   },
   multiPlatformHub: {
-    forkRepo: "01_Forkable/codex-chatgpt-web",
-    telemetryShield: "01_Forkable/codex-chatgpt-web/launcher/electron/aspace-telemetry-shield.cjs",
+    forkRepo: "01_Forkable/FKB01_Inference/codex-chatgpt-web",
+    telemetryShield: "01_Forkable/FKB01_Inference/codex-chatgpt-web/launcher/electron/aspace-telemetry-shield.cjs",
     zeroTelemetryVerified: true,
     companionRepos: [
       "01_Forkable/api-anything",
@@ -271,7 +271,7 @@ export const A0_CEO_HOLON = {
       "gemini-3.8-flash",
       "deepseek-v4-flash",
     ],
-    zeroTelemetryWebHub: "01_Forkable/codex-chatgpt-web",
+    zeroTelemetryWebHub: "01_Forkable/FKB01_Inference/codex-chatgpt-web",
     neverDiesOnZeroCryptoBalance: true,
   },
   harnesses: ["dsh", "dsh-superagent", "pi", "opencode", "claude", "codex", "agy", "hc", "orca"] as const,
@@ -959,7 +959,7 @@ export function evaluateWithOutsideJudge(params: {
 }
 
 /**
- * Resolve the root of Aspace OS V5 workspace from anywhere inside 01_Forkable/automaton.
+ * Resolve the root of Aspace OS V5 workspace from anywhere inside 01_Forkable/FKB00_Runtime/automaton.
  */
 export function resolveAspaceRoot(explicitRoot?: string): string {
   if (explicitRoot && fs.existsSync(explicitRoot)) {

@@ -1,9 +1,9 @@
-# FKB03_3DWorlds — Mondes 3D
+﻿# FKB03_3DWorlds — Mondes 3D
 
 ## Sous-catégories
 
 ### Cubefarm (mappé)
-- Emplacement : `01_Forkable/cubefarm` (non déplacé).
+- Emplacement : `01_Forkable/FKB03_3DWorlds/cubefarm` (non déplacé).
 - Rôle : immeuble opérationnel, 3 étages OS, 578 holons, Lobby supervisé par A0.
 
 ### Agent-Office (à cloner)

@@ -1,6 +1,6 @@
-/**
+﻿/**
  * Aspace OS V5 — Sovereign Zero-Telemetry Shield & Multi-Platform Fugu Inference Hub
- * for `01_Forkable/codex-chatgpt-web`
+ * for `01_Forkable/FKB01_Inference/codex-chatgpt-web`
  *
  * 1. Blocks all telemetry, analytics, crash-reporting, fingerprinting, and beacon requests
  *    at the Electron session level (`webRequest.onBeforeRequest` & `onBeforeSendHeaders`)

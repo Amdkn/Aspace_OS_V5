@@ -1,4 +1,4 @@
-# HANDOFF — Reprise de continuité Aspace OS V5 (2026-11-04)
+﻿# HANDOFF — Reprise de continuité Aspace OS V5 (2026-11-04)
 
 Lire d'abord : `AGENTS.md`, `00_Memoire/bundle/index.md`, fin de `00_Memoire/bundle/log.md`, `00_Memoire/bundle/concepts/sakana-fugu-inference.md`.
 
@@ -9,9 +9,9 @@ Lire d'abord : `AGENTS.md`, `00_Memoire/bundle/index.md`, fin de `00_Memoire/bun
 - Source brute : `00_Memoire/raw/sakana-fugu-10d-architecture-2026.md`.
 
 ## Reste à faire (ordre)
-1. `cd 01_Forkable/automaton; npm i; npx vitest run src/__tests__/aspace-ceo-holon.test.ts` (vitest absent → ERR_MODULE_NOT_FOUND).
-2. `cd 01_Forkable/cubefarm; npm i; npx vitest run server/aspaceHolons.test.ts`.
-3. UI : touche `Tab` 2D en Tableaux-Portails dans `01_Forkable/cubefarm/client/src/ui/` (données prêtes : `PORTAL_BOARDS_2D`, `LOOP_HIERARCHY` dans `shared/aspaceHolons.ts`) + Mezzanine `agent-office`.
+1. `cd 01_Forkable/FKB00_Runtime/automaton; npm i; npx vitest run src/__tests__/aspace-ceo-holon.test.ts` (vitest absent → ERR_MODULE_NOT_FOUND).
+2. `cd 01_Forkable/FKB03_3DWorlds/cubefarm; npm i; npx vitest run server/aspaceHolons.test.ts`.
+3. UI : touche `Tab` 2D en Tableaux-Portails dans `01_Forkable/FKB03_3DWorlds/cubefarm/client/src/ui/` (données prêtes : `PORTAL_BOARDS_2D`, `LOOP_HIERARCHY` dans `shared/aspaceHolons.ts`) + Mezzanine `agent-office`.
 4. Pages concept encore obsolètes (193 Holons / Business OS) : `concepts/aspace-3os-holons.md`, `concepts/ceo-automaton-cubefarm.md`.
 5. `00_Memoire\.venv\Scripts\graphify.exe update .`
 6. Wire `ASPACE_DOM_TELEMETRY_SHIELD_SCRIPT` aussi dans `markTurnTabSurface` si absent des onglets manuels.

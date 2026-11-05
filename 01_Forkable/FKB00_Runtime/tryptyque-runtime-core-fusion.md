@@ -1,10 +1,10 @@
-# RunTime — Triptyque Core Fusion (Automaton + Infinity + OpenRig)
+﻿# RunTime — Triptyque Core Fusion (Automaton + Infinity + OpenRig)
 # L'Architecture Tripartite du Noyau Vivant Souverain Aspace OS V5
 
 Date : 2026-11-05  
 Auteurs & Alignement : Amadou Kone (`human:amdkn` S0 10D) & Jumeau Numérique CEO 24/7 (`aspace:a0:amadeus` 7D)  
 Sources canoniques :
-- [Conway-Research/automaton](https://github.com/Conway-Research/automaton) (Forks souverains `01_Forkable/automaton`)
+- [Conway-Research/automaton](https://github.com/Conway-Research/automaton) (Forks souverains `01_Forkable/FKB00_Runtime/automaton`)
 - [hydro-project/infinity](https://github.com/hydro-project/infinity) (`01_Forkable/FKB00_Runtime/infinity`)
 - [mvschwarz/openrig](https://github.com/mvschwarz/openrig) (`01_Forkable/FKB00_Runtime/openrig`)
 
@@ -64,7 +64,7 @@ Un runtime d'IA autonome ne peut pas reposer sur un seul composant sans tomber d
 ## 2. Décomposition des Primitives par Pilier
 
 ### Pilier I : Automaton (`Conway-Research/automaton`) — L'Âme & La Doctrine
-- **Holon CEO Souverain (`aspace:a0:amadeus`)** : Incarné en permanence en 7D dans `01_Forkable/automaton`. Ne meurt jamais à solde crypto nul grâce au compute local souverain (`freellmapi/auto` + `LFM3-Omni-2B`).
+- **Holon CEO Souverain (`aspace:a0:amadeus`)** : Incarné en permanence en 7D dans `01_Forkable/FKB00_Runtime/automaton`. Ne meurt jamais à solde crypto nul grâce au compute local souverain (`freellmapi/auto` + `LFM3-Omni-2B`).
 - **Constitution et Sanctuarisation E-Myth** :
   - `B1-Surface` : Jerry (Test UX $\le$ 5s) & Summer (Action immédiate).
   - `A1-Vital` : Beth (Bouclier homéostatique LD03/LD04 + Sanctuaire nocturne 00h-05h) & Morty (Read-back natif et fallback réversible).
