@@ -1,0 +1,69 @@
+[submodule "01_Forkable/FKB00_Runtime/infinity"]
+	path = 01_Forkable/FKB00_Runtime/infinity
+	url = https://github.com/hydro-project/infinity.git
+[submodule "01_Forkable/FKB00_Runtime/openrig"]
+	path = 01_Forkable/FKB00_Runtime/openrig
+	url = https://github.com/mvschwarz/openrig.git
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/needle"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/needle
+	url = https://github.com/cactus-compute/needle.git
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/moshi"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/moshi
+	url = https://github.com/kyutai-labs/moshi.git
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/LoRA"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/LoRA
+	url = https://github.com/microsoft/LoRA.git
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide
+	url = https://huggingface.co/fastino/GLiNER2.5-multi-Decide
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/mimi"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/mimi
+	url = https://huggingface.co/kyutai/mimi
+[submodule "01_Forkable/FKB02_Video_SaaS/argo"]
+	path = 01_Forkable/FKB02_Video_SaaS/argo
+	url = https://github.com/shreyaskarnik/argo.git
+[submodule "01_Forkable/FKB02_Video_SaaS/explainroo"]
+	path = 01_Forkable/FKB02_Video_SaaS/explainroo
+	url = https://github.com/vincentsch/explainroo.git
+[submodule "01_Forkable/FKB02_Video_SaaS/huashu-motion"]
+	path = 01_Forkable/FKB02_Video_SaaS/huashu-motion
+	url = https://github.com/alchaincyf/huashu-motion.git
+[submodule "01_Forkable/FKB02_Video_SaaS/rossark-motion-skill"]
+	path = 01_Forkable/FKB02_Video_SaaS/rossark-motion-skill
+	url = https://github.com/rossark0/rossark-motion-skill.git
+[submodule "01_Forkable/FKB02_Video_SaaS/video-director"]
+	path = 01_Forkable/FKB02_Video_SaaS/video-director
+	url = https://github.com/win4r/video-director.git
+[submodule "01_Forkable/FKB03_3DWorlds/agent-office"]
+	path = 01_Forkable/FKB03_3DWorlds/agent-office
+	url = https://github.com/AgentSystemLabs/agent-office.git
+[submodule "01_Forkable/FKB04_Tools_Anything/api-anything"]
+	path = 01_Forkable/FKB04_Tools_Anything/api-anything
+	url = https://github.com/goodnight000/api-anything.git
+[submodule "01_Forkable/FKB04_Tools_Anything/CLI-Anything"]
+	path = 01_Forkable/FKB04_Tools_Anything/CLI-Anything
+	url = https://github.com/HKUDS/CLI-Anything.git
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B
+	url = https://huggingface.co/LiquidAI/LFM3-Omni-2B
+[submodule "01_Forkable/FKB02_Video_SaaS/earshot"]
+	path = 01_Forkable/FKB02_Video_SaaS/earshot
+	url = https://github.com/Leonxlnx/earshot.git
+[submodule "01_Forkable/FKB01_Inference/freellmapi"]
+	path = 01_Forkable/FKB01_Inference/freellmapi
+	url = https://github.com/tashfeenahmed/freellmapi.git
+[submodule "01_Forkable/FKB02_Video_SaaS/reanimate"]
+	path = 01_Forkable/FKB02_Video_SaaS/reanimate
+	url = https://github.com/NiazMorshed2007/reanimate.git
+[submodule "01_Forkable/FKB04_Tools_Anything/rea"]
+	path = 01_Forkable/FKB04_Tools_Anything/rea
+	url = https://github.com/morluto/rea.git
+[submodule "01_Forkable/FKB02_Video_SaaS/take-one"]
+	path = 01_Forkable/FKB02_Video_SaaS/take-one
+	url = https://github.com/talsiach/take-one.git
+[submodule "01_Forkable/elephant-goldfish-model"]
+	path = 01_Forkable/elephant-goldfish-model
+	url = https://github.com/google/elephant-goldfish-model.git
+[submodule "01_Forkable/MiroFish"]
+	path = 01_Forkable/MiroFish
+	url = https://github.com/666ghj/MiroFish.git
