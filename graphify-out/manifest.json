@@ -30,9 +30,9 @@
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/contexte-v5.md": {
-    "mtime": 1793747947.064677,
-    "seen": 1793748112.989626,
-    "ast_hash": "f8011dea5e9dfed65a73d8287bedae9b",
+    "mtime": 1793889995.764097,
+    "seen": 1793890213.8488643,
+    "ast_hash": "12a0957eb01da6fbda20df3a79629ad8",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/herdr.md": {
@@ -54,27 +54,27 @@
     "semantic_hash": ""
   },
   "00_Memoire/bundle/index.md": {
-    "mtime": 1793747945.246703,
-    "seen": 1793748112.992673,
-    "ast_hash": "45269b19d22b374074bff4ee96a6b447",
+    "mtime": 1793772390.7248108,
+    "seen": 1793890213.8516097,
+    "ast_hash": "1e80b0c1452a13e070533806fddb0b1c",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/log.md": {
-    "mtime": 1793747948.7980897,
-    "seen": 1793748112.992681,
-    "ast_hash": "c03119eaba7a286a454d1142bcf122ed",
+    "mtime": 1793833049.3614993,
+    "seen": 1793890213.8516154,
+    "ast_hash": "21dd7ee2fbc86c997478e7626203fb77",
     "semantic_hash": ""
   },
   "CLAUDE.md": {
-    "mtime": 1793747818.6990485,
-    "seen": 1793748112.9927862,
-    "ast_hash": "64d8584116b5fcb4911eb2e0970d3b41",
+    "mtime": 1793833049.4161336,
+    "seen": 1793890213.858514,
+    "ast_hash": "68e2e008a99dd10bac4b3435f7e426aa",
     "semantic_hash": ""
   },
   "AGENTS.md": {
-    "mtime": 1793747818.6990485,
-    "seen": 1793748112.9927802,
-    "ast_hash": "64d8584116b5fcb4911eb2e0970d3b41",
+    "mtime": 1793833049.415134,
+    "seen": 1793890213.8585079,
+    "ast_hash": "68e2e008a99dd10bac4b3435f7e426aa",
     "semantic_hash": ""
   },
   ".mcp.json": {
@@ -108,9 +108,9 @@
     "semantic_hash": ""
   },
   ".vscode/tasks.json": {
-    "mtime": 1793739873.3937373,
-    "seen": 1793740028.6277773,
-    "ast_hash": "76bddeb9f199a5610ed7370c856308ef",
+    "mtime": 1793833049.3487065,
+    "seen": 1793890213.2708993,
+    "ast_hash": "e186300590031450c218b7ff90366644",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/fable5-traces.md": {
@@ -276,9 +276,9 @@
     "semantic_hash": ""
   },
   ".github/ISSUE_TEMPLATE/factory-task.yml": {
-    "mtime": 1793739546.6903293,
-    "seen": 1793740028.6260831,
-    "ast_hash": "779be66a7adbf6ea27c5a70a8d070401",
+    "mtime": 1793833049.328574,
+    "seen": 1793890213.2664943,
+    "ast_hash": "243254decd0d6ac7cb0a09cb8e33af1b",
     "semantic_hash": ""
   },
   ".github/dependabot.yml": {
@@ -288,15 +288,15 @@
     "semantic_hash": ""
   },
   ".github/workflows/factory-dispatch.yml": {
-    "mtime": 1793739589.6855843,
-    "seen": 1793740028.6260915,
-    "ast_hash": "0df323b36f2f019d799dcef76db85765",
+    "mtime": 1793833049.334044,
+    "seen": 1793890213.2670598,
+    "ast_hash": "c2782186ffab7c7143aab01dcc8fc083",
     "semantic_hash": ""
   },
   ".github/workflows/factory-gate.yml": {
-    "mtime": 1793739580.8031673,
-    "seen": 1793740028.6260958,
-    "ast_hash": "e7fc5356fdbe74a58660db3b7613b807",
+    "mtime": 1793833049.3353903,
+    "seen": 1793890213.267068,
+    "ast_hash": "1172ac1eaa3f2ac5ddca426242eef9f2",
     "semantic_hash": ""
   },
   ".github/workflows/factory-wiki-insights.yml": {
@@ -305,52 +305,34 @@
     "ast_hash": "030562a0e27db88a5061a6cfdc07ffb3",
     "semantic_hash": ""
   },
-  "factory/checks.ps1": {
-    "mtime": 1793739628.2822268,
-    "seen": 1793740028.628654,
-    "ast_hash": "1c1e13c526e7d58f3c3136bfa6c9f668",
-    "semantic_hash": ""
-  },
-  "factory/config.json": {
-    "mtime": 1793742840.44609,
-    "seen": 1793743400.0295541,
-    "ast_hash": "dcd6510b20caa122f41929fe048d6934",
-    "semantic_hash": ""
-  },
-  "factory/factory.ps1": {
-    "mtime": 1793743233.809745,
-    "seen": 1793743400.0295618,
-    "ast_hash": "3f79f6bf11378a461bee599016ae58df",
-    "semantic_hash": ""
-  },
   ".agents/skills/aspace-factory/SKILL.md": {
-    "mtime": 1793741127.3624377,
-    "seen": 1793741507.5257,
-    "ast_hash": "c407d8522f43df78178e8e4d49009012",
+    "mtime": 1793833049.2975216,
+    "seen": 1793890213.836669,
+    "ast_hash": "425dd22ab647a90a07c291d5ec3405da",
     "semantic_hash": ""
   },
   ".claude/agents/approver.md": {
-    "mtime": 1793739800.6328714,
-    "seen": 1793740028.6329896,
-    "ast_hash": "ddf0b7d57aea4ba77859f57a2e65b767",
+    "mtime": 1793833049.3019807,
+    "seen": 1793890213.8422031,
+    "ast_hash": "1b2cd46d9e9b3e89498c6b51a0f4c4c7",
     "semantic_hash": ""
   },
   ".claude/agents/builder.md": {
-    "mtime": 1793739790.584383,
-    "seen": 1793740028.6329966,
-    "ast_hash": "5e41d897643e9147d29f908629e7adec",
+    "mtime": 1793833049.3041654,
+    "seen": 1793890213.8422074,
+    "ast_hash": "2a8b3a7e8c22fd7fc960aa9e8224b52b",
     "semantic_hash": ""
   },
   ".claude/agents/intake-assessor.md": {
-    "mtime": 1793739786.1017418,
-    "seen": 1793740028.6330016,
-    "ast_hash": "2b2e55eba5c2a42686ca04e0da429ffe",
+    "mtime": 1793833049.3061812,
+    "seen": 1793890213.8422112,
+    "ast_hash": "5c335557b23820f855533f572dbd66c9",
     "semantic_hash": ""
   },
   ".claude/agents/reviewer-code.md": {
-    "mtime": 1793739793.0363648,
-    "seen": 1793740028.6330063,
-    "ast_hash": "f400e74a07cca3d67746ad8674a49d57",
+    "mtime": 1793833049.308183,
+    "seen": 1793890213.8422143,
+    "ast_hash": "425cc36d10f2bc8b5b10778dbabca4cb",
     "semantic_hash": ""
   },
   ".claude/agents/reviewer-drift.md": {
@@ -366,57 +348,45 @@
     "semantic_hash": ""
   },
   ".claude/agents/reviewer-ux-ui.md": {
-    "mtime": 1793739796.575469,
-    "seen": 1793740028.633019,
-    "ast_hash": "aec141acb9c7c3fa2876a395e2608c48",
+    "mtime": 1793833049.3091807,
+    "seen": 1793890213.8430953,
+    "ast_hash": "b30d0e47bf6c018632b26ad521ca9c36",
     "semantic_hash": ""
   },
   ".claude/agents/spec-writer.md": {
-    "mtime": 1793739788.4038322,
-    "seen": 1793740028.633023,
-    "ast_hash": "d175a65e0ad2df8886d4ea73f2c760dc",
+    "mtime": 1793833049.3192034,
+    "seen": 1793890213.8430996,
+    "ast_hash": "08b4e46c7097ae3cc0b3bcbb638c2eaa",
     "semantic_hash": ""
   },
   ".claude/skills/aspace-factory/SKILL.md": {
-    "mtime": 1793741125.357004,
-    "seen": 1793741507.5353491,
-    "ast_hash": "c407d8522f43df78178e8e4d49009012",
+    "mtime": 1793833049.322238,
+    "seen": 1793890213.8431034,
+    "ast_hash": "425dd22ab647a90a07c291d5ec3405da",
     "semantic_hash": ""
   },
   ".github/PULL_REQUEST_TEMPLATE.md": {
-    "mtime": 1793739551.864328,
-    "seen": 1793740028.638547,
-    "ast_hash": "f963fe6338d8f6c80fcfe9681df6e055",
+    "mtime": 1793833049.3305204,
+    "seen": 1793890213.8484492,
+    "ast_hash": "73def3f8a21b4166e9d52ac12733e544",
     "semantic_hash": ""
   },
   ".github/SECURITY.md": {
-    "mtime": 1793739515.6942854,
-    "seen": 1793740028.6385548,
-    "ast_hash": "1c7d727c8639707828e2efc7dc01c91b",
+    "mtime": 1793833049.3320422,
+    "seen": 1793890213.8484533,
+    "ast_hash": "698e0ad4266800d15356b55706a39e59",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/aspace-factory.md": {
-    "mtime": 1793739880.029405,
-    "seen": 1793740028.639055,
-    "ast_hash": "a06e2408bc72791ddb593de2096076f1",
-    "semantic_hash": ""
-  },
-  "factory/dashboard.html": {
-    "mtime": 1793739666.8814075,
-    "seen": 1793740028.6418526,
-    "ast_hash": "7044dce71f5be3f5d87d6a152948395d",
-    "semantic_hash": ""
-  },
-  "factory/jobs/tkt-20261103-160601/spec.md": {
-    "mtime": 1793739961.9676309,
-    "seen": 1793740028.6418579,
-    "ast_hash": "7b9600924577d777f3dad76fdbff2eb9",
+    "mtime": 1793833049.3532877,
+    "seen": 1793890213.8488572,
+    "ast_hash": "d1d043477fb1775abf2b5745c25277a5",
     "semantic_hash": ""
   },
   ".pi/extensions/aspace-factory.ts": {
-    "mtime": 1793743235.969022,
-    "seen": 1793743400.0258396,
-    "ast_hash": "3e962be6d27c6ddce432451cd1354b37",
+    "mtime": 1793833049.3433104,
+    "seen": 1793890213.2682018,
+    "ast_hash": "4a9631ad22046d783f7989011d2e1670",
     "semantic_hash": ""
   },
   ".pi/settings.json": {
@@ -426,45 +396,45 @@
     "semantic_hash": ""
   },
   "opencode.json": {
-    "mtime": 1793747859.550691,
-    "seen": 1793748112.9660213,
-    "ast_hash": "473d7db4bfa0de4da9fafce0bea25676",
+    "mtime": 1793833049.4202816,
+    "seen": 1793890213.836661,
+    "ast_hash": "23a59c6a2b58256f93f02d52cfbe58e0",
     "semantic_hash": ""
   },
   ".pi/APPEND_SYSTEM.md": {
-    "mtime": 1793747826.6323586,
-    "seen": 1793748112.9877415,
-    "ast_hash": "960c033eed960ffe73ba65cd53f89d43",
+    "mtime": 1793833049.3412936,
+    "seen": 1793890213.8484578,
+    "ast_hash": "20f0bc3eab858fe32a56c0273d901f07",
     "semantic_hash": ""
   },
   ".pi/prompts/factory-build.md": {
-    "mtime": 1793741375.5230458,
-    "seen": 1793741507.54129,
-    "ast_hash": "2b9cd3162f3016a4a0126f5e174633d0",
+    "mtime": 1793833049.345562,
+    "seen": 1793890213.8484614,
+    "ast_hash": "88c743d9b9d51135d62adc996d7f102c",
     "semantic_hash": ""
   },
   ".pi/prompts/factory-review.md": {
-    "mtime": 1793741377.4582386,
-    "seen": 1793741507.5412962,
-    "ast_hash": "c4cbb2607a00e56e3f9d176f28b9e7dc",
+    "mtime": 1793833049.3465593,
+    "seen": 1793890213.8484645,
+    "ast_hash": "d2fc33a12f6b98577922cf3c5d9b1255",
     "semantic_hash": ""
   },
   ".agents/skills/pi-durable-subagents/SKILL.md": {
-    "mtime": 1793743238.692438,
-    "seen": 1793743400.03916,
-    "ast_hash": "d9a571f00a5fdf464898459d3c88b800",
+    "mtime": 1793833049.300061,
+    "seen": 1793890213.8421965,
+    "ast_hash": "4fe5d6890cb477ef7471638d057c828b",
     "semantic_hash": ""
   },
   ".claude/skills/pi-durable-subagents/SKILL.md": {
-    "mtime": 1793743240.8800468,
-    "seen": 1793743400.05045,
-    "ast_hash": "d9a571f00a5fdf464898459d3c88b800",
+    "mtime": 1793833049.3242528,
+    "seen": 1793890213.848443,
+    "ast_hash": "4fe5d6890cb477ef7471638d057c828b",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/pi-durable-subagents.md": {
-    "mtime": 1793743335.4653418,
-    "seen": 1793743400.0625079,
-    "ast_hash": "ed57a3fae969aa0545e7dee1087fe3a1",
+    "mtime": 1793833049.358898,
+    "seen": 1793890213.8505526,
+    "ast_hash": "5058c1c925c6754327e02de79ebc0b8d",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/.github/workflows/ci.yml": {
@@ -612,9 +582,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/__tests__/aspace-ceo-holon.test.ts": {
-    "mtime": 1793747376.429027,
-    "seen": 1793748112.958414,
-    "ast_hash": "2ae44923c516ad7f5133cb858a9aee51",
+    "mtime": 1793771932.517957,
+    "seen": 1793890213.287808,
+    "ast_hash": "f9236594bd9ad7bca8ec04d0d10fe7fc",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/__tests__/authority-rules.test.ts": {
@@ -966,9 +936,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/agent/aspace-holon-tools.ts": {
-    "mtime": 1793747997.1212468,
-    "seen": 1793748112.95884,
-    "ast_hash": "8ce85693a404d0d5478b7bd85a9639b7",
+    "mtime": 1793833049.3863194,
+    "seen": 1793890213.3322244,
+    "ast_hash": "266fd834fd9be82c3d468f05c953c6ea",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/agent/context.ts": {
@@ -1092,9 +1062,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/agent/system-prompt.ts": {
-    "mtime": 1793747369.7969673,
-    "seen": 1793748112.9589372,
-    "ast_hash": "8a640b319a4b7e194e0192b46eb7e0e7",
+    "mtime": 1793771942.5380557,
+    "seen": 1793890213.344298,
+    "ast_hash": "c752c1b694ad48c629aa6928a91974fa",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/agent/tools.ts": {
@@ -1110,9 +1080,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/aspace/holon-topology.ts": {
-    "mtime": 1793747219.2733216,
-    "seen": 1793748112.9589493,
-    "ast_hash": "bb2444227c495ea3454fcdf854236a6e",
+    "mtime": 1793833049.3898785,
+    "seen": 1793890213.3453033,
+    "ast_hash": "69b0fd0ff49457a28ca5b0d7fc4fc730",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/src/config.ts": {
@@ -5286,9 +5256,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/server/aspaceHolons.test.ts": {
-    "mtime": 1793747728.203072,
-    "seen": 1793748112.9634907,
-    "ast_hash": "d576d5c1090a551de923a2c2249434aa",
+    "mtime": 1793772278.0120795,
+    "seen": 1793890213.7344165,
+    "ast_hash": "0fdc6c4dbe1dba27e812f1e6cfa18c61",
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/server/backend.ts": {
@@ -5376,9 +5346,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/server/ceo.ts": {
-    "mtime": 1793747717.3380566,
-    "seen": 1793748112.9635649,
-    "ast_hash": "30004069e4be65e2279c48c4f3d0e486",
+    "mtime": 1793772276.9827447,
+    "seen": 1793890213.7444046,
+    "ast_hash": "9fddb1c44849870645a2b4f9bd9032ad",
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/server/ceoAsks.test.ts": {
@@ -5466,9 +5436,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/server/demo.ts": {
-    "mtime": 1793747664.837318,
-    "seen": 1793748112.9636366,
-    "ast_hash": "aac3828edaf7cd27298af630adb92eb1",
+    "mtime": 1793772277.1855602,
+    "seen": 1793890213.7526608,
+    "ast_hash": "501157d2230d6725d5fe5bfa8f41896a",
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/server/demoVisitors.test.ts": {
@@ -6120,9 +6090,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/shared/aspaceHolons.ts": {
-    "mtime": 1793747554.4526286,
-    "seen": 1793748112.9641256,
-    "ast_hash": "a5201508b1419166f5864d748b5d181e",
+    "mtime": 1793833049.394458,
+    "seen": 1793890213.8159137,
+    "ast_hash": "1afe632e8b6855dd6b1eace118b7aa59",
     "semantic_hash": ""
   },
   "01_Forkable/cubefarm/shared/careers.test.ts": {
@@ -6366,21 +6336,21 @@
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/ambition-modo-de-volar.md": {
-    "mtime": 1793747911.6147559,
-    "seen": 1793748112.9891472,
-    "ast_hash": "0c1cd3a104ab406e880a893492a76bc3",
+    "mtime": 1793889983.7726676,
+    "seen": 1793890213.8488479,
+    "ast_hash": "6be729f97d21e4ea5d48e46fab9dcb36",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/aspace-3os-holons.md": {
-    "mtime": 1793747913.661122,
-    "seen": 1793748112.9891546,
-    "ast_hash": "27582dc61e7f6c5f5e70f727f4cc5180",
+    "mtime": 1793889949.2092953,
+    "seen": 1793890213.8488524,
+    "ast_hash": "f6eead80e507350e7fa0c5f9fcccbbf5",
     "semantic_hash": ""
   },
   "00_Memoire/bundle/concepts/ceo-automaton-cubefarm.md": {
-    "mtime": 1793747915.80576,
-    "seen": 1793748112.9896178,
-    "ast_hash": "f1319b98d9aafcdde0c7a168001b486e",
+    "mtime": 1793889975.5176477,
+    "seen": 1793890213.8488607,
+    "ast_hash": "f7da4d6a8371d68a8b2d51154e22ce5b",
     "semantic_hash": ""
   },
   "00_Memoire/raw/aspace-os-drive-canon-2026.md": {
@@ -6396,9 +6366,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/AGENTS.md": {
-    "mtime": 1793747828.3723276,
-    "seen": 1793748112.9927018,
-    "ast_hash": "4187fa243835927a632cd3f52de54845",
+    "mtime": 1793772374.491775,
+    "seen": 1793890213.8523886,
+    "ast_hash": "fa993d793ac8981e9df505dface0465d",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/ARCHITECTURE.md": {
@@ -6420,9 +6390,9 @@
     "semantic_hash": ""
   },
   "01_Forkable/automaton/constitution.md": {
-    "mtime": 1793747217.211174,
-    "seen": 1793748112.9927223,
-    "ast_hash": "5e2187f2842142ed7eb6f1c9aad36054",
+    "mtime": 1793833049.3833199,
+    "seen": 1793890213.8535733,
+    "ast_hash": "d50adf10033d2805ce9484789390b3e3",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/scripts/conways-rules.txt": {
@@ -6519,6 +6489,2190 @@
     "mtime": 1793746277.4298904,
     "seen": 1793748112.9992204,
     "ast_hash": "b9a1479151f1ee37b34afdf35b894a10",
+    "semantic_hash": ""
+  },
+  "01_Forkable/clone-forkables.ps1": {
+    "mtime": 1793833049.391441,
+    "seen": 1793890213.3928802,
+    "ast_hash": "6c0d950a41bfe5fe56e754705b63f68c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/.github/ISSUE_TEMPLATE/bug-report.yml": {
+    "mtime": 1793771043.35416,
+    "seen": 1793890213.3928895,
+    "ast_hash": "d6ee879a0eabbbc02bc177c7dee4d2c4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/.github/ISSUE_TEMPLATE/config.yml": {
+    "mtime": 1793771043.3566818,
+    "seen": 1793890213.3928962,
+    "ast_hash": "89b240df28af1e0ea431a2093537e91f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/.github/actionlint.yaml": {
+    "mtime": 1793771043.359791,
+    "seen": 1793890213.3929033,
+    "ast_hash": "91b0730e22ac355fad9cf3a16b85dd61",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/.github/workflows/ci.yml": {
+    "mtime": 1793771043.3618019,
+    "seen": 1793890213.3929093,
+    "ast_hash": "7612850183178f0f96e62bb4bd90efdc",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/.github/workflows/release.yml": {
+    "mtime": 1793771043.3633113,
+    "seen": 1793890213.3929145,
+    "ast_hash": "ad1dd13a0d96b982cde6e728c21ac272",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/assets/linux-appimage-runner.sh": {
+    "mtime": 1793771043.5390956,
+    "seen": 1793890213.3929193,
+    "ast_hash": "b96491a65b8e7b2b7a8b2e30022b83d9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/aspace-telemetry-shield.cjs": {
+    "mtime": 1793771333.6498873,
+    "seen": 1793890213.3929253,
+    "ast_hash": "ffae3f71367371d3accd3c43b4c26e7c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/atomic-file.cjs": {
+    "mtime": 1793771043.5483267,
+    "seen": 1793890213.39293,
+    "ast_hash": "b1ffa196826cc89ca485e7b38fa2bdba",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/autostart.cjs": {
+    "mtime": 1793771043.5498347,
+    "seen": 1793890213.3929355,
+    "ast_hash": "d2c0f79d7483e7818290d6c862351670",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/browser-announcements.cjs": {
+    "mtime": 1793771043.5510738,
+    "seen": 1793890213.3929408,
+    "ast_hash": "69831f7f63befad369ed4cfb08129f5b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/browser-helper-verifier.cjs": {
+    "mtime": 1793771043.5524914,
+    "seen": 1793890213.3929462,
+    "ast_hash": "4ca96f5170a155f80af320d65b9e65ec",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/browser-host.cjs": {
+    "mtime": 1793771567.0793097,
+    "seen": 1793890213.3929517,
+    "ast_hash": "c71db08077fdc9b416cb45f2e93e3d26",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/browser-page-script.cjs": {
+    "mtime": 1793771043.55844,
+    "seen": 1793890213.3929577,
+    "ast_hash": "0db16bcdca8eddc32b4a48859944c13e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/browser-state.cjs": {
+    "mtime": 1793771043.5606055,
+    "seen": 1793890213.3929636,
+    "ast_hash": "c107c72d8daf3fdf7d0fc4f94afc5e4c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/chatgpt-auth-session.cjs": {
+    "mtime": 1793771043.5616064,
+    "seen": 1793890213.3929694,
+    "ast_hash": "72b0d3f893171ede71c6c998edd75f4a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/connector-identity.cjs": {
+    "mtime": 1793771043.5636039,
+    "seen": 1793890213.3929763,
+    "ast_hash": "bfb00db17f984c7ddbf9b9ecdc5d38c2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/control-server.cjs": {
+    "mtime": 1793771043.5650203,
+    "seen": 1793890213.3929822,
+    "ast_hash": "9206da7d4b5f39d21fb717930b737673",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/languages.json": {
+    "mtime": 1793771043.566563,
+    "seen": 1793890213.3929887,
+    "ast_hash": "e7053d4057085dff61e507bc210fc54f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/limits-controller.cjs": {
+    "mtime": 1793771043.5675817,
+    "seen": 1793890213.3929944,
+    "ast_hash": "6746ac1a4b00a13d10391bd27e0d2fb6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/limits-policy.json": {
+    "mtime": 1793771043.568584,
+    "seen": 1793890213.3930006,
+    "ast_hash": "502fbeb7290e659979ab670bb3d74ecf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/limits-store.cjs": {
+    "mtime": 1793771043.570589,
+    "seen": 1793890213.3930068,
+    "ast_hash": "413ab97121a43d3b4e03dc8d8c8dc45b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/logging.cjs": {
+    "mtime": 1793771043.5731058,
+    "seen": 1793890213.3930137,
+    "ast_hash": "539bc7ce19ec41cf91d3a6139356ac83",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/main.cjs": {
+    "mtime": 1793771043.5751274,
+    "seen": 1793890213.3930192,
+    "ast_hash": "97c03780c1f9961501f8517b8ed7ec21",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/passkey-login-state.cjs": {
+    "mtime": 1793771043.5766408,
+    "seen": 1793890213.3930247,
+    "ast_hash": "fd5ea1fd1d51007b0b2cb9fceb01195c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/preload.cjs": {
+    "mtime": 1793771043.5786626,
+    "seen": 1793890213.3930311,
+    "ast_hash": "a6aaf4f374e0eb5c3bae2bc3c60799db",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/process-tree.cjs": {
+    "mtime": 1793771043.5796595,
+    "seen": 1793890213.3930373,
+    "ast_hash": "cc6e59c5b296cc2db10924fac6acc9d8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/profile.cjs": {
+    "mtime": 1793771043.581741,
+    "seen": 1793890213.393043,
+    "ast_hash": "50279e90183ab0d048e369a3430f5d2e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/retained-turn-release.cjs": {
+    "mtime": 1793771043.5828993,
+    "seen": 1793890213.3930483,
+    "ast_hash": "e4fab9b143d648480e3995bb036949b2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/runtime-command.cjs": {
+    "mtime": 1793771043.5845282,
+    "seen": 1793890213.3930535,
+    "ast_hash": "d77a4fbb8d92261d07c14bad3f2442c9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/runtime-install.cjs": {
+    "mtime": 1793771043.586227,
+    "seen": 1793890213.393059,
+    "ast_hash": "6151367113d56c764f5ef52e0aed05a9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/runtime-supervisor.cjs": {
+    "mtime": 1793771043.5888112,
+    "seen": 1793890213.3930647,
+    "ast_hash": "adaa4aaf3b82c817849646fb4979aebc",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/runtime.cjs": {
+    "mtime": 1793771043.5908482,
+    "seen": 1793890213.39307,
+    "ast_hash": "46212330b197d6c263b80b406da5cc43",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/session-reminder-preload.cjs": {
+    "mtime": 1793771043.5922863,
+    "seen": 1793890213.3930755,
+    "ast_hash": "baeed66efa8acb48eaa9c7e00c9a6240",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/session-reminder-view.cjs": {
+    "mtime": 1793771043.5937011,
+    "seen": 1793890213.3930802,
+    "ast_hash": "6961d7eae9944b7327a4d034f4189d0f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/state.cjs": {
+    "mtime": 1793771043.5954723,
+    "seen": 1793890213.393085,
+    "ast_hash": "1234396b1ae4fa488cf24f0495c9b11d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/tunnel-proxy.cjs": {
+    "mtime": 1793771043.5964992,
+    "seen": 1793890213.3930902,
+    "ast_hash": "3f68b18d1b093d9fdf8565ec64894dcd",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/turn-suspension.cjs": {
+    "mtime": 1793771043.5985887,
+    "seen": 1793890213.393095,
+    "ast_hash": "7837baece67fc8f88f4cfff57dbfe5e3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/update-worker.cjs": {
+    "mtime": 1793771043.599916,
+    "seen": 1793890213.3930995,
+    "ast_hash": "5fbfa3ac78769d3eab28e5470f4043ed",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/update.cjs": {
+    "mtime": 1793771569.495826,
+    "seen": 1793890213.3931038,
+    "ast_hash": "2b2107a0267818da3f1cdea1d6f4215b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/window-state.cjs": {
+    "mtime": 1793771043.6041906,
+    "seen": 1793890213.393109,
+    "ast_hash": "805e47a143765cbc2afc789bf5ac75ee",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/electron/windows-trust.cjs": {
+    "mtime": 1793771043.6052053,
+    "seen": 1793890213.393114,
+    "ast_hash": "5095741d1aae5c7d3367daafcf2a76fb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/package.json": {
+    "mtime": 1793771043.6083612,
+    "seen": 1793890213.3931196,
+    "ast_hash": "2a7ba0c92e7d69f1508b5f2659173b86",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/scripts/dev.cjs": {
+    "mtime": 1793771043.6124296,
+    "seen": 1793890213.3931246,
+    "ast_hash": "f016d4497a8e612a2e076473d68a17ef",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/scripts/package.cjs": {
+    "mtime": 1793771043.614254,
+    "seen": 1793890213.3931289,
+    "ast_hash": "caa56f500de1fdac64cf0c50a5604867",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/scripts/prepare-linux-appimage-tools.cjs": {
+    "mtime": 1793771043.6152706,
+    "seen": 1793890213.3931339,
+    "ast_hash": "49a514622c346bb484b5aaab0391755a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/scripts/prepare-runtime.cjs": {
+    "mtime": 1793771043.6167803,
+    "seen": 1793890213.3931384,
+    "ast_hash": "6e1f7ad94393c96473b2615662cb2c0d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/scripts/smoke-linux-appimage-symbols.sh": {
+    "mtime": 1793771043.6178412,
+    "seen": 1793890213.3931432,
+    "ast_hash": "9c18ff5286c58581581b167e26650586",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/scripts/smoke-package.cjs": {
+    "mtime": 1793771043.6194634,
+    "seen": 1793890213.3931484,
+    "ast_hash": "881295f1dc19a3353a4dbb47fccb88fd",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/App.tsx": {
+    "mtime": 1793771043.624118,
+    "seen": 1793890213.393154,
+    "ast_hash": "fcfa7a6779b6ad45e0ef5f5f45ee35b6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/LimitsSurface.tsx": {
+    "mtime": 1793771043.6256378,
+    "seen": 1793890213.3931587,
+    "ast_hash": "d764d89ae8d637d18f0ce8878620d352",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/SessionReminderOverlay.tsx": {
+    "mtime": 1793771043.6271565,
+    "seen": 1793890213.393163,
+    "ast_hash": "937357d73b144e7505878fe0cbfc110a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/i18n.ts": {
+    "mtime": 1793771043.732069,
+    "seen": 1793890213.393168,
+    "ast_hash": "1fbfd59c5ca73e56d99d7f88e129cf40",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/icons.tsx": {
+    "mtime": 1793771043.7331636,
+    "seen": 1793890213.3931725,
+    "ast_hash": "64140b5a796311187e427c9daa84d348",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/limits-copy.ts": {
+    "mtime": 1793771043.734672,
+    "seen": 1793890213.393177,
+    "ast_hash": "369caecbd86d99bbb3f6a691ff7f1fc4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/limits-types.ts": {
+    "mtime": 1793771043.7378187,
+    "seen": 1793890213.3931823,
+    "ast_hash": "2831e83be393c566575dcc9e8b68dba4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/main.tsx": {
+    "mtime": 1793771043.7403193,
+    "seen": 1793890213.3931882,
+    "ast_hash": "6953f314c12ad910e953859b62d95acb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/turn-activity.ts": {
+    "mtime": 1793771043.746357,
+    "seen": 1793890213.3931932,
+    "ast_hash": "f453df7a6ce33840a4ff0933ee999367",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/types.ts": {
+    "mtime": 1793771043.7473674,
+    "seen": 1793890213.393198,
+    "ast_hash": "732520a71018ea22871ea6a711458375",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/useLimits.ts": {
+    "mtime": 1793771043.749378,
+    "seen": 1793890213.393203,
+    "ast_hash": "c1b1ae17ba557a23d84cdd73ca5152d2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/atomic-file.test.cjs": {
+    "mtime": 1793771043.7508936,
+    "seen": 1793890213.3932073,
+    "ast_hash": "32481e993e5179ae08d9051ece564a26",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/browser-announcements.test.cjs": {
+    "mtime": 1793771043.7534156,
+    "seen": 1793890213.3932123,
+    "ast_hash": "a930c0bd3ce7787445dea38054441e36",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/browser-helper-verifier.test.cjs": {
+    "mtime": 1793771043.7558486,
+    "seen": 1793890213.3932168,
+    "ast_hash": "105601e2b1cd21e03ced049ae38ad0fb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/browser-host.test.cjs": {
+    "mtime": 1793771043.7596276,
+    "seen": 1793890213.3932214,
+    "ast_hash": "be6d410d846b44e3cdf391535a106b8f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/browser-page-script.test.cjs": {
+    "mtime": 1793771043.7613456,
+    "seen": 1793890213.3932261,
+    "ast_hash": "830d91363967ee2d4fb75e55ccd7f2b2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/control-server.test.cjs": {
+    "mtime": 1793771043.763527,
+    "seen": 1793890213.3932312,
+    "ast_hash": "2ef696b93322b686728471595ca10ac4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/fixtures/chatgpt-link-regexp.json": {
+    "mtime": 1793771043.7652333,
+    "seen": 1793890213.3932362,
+    "ast_hash": "0120fccc0abe209a4216dc3b4d0a1547",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/fixtures/composer-controls.cjs": {
+    "mtime": 1793771043.7668417,
+    "seen": 1793890213.3932414,
+    "ast_hash": "5cc77d471c1363bde1f562411ffe5cc4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/fixtures/context-markdown-regexp.cjs": {
+    "mtime": 1793771043.7679353,
+    "seen": 1793890213.3932462,
+    "ast_hash": "31fbd462cd3b3cc3fdaadab72bcb1114",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/fixtures/navigation-viewport.cjs": {
+    "mtime": 1793771043.7697349,
+    "seen": 1793890213.3932505,
+    "ast_hash": "a3f280a515e7933e4079876f113b7861",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/fixtures/session-reminder.cjs": {
+    "mtime": 1793771043.7712553,
+    "seen": 1793890213.3932552,
+    "ast_hash": "d69bc957662b9603e145a3576e0f7db6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/fixtures/viewport.cjs": {
+    "mtime": 1793771043.7725534,
+    "seen": 1793890213.3932598,
+    "ast_hash": "8c60d96818d55551d3d2486587cd4ea5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/limits-controller.test.cjs": {
+    "mtime": 1793771043.7736251,
+    "seen": 1793890213.3932645,
+    "ast_hash": "8596742a5a7e51e1f10e887790e8d7b6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/limits-store.test.cjs": {
+    "mtime": 1793771043.7753253,
+    "seen": 1793890213.393269,
+    "ast_hash": "ab4999dc6b9ca5e16dcb023084903589",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/localization.test.cjs": {
+    "mtime": 1793771043.7765188,
+    "seen": 1793890213.3932745,
+    "ast_hash": "699dbda95ca8639da83ee5d71e274e32",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/logging.test.cjs": {
+    "mtime": 1793771043.778299,
+    "seen": 1793890213.3932796,
+    "ast_hash": "ad037d46f37bd39ebdd9fe50e4a7e6e4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/packaging-contract.test.cjs": {
+    "mtime": 1793771043.779613,
+    "seen": 1793890213.393284,
+    "ast_hash": "339593c97bc0f2bdaa3ac8e022f8b1ef",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/passkey-login-state.test.cjs": {
+    "mtime": 1793771043.781003,
+    "seen": 1793890213.3932889,
+    "ast_hash": "ab205d070c852a9cf54b60bcb2c8ec85",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/profile.test.cjs": {
+    "mtime": 1793771043.782098,
+    "seen": 1793890213.3932936,
+    "ast_hash": "5e36cbfdb332c1afafaa1073f7e18e1b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/renderer-wiring.test.cjs": {
+    "mtime": 1793771043.7842233,
+    "seen": 1793890213.3932981,
+    "ast_hash": "2c0f38a9a855c4e3405d212a884382ad",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/runtime-host.test.cjs": {
+    "mtime": 1793771043.7863095,
+    "seen": 1793890213.3933036,
+    "ast_hash": "7a9ee289b6432f6a9032e2759bcb7b40",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/runtime-install.test.cjs": {
+    "mtime": 1793771043.788249,
+    "seen": 1793890213.3933089,
+    "ast_hash": "929dcc25948bbac58d7c7fff15af143d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/runtime-supervisor.test.cjs": {
+    "mtime": 1793771043.790745,
+    "seen": 1793890213.393314,
+    "ast_hash": "50bbcb37862a15120f6590c6becb65a2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/state.test.cjs": {
+    "mtime": 1793771043.7923386,
+    "seen": 1793890213.3933184,
+    "ast_hash": "d3942b00204f9067a6acf8f67a4e6295",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/tunnel-proxy.test.cjs": {
+    "mtime": 1793771043.793843,
+    "seen": 1793890213.3933227,
+    "ast_hash": "f76519fe828e3a56eebceb895b528515",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/turn-suspension.test.cjs": {
+    "mtime": 1793771043.794366,
+    "seen": 1793890213.3933275,
+    "ast_hash": "5dd89d881e15b555aadfe8d4ab378c3b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/update.test.cjs": {
+    "mtime": 1793771043.7963958,
+    "seen": 1793890213.3933327,
+    "ast_hash": "c2746de719065c22c1f3d4ecb2554dee",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/window-state.test.cjs": {
+    "mtime": 1793771043.7978566,
+    "seen": 1793890213.393338,
+    "ast_hash": "40440bb578606a293ed24e14a43f5875",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/windows-installer.test.cjs": {
+    "mtime": 1793771043.8054173,
+    "seen": 1793890213.3933425,
+    "ast_hash": "ab48d7ab1806219f2d163f4245241d71",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/windows-installer.test.ps1": {
+    "mtime": 1793771043.8064442,
+    "seen": 1793890213.393347,
+    "ast_hash": "2a2c18e13dd88b84309d021573b2d824",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tests/windows-trust.test.cjs": {
+    "mtime": 1793771043.8079886,
+    "seen": 1793890213.3933508,
+    "ast_hash": "4617a255bfce6c135ba7c32998d28179",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/tsconfig.json": {
+    "mtime": 1793771043.809597,
+    "seen": 1793890213.3933556,
+    "ast_hash": "3e23d4673dd0426c310a20f65b05810e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/vite.config.ts": {
+    "mtime": 1793771043.8106897,
+    "seen": 1793890213.3933604,
+    "ast_hash": "875e554faf4ac454e138efe7b6a66739",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/package.json": {
+    "mtime": 1793771043.8124328,
+    "seen": 1793890213.393365,
+    "ast_hash": "66db10f6e77d13077efb1c10dcc727c8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/build-browser-helper.ts": {
+    "mtime": 1793771043.8145957,
+    "seen": 1793890213.3933702,
+    "ast_hash": "3f255786dc82def1e643720abedd78ee",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/build-runtime-bundle.ts": {
+    "mtime": 1793771043.8158326,
+    "seen": 1793890213.3933752,
+    "ast_hash": "8fbe62354c84088f2c754d6ac17fb6ba",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/check-version.ts": {
+    "mtime": 1793771043.8178792,
+    "seen": 1793890213.3933797,
+    "ast_hash": "494c6c351d1e09b9e8ad2f3ac2476897",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/clean.ts": {
+    "mtime": 1793771043.8193963,
+    "seen": 1793890213.3933845,
+    "ast_hash": "6c931fcc6f569bb3b1953b58faea6bff",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/generate-third-party-notices.ts": {
+    "mtime": 1793771043.821406,
+    "seen": 1793890213.3933902,
+    "ast_hash": "871423d275c3c37040d2f26eeb42393f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/install-launcher.ps1": {
+    "mtime": 1793771043.8239284,
+    "seen": 1793890213.3933954,
+    "ast_hash": "dec9d115ee1064080d6eeeb9eb14f3af",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/install-launcher.sh": {
+    "mtime": 1793771043.824928,
+    "seen": 1793890213.3934,
+    "ast_hash": "c75a44e625b60d20bda420aa075f963c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/install.sh": {
+    "mtime": 1793771043.8269262,
+    "seen": 1793890213.3934054,
+    "ast_hash": "c20e5f13720dcbd8ba9abe3de5ae088d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/prepare-linux-libnotify.sh": {
+    "mtime": 1793771043.8284535,
+    "seen": 1793890213.3934104,
+    "ast_hash": "ba00313fbb6e344c787c0ef6aee0f2f2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/prepare-windows-baseline-bun.ps1": {
+    "mtime": 1793771043.829558,
+    "seen": 1793890213.3934162,
+    "ast_hash": "ff7ac30be731370325d73d8f77baa0a8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-codex-cancel.ts": {
+    "mtime": 1793771043.831069,
+    "seen": 1793890213.3934212,
+    "ast_hash": "b499b7df2c589ad12216faad8b4afbd2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-codex-catalog.ts": {
+    "mtime": 1793771043.833119,
+    "seen": 1793890213.393426,
+    "ast_hash": "347f0ff8552202d8753352a3556cc043",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-codex-environment.ts": {
+    "mtime": 1793771043.8341563,
+    "seen": 1793890213.3934307,
+    "ast_hash": "c14a26d36327443fd7517be2041a2514",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-codex-interrupt.ts": {
+    "mtime": 1793771043.8356318,
+    "seen": 1793890213.393436,
+    "ast_hash": "2891e3c645e7d98d8f5025c410fe4d29",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-codex-subagents.ts": {
+    "mtime": 1793771043.8384397,
+    "seen": 1793890213.393441,
+    "ast_hash": "87ef9624acc7273971d1f2dd8b407e68",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-codex-web-subagents.ts": {
+    "mtime": 1793771043.8404384,
+    "seen": 1793890213.3934479,
+    "ast_hash": "240d92a69caa1a5140e3c4bbb9559605",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/smoke-release.ts": {
+    "mtime": 1793771043.8419485,
+    "seen": 1793890213.3934536,
+    "ast_hash": "06c9c612500381639abf0be494dc8efb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/start-launcher.ts": {
+    "mtime": 1793771043.8434627,
+    "seen": 1793890213.3934581,
+    "ast_hash": "aecc6e699b75e0ab2364f68659dfdde8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/scripts/verify.ts": {
+    "mtime": 1793771043.8457353,
+    "seen": 1793890213.3934634,
+    "ast_hash": "9122deaa386b6f888d83aac983a6d8b2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/skills/pro-researcher/agents/openai.yaml": {
+    "mtime": 1793771043.851312,
+    "seen": 1793890213.3934686,
+    "ast_hash": "3529a843aaaf4a0adb57c2c7ebbb6658",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/base.ts": {
+    "mtime": 1793771043.8558378,
+    "seen": 1793890213.393474,
+    "ast_hash": "69a7556c90b213c224bf108fd842a6c1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/adapter-error.ts": {
+    "mtime": 1793771043.858356,
+    "seen": 1793890213.3934793,
+    "ast_hash": "dd1ffa2cdfbf0f1e0643cf0639b31daa",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/attachment-upload.ts": {
+    "mtime": 1793771043.8613572,
+    "seen": 1793890213.3934844,
+    "ast_hash": "5d1aca9c1f7c6b7a23236d8c54e0343d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-diagnostic-history.ts": {
+    "mtime": 1793771043.8638954,
+    "seen": 1793890213.3934891,
+    "ast_hash": "3b93173b4ba10764f6ee2ea76398cfd2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-helper-main.ts": {
+    "mtime": 1793771043.8649058,
+    "seen": 1793890213.3934941,
+    "ast_hash": "c46817ca92b29276da0c6a439b66343c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-helper-prompt-selection.ts": {
+    "mtime": 1793771043.8664167,
+    "seen": 1793890213.3934987,
+    "ast_hash": "667feed8c2addd83083154be18e2aa4d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-interaction-state.ts": {
+    "mtime": 1793771043.8688245,
+    "seen": 1793890213.3935037,
+    "ast_hash": "4ea69d905e3d283ff6dfdf1decbeccd1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-response-structure.ts": {
+    "mtime": 1793771043.8698256,
+    "seen": 1793890213.3935091,
+    "ast_hash": "ac24c288ca2a07aca8244ecfacca54cd",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-user-message.ts": {
+    "mtime": 1793771043.8723373,
+    "seen": 1793890213.393515,
+    "ast_hash": "5ad21cdd8843a77c81ac172859666d46",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/browser-worker.ts": {
+    "mtime": 1793771043.8778756,
+    "seen": 1793890213.393521,
+    "ast_hash": "a1146aed1b36ee80e3ccebae9f71025b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/codex-rollout-environment.ts": {
+    "mtime": 1793771043.8793843,
+    "seen": 1793890213.393527,
+    "ast_hash": "6220afc16e74e6c0fd18b71687a0ea54",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/compaction-continuation.ts": {
+    "mtime": 1793771043.8803976,
+    "seen": 1793890213.3935325,
+    "ast_hash": "01e2749290a97b9158f692ae27e35153",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/compaction-handoff.ts": {
+    "mtime": 1793771043.8828979,
+    "seen": 1793890213.3935392,
+    "ast_hash": "cd265e91528368a077cdb9ace794c069",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/compaction-transaction.ts": {
+    "mtime": 1793771043.884408,
+    "seen": 1793890213.393544,
+    "ast_hash": "9d910e098c88db3bb7e540c8a01a5e22",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/concurrency.ts": {
+    "mtime": 1793771043.8859265,
+    "seen": 1793890213.3935485,
+    "ast_hash": "2fbe83812de4a1143ca3df5a700eb436",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/conversation-key.ts": {
+    "mtime": 1793771043.8879445,
+    "seen": 1793890213.3935552,
+    "ast_hash": "f896ccf294f0111ff857e324e0d88ee3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/environment.ts": {
+    "mtime": 1793771043.8908236,
+    "seen": 1793890213.3935604,
+    "ast_hash": "9c0214244793c0fd2e89027520cd712c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/index.ts": {
+    "mtime": 1793771043.8934393,
+    "seen": 1793890213.3935654,
+    "ast_hash": "02208204fde9041a408fe909bcf32e7f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/input-tokens.ts": {
+    "mtime": 1793771043.8949478,
+    "seen": 1793890213.3935707,
+    "ast_hash": "4b517272d2b843ec984e4cc385e41fc9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/launcher-helper-client.ts": {
+    "mtime": 1793771043.8959599,
+    "seen": 1793890213.3935761,
+    "ast_hash": "01091f5ed2326401549e3ba0079499c5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/limits.ts": {
+    "mtime": 1793771043.8974683,
+    "seen": 1793890213.3935814,
+    "ast_hash": "5b7694c803c6e22d76b6faf88b31b3ad",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/markdown.ts": {
+    "mtime": 1793771043.9003615,
+    "seen": 1793890213.3935862,
+    "ast_hash": "43ac68c59dbc34a761189ea44db59bfc",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/mcp-main.ts": {
+    "mtime": 1793771043.901363,
+    "seen": 1793890213.3935907,
+    "ast_hash": "997f4f6e33119fc9a8d5ba51cd909f73",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/mcp-observation.ts": {
+    "mtime": 1793771043.9036076,
+    "seen": 1793890213.3935957,
+    "ast_hash": "790e31525ff2f74b6ad63c3c9424c8c6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/mcp-server.ts": {
+    "mtime": 1793771043.9061303,
+    "seen": 1793890213.3935997,
+    "ast_hash": "7d799b91540bd59b173a313890068a10",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/model-selection.ts": {
+    "mtime": 1793771043.9072182,
+    "seen": 1793890213.3936045,
+    "ast_hash": "79389beb9cfc55d622f449aadc0eb487",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/model.ts": {
+    "mtime": 1793771043.9093108,
+    "seen": 1793890213.393609,
+    "ast_hash": "c00012a06965738bff3b17aea091f201",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/native-compaction-control.ts": {
+    "mtime": 1793771043.9103105,
+    "seen": 1793890213.3936138,
+    "ast_hash": "f5e6e786b271fdaaddcf57e4be976927",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/output-validation.ts": {
+    "mtime": 1793771043.91231,
+    "seen": 1793890213.393618,
+    "ast_hash": "0bf16d766235b3d61c1b69fc25415756",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/process-line-writer.ts": {
+    "mtime": 1793771043.9134593,
+    "seen": 1793890213.393624,
+    "ast_hash": "d71c2d987a6d04e38068a05baf8b9d16",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/prompt.ts": {
+    "mtime": 1793771043.915436,
+    "seen": 1793890213.39363,
+    "ast_hash": "a6c6815d9ad1ba6998a21c56ab27c90a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/retry-policy.ts": {
+    "mtime": 1793771043.9168193,
+    "seen": 1793890213.393635,
+    "ast_hash": "8ad7d6687e58e39f049feb2156b190c1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/rolling-checkpoint.ts": {
+    "mtime": 1793771043.918834,
+    "seen": 1793890213.39364,
+    "ast_hash": "f00d07d62fb2058abccba2c92f786dd5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/skill-attachments.ts": {
+    "mtime": 1793771043.9203646,
+    "seen": 1793890213.3936458,
+    "ast_hash": "79eda035ddfa8d867214847d1e45db70",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/stream-diagnostics.ts": {
+    "mtime": 1793771043.922393,
+    "seen": 1793890213.3936508,
+    "ast_hash": "e2bbf8a0265f521acd51ab222deea10f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/thread-environment.ts": {
+    "mtime": 1793771043.9234211,
+    "seen": 1793890213.393656,
+    "ast_hash": "641902320270e8724524aec727793ca3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/turn-broker.ts": {
+    "mtime": 1793771043.9259422,
+    "seen": 1793890213.3936615,
+    "ast_hash": "ed64b86e62e7105be6280bebf2453ba3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/turn-execution.ts": {
+    "mtime": 1793771043.9294672,
+    "seen": 1793890213.3936672,
+    "ast_hash": "016df50f889385f96d48888fe973875e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/turn-progress.ts": {
+    "mtime": 1793771043.9320078,
+    "seen": 1793890213.3936727,
+    "ast_hash": "1e44c1449c90ef283535504b4dc3cec8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/ui-labels.ts": {
+    "mtime": 1793771043.9331598,
+    "seen": 1793890213.3936775,
+    "ast_hash": "95fc0c609a097cde25a885594c91aa9d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/chatgpt-web/usage.ts": {
+    "mtime": 1793771043.9343624,
+    "seen": 1793890213.393682,
+    "ast_hash": "c48373dc9ddcdcdf2e3a0bd1f49b59d7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/adapters/image.ts": {
+    "mtime": 1793771043.9379573,
+    "seen": 1793890213.3936868,
+    "ast_hash": "1e2b68853c1fc6b5abf8094589a8d4be",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/bridge.ts": {
+    "mtime": 1793771043.9394667,
+    "seen": 1793890213.3936923,
+    "ast_hash": "be560cba6d9d6969b6f579a2d474f27e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/browser-login.ts": {
+    "mtime": 1793771043.9415917,
+    "seen": 1793890213.393697,
+    "ast_hash": "1cff01a41dcba94eeb2917a00589cd71",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-session.ts": {
+    "mtime": 1793771043.9426138,
+    "seen": 1793890213.393703,
+    "ast_hash": "f7f1d698c22d9e9761db998689f696dc",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-ui/composer.ts": {
+    "mtime": 1793771043.9465146,
+    "seen": 1793890213.3938725,
+    "ast_hash": "c245fef1fb3c0d88dfca560964d1b21f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-ui/model-picker.ts": {
+    "mtime": 1793771043.9475403,
+    "seen": 1793890213.3938892,
+    "ast_hash": "b2c8dbdeb9a024b5a305b309e5cb91b6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-ui/observations.ts": {
+    "mtime": 1793771043.9495523,
+    "seen": 1793890213.3938956,
+    "ast_hash": "9d68e858f4ef18fa27ce5a54fd399b81",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-ui/turns.ts": {
+    "mtime": 1793771043.9507618,
+    "seen": 1793890213.3939013,
+    "ast_hash": "4512441126e4f8f22b977c014c6ba1b3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-web-models.ts": {
+    "mtime": 1793771043.9533613,
+    "seen": 1793890213.393906,
+    "ast_hash": "b643ff1ea5fce9f1348756425b07a9b9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/cli.ts": {
+    "mtime": 1793771043.9548993,
+    "seen": 1793890213.3939118,
+    "ast_hash": "51566ec59b9e737b63a544cdd9d2f9c2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/codex-integration-document.ts": {
+    "mtime": 1793771043.9577427,
+    "seen": 1793890213.3939197,
+    "ast_hash": "32e338f9b29d7387d1848f00196db3a2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/codex-integration-journal.ts": {
+    "mtime": 1793771043.9592595,
+    "seen": 1793890213.3939252,
+    "ast_hash": "735a1b394a0bf0803c6b6c1f324422f3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/codex-integration-route.ts": {
+    "mtime": 1793771043.9613185,
+    "seen": 1793890213.3939316,
+    "ast_hash": "81110f9552f66c5813f58ddcbb41f058",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/codex-integration-shared.ts": {
+    "mtime": 1793771043.9621801,
+    "seen": 1793890213.3939369,
+    "ast_hash": "a215f5f73f30dd3473905bc59e835e70",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/codex-integration.ts": {
+    "mtime": 1793771043.9641352,
+    "seen": 1793890213.3939426,
+    "ast_hash": "a4f0a85c03096f240ea01826ec6e48e1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/codex-interrupt-hook.ts": {
+    "mtime": 1793771043.9656098,
+    "seen": 1793890213.3939493,
+    "ast_hash": "05e33d257eff35e6df7767c9f1def0ac",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/composer-predictions.ts": {
+    "mtime": 1793771043.967121,
+    "seen": 1793890213.3939545,
+    "ast_hash": "e52dfa234133916781a24efaf5417eb7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/config.ts": {
+    "mtime": 1793771043.9697063,
+    "seen": 1793890213.3939595,
+    "ast_hash": "0ae6693ba2f672eafc0d9cafb0b54c6d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/dev-chat/cli.ts": {
+    "mtime": 1793771043.9747055,
+    "seen": 1793890213.3939645,
+    "ast_hash": "ea1c9e2cc8cf44d9544464c2bdb9ec4a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/dev-chat/constants.ts": {
+    "mtime": 1793771043.9752257,
+    "seen": 1793890213.3939693,
+    "ast_hash": "b59d9f88b22e1f7225c06589e8e660c2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/dev-chat/driver.ts": {
+    "mtime": 1793771043.977637,
+    "seen": 1793890213.3939748,
+    "ast_hash": "cd8b625419352013319b58f55e53136c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/dev-chat/profile.ts": {
+    "mtime": 1793771043.9793625,
+    "seen": 1793890213.3939798,
+    "ast_hash": "03d9b39e9e49b1e88d88af0130c6af65",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/dev-chat/session.ts": {
+    "mtime": 1793771043.9804616,
+    "seen": 1793890213.3939857,
+    "ast_hash": "bf73a525540b84ff1f6fc02b95e30754",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/dev-chat/transport.ts": {
+    "mtime": 1793771043.981938,
+    "seen": 1793890213.3939912,
+    "ast_hash": "be291f546ceff2aec14c17754494d36f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/doctor-compaction.ts": {
+    "mtime": 1793771043.9829466,
+    "seen": 1793890213.3939958,
+    "ast_hash": "d319e7276dde954541e5a35e867595f9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/doctor.ts": {
+    "mtime": 1793771043.9844651,
+    "seen": 1793890213.3940003,
+    "ast_hash": "c5be3ce918779e9e531e2d4c4ec33e2b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/domino.d.ts": {
+    "mtime": 1793771043.9888437,
+    "seen": 1793890213.3940046,
+    "ast_hash": "3dd24ff967871f770ef2d7d846565728",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/event-queue.ts": {
+    "mtime": 1793771043.9909894,
+    "seen": 1793890213.394009,
+    "ast_hash": "9d29dc11d43d68432244c9260240c75c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/http-body.ts": {
+    "mtime": 1793771043.9925103,
+    "seen": 1793890213.3940134,
+    "ast_hash": "6e7ee799adc8ae3b92b4c86ccb75da7a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/launcher-browser-host.ts": {
+    "mtime": 1793771043.9945297,
+    "seen": 1793890213.3940184,
+    "ast_hash": "251817b91a8cb2c988b16440d12a1895",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/lib/errors.ts": {
+    "mtime": 1793771043.9970653,
+    "seen": 1793890213.394024,
+    "ast_hash": "a0d68f21f329922c550c6b2a0ca951e7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/lib/token-estimate.ts": {
+    "mtime": 1793771043.9980657,
+    "seen": 1793890213.394028,
+    "ast_hash": "3d46b996320972b8c6c18fcf87fc7167",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/model-catalog.ts": {
+    "mtime": 1793771043.9995933,
+    "seen": 1793890213.3940325,
+    "ast_hash": "e6894bfe8ae71fd6203bc81d5d64b771",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/native-network.ts": {
+    "mtime": 1793771044.0011027,
+    "seen": 1793890213.394037,
+    "ast_hash": "18a2adb8578765106418598dbbf3823a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/native-passthrough.ts": {
+    "mtime": 1793771044.0031147,
+    "seen": 1793890213.394041,
+    "ast_hash": "71e9f51a2e43d5c4b71ed95f964272fe",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/process.ts": {
+    "mtime": 1793771044.0031147,
+    "seen": 1793890213.394047,
+    "ast_hash": "ac98aac18d7c2fe9324991035548eaa1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/responses/compaction.ts": {
+    "mtime": 1793771044.0061646,
+    "seen": 1793890213.3940525,
+    "ast_hash": "94da190a8c924e74ee1af62f7bdf4900",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/responses/native-context.ts": {
+    "mtime": 1793771044.0084264,
+    "seen": 1793890213.394058,
+    "ast_hash": "da9342265cd6af5b39b12447faf71d4a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/responses/parser.ts": {
+    "mtime": 1793771044.0098412,
+    "seen": 1793890213.394063,
+    "ast_hash": "d6a3e677584dbf6214ddae666682288a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/responses/reasoning-envelope.ts": {
+    "mtime": 1793771044.0118537,
+    "seen": 1793890213.394068,
+    "ast_hash": "aa40501b2213708012869ee55a76e95f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/responses/schema.ts": {
+    "mtime": 1793771044.0132198,
+    "seen": 1793890213.3940728,
+    "ast_hash": "08cd6fbbf488aa12821627e3f9384cd4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/responses/state.ts": {
+    "mtime": 1793771044.0142186,
+    "seen": 1793890213.3940783,
+    "ast_hash": "c8fe62742ac7113e094024259b287fcf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/server.ts": {
+    "mtime": 1793771044.0167415,
+    "seen": 1793890213.3940835,
+    "ast_hash": "11442682758235b4e88957c6aa04aef0",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/service.ts": {
+    "mtime": 1793771044.0187917,
+    "seen": 1793890213.3940887,
+    "ast_hash": "b1fc741f2af06317e8aa255361252d33",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/setup.ts": {
+    "mtime": 1793771044.0218387,
+    "seen": 1793890213.394094,
+    "ast_hash": "b945ade50e1a8df014256d2c3dee5077",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/stall-timeout.ts": {
+    "mtime": 1793771044.0231564,
+    "seen": 1793890213.3940988,
+    "ast_hash": "4562cf9793c80dbe93b44bfb49e72bf1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/tunnel-service.ts": {
+    "mtime": 1793771044.0249398,
+    "seen": 1793890213.3941035,
+    "ast_hash": "7d631b487dff8d21e379e4d35505578a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/tunnel.ts": {
+    "mtime": 1793771044.0269606,
+    "seen": 1793890213.3941076,
+    "ast_hash": "5b12f9af7c898a046a2b539825698c7c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/turndown-plugin-gfm.d.ts": {
+    "mtime": 1793771044.0284798,
+    "seen": 1793890213.3941133,
+    "ast_hash": "4ba2a1bab163a26fa8605adfb0056d60",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/types.ts": {
+    "mtime": 1793771044.0290139,
+    "seen": 1793890213.394133,
+    "ast_hash": "0c3de50ba6e6a18877b14354ce9093b2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/usage/totals.ts": {
+    "mtime": 1793771044.0317104,
+    "seen": 1793890213.39414,
+    "ast_hash": "1f52158f5f1fc7eb62ae33efb50fd54e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/version.ts": {
+    "mtime": 1793771044.03372,
+    "seen": 1793890213.3941455,
+    "ast_hash": "d31dceba897eb87df8ceea41efe68186",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/start-aspace-codex-web.ps1": {
+    "mtime": 1793771629.1025283,
+    "seen": 1793890213.3941507,
+    "ast_hash": "6d07fc2b8c1a1029520390bb34ff08f1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/attachment-upload-electron.test.ts": {
+    "mtime": 1793771044.035406,
+    "seen": 1793890213.3941557,
+    "ast_hash": "18834bb2d87a11ab85c7dbf2118fb559",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/attachment-upload.test.ts": {
+    "mtime": 1793771044.039438,
+    "seen": 1793890213.3941615,
+    "ast_hash": "7904c3cd6a5001cacbf44c4719ae2e4b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/bridge-collaboration.test.ts": {
+    "mtime": 1793771044.0419576,
+    "seen": 1793890213.394167,
+    "ast_hash": "2dcfd4e51c959dfe4cf917cc2d6bac50",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/bridge-platform.test.ts": {
+    "mtime": 1793771044.0436735,
+    "seen": 1793890213.3941722,
+    "ast_hash": "8a8105d835727882bb968b7f84617901",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/bridge-stall-timeout.test.ts": {
+    "mtime": 1793771044.0446844,
+    "seen": 1793890213.394177,
+    "ast_hash": "cd72267ffbdbee9233c0798c156dc068",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-cancellation.test.ts": {
+    "mtime": 1793771044.046193,
+    "seen": 1793890213.394182,
+    "ast_hash": "63e6ec6299c10a7acf2a00a187e67ae5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-diagnostic-history.test.ts": {
+    "mtime": 1793771044.0482695,
+    "seen": 1793890213.3941867,
+    "ast_hash": "ad322b926ee2e1b82d13bb1e32532d6c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-generation.test.ts": {
+    "mtime": 1793771044.0497952,
+    "seen": 1793890213.3941932,
+    "ast_hash": "085321cf78edd1f5e6aca9069d24efb7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-live-progress.test.ts": {
+    "mtime": 1793771044.0508068,
+    "seen": 1793890213.3942323,
+    "ast_hash": "a7f0bfb1d905f04cfd26563e470ea0f4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-login.test.ts": {
+    "mtime": 1793771044.0533304,
+    "seen": 1793890213.394239,
+    "ast_hash": "c07f1addd5adb311cb8a5713527a3e37",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-response-dom.test.ts": {
+    "mtime": 1793771044.0558507,
+    "seen": 1793890213.394245,
+    "ast_hash": "f11b6828b0a90908a38a0304eac65fdf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-turn-binding.test.ts": {
+    "mtime": 1793771044.0609012,
+    "seen": 1793890213.3942502,
+    "ast_hash": "0492faff66896b5c0b35c051b9a6ae61",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/browser-worker-contract.test.ts": {
+    "mtime": 1793771044.065427,
+    "seen": 1793890213.3942556,
+    "ast_hash": "4324336d3efaceadb1dc43dc647ea514",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-capabilities-browser.test.ts": {
+    "mtime": 1793771044.0674262,
+    "seen": 1793890213.394261,
+    "ast_hash": "2cf3c3cd6847cfc62e7761fec30c4a0b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-effort-browser.test.ts": {
+    "mtime": 1793771044.0710018,
+    "seen": 1793890213.3942661,
+    "ast_hash": "1a0703d9fc168f2e48f568c98bd12bad",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-limits-browser.test.ts": {
+    "mtime": 1793771044.0718958,
+    "seen": 1793890213.3942711,
+    "ast_hash": "311d00d023086921d5b3da663c4202f6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-limits.test.ts": {
+    "mtime": 1793771044.0744421,
+    "seen": 1793890213.394277,
+    "ast_hash": "84b314cdc98e70efec0c4f3726685c6a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-markdown-parser.test.ts": {
+    "mtime": 1793771044.0781183,
+    "seen": 1793890213.394283,
+    "ast_hash": "f033b82cfe79e837b1f2519c7d1fac30",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-model-family-browser.test.ts": {
+    "mtime": 1793771044.0801175,
+    "seen": 1793890213.394287,
+    "ast_hash": "e1237d10b6757075839174494baadaa6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-model-selection.test.ts": {
+    "mtime": 1793771044.0811367,
+    "seen": 1793890213.3942919,
+    "ast_hash": "52f4e0451ded5ff09c8874907dd211dc",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-session.test.ts": {
+    "mtime": 1793771044.0831487,
+    "seen": 1793890213.3942966,
+    "ast_hash": "f6eb310c1cbd5eaf47b8d96ae7e8ec40",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-ui-observations-browser.test.ts": {
+    "mtime": 1793771044.0846553,
+    "seen": 1793890213.394301,
+    "ast_hash": "1f5e059316caa343c1bf40913fb93ac8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-ui-observations.test.ts": {
+    "mtime": 1793771044.088176,
+    "seen": 1793890213.394306,
+    "ast_hash": "36ecc90470521f7d60446b3c65ae71f0",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-web-harness.test.ts": {
+    "mtime": 1793771044.0932355,
+    "seen": 1793890213.394311,
+    "ast_hash": "e83b180e6b170f817d06875b5ec8c1ff",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-web-markdown.test.ts": {
+    "mtime": 1793771044.0942335,
+    "seen": 1793890213.3943162,
+    "ast_hash": "a4498c523c68247f971a1b6b976ad6ee",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-web-models.test.ts": {
+    "mtime": 1793771044.0967312,
+    "seen": 1793890213.394321,
+    "ast_hash": "4506ed12ed8f643268ccf3308437bd42",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/chatgpt-web-usage.test.ts": {
+    "mtime": 1793771044.097255,
+    "seen": 1793890213.394325,
+    "ast_hash": "08139d21f32d5f0717e0d0ec07d72b78",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/cli.test.ts": {
+    "mtime": 1793771044.099896,
+    "seen": 1793890213.3943295,
+    "ast_hash": "c71ffe41ac9edee7e3799750f6f7800e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/codex-integration.test.ts": {
+    "mtime": 1793771044.1105793,
+    "seen": 1793890213.3943348,
+    "ast_hash": "0729176ea683b0c81314b1dc310ed3fa",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/codex-interrupt-hook.test.ts": {
+    "mtime": 1793771044.1125932,
+    "seen": 1793890213.3943398,
+    "ast_hash": "2f21934435f1191baa222089e9a84d37",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/compaction-browser-recovery.test.ts": {
+    "mtime": 1793771044.1135924,
+    "seen": 1793890213.394345,
+    "ast_hash": "5fb49e4a1de0fc206fd135cd2c996df3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/compaction-goal-source.test.ts": {
+    "mtime": 1793771044.1156096,
+    "seen": 1793890213.3943496,
+    "ast_hash": "b0ffef872e47aa44946afefe2ff901b3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/compaction-task-context-review.test.ts": {
+    "mtime": 1793771044.1171496,
+    "seen": 1793890213.3943539,
+    "ast_hash": "10b468f8af80e09ed0e58073f1169e8e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/compaction-task-context.test.ts": {
+    "mtime": 1793771044.1181614,
+    "seen": 1793890213.3943594,
+    "ast_hash": "34de09460be9d172a1bfab2d0e75306f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/compaction-v1.test.ts": {
+    "mtime": 1793771044.1213222,
+    "seen": 1793890213.394364,
+    "ast_hash": "81002901896487a473bc404dbe890de4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/composer-insert.test.ts": {
+    "mtime": 1793771044.1228278,
+    "seen": 1793890213.3943691,
+    "ast_hash": "367b41fe6b812e2d6bd6343074445ea3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/context-markdown-regexp.test.ts": {
+    "mtime": 1793771044.1240153,
+    "seen": 1793890213.3943753,
+    "ast_hash": "883672b2133c47ada62d15be1cca3f13",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/delivery-timeout.test.ts": {
+    "mtime": 1793771044.1262996,
+    "seen": 1793890213.3943803,
+    "ast_hash": "464fdb1e3603fa5943f63b16cdf6e241",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/dev-chat.test.ts": {
+    "mtime": 1793771044.1274662,
+    "seen": 1793890213.3943856,
+    "ast_hash": "6ef8fe79a42f020629421e0e75fc7ceb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/dev-profile.test.ts": {
+    "mtime": 1793771044.128493,
+    "seen": 1793890213.3943908,
+    "ast_hash": "b29a778551a4bed5eb60d2b18dfd96cf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/doctor-compaction.test.ts": {
+    "mtime": 1793771044.1310525,
+    "seen": 1793890213.3943949,
+    "ast_hash": "68b22fd973b7a4b5698b7f5d1cdef475",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/environment.test.ts": {
+    "mtime": 1793771044.1345336,
+    "seen": 1793890213.3943996,
+    "ast_hash": "771515719628b3fdbf09035a17d12580",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-markdown-link-regexp.json": {
+    "mtime": 1793771044.1484191,
+    "seen": 1793890213.3944063,
+    "ast_hash": "0120fccc0abe209a4216dc3b4d0a1547",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/http-body.test.ts": {
+    "mtime": 1793771044.1683357,
+    "seen": 1793890213.3944116,
+    "ast_hash": "f7fdb27cb9c96fe3d961bf56122fd868",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-browser-host.test.ts": {
+    "mtime": 1793771044.170617,
+    "seen": 1793890213.3944163,
+    "ast_hash": "f72a80ce2c6979f5010da3acf26a2976",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-helper-client.test.ts": {
+    "mtime": 1793771044.172121,
+    "seen": 1793890213.3944216,
+    "ast_hash": "e73b8ec2047a4eede9636057c7610ad7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-localization.test.ts": {
+    "mtime": 1793771044.1741138,
+    "seen": 1793890213.3944268,
+    "ast_hash": "0d0db331b8baad0f151fefe637655b08",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-navigation-viewport.test.ts": {
+    "mtime": 1793771044.1751268,
+    "seen": 1793890213.3944342,
+    "ast_hash": "f17ee5a7bf32d5fd3b9c2020d66bf1b8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-session-reminder-browser.test.ts": {
+    "mtime": 1793771044.1769898,
+    "seen": 1793890213.3944395,
+    "ast_hash": "f3494256b5f5e5e5c2893d6fc9e59e77",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-status.test.ts": {
+    "mtime": 1793771044.1789045,
+    "seen": 1793890213.3944468,
+    "ast_hash": "d95f5fecd372310e636b7f5d73bcb25b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-system-theme.test.ts": {
+    "mtime": 1793771044.1805844,
+    "seen": 1793890213.3944514,
+    "ast_hash": "f6dbd4a108cd8d7f3521575638eecd4c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/launcher-viewport-browser.test.ts": {
+    "mtime": 1793771044.182624,
+    "seen": 1793890213.3944564,
+    "ast_hash": "b6c42dfe905de89779ef979b7221655a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/luna-bigger-context.test.ts": {
+    "mtime": 1793771044.1841507,
+    "seen": 1793890213.3944612,
+    "ast_hash": "9d607580669f996f414e1c348da98afd",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/mcp-observation.test.ts": {
+    "mtime": 1793771044.1861637,
+    "seen": 1793890213.3944664,
+    "ast_hash": "88f8eb64b62bf194b280c691abd5919f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/model-catalog.test.ts": {
+    "mtime": 1793771044.188689,
+    "seen": 1793890213.3944712,
+    "ast_hash": "453a9a991e92403036ddb0306654cbaa",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/model-contract.test.ts": {
+    "mtime": 1793771044.1891985,
+    "seen": 1793890213.394477,
+    "ast_hash": "dcda632262dd3fac59caca4856397d90",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/multipart-compaction.test.ts": {
+    "mtime": 1793771044.191228,
+    "seen": 1793890213.394482,
+    "ast_hash": "ef701be344ee3f022f80eccdc2c1bd99",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/multipart-history.test.ts": {
+    "mtime": 1793771044.1927629,
+    "seen": 1793890213.3944874,
+    "ast_hash": "f7daabd15051faefbe0807e1af3b5105",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/native-network.test.ts": {
+    "mtime": 1793771044.1942928,
+    "seen": 1793890213.3944929,
+    "ast_hash": "1248364ef550d6e17ad9e5272b03614a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/native-passthrough.test.ts": {
+    "mtime": 1793771044.1967077,
+    "seen": 1793890213.3944995,
+    "ast_hash": "06954a1145e9ba7c40624d34f0a42716",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/process-line-writer.test.ts": {
+    "mtime": 1793771044.1972153,
+    "seen": 1793890213.3945065,
+    "ast_hash": "46516ccf8534e497c521e41f039226fe",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/prompt-contract.test.ts": {
+    "mtime": 1793771044.2001767,
+    "seen": 1793890213.394513,
+    "ast_hash": "9c0f95030b401def63a27585f9ac2c11",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/prompt-history-metadata.test.ts": {
+    "mtime": 1793771044.2022274,
+    "seen": 1793890213.3945174,
+    "ast_hash": "27ba14e88d3e611c3b2560fdaa60527c",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/responses-agent-message.test.ts": {
+    "mtime": 1793771044.2037363,
+    "seen": 1793890213.3945236,
+    "ast_hash": "6a82f39b1b5e278e45f2c4a886a59e63",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/responses-lite-tools.test.ts": {
+    "mtime": 1793771044.2057474,
+    "seen": 1793890213.3945286,
+    "ast_hash": "ca0b7483adc8b208375333902c07031a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/responses-text-controls.test.ts": {
+    "mtime": 1793771044.2075493,
+    "seen": 1793890213.3945343,
+    "ast_hash": "e52c5bb2dc147b065deb3dcf842217c6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/retained-compaction.test.ts": {
+    "mtime": 1793771044.2101228,
+    "seen": 1793890213.3945417,
+    "ast_hash": "e0d7f1949087d0ae7ec6110d76659e6a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/rolling-checkpoint.test.ts": {
+    "mtime": 1793771044.2115996,
+    "seen": 1793890213.3945484,
+    "ast_hash": "2c4a6e83f3d513f239f23e6cb999a80a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/runtime-layout.test.ts": {
+    "mtime": 1793771044.213648,
+    "seen": 1793890213.3945534,
+    "ast_hash": "3542a29b3f2c95b5eb4fe1acfe4483d4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/server-compaction.test.ts": {
+    "mtime": 1793771044.2146597,
+    "seen": 1793890213.3945582,
+    "ast_hash": "69043e0fbd1569acc66d937fb04d709d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/server-lifecycle.test.ts": {
+    "mtime": 1793771044.2177024,
+    "seen": 1793890213.394563,
+    "ast_hash": "dfafbb133fddee1986c1bce910be8188",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/server-models.test.ts": {
+    "mtime": 1793771044.2223723,
+    "seen": 1793890213.394568,
+    "ast_hash": "660cc99664893ad2d689bd5d212b1aec",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/server-predictions.test.ts": {
+    "mtime": 1793771044.2239082,
+    "seen": 1793890213.3945723,
+    "ast_hash": "a7d06ba7c52910f46ac00aa75a26c94e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/server-subagents.test.ts": {
+    "mtime": 1793771044.2254272,
+    "seen": 1793890213.3945775,
+    "ast_hash": "c0187438b4fb80ea0b18b04bfa68192f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/service-lifecycle.test.ts": {
+    "mtime": 1793771044.2275674,
+    "seen": 1793890213.3945823,
+    "ast_hash": "49881b0067108f6164431a56f5553f17",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/setup-lifecycle.test.ts": {
+    "mtime": 1793771044.229087,
+    "seen": 1793890213.3945873,
+    "ast_hash": "99baafc649d65246e8ac53ad50efcc3b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/skill-attachments.test.ts": {
+    "mtime": 1793771044.2306428,
+    "seen": 1793890213.3948317,
+    "ast_hash": "e2ae4866bb21e609356a19e69b054c70",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/smoke-codex-cancel.test.ts": {
+    "mtime": 1793771044.2321732,
+    "seen": 1793890213.3948448,
+    "ast_hash": "404322bfb7f14315eeea420d610310cd",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/stream-diagnostics.test.ts": {
+    "mtime": 1793771044.2346928,
+    "seen": 1793890213.3948507,
+    "ast_hash": "d001c5a04ae11ea4fe61e3be3c87e313",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/subagent-environment-history.test.ts": {
+    "mtime": 1793771044.2367647,
+    "seen": 1793890213.3948567,
+    "ast_hash": "5f8b3023ef81e7225ab0307da928a0d3",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/submission-error-alert.test.ts": {
+    "mtime": 1793771044.2382731,
+    "seen": 1793890213.394863,
+    "ast_hash": "8544fc2802a88c2040a1e981db51487f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/token-estimate.test.ts": {
+    "mtime": 1793771044.239657,
+    "seen": 1793890213.3948684,
+    "ast_hash": "918a204b68c3694ddc5dcf896109ccf4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/tool-approval-dom.test.ts": {
+    "mtime": 1793771044.241145,
+    "seen": 1793890213.3948736,
+    "ast_hash": "ebf58308fda47e2027f63c9dadd2a3ee",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/trusted-codex-homes.test.ts": {
+    "mtime": 1793771044.2431455,
+    "seen": 1793890213.3948784,
+    "ast_hash": "698950dad772b4160bc972fde4deee61",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/tunnel-service.test.ts": {
+    "mtime": 1793771044.2436538,
+    "seen": 1793890213.3948832,
+    "ast_hash": "0fee3fbf70bb1fd30054a572064627bf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/tunnel.test.ts": {
+    "mtime": 1793771044.245674,
+    "seen": 1793890213.3948877,
+    "ast_hash": "f62e732e412f0a647234049dfe6cfe25",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/turn-broker-diagnostics.test.ts": {
+    "mtime": 1793771044.246675,
+    "seen": 1793890213.3948927,
+    "ast_hash": "dfb781169ef940fa1949118dc2969553",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/turn-broker-lifecycle.test.ts": {
+    "mtime": 1793771044.2491925,
+    "seen": 1793890213.3948982,
+    "ast_hash": "fce5468b83139fba73b39710857daee5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/zero-risk-adapter.test.ts": {
+    "mtime": 1793771044.2517078,
+    "seen": 1793890213.3949032,
+    "ast_hash": "7e654c64dc0b99dd4e6d635312ee624a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/zero-risk-mcp-lifecycle.test.ts": {
+    "mtime": 1793771044.2547638,
+    "seen": 1793890213.3949087,
+    "ast_hash": "960f2d54ff552aab8cb0fab640817dd0",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/zero-risk-prompt-contract.test.ts": {
+    "mtime": 1793771044.2572987,
+    "seen": 1793890213.3949137,
+    "ast_hash": "634fea89c98041492cce02a7ac6f8eca",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tsconfig.json": {
+    "mtime": 1793771044.2583053,
+    "seen": 1793890213.3949196,
+    "ast_hash": "b528a4254153cb9be6049dd37b67647c",
+    "semantic_hash": ""
+  },
+  "02_Factory/checks.ps1": {
+    "mtime": 1793833284.8313303,
+    "seen": 1793890213.8366299,
+    "ast_hash": "6a8290395d9c03eebf9d77d4a775520c",
+    "semantic_hash": ""
+  },
+  "02_Factory/config.json": {
+    "mtime": 1793833049.3989842,
+    "seen": 1793890213.836639,
+    "ast_hash": "abd523ed3d461767dc4f5eff9e83f617",
+    "semantic_hash": ""
+  },
+  "02_Factory/factory.ps1": {
+    "mtime": 1793833049.4019847,
+    "seen": 1793890213.8366451,
+    "ast_hash": "a4c1e73e9c24fd0f785fb04713a28354",
+    "semantic_hash": ""
+  },
+  "02_Factory/semantic_gate.py": {
+    "mtime": 1793833049.4100685,
+    "seen": 1793890213.836652,
+    "ast_hash": "6896b578f583ba2c9ef8b62faf6cba3f",
+    "semantic_hash": ""
+  },
+  "00_Memoire/bundle/concepts/sakana-fugu-inference.md": {
+    "mtime": 1793772390.4318295,
+    "seen": 1793890213.851119,
+    "ast_hash": "2a5ca218dbc400f63246a0f33a04fcf8",
+    "semantic_hash": ""
+  },
+  "00_Memoire/raw/sakana-fugu-10d-architecture-2026.md": {
+    "mtime": 1793771118.9387515,
+    "seen": 1793890213.8523824,
+    "ast_hash": "e474a86e074562f0a289a1f165ac9842",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB-INDEX.md": {
+    "mtime": 1793833049.3644426,
+    "seen": 1793890213.8523922,
+    "ast_hash": "a52a872e83d356a6c87d9a743ced1737",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB00_Runtime/index.md": {
+    "mtime": 1793833049.3659544,
+    "seen": 1793890213.852397,
+    "ast_hash": "495ba420c766a8fc81572694d69489a9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB00_Runtime/inference-locale/index.md": {
+    "mtime": 1793833049.3679695,
+    "seen": 1793890213.8524008,
+    "ast_hash": "76886deed16abe5ac1da3df859639eab",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB00_Runtime/inference-locale/mimi-lora-lfm3-omni.md": {
+    "mtime": 1793833049.369969,
+    "seen": 1793890213.852405,
+    "ast_hash": "c8e1348d13a4c90bc68a1dbd2b04a88b",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB00_Runtime/inference-locale/needle-gliner-edge.md": {
+    "mtime": 1793833049.3709695,
+    "seen": 1793890213.8524084,
+    "ast_hash": "af947e9930bed5ae93f81bba86128b84",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB00_Runtime/principes-fusion-runtime.md": {
+    "mtime": 1793833049.3739505,
+    "seen": 1793890213.8524117,
+    "ast_hash": "68fc94a6fca81a6d08595a41b33ca2f5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB01_Inference/index.md": {
+    "mtime": 1793833049.3759978,
+    "seen": 1793890213.8524146,
+    "ast_hash": "cc0c7a1dd06972f9e2908c6e1c00c4e1",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB02_Video_SaaS/index.md": {
+    "mtime": 1793833049.3779986,
+    "seen": 1793890213.8524184,
+    "ast_hash": "434921f4b26b05775d77a40ee69a1271",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB03_3DWorlds/index.md": {
+    "mtime": 1793833049.3793209,
+    "seen": 1793890213.8524215,
+    "ast_hash": "e1453ae822d0828e0b4a1e592198b6bb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/FKB04_Tools_Anything/index.md": {
+    "mtime": 1793833049.38132,
+    "seen": 1793890213.8524258,
+    "ast_hash": "294b7229d2146abe36271842cbd9eb65",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/.github/PULL_REQUEST_TEMPLATE.md": {
+    "mtime": 1793771043.3582017,
+    "seen": 1793890213.8539321,
+    "ast_hash": "6a9f0f0ee080b8a5c9890079badd520d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/CONTRIBUTING.md": {
+    "mtime": 1793771043.3656847,
+    "seen": 1793890213.853937,
+    "ast_hash": "11210b662395baec48a330de7cbd3040",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/LICENSES/Bun-1.4.0.md": {
+    "mtime": 1793771043.3695142,
+    "seen": 1793890213.8539402,
+    "ast_hash": "792e9f9525336835ff628fa7a059c3b0",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/LICENSES/libnotify-0.8.7-LGPL-2.1.md": {
+    "mtime": 1793771043.3726466,
+    "seen": 1793890213.8539433,
+    "ast_hash": "ca44b4214e6ee768d4d80cc298a4d803",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/LICENSES/tiktoken-MIT.txt": {
+    "mtime": 1793771043.374007,
+    "seen": 1793890213.853947,
+    "ast_hash": "a696d78f448e771f662c62c8efee857a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/README.ja.md": {
+    "mtime": 1793771043.375545,
+    "seen": 1793890213.8539503,
+    "ast_hash": "740242ef11c3fc14c982d6ba9cba1aa7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/README.ko.md": {
+    "mtime": 1793771043.3771684,
+    "seen": 1793890213.8539574,
+    "ast_hash": "ac9ab7398d6a99ed8bb416d93bd0afaf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/README.md": {
+    "mtime": 1793771043.3786905,
+    "seen": 1793890213.8539617,
+    "ast_hash": "54e7a1fb70f655778302c4e9432da2f5",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/README.zh-CN.md": {
+    "mtime": 1793771043.380756,
+    "seen": 1793890213.853965,
+    "ast_hash": "def9577160b884f96c1b5795b13a8819",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/SECURITY.md": {
+    "mtime": 1793771043.3821588,
+    "seen": 1793890213.853968,
+    "ast_hash": "5db0be458ee9a7daba7f4183283defef",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/TROUBLESHOOTING.md": {
+    "mtime": 1793771043.383811,
+    "seen": 1793890213.8539712,
+    "ast_hash": "f6426e55584f7bf272a1556a067e4997",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/docs/architecture.md": {
+    "mtime": 1793771043.5221655,
+    "seen": 1793890213.8539743,
+    "ast_hash": "79691584ba1a243c0d6dc3df41bb6de8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/docs/dev-chat.md": {
+    "mtime": 1793771043.5240407,
+    "seen": 1793890213.8539777,
+    "ast_hash": "6f408c391ac14033a7be4c160256f4cf",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/docs/release-validation.md": {
+    "mtime": 1793771043.5256436,
+    "seen": 1793890213.85398,
+    "ast_hash": "1dd44a6d996a2af972543c14df12ac82",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/docs/security-model.md": {
+    "mtime": 1793771043.5271423,
+    "seen": 1793890213.853983,
+    "ast_hash": "8bcf7c9afe09768a61a336e821714edb",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/index.html": {
+    "mtime": 1793771043.6072512,
+    "seen": 1793890213.8539865,
+    "ast_hash": "228bf1080463fa67c403aa50ab9487e2",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/skills/pro-researcher/SKILL.md": {
+    "mtime": 1793771043.8487928,
+    "seen": 1793890213.8539894,
+    "ast_hash": "3720c5e05ab6d434ab5adb82e896622f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/src/chatgpt-ui/README.md": {
+    "mtime": 1793771043.944687,
+    "seen": 1793890213.8539922,
+    "ast_hash": "d2e34a3c9ad39451df05122029bfe268",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-activity-summaries.html": {
+    "mtime": 1793771044.1378038,
+    "seen": 1793890213.8539953,
+    "ast_hash": "a54b9504519d7604b55c45159b38aa78",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-codemirror-reply-2026-10-11.html": {
+    "mtime": 1793771044.1388144,
+    "seen": 1793890213.8539982,
+    "ast_hash": "54a1496db73bcdc81a4caf860e9a05c4",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-composer-stop.html": {
+    "mtime": 1793771044.1423354,
+    "seen": 1793890213.8540034,
+    "ast_hash": "e1fab2166b3752f6e277fea8ef1cbaf7",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-composer-think-2026-10-11.html": {
+    "mtime": 1793771044.1437387,
+    "seen": 1793890213.8540087,
+    "ast_hash": "d0bcd60c63ad68a293a512a41853123d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-composer-think-2026-10-28.html": {
+    "mtime": 1793771044.1448998,
+    "seen": 1793890213.8540113,
+    "ast_hash": "fdad237fc5b6a83f6bd1a45469b7192d",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-composer-think.html": {
+    "mtime": 1793771044.145898,
+    "seen": 1793890213.8540173,
+    "ast_hash": "6d56f626b2acf76d27908f33deb34822",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-dil-smoke.html": {
+    "mtime": 1793771044.1474075,
+    "seen": 1793890213.8540215,
+    "ast_hash": "460ab79bf0d0dfa38315c34315082f94",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-model-picker-explicit-2026-10-28.html": {
+    "mtime": 1793771044.1494193,
+    "seen": 1793890213.854025,
+    "ast_hash": "947b106e824417dc5bea5f550978c219",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-model-picker-power-2026-09-29.html": {
+    "mtime": 1793771044.1514602,
+    "seen": 1793890213.854028,
+    "ast_hash": "c82dc7171984e6e2b614e8287cab8b19",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-power-activity.html": {
+    "mtime": 1793771044.1565087,
+    "seen": 1793890213.8540308,
+    "ast_hash": "1c2e9919c29290a9adeadfb568a5f069",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-power-complete.html": {
+    "mtime": 1793771044.164299,
+    "seen": 1793890213.8540337,
+    "ast_hash": "d61c170cc8c9765675e349497ff7231a",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/tests/fixtures/chatgpt-power-streaming.html": {
+    "mtime": 1793771044.1662986,
+    "seen": 1793890213.8540366,
+    "ast_hash": "c4189d8928505138a770116c3a9cadfa",
+    "semantic_hash": ""
+  },
+  "02_Factory/dashboard.html": {
+    "mtime": 1793833049.3999796,
+    "seen": 1793890213.8584838,
+    "ast_hash": "906aab0541c815196e5f28b243d9c00d",
+    "semantic_hash": ""
+  },
+  "02_Factory/jobs/tkt-20261103-160601/spec.md": {
+    "mtime": 1793833049.407982,
+    "seen": 1793890213.858492,
+    "ast_hash": "b5b43c9d4a6381a6168ddf608bbf1b53",
+    "semantic_hash": ""
+  },
+  "03_Videaste/00_Repos_Category/index.md": {
+    "mtime": 1793833049.4131274,
+    "seen": 1793890213.858499,
+    "ast_hash": "b0fc7f6ff62c8c17c4b16c6753e049a4",
+    "semantic_hash": ""
+  },
+  "HANDOFF.md": {
+    "mtime": 1793833049.4177377,
+    "seen": 1793890213.8585207,
+    "ast_hash": "e93ae72b85b58516ee027f98ea8b4471",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/assets/demo.gif": {
+    "mtime": 1793771043.505524,
+    "seen": 1793890213.8594248,
+    "ast_hash": "b003c3c1a06e9ffbca8306dc81783041",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/assets/readme/download-linux.svg": {
+    "mtime": 1793771043.50752,
+    "seen": 1793890213.8594322,
+    "ast_hash": "fe47936c7ea5a1dd8e11b7f4af1cdb81",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/assets/readme/download-macos.svg": {
+    "mtime": 1793771043.5100079,
+    "seen": 1793890213.859438,
+    "ast_hash": "4b2c4e4f430ae44818b649c66769c47f",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/assets/readme/download-windows.svg": {
+    "mtime": 1793771043.5113,
+    "seen": 1793890213.8594425,
+    "ast_hash": "ba8a86dd9fa97b128dd169a1dc2140a6",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/assets/readme/hero.svg": {
+    "mtime": 1793771043.5128021,
+    "seen": 1793890213.8594472,
+    "ast_hash": "c1c6b2857a2557d453983b6de3134aa8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/assets/readme/persona-voice.svg": {
+    "mtime": 1793771043.5149236,
+    "seen": 1793890213.8594525,
+    "ast_hash": "b6d486e228d956c7dc05ce1834e02004",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/assets/icon.png": {
+    "mtime": 1793771043.5370982,
+    "seen": 1793890213.859458,
+    "ast_hash": "59943a4d680e265dd6c3d314fb50153e",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/assets/mcp-mark.svg": {
+    "mtime": 1793771043.5410302,
+    "seen": 1793890213.8594747,
+    "ast_hash": "32bd1acea6c173007ca8878c0779dc33",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/assets/trayTemplate.png": {
+    "mtime": 1793771043.5423295,
+    "seen": 1793890213.8594809,
+    "ast_hash": "cdddb98b69b8aa319b451155440b7641",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/assets/trayTemplate@2x.png": {
+    "mtime": 1793771043.5433626,
+    "seen": 1793890213.8594866,
+    "ast_hash": "578a7ac087583a505ee02a767eb713e9",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/assets/mcp-connect-connector.gif": {
+    "mtime": 1793771043.6468678,
+    "seen": 1793890213.859491,
+    "ast_hash": "7278163beb429b129d1d4642b3a4b6f8",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/assets/mcp-create-tunnel.gif": {
+    "mtime": 1793771043.7122562,
+    "seen": 1793890213.8594964,
+    "ast_hash": "f095f55c1050b8db51b283e39ff5e132",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/assets/mcp-connect-connector.mp4": {
+    "mtime": 1793771043.6686723,
+    "seen": 1793890213.86247,
+    "ast_hash": "b3e15fd0743c411271a10e6bed08cb17",
+    "semantic_hash": ""
+  },
+  "01_Forkable/codex-chatgpt-web/launcher/src/assets/mcp-create-tunnel.mp4": {
+    "mtime": 1793771043.7291653,
+    "seen": 1793890213.8624773,
+    "ast_hash": "69f3bd35372669a8e03ad85fca67d6be",
     "semantic_hash": ""
   },
   "01_Forkable/automaton/package-lock.json": {

@@ -45,4 +45,4 @@ Application obligatoire du protocole de profondeur en **4 étapes** :
 
 ### Vecteur 4 — Range (Envergure Multi-Disciplinaire & Verbes d'Impact)
 - **Remplacer les noms par des verbes d'effet réel** : ne pas livrer « un mémo » ou « un tableau », mais *architecturer, automatiser, tester, déployer et prouver de bout en bout*.
-- **Équipage Holonique Multi-Domaines** : mobiliser les méthodes réelles de chaque discipline à travers `Tech OS`, `Life OS 2026` et `Business OS`, en incluant systématiquement un critique Red Team (`S1-RICK` / `A1-MORTY`).
+- **Équipage Holonique Multi-Domaines** : mobiliser les méthodes réelles de chaque discipline à travers `Tech OS`, `Life OS 2026` et `Areas OS`, en incluant systématiquement un critique Red Team (`S1-RICK` / `A1-MORTY`).

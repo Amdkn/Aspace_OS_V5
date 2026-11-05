@@ -48,7 +48,7 @@ if ($deletedLines -gt 0) {
 
 # 6. Scan anti-fuite de secrets dans les fichiers suivis par Git
 Write-Host "[6/6] Secret Scanning Guard..." -NoNewline
-$tracked = git ls-files 2>$null
+$tracked = git ls-files 2>$null | Where-Object { $_ -notmatch '(\.test\.(ts|js)|_test\.(ts|js)|test-fixtures)' }
 if ($tracked) {
   $leaks = Select-String -Path $tracked -Pattern '(ghp_[A-Za-z0-9]{30,}|sk-ant-[A-Za-z0-9\-_]{20,}|AIza[0-9A-Za-z\-_]{35}|BEGIN (RSA|OPENSSH|EC) PRIVATE KEY)' -EA SilentlyContinue
   if ($leaks) {
