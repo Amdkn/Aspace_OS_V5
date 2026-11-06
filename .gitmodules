@@ -15,22 +15,37 @@
 	url = https://github.com/Amdkn/LoRA.git
 [submodule "01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide"]
 	path = 01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide
-	url = https://huggingface.co/fastino/GLiNER2.5-multi-Decide
+	url = https://huggingface.co/Amdkn7/GLiNER2.5-multi-Decide
 [submodule "01_Forkable/FKB00_Runtime/inference-locale/mimi"]
 	path = 01_Forkable/FKB00_Runtime/inference-locale/mimi
-	url = https://huggingface.co/kyutai/mimi
+	url = https://huggingface.co/Amdkn7/mimi
+[submodule "01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B"]
+	path = 01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B
+	url = https://huggingface.co/Amdkn7/LFM3-Omni-2B
+[submodule "01_Forkable/FKB01_Inference/freellmapi"]
+	path = 01_Forkable/FKB01_Inference/freellmapi
+	url = https://github.com/Amdkn/freellmapi.git
 [submodule "01_Forkable/FKB02_Video_SaaS/argo"]
 	path = 01_Forkable/FKB02_Video_SaaS/argo
 	url = https://github.com/Amdkn/argo.git
+[submodule "01_Forkable/FKB02_Video_SaaS/earshot"]
+	path = 01_Forkable/FKB02_Video_SaaS/earshot
+	url = https://github.com/Amdkn/earshot.git
 [submodule "01_Forkable/FKB02_Video_SaaS/explainroo"]
 	path = 01_Forkable/FKB02_Video_SaaS/explainroo
 	url = https://github.com/Amdkn/explainroo.git
 [submodule "01_Forkable/FKB02_Video_SaaS/huashu-motion"]
 	path = 01_Forkable/FKB02_Video_SaaS/huashu-motion
 	url = https://github.com/Amdkn/huashu-motion.git
+[submodule "01_Forkable/FKB02_Video_SaaS/reanimate"]
+	path = 01_Forkable/FKB02_Video_SaaS/reanimate
+	url = https://github.com/Amdkn/reanimate.git
 [submodule "01_Forkable/FKB02_Video_SaaS/rossark-motion-skill"]
 	path = 01_Forkable/FKB02_Video_SaaS/rossark-motion-skill
 	url = https://github.com/Amdkn/rossark-motion-skill.git
+[submodule "01_Forkable/FKB02_Video_SaaS/take-one"]
+	path = 01_Forkable/FKB02_Video_SaaS/take-one
+	url = https://github.com/Amdkn/take-one.git
 [submodule "01_Forkable/FKB02_Video_SaaS/video-director"]
 	path = 01_Forkable/FKB02_Video_SaaS/video-director
 	url = https://github.com/Amdkn/video-director.git
@@ -43,24 +58,9 @@
 [submodule "01_Forkable/FKB04_Tools_Anything/CLI-Anything"]
 	path = 01_Forkable/FKB04_Tools_Anything/CLI-Anything
 	url = https://github.com/Amdkn/CLI-Anything.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B
-	url = https://huggingface.co/LiquidAI/LFM3-Omni-2B
-[submodule "01_Forkable/FKB02_Video_SaaS/earshot"]
-	path = 01_Forkable/FKB02_Video_SaaS/earshot
-	url = https://github.com/Amdkn/earshot.git
-[submodule "01_Forkable/FKB01_Inference/freellmapi"]
-	path = 01_Forkable/FKB01_Inference/freellmapi
-	url = https://github.com/Amdkn/freellmapi.git
-[submodule "01_Forkable/FKB02_Video_SaaS/reanimate"]
-	path = 01_Forkable/FKB02_Video_SaaS/reanimate
-	url = https://github.com/Amdkn/reanimate.git
 [submodule "01_Forkable/FKB04_Tools_Anything/rea"]
 	path = 01_Forkable/FKB04_Tools_Anything/rea
 	url = https://github.com/Amdkn/rea.git
-[submodule "01_Forkable/FKB02_Video_SaaS/take-one"]
-	path = 01_Forkable/FKB02_Video_SaaS/take-one
-	url = https://github.com/Amdkn/take-one.git
 [submodule "01_Forkable/elephant-goldfish-model"]
 	path = 01_Forkable/elephant-goldfish-model
 	url = https://github.com/Amdkn/elephant-goldfish-model.git

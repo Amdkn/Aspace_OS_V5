@@ -1,4 +1,4 @@
-# Re-clone tous les 23 forks souverains de 01_Forkable via Amdkn (ou upstream pour Hugging Face). Idempotent.
+# Re-clone tous les 23 forks souverains de 01_Forkable via Amdkn (GitHub) et Amdkn7 (Hugging Face). Idempotent.
 # FKB00: infinity, openrig, needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01: freellmapi
 # FKB02: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
@@ -22,9 +22,9 @@ $repos = @{
   "moshi"                   = "https://github.com/Amdkn/moshi.git"
   "LoRA"                    = "https://github.com/Amdkn/LoRA.git"
   "freellmapi"              = "https://github.com/Amdkn/freellmapi.git"
-  "GLiNER2.5-multi-Decide"  = "https://huggingface.co/fastino/GLiNER2.5-multi-Decide"
-  "mimi"                    = "https://huggingface.co/kyutai/mimi"
-  "LFM3-Omni-2B"            = "https://huggingface.co/LiquidAI/LFM3-Omni-2B"
+  "GLiNER2.5-multi-Decide"  = "https://huggingface.co/Amdkn7/GLiNER2.5-multi-Decide"
+  "mimi"                    = "https://huggingface.co/Amdkn7/mimi"
+  "LFM3-Omni-2B"            = "https://huggingface.co/Amdkn7/LFM3-Omni-2B"
   "huashu-motion"           = "https://github.com/Amdkn/huashu-motion.git"
   "take-one"                = "https://github.com/Amdkn/take-one.git"
   "rossark-motion-skill"    = "https://github.com/Amdkn/rossark-motion-skill.git"
