@@ -1,4 +1,4 @@
-# Re-clone tous les 46 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Re-clone tous les 50 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
@@ -9,6 +9,7 @@
 # FKB05: elephant-goldfish-model, MiroFish
 # FKB06_Video_SaaS: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
 # FKB07_Money_Maker: impeccable, OpenMontage, DeepTutor, OpenMausBot, text-to-cad, open-notebook, changedetection.io, uptime-kuma
+# FKB07 01_Trading: tradingview-indicator-search-mcp-server, TradingView-Unified-MCP, nansen-cli, claude-trading-skills
 $ErrorActionPreference = "Stop"
 $env:GIT_LFS_SKIP_SMUDGE = "1"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -60,6 +61,10 @@ $repos = @{
   "open-notebook"             = "https://github.com/Amdkn/open-notebook.git"
   "changedetection.io"        = "https://github.com/Amdkn/changedetection.io.git"
   "uptime-kuma"               = "https://github.com/Amdkn/uptime-kuma.git"
+  "tradingview-indicator-search-mcp-server" = "https://github.com/Amdkn/tradingview-indicator-search-mcp-server.git"
+  "TradingView-Unified-MCP"                 = "https://github.com/Amdkn/TradingView-Unified-MCP.git"
+  "nansen-cli"                              = "https://github.com/nansen-ai/nansen-cli.git"
+  "claude-trading-skills"                   = "https://github.com/tradermonty/claude-trading-skills.git"
 }
 
 $paths = @{
@@ -107,6 +112,10 @@ $paths = @{
   "open-notebook"             = "FKB07_Money_Maker/open-notebook"
   "changedetection.io"        = "FKB07_Money_Maker/changedetection.io"
   "uptime-kuma"               = "FKB07_Money_Maker/uptime-kuma"
+  "tradingview-indicator-search-mcp-server" = "FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server"
+  "TradingView-Unified-MCP"                 = "FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP"
+  "nansen-cli"                              = "FKB07_Money_Maker/01_Trading/nansen-cli"
+  "claude-trading-skills"                   = "FKB07_Money_Maker/01_Trading/claude-trading-skills"
 }
 
 foreach ($name in $repos.Keys) {

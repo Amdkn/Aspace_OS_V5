@@ -13,7 +13,7 @@ Créé sur ordre d'Amadou Kone (`human:amdkn`). Les catégories organisent l'ens
 | **FKB04_Tools_Anything** | **Optimisation & Reverse-Engineering Universel** | `api-anything`, `CLI-Anything`, `rea`. |
 | **FKB05_Wargames** | **Wargames & Rétro-Alimentation Stratégique** | `MiroFish`, `elephant-goldfish-model`. |
 | **FKB06_Video_SaaS** | **Studio Vidéo Agentique (8 Moteurs)** | `argo`, `earshot`, `explainroo`, `huashu-motion`, `reanimate`, `rossark-motion-skill`, `take-one`, `video-director`. |
-| **FKB07_Money_Maker** | **8 Moteurs B2B Productized Services (High Margin 90-98%)** | `impeccable` (Refonte anti-look IA), `OpenMontage` (Pack vidéo e-commerce), `DeepTutor` (Tuteur IA privé), `OpenMausBot` (Équipe assistants locaux), `text-to-cad` (Modélisation pièces 3D), `open-notebook` (Podcasts d'entreprise), `changedetection.io` (Radar marchés publics), `uptime-kuma` (Gardiennage & surveillance 24/7). |
+| **FKB07_Money_Maker** | **8 Moteurs B2B Productized Services & Pôle 01_Trading (High Margin)** | `01_Trading` (TradingView MCP, Nansen CLI, TraderMonty Skills sous protocole AVERTISSEMENTS.md), `impeccable` (Refonte anti-look IA), `OpenMontage` (Pack vidéo e-commerce), `DeepTutor` (Tuteur IA privé), `OpenMausBot` (Équipe assistants locaux), `text-to-cad` (Modélisation pièces 3D), `open-notebook` (Podcasts d'entreprise), `changedetection.io` (Radar marchés publics), `uptime-kuma` (Gardiennage & surveillance 24/7). |
 
 ---
 

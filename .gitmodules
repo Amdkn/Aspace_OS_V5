@@ -143,3 +143,15 @@
 [submodule "01_Forkable/FKB07_Money_Maker/uptime-kuma"]
 	path = 01_Forkable/FKB07_Money_Maker/uptime-kuma
 	url = https://github.com/Amdkn/uptime-kuma.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server
+	url = https://github.com/Amdkn/tradingview-indicator-search-mcp-server.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP
+	url = https://github.com/Amdkn/TradingView-Unified-MCP.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli
+	url = https://github.com/nansen-ai/nansen-cli.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills
+	url = https://github.com/tradermonty/claude-trading-skills.git

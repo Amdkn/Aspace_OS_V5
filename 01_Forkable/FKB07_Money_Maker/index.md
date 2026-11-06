@@ -48,3 +48,18 @@
    * Complémentarité directe avec `OpenMontage` pour la génération et le rendu vidéo e-commerce via `take-one` et `argo`.
 3. **FKB04_Tools_Anything** :
    * `API-Anything` et `CLI-Anything` permettent d'interfacer n'importe quel portail de marchés publics ou CMS client sans coder d'intégration sur mesure.
+
+---
+
+## 4. Sous-Module 01_Trading — Boîte à Outils d'Analyse Quantitative & Copilote de Marché
+
+> [!WARNING]
+> Voir impérativement [01_Trading/AVERTISSEMENTS.md](01_Trading/AVERTISSEMENTS.md) avant tout usage.
+> L'IA opère ici exclusivement comme **copilote d'analyse outillé en lecture seule**, jamais comme décideur autonome de passage d'ordres (danger prouvé par les pertes en capital réel documentées par Mike Russell).
+
+* [01_Trading/index.md](01_Trading/index.md) : Index et checklist d'audit formelle.
+* **4 Briques Intégrées** :
+  1. `tradingview-indicator-search-mcp-server` (Recherche d'indicateurs communautaires Pine Script).
+  2. `TradingView-Unified-MCP` (Contrôle headless du client TradingView).
+  3. `nansen-cli` (Surveillance on-chain Smart Money et flux institutionnels).
+  4. `claude-trading-skills` (TraderMonty Position Sizer déterministe avec risque $\le 1\%$).
