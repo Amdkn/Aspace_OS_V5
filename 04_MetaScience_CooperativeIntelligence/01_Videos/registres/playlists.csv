@@ -3,3 +3,5 @@ pl_foul_essaims,ch_fouloscopie,"Intelligence Collective & Essaims","https://www.
 pl_foul_citoyen,ch_fouloscopie,"Science Citoyenne & Foules Connectées","https://www.youtube.com/@Fouloscopie/playlists",8,"Calcul distribué humain, jeux vidéo scientifiques, sagesse des foules","Audite"
 pl_foul_reseaux,ch_fouloscopie,"Dynamique des Réseaux & Histoire des Sciences","https://www.youtube.com/@Fouloscopie/playlists",12,"Graphes de citations, percolation, petits mondes, épistémologie","Audite"
 pl_bradb_skills,ch_bradb,"Omni-Compiler & Knowledge to Code","https://www.youtube.com/@brad_bonanno/playlists",6,"Pipelines multimodaux, Video-to-Skill, Book-to-SOP","Audite"
+pl_disc_architectures,ch_discoverai,"LLM Architectures & State Space Models","https://www.youtube.com/@code4AI/videos",25,"SSSM, Hymba, Mamba, Context Rot, KV-cache sharing","Audite"
+pl_disc_agents,ch_discoverai,"AI Agent Mathematics & Reliability","https://www.youtube.com/@code4AI/videos",18,"Long-horizon transduction, Stale binding, Attention drift, RADAR","Audite"
