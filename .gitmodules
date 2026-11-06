@@ -48,28 +48,28 @@
 	url = https://github.com/Amdkn/freebuff.git
 
 [submodule "01_Forkable/FKB02_Video_SaaS/argo"]
-	path = 01_Forkable/FKB02_Video_SaaS/argo
+	path = 01_Forkable/FKB06_Video_SaaS/argo
 	url = https://github.com/Amdkn/argo.git
 [submodule "01_Forkable/FKB02_Video_SaaS/earshot"]
-	path = 01_Forkable/FKB02_Video_SaaS/earshot
+	path = 01_Forkable/FKB06_Video_SaaS/earshot
 	url = https://github.com/Amdkn/earshot.git
 [submodule "01_Forkable/FKB02_Video_SaaS/explainroo"]
-	path = 01_Forkable/FKB02_Video_SaaS/explainroo
+	path = 01_Forkable/FKB06_Video_SaaS/explainroo
 	url = https://github.com/Amdkn/explainroo.git
 [submodule "01_Forkable/FKB02_Video_SaaS/huashu-motion"]
-	path = 01_Forkable/FKB02_Video_SaaS/huashu-motion
+	path = 01_Forkable/FKB06_Video_SaaS/huashu-motion
 	url = https://github.com/Amdkn/huashu-motion.git
 [submodule "01_Forkable/FKB02_Video_SaaS/reanimate"]
-	path = 01_Forkable/FKB02_Video_SaaS/reanimate
+	path = 01_Forkable/FKB06_Video_SaaS/reanimate
 	url = https://github.com/Amdkn/reanimate.git
 [submodule "01_Forkable/FKB02_Video_SaaS/rossark-motion-skill"]
-	path = 01_Forkable/FKB02_Video_SaaS/rossark-motion-skill
+	path = 01_Forkable/FKB06_Video_SaaS/rossark-motion-skill
 	url = https://github.com/Amdkn/rossark-motion-skill.git
 [submodule "01_Forkable/FKB02_Video_SaaS/take-one"]
-	path = 01_Forkable/FKB02_Video_SaaS/take-one
+	path = 01_Forkable/FKB06_Video_SaaS/take-one
 	url = https://github.com/Amdkn/take-one.git
 [submodule "01_Forkable/FKB02_Video_SaaS/video-director"]
-	path = 01_Forkable/FKB02_Video_SaaS/video-director
+	path = 01_Forkable/FKB06_Video_SaaS/video-director
 	url = https://github.com/Amdkn/video-director.git
 
 [submodule "01_Forkable/FKB03_3DWorlds/cubefarm"]
@@ -95,3 +95,18 @@
 [submodule "01_Forkable/MiroFish"]
 	path = 01_Forkable/MiroFish
 	url = https://github.com/Amdkn/MiroFish.git
+[submodule "01_Forkable/FKB02_Memory/graphify"]
+	path = 01_Forkable/FKB02_Memory/graphify
+	url = https://github.com/Amdkn/graphify.git
+[submodule "01_Forkable/FKB02_Memory/dox"]
+	path = 01_Forkable/FKB02_Memory/dox
+	url = https://github.com/Amdkn/dox.git
+[submodule "01_Forkable/FKB02_Memory/knowledge-catalog"]
+	path = 01_Forkable/FKB02_Memory/knowledge-catalog
+	url = https://github.com/Amdkn/knowledge-catalog.git
+[submodule "01_Forkable/FKB02_Memory/servers"]
+	path = 01_Forkable/FKB02_Memory/servers
+	url = https://github.com/Amdkn/servers.git
+[submodule "01_Forkable/FKB02_Memory/llm-wiki"]
+	path = 01_Forkable/FKB02_Memory/llm-wiki
+	url = https://gist.github.com/34a4b4bf6d54b1828ba8c256615619e8.git

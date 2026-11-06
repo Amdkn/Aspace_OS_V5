@@ -79,14 +79,19 @@ Chaque innovation est configurée nativement dans son harness de base **et** exp
 
 ---
 
-## 5. Architecture Mémoire Évolutive V5 (`00_Memoire/`) — WikiLLM + OKF v0.2 + DOX + Graphify
-Trois couches :
+## 5. Architecture Mémoire Évolutive V5 (`00_Memoire/` & `FKB02_Memory`) — Gateway MCP + WikiLLM + OKF v0.2 + DOX + Graphify
+Quatre couches :
+1. **Gateway MCP Mémoire Partagée (`01_Forkable/FKB02_Memory/` & `00_Memoire/shared_brain/`)** : Standard ouvert `@modelcontextprotocol/server-memory` unifiant Claude, Codex, OpenCode, Pi, DeepSeek, Antigravity, Herdr, Orca et ChatGPT Web sur un fichier graphe JSONL unique (`C:\Users\amado\Aspace OS V5\00_Memoire\shared_brain\memory.jsonl`). Verrou concurrentiel atomique inter-processus (`FileLock O_EXCL`).
+   - **Règle de Comportement Universelle (Instruction Système)** : *Avant de répondre, recherche systématiquement dans la mémoire partagée (`search_nodes`, `read_graph`) si des informations, décisions ou faits passés s'appliquent. Après chaque décision importante ou action réalisée, consigne immédiatement le résultat dans le graphe (`create_entities`, `add_observations`, `create_relations`).*
+2. **Raw sources (`00_Memoire/raw/`)** : documents sources bruts (immuables, lecture seule pour l'agent). Images dans `00_Memoire/raw/assets/`.
+3. **The Wiki (`00_Memoire/bundle/`)** : wiki persistant au format OKF v0.2 (`index.md`, `log.md`, `concepts/*.md`). Entièrement maintenu par les agents.
+4. **The Schema (`AGENTS.md`, `CLAUDE.md` & `00_Memoire/AGENTS.md`)** : règles de structure, d'ingestion, de requête et de maintenance.
 1. **Raw sources (`00_Memoire/raw/`)** : documents sources bruts (immuables, lecture seule pour l'agent). Images dans `00_Memoire/raw/assets/`.
 2. **The Wiki (`00_Memoire/bundle/`)** : wiki persistant au format OKF v0.2 (`index.md`, `log.md`, `concepts/*.md`). Entièrement maintenu par les agents.
 3. **The Schema (`AGENTS.md`, `CLAUDE.md` & `00_Memoire/AGENTS.md`)** : règles de structure, d'ingestion, de requête et de maintenance.
 
 ### Opérations WikiLLM (Obligatoires pour tous les agents)
-- **À l'entrée de chaque tâche (Query)** : lire `00_Memoire/bundle/index.md` et la fin de `00_Memoire/bundle/log.md` (déjà injectés par `00_Memoire/hooks/recall.ps1`), approfondir dans `00_Memoire/bundle/concepts/*.md` et interroger le graphe (`00_Memoire\.venv\Scripts\graphify.exe query` / `explain`).
+- **À l'entrée de chaque tâche (Query)** : interroger la mémoire MCP partagée (`read_graph` / `search_nodes`), lire `00_Memoire/bundle/index.md` et la fin de `00_Memoire/bundle/log.md` (déjà injectés par `00_Memoire/hooks/recall.ps1`), approfondir dans `00_Memoire/bundle/concepts/*.md` et interroger le graphe (`00_Memoire\.venv\Scripts\graphify.exe query` / `explain`).
 - **À la sortie de chaque tâche (Ingest & Append-Only Log)** :
   1. Ajouter à la fin de `00_Memoire/bundle/log.md` (**STRICTEMENT APPEND-ONLY** : jamais d'édition ou de suppression d'une ligne existante) : `* **Note**: <faits, décisions, fichiers touchés, état restant — 1 à 3 lignes>`.
   2. Si une connaissance durable change, créer/mettre à jour la page dans `00_Memoire/bundle/concepts/*.md` (frontmatter YAML avec `type:` obligatoire), la référencer dans `00_Memoire/bundle/index.md`, et lancer `00_Memoire\.venv\Scripts\graphify.exe update .`.

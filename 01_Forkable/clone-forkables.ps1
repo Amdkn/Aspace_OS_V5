@@ -1,12 +1,13 @@
-# Re-clone tous les 29 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Re-clone tous les 35 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
 # FKB01 03_Inference_FreeCloud: freellmapi, codex-chatgpt-web, freebuff
-# FKB02: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
+# FKB02_Memory: servers (MCP memory), graphify, dox, knowledge-catalog, llm-wiki
 # FKB03: cubefarm, agent-office
 # FKB04: api-anything, CLI-Anything, rea
-# Racine: elephant-goldfish-model, MiroFish
+# FKB05: elephant-goldfish-model, MiroFish
+# FKB06_Video_SaaS: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
 $ErrorActionPreference = "Stop"
 $env:GIT_LFS_SKIP_SMUDGE = "1"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -34,6 +35,11 @@ $repos = @{
   "DeepInfer"                 = "https://github.com/Amdkn/DeepInfer.git"
   "mesh-llm"                  = "https://github.com/Amdkn/mesh-llm.git"
   "cross-platform-llm-client" = "https://github.com/Amdkn/cross-platform-llm-client.git"
+  "servers"                   = "https://github.com/Amdkn/servers.git"
+  "graphify"                  = "https://github.com/Amdkn/graphify.git"
+  "dox"                       = "https://github.com/Amdkn/dox.git"
+  "knowledge-catalog"         = "https://github.com/Amdkn/knowledge-catalog.git"
+  "llm-wiki"                  = "https://gist.github.com/34a4b4bf6d54b1828ba8c256615619e8.git"
   "huashu-motion"             = "https://github.com/Amdkn/huashu-motion.git"
   "take-one"                  = "https://github.com/Amdkn/take-one.git"
   "rossark-motion-skill"      = "https://github.com/Amdkn/rossark-motion-skill.git"
@@ -65,14 +71,19 @@ $paths = @{
   "DeepInfer"                 = "FKB01_Inference/02_Inference_Cooperative/DeepInfer"
   "mesh-llm"                  = "FKB01_Inference/02_Inference_Cooperative/mesh-llm"
   "cross-platform-llm-client" = "FKB01_Inference/02_Inference_Cooperative/cross-platform-llm-client"
-  "huashu-motion"             = "FKB02_Video_SaaS/huashu-motion"
-  "take-one"                  = "FKB02_Video_SaaS/take-one"
-  "rossark-motion-skill"      = "FKB02_Video_SaaS/rossark-motion-skill"
-  "reanimate"                 = "FKB02_Video_SaaS/reanimate"
-  "argo"                      = "FKB02_Video_SaaS/argo"
-  "explainroo"                = "FKB02_Video_SaaS/explainroo"
-  "video-director"            = "FKB02_Video_SaaS/video-director"
-  "earshot"                   = "FKB02_Video_SaaS/earshot"
+  "servers"                   = "FKB02_Memory/servers"
+  "graphify"                  = "FKB02_Memory/graphify"
+  "dox"                       = "FKB02_Memory/dox"
+  "knowledge-catalog"         = "FKB02_Memory/knowledge-catalog"
+  "llm-wiki"                  = "FKB02_Memory/llm-wiki"
+  "huashu-motion"             = "FKB06_Video_SaaS/huashu-motion"
+  "take-one"                  = "FKB06_Video_SaaS/take-one"
+  "rossark-motion-skill"      = "FKB06_Video_SaaS/rossark-motion-skill"
+  "reanimate"                 = "FKB06_Video_SaaS/reanimate"
+  "argo"                      = "FKB06_Video_SaaS/argo"
+  "explainroo"                = "FKB06_Video_SaaS/explainroo"
+  "video-director"            = "FKB06_Video_SaaS/video-director"
+  "earshot"                   = "FKB06_Video_SaaS/earshot"
 }
 
 foreach ($name in $repos.Keys) {

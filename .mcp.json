@@ -2,7 +2,10 @@
   "mcpServers": {
     "memory": {
       "command": "C:/Users/amado/AppData/Roaming/npm/mcp-server-memory.cmd",
-      "args": []
+      "args": [],
+      "env": {
+        "MEMORY_FILE_PATH": "C:/Users/amado/Aspace OS V5/00_Memoire/shared_brain/memory.jsonl"
+      }
     },
     "desktop-commander": {
       "command": "C:/Users/amado/AppData/Roaming/npm/desktop-commander.cmd",

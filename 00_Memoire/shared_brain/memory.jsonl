@@ -1,0 +1,7 @@
+{"type":"entity","name":"Amadou_Kone","entityType":"Human","observations":["Identifiant souverain: human:amdkn","Posture: 10D Souveraine Out of the Loop (S0)","Unique detenteur de la signature de ratification"]}
+{"type":"entity","name":"A0_Amadeus","entityType":"DigitalTwin","observations":["Jumeau Numerique CEO 24/7 (aspace:a0:amadeus, alias Kirby)","Incarne dans FKB00_Runtime/automaton","Installe dans le Lobby de FKB03_3DWorlds/cubefarm","Posture: 7D Dimensionnelle"]}
+{"type":"entity","name":"Aspace_OS_V5","entityType":"HolonicOperatingSystem","observations":["Architecture 3 OS et 578 Holons (Tech OS, Life OS 2026, Areas OS)","Sanctuarisation FKB00_Runtime (Automaton, Infinity, OpenRig)","Pole Inference FKB01 (4 Strates: Locale, Cooperative, FreeCloud, Youtube Registry)","Gateway MCP Memoire Partagee FKB02_Memory (Multi-Harness Shared Brain)"]}
+{"type":"entity","name":"FKB02_Memory","entityType":"MemoryGateway","observations":["Agnosticite totale pour tous les harnesses (Claude, Codex, OpenCode, Pi, Antigravity, Herdr, Orca)","Composants: server-memory (MCP officiel), graphify, dox, knowledge-catalog (OKF), llm-wiki","Chemin universel: C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\shared_brain\\memory.jsonl"]}
+{"type":"relation","from":"Amadou_Kone","to":"A0_Amadeus","relationType":"delegates_to"}
+{"type":"relation","from":"A0_Amadeus","to":"Aspace_OS_V5","relationType":"supervises"}
+{"type":"relation","from":"Aspace_OS_V5","to":"FKB02_Memory","relationType":"shares_memory_via"}
