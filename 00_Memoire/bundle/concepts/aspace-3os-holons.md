@@ -1,4 +1,4 @@
-﻿---
+---
 type: concept
 id: aspace-3os-holons
 title: "Architecture Holonique des 3 OS d'Aspace OS (578 Holons, 20 IPBDs & Triangle E-Myth)"

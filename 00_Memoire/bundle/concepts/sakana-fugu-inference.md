@@ -1,4 +1,4 @@
-﻿---
+---
 type: concept
 id: sakana-fugu-inference
 title: "Areas OS (522 Holons), Boucle S0..S3, Échelle 0D..10D & Inférence Souveraine Sakana Fugu"

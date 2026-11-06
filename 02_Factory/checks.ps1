@@ -57,6 +57,16 @@ if ($tracked) {
   } else { Write-Host " PASS" -ForegroundColor Green }
 } else { Write-Host " PASS (no tracked files yet)" -ForegroundColor Green }
 
+# 7. Level 5 Semantic Gate (deterministic, fail-closed — D-N044 A2)
+Write-Host "[7/7] Level 5 Semantic Gate..." -NoNewline
+if (-not (Get-Command python3 -ErrorAction SilentlyContinue)) {
+  $failures += "python3 absent — Level 5 Semantic Gate not executed"
+  Write-Host " FAIL (python3 absent)" -ForegroundColor Red
+} else {
+  python3 02_Factory/semantic_gate.py
+  if ($LASTEXITCODE -ne 0) { $failures += "Level 5 Semantic Gate failed" } else { Write-Host " PASS" -ForegroundColor Green }
+}
+
 if ($failures.Count -gt 0) {
   Write-Host "=== GATE RESULT: FAIL ===" -ForegroundColor Red
   $failures | ForEach-Object { Write-Host " - $_" -ForegroundColor Red }
@@ -64,7 +74,3 @@ if ($failures.Count -gt 0) {
 }
 Write-Host "=== GATE RESULT: PASS (Ready for Independent Reviewers) ===" -ForegroundColor Green
 exit 0
-
-
-# Level 5 Semantic Gate Integration
-python3 02_Factory/semantic_gate.py
