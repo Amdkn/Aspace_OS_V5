@@ -7,3 +7,9 @@
 {"type":"relation","from":"Aspace_OS_V5","to":"FKB02_Memory","relationType":"shares_memory_via"}
 {"type":"entity","name":"01_BillionContxtLanguage_AutoOnthology","entityType":"NeuroSymbolicEngine","observations":["Infrastructure memoire neuro-symbolique a contexte infini","Piliers: billion-context (stockage/KV NVMe), auto-ontology (extraction taxonomique DAG), context-language-models (conditionnement latent sans hallucination)","Synergie avec Fastino GLiNER2.5 et Liquid LFM3-Omni-2B"]}
 {"type":"relation","from":"FKB02_Memory","to":"01_BillionContxtLanguage_AutoOnthology","relationType":"implements_infinite_context_via"}
+{"type": "entity", "name": "BillionContext_Substrate", "entityType": "StorageLayer", "observations": ["Gestionnaire de KV-cache NVMe multi-résolution", "Chunk actif CAS: 31f9bdf334c67bab", "Zéro saturation RAM sur contextes colossaux"]}
+{"type": "entity", "name": "AutoOntology_Compiler", "entityType": "SemanticEngine", "observations": ["Compilateur formel de taxonomies sans cycles (DAG)", "Dédoublonnage strict et filtrage des contradictions"]}
+{"type": "entity", "name": "ContextLM_Decoder", "entityType": "InferenceConditioner", "observations": ["Conditionnement par représentations latentes contextuelles", "Génération ancrée zéro-hallucination (Zero Lost-in-the-Middle)"]}
+{"type": "relation", "from": "01_BillionContxtLanguage_AutoOnthology", "to": "BillionContext_Substrate", "relationType": "utilizes_substrate"}
+{"type": "relation", "from": "BillionContext_Substrate", "to": "AutoOntology_Compiler", "relationType": "streams_deltas_to"}
+{"type": "relation", "from": "AutoOntology_Compiler", "to": "ContextLM_Decoder", "relationType": "conditions_inference_of"}
