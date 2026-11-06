@@ -7,7 +7,7 @@ Créé sur ordre d'Amadou Kone (`human:amdkn`). Les catégories organisent l'ens
 | Catégorie | Rôle Fondamental | Contenu & Sous-modules |
 |---|---|---|
 | **FKB00_Runtime** | **Triptyque Core Fusion permanent** (Âme, Système Nerveux, Corps des Agents) | `automaton` (A0 Amadeus CEO Holon), `infinity` (Hibernation 75k agents & RAP), `openrig` (Corps opérationnel & Rigs multi-harness). |
-| **FKB01_Inference** | **Pôle Inférence Souverain Unifié (3 Strates)** | `01_Inference_Locale` (Needle, Moshi, Mimi, GLiNER, LFM3, LoRA), `02_Inference_Cooperative` (DeepInfer, Mesh-LLM, Cross-Platform-Client), `03_Inference_FreeCloud` (FreeLLMAPI, Codex-ChatGPT-Web). |
+| **FKB01_Inference** | **Pôle Inférence Souverain Unifié (3 Strates)** | `01_Inference_Locale` (Needle, Moshi, Mimi, GLiNER, LFM3, LoRA), `02_Inference_Cooperative` (DeepInfer, Mesh-LLM, Cross-Platform-Client), `03_Inference_FreeCloud` (FreeLLMAPI, Codex-ChatGPT-Web, Freebuff). |
 | **FKB02_Video_SaaS** | **Studio Vidéo Agentique (8 Moteurs)** | `argo`, `earshot`, `explainroo`, `huashu-motion`, `reanimate`, `rossark-motion-skill`, `take-one`, `video-director`. |
 | **FKB03_3DWorlds** | **Mondes Virtuels & Cockpits 3D** | `cubefarm` (3 Étages OS, 578 Holons), `agent-office` (Mezzanine 3D). |
 | **FKB04_Tools_Anything** | **Optimisation & Reverse-Engineering Universel** | `api-anything`, `CLI-Anything`, `rea`. |
@@ -21,4 +21,4 @@ Créé sur ordre d'Amadou Kone (`human:amdkn`). Les catégories organisent l'ens
 2. **`FKB01_Inference`** centralise l'intégralité des 11 moteurs d'inférence en trois dossiers numérotés :
    - `01_Inference_Locale/` : Edge ultra-léger sans réseau (2-bit Needle, GLiNER classification, Mimi audio, LFM3).
    - `02_Inference_Cooperative/` : Maillage P2P cluster (DeepInfer compute C++/CUDA, Mesh-LLM partitionnement PP, Client omnicanal).
-   - `03_Inference_FreeCloud/` : Débordement zéro-coût (FreeLLMAPI routeur :31415, Codex-ChatGPT-Web shield télémétrie).
+   - `03_Inference_FreeCloud/` : Débordement zéro-coût (FreeLLMAPI routeur :31415, Codex-ChatGPT-Web shield télémétrie, Freebuff radar opportunités/Exa $50).

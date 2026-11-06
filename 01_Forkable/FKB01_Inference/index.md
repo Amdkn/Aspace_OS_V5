@@ -27,7 +27,8 @@
 ┌────────────────────────────────────────────────────────────────────────┐
 │ STRATE 3 · INFERENCE FREECLOUD & SHIELD (03_Inference_FreeCloud)       │
 │  ├─ FreeLLMAPI : Pool de 34 providers gratuits (port :31415)           │
-│  └─ Codex-ChatGPT-Web : Façade Web Pro étanche zéro-télémétrie        │
+│  ├─ Codex-ChatGPT-Web : Façade Web Pro étanche zéro-télémétrie        │
+│  └─ Freebuff : Radar opportunités (Exa $50) branché Voie A/B          │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
@@ -48,3 +49,4 @@
 | **02 Coopérative** | **Cross-Platform Client** | [Amdkn/cross-platform-llm-client](https://github.com/Amdkn/cross-platform-llm-client) | Application Desktop/Mobile |
 | **03 FreeCloud** | **FreeLLMAPI** | [Amdkn/freellmapi](https://github.com/Amdkn/freellmapi) | Port local `:31415` |
 | **03 FreeCloud** | **Codex-ChatGPT-Web** | [Amdkn/codex-chatgpt-web](https://github.com/Amdkn/codex-chatgpt-web) | Shield zéro-télémétrie |
+| **03 FreeCloud** | **Freebuff** | [Amdkn/freebuff](https://github.com/Amdkn/freebuff) | Radar de découverte d'opportunités d'inférence (Exa $50) |

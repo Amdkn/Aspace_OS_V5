@@ -43,6 +43,9 @@
 [submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web"]
 	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web
 	url = https://github.com/Amdkn/codex-chatgpt-web.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freebuff"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freebuff
+	url = https://github.com/Amdkn/freebuff.git
 
 [submodule "01_Forkable/FKB02_Video_SaaS/argo"]
 	path = 01_Forkable/FKB02_Video_SaaS/argo

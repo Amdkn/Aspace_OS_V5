@@ -2,7 +2,7 @@
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
-# FKB01 03_Inference_FreeCloud: freellmapi, codex-chatgpt-web
+# FKB01 03_Inference_FreeCloud: freellmapi, codex-chatgpt-web, freebuff
 # FKB02: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
 # FKB03: cubefarm, agent-office
 # FKB04: api-anything, CLI-Anything, rea
@@ -15,6 +15,7 @@ $repos = @{
   "automaton"                 = "https://github.com/Amdkn/automaton.git"
   "cubefarm"                  = "https://github.com/Amdkn/cubefarm.git"
   "codex-chatgpt-web"         = "https://github.com/Amdkn/codex-chatgpt-web.git"
+  "freebuff"                  = "https://github.com/Amdkn/freebuff.git"
   "agent-office"              = "https://github.com/Amdkn/agent-office.git"
   "api-anything"              = "https://github.com/Amdkn/api-anything.git"
   "CLI-Anything"              = "https://github.com/Amdkn/CLI-Anything.git"
@@ -47,6 +48,7 @@ $paths = @{
   "automaton"                 = "FKB00_Runtime/automaton"
   "cubefarm"                  = "FKB03_3DWorlds/cubefarm"
   "codex-chatgpt-web"         = "FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web"
+  "freebuff"                  = "FKB01_Inference/03_Inference_FreeCloud/freebuff"
   "freellmapi"                = "FKB01_Inference/03_Inference_FreeCloud/freellmapi"
   "agent-office"              = "FKB03_3DWorlds/agent-office"
   "api-anything"              = "FKB04_Tools_Anything/api-anything"
