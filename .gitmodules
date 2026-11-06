@@ -154,10 +154,31 @@
 	url = https://github.com/nansen-ai/nansen-cli.git
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills
-	url = https://github.com/tradermonty/claude-trading-skills.git
+	url = https://github.com/Amdkn/claude-trading-skills.git
 [submodule "01_Forkable/FKB03_3DWorlds/city-office"]
 	path = 01_Forkable/FKB03_3DWorlds/city-office
 	url = https://github.com/Amdkn/city-office.git
 [submodule "01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld"]
 	path = 01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld
 	url = https://github.com/Amdkn/BlenderWorld.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab
+	url = https://github.com/Amdkn/LLM-Trading-Lab.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade
+	url = https://github.com/Amdkn/freqtrade.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis
+	url = https://github.com/Amdkn/daily_stock_analysis.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund
+	url = https://github.com/Amdkn/ai-hedge-fund.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading
+	url = https://github.com/Amdkn/Vibe-Trading.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/financial-services
+	url = https://github.com/Amdkn/financial-services.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents
+	url = https://github.com/Amdkn/TradingAgents.git
