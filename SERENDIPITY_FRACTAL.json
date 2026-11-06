@@ -30,10 +30,11 @@
     },
     "8L": {
       "name": "Spatial City-Office & 24/7 Runtime",
-      "attention_heads": ["H06_Automaton", "H07_CubeFarm_Core", "H08_AgentOffice_Ring"],
+      "attention_heads": ["H06_Automaton", "H07_CubeFarm_Core", "H08_AgentOffice_Ring", "H08B_BlenderWorld_Proc3D"],
       "mounts": [
         "01_Forkable/FKB00_Runtime",
-        "01_Forkable/FKB03_3DWorlds/city-office"
+        "01_Forkable/FKB03_3DWorlds/city-office",
+        "01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld"
       ],
       "orbital_deployments": {
         "city-office": {

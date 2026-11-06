@@ -158,3 +158,6 @@
 [submodule "01_Forkable/FKB03_3DWorlds/city-office"]
 	path = 01_Forkable/FKB03_3DWorlds/city-office
 	url = https://github.com/Amdkn/city-office.git
+[submodule "01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld"]
+	path = 01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld
+	url = https://github.com/Amdkn/BlenderWorld.git

@@ -4,7 +4,7 @@ param(
   [string]$Profile = "All"
 )
 
-# Re-clone tous les 51 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Re-clone tous les 52 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
 # Profils: Core (frugal <2GB), Heavy (video/IA massive/3D), Business (monetisation), All (complet)
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
@@ -17,6 +17,7 @@ param(
 # FKB06_Video_SaaS: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
 # FKB07_Money_Maker: impeccable, OpenMontage, DeepTutor, OpenMausBot, text-to-cad, open-notebook, changedetection.io, uptime-kuma
 # FKB07 01_Trading: tradingview-indicator-search-mcp-server, TradingView-Unified-MCP, nansen-cli, claude-trading-skills
+# FKB07 03_3D_World: BlenderWorld
 $ErrorActionPreference = "Stop"
 $env:GIT_LFS_SKIP_SMUDGE = "1"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -73,6 +74,7 @@ $repos = @{
   "TradingView-Unified-MCP"                 = "https://github.com/Amdkn/TradingView-Unified-MCP.git"
   "nansen-cli"                              = "https://github.com/nansen-ai/nansen-cli.git"
   "claude-trading-skills"                   = "https://github.com/tradermonty/claude-trading-skills.git"
+  "BlenderWorld"                            = "https://github.com/Amdkn/BlenderWorld.git"
 }
 
 $paths = @{
@@ -125,6 +127,7 @@ $paths = @{
   "TradingView-Unified-MCP"                 = "FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP"
   "nansen-cli"                              = "FKB07_Money_Maker/01_Trading/nansen-cli"
   "claude-trading-skills"                   = "FKB07_Money_Maker/01_Trading/claude-trading-skills"
+  "BlenderWorld"                            = "FKB07_Money_Maker/03_3D_World/BlenderWorld"
 }
 
 $coreModules = @(
@@ -145,7 +148,7 @@ $businessModules = @(
   "impeccable", "OpenMontage", "DeepTutor", "OpenMausBot", "text-to-cad",
   "open-notebook", "changedetection.io", "uptime-kuma",
   "tradingview-indicator-search-mcp-server", "TradingView-Unified-MCP",
-  "nansen-cli", "claude-trading-skills"
+  "nansen-cli", "claude-trading-skills", "BlenderWorld"
 )
 
 $targetKeys = switch ($Profile) {

@@ -49,7 +49,7 @@ $maxIdx = $layerOrder.IndexOf($TargetLayer)
 $layerPaths = @{
   "2L"  = @("01_Forkable/FKB02_Memory/servers")
   "4L"  = @("01_Forkable/FKB01_Inference/01_Inference_Locale/GLiNER2.5-multi-Decide", "01_Forkable/FKB01_Inference/01_Inference_Locale/needle")
-  "8L"  = @("01_Forkable/FKB00_Runtime/automaton", "01_Forkable/FKB03_3DWorlds/cubefarm", "01_Forkable/FKB03_3DWorlds/agent-office")
+  "8L"  = @("01_Forkable/FKB00_Runtime/automaton", "01_Forkable/FKB03_3DWorlds/cubefarm", "01_Forkable/FKB03_3DWorlds/agent-office", "01_Forkable/FKB03_3DWorlds/city-office", "01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld")
   "16L" = @("01_Forkable/FKB04_Tools_Anything/api-anything", "01_Forkable/FKB06_Video_SaaS/huashu-motion", "01_Forkable/FKB07_Money_Maker/impeccable")
   "20L" = @("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context", "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology", "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models")
 }
