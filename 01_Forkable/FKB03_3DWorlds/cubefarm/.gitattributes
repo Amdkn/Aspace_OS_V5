@@ -1,2 +1,0 @@
-# The command's shebang breaks on macOS and Linux with Windows line endings.
-bin/cubefarm.js text eol=lf

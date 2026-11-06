@@ -1,8 +1,8 @@
-# Re-clone tous les 23 forks souverains de 01_Forkable via Amdkn (GitHub) et Amdkn7 (Hugging Face). Idempotent.
-# FKB00: infinity, openrig, needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
-# FKB01: freellmapi
+# Re-clone tous les 26 forks souverains de 01_Forkable via Amdkn (GitHub) et Amdkn7 (Hugging Face). Idempotent.
+# FKB00: automaton, infinity, openrig, needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
+# FKB01: codex-chatgpt-web, freellmapi
 # FKB02: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
-# FKB03: agent-office
+# FKB03: cubefarm, agent-office
 # FKB04: api-anything, CLI-Anything, rea
 # Racine: elephant-goldfish-model, MiroFish
 $ErrorActionPreference = "Stop"
@@ -10,6 +10,9 @@ $env:GIT_LFS_SKIP_SMUDGE = "1"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 $repos = @{
+  "automaton"               = "https://github.com/Amdkn/automaton.git"
+  "cubefarm"                = "https://github.com/Amdkn/cubefarm.git"
+  "codex-chatgpt-web"       = "https://github.com/Amdkn/codex-chatgpt-web.git"
   "agent-office"            = "https://github.com/Amdkn/agent-office.git"
   "api-anything"            = "https://github.com/Amdkn/api-anything.git"
   "CLI-Anything"            = "https://github.com/Amdkn/CLI-Anything.git"
@@ -36,6 +39,9 @@ $repos = @{
 }
 
 $paths = @{
+  "automaton"               = "FKB00_Runtime/automaton"
+  "cubefarm"                = "FKB03_3DWorlds/cubefarm"
+  "codex-chatgpt-web"       = "FKB01_Inference/codex-chatgpt-web"
   "agent-office"            = "FKB03_3DWorlds/agent-office"
   "api-anything"            = "FKB04_Tools_Anything/api-anything"
   "CLI-Anything"            = "FKB04_Tools_Anything/CLI-Anything"

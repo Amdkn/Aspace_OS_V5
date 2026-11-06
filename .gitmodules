@@ -67,3 +67,12 @@
 [submodule "01_Forkable/MiroFish"]
 	path = 01_Forkable/MiroFish
 	url = https://github.com/Amdkn/MiroFish.git
+[submodule "01_Forkable/FKB00_Runtime/automaton"]
+	path = 01_Forkable/FKB00_Runtime/automaton
+	url = https://github.com/Amdkn/automaton.git
+[submodule "01_Forkable/FKB03_3DWorlds/cubefarm"]
+	path = 01_Forkable/FKB03_3DWorlds/cubefarm
+	url = https://github.com/Amdkn/cubefarm.git
+[submodule "01_Forkable/FKB01_Inference/codex-chatgpt-web"]
+	path = 01_Forkable/FKB01_Inference/codex-chatgpt-web
+	url = https://github.com/Amdkn/codex-chatgpt-web.git
