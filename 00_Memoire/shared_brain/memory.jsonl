@@ -5,3 +5,5 @@
 {"type":"relation","from":"Amadou_Kone","to":"A0_Amadeus","relationType":"delegates_to"}
 {"type":"relation","from":"A0_Amadeus","to":"Aspace_OS_V5","relationType":"supervises"}
 {"type":"relation","from":"Aspace_OS_V5","to":"FKB02_Memory","relationType":"shares_memory_via"}
+{"type":"entity","name":"01_BillionContxtLanguage_AutoOnthology","entityType":"NeuroSymbolicEngine","observations":["Infrastructure memoire neuro-symbolique a contexte infini","Piliers: billion-context (stockage/KV NVMe), auto-ontology (extraction taxonomique DAG), context-language-models (conditionnement latent sans hallucination)","Synergie avec Fastino GLiNER2.5 et Liquid LFM3-Omni-2B"]}
+{"type":"relation","from":"FKB02_Memory","to":"01_BillionContxtLanguage_AutoOnthology","relationType":"implements_infinite_context_via"}

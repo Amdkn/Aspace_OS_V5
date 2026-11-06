@@ -1,9 +1,9 @@
-# Re-clone tous les 35 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Re-clone tous les 38 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
 # FKB01 03_Inference_FreeCloud: freellmapi, codex-chatgpt-web, freebuff
-# FKB02_Memory: servers (MCP memory), graphify, dox, knowledge-catalog, llm-wiki
+# FKB02_Memory: 01_BillionContxtLanguage_AutoOnthology (billion-context, auto-ontology, context-language-models), servers (MCP memory), graphify, dox, knowledge-catalog, llm-wiki
 # FKB03: cubefarm, agent-office
 # FKB04: api-anything, CLI-Anything, rea
 # FKB05: elephant-goldfish-model, MiroFish
@@ -36,6 +36,9 @@ $repos = @{
   "mesh-llm"                  = "https://github.com/Amdkn/mesh-llm.git"
   "cross-platform-llm-client" = "https://github.com/Amdkn/cross-platform-llm-client.git"
   "servers"                   = "https://github.com/Amdkn/servers.git"
+  "billion-context"           = "https://github.com/Amdkn/billion-context.git"
+  "auto-ontology"             = "https://github.com/Amdkn/auto-ontology.git"
+  "context-language-models"   = "https://github.com/Amdkn/context-language-models.git"
   "graphify"                  = "https://github.com/Amdkn/graphify.git"
   "dox"                       = "https://github.com/Amdkn/dox.git"
   "knowledge-catalog"         = "https://github.com/Amdkn/knowledge-catalog.git"
@@ -72,6 +75,9 @@ $paths = @{
   "mesh-llm"                  = "FKB01_Inference/02_Inference_Cooperative/mesh-llm"
   "cross-platform-llm-client" = "FKB01_Inference/02_Inference_Cooperative/cross-platform-llm-client"
   "servers"                   = "FKB02_Memory/servers"
+  "billion-context"           = "FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context"
+  "auto-ontology"             = "FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology"
+  "context-language-models"   = "FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models"
   "graphify"                  = "FKB02_Memory/graphify"
   "dox"                       = "FKB02_Memory/dox"
   "knowledge-catalog"         = "FKB02_Memory/knowledge-catalog"

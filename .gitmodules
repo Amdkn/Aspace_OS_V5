@@ -110,3 +110,12 @@
 [submodule "01_Forkable/FKB02_Memory/llm-wiki"]
 	path = 01_Forkable/FKB02_Memory/llm-wiki
 	url = https://gist.github.com/34a4b4bf6d54b1828ba8c256615619e8.git
+[submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context"]
+	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context
+	url = https://github.com/Amdkn/billion-context.git
+[submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology"]
+	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology
+	url = https://github.com/Amdkn/auto-ontology.git
+[submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models"]
+	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models
+	url = https://github.com/Amdkn/context-language-models.git

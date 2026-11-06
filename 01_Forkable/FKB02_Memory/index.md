@@ -4,8 +4,14 @@
 
 ---
 
-## 1. Topologie des Composants Souverains (5 Sous-Modules)
+## 1. Topologie des Composants Souverains (8 Sous-Modules)
 
+### A. Moteur Neuro-Symbolique à Contexte Infini (`01_BillionContxtLanguage_AutoOnthology`)
+* **`billion-context`** ([Amdkn/billion-context](https://github.com/Amdkn/billion-context)) : Ingestion billion-scale, compression multi-résolution et persistance NVMe du KV-cache.
+* **`auto-ontology`** ([Amdkn/auto-ontology](https://github.com/Amdkn/auto-ontology)) : Extraction ontologique automatique, typage formel des relations et DAG acyclique des connaissances.
+* **`context-language-models`** ([Amdkn/context-language-models](https://github.com/Amdkn/context-language-models)) : Décodage conditionné, cross-attention guidée par l'ontologie et zéro hallucination.
+
+### B. Gateway MCP & WikiLLM Partagé
 | Composant | Rôle dans l'Architecture Mémoire | Dépôt Source Amdkn | Type de Ressource |
 |---|---|---|---|
 | **`servers` (src/memory)** | **Moteur de Graphe MCP Officiel** : Implémentation TypeScript (@modelcontextprotocol/server-memory) avec 9 outils et verrou multi-processus. | [Amdkn/servers](https://github.com/Amdkn/servers) | Serveur MCP Stdio / JSONL |
