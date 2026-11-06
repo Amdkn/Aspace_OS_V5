@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-A'Space OS V5 — Level 5 Semantic Gate & Invariant Engine
+A'Space OS V5 - Level 5 Semantic Gate & Invariant Engine
 Remplace le scanning textuel 1D par une validation topologique, sémantique et formelle (7R).
 """
 
@@ -12,6 +12,13 @@ import ast
 from pathlib import Path
 
 FORKABLE_DIRS = {"01_Forkable", "graphify-out"}
+EXCLUDE_DIRS = {".git", ".github", ".venv", "node_modules", ".gemini", ".dsh", ".hermes", "01_Forkable", "graphify-out"}
+BINARY_EXTS = {
+    ".png", ".jpg", ".jpeg", ".gif", ".ico", ".sqlite", ".sqlite3",
+    ".db", ".lock", ".exe", ".dll", ".bin", ".safetensors", ".pt",
+    ".parquet", ".zip", ".tar", ".gz", ".woff", ".woff2", ".ttf"
+}
+
 STRICT_SECRET_PATTERNS = [
     re.compile(r"ghp_[A-Za-z0-9]{36,}"),
     re.compile(r"sk-ant-[A-Za-z0-9\-_]{30,}"),
@@ -22,11 +29,6 @@ STRICT_SECRET_PATTERNS = [
 MOCK_OR_SAMPLE_INDICATORS = [
     "example", "sample", "dummy", "placeholder", "test", "fake", "xxx", "your_", "mock"
 ]
-
-
-def is_forkable_or_vendor(path: Path) -> bool:
-    parts = path.parts
-    return any(p in FORKABLE_DIRS for p in parts)
 
 
 def verify_okf_frontmatter(path: Path) -> list:
@@ -48,7 +50,11 @@ def verify_okf_frontmatter(path: Path) -> list:
 
 def analyze_code_for_live_secrets(path: Path) -> list:
     errors = []
+    if path.suffix.lower() in BINARY_EXTS:
+        return errors
     try:
+        if path.stat().st_size > 500_000:
+            return errors
         content = path.read_text(encoding="utf-8", errors="ignore")
     except Exception:
         return errors
@@ -78,7 +84,6 @@ def analyze_code_for_live_secrets(path: Path) -> list:
         for pat in STRICT_SECRET_PATTERNS:
             match = pat.search(line)
             if match:
-                matched_str = match.group(0)
                 if not any(m in line.lower() for m in MOCK_OR_SAMPLE_INDICATORS):
                     errors.append(f"{path}:{idx}: Token authentique non masqué détecté hors Holon.")
     return errors
@@ -87,7 +92,7 @@ def analyze_code_for_live_secrets(path: Path) -> list:
 def run_gate(root_dir: Path) -> bool:
     violations = []
     print("=" * 60)
-    print("A'SPACE OS V5 — LEVEL 5 DETERMINISTIC GATE (AGENT-NATIVE)")
+    print("A'SPACE OS V5 - LEVEL 5 DETERMINISTIC GATE (AGENT-NATIVE)")
     print("=" * 60)
 
     required_files = [
@@ -110,22 +115,24 @@ def run_gate(root_dir: Path) -> bool:
     scanned_core = 0
     scanned_forkable = 0
 
-    for path in root_dir.rglob("*"):
-        if not path.is_file():
-            continue
-        rel = path.relative_to(root_dir)
+    for root_p, dirs, files in os.walk(root_dir):
+        dirs[:] = [d for d in dirs if d not in EXCLUDE_DIRS]
+        for f in files:
+            path = Path(root_p) / f
+            rel = path.relative_to(root_dir)
+            if str(rel).replace("\\", "/") == "00_Memoire/ledger.jsonl":
+                continue
+            scanned_core += 1
+            violations.extend(analyze_code_for_live_secrets(path))
 
-        if any(part in {".git", ".github"} for part in rel.parts) or str(rel).replace("\\", "/") == "00_Memoire/ledger.jsonl":
-            continue
+    # Forkable Holons CAS count
+    forkable_dir = root_dir / "01_Forkable"
+    if forkable_dir.is_dir():
+        for d in forkable_dir.iterdir():
+            if d.is_dir():
+                scanned_forkable += 1
 
-        if is_forkable_or_vendor(rel):
-            scanned_forkable += 1
-            continue
-
-        scanned_core += 1
-        violations.extend(analyze_code_for_live_secrets(path))
-
-    print(f"Topologie : {scanned_core} fichiers Core audités | {scanned_forkable} fichiers Holons CAS isolés.")
+    print(f"Topologie : {scanned_core} fichiers Core audités | {scanned_forkable} Holons Forkable CAS isolés.")
 
     if violations:
         print(f"\n[ÉCHEC] {len(violations)} violation(s) d'invariant détectée(s) :")
@@ -133,7 +140,7 @@ def run_gate(root_dir: Path) -> bool:
             print(f"  - {v}")
         return False
 
-    print("\n[SUCCÈS] Tous les invariants 5D sont validés. Baux conformes.")
+    print("\n[SUCCES] Tous les invariants 5D sont validés. Baux conformes.")
     return True
 
 

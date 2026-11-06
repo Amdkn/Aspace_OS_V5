@@ -8,6 +8,7 @@ graphify-out/cache/
 00_Memoire/dsh-superagent/
 .claude/*.bak*
 01_Forkable/**/node_modules/
+node_modules/
 01_Forkable/**/dist/
 01_Forkable/**/dist-server/
 01_Forkable/**/.swarm-home/
