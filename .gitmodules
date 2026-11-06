@@ -15,13 +15,13 @@
 	url = https://github.com/Amdkn/LoRA.git
 [submodule "01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide"]
 	path = 01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide
-	url = https://huggingface.co/Amdkn7/GLiNER2.5-multi-Decide
+	url = https://github.com/Amdkn/GLiNER2.5-multi-Decide.git
 [submodule "01_Forkable/FKB00_Runtime/inference-locale/mimi"]
 	path = 01_Forkable/FKB00_Runtime/inference-locale/mimi
-	url = https://huggingface.co/Amdkn7/mimi
+	url = https://github.com/Amdkn/mimi.git
 [submodule "01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B"]
 	path = 01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B
-	url = https://huggingface.co/Amdkn7/LFM3-Omni-2B
+	url = https://github.com/Amdkn/LFM3-Omni-2B.git
 [submodule "01_Forkable/FKB01_Inference/freellmapi"]
 	path = 01_Forkable/FKB01_Inference/freellmapi
 	url = https://github.com/Amdkn/freellmapi.git
