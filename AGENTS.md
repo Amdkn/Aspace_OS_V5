@@ -82,7 +82,7 @@ Chaque innovation est configurée nativement dans son harness de base **et** exp
 ## 5. Architecture Mémoire Évolutive V5 (`00_Memoire/` & `FKB02_Memory`) — Gateway MCP + WikiLLM + OKF v0.2 + DOX + Graphify
 Quatre couches :
 1. **Gateway MCP Mémoire Partagée (`01_Forkable/FKB02_Memory/` & `00_Memoire/shared_brain/`)** : Standard ouvert `@modelcontextprotocol/server-memory` unifiant Claude, Codex, OpenCode, Pi, DeepSeek, Antigravity, Herdr, Orca et ChatGPT Web sur un fichier graphe JSONL unique (`C:\Users\amado\Aspace OS V5\00_Memoire\shared_brain\memory.jsonl`). Verrou concurrentiel atomique inter-processus (`FileLock O_EXCL`).
-   - **Règle de Comportement Universelle (Instruction Système)** : *Avant de répondre, recherche systématiquement dans la mémoire partagée (`search_nodes`, `read_graph`) si des informations, décisions ou faits passés s'appliquent. Après chaque décision importante ou action réalisée, consigne immédiatement le résultat dans le graphe (`create_entities`, `add_observations`, `create_relations`).*
+   - **Règle de Comportement Universelle (Instruction Système)** : *Avant de répondre, recherche systématiquement dans la mémoire partagée via `search_nodes(query)` (ou `open_nodes` sur les entités ciblées) plutôt que `read_graph` complet (interdit en routine pour préserver les fenêtres de contexte et les quotas de tokens) si des informations, décisions ou faits passés s'appliquent. Après chaque décision importante ou action réalisée, consigne immédiatement le résultat dans le graphe (`create_entities`, `add_observations`, `create_relations`).*
 2. **Raw sources (`00_Memoire/raw/`)** : documents sources bruts (immuables, lecture seule pour l'agent). Images dans `00_Memoire/raw/assets/`.
 3. **The Wiki (`00_Memoire/bundle/`)** : wiki persistant au format OKF v0.2 (`index.md`, `log.md`, `concepts/*.md`). Entièrement maintenu par les agents.
 4. **The Schema (`AGENTS.md`, `CLAUDE.md` & `00_Memoire/AGENTS.md`)** : règles de structure, d'ingestion, de requête et de maintenance.
@@ -91,10 +91,10 @@ Quatre couches :
 3. **The Schema (`AGENTS.md`, `CLAUDE.md` & `00_Memoire/AGENTS.md`)** : règles de structure, d'ingestion, de requête et de maintenance.
 
 ### Opérations WikiLLM (Obligatoires pour tous les agents)
-- **À l'entrée de chaque tâche (Query)** : interroger la mémoire MCP partagée (`read_graph` / `search_nodes`), lire `00_Memoire/bundle/index.md` et la fin de `00_Memoire/bundle/log.md` (déjà injectés par `00_Memoire/hooks/recall.ps1`), approfondir dans `00_Memoire/bundle/concepts/*.md` et interroger le graphe (`00_Memoire\.venv\Scripts\graphify.exe query` / `explain`).
+- **À l'entrée de chaque tâche (Query)** : interroger la mémoire MCP partagée via `search_nodes` / `open_nodes` (ne jamais appeler `read_graph` en routine pour sanctuariser le contexte et les quotas), lire `00_Memoire/bundle/index.md` et la fin de `00_Memoire/bundle/log.md` (déjà injectés par `00_Memoire/hooks/recall.ps1`), approfondir dans `00_Memoire/bundle/concepts/*.md` et interroger le graphe (`.venv\Scripts\graphify.exe query` / `explain`).
 - **À la sortie de chaque tâche (Ingest & Append-Only Log)** :
   1. Ajouter à la fin de `00_Memoire/bundle/log.md` (**STRICTEMENT APPEND-ONLY** : jamais d'édition ou de suppression d'une ligne existante) : `* **Note**: <faits, décisions, fichiers touchés, état restant — 1 à 3 lignes>`.
-  2. Si une connaissance durable change, créer/mettre à jour la page dans `00_Memoire/bundle/concepts/*.md` (frontmatter YAML avec `type:` obligatoire), la référencer dans `00_Memoire/bundle/index.md`, et lancer `00_Memoire\.venv\Scripts\graphify.exe update .`.
+  2. Si une connaissance durable change, créer/mettre à jour la page dans `00_Memoire/bundle/concepts/*.md` (frontmatter YAML avec `type:` obligatoire), la référencer dans `00_Memoire/bundle/index.md`, et lancer `.venv\Scripts\graphify.exe update .`.
 - **Lint** : exécuter `pwsh -NoProfile -File 02_Factory/checks.ps1` pour vérifier les 6 gates déterministes (27/27 outils via `.vscode/doctor.ps1`, zéro relique OpenWiki, schémas JSON valides, frontmatter OKF v0.2, intégrité append-only `log.md`, zéro secret en clair).
 
 ---

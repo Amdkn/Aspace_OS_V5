@@ -59,7 +59,7 @@ if ($tracked) {
 
 # 7. Level 5 Semantic Gate (deterministic, fail-closed - D-N044 A2)
 Write-Host "[7/7] Level 5 Semantic Gate..." -NoNewline
-$pythonCmd = if (Test-Path "00_Memoire/.venv/Scripts/python.exe") { "00_Memoire/.venv/Scripts/python.exe" } elseif (Get-Command python3 -ErrorAction SilentlyContinue | Where-Object Source -notmatch "WindowsApps") { "python3" } elseif (Get-Command python -ErrorAction SilentlyContinue | Where-Object Source -notmatch "WindowsApps") { "python" } else { $null }
+$pythonCmd = if (Test-Path ".venv/Scripts/python.exe") { ".venv/Scripts/python.exe" } elseif (Test-Path "00_Memoire/.venv/Scripts/python.exe") { "00_Memoire/.venv/Scripts/python.exe" } elseif (Get-Command python3 -ErrorAction SilentlyContinue | Where-Object Source -notmatch "WindowsApps") { "python3" } elseif (Get-Command python -ErrorAction SilentlyContinue | Where-Object Source -notmatch "WindowsApps") { "python" } else { $null }
 if (-not $pythonCmd) {
   $failures += "python absent - Level 5 Semantic Gate not executed"
   Write-Host " FAIL (python absent)" -ForegroundColor Red

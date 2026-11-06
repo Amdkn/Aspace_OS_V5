@@ -30,4 +30,4 @@ Tous les agents pointent sur le serveur officiel Anthropic `@modelcontextprotoco
 
 ## 3. Instruction Système Universelle
 
-> *Avant de répondre, interroger la mémoire partagée (`search_nodes`, `read_graph`) ; après toute décision/action, enregistrer dans le graphe (`create_entities`, `add_observations`, `create_relations`).*
+> *Avant de répondre, interroger la mémoire partagée via `search_nodes` / `open_nodes` (ne jamais appeler `read_graph` en routine pour sanctuariser le contexte et les quotas de tokens) ; après toute décision/action, enregistrer dans le graphe (`create_entities`, `add_observations`, `create_relations`).*

@@ -7,9 +7,10 @@
 #>
 [CmdletBinding()]
 param(
-    [ValidateSet('status', 'read', 'run', 'test')]
+    [ValidateSet('status', 'read', 'run', 'test', 'compact')]
     [string]$Action = 'status',
-    [string]$MemoryPath = "C:\Users\amado\Aspace OS V5\00_Memoire\shared_brain\memory.jsonl"
+    [string]$MemoryPath = "C:\Users\amado\Aspace OS V5\00_Memoire\shared_brain\memory.jsonl",
+    [string]$Token = $env:ASPACE_MEMORY_TOKEN
 )
 
 $ErrorActionPreference = 'Stop'
@@ -58,5 +59,20 @@ switch ($Action) {
     'run' {
         Write-Host "Démarrage du serveur stdio..." -ForegroundColor Yellow
         npx -y @modelcontextprotocol/server-memory
+    }
+    'compact' {
+        $lines = @(Get-Content $MemoryPath)
+        $count = $lines.Count
+        Write-Host "Vérification compaction: $count entrées détectées." -ForegroundColor Cyan
+        if ($count -gt 500) {
+            $archivePath = "C:\Users\amado\Aspace OS V5\00_Memoire\bundle\archive_memory.jsonl"
+            $toArchive = $lines[0..($count - 501)]
+            $toKeep = $lines[($count - 500)..($count - 1)]
+            Add-Content -Path $archivePath -Value $toArchive -Encoding UTF8
+            Set-Content -Path $MemoryPath -Value $toKeep -Encoding UTF8
+            Write-Host "[OK] Compaction effectuée : $($toArchive.Count) entrées archivées dans bundle/archive_memory.jsonl, 500 conservées dans shared_brain." -ForegroundColor Green
+        } else {
+            Write-Host "[OK] Graphe sain ($count entrées <= 500). Aucune compaction requise." -ForegroundColor Green
+        }
     }
 }

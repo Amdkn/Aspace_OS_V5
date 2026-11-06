@@ -1,4 +1,11 @@
+[CmdletBinding()]
+param(
+  [ValidateSet("All", "Core", "Heavy", "Business")]
+  [string]$Profile = "All"
+)
+
 # Re-clone tous les 50 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Profils: Core (frugal <2GB), Heavy (video/IA massive), Business (monetisation), All (complet)
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
@@ -118,7 +125,37 @@ $paths = @{
   "claude-trading-skills"                   = "FKB07_Money_Maker/01_Trading/claude-trading-skills"
 }
 
-foreach ($name in $repos.Keys) {
+$coreModules = @(
+  "automaton", "infinity", "openrig", "freellmapi", "codex-chatgpt-web", "freebuff",
+  "needle", "GLiNER2.5-multi-Decide", "LFM3-Omni-2B", "servers", "graphify", "dox",
+  "knowledge-catalog", "llm-wiki"
+)
+
+$heavyModules = @(
+  "billion-context", "auto-ontology", "context-language-models",
+  "huashu-motion", "take-one", "rossark-motion-skill", "reanimate", "argo",
+  "explainroo", "video-director", "earshot", "moshi", "mimi", "LoRA", "DeepInfer",
+  "mesh-llm", "cross-platform-llm-client", "cubefarm", "agent-office", "api-anything",
+  "CLI-Anything", "rea", "elephant-goldfish-model", "MiroFish"
+)
+
+$businessModules = @(
+  "impeccable", "OpenMontage", "DeepTutor", "OpenMausBot", "text-to-cad",
+  "open-notebook", "changedetection.io", "uptime-kuma",
+  "tradingview-indicator-search-mcp-server", "TradingView-Unified-MCP",
+  "nansen-cli", "claude-trading-skills"
+)
+
+$targetKeys = switch ($Profile) {
+  "Core"     { $repos.Keys | Where-Object { $coreModules -contains $_ } }
+  "Heavy"    { $repos.Keys | Where-Object { $heavyModules -contains $_ } }
+  "Business" { $repos.Keys | Where-Object { $businessModules -contains $_ } }
+  Default    { $repos.Keys }
+}
+
+Write-Host "=== ACTIVATION CLONE-FORKABLES (Profil: $Profile - $(@($targetKeys).Count) modules cibles) ===" -ForegroundColor Cyan
+
+foreach ($name in $targetKeys) {
   $rel = if ($paths.ContainsKey($name)) { $paths[$name] } else { $name }
   $dest = Join-Path $here $rel
   if (-not (Test-Path (Join-Path $dest ".git"))) {

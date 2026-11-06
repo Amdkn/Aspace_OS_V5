@@ -1,3 +1,4 @@
+.venv/
 00_Memoire/.venv/
 00_Memoire/graphify-out/cache/
 graphify-out/cache/
