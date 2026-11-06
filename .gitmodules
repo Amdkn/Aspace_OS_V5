@@ -182,3 +182,6 @@
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents
 	url = https://github.com/Amdkn/TradingAgents.git
+[submodule "01_Forkable/FKB04_Tools_Anything/hermes-agent"]
+	path = 01_Forkable/FKB04_Tools_Anything/hermes-agent
+	url = https://github.com/Amdkn/hermes-agent.git
