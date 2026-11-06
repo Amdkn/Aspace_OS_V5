@@ -119,3 +119,27 @@
 [submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models"]
 	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models
 	url = https://github.com/Amdkn/context-language-models.git
+[submodule "01_Forkable/FKB07_Money_Maker/impeccable"]
+	path = 01_Forkable/FKB07_Money_Maker/impeccable
+	url = https://github.com/Amdkn/impeccable.git
+[submodule "01_Forkable/FKB07_Money_Maker/OpenMontage"]
+	path = 01_Forkable/FKB07_Money_Maker/OpenMontage
+	url = https://github.com/Amdkn/OpenMontage.git
+[submodule "01_Forkable/FKB07_Money_Maker/DeepTutor"]
+	path = 01_Forkable/FKB07_Money_Maker/DeepTutor
+	url = https://github.com/Amdkn/DeepTutor.git
+[submodule "01_Forkable/FKB07_Money_Maker/OpenMausBot"]
+	path = 01_Forkable/FKB07_Money_Maker/OpenMausBot
+	url = https://github.com/Amdkn/OpenMausBot.git
+[submodule "01_Forkable/FKB07_Money_Maker/text-to-cad"]
+	path = 01_Forkable/FKB07_Money_Maker/text-to-cad
+	url = https://github.com/Amdkn/text-to-cad.git
+[submodule "01_Forkable/FKB07_Money_Maker/open-notebook"]
+	path = 01_Forkable/FKB07_Money_Maker/open-notebook
+	url = https://github.com/Amdkn/open-notebook.git
+[submodule "01_Forkable/FKB07_Money_Maker/changedetection.io"]
+	path = 01_Forkable/FKB07_Money_Maker/changedetection.io
+	url = https://github.com/Amdkn/changedetection.io.git
+[submodule "01_Forkable/FKB07_Money_Maker/uptime-kuma"]
+	path = 01_Forkable/FKB07_Money_Maker/uptime-kuma
+	url = https://github.com/Amdkn/uptime-kuma.git

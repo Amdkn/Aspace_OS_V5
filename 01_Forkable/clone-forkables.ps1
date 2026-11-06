@@ -1,4 +1,4 @@
-# Re-clone tous les 38 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Re-clone tous les 46 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
@@ -8,6 +8,7 @@
 # FKB04: api-anything, CLI-Anything, rea
 # FKB05: elephant-goldfish-model, MiroFish
 # FKB06_Video_SaaS: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
+# FKB07_Money_Maker: impeccable, OpenMontage, DeepTutor, OpenMausBot, text-to-cad, open-notebook, changedetection.io, uptime-kuma
 $ErrorActionPreference = "Stop"
 $env:GIT_LFS_SKIP_SMUDGE = "1"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -51,6 +52,14 @@ $repos = @{
   "explainroo"                = "https://github.com/Amdkn/explainroo.git"
   "video-director"            = "https://github.com/Amdkn/video-director.git"
   "earshot"                   = "https://github.com/Amdkn/earshot.git"
+  "impeccable"                = "https://github.com/Amdkn/impeccable.git"
+  "OpenMontage"               = "https://github.com/Amdkn/OpenMontage.git"
+  "DeepTutor"                 = "https://github.com/Amdkn/DeepTutor.git"
+  "OpenMausBot"               = "https://github.com/Amdkn/OpenMausBot.git"
+  "text-to-cad"               = "https://github.com/Amdkn/text-to-cad.git"
+  "open-notebook"             = "https://github.com/Amdkn/open-notebook.git"
+  "changedetection.io"        = "https://github.com/Amdkn/changedetection.io.git"
+  "uptime-kuma"               = "https://github.com/Amdkn/uptime-kuma.git"
 }
 
 $paths = @{
@@ -90,6 +99,14 @@ $paths = @{
   "explainroo"                = "FKB06_Video_SaaS/explainroo"
   "video-director"            = "FKB06_Video_SaaS/video-director"
   "earshot"                   = "FKB06_Video_SaaS/earshot"
+  "impeccable"                = "FKB07_Money_Maker/impeccable"
+  "OpenMontage"               = "FKB07_Money_Maker/OpenMontage"
+  "DeepTutor"                 = "FKB07_Money_Maker/DeepTutor"
+  "OpenMausBot"               = "FKB07_Money_Maker/OpenMausBot"
+  "text-to-cad"               = "FKB07_Money_Maker/text-to-cad"
+  "open-notebook"             = "FKB07_Money_Maker/open-notebook"
+  "changedetection.io"        = "FKB07_Money_Maker/changedetection.io"
+  "uptime-kuma"               = "FKB07_Money_Maker/uptime-kuma"
 }
 
 foreach ($name in $repos.Keys) {

@@ -13,3 +13,5 @@
 {"type": "relation", "from": "01_BillionContxtLanguage_AutoOnthology", "to": "BillionContext_Substrate", "relationType": "utilizes_substrate"}
 {"type": "relation", "from": "BillionContext_Substrate", "to": "AutoOntology_Compiler", "relationType": "streams_deltas_to"}
 {"type": "relation", "from": "AutoOntology_Compiler", "to": "ContextLM_Decoder", "relationType": "conditions_inference_of"}
+{"type":"entity","name":"FKB07_Money_Maker","entityType":"CashEngine","observations":["8 Moteurs B2B Productized Services a haute marge (90-98%)","Inspiration: Enquete Corey Ganim 8 GitHub repos that print money","Composants: impeccable, OpenMontage, DeepTutor, OpenMausBot, text-to-cad, open-notebook, changedetection.io, uptime-kuma","Strategie Foot-in-the-Door & echantillons gratuits personnalises (Treg)","Alignement: The OMK Office 100 clients/mois x 300 $/an = 10 000 $/mois net A0 Amadeus"]}
+{"type":"relation","from":"Aspace_OS_V5","to":"FKB07_Money_Maker","relationType":"generates_revenue_via"}
