@@ -1,4 +1,4 @@
-﻿---
+---
 type: Project Context
 title: Contexte courant de V5
 description: État évolutif de Aspace OS V5, décisions durables et préférences.

@@ -1,4 +1,4 @@
-﻿---
+---
 type: concept
 id: ceo-automaton-cubefarm
 title: "Jumeau Numérique CEO 24/7 (Automaton) & Cube Farm 3 Étages OS (578 Holons)"
