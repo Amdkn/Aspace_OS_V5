@@ -1,7 +1,9 @@
 .venv/
 00_Memoire/.venv/
-00_Memoire/graphify-out/cache/
-graphify-out/cache/
+graphify-out/
+00_Memoire/graphify-out/
+test-projet/
+03_Videaste/
 00_Memoire/graphify/
 00_Memoire/wikillm/
 00_Memoire/dox/

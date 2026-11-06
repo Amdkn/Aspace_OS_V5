@@ -155,3 +155,6 @@
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills
 	url = https://github.com/tradermonty/claude-trading-skills.git
+[submodule "01_Forkable/FKB03_3DWorlds/city-office"]
+	path = 01_Forkable/FKB03_3DWorlds/city-office
+	url = https://github.com/Amdkn/city-office.git

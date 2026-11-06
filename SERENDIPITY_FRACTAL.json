@@ -1,0 +1,62 @@
+{
+  "$schema": "https://aspaceos.tech/schemas/serendipity-fractal-v5.json",
+  "architecture": "Serendipity-Fractal-V5",
+  "analogies": {
+    "depth_layers": ["0L", "2L", "4L", "8L", "16L", "20L"],
+    "attention_heads": 13,
+    "linguistic_manifolds": 16
+  },
+  "layers": {
+    "0L": {
+      "name": "Zero-Point Sovereign Seed",
+      "description": "Table de routage pure. Aucun sous-module cloné par défaut.",
+      "mounts": ["AGENTS.md", "CLAUDE.md", ".mcp.json", ".gitmodules", "SERENDIPITY_FRACTAL.json"]
+    },
+    "2L": {
+      "name": "Synaptic Memory & Deterministic Gate",
+      "attention_heads": ["H01_Memory", "H02_OutsideJudge"],
+      "mounts": [
+        "00_Memoire",
+        "02_Factory",
+        "01_Forkable/FKB02_Memory/servers"
+      ]
+    },
+    "4L": {
+      "name": "Sub-170ms Reflex & Tool Calling",
+      "attention_heads": ["H03_GLiNER_16Lang", "H04_Needle_CQ2", "H05_Router"],
+      "mounts": [
+        "01_Forkable/FKB01_Inference"
+      ]
+    },
+    "8L": {
+      "name": "Spatial City-Office & 24/7 Runtime",
+      "attention_heads": ["H06_Automaton", "H07_CubeFarm_Core", "H08_AgentOffice_Ring"],
+      "mounts": [
+        "01_Forkable/FKB00_Runtime",
+        "01_Forkable/FKB03_3DWorlds/city-office"
+      ],
+      "orbital_deployments": {
+        "city-office": {
+          "repo": "https://github.com/Amdkn/city-office",
+          "vercel_domain": "https://city.aspaceos.tech"
+        }
+      }
+    },
+    "16L": {
+      "name": "OMK B2B Cashflow & Video Studio",
+      "attention_heads": ["H09_MoneyMaker", "H10_VideoSaaS", "H11_ToolsAnything"],
+      "mounts": [
+        "01_Forkable/FKB04_Tools_Anything",
+        "01_Forkable/FKB06_Video_SaaS",
+        "01_Forkable/FKB07_Money_Maker"
+      ]
+    },
+    "20L": {
+      "name": "Nocturnal REM & Billion-Context Ontology",
+      "attention_heads": ["H12_BillionContext", "H13_AutoOntology"],
+      "mounts": [
+        "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology"
+      ]
+    }
+  }
+}

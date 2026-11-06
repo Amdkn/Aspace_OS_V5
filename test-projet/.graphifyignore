@@ -1,9 +1,0 @@
-# Graphify Ignore — V5 Alignment
-# Exclude clones and non-V5 directories
-.graphify/
-00_Memoire/graphify
-00_Memoire/openwiki
-00_Memoire/knowledge-catalog
-00_Memoire/dox
-.venv
-tools

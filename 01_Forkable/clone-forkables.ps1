@@ -4,14 +4,14 @@ param(
   [string]$Profile = "All"
 )
 
-# Re-clone tous les 50 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
-# Profils: Core (frugal <2GB), Heavy (video/IA massive), Business (monetisation), All (complet)
+# Re-clone tous les 51 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
+# Profils: Core (frugal <2GB), Heavy (video/IA massive/3D), Business (monetisation), All (complet)
 # FKB00: automaton, infinity, openrig
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
 # FKB01 03_Inference_FreeCloud: freellmapi, codex-chatgpt-web, freebuff
 # FKB02_Memory: 01_BillionContxtLanguage_AutoOnthology (billion-context, auto-ontology, context-language-models), servers (MCP memory), graphify, dox, knowledge-catalog, llm-wiki
-# FKB03: cubefarm, agent-office
+# FKB03: cubefarm, agent-office, city-office
 # FKB04: api-anything, CLI-Anything, rea
 # FKB05: elephant-goldfish-model, MiroFish
 # FKB06_Video_SaaS: huashu-motion, take-one, rossark-motion-skill, reanimate, argo, explainroo, video-director, earshot
@@ -27,6 +27,7 @@ $repos = @{
   "codex-chatgpt-web"         = "https://github.com/Amdkn/codex-chatgpt-web.git"
   "freebuff"                  = "https://github.com/Amdkn/freebuff.git"
   "agent-office"              = "https://github.com/Amdkn/agent-office.git"
+  "city-office"               = "https://github.com/Amdkn/city-office.git"
   "api-anything"              = "https://github.com/Amdkn/api-anything.git"
   "CLI-Anything"              = "https://github.com/Amdkn/CLI-Anything.git"
   "elephant-goldfish-model"   = "https://github.com/Amdkn/elephant-goldfish-model.git"
@@ -81,6 +82,7 @@ $paths = @{
   "freebuff"                  = "FKB01_Inference/03_Inference_FreeCloud/freebuff"
   "freellmapi"                = "FKB01_Inference/03_Inference_FreeCloud/freellmapi"
   "agent-office"              = "FKB03_3DWorlds/agent-office"
+  "city-office"               = "FKB03_3DWorlds/city-office"
   "api-anything"              = "FKB04_Tools_Anything/api-anything"
   "CLI-Anything"              = "FKB04_Tools_Anything/CLI-Anything"
   "infinity"                  = "FKB00_Runtime/infinity"
@@ -135,7 +137,7 @@ $heavyModules = @(
   "billion-context", "auto-ontology", "context-language-models",
   "huashu-motion", "take-one", "rossark-motion-skill", "reanimate", "argo",
   "explainroo", "video-director", "earshot", "moshi", "mimi", "LoRA", "DeepInfer",
-  "mesh-llm", "cross-platform-llm-client", "cubefarm", "agent-office", "api-anything",
+  "mesh-llm", "cross-platform-llm-client", "cubefarm", "agent-office", "city-office", "api-anything",
   "CLI-Anything", "rea", "elephant-goldfish-model", "MiroFish"
 )
 
