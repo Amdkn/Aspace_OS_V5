@@ -1,10 +1,10 @@
-# FKB01_Inference — Pôle d'Inférence Souverain Unifié (3 Strates)
+# FKB01_Inference — Pôle d'Inférence Souverain Unifié (4 Strates)
 
-> **Architecture Déterministe** : FKB01 regroupe l'intégralité des capacités de génération de tokens d'Aspace OS V5, réparties en trois strates étanches allant du calcul on-device ultra-léger jusqu'au cloud gratuit multi-modèles.
+> **Architecture Déterministe** : FKB01 regroupe l'intégralité des capacités de génération de tokens d'Aspace OS V5, réparties en quatre strates étanches allant du calcul on-device ultra-léger jusqu'au registre de qualification des opportunités d'inférence.
 
 ---
 
-## Les 3 Strates d'Inférence Souveraine
+## Les 4 Strates d'Inférence Souveraine
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -29,14 +29,22 @@
 │  ├─ FreeLLMAPI : Pool de 34 providers gratuits (port :31415)           │
 │  ├─ Codex-ChatGPT-Web : Façade Web Pro étanche zéro-télémétrie        │
 │  └─ Freebuff : Radar opportunités (Exa $50) branché Voie A/B          │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Alimentation continue & qualification anti-clickbait
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ STRATE 4 · REGISTRE DE VEILLE YOUTUBE & SKILL WATCH (04_Inference...) │
+│  ├─ Skill Watch : 5 filtres anti-clickbait & anti-durcissement CGU     │
+│  ├─ Base Registry JSON : Suivi dynamique des opportunités indexées     │
+│  └─ Qualification : APINex (20M/j), Refuseless, Croton, Kito, WorkBuddy│
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Tableau de Bord des Sous-Modules par Strate
+## Tableau de Bord des Sous-Modules et Registres par Strate
 
-| Strate | Sous-Module | Dépôt GitHub Amdkn | Destination des Poids / Secrets |
+| Strate | Sous-Module / Registre | Dépôt GitHub Amdkn / Source | Destination des Poids / Secrets |
 |---|---|---|---|
 | **01 Locale** | **Cactus Needle** | [Amdkn/needle](https://github.com/Amdkn/needle) | [HuggingFace Amdkn7/needle3](https://huggingface.co/Amdkn7/needle3) |
 | **01 Locale** | **Kyutai Moshi** | [Amdkn/moshi](https://github.com/Amdkn/moshi) | Local weights / Hugging Face |
@@ -50,3 +58,4 @@
 | **03 FreeCloud** | **FreeLLMAPI** | [Amdkn/freellmapi](https://github.com/Amdkn/freellmapi) | Port local `:31415` |
 | **03 FreeCloud** | **Codex-ChatGPT-Web** | [Amdkn/codex-chatgpt-web](https://github.com/Amdkn/codex-chatgpt-web) | Shield zéro-télémétrie |
 | **03 FreeCloud** | **Freebuff** | [Amdkn/freebuff](https://github.com/Amdkn/freebuff) | Radar de découverte d'opportunités d'inférence (Exa $50) |
+| **04 Veille YouTube** | **YouTube Discovery Registry** | `04_Inference_Youtube_Discovery_Registry` | Skill Watch anti-clickbait & Registre JSON des opportunités |
