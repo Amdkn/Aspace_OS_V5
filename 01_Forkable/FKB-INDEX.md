@@ -14,6 +14,7 @@ Créé sur ordre d'Amadou Kone (`human:amdkn`). Les catégories organisent l'ens
 | **FKB05_Wargames** | **Wargames & Rétro-Alimentation Stratégique** | `MiroFish`, `elephant-goldfish-model`. |
 | **FKB06_Video_SaaS** | **Studio Vidéo Agentique (8 Moteurs)** | `argo`, `earshot`, `explainroo`, `huashu-motion`, `reanimate`, `rossark-motion-skill`, `take-one`, `video-director`. |
 | **FKB07_Money_Maker** | **Moteurs B2B Productized Services & Pôles Spécialisés** | `01_Trading` (TradingView MCP, Nansen CLI, TraderMonty Skills sous protocole AVERTISSEMENTS.md), `03_3D_World` (QwenLM BlenderWorld : génération procédurale bpy & export glb pour City Office), `impeccable` (Refonte anti-look IA), `OpenMontage` (Pack vidéo e-commerce), `DeepTutor` (Tuteur IA privé), `OpenMausBot` (Équipe assistants locaux), `text-to-cad` (Modélisation pièces 3D), `open-notebook` (Podcasts d'entreprise), `changedetection.io` (Radar marchés publics), `uptime-kuma` (Gardiennage & surveillance 24/7). |
+| **FKB08_Plugins** | **Écosystème Plugins, Meta-Creators & Ingestion Multimodale** | `anthropic-skills` (Amdkn/skills officiel), `mattpocock-skills` (Pocock engineering skills), `openai-plugins` (Spécification plugins OpenAI), `claude-video` (Moteur Dual-Engine Watch v2 & Gemini API). |
 
 ---
 

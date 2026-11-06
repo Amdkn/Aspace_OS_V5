@@ -185,3 +185,15 @@
 [submodule "01_Forkable/FKB04_Tools_Anything/hermes-agent"]
 	path = 01_Forkable/FKB04_Tools_Anything/hermes-agent
 	url = https://github.com/Amdkn/hermes-agent.git
+[submodule "01_Forkable/FKB08_Plugins/anthropic-skills"]
+	path = 01_Forkable/FKB08_Plugins/anthropic-skills
+	url = https://github.com/Amdkn/skills.git
+[submodule "01_Forkable/FKB08_Plugins/mattpocock-skills"]
+	path = 01_Forkable/FKB08_Plugins/mattpocock-skills
+	url = https://github.com/mattpocock/skills.git
+[submodule "01_Forkable/FKB08_Plugins/openai-plugins"]
+	path = 01_Forkable/FKB08_Plugins/openai-plugins
+	url = https://github.com/openai/plugins.git
+[submodule "01_Forkable/FKB08_Plugins/claude-video"]
+	path = 01_Forkable/FKB08_Plugins/claude-video
+	url = https://github.com/bradautomates/claude-video.git
