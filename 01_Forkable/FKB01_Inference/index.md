@@ -1,21 +1,50 @@
-﻿# FKB01_Inference — Inférence souveraine multi-plateformes
+# FKB01_Inference — Pôle d'Inférence Souverain Unifié (3 Strates)
 
-## Sous-catégories
+> **Architecture Déterministe** : FKB01 regroupe l'intégralité des capacités de génération de tokens d'Aspace OS V5, réparties en trois strates étanches allant du calcul on-device ultra-léger jusqu'au cloud gratuit multi-modèles.
 
-### Codex-GPT-Web (mappé)
-- Emplacement : `01_Forkable/FKB01_Inference/codex-chatgpt-web` (non déplacé).
-- Rôle : hub web et CLI multi-plateformes zéro télémétrie (shield `aspace-telemetry-shield.cjs`).
-- Constitution (ligne 21) : combiné à api-anything, CLI-Anything et rea, rotation intelligente sur quota.
+---
 
-### FreeLLMAPI (mappé, service)
-- Routeur unifié. Compte du Capitaine sur son PC (port :31415 docs V5 ; sandbox :3001 distinct).
-- Faits dashboard 2026-11-04 (capture du Capitaine) : 4,1B restants, 96% de 4,2B, 176,7M utilisés.
-- 71 modèles + 120 sans quota publié. Routage Balanced : fiabilité 50%, vitesse 25%, intelligence 25%.
-- Modèles visibles : Qwen3.8 Max/Omni (xKiro), Gemini Flash 3.5/3.6/3.7, Qwen3.7 Max 120/120, Qwen3.6, SenseNova, Aion 3.0.
-- Failover V5 existant : freellmapi/auto → claude-sonnet-4-5 → qwen3.8-max → gemini-3.8-flash → deepseek-v4-flash.
+## Les 3 Strates d'Inférence Souveraine
 
-### Fusion (question ouverte, analyse d'abord)
-- Peut-on fusionner routeur + hub en un seul point d'inférence souveraine ?
-- Piste : codex-web en façade (zéro télémétrie), FreeLLMAPI en pool (rotation quota),
-  LFM3 local en repli. Plateformes : Muse, Gemini, Claude, DeepSeek, Z, Qwen.
-- Optimisation via FKB04 (API Anything) avant tout code de fusion.
+```
+┌────────────────────────────────────────────────────────────────────────┐
+│ STRATE 1 · INFERENCE LOCALE ON-DEVICE (01_Inference_Locale)            │
+│  ├─ Cactus Needle : Tool-calling déterministe 2-bit & ASR Whistle     │
+│  ├─ Fastino GLiNER 2.5 : Extraction d'entités & intention sans hallu. │
+│  ├─ Kyutai Mimi & Moshi : Dialogue vocal & codec audio streaming       │
+│  └─ Liquid AI LFM3-Omni-2B + LoRA : Modèle neuronal local (:9931)      │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Débordement si tâche trop lourde
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ STRATE 2 · INFERENCE COOPERATIVE DISTRIBUEE (02_Inference_Cooperative) │
+│  ├─ DeepInfer : Moteur C++/CUDA, micro-kernels FP8 & KV-Cache Paged   │
+│  ├─ Mesh-LLM : Orchestration P2P, Pipeline Parallelism (PP) & mDNS     │
+│  └─ Cross-Platform Client : Surface omnicanale Tauri/Flutter           │
+└───────────────────────────────────┬────────────────────────────────────┘
+                                    │ Débordement si modèle colossal / externe
+                                    ▼
+┌────────────────────────────────────────────────────────────────────────┐
+│ STRATE 3 · INFERENCE FREECLOUD & SHIELD (03_Inference_FreeCloud)       │
+│  ├─ FreeLLMAPI : Pool de 34 providers gratuits (port :31415)           │
+│  └─ Codex-ChatGPT-Web : Façade Web Pro étanche zéro-télémétrie        │
+└────────────────────────────────────────────────────────────────────────┘
+```
+
+---
+
+## Tableau de Bord des Sous-Modules par Strate
+
+| Strate | Sous-Module | Dépôt GitHub Amdkn | Destination des Poids / Secrets |
+|---|---|---|---|
+| **01 Locale** | **Cactus Needle** | [Amdkn/needle](https://github.com/Amdkn/needle) | [HuggingFace Amdkn7/needle3](https://huggingface.co/Amdkn7/needle3) |
+| **01 Locale** | **Kyutai Moshi** | [Amdkn/moshi](https://github.com/Amdkn/moshi) | Local weights / Hugging Face |
+| **01 Locale** | **Kyutai Mimi** | [Amdkn/mimi](https://github.com/Amdkn/mimi) | [HuggingFace Amdkn7/mimi](https://huggingface.co/Amdkn7/mimi) |
+| **01 Locale** | **Fastino GLiNER 2.5** | [Amdkn/GLiNER2.5-multi-Decide](https://github.com/Amdkn/GLiNER2.5-multi-Decide) | [HuggingFace Amdkn7/GLiNER2.5-multi-Decide](https://huggingface.co/Amdkn7/GLiNER2.5-multi-Decide) |
+| **01 Locale** | **Liquid LFM3-Omni-2B** | [Amdkn/LFM3-Omni-2B](https://github.com/Amdkn/LFM3-Omni-2B) | [HuggingFace Amdkn7/LFM3-Omni-2B](https://huggingface.co/Amdkn7/LFM3-Omni-2B) |
+| **01 Locale** | **Microsoft LoRA** | [Amdkn/LoRA](https://github.com/Amdkn/LoRA) | Adaptateurs locaux |
+| **02 Coopérative** | **DeepInfer** | [Amdkn/DeepInfer](https://github.com/Amdkn/DeepInfer) | Compilateur CUDA / C++ local |
+| **02 Coopérative** | **Mesh-LLM** | [Amdkn/mesh-llm](https://github.com/Amdkn/mesh-llm) | Libp2p / découverte mDNS |
+| **02 Coopérative** | **Cross-Platform Client** | [Amdkn/cross-platform-llm-client](https://github.com/Amdkn/cross-platform-llm-client) | Application Desktop/Mobile |
+| **03 FreeCloud** | **FreeLLMAPI** | [Amdkn/freellmapi](https://github.com/Amdkn/freellmapi) | Port local `:31415` |
+| **03 FreeCloud** | **Codex-ChatGPT-Web** | [Amdkn/codex-chatgpt-web](https://github.com/Amdkn/codex-chatgpt-web) | Shield zéro-télémétrie |

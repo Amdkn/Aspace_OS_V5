@@ -368,7 +368,7 @@ la file globale de merge. Le bridge reste le bridge.
 
 C'était le manque de ce document : les principes ci-dessus
 décrivaient un Runtime vivant, sans sa base de fondation.
-La base est `01_Forkable/FKB00_Runtime/inference-locale/`,
+La base est `01_Forkable/FKB01_Inference/01_Inference_Locale/`,
 les 2 synthèses préservées. Elle ne s'ajoute pas au Runtime,
 elle le fonde : le signal brut y devient tokens, les tokens
 y deviennent décisions, les décisions y deviennent actions,
@@ -473,7 +473,7 @@ de la pile locale. Il orchestre trois couches d'inférence :
 
 - Automaton, Conway Research : pattern déjà consigné (boucle ReAct,
   heartbeat, mémoire 5 tiers, politique en code, holons).
-- `01_Forkable/FKB00_Runtime/inference-locale/` : index, mimi-lora-lfm3-omni.md,
+- `01_Forkable/FKB01_Inference/01_Inference_Locale/` : index, mimi-lora-lfm3-omni.md,
   needle-gliner-edge.md (synthèses préservées, base de fondation §6).
 - https://github.com/hydro-project/infinity
 - https://github.com/mvschwarz/openrig

@@ -14,5 +14,5 @@ sources:
 - **Boucle** : `S0` Out of the Loop (Amadou Kone, 10D) · `S1` Near (Rick) · `S2` Close (Doctors/A2/B2, Mezzanine Agent-Office) · `S3` Keep Loop Alive. A0 Amadeus = 7D.
 - **Échelle** : 0D IPBD · 1D EGM + Clean-Room · 2D Mondes agentiques + Tableaux-Portails (`Tab`) · 3D Cube Farm × Agent-Office · 4D Runtime + 4P · 5D 8 domaines parallèles · 6D 6 Frameworks · 7D encodage poids (LFM3, Needle 3, GLiNER2.5).
 - **Rory** : 4P + Wargames `MiroFish` (`01_Forkable/MiroFish`).
-- **Inférence** : Sakana `Fugu` (Conductor + TRINITY Thinker/Worker/Verifier) + `LFM3-Omni-2B` (`127.0.0.1:9931`) + `freellmapi/auto` (`:31415`) + `01_Forkable/FKB01_Inference/codex-chatgpt-web` (bouclier `aspace-telemetry-shield.cjs`, 24 patterns bloqués, MAJ GitHub off sauf `ASPACE_ALLOW_EXTERNAL_UPDATE=1`, lanceur `start-aspace-codex-web.ps1`).
+- **Inférence** : Sakana `Fugu` (Conductor + TRINITY Thinker/Worker/Verifier) + `LFM3-Omni-2B` (`127.0.0.1:9931`) + `freellmapi/auto` (`:31415`) + `01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web` (bouclier `aspace-telemetry-shield.cjs`, 24 patterns bloqués, MAJ GitHub off sauf `ASPACE_ALLOW_EXTERNAL_UPDATE=1`, lanceur `start-aspace-codex-web.ps1`).
 - **Code** : `01_Forkable/FKB00_Runtime/automaton/src/aspace/holon-topology.ts`, `01_Forkable/FKB03_3DWorlds/cubefarm/shared/aspaceHolons.ts`.

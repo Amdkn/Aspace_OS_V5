@@ -4,27 +4,46 @@
 [submodule "01_Forkable/FKB00_Runtime/openrig"]
 	path = 01_Forkable/FKB00_Runtime/openrig
 	url = https://github.com/Amdkn/openrig.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/needle"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/needle
+[submodule "01_Forkable/FKB00_Runtime/automaton"]
+	path = 01_Forkable/FKB00_Runtime/automaton
+	url = https://github.com/Amdkn/automaton.git
+
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/needle"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/needle
 	url = https://github.com/Amdkn/needle.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/moshi"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/moshi
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/moshi"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/moshi
 	url = https://github.com/Amdkn/moshi.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/LoRA"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/LoRA
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/LoRA"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/LoRA
 	url = https://github.com/Amdkn/LoRA.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/GLiNER2.5-multi-Decide
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/GLiNER2.5-multi-Decide"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/GLiNER2.5-multi-Decide
 	url = https://github.com/Amdkn/GLiNER2.5-multi-Decide.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/mimi"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/mimi
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/mimi"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/mimi
 	url = https://github.com/Amdkn/mimi.git
-[submodule "01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B"]
-	path = 01_Forkable/FKB00_Runtime/inference-locale/LFM3-Omni-2B
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/LFM3-Omni-2B"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/LFM3-Omni-2B
 	url = https://github.com/Amdkn/LFM3-Omni-2B.git
-[submodule "01_Forkable/FKB01_Inference/freellmapi"]
-	path = 01_Forkable/FKB01_Inference/freellmapi
+
+[submodule "01_Forkable/FKB01_Inference/02_Inference_Cooperative/DeepInfer"]
+	path = 01_Forkable/FKB01_Inference/02_Inference_Cooperative/DeepInfer
+	url = https://github.com/Amdkn/DeepInfer.git
+[submodule "01_Forkable/FKB01_Inference/02_Inference_Cooperative/mesh-llm"]
+	path = 01_Forkable/FKB01_Inference/02_Inference_Cooperative/mesh-llm
+	url = https://github.com/Amdkn/mesh-llm.git
+[submodule "01_Forkable/FKB01_Inference/02_Inference_Cooperative/cross-platform-llm-client"]
+	path = 01_Forkable/FKB01_Inference/02_Inference_Cooperative/cross-platform-llm-client
+	url = https://github.com/Amdkn/cross-platform-llm-client.git
+
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freellmapi"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freellmapi
 	url = https://github.com/Amdkn/freellmapi.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web
+	url = https://github.com/Amdkn/codex-chatgpt-web.git
+
 [submodule "01_Forkable/FKB02_Video_SaaS/argo"]
 	path = 01_Forkable/FKB02_Video_SaaS/argo
 	url = https://github.com/Amdkn/argo.git
@@ -49,9 +68,14 @@
 [submodule "01_Forkable/FKB02_Video_SaaS/video-director"]
 	path = 01_Forkable/FKB02_Video_SaaS/video-director
 	url = https://github.com/Amdkn/video-director.git
+
+[submodule "01_Forkable/FKB03_3DWorlds/cubefarm"]
+	path = 01_Forkable/FKB03_3DWorlds/cubefarm
+	url = https://github.com/Amdkn/cubefarm.git
 [submodule "01_Forkable/FKB03_3DWorlds/agent-office"]
 	path = 01_Forkable/FKB03_3DWorlds/agent-office
 	url = https://github.com/Amdkn/agent-office.git
+
 [submodule "01_Forkable/FKB04_Tools_Anything/api-anything"]
 	path = 01_Forkable/FKB04_Tools_Anything/api-anything
 	url = https://github.com/Amdkn/api-anything.git
@@ -61,18 +85,10 @@
 [submodule "01_Forkable/FKB04_Tools_Anything/rea"]
 	path = 01_Forkable/FKB04_Tools_Anything/rea
 	url = https://github.com/Amdkn/rea.git
+
 [submodule "01_Forkable/elephant-goldfish-model"]
 	path = 01_Forkable/elephant-goldfish-model
 	url = https://github.com/Amdkn/elephant-goldfish-model.git
 [submodule "01_Forkable/MiroFish"]
 	path = 01_Forkable/MiroFish
 	url = https://github.com/Amdkn/MiroFish.git
-[submodule "01_Forkable/FKB00_Runtime/automaton"]
-	path = 01_Forkable/FKB00_Runtime/automaton
-	url = https://github.com/Amdkn/automaton.git
-[submodule "01_Forkable/FKB03_3DWorlds/cubefarm"]
-	path = 01_Forkable/FKB03_3DWorlds/cubefarm
-	url = https://github.com/Amdkn/cubefarm.git
-[submodule "01_Forkable/FKB01_Inference/codex-chatgpt-web"]
-	path = 01_Forkable/FKB01_Inference/codex-chatgpt-web
-	url = https://github.com/Amdkn/codex-chatgpt-web.git
