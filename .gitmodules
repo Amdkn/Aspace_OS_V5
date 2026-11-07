@@ -92,8 +92,8 @@
 [submodule "01_Forkable/elephant-goldfish-model"]
 	path = 01_Forkable/elephant-goldfish-model
 	url = https://github.com/Amdkn/elephant-goldfish-model.git
-[submodule "01_Forkable/MiroFish"]
-	path = 01_Forkable/MiroFish
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish
 	url = https://github.com/Amdkn/MiroFish.git
 [submodule "01_Forkable/FKB02_Memory/graphify"]
 	path = 01_Forkable/FKB02_Memory/graphify

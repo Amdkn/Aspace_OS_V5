@@ -34,3 +34,7 @@ license: "Apache-2.0"
 - **Architecture** : Modèle de fondation temporel universel prédisant à plus de 300 séries par seconde.
 - **Covariables** : Support natif des covariables passées et futures connues (promotions, jours fériés, annonces macroéconomiques).
 - **Rôle V5** : Prévision de trésorerie, charge système des holons et métriques d'activité.
+
+
+## Couplage Wargame MiroFish
+Mitra-v2 et Chronos-2 sont interfacés directement avec le moteur de simulation MiroFish (`MiroFish/`) pour classifier les états décisionnels du swarm et prédire les séries temporelles multivariées.

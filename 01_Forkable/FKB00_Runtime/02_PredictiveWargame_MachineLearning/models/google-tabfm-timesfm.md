@@ -27,3 +27,7 @@ github_sovereign_forks:
 - **Architecture** : Stacked Mixing Transformer à 20 couches, 16 têtes d'attention (`dim=1280`), mécanisme *Variate Attention* et *CPM Iterative RevIN*.
 - **Patch Contexte $\rightarrow$ Horizon** : Patch d'entrée de 32 pas vers horizon de 64 pas ($t+64$).
 - **Quantiles Multi-Niveaux** : Sortie directe de la distribution avec cône d'incertitude `q10`..`q90` (médiane à l'index 4), calculant automatiquement le risque de chute (*downside drawdown*).
+
+
+## Couplage Wargame MiroFish
+TabFM et TimesFM agissent comme double jury de vérification et d arbitrage sur les sorties de simulation wargame produites par MiroFish (`MiroFish/`).

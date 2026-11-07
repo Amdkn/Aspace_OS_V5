@@ -3,7 +3,11 @@
   "fractal_layer": "20L",
   "swarm_engine": {
     "name": "MiroFish (OASIS + MindGraph)",
-    "upstream": "https://github.com/666ghj/MiroFish"
+    "upstream": "https://github.com/666ghj/MiroFish",
+    "sovereign_fork": "https://github.com/Amdkn/MiroFish",
+    "pinned_commit": "7657031ac01184afe2cb220f5ee3545573b5e843",
+    "submodule": "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish",
+    "architecture_doc": "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/models/mirofish-wargame-engine.md"
   },
   "orchestrator": {
     "name": "AutoGluon (TabularPredictor + TimeSeriesPredictor)",

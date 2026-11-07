@@ -30,3 +30,7 @@ license: "Apache-2.0"
 - `predict_samples` : Échantillonne les trajectoires jusqu'à 480 pas (ou 256 pas en mode chaotique).
 - `rollout` : Prolonge chaque trajectoire de façon autonome sur un horizon étendu.
 - `predict_quantiles` : Retourne les cônes d'incertitude quantiles et la prévision ponctuelle.
+
+
+## Couplage Wargame MiroFish
+PathFM fournit le moteur de rollout chaotique multi-horizons (jusqu à 480 pas) pour simuler la divergence des trajectoires d agents dans MiroFish (`MiroFish/`).
