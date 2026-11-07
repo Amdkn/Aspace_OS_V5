@@ -89,8 +89,8 @@
 	path = 01_Forkable/FKB04_Tools_Anything/rea
 	url = https://github.com/Amdkn/rea.git
 
-[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/03_MasterSpec_CleanPlan"]
-	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/03_MasterSpec_CleanPlan
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/elephant-goldfish-model"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/elephant-goldfish-model
 	url = https://github.com/Amdkn/elephant-goldfish-model.git
 [submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish"]
 	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish
@@ -215,14 +215,14 @@
 [submodule "01_Forkable/FKB07_Money_Maker/powerbi-to-ai-visuals"]
 	path = 01_Forkable/FKB07_Money_Maker/powerbi-to-ai-visuals
 	url = https://github.com/Amdkn/powerbi-to-ai-visuals.git
-[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/gstack"]
-	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/gstack
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gstack"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gstack
 	url = https://github.com/Amdkn/gstack.git
-[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/superpowers"]
-	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/superpowers
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/superpowers"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/superpowers
 	url = https://github.com/Amdkn/superpowers.git
-[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done"]
-	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/get-shit-done"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/get-shit-done
 	url = https://github.com/Amdkn/get-shit-done.git
 
 [submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm"]
