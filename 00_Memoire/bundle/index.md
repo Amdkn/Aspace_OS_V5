@@ -20,3 +20,4 @@ okf_version: "0.2"
 * [FKB07 Money Maker & Productized B2B Services](concepts/b2b-money-maker.md) - 8 Moteurs B2B haute marge (90-98%) inspirés de Corey Ganim (Impeccable, OpenMontage, DeepTutor, OpenMausBot, text-to-cad, open-notebook, changedetection, uptime-kuma)
 * [Neuro-Tabular Wargame & Quatuor Prédictif](concepts/neuro-tabular-wargame.md) - AutoGluon (Mitra-v2, Chronos-2, PathFM) x Google (TabFM, TimesFM) x CEO-Bench déterministe (GBrain, Gstack, GSD, Superpowers)
 * [Structure code graphifié](concepts/contexte-v5.md) - résultats Graphify V5
+- [argon-flash38-distillation.md](concepts/argon-flash38-distillation.md) — Distillation des traces de raisonnement et décisions de Gemini 4 Argon × Fable 5 vers Gemini 3.8 Flash (Protocole Zero-Quota-Burn & 1-Turn Closure).

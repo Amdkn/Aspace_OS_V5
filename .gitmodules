@@ -1,11 +1,11 @@
 [submodule "01_Forkable/FKB00_Runtime/infinity"]
-	path = 01_Forkable/FKB00_Runtime/infinity
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity
 	url = https://github.com/Amdkn/infinity.git
 [submodule "01_Forkable/FKB00_Runtime/openrig"]
-	path = 01_Forkable/FKB00_Runtime/openrig
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig
 	url = https://github.com/Amdkn/openrig.git
 [submodule "01_Forkable/FKB00_Runtime/automaton"]
-	path = 01_Forkable/FKB00_Runtime/automaton
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/automaton
 	url = https://github.com/Amdkn/automaton.git
 
 [submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/needle"]
@@ -224,3 +224,4 @@
 [submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done"]
 	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done
 	url = https://github.com/Amdkn/get-shit-done.git
+

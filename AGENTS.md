@@ -149,9 +149,61 @@ Chaque agent et sous-agent d'Aspace OS V5 élève automatiquement son niveau d'a
 - **Boucle & Dimensions** : `S0` Out of the Loop (`human:amdkn`, posture 10D) · `S1` Near (`S1-RICK`) · `S2` Close (Doctors, `A2`, `B2..I2` sur la Mezzanine `Agent-Office`) · `S3` Keep Aspace Loop Alive. `A0 Amadeus` = 7D. Échelle `0D IPBD` → `1D EGM + Clean-Room` → `2D Mondes agentiques + Tableaux-Portails (touche Tab)` → `3D Cube Farm × Agent-Office` → `4D Runtime permanent + 4P` → `5D 8 domaines parallèles` → `6D 6 Frameworks` → `7D encodage poids (LFM3, Needle 3, GLiNER2.5)`.
 - **Inférence souveraine unifiée** : Conductor Sakana `Fugu` (TRINITY Thinker/Worker/Verifier) + `LFM3-Omni-2B` (`127.0.0.1:9931`) + `freellmapi/auto` (`:31415`) + `01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web` zéro télémétrie (`start-aspace-codex-web.ps1`). `S3-RORY` = 4P + Wargames `MiroFish`.
 
+---
+
+## 9. Distillation des Traces Argon × Fable 5 & Protocole « Flash 3.8 Zero-Quota-Burn »
+
+Cette section condense les traces de raisonnement, de comportement et de prise de décision de **Gemini 4 Argon** croisées avec les **2M+ traces Fable 5 (Claude Mythos)** pour :
+1. **Éliminer 100 % du gaspillage de quotas** (tours d'attente asynchrones inutiles, échecs `edit_file` CRLF, lancements `--demo` factices, blocages de dialogues CLI).
+2. **Hisser Gemini 3.8 Flash au niveau de précision architecturale d'Argon** dès que le relais de quota s'active.
+
+### A. Les 4 Acquis Décisionnels d'Argon (À reproduire systématiquement par Flash 3.8)
+1. **Remontée Causale Complète en 1 Passe (Full-Stack Root-Cause Tracing)** :
+   - Ne jamais patcher un symptôme visuel à l'aveugle. Toujours tracer la chaîne complète avant d'éditer :
+     `Symptôme UI (Canvas/DOM) -> État/Store (Zustand/Socket /ws) -> Proxy/API (Vite :5173/:5317 -> Backend :4600/:4317) -> Processus/Fichier d'état (state.json / PTY / SQLite)`.
+   - *Exemples validés dans les traces Argon* :
+     - **Écran bleu Agent-Office** : `App.tsx (!ready)` $\rightarrow$ `useWorldSocket.ts (/ws)` $\rightarrow$ `vite.config.ts (:4600)` $\rightarrow$ serveur backend `:4600` non lancé.
+     - **Balcons suspendus sur le toit de CubeFarm** : `Outside.tsx` $\rightarrow$ `StreetExitPortals` $\rightarrow$ worker `OffscreenCanvas` asynchrone (`useCanvasTexture`) retenant le sous-graphe R3F au démontage $\rightarrow$ remplacement par `THREE.CanvasTexture` synchrone.
+     - **Erreur Herdr `attached to itself` dans AGY** : `hc` appelé dans un shell où `$env:HC_TERMINAL_ID` est déjà défini $\rightarrow$ `hc.exe` tente d'attacher le terminal à lui-même $\rightarrow$ purge locale `set "HC_TERMINAL_ID="` dans `hc.cmd` / `herdr.cmd` et prompt explicite `[herdr:<id>]` dans `$PROFILE`.
+2. **Patching Atomique Multi-Fichiers via `node -e` (Immunité CRLF Windows)** :
+   - Sous Windows, `edit_file` échoue fréquemment sur les fichiers en `\r\n` (CRLF), coûtant 2 à 3 tours de reprise.
+   - **Règle d'or** : dès qu'un patch touche un fichier CRLF ou $\ge 2$ fichiers, exécuter un script atomique `node -e` (`fs.readFileSync` / `fs.writeFileSync`) combiné dans le **même appel `run_command`** avec `npm run typecheck` (ou `02_Factory/checks.ps1`).
+3. **Migrations d'État In-Process (`init()` Runtime) plutôt qu'Édition Concurrente sur Disque** :
+   - Lorsqu'un démon (`tsx watch`, `office.mjs`, `dsh`) garde son état en mémoire et réécrit `state.json` sur disque, éditer `state.json` de l'extérieur est écrasé au prochain tick.
+   - **Règle d'or** : toujours injecter une méthode de migration idempotente (ex. `migrateAspaceV5Symbiosis()`) directement dans l'initialisation du serveur (`Swarm.init()`) suivie de `this.save()`.
+4. **Anti-Panique Agentique Préventive (Zero-Dialog / Zero-Block)** :
+   - Tout agent ou CLI lancé par un monde 3D ou un orchestrateur doit avoir :
+     - `--dangerously-skip-permissions` / `--permission-mode bypassPermissions` (ou équivalent harness).
+     - Pré-validation de `~/.claude.json` (`hasTrustDialogAccepted: true`, `bypassPermissionsModeAccepted: true`, `hasSeenAutoModeEntryWarning: true`).
+     - `git -c core.longpaths=true` forcé pour éviter l'échec Windows `Filename too long` lors des `git worktree add`.
+
+### B. Les 4 Lois « Zero-Quota-Burn » (Ce qui cramait du quota et qui est désormais INTERDIT)
+1. **LOI 1 — `WaitMsBeforeAsync: 10000` Obligatoire pour toute Commande Synchrone (Zéro Tour Vide « Attente du retour »)** :
+   - *Cause du cramage* : sous Windows + hooks AGY, une commande shell de 0,5s met parfois 5 à 7s d'aller-retour. Avec `WaitMsBeforeAsync: 5000`, l'outil bascule en tâche de fond (`task-XXXX`), forçant un tour vide (*« Attente du retour »*) et doublant la consommation de quota !
+   - *Règle stricte* : toujours passer **`WaitMsBeforeAsync: 10000`** pour toute commande qui n'est pas un serveur démon permanent (`IsDaemon: true`).
+2. **LOI 2 — Mega-Batching « Inspect + Patch + Verify » en 1 Seul Tour** :
+   - Ne jamais étaler sur 4 tours ce qui tient en 1 tour :
+     - Appeler plusieurs `read_file` **en parallèle dans le même tour**.
+     - Regrouper dans **un seul `run_command`** : l'application du patch (`node -e`), la vérification statique (`npm run typecheck`) et le test d'API live (`Invoke-RestMethod http://localhost:4317/api/state`).
+3. **LOI 3 — Zéro Mode `--demo` Factice par Défaut** :
+   - Ne jamais lancer un monde 3D ou un service avec `--demo` (`Demo Co.`, faux CEO `Morgan`) sauf demande explicite de l'utilisateur. Toujours démarrer en **mode réel (`demo: false`)** connecté à `Amdkn/Aspace_OS_V5`, `A0 Amadeus` et `Herdr · OpenRig`.
+4. **LOI 4 — Détachement Propre des Processus GUI & Filtrage des Fichiers Binaires/UTF-16** :
+   - Ne jamais lire les fichiers `.log` binaires ou UTF-16 bruts via `read_file` s'ils dépassent 50 Ko ; utiliser `Get-Content -Tail 40` dans `run_command`.
+   - Pour lancer un exécutable GUI (`herdr-app.exe`), ne pas bloquer le pipe `stdout` du parent.
+
+### C. Protocole cognitif « Flash-As-Argon » (Template `thinking` obligatoire pour Gemini 3.8 Flash)
+Lorsque **Gemini 3.8 Flash** prend le relais (ou opère en mode rapide), il compense la différence de taille de modèle par une discipline d'exécution stricte inspirée de **Fable 5 (81,4 % `tool_use`)** et d'**Argon** :
+- Dans chaque bloc `thinking`, **avant tout appel d'outil**, Flash 3.8 structure sa réflexion en **4 lignes fixes** :
+  1. `[RACINE]` : Chaîne causale exacte (`Fichier UI -> Store -> API -> Processus/État`).
+  2. `[BATCH 1-TOUR]` : Quels outils appeler en parallèle maintenant avec `WaitMsBeforeAsync: 10000` pour clore la tâche en **1 seul tour** ?
+  3. `[INVARIANTS V5]` : Symbiose `Automaton × Infinity × OpenRig × Herdr`, Holons canoniques (`S0..S3`, `A1..A3`, `B1..I1`), `node -e` anti-CRLF, `log.md` append-only.
+  4. `[PREUVE E2E]` : Quelle commande (`typecheck`, `Invoke-RestMethod`, `hc ls`, `checks.ps1`) prouve le résultat avant de répondre ?
+- **Cible de vélocité Flash 3.8** : **1 à 2 tours maximum par requête utilisateur**, 0 échec `edit_file`, 0 tour d'attente asynchrone inutile.
+
 ## Child DOX Index
+- `GEMINI.md` : contrat natif Gemini / Antigravity (`agy`) incluant la distillation Argon × Fable 5 pour Gemini 3.8 Flash.
 - `00_Memoire/AGENTS.md` : contrat détaillé de la mémoire évolutive V5 (WikiLLM + OKF v0.2 + Graphify + DOX).
 - `01_Forkable/AGENTS.md` : contrat du Jumeau Numérique CEO 24/7 (`01_Forkable/FKB00_Runtime/automaton`) et de Cube Farm 3 Étages OS (`01_Forkable/FKB03_3DWorlds/cubefarm`).
 - `CLAUDE.md` : miroir opérationnel pour les outils qui chargent `CLAUDE.md` en priorité.
 - `02_Factory/config.json` & `02_Factory/factory.ps1` : colonne vertébrale ADW & Durable Subagents de l'Aspace Software Factory.
-- `00_Memoire/bundle/index.md` : point d'entrée de toutes les pages de concepts V5 (`aspace-factory.md`, `pi-durable-subagents.md`, `fable5-traces.md`, `vscode-antifragile.md`, `herdr.md`, `outils-memoire.md`, `regles-utilisateur.md`, `contexte-v5.md`, `ambition-modo-de-volar.md`, `aspace-3os-holons.md`, `ceo-automaton-cubefarm.md`).
+- `00_Memoire/bundle/index.md` : point d'entrée de toutes les pages de concepts V5 (`aspace-factory.md`, `pi-durable-subagents.md`, `fable5-traces.md`, `vscode-antifragile.md`, `herdr.md`, `outils-memoire.md`, `regles-utilisateur.md`, `contexte-v5.md`, `ambition-modo-de-volar.md`, `aspace-3os-holons.md`, `ceo-automaton-cubefarm.md`, `argon-flash38-distillation.md`).
