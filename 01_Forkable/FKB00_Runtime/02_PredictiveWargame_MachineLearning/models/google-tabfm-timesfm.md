@@ -9,6 +9,12 @@ upstream_repos:
   - "google/timesfm-3.0-pytorch"
 fractal_layer: "20L"
 license: "tabfm-non-commercial-v1.0 & timesfm-non-commercial-license-v1.0"
+code_submodules:
+  - "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm"
+  - "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm"
+github_sovereign_forks:
+  - "https://github.com/Amdkn/timesfm"
+  - "https://github.com/Amdkn/tabfm"
 ---
 
 # Google TabFM 1.1.0 & TimesFM 3.0 — Jury de Calibration Interne A0

@@ -11,7 +11,12 @@ upstream_repos:
   - "autogluon/chronos-2-small"
   - "autogluon/mitra-classifier-2"
   - "autogluon/mitra-regressor-2"
-code_submodule: "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon"
+code_submodules:
+  - "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/chronos-forecasting"
+  - "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon"
+github_sovereign_forks:
+  - "https://github.com/Amdkn/chronos-forecasting"
+  - "https://github.com/Amdkn/autogluon"
 fractal_layer: "16L"
 license: "Apache-2.0"
 ---

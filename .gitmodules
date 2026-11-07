@@ -225,3 +225,12 @@
 	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done
 	url = https://github.com/Amdkn/get-shit-done.git
 
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm
+	url = https://github.com/Amdkn/timesfm.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/chronos-forecasting"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/chronos-forecasting
+	url = https://github.com/Amdkn/chronos-forecasting.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm
+	url = https://github.com/Amdkn/tabfm.git
