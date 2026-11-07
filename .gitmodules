@@ -234,3 +234,6 @@
 [submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm"]
 	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm
 	url = https://github.com/Amdkn/tabfm.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2
+	url = https://github.com/Amdkn/mitra-2.git
