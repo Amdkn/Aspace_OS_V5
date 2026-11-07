@@ -197,3 +197,30 @@
 [submodule "01_Forkable/FKB08_Plugins/claude-video"]
 	path = 01_Forkable/FKB08_Plugins/claude-video
 	url = https://github.com/bradautomates/claude-video.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/PathFM"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/PathFM
+	url = https://github.com/Amdkn/PathFM.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon
+	url = https://github.com/Amdkn/autogluon.git
+[submodule "01_Forkable/FKB02_Memory/gbrain"]
+	path = 01_Forkable/FKB02_Memory/gbrain
+	url = https://github.com/Amdkn/gbrain.git
+[submodule "01_Forkable/FKB02_Memory/infinite-brain-os"]
+	path = 01_Forkable/FKB02_Memory/infinite-brain-os
+	url = https://github.com/Amdkn/infinite-brain-os.git
+[submodule "01_Forkable/FKB02_Memory/infinite-brain-harness"]
+	path = 01_Forkable/FKB02_Memory/infinite-brain-harness
+	url = https://github.com/Amdkn/infinite-brain-harness.git
+[submodule "01_Forkable/FKB07_Money_Maker/powerbi-to-ai-visuals"]
+	path = 01_Forkable/FKB07_Money_Maker/powerbi-to-ai-visuals
+	url = https://github.com/Amdkn/powerbi-to-ai-visuals.git
+[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/gstack"]
+	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/gstack
+	url = https://github.com/Amdkn/gstack.git
+[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/superpowers"]
+	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/superpowers
+	url = https://github.com/Amdkn/superpowers.git
+[submodule "01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done"]
+	path = 01_Forkable/FKB00_Runtime/03_Governance_Harnesses/get-shit-done
+	url = https://github.com/Amdkn/get-shit-done.git

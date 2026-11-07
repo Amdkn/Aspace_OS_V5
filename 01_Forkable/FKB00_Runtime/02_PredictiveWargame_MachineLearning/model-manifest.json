@@ -1,0 +1,62 @@
+{
+  "module": "02_PredictiveWargame_MachineLearning",
+  "fractal_layer": "20L",
+  "swarm_engine": {
+    "name": "MiroFish (OASIS + MindGraph)",
+    "upstream": "https://github.com/666ghj/MiroFish"
+  },
+  "orchestrator": {
+    "name": "AutoGluon (TabularPredictor + TimeSeriesPredictor)",
+    "submodule": "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon",
+    "install_cmd": "uv pip install autogluon.tabular[mitra] autogluon.timeseries",
+    "license": "Apache-2.0"
+  },
+  "predictive_quartet_foundation_models": [
+    {
+      "pillar": "1_Tabular_Fast_Commercial",
+      "ids": [
+        "autogluon/mitra-classifier-2",
+        "autogluon/mitra-regressor-2"
+      ],
+      "specs": "12 layers, 75.7M/76.7M params, 2D Row/Column Attention, 8 copies consensus vote",
+      "weight_size": "~300 MB",
+      "license": "Apache-2.0",
+      "sovereign_mirror": "Amdkn/mitra-classifier-2"
+    },
+    {
+      "pillar": "2_Temporal_Universal_Commercial",
+      "ids": [
+        "autogluon/chronos-2",
+        "autogluon/chronos-2-small"
+      ],
+      "specs": "120M / 28M params, >300 series/s, past and future covariates support",
+      "weight_size": "~480 MB",
+      "license": "Apache-2.0",
+      "sovereign_mirror": "Amdkn/chronos-2"
+    },
+    {
+      "pillar": "3_Trajectory_Chaotic_Systems",
+      "ids": [
+        "autogluon/PathFM-125M",
+        "autogluon/PathFM-300M",
+        "autogluon/PathFM-Chaotic-75M",
+        "autogluon/PathFM-Chaotic-125M"
+      ],
+      "specs": "Continuous trajectory foundation model, 512-8192 context, 256-480 horizon, rollout & predict_quantiles",
+      "weight_size": "75M-300M params",
+      "license": "Apache-2.0",
+      "sovereign_mirror": "Amdkn/PathFM"
+    },
+    {
+      "pillar": "4_Internal_Calibration_Jury_Google",
+      "ids": [
+        "google/tabfm-1.1.0-pytorch",
+        "google/timesfm-3.0-pytorch"
+      ],
+      "specs": "TabFM (24 ICL blocks, /classification & /regression) + TimesFM 3.0 (20L, 16H, Variate Attention, patch 32->64)",
+      "weight_size": "1.65 GB + 1.32 GB",
+      "license": "Non-Commercial",
+      "sovereign_mirror": "Amdkn/tabfm-1.1.0-pytorch & Amdkn/timesfm-3.0-pytorch"
+    }
+  ]
+}

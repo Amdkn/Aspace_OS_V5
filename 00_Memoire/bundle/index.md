@@ -18,4 +18,5 @@ okf_version: "0.2"
 * [Jumeau Numérique CEO 24/7 (Automaton) & Cube Farm 3 Étages OS](concepts/ceo-automaton-cubefarm.md) - forks souverains dans `01_Forkable/FKB00_Runtime/automaton` (`A0 Amadeus`) et `01_Forkable/FKB03_3DWorlds/cubefarm` (3 Étages OS Holoniques)
 * [Gateway MCP & Mémoire Partagée Multi-Harness](concepts/mcp-shared-memory.md) - Cerveau partagé unifié (`FKB02_Memory`) synchronisant Claude, Codex, OpenCode, Pi, Antigravity, Herdr, Orca et ChatGPT Web sur `memory.jsonl`
 * [FKB07 Money Maker & Productized B2B Services](concepts/b2b-money-maker.md) - 8 Moteurs B2B haute marge (90-98%) inspirés de Corey Ganim (Impeccable, OpenMontage, DeepTutor, OpenMausBot, text-to-cad, open-notebook, changedetection, uptime-kuma)
+* [Neuro-Tabular Wargame & Quatuor Prédictif](concepts/neuro-tabular-wargame.md) - AutoGluon (Mitra-v2, Chronos-2, PathFM) x Google (TabFM, TimesFM) x CEO-Bench déterministe (GBrain, Gstack, GSD, Superpowers)
 * [Structure code graphifié](concepts/contexte-v5.md) - résultats Graphify V5
