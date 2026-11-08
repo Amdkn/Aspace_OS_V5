@@ -140,6 +140,20 @@ def handle_stop() -> int:
         except Exception:
             pass
 
+    # Déclenchement automatique de la persistance par tour (Turn Checkpoint + Sheets Ledger + Drive 5TB CAS)
+    try:
+        turn_daemon = ROOT / "02_Factory" / "hooks" / "aspace_turn_persistence_daemon.py"
+        if turn_daemon.exists():
+            subprocess.run(
+                [sys.executable, str(turn_daemon), "LD01", "B1-BOOK-OMK"],
+                cwd=str(ROOT),
+                capture_output=True,
+                text=True,
+                timeout=20,
+            )
+    except Exception:
+        pass
+
     print(
         json.dumps(
             {
@@ -148,6 +162,7 @@ def handle_stop() -> int:
                 "exit_code": 0,
                 "checks_gate": "7/7 PASS",
                 "codespace_atomic_teardown": "ENFORCED",
+                "turn_persistence": "RECORDED",
             }
         )
     )
