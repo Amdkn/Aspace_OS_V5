@@ -1,0 +1,80 @@
+name: "Aspace n8n Primitive & GWS Life-OS Orchestrator (Scion Sparse)"
+
+on:
+  workflow_dispatch:
+    inputs:
+      life_os_vessel:
+        description: "Vaisseau Life OS à synchroniser via Google Workspace CLI (gws)"
+        required: true
+        default: "ALL_6_VESSELS"
+        type: choice
+        options:
+          - ALL_6_VESSELS
+          - 21_Ikigai_Orville
+          - 22_Wheel_Discovery
+          - 23_12WY_SNW
+          - 24_PARA_Enterprise
+          - 25_GTD_Cerritos
+          - 26_DEAL_Protostar
+      action_type:
+        description: "Action n8n à exécuter"
+        required: true
+        default: "sync-cockpit"
+  repository_dispatch:
+    types: [gws_webhook_trigger, supabase_event, make_activepieces_bridge]
+  schedule:
+    # Synchronisation Matinale (06h00 UTC) & Soirée (21h00 UTC — hors sanctuaire nocturne Beth 00h00-05h00)
+    - cron: "0 6,21 * * *"
+
+concurrency:
+  group: aspace-n8n-gws-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # ============================================================================
+  # FAMILLES N8N 1 -> 5 : TRIGGER -> CORE -> APP (GWS/SUPABASE) -> AI CLUSTER
+  # ============================================================================
+  n8n-gws-lifeos-bus:
+    name: "n8n 5-Family Bus · GWS CLI × FreeComputeAPI × Scion"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15 # Garde-fou strict contre l'épuisement de quotas
+
+    steps:
+      - name: "Scion Sparse Checkout (00_Memoire, 01_Forkable/FKB00_Runtime/00_A0_Core & 02_Factory uniquement)"
+        uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            00_Memoire
+            01_Forkable/FKB00_Runtime/00_A0_Core
+            02_Factory
+            .vscode
+
+      - name: "Setup Python 3.12"
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: "Core Node : Audit FreeComputeAPI & Quotas"
+        run: |
+          python 01_Forkable/FKB00_Runtime/00_A0_Core/aspace_freecompute_router.py webhook 30
+
+      - name: "App & AI Cluster Nodes : Dispatch Life OS Vessels via GWS CLI"
+        env:
+          GWS_CREDENTIALS_JSON: ${{ secrets.GWS_CREDENTIALS_JSON }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_ROLE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+        run: |
+          python 02_Factory/gws_lifeos_n8n_dispatcher.py \
+            --event "${{ github.event_name }}" \
+            --vessel "${{ inputs.life_os_vessel || 'ALL_6_VESSELS' }}" \
+            --action "${{ inputs.action_type || 'sync-cockpit' }}"
+
+      - name: "Stop Hook Atomique : Extinction Garantie des Codespaces Oubliés"
+        if: always()
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          echo "Vérification et arrêt atomique des Codespaces inactifs..."
+          gh codespace stop --all || true

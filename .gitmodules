@@ -378,3 +378,6 @@
 [submodule "01_Forkable/FKB07_Money_Maker/02_Video/video-director"]
 	path = 01_Forkable/FKB07_Money_Maker/02_Video/video-director
 	url = https://github.com/Amdkn/video-director.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS
+	url = https://github.com/Amdkn/FreeVPS.git

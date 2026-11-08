@@ -19,11 +19,22 @@
     ],
     "Stop": [
       {
+        "matcher": ".*",
         "hooks": [
           {
             "type": "command",
-            "timeout": 30,
-            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File \"C:/Users/amado/Aspace OS V5/00_Memoire/hooks/record.ps1\""
+            "command": "python 02_Factory/hooks/aspace_deterministic_hooks.py stop"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|Write|MultiEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python 02_Factory/hooks/aspace_deterministic_hooks.py pre-tool"
           }
         ]
       }
