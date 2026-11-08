@@ -237,3 +237,91 @@
 [submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2"]
 	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2
 	url = https://github.com/Amdkn/mitra-2.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero
+	url = https://github.com/Amdkn/agent-zero.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins
+	url = https://github.com/Amdkn/a0-plugins.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/spynel"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/spynel
+	url = https://github.com/Amdkn/spynel.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/tuxee"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/tuxee
+	url = https://github.com/Amdkn/tuxee.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/cordis"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/cordis
+	url = https://github.com/Amdkn/cordis.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness
+	url = https://github.com/Amdkn/deepseek-harness.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/pi"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/pi
+	url = https://github.com/Amdkn/pi.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr
+	url = https://github.com/Amdkn/herdr.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core
+	url = https://github.com/Amdkn/herdr-core.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app
+	url = https://github.com/Amdkn/herdr-app.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/orca"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/orca
+	url = https://github.com/Amdkn/orca.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/t3code"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/t3code
+	url = https://github.com/Amdkn/t3code.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/openclaw"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/openclaw
+	url = https://github.com/Amdkn/openclaw.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/claude-code"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/claude-code
+	url = https://github.com/Amdkn/claude-code.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex
+	url = https://github.com/Amdkn/codex.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/hermes-agent"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/hermes-agent
+	url = https://github.com/Amdkn/hermes-agent.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent
+	url = https://github.com/Amdkn/prime-agent.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
+	url = https://github.com/Amdkn/wikiskill.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes
+	url = https://github.com/Amdkn/adk-recipes.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi
+	url = https://github.com/Amdkn/rrsi.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi
+	url = https://github.com/Amdkn/dream-rsi.git
+
+[submodule "01_Forkable/FKB03_3DWorlds/space-agent"]
+	path = 01_Forkable/FKB03_3DWorlds/space-agent
+	url = https://github.com/Amdkn/space-agent.git
