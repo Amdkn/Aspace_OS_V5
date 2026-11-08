@@ -22,3 +22,5 @@ okf_version: "0.2"
 * [Structure code graphifié](concepts/contexte-v5.md) - résultats Graphify V5
 * [Distillation Argon × Fable 5 → Gemini 3.8 Flash](concepts/argon-flash38-distillation.md) - Protocole Zero-Quota-Burn & 1-Turn Closure
 * [Noyau Souverain A0 : Micro-Noyau Cordis × Agent-Zero × Tri-Horizon RSI](concepts/a0-cordis-recursive-factory.md) - Architecture Fork-Mutant A0 (`00_A0_Core`, `04_ADE_OpenRig`, `05_Recursive_RSI`, Mono-Gateway FreeCloud 3-en-1 `:31415`, Prime-Agent RLM, WikiSkill/AQuA, Dream-RSI/RRSI)
+* [Areas OS (`LD01..LD08` + `J1` — 578 Holons)](areas_os/README.md) - Mutation de `Business OS` en `Areas OS` imbriqué dans `24_PARA_Enterprise` (8 Colonnes `B..I`, Directeurs `B1..I1`, 64 Managers DC `B2..I2`, 450 Spécialistes Marvel `B3..I3`, contrat à 8 fichiers)
+* [Plan d'Urgence Jules 100 Sessions/Jour & Essaim EGM](jules-burst-100-missions.md) - File active des missions Poissons Rouges (`00_Memoire/egm_missions.db`) pour `jules.google.com`, `codex-chatgpt-web` et `04_ADE_OpenRig`

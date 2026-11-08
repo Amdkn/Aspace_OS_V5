@@ -1,0 +1,10 @@
+# D3 — 8 Squads d'Exécution Marvel (LD03)
+
+- `D3.1_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.2_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.3_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.4_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.5_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.6_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.7_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `D3.8_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
