@@ -1,4 +1,4 @@
-# FKB07_Money_Maker — 8 Moteurs B2B Productized Services (High Margin)
+# FKB07_Money_Maker — 9 Moteurs B2B Productized Services & Video SaaS (High Margin)
 
 > **Thèse Opérationnelle & Usine à Cash (Cash Machine)** : Inspiré de l'enquête de Corey Ganim (*8 GitHub repos that print money*), FKB07 package des dépôts open-source en **services B2B clés en main (Productized Services)** exécutés par des agents IA autonomes (**Claude Code**, **Codex**, **DeepSeek Superagent**). Les clients n'achètent pas du code brut mais un **résultat concret (Outcome)** à haute valeur perçue, dégageant **90 % à 98 % de marge brute**.
 
@@ -25,7 +25,7 @@
 
 ---
 
-## 2. Tableau de Bord des 8 Moteurs B2B Productized Services
+## 2. Tableau de Bord des 9 Moteurs B2B Productized Services & Video SaaS
 
 | Moteur | Dépôt GitHub Amdkn | Offre Packagée (Outcome) | Setup Fee | Retainer Récurrent | Coût Op. | Cible Privilégiée (ICP) | Vecteur d'Acquisition Échantillon |
 |---|---|---|---|---|---|---|---|
@@ -37,6 +37,7 @@
 | **6. Open Notebook** | [Amdkn/open-notebook](https://github.com/Amdkn/open-notebook) | Podcast d'entreprise hebdomadaire (10 min) clé en main | 1 000 $ | 600 $/mois | ~30 $/mois infra | Cabinets d'expertise comptable, conseil, fédérations pro | Mini-podcast de 5 min généré depuis leur dernière newsletter publique. |
 | **7. ChangeDetection** | [Amdkn/changedetection.io](https://github.com/Amdkn/changedetection.io) | Radar de surveillance d'appels d'offres publics | 500 $ | 350 $/mois | ~10 $/mois API | PME du BTP, nettoyage industriel, paysagistes, intégrateurs IT | Envoi de 3 appels d'offres ouverts dans leur secteur dès le 1er email. |
 | **8. Uptime Kuma** | [Amdkn/uptime-kuma](https://github.com/Amdkn/uptime-kuma) | Gardiennage & surveillance disponibilité 24/7 + alertes SSL | Inclus | 99 $/mois (300 $ wholesale) | ~5 $/mois VPS | E-commerce, cliniques privées, agences web (marque blanche) | Alerte automatique envoyée au fondateur si son certificat SSL expire < 10j. |
+| **9. Flute (Video SaaS)** | [Amdkn/flute](https://github.com/Amdkn/flute) | Studio SaaS Vidéo & Canvas UI/UX interactif (`webprodigies-org/flute`) | 1 500 $ | 750 $/mois | ~20 $/mois | Fondateurs SaaS, agences créatives & équipes produit | Prototype interactif + vidéo de lancement générés en < 24h. |
 
 ---
 

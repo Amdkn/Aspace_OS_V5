@@ -329,3 +329,11 @@
 [submodule "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity"]
 	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity
 	url = https://github.com/Amdkn/RigInfinity.git
+
+[submodule "01_Forkable/FKB06_Video_SaaS/flute"]
+	path = 01_Forkable/FKB06_Video_SaaS/flute
+	url = https://github.com/Amdkn/flute.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/flute"]
+	path = 01_Forkable/FKB07_Money_Maker/flute
+	url = https://github.com/Amdkn/flute.git
