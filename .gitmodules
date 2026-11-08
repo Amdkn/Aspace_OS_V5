@@ -381,3 +381,33 @@
 [submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS"]
 	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS
 	url = https://github.com/Amdkn/FreeVPS.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot
+	url = https://github.com/Amdkn/openbot.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse
+	url = https://github.com/Amdkn/openmuse.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots
+	url = https://github.com/Amdkn/OpenDots.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet
+	url = https://github.com/Amdkn/OpenDuet.git
+[submodule "01_Forkable/FKB07_Money_Maker/BusinessOS"]
+	path = 01_Forkable/FKB07_Money_Maker/BusinessOS
+	url = https://github.com/Amdkn/BusinessOS.git
+[submodule "01_Forkable/FKB04_Tools_Anything/caveman"]
+	path = 01_Forkable/FKB04_Tools_Anything/caveman
+	url = https://github.com/JuliusBrussee/caveman.git
+[submodule "01_Forkable/FKB04_Tools_Anything/claude-mem"]
+	path = 01_Forkable/FKB04_Tools_Anything/claude-mem
+	url = https://github.com/TheDotMack/claude-mem.git
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling
+	url = https://github.com/D4Vinci/Scrapling.git
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify
+	url = https://github.com/langgenius/dify.git
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton
+	url = https://github.com/presenton/presenton.git

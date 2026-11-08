@@ -27,3 +27,6 @@ okf_version: "0.2"
 * [Wargame Au-Delà d'Argon : Hyperviseur Cordis × Automaton Runtime × RigInfinity (Rust) × Reviewer-Security OWASP](concepts/wargame-riginfinity-cordis-daemon.md) - Loi du Daemon Maître unique, fusion `OpenRig × Infinity` en `Amdkn/RigInfinity`, triage OWASP Top 10 et structuration de `02_Factory/` en 6 catégories
 - [n8n-hooks-freecompute-scion.md](concepts/n8n-hooks-freecompute-scion.md) — GitHub as n8n Primitive (5 Node Families), Deterministic Hooks (`exit 2`), `FreeComputeAPI` & Anthropic Scion Sparse Checkouts.
 - [WARGAME_LAUNCH_AUDIT.md](areas_os/B_LD01_Business_OMK/WARGAME_LAUNCH_AUDIT.md) — Audit Wargame Prédictif de Lancement Business OS (LD01) & Nœuds Jetables (MiroFish x Mitra-v2 x TimesFM 3.0 x PathFM).
+- [PLAYBOOK_FDE_SPRINT.md](areas_os/B_LD01_Business_OMK/PLAYBOOK_FDE_SPRINT.md) — Playbook Forward Deployed Engineering (Palantir x Veric 5-Step Model).
+- [PLAYBOOK_GTME_CLAY_TREG_APIFY.md](areas_os/B_LD01_Business_OMK/PLAYBOOK_GTME_CLAY_TREG_APIFY.md) — Playbook Go-To-Market Engineering (Clay x Kiln x Treg x Apify).
+- [PLAYBOOK_FOA_6_LEVELS.md](areas_os/C_LD02_Finances/PLAYBOOK_FOA_6_LEVELS.md) — Playbook Family Office Agentique en 6 Niveaux (Great Wealth Transfer).
