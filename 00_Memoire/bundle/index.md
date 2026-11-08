@@ -26,3 +26,4 @@ okf_version: "0.2"
 * [Plan d'Urgence Jules 100 Sessions/Jour & Essaim EGM](jules-burst-100-missions.md) - File active des missions Poissons Rouges (`00_Memoire/egm_missions.db`) pour `jules.google.com`, `codex-chatgpt-web` et `04_ADE_OpenRig`
 * [Wargame Au-Delà d'Argon : Hyperviseur Cordis × Automaton Runtime × RigInfinity (Rust) × Reviewer-Security OWASP](concepts/wargame-riginfinity-cordis-daemon.md) - Loi du Daemon Maître unique, fusion `OpenRig × Infinity` en `Amdkn/RigInfinity`, triage OWASP Top 10 et structuration de `02_Factory/` en 6 catégories
 - [n8n-hooks-freecompute-scion.md](concepts/n8n-hooks-freecompute-scion.md) — GitHub as n8n Primitive (5 Node Families), Deterministic Hooks (`exit 2`), `FreeComputeAPI` & Anthropic Scion Sparse Checkouts.
+- [WARGAME_LAUNCH_AUDIT.md](areas_os/B_LD01_Business_OMK/WARGAME_LAUNCH_AUDIT.md) — Audit Wargame Prédictif de Lancement Business OS (LD01) & Nœuds Jetables (MiroFish x Mitra-v2 x TimesFM 3.0 x PathFM).
