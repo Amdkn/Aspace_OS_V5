@@ -303,10 +303,6 @@
 	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity
 	url = https://github.com/Amdkn/RigInfinity.git
 
-[submodule "01_Forkable/FKB06_Video_SaaS/flute"]
-	path = 01_Forkable/FKB06_Video_SaaS/flute
-	url = https://github.com/Amdkn/flute.git
-
 [submodule "01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage"]
 	path = 01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage
 	url = https://github.com/Amdkn/OpenMontage.git
@@ -350,3 +346,35 @@
 [submodule "01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld"]
 	path = 01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld
 	url = https://github.com/Amdkn/BlenderWorld.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/argo"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/argo
+	url = https://github.com/Amdkn/argo.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/earshot"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/earshot
+	url = https://github.com/Amdkn/earshot.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/explainroo"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/explainroo
+	url = https://github.com/Amdkn/explainroo.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion
+	url = https://github.com/Amdkn/huashu-motion.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/reanimate"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/reanimate
+	url = https://github.com/Amdkn/reanimate.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/rossark-motion-skill"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/rossark-motion-skill
+	url = https://github.com/Amdkn/rossark-motion-skill.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/take-one"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/take-one
+	url = https://github.com/Amdkn/take-one.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/video-director"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/video-director
+	url = https://github.com/Amdkn/video-director.git

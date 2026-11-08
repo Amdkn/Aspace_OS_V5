@@ -9,7 +9,7 @@
 ```
 01_Forkable/FKB07_Money_Maker/
 ├── 01_Trading/               # Analyse quantitative, crypto, actions & copilotes de marché
-├── 02_Video/                 # Production & montage vidéo e-commerce / SaaS (OpenMontage, flute)
+├── 02_Video/                 # Studio vidéo complet 10 moteurs (OpenMontage, flute, take-one, huashu-motion, argo, earshot, explainroo, reanimate, rossark, video-director)
 ├── 03_Website_and_Infra/     # Refonte express anti-Look IA, uptime 24/7, radar marchés publics (impeccable, uptime-kuma, changedetection.io)
 ├── 04_Learning/              # Tuteurs IA 24/7 interactifs & podcasts d'entreprise (DeepTutor, open-notebook)
 ├── 05_Executive_and_BI/      # Assistants de direction locaux & visualisation PowerBI (OpenMausBot, powerbi-to-ai-visuals)
