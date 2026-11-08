@@ -119,30 +119,7 @@
 [submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models"]
 	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models
 	url = https://github.com/Amdkn/context-language-models.git
-[submodule "01_Forkable/FKB07_Money_Maker/impeccable"]
-	path = 01_Forkable/FKB07_Money_Maker/impeccable
-	url = https://github.com/Amdkn/impeccable.git
-[submodule "01_Forkable/FKB07_Money_Maker/OpenMontage"]
-	path = 01_Forkable/FKB07_Money_Maker/OpenMontage
-	url = https://github.com/Amdkn/OpenMontage.git
-[submodule "01_Forkable/FKB07_Money_Maker/DeepTutor"]
-	path = 01_Forkable/FKB07_Money_Maker/DeepTutor
-	url = https://github.com/Amdkn/DeepTutor.git
-[submodule "01_Forkable/FKB07_Money_Maker/OpenMausBot"]
-	path = 01_Forkable/FKB07_Money_Maker/OpenMausBot
-	url = https://github.com/Amdkn/OpenMausBot.git
-[submodule "01_Forkable/FKB07_Money_Maker/text-to-cad"]
-	path = 01_Forkable/FKB07_Money_Maker/text-to-cad
-	url = https://github.com/Amdkn/text-to-cad.git
-[submodule "01_Forkable/FKB07_Money_Maker/open-notebook"]
-	path = 01_Forkable/FKB07_Money_Maker/open-notebook
-	url = https://github.com/Amdkn/open-notebook.git
-[submodule "01_Forkable/FKB07_Money_Maker/changedetection.io"]
-	path = 01_Forkable/FKB07_Money_Maker/changedetection.io
-	url = https://github.com/Amdkn/changedetection.io.git
-[submodule "01_Forkable/FKB07_Money_Maker/uptime-kuma"]
-	path = 01_Forkable/FKB07_Money_Maker/uptime-kuma
-	url = https://github.com/Amdkn/uptime-kuma.git
+
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server
 	url = https://github.com/Amdkn/tradingview-indicator-search-mcp-server.git
@@ -158,9 +135,7 @@
 [submodule "01_Forkable/FKB03_3DWorlds/city-office"]
 	path = 01_Forkable/FKB03_3DWorlds/city-office
 	url = https://github.com/Amdkn/city-office.git
-[submodule "01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld"]
-	path = 01_Forkable/FKB07_Money_Maker/03_3D_World/BlenderWorld
-	url = https://github.com/Amdkn/BlenderWorld.git
+
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab
 	url = https://github.com/Amdkn/LLM-Trading-Lab.git
@@ -212,9 +187,7 @@
 [submodule "01_Forkable/FKB02_Memory/infinite-brain-harness"]
 	path = 01_Forkable/FKB02_Memory/infinite-brain-harness
 	url = https://github.com/Amdkn/infinite-brain-harness.git
-[submodule "01_Forkable/FKB07_Money_Maker/powerbi-to-ai-visuals"]
-	path = 01_Forkable/FKB07_Money_Maker/powerbi-to-ai-visuals
-	url = https://github.com/Amdkn/powerbi-to-ai-visuals.git
+
 [submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gstack"]
 	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gstack
 	url = https://github.com/Amdkn/gstack.git
@@ -334,6 +307,46 @@
 	path = 01_Forkable/FKB06_Video_SaaS/flute
 	url = https://github.com/Amdkn/flute.git
 
-[submodule "01_Forkable/FKB07_Money_Maker/flute"]
-	path = 01_Forkable/FKB07_Money_Maker/flute
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage
+	url = https://github.com/Amdkn/OpenMontage.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/flute"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/flute
 	url = https://github.com/Amdkn/flute.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable"]
+	path = 01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable
+	url = https://github.com/Amdkn/impeccable.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma"]
+	path = 01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma
+	url = https://github.com/Amdkn/uptime-kuma.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/changedetection.io"]
+	path = 01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/changedetection.io
+	url = https://github.com/Amdkn/changedetection.io.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor"]
+	path = 01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor
+	url = https://github.com/Amdkn/DeepTutor.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook"]
+	path = 01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook
+	url = https://github.com/Amdkn/open-notebook.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot
+	url = https://github.com/Amdkn/OpenMausBot.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/powerbi-to-ai-visuals"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/powerbi-to-ai-visuals
+	url = https://github.com/Amdkn/powerbi-to-ai-visuals.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad"]
+	path = 01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad
+	url = https://github.com/Amdkn/text-to-cad.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld"]
+	path = 01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld
+	url = https://github.com/Amdkn/BlenderWorld.git
