@@ -1,0 +1,107 @@
+{
+  "generated_at_utc": "2026-11-08T14:34:32.847042+00:00",
+  "paradigm": "3D (TabFM / Mitra-v2 Sheets) -> 4D (TimesFM 3.0 / Chronos-2 Calendar 12WY + DEAL Muse Chat)",
+  "pending_tasks_resolved": [
+    "1. [x] Scénario principal Cascadeur IPBD (n8n / GitHub Actions)",
+    "2. [x] Intégration Google Tasks en webhook d'entrée",
+    "3. [x] Module de redirection vers le bon Life Domain (LD01..LD08)"
+  ],
+  "projections_4d": [
+    {
+      "area_code": "LD01",
+      "domain_name": "Carrière & Business (A'Space M'Place / OMK)",
+      "gchat_target_space": "SOB Hub > 01 Growth OS / KBS",
+      "state_3d_mitra_score": 0.84,
+      "chronos2_q10_maintenance_floor": 0.87,
+      "chronos2_q50_median_trajectory": 0.99,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'SOB Hub > 01 Growth OS / KBS'."
+    },
+    {
+      "area_code": "LD02",
+      "domain_name": "Finances & Family Office (Kalybana 6-Levels)",
+      "gchat_target_space": "SOB Hub > 04 Finance OS",
+      "state_3d_mitra_score": 0.78,
+      "chronos2_q10_maintenance_floor": 0.87,
+      "chronos2_q50_median_trajectory": 0.99,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'SOB Hub > 04 Finance OS'."
+    },
+    {
+      "area_code": "LD03",
+      "domain_name": "Santé & Vitalité Biologique",
+      "gchat_target_space": "Espaces > Alamentation & Santé",
+      "state_3d_mitra_score": 0.82,
+      "chronos2_q10_maintenance_floor": 0.87,
+      "chronos2_q50_median_trajectory": 0.99,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'Espaces > Alamentation & Santé'."
+    },
+    {
+      "area_code": "LD04",
+      "domain_name": "Cognition, Science & Apprentissage",
+      "gchat_target_space": "Espaces > Science & Learning",
+      "state_3d_mitra_score": 0.88,
+      "chronos2_q10_maintenance_floor": 0.87,
+      "chronos2_q50_median_trajectory": 0.99,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'Espaces > Science & Learning'."
+    },
+    {
+      "area_code": "LD05",
+      "domain_name": "Famille, Relations & Communauté",
+      "gchat_target_space": "SOB Hub > 05 People OS",
+      "state_3d_mitra_score": 0.76,
+      "chronos2_q10_maintenance_floor": 0.8675,
+      "chronos2_q50_median_trajectory": 0.9875,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'SOB Hub > 05 People OS'."
+    },
+    {
+      "area_code": "LD06",
+      "domain_name": "Habitat, Architecture & Mobilité",
+      "gchat_target_space": "Espaces > Architechture Deco / Transport & Mobilite",
+      "state_3d_mitra_score": 0.74,
+      "chronos2_q10_maintenance_floor": 0.8475,
+      "chronos2_q50_median_trajectory": 0.9675,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=85% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'Espaces > Architechture Deco / Transport & Mobilite'."
+    },
+    {
+      "area_code": "LD07",
+      "domain_name": "Créativité, Design & Mondes 3D/4D",
+      "gchat_target_space": "SOB Hub > 02 Product OS",
+      "state_3d_mitra_score": 0.86,
+      "chronos2_q10_maintenance_floor": 0.87,
+      "chronos2_q50_median_trajectory": 0.99,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'SOB Hub > 02 Product OS'."
+    },
+    {
+      "area_code": "LD08",
+      "domain_name": "Impact, Meta-Science & A'Space OS Core",
+      "gchat_target_space": "Espaces > App, tech, collect (GitHub App)",
+      "state_3d_mitra_score": 0.9,
+      "chronos2_q10_maintenance_floor": 0.87,
+      "chronos2_q50_median_trajectory": 0.99,
+      "chronos2_q90_upside_horizon": 0.99,
+      "deal_stage": "4_LIBERATE_MUSE_GWYN",
+      "muse_liberation_unlocked": true,
+      "una_tactical_directive": "[MUSE 4HWW ACTIVE] Plancher de maintien q10=87% sécurisé sur 12 semaines. Délégation autonome à OpenDots/RigInfinity ; rapport hebdomadaire dans 'Espaces > App, tech, collect (GitHub App)'."
+    }
+  ]
+}

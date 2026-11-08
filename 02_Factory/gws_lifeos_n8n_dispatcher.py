@@ -139,12 +139,30 @@ class N8nFiveFamiliesEngine:
 
     # 4. AI CLUSTER NODES (Root Agent A0 + Memory MCP + Tools)
     def node_4_ai_cluster(self, app_results: list[dict]) -> dict:
+        # Exécution du Cascadeur IPBD 4D (Mitra-v2/TabFM 3D Sheets -> Chronos-2/TimesFM 4D Calendar/Chat DEAL Muse)
+        ipbd_cascade_status = "NOT_RUN"
+        try:
+            cascade_script = ROOT / "02_Factory" / "ipbd_4d_chronos_cascade.py"
+            if cascade_script.exists():
+                c_proc = subprocess.run(
+                    [sys.executable, str(cascade_script)],
+                    capture_output=True,
+                    text=True,
+                    timeout=20,
+                    cwd=str(ROOT),
+                )
+                if c_proc.returncode == 0:
+                    ipbd_cascade_status = "IPBD_4D_CHRONOS_CASCADE_COMPLETED"
+        except Exception as exc:
+            ipbd_cascade_status = f"IPBD_CASCADE_ERR ({exc})"
+
         return {
             "family": "4_AI_Cluster_Node",
             "root_agent": "A0_Amadeus_Cortex",
             "llm_provider": "FreeLLMAPI_Gateway (127.0.0.1:31415 -> freellmapi/auto)",
             "memory_bus": "00_Memoire/shared_brain/memory.jsonl + egm_missions.db",
             "synthesized_vessels_count": len(app_results),
+            "ipbd_4d_cascade": ipbd_cascade_status,
         }
 
     # 5. COMMUNITY NODES (Scion Sparse-Checkout & FreeComputeAPI)
