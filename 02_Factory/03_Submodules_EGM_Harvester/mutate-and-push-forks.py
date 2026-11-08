@@ -18,7 +18,7 @@ import time
 from pathlib import Path
 from typing import Any
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 DB_PATH = ROOT / "00_Memoire" / "egm_missions.db"
 BRANCH_NAME = "aspace-v5-native"
 

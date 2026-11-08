@@ -19,7 +19,7 @@ import sqlite3
 from pathlib import Path
 from typing import Any
 
-WORKSPACE_ROOT = Path(__file__).resolve().parents[1]
+WORKSPACE_ROOT = Path(__file__).resolve().parents[2]
 AREAS_OS_DIR = WORKSPACE_ROOT / "00_Memoire" / "bundle" / "areas_os"
 JULES_BURST_MD = WORKSPACE_ROOT / "00_Memoire" / "bundle" / "jules-burst-100-missions.md"
 DB_PATH = WORKSPACE_ROOT / "00_Memoire" / "egm_missions.db"

@@ -325,3 +325,7 @@
 [submodule "01_Forkable/FKB03_3DWorlds/space-agent"]
 	path = 01_Forkable/FKB03_3DWorlds/space-agent
 	url = https://github.com/agent0ai/space-agent.git
+
+[submodule "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity"]
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity
+	url = https://github.com/Amdkn/RigInfinity.git

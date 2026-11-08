@@ -1,0 +1,46 @@
+name: "Aspace Factory · Continuous Integration Matrix (578 Holons × Cordis Daemon × EGM)"
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  factory-matrix-verification:
+    name: "Verify Category ${{ matrix.category }}"
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        category:
+          - "01_Kernel_Gates"
+          - "02_Holons_578_QualityControl"
+          - "03_Submodules_EGM_Harvester"
+          - "04_Security_OWASP_RigInfinity"
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Execute Category Verification Suite
+        run: |
+          if [ "${{ matrix.category }}" = "01_Kernel_Gates" ]; then
+            python3 02_Factory/semantic_gate.py
+            python3 02_Factory/01_Kernel_Gates/daemon_supervisor_cordis.py --self-test
+          elif [ "${{ matrix.category }}" = "02_Holons_578_QualityControl" ]; then
+            python3 02_Factory/02_Holons_578_QualityControl/openrig_demo_qc_578.py --self-test
+          elif [ "${{ matrix.category }}" = "03_Submodules_EGM_Harvester" ]; then
+            python3 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py --self-test
+            python3 01_Forkable/FKB00_Runtime/00_A0_Core/a0_egm_bridge.py
+          elif [ "${{ matrix.category }}" = "04_Security_OWASP_RigInfinity" ]; then
+            python3 02_Factory/04_Security_OWASP_RigInfinity/reviewer_security_harness.py --self-test
+          fi

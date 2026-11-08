@@ -1,23 +1,32 @@
+# .github/dependabot.yml — A'Space OS V5 Autonomous Dependency & Submodule Security Radar
+# Alimente automatiquement l'agent `reviewer-security` (02_Factory/04_Security_OWASP_RigInfinity)
 version: 2
 updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "daily"
+      time: "02:00"
+    labels:
+      - "factory:security"
+      - "holon:s1-rick"
+      - "owasp:a06-vulnerable-components"
+    open-pull-requests-limit: 10
+
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
     labels:
-      - "factory"
       - "factory:security"
-  - package-ecosystem: "pip"
+      - "ci:actions"
+
+  - package-ecosystem: "gitsubmodule"
     directory: "/"
     schedule:
-      interval: "weekly"
+      interval: "daily"
+      time: "03:00"
     labels:
-      - "factory"
       - "factory:security"
-  - package-ecosystem: "npm"
-    directory: "/"
-    schedule:
-      interval: "weekly"
-    labels:
-      - "factory"
-      - "factory:security"
+      - "submodules:aspace-v5-native"
+    open-pull-requests-limit: 15
