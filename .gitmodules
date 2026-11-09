@@ -107,9 +107,6 @@
 [submodule "01_Forkable/FKB02_Memory/servers"]
 	path = 01_Forkable/FKB02_Memory/servers
 	url = https://github.com/Amdkn/servers.git
-[submodule "01_Forkable/FKB02_Memory/llm-wiki"]
-	path = 01_Forkable/FKB02_Memory/llm-wiki
-	url = https://gist.github.com/34a4b4bf6d54b1828ba8c256615619e8.git
 [submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context"]
 	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context
 	url = https://github.com/Amdkn/billion-context.git
