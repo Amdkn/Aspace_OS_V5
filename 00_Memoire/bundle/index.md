@@ -33,3 +33,11 @@ okf_version: "0.2"
 - [4d-ipbd-chronos-muse-cascade.md](concepts/4d-ipbd-chronos-muse-cascade.md) — Le Cascadeur IPBD 4D : Isomorphisme 3D (TabFM/Mitra-v2 Sheets) -> 4D (TimesFM/Chronos-2 Calendar 12WY & DEAL Muse Chat).
 - [ROAD_TO_MARKET_PLAN.md](areas_os/B_LD01_Business_OMK/ROAD_TO_MARKET_PLAN.md) — Plan Stratégique Road to Market ASpace MarketPlace (Projet Picard LD01 / 100 Comptes B2B).
 - [free-cloud-orchestration-studio-gas-retool.md](concepts/free-cloud-orchestration-studio-gas-retool.md) — Orchestration Cloud Gratuite : Workspace Studio Triggers, Google Apps Script (GAS), Retool, Zenphi & Quota Accounting.
+- [MASTER_PLAN_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/MASTER_PLAN_LD01.md) — Master Plan LD01 : L Aiguille de l Abondance & ASpace MarketPlace (Projet Picard Book).
+- [MISSION_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/MISSION_LD01.md) — Mission LD01 : Monétisation Holonique, Les 4 Piliers Ikigai x 5 Horizons.
+- [SPEC_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/SPEC_LD01.md) — Spécifications Techniques, Financières et Recette RigInfinity ASpace MarketPlace.
+- [DESIGN_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/DESIGN_LD01.md) — Direction Artistique, Système de Design UI/UX et Pavillons 3D City Office.
+- [ROADMAP_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/ROADMAP_LD01.md) — Feuille de Route Trimestrielle 12WY (Semaines 1 à 12).
+- [PRD_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/PRD_LD01.md) — Product Requirements Document : ASpace MarketPlace.
+- [BUSINESS_MODEL_CANVAS_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/BUSINESS_MODEL_CANVAS_LD01.md) — Business Model Canvas en 9 Blocs pour LD01.
+- [MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md](../../04_MetaScience_CooperativeIntelligence/02_Architectures/MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md) — Ingestion & Décomposition MSCI des 34 Vidéos YouTube en Skills.
