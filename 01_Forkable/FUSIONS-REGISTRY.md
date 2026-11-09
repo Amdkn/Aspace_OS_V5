@@ -109,4 +109,38 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 
 ---
 
+## Adaptations (D-N048 — §D10)
+
+**Un seul registre, deux sections.** Les 21 adaptations ne sont pas des fusions (une fusion merge des modules ; une adaptation souverainise un module). L'Auto Research consomme cette section : il lit les états d'adaptation pour proposer des fusions (une fusion ne merge que des modules dont l'état d'adaptation est connu). Les compteurs C et D sont les mêmes (les adaptations alimentent C, les fusions alimentent D).
+
+**États :** 0 Basique (fork Amdkn non adapté) ; 1 Adapté (fiche + adapter + manifeste, tests verts) ; 2 Vérifié (hold-outs verts + validation 13e) ; 3 Publié (état 2 + registre à jour). Table de gel : `01_Forkable/FORKS-AMONT-21-FREEZE.md` (D-N048 V0).
+
+| Module (fork Amdkn) | État | Commit gelé | Manifeste | Licence |
+|---|---|---|---|---|
+| deepseek-harness | 0 | `fcc0ad4` | `fiber:a0:deepseek-harness` | MIT |
+| herdr-app | 0 | `b1a2a67` | `fiber:a0:herdr-app` | Apache-2.0 |
+| t3code | 0 | `dc72705` | `fiber:a0:t3code` | MIT |
+| openclaw | 0 | `ce7788f` | `fiber:a0:openclaw` | MIT |
+| claude-code | 0 | `0ed9469` | — (D12, référence seule) | **sans licence** |
+| codex | 0 | `27fcd7c` | `fiber:a0:codex` | Apache-2.0 |
+| wikiskill | 0 | `cdc291c` | `fiber:a0:wikiskill` | MIT |
+| adk-recipes | 0 | `a93b9cc` | `fiber:a0:adk-recipes` | Apache-2.0 |
+| rrsi | 0 | `be50316` | `fiber:a0:rrsi` | Apache-2.0 |
+| dream-rsi | 0 | `8ec35bd` | `fiber:a0:dream-rsi` | Apache-2.0 |
+| space-agent | 0 | `10f4ffd` | `fiber:a0:space-agent` | MIT |
+| caveman | 0 | `3dc497a` | `fiber:a0:caveman` | Apache-2.0 |
+| claude-mem | 0 | `a926f57` | `fiber:a0:claude-mem` | Apache-2.0 |
+| nansen-cli | 0 | `0b39ae5` | `fiber:a0:nansen-cli` | MIT |
+| Scrapling | 0 | `c5121c7` | `fiber:a0:scrapling` | BSD-3-Clause |
+| dify | 0 | `b29552a` | `fiber:a0:dify` | Apache-2.0 modifiée (§0.1) |
+| presenton | 0 | `9af2b47` | `fiber:a0:presenton` | Apache-2.0 |
+| mattpocock-skills | 0 | `4ae2317` | `fiber:a0:mattpocock-skills` | MIT |
+| openai-plugins | 0 | `d420d13` | — (D12, référence seule) | **sans licence** |
+| claude-video | 0 | `03ceb42` | `fiber:a0:claude-video` | MIT |
+| llm-wiki (gist) | rapatrié | — | — (pas un module) | — (propre) |
+
+**Baseline V0 (D-N048) :** C = 0/21 forkés, 0 adaptés ; D = 8. Renommage enregistré : `Amdkn/mattpocock-skills`, `fiber:a0:mattpocock-skills` (§D2). Gist rapatrié : `00_Memoire/bundle/concepts/llm-wiki.md`, pointeur retiré, compte 119 → 118 (§D3).
+
+---
+
 *Registre créé par Ryan (Factory), dispatch D-N047, Phase A2 — design Clara signé 2026-11-09. Dix fusions en « proposée » ; aucune mesure n'est inventée avant la première mesure du compteur d'état 0 (sortie de l'étape 1).*
