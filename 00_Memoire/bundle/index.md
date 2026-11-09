@@ -48,3 +48,5 @@ okf_version: "0.2"
 - [adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md](concepts/adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md) — ADR-004 : Sanctuarisation Juridictionnelle US (Cincinnati / Northern Kentucky) & Geo-Fencing d Exclusion Stricte France / Europe.
 - [mandat_souverain_muse_a0_247.md](concepts/mandat_souverain_muse_a0_247.md) — Mandat d Autonomie Souveraine Muse (A0 Amadeus Incarne 24/7) : Visionnaire, Manager, Technicien (Zero Human Intervention).
 - [secrets_and_vault_registry.md](concepts/secrets_and_vault_registry.md) — Registre des Secrets, Vaults GitHub & Politique de Rotation (Zero Fuite en Clair).
+- [propositions-unification-forks-fusions-autoresearch.md](concepts/propositions-unification-forks-fusions-autoresearch.md) — Propositions A0 : Unification des forks V5, Auto Research des fusions, intégration native en mono-repo (zéro module en publication basique).
+- [adaptation-cordis-aspace-roadmap-forks.md](concepts/adaptation-cordis-aspace-roadmap-forks.md) — Adaptation de Cordis à A'Space + roadmap de l'ordre d'adaptation des forks (Cordis d'abord).
