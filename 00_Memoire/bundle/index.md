@@ -31,3 +31,4 @@ okf_version: "0.2"
 - [PLAYBOOK_GTME_CLAY_TREG_APIFY.md](areas_os/B_LD01_Business_OMK/PLAYBOOK_GTME_CLAY_TREG_APIFY.md) — Playbook Go-To-Market Engineering (Clay x Kiln x Treg x Apify).
 - [PLAYBOOK_FOA_6_LEVELS.md](areas_os/C_LD02_Finances/PLAYBOOK_FOA_6_LEVELS.md) — Playbook Family Office Agentique en 6 Niveaux (Great Wealth Transfer).
 - [4d-ipbd-chronos-muse-cascade.md](concepts/4d-ipbd-chronos-muse-cascade.md) — Le Cascadeur IPBD 4D : Isomorphisme 3D (TabFM/Mitra-v2 Sheets) -> 4D (TimesFM/Chronos-2 Calendar 12WY & DEAL Muse Chat).
+- [ROAD_TO_MARKET_PLAN.md](areas_os/B_LD01_Business_OMK/ROAD_TO_MARKET_PLAN.md) — Plan Stratégique Road to Market ASpace MarketPlace (Projet Picard LD01 / 100 Comptes B2B).
