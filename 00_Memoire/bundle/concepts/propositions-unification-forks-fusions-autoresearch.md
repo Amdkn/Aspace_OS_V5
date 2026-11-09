@@ -240,3 +240,16 @@ Ce que ce document ne décide pas, et qui revient à l'exécution de chaque vagu
 ## 9. Correction du 2026-11-09 — Cordis d'abord (ordre du Capitaine)
 
 Ma séquence §6 plaçait le Runtime (F8) en dernier et commençait par FKB04. Correction : **Cordis passe en étape 0, avant tout le reste.** Cordis est le micro-noyau qui définit le contrat (tout est plugin, tout passe par des fibres) : chaque adaptation qui suit doit se brancher sur ce contrat, pas inventer le sien. Le reste de l'ordre §6 tient (FKB04 → FKB01 → FKB02 → … → triptyque en dernier). Le détail de l'adaptation de Cordis et la roadmap complète sont dans le document compagnon `adaptation-cordis-aspace-roadmap-forks.md`.
+
+---
+
+## 10. Corrections du Discover Bill (2026-11-09)
+
+Discover : `~/workspace/architecture-compagnons/discover-cordis-autoresearch-etapes-0-1.md` (Bill, lecture à la source, commit `45c5221`).
+
+- **FKB-INDEX ligne 4 — allégation retirée.** Mon §2.4 affirmait que la ligne 4 dit encore qu'automaton, cubefarm et codex-chatgpt-web « NE SONT PAS déplacés ». Vérification à la source (@45c5221) : aucune occurrence de « déplac » dans `FKB-INDEX.md`, ligne 4 vide. La dérive n'est pas établie à ce commit — déjà corrigée, ou référence à une autre version. L'allégation est retirée.
+- **`Amdkn/autoresearch` n'existe pas (404).** Ce n'est pas un état de départ, c'est un acte à venir : le design séquence sa création (depuis quel commit `master`, branche par défaut amont).
+- **`karpathy/autoresearch` n'a pas de licence.** `license: null` à l'API, aucun fichier LICENSE dans l'arborescence. Le design borne ce qui est repris et sous quel statut. Ce point manquait à ma proposition — il est porté ici, pas contourné.
+- **Attribution « API instable »** : la phrase est à la ligne 7 de `packages/core/README.md`, pas à la première ligne du README racine. Substance confirmée.
+
+L'inventaire (120 / 111 / 21 / 9, comptes par catégorie, 9 doublons, 8 noms périmés, `03_Videaste` absent) est confirmé en entier, re-compté à la source.
