@@ -392,10 +392,10 @@
 	url = https://github.com/Amdkn/BusinessOS.git
 [submodule "01_Forkable/FKB04_Tools_Anything/caveman"]
 	path = 01_Forkable/FKB04_Tools_Anything/caveman
-	url = https://github.com/JuliusBrussee/caveman.git
+	url = https://github.com/Amdkn/caveman.git
 [submodule "01_Forkable/FKB04_Tools_Anything/claude-mem"]
 	path = 01_Forkable/FKB04_Tools_Anything/claude-mem
-	url = https://github.com/TheDotMack/claude-mem.git
+	url = https://github.com/Amdkn/claude-mem.git
 [submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling"]
 	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling
 	url = https://github.com/D4Vinci/Scrapling.git
