@@ -19,7 +19,7 @@ tags:
 
 ## 1. La Thèse Fondatrice : L'Équation Amazon $\rightarrow$ AWS $\rightarrow$ Blue Origin
 
-Isolés, les projets locaux (OMK Office, Liberty Ride, Ali Kaly Bana) atteignent rapidement un plafond d'échelle de niveau C2/C3.
+Isolés, les projets locaux (AMP A'Space MarketPlace, Liberty Ride, Ali Kaly Bana) atteignent rapidement un plafond d'échelle de niveau C2/C3.
 **A'Space MarketPlace** est le moteur transactionnel multi-catégories qui :
 1. **Rentabilise l'Infrastructure Souveraine (`CoolEmbrl OS` / `A0`)** : Chaque vente d'un bot ou d'un service consomme nos briques à coût nul (`FreeLLMAPI`, `FreeComputeAPI`, GitHub Actions n8n, Bucket Drive 5 To).
 2. **Finance l'Ambition Industrielle Long Terme** : Génère le cashflow net nécessaire pour financer la recherche méta-scientifique (`LD08`), les jumeaux numériques et l'autonomie matérielle.
@@ -36,7 +36,7 @@ Isolés, les projets locaux (OMK Office, Liberty Ride, Ali Kaly Bana) atteignent
 │ C1 · COACHS & EXPERTS TERRAIN (FDE, GTME, Family Office Agentique)    │
 │      -> Équivalent AWS Solutions Architects : Audits & Déploiements   │
 ├────────────────────────────────────────────────────────────────────────┤
-│ C2 · OFFRES CEO FIRST-PARTY (The OMK Office, Kalybana, Liberty Ride)  │
+│ C2 · OFFRES CEO FIRST-PARTY (AMP A'Space MarketPlace, Kalybana, Liberty Ride)  │
 │      -> Équivalent Amazon Basics (1P) : Preuve d'excellence en direct │
 ├────────────────────────────────────────────────────────────────────────┤
 │ C3 · GRAND PUBLIC & BOTS SOUVERAINS (Assistants OpenBot / OpenMuse)   │

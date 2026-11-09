@@ -1,5 +1,5 @@
 ---
-title: "Business Model Canvas LD01 — A'Space MarketPlace & The OMK Office"
+title: "Business Model Canvas LD01 — A'Space MarketPlace & AMP A'Space MarketPlace"
 type: concept
 status: active
 updated: 2026-11-08

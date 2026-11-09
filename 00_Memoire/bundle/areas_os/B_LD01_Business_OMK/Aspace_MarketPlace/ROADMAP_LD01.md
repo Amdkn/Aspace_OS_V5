@@ -26,7 +26,7 @@ Piloté par **`Vision_Pike`** (Stratégie & Jalons) et **`Planning_Una`** (Blocs
 ├────────────────────────────────────────────────────────────────────────┤
 │ S4 - S6  : OUTBOUND D'ÉLITE & PREMIÈRES COMMANDES                      │
 │            • Envoi Proof-First vers les 100 décideurs qualifiés.       │
-│            • Signature des 3 premiers comptes OMK Office ($1 500 MRR). │
+│            • Signature des 3 premiers comptes AMP A'Space MarketPlace ($1 500 MRR). │
 │            • Déploiement des cellules OpenBot / OpenMuse en production.│
 ├────────────────────────────────────────────────────────────────────────┤
 │ S7 - S9  : EXPANSION & MANDATS FORWARD DEPLOYED ENGINEERING            │

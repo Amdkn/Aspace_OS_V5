@@ -128,7 +128,7 @@ def offload_heavy_media_to_drive_5tb() -> list[dict[str, Any]]:
 
 
 def commit_and_push_disposable_turn(
-    area_code: str = "LD01", holon_id: str = "B1-BOOK-OMK"
+    area_code: str = "LD01", holon_id: str = "B1-BOOK-AMP"
 ) -> dict[str, Any]:
     """
     Enregistre l'état du tour courant dans Git et pousse vers une branche dédiée au nœud
@@ -218,7 +218,7 @@ if __name__ == "__main__":
     holon = (
         sys.argv[2]
         if len(sys.argv) > 2
-        else os.environ.get("ASPACE_ACTIVE_HOLON", "B1-BOOK-OMK")
+        else os.environ.get("ASPACE_ACTIVE_HOLON", "B1-BOOK-AMP")
     )
     result = commit_and_push_disposable_turn(area_code=area, holon_id=holon)
     print(json.dumps(result, indent=2, ensure_ascii=False))

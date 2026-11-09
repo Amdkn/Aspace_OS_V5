@@ -29,6 +29,6 @@ if [ -f "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gat
 fi
 
 # 4. Exécution du premier checkpoint de tour (Git Branch + Sheets Ledger + Drive 5TB CAS Index)
-python3 02_Factory/hooks/aspace_turn_persistence_daemon.py "LD01" "B1-BOOK-OMK"
+python3 02_Factory/hooks/aspace_turn_persistence_daemon.py "LD01" "B1-BOOK-AMP"
 
 echo "=== [OK] Nœud $NODE_NAME opérationnel et synchronisé sur GitHub SSOT + Drive 5 To ==="

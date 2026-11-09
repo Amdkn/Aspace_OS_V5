@@ -159,7 +159,7 @@ def handle_stop() -> int:
         turn_daemon = ROOT / "02_Factory" / "hooks" / "aspace_turn_persistence_daemon.py"
         if turn_daemon.exists():
             subprocess.run(
-                [sys.executable, str(turn_daemon), "LD01", "B1-BOOK-OMK"],
+                [sys.executable, str(turn_daemon), "LD01", "B1-BOOK-AMP"],
                 cwd=str(ROOT),
                 capture_output=True,
                 text=True,

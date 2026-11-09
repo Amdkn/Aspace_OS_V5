@@ -24,7 +24,7 @@ Activation officielle de la tâche n°3 de Google Tasks (`LD 1: Carrière et Bus
 |---|---|---|
 | **Comptes B2B Cibles Initiaux** | **100 comptes qualifiés** | Scraped via Apify Maps + Enrichis via `treg.to` |
 | **Plancher de Cashflow $q_{10}$** | **$\$3\,500/\text{mois}$** | 7 clients rétenteurs actifs à $\$500/\text{m}$ |
-| **Médiane de Croissance $q_{50}$** | **$\$10\,000/\text{mois}$ ($\$120\,000/\text{an}$)** | Mix First-Party OMK Office + Offres GTME |
+| **Médiane de Croissance $q_{50}$** | **$\$10\,000/\text{mois}$ ($\$120\,000/\text{an}$)** | Mix First-Party AMP A'Space MarketPlace + Offres GTME |
 | **Cible d'Ambition $q_{90}$** | **$\$25\,000/\text{mois}$ ($\$300\,000/\text{an}$)** | Passage aux mandats FDE (Palantir/Veric) & FOA Kalybana |
 
 ---

@@ -15,7 +15,7 @@ tags:
 # Cohorte des 25 Comptes Cibles US : Audits Proof-First & Approches Chirurgicales
 
 > **ADR-004 Appliqué** : Exclusion stricte de la France et de l'Europe. Sanctuarisation 100% US Domestic & Regional (Cincinnati / Northern Kentucky / Ohio Valley & US Tech Hubs).
-> **Bannière Maîtresse** : **A'Space MarketPlace (LD01 Book / Projet Picard)**. Zéro étiquette 'OMK Office'.
+> **Bannière Maîtresse** : **A'Space MarketPlace (LD01 Book / Projet Picard)**. Zéro étiquette 'AMP A'Space MarketPlace'.
 
 ## Synthèse Financière de la Cohorte US (en Dollars USD)
 - **Comptes Qualifiés** : `25 entreprises américaines réelles` (10 Cabinets B2B Cincinnati/NKY, 10 Marques US D2C, 5 Leaders Fret/BTP/IT)

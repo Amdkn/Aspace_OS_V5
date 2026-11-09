@@ -1,5 +1,5 @@
 ---
-title: "Mission LD01 — Monétisation Holonique, Les 4 Piliers Ikigai × 5 Horizons & The OMK Office"
+title: "Mission LD01 — Monétisation Holonique, Les 4 Piliers Ikigai × 5 Horizons & AMP A'Space MarketPlace"
 type: concept
 status: active
 updated: 2026-11-08
@@ -22,7 +22,7 @@ Déployer et opérer **A'Space MarketPlace** comme le premier Projet Picard de *
 
 | Horizon | Cap Temporel | Vaisseau Associé | Objectif LD01 |
 |---|---|---|---|
-| **H1** | 12 Semaines | `USS Curie (12WY)` | Lancement du catalogue des 5 offres GTME + 10 premiers clients The OMK Office ($5 000 MRR). |
+| **H1** | 12 Semaines | `USS Curie (12WY)` | Lancement du catalogue des 5 offres GTME + 10 premiers clients AMP A'Space MarketPlace ($5 000 MRR). |
 | **H2** | 1 An | `USS Discovery (Wheel)` | Atteinte de 100 clients récurrents à $300/an ($30 000) + 15 mandats GTME ($90 000) = $120 000/an. |
 | **H3** | 3 Ans | `A'Space MarketPlace` | Place de marché ouverte aux développeurs tiers certifiés (C3) avec $500 000 GMV annuel. |
 | **H4** | 10 Ans | `USS Enterprise (PARA)` | Fournisseur d'infrastructure agentique souveraine B2B (CoolEmbrl AWS) pour les PME. |
