@@ -6,7 +6,7 @@ Doctrine "Stateless Cattle Nodes" (VPS / WSL CoolEmbrl / Local FS jetables) :
      -> Upload/Indexation vers Bucket Google Drive 5 To (4,99 To libres)
      -> Remplacement dans Git par un pointeur léger .cas.json
   2. Auto-Commit & Push de chaque tour sur une branche Git dédiée au nœud (`turns/<hostname>/<YYYY-MM-DD>`)
-  3. Synchronise les métriques et pointeurs dans Google Sheets (`Areas OS` : `B_LD01_Business_OMK` .. `LD08`)
+  3. Synchronise les métriques et pointeurs dans Google Sheets (`Areas OS` : `B_LD01_Business_AMP` .. `LD08`)
 """
 
 from __future__ import annotations

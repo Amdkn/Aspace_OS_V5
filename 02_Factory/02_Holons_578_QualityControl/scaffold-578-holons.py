@@ -70,7 +70,7 @@ GWS_FRAMEWORKS = {
 
 AREAS_SPEC = [
     {
-        "folder": "B_LD01_Business_OMK",
+        "folder": "B_LD01_Business_AMP",
         "col": "B",
         "ld": "LD01",
         "title": "Carrière & Business (Business OS / The OMK Office / SOB / Concordia)",

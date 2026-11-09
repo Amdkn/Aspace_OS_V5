@@ -18,7 +18,7 @@ REPORT_OUT = (
     / "00_Memoire"
     / "bundle"
     / "areas_os"
-    / "B_LD01_Business_OMK"
+    / "B_LD01_Business_AMP"
     / "WARGAME_LAUNCH_AUDIT.md"
 )
 SHEET_SCHEMA_OUT = (

@@ -26,20 +26,21 @@ okf_version: "0.2"
 * [Plan d'Urgence Jules 100 Sessions/Jour & Essaim EGM](jules-burst-100-missions.md) - File active des missions Poissons Rouges (`00_Memoire/egm_missions.db`) pour `jules.google.com`, `codex-chatgpt-web` et `04_ADE_OpenRig`
 * [Wargame Au-Delà d'Argon : Hyperviseur Cordis × Automaton Runtime × RigInfinity (Rust) × Reviewer-Security OWASP](concepts/wargame-riginfinity-cordis-daemon.md) - Loi du Daemon Maître unique, fusion `OpenRig × Infinity` en `Amdkn/RigInfinity`, triage OWASP Top 10 et structuration de `02_Factory/` en 6 catégories
 - [n8n-hooks-freecompute-scion.md](concepts/n8n-hooks-freecompute-scion.md) — GitHub as n8n Primitive (5 Node Families), Deterministic Hooks (`exit 2`), `FreeComputeAPI` & Anthropic Scion Sparse Checkouts.
-- [WARGAME_LAUNCH_AUDIT.md](areas_os/B_LD01_Business_OMK/WARGAME_LAUNCH_AUDIT.md) — Audit Wargame Prédictif de Lancement Business OS (LD01) & Nœuds Jetables (MiroFish x Mitra-v2 x TimesFM 3.0 x PathFM).
-- [PLAYBOOK_FDE_SPRINT.md](areas_os/B_LD01_Business_OMK/PLAYBOOK_FDE_SPRINT.md) — Playbook Forward Deployed Engineering (Palantir x Veric 5-Step Model).
-- [PLAYBOOK_GTME_CLAY_TREG_APIFY.md](areas_os/B_LD01_Business_OMK/PLAYBOOK_GTME_CLAY_TREG_APIFY.md) — Playbook Go-To-Market Engineering (Clay x Kiln x Treg x Apify).
+- [WARGAME_LAUNCH_AUDIT.md](areas_os/B_LD01_Business_AMP/WARGAME_LAUNCH_AUDIT.md) — Audit Wargame Prédictif de Lancement Business OS (LD01) & Nœuds Jetables (MiroFish x Mitra-v2 x TimesFM 3.0 x PathFM).
+- [PLAYBOOK_FDE_SPRINT.md](areas_os/B_LD01_Business_AMP/PLAYBOOK_FDE_SPRINT.md) — Playbook Forward Deployed Engineering (Palantir x Veric 5-Step Model).
+- [PLAYBOOK_GTME_CLAY_TREG_APIFY.md](areas_os/B_LD01_Business_AMP/PLAYBOOK_GTME_CLAY_TREG_APIFY.md) — Playbook Go-To-Market Engineering (Clay x Kiln x Treg x Apify).
 - [PLAYBOOK_FOA_6_LEVELS.md](areas_os/C_LD02_Finances/PLAYBOOK_FOA_6_LEVELS.md) — Playbook Family Office Agentique en 6 Niveaux (Great Wealth Transfer).
 - [4d-ipbd-chronos-muse-cascade.md](concepts/4d-ipbd-chronos-muse-cascade.md) — Le Cascadeur IPBD 4D : Isomorphisme 3D (TabFM/Mitra-v2 Sheets) -> 4D (TimesFM/Chronos-2 Calendar 12WY & DEAL Muse Chat).
-- [ROAD_TO_MARKET_PLAN.md](areas_os/B_LD01_Business_OMK/ROAD_TO_MARKET_PLAN.md) — Plan Stratégique Road to Market ASpace MarketPlace (Projet Picard LD01 / 100 Comptes B2B).
+- [ROAD_TO_MARKET_PLAN.md](areas_os/B_LD01_Business_AMP/ROAD_TO_MARKET_PLAN.md) — Plan Stratégique Road to Market ASpace MarketPlace (Projet Picard LD01 / 100 Comptes B2B).
 - [free-cloud-orchestration-studio-gas-retool.md](concepts/free-cloud-orchestration-studio-gas-retool.md) — Orchestration Cloud Gratuite : Workspace Studio Triggers, Google Apps Script (GAS), Retool, Zenphi & Quota Accounting.
-- [MASTER_PLAN_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/MASTER_PLAN_LD01.md) — Master Plan LD01 : L Aiguille de l Abondance & ASpace MarketPlace (Projet Picard Book).
-- [MISSION_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/MISSION_LD01.md) — Mission LD01 : Monétisation Holonique, Les 4 Piliers Ikigai x 5 Horizons.
-- [SPEC_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/SPEC_LD01.md) — Spécifications Techniques, Financières et Recette RigInfinity ASpace MarketPlace.
-- [DESIGN_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/DESIGN_LD01.md) — Direction Artistique, Système de Design UI/UX et Pavillons 3D City Office.
-- [ROADMAP_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/ROADMAP_LD01.md) — Feuille de Route Trimestrielle 12WY (Semaines 1 à 12).
-- [PRD_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/PRD_LD01.md) — Product Requirements Document : ASpace MarketPlace.
-- [BUSINESS_MODEL_CANVAS_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/BUSINESS_MODEL_CANVAS_LD01.md) — Business Model Canvas en 9 Blocs pour LD01.
+- [MASTER_PLAN_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/MASTER_PLAN_LD01.md) — Master Plan LD01 : L Aiguille de l Abondance & ASpace MarketPlace (Projet Picard Book).
+- [MISSION_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/MISSION_LD01.md) — Mission LD01 : Monétisation Holonique, Les 4 Piliers Ikigai x 5 Horizons.
+- [SPEC_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/SPEC_LD01.md) — Spécifications Techniques, Financières et Recette RigInfinity ASpace MarketPlace.
+- [DESIGN_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/DESIGN_LD01.md) — Direction Artistique, Système de Design UI/UX et Pavillons 3D City Office.
+- [ROADMAP_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/ROADMAP_LD01.md) — Feuille de Route Trimestrielle 12WY (Semaines 1 à 12).
+- [PRD_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/PRD_LD01.md) — Product Requirements Document : ASpace MarketPlace.
+- [BUSINESS_MODEL_CANVAS_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/BUSINESS_MODEL_CANVAS_LD01.md) — Business Model Canvas en 9 Blocs pour LD01.
 - [MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md](../../04_MetaScience_CooperativeIntelligence/02_Architectures/MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md) — Ingestion & Décomposition MSCI des 34 Vidéos YouTube en Skills.
-- [COHORTE_25_PROSPECTS_AUDITS.md](areas_os/B_LD01_Business_OMK/COHORTE_25_PROSPECTS_AUDITS.md) — Cohorte des 25 Premiers Comptes B2B Cibles : Audits Proof-First & Messages Chirurgicaux The OMK Office.
+- [COHORTE_25_PROSPECTS_AUDITS.md](areas_os/B_LD01_Business_AMP/COHORTE_25_PROSPECTS_AUDITS.md)
+- [The_OMK_Office/README.md](areas_os/B_LD01_Business_AMP/The_OMK_Office/README.md) — Vitrine First-Party (1P) Couche C2 opérée sur AMP (The OMK Office B2B Services). — Cohorte des 25 Premiers Comptes B2B Cibles : Audits Proof-First & Messages Chirurgicaux The OMK Office.
 - [adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md](concepts/adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md) — ADR-004 : Sanctuarisation Juridictionnelle US (Cincinnati / Northern Kentucky) & Geo-Fencing d Exclusion Stricte France / Europe.

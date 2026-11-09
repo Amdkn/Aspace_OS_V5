@@ -33,7 +33,7 @@ RTM_STATE_OUT = (
     / "00_Memoire"
     / "bundle"
     / "areas_os"
-    / "B_LD01_Business_OMK"
+    / "B_LD01_Business_AMP"
     / "ROAD_TO_MARKET_STATE.json"
 )
 

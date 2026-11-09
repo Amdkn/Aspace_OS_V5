@@ -30,7 +30,7 @@ AUDITS_JSON_OUT = (
     / "00_Memoire"
     / "bundle"
     / "areas_os"
-    / "B_LD01_Business_OMK"
+    / "B_LD01_Business_AMP"
     / "COHORTE_25_PROSPECTS_AUDITS.json"
 )
 AUDITS_MD_OUT = (
@@ -38,7 +38,7 @@ AUDITS_MD_OUT = (
     / "00_Memoire"
     / "bundle"
     / "areas_os"
-    / "B_LD01_Business_OMK"
+    / "B_LD01_Business_AMP"
     / "COHORTE_25_PROSPECTS_AUDITS.md"
 )
 SHEETS_QUEUE_PATH = ROOT / "00_Memoire" / "gws_sheets_turn_ledger.jsonl"

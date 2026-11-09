@@ -87,7 +87,7 @@ def sync_tasks_with_gws() -> dict:
             "activated_at": now_iso,
             "assigned_squad": "B1-BOOK -> B2.5-ALLIANCES-DC -> B3.5-MARVEL-GTME",
             "next_deliverable": "Pipeline d'acquisition Proof-First (Apify + Clay/treg.to + 5 Moteurs Cashflow)",
-            "roadmap_file": "00_Memoire/bundle/areas_os/B_LD01_Business_OMK/ROAD_TO_MARKET_PLAN.md",
+            "roadmap_file": "00_Memoire/bundle/areas_os/B_LD01_Business_AMP/ROAD_TO_MARKET_PLAN.md",
         },
     }
 
