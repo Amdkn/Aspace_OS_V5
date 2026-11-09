@@ -271,9 +271,6 @@
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex
 	url = https://github.com/openai/codex.git
 
-[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/hermes-agent"]
-	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/hermes-agent
-	url = https://github.com/Amdkn/hermes-agent.git
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent
