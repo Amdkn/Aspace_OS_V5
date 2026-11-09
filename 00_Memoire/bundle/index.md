@@ -42,3 +42,4 @@ okf_version: "0.2"
 - [BUSINESS_MODEL_CANVAS_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/BUSINESS_MODEL_CANVAS_LD01.md) — Business Model Canvas en 9 Blocs pour LD01.
 - [MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md](../../04_MetaScience_CooperativeIntelligence/02_Architectures/MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md) — Ingestion & Décomposition MSCI des 34 Vidéos YouTube en Skills.
 - [COHORTE_25_PROSPECTS_AUDITS.md](areas_os/B_LD01_Business_OMK/COHORTE_25_PROSPECTS_AUDITS.md) — Cohorte des 25 Premiers Comptes B2B Cibles : Audits Proof-First & Messages Chirurgicaux The OMK Office.
+- [adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md](concepts/adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md) — ADR-004 : Sanctuarisation Juridictionnelle US (Cincinnati / Northern Kentucky) & Geo-Fencing d Exclusion Stricte France / Europe.

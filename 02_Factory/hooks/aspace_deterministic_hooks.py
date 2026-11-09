@@ -86,6 +86,20 @@ def handle_pre_tool(payload: dict) -> int:
                     )
                     return 2
 
+    # 3b. Garde-fou ADR-004 : Geo-Fencing d'Exclusion Stricte France & Europe pour A'Space MarketPlace LD01
+    content_str = str(tool_input.get("content") or tool_input.get("Content") or "")
+    if "B_LD01_Business" in file_path or "proof_first" in file_path:
+        forbidden_geo = ["Paris, France", "Lyon, France", "Marseille, France", "France", "Bordeaux, France", ".fr"]
+        if any(geo in content_str for geo in forbidden_geo):
+            # Bloquer uniquement si le contenu contient explicitement des prospects français dans le pipeline LD01
+            if "PROSP-" in content_str and any(geo in content_str for geo in ["Paris", "France", "Lyon"]):
+                sys.stderr.write(
+                    "[HOOK BLOCKED - ADR-004 Geo-Fencing (exit 2)] Les clients de France/Europe sont strictement "
+                    "interdits tant que l'opérateur opère depuis Cincinnati / Northern Kentucky (US). "
+                    "La cible doit être 100% US Domestic (Cincinnati/NKY Metro, Ohio Valley, US National B2B).\n"
+                )
+                return 2
+
     # 4. Garde-fou Bash / Shell contre les destructions récursives sur les dossiers racines
     if tool_name in ("bash", "run_command", "shell"):
         cmd = str(tool_input.get("command") or tool_input.get("CommandLine") or "")
