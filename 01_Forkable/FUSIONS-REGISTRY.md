@@ -68,8 +68,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 - **Fonction :** une seule couche d'appel universel — toute API, tout CLI, tout outil, par le même contrat.
 - **Déjà existant :** FKB04 est la première catégorie désignée comme prioritaire par le document de fusion. `hermes-agent` en doublon avec FKB00 à résorber (canonique : FKB04).
 - **Preuve attendue :** un même appel traverse API, CLI et agent sans changer de contrat.
-- **État :** proposée
-- **Mesures :** — (H : — / C : — / D : —)
+- **État :** acceptée (première expérience 2026-11-09, jugement 13e : PR #5 VALIDÉE, H-C1-1..7 CLOS ; mergée `4638ca6`, 2 parents)
+- **Mesures :** H 5/5, C 89, D 9→8 (avant : C 89, D 9 ; après : C 89, D 8 — retrait du pointeur doublon hermes-agent FKB00, canonique FKB04)
 
 ## F7 — Moteur Money Maker unique (FKB07)
 
