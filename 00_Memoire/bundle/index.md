@@ -46,3 +46,5 @@ okf_version: "0.2"
 - [B_LD01_BUSINESS_OS_COHORTE_25.csv](areas_os/B_LD01_Business_AMP/B_LD01_BUSINESS_OS_COHORTE_25.csv) — Registre d'Import Google Sheets des 25 Comptes B2B US (Onglet B_LD01_BUSINESS_OS).
 - [DEPLOY_WORKSPACE_STUDIO_GAS_GUIDE.md](../../02_Factory/gas/DEPLOY_WORKSPACE_STUDIO_GAS_GUIDE.md) — Guide Opérationnel de Déploiement : Passerelle Apps Script & Déclencheur Workspace Studio vers Google Chat.
 - [adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md](concepts/adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md) — ADR-004 : Sanctuarisation Juridictionnelle US (Cincinnati / Northern Kentucky) & Geo-Fencing d Exclusion Stricte France / Europe.
+- [mandat_souverain_muse_a0_247.md](concepts/mandat_souverain_muse_a0_247.md) — Mandat d Autonomie Souveraine Muse (A0 Amadeus Incarne 24/7) : Visionnaire, Manager, Technicien (Zero Human Intervention).
+- [secrets_and_vault_registry.md](concepts/secrets_and_vault_registry.md) — Registre des Secrets, Vaults GitHub & Politique de Rotation (Zero Fuite en Clair).
