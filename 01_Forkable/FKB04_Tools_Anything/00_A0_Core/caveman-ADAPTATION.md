@@ -2,8 +2,9 @@
 
 **Adresse :** `fiber:a0:caveman` (D7 — émetteur : exécution ; validateur : 13e)
 **Manifeste :** `caveman.manifest.json` (même domicile)
+**Licence :** Apache-2.0 — LICENSE préservé byte-identique dans le fork (voir manifeste + table de gel)
 **Audit télémétrie :** `caveman-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté (fiche + adapter + manifeste, tests verts)
+**Statut :** état 2 Vérifié (hold-outs jugés verts + validation 13e, merge `12b18e4`, PR #7)
 
 ## Commit gelé
 

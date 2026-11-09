@@ -128,8 +128,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | rrsi | 0 | `be50316` | `fiber:a0:rrsi` | Apache-2.0 |
 | dream-rsi | 0 | `8ec35bd` | `fiber:a0:dream-rsi` | Apache-2.0 |
 | space-agent | 0 | `10f4ffd` | `fiber:a0:space-agent` | MIT |
-| caveman | 0 | `3dc497a` | `fiber:a0:caveman` | Apache-2.0 |
-| claude-mem | 0 | `a926f57` | `fiber:a0:claude-mem` | Apache-2.0 |
+| caveman | 2 | `3dc497a` | `fiber:a0:caveman` | Apache-2.0 |
+| claude-mem | 2 | `a926f57` | `fiber:a0:claude-mem` | Apache-2.0 |
 | nansen-cli | 0 | `0b39ae5` | `fiber:a0:nansen-cli` | MIT |
 | Scrapling | 0 | `c5121c7` | `fiber:a0:scrapling` | BSD-3-Clause |
 | dify | 0 | `b29552a` | `fiber:a0:dify` | Apache-2.0 modifiée (§0.1) |
