@@ -41,3 +41,4 @@ okf_version: "0.2"
 - [PRD_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/PRD_LD01.md) — Product Requirements Document : ASpace MarketPlace.
 - [BUSINESS_MODEL_CANVAS_LD01.md](areas_os/B_LD01_Business_OMK/Aspace_MarketPlace/BUSINESS_MODEL_CANVAS_LD01.md) — Business Model Canvas en 9 Blocs pour LD01.
 - [MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md](../../04_MetaScience_CooperativeIntelligence/02_Architectures/MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md) — Ingestion & Décomposition MSCI des 34 Vidéos YouTube en Skills.
+- [COHORTE_25_PROSPECTS_AUDITS.md](areas_os/B_LD01_Business_OMK/COHORTE_25_PROSPECTS_AUDITS.md) — Cohorte des 25 Premiers Comptes B2B Cibles : Audits Proof-First & Messages Chirurgicaux The OMK Office.
