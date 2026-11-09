@@ -1,0 +1,104 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/cordis-ADAPTATION.md",
+  "adapter": {
+    "commit": "a40cc74",
+    "package": "@aspace/cordis-adapter",
+    "surface": [
+      "createAspaceApp() -> { ctx, hmr }",
+      "reconcile(ctx, roots) -> ReconcileReport",
+      "hasHmr(ctx) -> boolean",
+      "PINNED_HMR_SURFACE"
+    ],
+    "version": "0.1.0"
+  },
+  "entry": "packages/aspace-cordis-adapter/src/index.ts",
+  "id": "fiber:a0:cordis",
+  "issued_by": "Ryan (Factory), dispatch D-N047, Phase B",
+  "levels": {
+    "current": 0,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "note_packages": "10 paquets au gel b38ef58, pas 11 : la reprise #298 a supprimé le paquet loader-utils (absorbé par loader/src/internal.ts + hmr/src/runtime/). Le « 11 paquets » du design est l'inventaire à #297.",
+  "packages": [
+    {
+      "name": "cordis",
+      "path": "packages/core",
+      "state": 0,
+      "version": "4.0.0-rc.12"
+    },
+    {
+      "name": "create-cordis",
+      "path": "packages/create",
+      "state": 0,
+      "version": "0.3.2"
+    },
+    {
+      "name": "@cordisjs/plugin-fs-node",
+      "path": "packages/fs-node",
+      "state": 0,
+      "version": "0.1.0"
+    },
+    {
+      "name": "@cordisjs/plugin-group",
+      "path": "packages/group",
+      "state": 0,
+      "version": "1.0.0"
+    },
+    {
+      "name": "@cordisjs/plugin-hmr",
+      "path": "packages/hmr",
+      "state": 0,
+      "version": "1.1.2"
+    },
+    {
+      "name": "@cordisjs/plugin-include",
+      "path": "packages/include",
+      "state": 0,
+      "version": "1.2.0"
+    },
+    {
+      "name": "@cordisjs/plugin-loader",
+      "path": "packages/loader",
+      "state": 0,
+      "version": "1.0.0-rc.9"
+    },
+    {
+      "name": "@cordisjs/plugin-logger-console",
+      "path": "packages/logger-console",
+      "state": 0,
+      "version": "1.0.0"
+    },
+    {
+      "name": "@cordisjs/plugin-package-manager",
+      "path": "packages/package-manager",
+      "state": 0,
+      "version": "0.1.0"
+    },
+    {
+      "name": "@cordisjs/plugin-timer",
+      "path": "packages/timer",
+      "state": 0,
+      "version": "1.1.4"
+    }
+  ],
+  "schema_authority": "Clara (design D-N047, D4)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/cordis-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "api_stable": false,
+    "api_warning": "core README line 7: API instable",
+    "branch": "main",
+    "fork": "Amdkn/cordis",
+    "frozen_commit": "b38ef58",
+    "frozen_pr": 298,
+    "frozen_title": "feat(hmr): invalidate resolution caches and package manifests (#298)",
+    "license": "MIT",
+    "repository": "cordiverse/cordis"
+  },
+  "validated_by": "13e Doctor (en attente)",
+  "version": "0.1.0"
+}
