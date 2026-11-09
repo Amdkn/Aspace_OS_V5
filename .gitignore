@@ -20,3 +20,6 @@ node_modules/
 01_Forkable/**/.git.upstream/
 
 02_Factory/factory.sqlite*
+
+__pycache__/
+*.pyc

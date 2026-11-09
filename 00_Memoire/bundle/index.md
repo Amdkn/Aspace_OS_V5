@@ -42,5 +42,6 @@ okf_version: "0.2"
 - [BUSINESS_MODEL_CANVAS_LD01.md](areas_os/B_LD01_Business_AMP/Aspace_MarketPlace/BUSINESS_MODEL_CANVAS_LD01.md) — Business Model Canvas en 9 Blocs pour LD01.
 - [MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md](../../04_MetaScience_CooperativeIntelligence/02_Architectures/MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md) — Ingestion & Décomposition MSCI des 34 Vidéos YouTube en Skills.
 - [COHORTE_25_PROSPECTS_AUDITS.md](areas_os/B_LD01_Business_AMP/COHORTE_25_PROSPECTS_AUDITS.md)
-- [The_OMK_Office/README.md](areas_os/B_LD01_Business_AMP/The_OMK_Office/README.md) — Vitrine First-Party (1P) Couche C2 opérée sur AMP (The OMK Office B2B Services). — Cohorte des 25 Premiers Comptes B2B Cibles : Audits Proof-First & Messages Chirurgicaux The OMK Office.
+- [The_OMK_Office/README.md](areas_os/B_LD01_Business_AMP/The_OMK_Office/README.md)
+- [B_LD01_BUSINESS_OS_COHORTE_25.csv](areas_os/B_LD01_Business_AMP/B_LD01_BUSINESS_OS_COHORTE_25.csv) — Registre d'Import Google Sheets des 25 Comptes B2B US (Onglet B_LD01_BUSINESS_OS). — Vitrine First-Party (1P) Couche C2 opérée sur AMP (The OMK Office B2B Services). — Cohorte des 25 Premiers Comptes B2B Cibles : Audits Proof-First & Messages Chirurgicaux The OMK Office.
 - [adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md](concepts/adr-004-us-jurisdiction-geo-fencing-exclude-france-eu.md) — ADR-004 : Sanctuarisation Juridictionnelle US (Cincinnati / Northern Kentucky) & Geo-Fencing d Exclusion Stricte France / Europe.
