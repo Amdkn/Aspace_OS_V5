@@ -118,15 +118,15 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | Module (fork Amdkn) | État | Commit gelé | Manifeste | Licence |
 |---|---|---|---|---|
 | deepseek-harness | 0 | `fcc0ad4` | `fiber:a0:deepseek-harness` | MIT |
-| herdr-app | 0 | `b1a2a67` | `fiber:a0:herdr-app` | Apache-2.0 |
+| herdr-app | 2 | `b1a2a67` | `fiber:a0:herdr-app` | Apache-2.0 |
 | t3code | 0 | `dc72705` | `fiber:a0:t3code` | MIT |
 | openclaw | 0 | `ce7788f` | `fiber:a0:openclaw` | MIT |
 | claude-code | 0 | `0ed9469` | — (D12, référence seule) | **sans licence** |
 | codex | 0 | `27fcd7c` | `fiber:a0:codex` | Apache-2.0 |
-| wikiskill | 0 | `cdc291c` | `fiber:a0:wikiskill` | MIT |
+| wikiskill | 2 | `cdc291c` | `fiber:a0:wikiskill` | MIT |
 | adk-recipes | 0 | `a93b9cc` | `fiber:a0:adk-recipes` | Apache-2.0 |
-| rrsi | 0 | `be50316` | `fiber:a0:rrsi` | Apache-2.0 |
-| dream-rsi | 0 | `8ec35bd` | `fiber:a0:dream-rsi` | Apache-2.0 |
+| rrsi | 2 | `be50316` | `fiber:a0:rrsi` | Apache-2.0 |
+| dream-rsi | 2 | `8ec35bd` | `fiber:a0:dream-rsi` | Apache-2.0 |
 | space-agent | 2 | `10f4ffd` | `fiber:a0:space-agent` | MIT |
 | caveman | 2 | `3dc497a` | `fiber:a0:caveman` | Apache-2.0 |
 | claude-mem | 2 | `a926f57` | `fiber:a0:claude-mem` | Apache-2.0 |

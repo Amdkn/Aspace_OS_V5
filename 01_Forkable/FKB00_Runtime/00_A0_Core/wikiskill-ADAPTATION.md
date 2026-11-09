@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:wikiskill`
 **Manifeste :** `wikiskill.manifest.json` (même domicile)
 **Audit télémétrie :** `wikiskill-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, tests verts)
+**Statut :** état 2 Vérifié (hold-outs verts + validation 13e, PR #9 mergée `d0631f1`)
 **Licence :** MIT
 
 ## Commit gelé

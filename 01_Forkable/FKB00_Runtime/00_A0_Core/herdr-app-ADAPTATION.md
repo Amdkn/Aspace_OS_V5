@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:herdr-app`
 **Manifeste :** `herdr-app.manifest.json` (même domicile)
 **Audit télémétrie :** `herdr-app-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, tests verts)
+**Statut :** état 2 Vérifié (hold-outs verts + validation 13e, PR #9 mergée `d0631f1`)
 **Licence :** Apache-2.0
 
 ## Commit gelé
