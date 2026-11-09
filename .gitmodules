@@ -246,7 +246,7 @@
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app
-	url = https://github.com/herdrdev/herdr-app.git
+	url = https://github.com/Amdkn/herdr-app.git
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/orca"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/orca
@@ -275,7 +275,7 @@
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
-	url = https://github.com/ashutoshsinghpr7/wikiskill.git
+	url = https://github.com/Amdkn/wikiskill.git
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes
@@ -283,11 +283,11 @@
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi
-	url = https://github.com/google-research/rrsi.git
+	url = https://github.com/Amdkn/rrsi.git
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi
-	url = https://github.com/google-research/dream-rsi.git
+	url = https://github.com/Amdkn/dream-rsi.git
 
 [submodule "01_Forkable/FKB03_3DWorlds/space-agent"]
 	path = 01_Forkable/FKB03_3DWorlds/space-agent

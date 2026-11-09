@@ -1,0 +1,44 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/dream-rsi-ADAPTATION.md",
+  "adapter": {
+    "commit": "fa0c8f0",
+    "package": "aspace-dream-rsi-adapter",
+    "surface": [
+      "dream_rsi.cli.main:main(argv) -> int",
+      "python3 -m dream_rsi --help",
+      "dream-rsi learning <sous-commande> (hors-ligne)"
+    ],
+    "version": "0.1.0"
+  },
+  "entry": "aspace-dream-rsi-adapter/smoke_test.py",
+  "id": "fiber:a0:dream-rsi",
+  "issued_by": "Ryan (Factory), dispatch D-N048, vague V3a",
+  "levels": {
+    "current": 0,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "packages": [
+    {
+      "name": "dream-rsi",
+      "path": "dream_rsi",
+      "state": 0,
+      "version": "0.1.0"
+    }
+  ],
+  "schema_authority": "Clara (design D-N048, D7)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/dream-rsi-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/dream-rsi",
+    "frozen_commit": "8ec35bd",
+    "license": "Apache-2.0",
+    "repository": "google-research/dream-rsi"
+  },
+  "validated_by": "13e Doctor",
+  "version": "0.1.0"
+}
