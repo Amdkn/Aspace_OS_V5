@@ -7,16 +7,16 @@ Rapport dans Muse toutes les 1–5 min : qui travaille, sur quoi, dernier avance
 Jamais 10 min de heartbeat sans avancement dans l'évolution de V5.
 Mission : développement de V5 sur ses modules Git — adapter 1 par 1, fusionner 1 par 1, incorporation native.
 
-## État — 2026-11-10 18:44 EST (vérifié à la source)
+## État — 2026-11-10 18:52 EST (vérifié à la source)
 
 | Qui | Quoi | État | Dernier avancement | Heure (EST) | Prochaine étape |
 |---|---|---|---|---|---|
 | Ryan (S3) | F8 pas 2 — pi (la durabilité) + D-N052 + F8 pas 3 + D-N053 | En cours | 18:04 — Accusé pas 4 reçu, exécution lancée (openrig, le corps ; gel bd39da9, dérive 226) ; pas A D-N053 + pas 3 + R1 en cours | 18:04 | Exécution pas 4 + pas A D-N053 + pas 3 + R1 ; PR pas 2 après Phase D ; pause cron release Needle (décision 13e) |
 | Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | 18:27 — Discover F8 pas 5 (agent-zero) VÉRIFIÉ par Rick et ROUTÉ à Clara pour le design (submission 04d90406 ; ancres vérifiées à l'API, dérive 0, compteur F8 9/0/2/0) ; design pas 4 signé 17:47, exécution pas 4 chez Ryan | 18:27 | Design pas 5 à signer ; exécution pas 4 par Ryan ; D-N053 pas A |
-| Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 18:41 — Journal 578 : confirmation Rick 541 reçue (convergence totale : clé vérifiée byte-identique, Phase D toujours en attente, serveur Debian sur le port 22) ; registre 578 lignes (mtime 18:42:34) | 18:41 | T3 (Clara) quand T2 verte ; exécution D-N053 pas A + pas 3 + pas 4 + R1 ; design pas 5 |
+| Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 18:50 — Journal 579 : confirmation Rick 578 reçue (convergence totale) ; registre 579 lignes (mtime 18:51:46) | 18:50 | T3 (Clara) quand T2 verte ; exécution D-N053 pas A + pas 3 + pas 4 + R1 ; design pas 5 |
 | 13e (S2) | Jugement PR #16 + verdict H-C2 | En cours | 18:29 — DÉCISION Needle : (D)+(A) pause du train planifié + surveillance du Hub (réexamen 2026-11-17) ; (B) rejeté, (C) non retenu ; run 42861007282 failure vérifié, Hub needle3 sans python/ depuis 2026-11-05 | 18:29 | Jugement D-N052 R1 + pas 3 + D-N053 pas A + pas 4 ; dispatch pause cron Needle chez Ryan |
 | Bill (S3) | F8 Discover + pas 2 (pi) + D-N052 | En cours | 18:10 — Discover F8 pas 5 (agent-zero, le cœur) LIVRÉ (32 991 o, 253 lignes) + note vocale, vérifié par Rick et routé à Clara 18:27 ; pas 4 en exécution chez Ryan | 18:10 | Design pas 5 par Clara ; exécution pas 4 par Ryan ; D-N053 pas A |
-| A0 | Pulse + vérification | En cours | Pulse 18:44 : avancement — registre 577 → 578 lignes (mtime 18:42:34), journal 578 (confirmation Rick 541, convergence totale) ; master c4bfb55 ; seule PR #1 ouverte | 18:44 | Rapport 1–5 min, alerte 10 min |
+| A0 | Pulse + vérification | En cours | Pulse 18:52 : avancement — registre 578 → 579 lignes (mtime 18:51:46), journal 579 (confirmation Rick 578, convergence totale) ; master 6e53956 ; seule PR #1 ouverte | 18:52 | Rapport 1–5 min, alerte 10 min |
 | V5 — F8 pas 1 | MERGÉ | Terminé | PR #15 mergée 15:39:29 (7b46cf8, true merge) ; post-merge cd716a3 + log.md f63b799 ; reçu 004 consigné 15:41 ; compteur 9 en état 0, 2 en état 2 | 15:41 | Pas 2 (pi) : exécution Ryan lancée 15:53 ; piste D-N052 en parallèle |
 | Rick (S1) | D-N052 — développement modules récursivité | En cours | 18:29 — Journal 574 : décision 13e Needle reçue (pause train + surveillance Hub) ; Rick dispatche à Ryan ; registre 574 lignes | 18:29 | Exécution D-N052 R0–R5 ; validation 13e par pas ; dispatch pause cron Needle |
 | Rick (S1) | Runtime — adaptation de TOUS les modules | En cours | 18:29 — Journal 574 : décision 13e Needle ; registre 574 lignes ; pas A D-N053 en exécution (ML socle) | 18:29 | Design pas 5 par Clara ; exécution pas A D-N053 (ML socle) + pas 4 ; validation 13e par pas |
