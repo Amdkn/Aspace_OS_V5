@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:openclaw`
 **Manifeste :** `openclaw.manifest.json` (même domicile)
 **Audit télémétrie :** `openclaw-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté (fiche + adapter + manifeste ; suite partielle, voir § Tests — télémétrie 98/98 verte, reste qualifié, `unit` non couru)
+**Statut :** état 2 Vérifié (hold-outs H-M1..M7 verts + validation 13e, PR #11 mergée `8d2c658` ; fiche + adapter + manifeste ; suite partielle, voir § Tests — télémétrie 98/98 verte, reste qualifié, `unit` non couru)
 **Licence :** MIT
 
 ## Commit gelé

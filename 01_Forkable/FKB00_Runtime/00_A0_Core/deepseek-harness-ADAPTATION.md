@@ -23,7 +23,7 @@ les commandes de l'adapter ne montent aucun profil, donc aucune instance de
 
 ## Statut
 
-État 0 (fork au gel) — adapter livré sur le fork, en attente du jugement du 13e.
+État 2 Vérifié — hold-outs H-M1..M7 verts + validation 13e (journal 434), PR #11 mergée `8d2c658`.
 
 ## Commit gelé
 

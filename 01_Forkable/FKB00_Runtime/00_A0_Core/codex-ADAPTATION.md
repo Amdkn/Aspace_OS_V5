@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:codex`
 **Manifeste :** `codex.manifest.json` (même domicile)
 **Audit télémétrie :** `codex-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, smoke 6/6, suite 8 931 passés / 49 échecs qualifiés environnementaux / 17 ignorés, 6 crates non courues OOM — voir § Tests)
+**Statut :** état 2 Vérifié (hold-outs H-M1..M7 verts + validation 13e, PR #11 mergée `8d2c658` ; fiche + adapter + manifeste, smoke 6/6, suite 8 931 passés / 49 échecs qualifiés environnementaux / 17 ignorés, 6 crates non courues OOM — voir § Tests)
 **Licence :** Apache-2.0
 
 ## Commit gelé

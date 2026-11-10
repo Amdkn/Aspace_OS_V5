@@ -1,1 +1,48 @@
-{"adaptation_sheet":"01_Forkable/FKB00_Runtime/00_A0_Core/claude-code-ADAPTATION.md","adapter":{"commit":"f2965df","package":"aspace-claude-code-adapter","surface":["claude (documented entry) — described, never invoked","mock --help / --version / status (clean-room test double, stdlib only)"],"version":"0.1.0"},"clean_room":true,"entry":"aspace-claude-code-adapter/smoke_test.py","fallback":"If Anthropic objects to the reference or a licence appears that requires it, the fork Amdkn/claude-code is deleted. The clean-room adapter is A'Space's own work and depends on no upstream file.","id":null,"id_note":"D12: no fiber:a0: address until a clean-room adaptation is validated by the 13e Doctor. The fork is a reference only.","issued_by":"Ryan (Factory), dispatch D-N048, vague V3b","levels":{"current":0,"states":["0 Basique (fork Amdkn non adapté)","1 Adapté (fiche + adapter + manifeste, tests verts)","2 Vérifié (hold-outs verts + validation 13e)","3 Publié (état 2 + registre à jour)"]},"packages":[{"name":"claude-code","path":"claude-code","state":0,"version":null}],"schema_authority":"Clara (design D-N048, D7)","telemetry_audit":"01_Forkable/FKB00_Runtime/00_A0_Core/claude-code-TELEMETRY-AUDIT.md","upstream":{"branch":"main","fork":"Amdkn/claude-code","frozen_commit":"0ed94698aa0aeee471465fc9c867c2e8434c4d68","license":null,"license_note":"LICENSE.md = '© Anthropic PBC. All rights reserved. Use is subject to Anthropic's Commercial Terms of Service' — proprietary notice, not a free licence. GitHub API reports license: null. D12 applies.","repository":"anthropics/claude-code"},"validated_by":"13e Doctor","variant":"D12 (reference only, clean-room)","version":"0.1.0"}
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/claude-code-ADAPTATION.md",
+  "adapter": {
+    "commit": "f2965df",
+    "package": "aspace-claude-code-adapter",
+    "surface": [
+      "claude (documented entry) — described, never invoked",
+      "mock --help / --version / status (clean-room test double, stdlib only)"
+    ],
+    "version": "0.1.0"
+  },
+  "clean_room": true,
+  "entry": "aspace-claude-code-adapter/smoke_test.py",
+  "fallback": "If Anthropic objects to the reference or a licence appears that requires it, the fork Amdkn/claude-code is deleted. The clean-room adapter is A'Space's own work and depends on no upstream file.",
+  "id": "fiber:a0:claude-code",
+  "id_note": "D12: adresse fiber:a0:claude-code attribuée par le jugement du 13e (journal 434, D-N048 V3b) après sa propre comparaison — zéro copie parmi les 1 479 blobs du gel. Le fork reste une référence seule.",
+  "issued_by": "Ryan (Factory), dispatch D-N048, vague V3b",
+  "levels": {
+    "current": 2,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "packages": [
+    {
+      "name": "claude-code",
+      "path": "claude-code",
+      "state": 0,
+      "version": null
+    }
+  ],
+  "schema_authority": "Clara (design D-N048, D7)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/claude-code-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/claude-code",
+    "frozen_commit": "0ed94698aa0aeee471465fc9c867c2e8434c4d68",
+    "license": null,
+    "license_note": "LICENSE.md = '© Anthropic PBC. All rights reserved. Use is subject to Anthropic's Commercial Terms of Service' — proprietary notice, not a free licence. GitHub API reports license: null. D12 applies.",
+    "repository": "anthropics/claude-code"
+  },
+  "validated_by": "13e Doctor",
+  "variant": "D12 (reference only, clean-room)",
+  "version": "0.1.0"
+}

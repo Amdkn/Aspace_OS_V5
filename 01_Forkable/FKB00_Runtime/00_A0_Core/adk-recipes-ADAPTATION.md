@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:adk-recipes`
 **Manifeste :** `adk-recipes.manifest.json` (même domicile)
 **Audit télémétrie :** `adk-recipes-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, tests verts)
+**Statut :** état 2 Vérifié (hold-outs H-M1..M7 verts + validation 13e, PR #11 mergée `8d2c658` ; fiche + adapter + manifeste, tests verts)
 **Licence :** Apache-2.0
 
 ## Commit gelé

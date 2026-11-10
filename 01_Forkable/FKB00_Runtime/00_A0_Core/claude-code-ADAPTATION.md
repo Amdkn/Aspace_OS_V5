@@ -3,7 +3,7 @@
 **Adresse :** — (D12 : pas d'adresse `fiber:a0:*` tant qu'aucune adaptation clean-room n'est validée par le 13e)
 **Manifeste :** `claude-code.manifest.json` (même domicile, `id: null`)
 **Audit télémétrie :** `claude-code-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter clean-room + manifeste, smoke vert)
+**Statut :** état 2 Vérifié (D12 validé par la propre comparaison du 13e — zéro copie parmi les 1 479 blobs du gel ; adresse `fiber:a0:claude-code` attribuée par ce jugement, PR #11 mergée `8d2c658` ; fiche + adapter clean-room + manifeste, smoke vert)
 **Licence :** **sans licence** (voir ci-dessous)
 
 ## Commit gelé
