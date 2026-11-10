@@ -48,5 +48,11 @@
     "opencode": { "cmd": ["opencode"], "orchestrators": ["herdr", "orca", "vscode"], "config": "opencode.json" },
     "pi": { "cmd": ["pi", "--approve"], "orchestrators": ["herdr", "orca", "vscode"], "config": ".pi/settings.json" },
     "antigravity": { "cmd": ["agy", "--dangerously-skip-permissions"], "orchestrators": ["herdr", "vscode"] }
+  },
+  "modelPool": {
+    "chain": ["freellmapi/auto", "claude-sonnet-4-5", "qwen3.8-max", "gemini-3.8-flash", "deepseek-v4-flash"],
+    "firstLink": { "endpoint": "127.0.0.1:31415", "model": "freellmapi/auto" },
+    "note": "Chaîne versionnée (D-N049, D7). Re-test 15 min : si le maillon courant échoue, bascule au maillon suivant et consigne la bascule dans le reçu. Les points de terminaison et identifiants restent machine-locaux — jamais lus, jamais versionnés.",
+    "retestMinutes": 15
   }
 }
