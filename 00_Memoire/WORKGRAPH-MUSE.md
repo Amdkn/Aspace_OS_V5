@@ -7,18 +7,18 @@ Rapport dans Muse toutes les 1–5 min : qui travaille, sur quoi, dernier avance
 Jamais 10 min de heartbeat sans avancement dans l'évolution de V5.
 Mission : développement de V5 sur ses modules Git — adapter 1 par 1, fusionner 1 par 1, incorporation native.
 
-## État — 2026-11-10 16:16 EST (vérifié à la source)
+## État — 2026-11-10 16:20 EST (vérifié à la source)
 
 | Qui | Quoi | État | Dernier avancement | Heure (EST) | Prochaine étape |
 |---|---|---|---|---|---|
 | Ryan (S3) | F8 pas 2 — pi (la durabilité) + D-N052 | En cours | 16:16 — Clarification Ryan Phase D : 2e retentative SSH refusée, serveur Debian (pas Windows) — le gate n'est PAS levé par l'autorisation Windows ; pas de 3e tentative sans changement côté PC ; clé byte-identique, bien dans authorized_keys Windows ; Phases A–C continuent (adapter pi, R0 D-N052) | 16:16 | Exécution D-N052 (R0–R5) ; Phase D en attente du mot du Capitaine (clé Debian) |
 | Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | Design D-N052 SIGNÉ ~16:00 — plan borné 27 048 o, D1–D17, séquence R0–R5, hold-outs H-R0..H-R8 ; livré à Rick (plan + note vocale) ; design pas 2 (pi) signé 15:52 ; D-N052 TYPÉ à Ryan 16:05 | 16:00 | Exécution D-N052 par Ryan ; jugement 13e par pas |
-| Nardole (S3) | T2 — transmission + typage D-N052 | En cours | 16:16 — Journaux 499–502 : pulsation Ryan Phase D (retentative refusée, serveur Debian), rectification citation D-N052, clarification Ryan (gate non levé), concession Rick (numérotation journal = ligne, corrigée) ; registre 502 lignes (mtime 16:16:29) | 16:16 | T3 (Clara) quand T2 verte ; exécution D-N052 |
+| Nardole (S3) | T2 — transmission + typage D-N052 | En cours | 16:20 — Journaux 503–506 : confirmations Rick reçues (journaux 493, 494, 500) — convergence totale sur la numérotation (journal = ligne) et sur la Phase D (gate non levé, serveur Debian) ; registre 506 lignes (mtime 16:20:26) | 16:20 | T3 (Clara) quand T2 verte ; exécution D-N052 |
 | 13e (S2) | Jugement PR #15 + verdict H-C2 | En cours | JUGEMENT 482 15:38 : PR #15 VALIDÉE, H-M3 VERT avec réserve, H-F8-1/6/7/9 VERTS ; verdict H-C2 VERT 15:36 | 15:38 | Jugement pas 2 (pi) quand PR livrée ; jugement D-N052 par pas |
 | Bill (S3) | F8 Discover + pas 2 (pi) + D-N052 | En cours | Discover pas 3 (infinity) MANDATÉ 16:12 (journal 498, saisine cc49fa00) — Bill découvre pendant que Ryan exécute le pas 2 ; Discover D-N052 LIVRÉ 15:54 ; Discover pas 2 (pi) livré 15:47 | 16:12 | Discover F8 pas 3 (infinity) en cours ; Discover Runtime D-N053 ensuite |
-| A0 | Pulse + vérification | En cours | Pulse 16:16 : registre 502 lignes (mtime 16:16:29) — journaux 499–502 (clarification Ryan Phase D, concession Rick numérotation) ; master 80cc9e7 ; seule PR #1 ouverte | 16:16 | Rapport 1–5 min, alerte 10 min |
+| A0 | Pulse + vérification | En cours | Pulse 16:20 : registre 506 lignes (mtime 16:20:26) — journaux 503–506 (confirmations Rick, convergence numérotation + Phase D) ; master 7db0c13 ; seule PR #1 ouverte | 16:20 | Rapport 1–5 min, alerte 10 min |
 | V5 — F8 pas 1 | MERGÉ | Terminé | PR #15 mergée 15:39:29 (7b46cf8, true merge) ; post-merge cd716a3 + log.md f63b799 ; reçu 004 consigné 15:41 ; compteur 9 en état 0, 2 en état 2 | 15:41 | Pas 2 (pi) : exécution Ryan lancée 15:53 ; piste D-N052 en parallèle |
-| Rick (S1) | D-N052 — développement modules récursivité | En cours | 16:16 — Concession Rick (journal 502) : numérotation corrigée — journal = numéro de ligne (typage D-N052 = journal 492, autorisation SSH = 493, accusé Ryan = 495) ; Phase D : mot du Capitaine demandé (clé Debian) | 16:16 | Exécution D-N052 R0–R5 ; validation 13e par pas |
+| Rick (S1) | D-N052 — développement modules récursivité | En cours | 16:20 — Confirmations journaux 493/494/500 reçues de Rick : convergence totale (numérotation journal = ligne, Phase D gate non levé, serveur Debian) ; réserve : commit R0 3ed3517 non vérifié (SHA complet requis à la livraison PR) | 16:20 | Exécution D-N052 R0–R5 ; validation 13e par pas |
 | Rick (S1) | Runtime — adaptation de TOUS les modules | En cours | Ordre S0 15:56 : finir l'adaptation de tous les modules du Runtime (ML ×7, MasterSpec ×4, spynel, tuxee, a0-plugins, herdr, herdr-core, orca — mesure exacte par Discover) ; routé à Rick ; BYB D-N053 6 904 o, 25 candidats état 0, déjà routé à Bill (après pas 3) | 15:56 | BYB Rick → Discover Bill → design Clara → dispatch |
 
 ## Mise à jour
