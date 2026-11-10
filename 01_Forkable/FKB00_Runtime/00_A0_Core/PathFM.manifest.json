@@ -1,0 +1,49 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/PathFM-ADAPTATION.md",
+  "adapter": {
+    "commit": "8bcdd5bf52e33f5d6a86acc8fb42711e66b1f9f9",
+    "package": "aspace_pathfm_adapter",
+    "surface": [
+      "validate() -> dict",
+      "doctor() -> list[check]",
+      "describe() -> dict",
+      "PINNED_UPSTREAM_COMMIT",
+      "FIBER_ADDRESS"
+    ],
+    "version": "0.1.0"
+  },
+  "bind": {
+    "commit": "d94942ecb0b12609bf1d450e50ab98240999d549",
+    "commit_reapplied_on_main": "e4a9009c098b5ee4a9c307047fd08f7ede0cf1e0",
+    "file": "aspace-plugin.json",
+    "layer": "16L",
+    "verbatim": true
+  },
+  "entry": "aspace-PathFM-adapter/aspace_pathfm_adapter/__init__.py",
+  "id": "fiber:a0:PathFM",
+  "issued_by": "Ryan (Factory), dispatch D-N053 pas A, Groupe 2",
+  "levels": {
+    "current": 1,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "note": "PathFM : generative forecasting de trajectoires multivariees (modeles chaotiques). Code CC BY-NC 4.0, modeles non-commerciaux, confines au profil interne.",
+  "confinement": "CONFINEMENT PROFIL INTERNE (design D-N053 D3) : le CODE du repo PathFM est CC BY-NC 4.0 (LICENSE lue par Clara) et les MODELES PathFM sont non-commerciaux ; jamais en B2B (verifie a la configuration du profil commercial, H-A5 : `aspace_precheck_weights.py` NON_COMMERCIAL + `assert_commercial_safe()`). Manifeste ML corrige a CC BY-NC 4.0 (acte nomme du pas A, evidence D-N053/a/PathFM/).",
+  "schema_authority": "Clara (design D-N053)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/PathFM-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/PathFM",
+    "frozen_commit": "8a3a42c05ce84981bc0fa292d5503b3f2ea22a8b",
+    "frozen_commit_short": "8a3a42c",
+    "frozen_title": "Prepare PathFM release",
+    "license": "CC BY-NC 4.0",
+    "repository": "autogluon/PathFM"
+  },
+  "validated_by": "13e Doctor (en attente — integration par le coordinateur)",
+  "version": "0.1.0"
+}
