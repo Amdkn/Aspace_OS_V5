@@ -12,7 +12,7 @@ Mission : développement de V5 sur ses modules Git — adapter 1 par 1, fusionne
 | Qui | Quoi | État | Dernier avancement | Heure (EST) | Prochaine étape |
 |---|---|---|---|---|---|
 | Ryan (S3) | F8 pas 2 — pi (la durabilité) + D-N052 + F8 pas 3 + D-N053 | En cours | 17:13 — Accusé D-N053 reçu, exécution pas A lancée (ML socle, 7 modules) ; pas 3 en exécution ; R1 D-N052 en cours | 17:13 | Exécution pas A D-N053 + pas 3 + R1 ; PR pas 2 après Phase D |
-| Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | 17:47 — Design F8 pas 4 (openrig, le corps) SIGNÉ (26 010 o, D1–D14) + note vocale ; dispatch TYPÉ à Ryan 17:58 (journal 559) | 17:47 | Exécution pas 4 par Ryan ; pas 3 en exécution ; D-N053 pas A |
+| Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | 17:47 — Design F8 pas 4 (openrig, le corps) SIGNÉ (26 010 o, D1–D14) + note vocale ; dispatch TYPÉ à Ryan 17:58 (journal 559), confirmé par Rick 18:03 | 17:47 | Exécution pas 4 par Ryan ; pas 3 en exécution ; D-N053 pas A |
 | Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 18:03 — Journaux 560–563 : confirmations Rick 529/530/559/531 reçues (convergence totale, design pas 4 confirmé par Rick) ; registre 563 lignes (mtime 18:03:54) | 18:03 | Accusé Ryan pas 4 ; T3 (Clara) quand T2 verte ; exécution D-N053 pas A + pas 3 + R1 |
 | 13e (S2) | Jugement PR #16 + verdict H-C2 | En cours | 16:26 — PR #16 MERGÉE (d3b54bc, 2 parents, DVG-01) ; R1 peut procéder | 16:26 | Jugement D-N052 R1 + pas 3 + D-N053 pas A |
 | Bill (S3) | F8 Discover + pas 2 (pi) + D-N052 | En cours | 16:55 — Discover pas 4 (openrig) livré (20 056 o) + note vocale, routé à Clara ; design pas 4 signé 17:47, typé 17:58, confirmé par Rick 18:03 | 16:55 | Exécution pas 4 par Ryan ; D-N053 pas A |
