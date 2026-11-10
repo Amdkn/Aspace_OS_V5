@@ -1,0 +1,62 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/automaton-ADAPTATION.md",
+  "adapter": {
+    "commit": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
+    "commit_short": "7cdaa00",
+    "package": "@aspace/automaton-adapter",
+    "surface": [
+      "isOutboundAllowed(url, extraHosts?) -> boolean",
+      "installOutboundGuard({ allowHosts }) -> restore()",
+      "getFrozenRepoInfo() -> { originUrl, branch, headHash, headMessage }",
+      "verifyFrozenCommit() -> { ok, head }",
+      "verifyFrozenLineage() -> { ok, head, headFull, gelAncestor, ahead, nonAdapterFiles }",
+      "ASPACE_HEARTBEAT_OVERRIDES { check_for_updates: { enabled: false } }",
+      "TELEMETRY_BLOCKLIST (16 entries, always denied)"
+    ],
+    "version": "0.1.0",
+    "commits": [
+      "2d2501613f8bd42cc270f02a0e12986866f06edf",
+      "7cdaa00fb7464046dcb2016896f48f60b5426a8b"
+    ]
+  },
+  "entry": "aspace-automaton-adapter/src/index.ts",
+  "holdouts": {
+    "H-M1": "PASS — HEAD du fork = gel e025526, diff relu, aucun autre commit amont",
+    "H-M2": "PASS — compare API gel...HEAD : ahead 2, behind 0, 6 fichiers adapter uniquement (2 commits), amont byte-identique",
+    "H-M3": "ROUGE — suite 1646 passés / 0 échoué / 1 test bloqué (~7 h prédites, cause racine nommée, voir fiche § Tests) ; jugement 13e requis",
+    "H-M4": "PASS — télémétrie zéro par contrat, audit versionné, garde-fou exécuté (smoke 21/21, dont 21/21 sous unshare -n)",
+    "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:automaton",
+    "H-M6": "PASS — aspace-automaton-adapter seul code A'Space du fork ; section divergence remplie ; propriétaire cœur Buzz",
+    "H-M7": "PASS — automaton-ADAPTATION.md au domicile FKB00"
+  },
+  "id": "fiber:a0:automaton",
+  "issued_by": "Adaptation D-N051 F8 pas 1 (dispatch D-N051)",
+  "levels": {
+    "current": 0,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "note_doctrine": "La doctrine A'Space (constitution.md, src/aspace/holon-topology.ts, src/agent/aspace-holon-tools.ts, src/heartbeat/tasks.ts — commit e025526) n'est PAS touchée par l'adapter : elle part en natif via Ryan à ce pas. L'adapter ne fait que l'adapter (garde-fou + épinglage).",
+  "schema_authority": "Clara (design D-N051, D4)",
+  "smoke": {
+    "command": "npx tsx aspace-automaton-adapter/smoke_test.ts",
+    "result": "21/21 PASS ; 21/21 PASS sous unshare -n (zéro interface)"
+  },
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/automaton-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/automaton",
+    "frozen_commit": "e025526",
+    "frozen_commit_full": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
+    "frozen_date": "2026-11-06T03:32:10-05:00",
+    "frozen_title": "feat(aspace): integrer doctrine souveraine A0 Amadeus CEO Holon et outils holoniques",
+    "license": "MIT",
+    "repository": "Conway-Research/automaton"
+  },
+  "validated_by": "13e Doctor",
+  "version": "0.1.0"
+}
