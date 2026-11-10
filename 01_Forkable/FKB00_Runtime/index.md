@@ -4,6 +4,12 @@ Ce répertoire regroupe les moteurs d'exécution, le micro-noyau spatio-temporel
 
 ---
 
+## Sanctuarisation
+
+**FKB00 est sanctuarisé : aucune écriture dans FKB00 sans design signé de Clara ; la fusion se fait sur des gels nommés, jamais sur des HEAD vivants ; la revisite est par signal de dérive (inventaire hebdomadaire).**
+
+---
+
 ## 00. [`00_A0_Core`](./00_A0_Core) — Noyau Souverain A0 (`Agent-Zero × Cordis × DSH × Pi`)
 Réécriture souveraine d'Agent Zero greffée sur le micro-noyau spatio-temporel Cordis (`Everything-is-a-Plugin`, Fibers à effets réversibles et co-effets réactifs) :
 - `agent-zero` (`Amdkn/agent-zero` ← `agent0ai/agent-zero`) — Cœur d'agent autonome réécrit pour A0 Amadeus.
@@ -61,3 +67,12 @@ Réécriture souveraine d'Agent Zero greffée sur le micro-noyau spatio-temporel
 - `adk-recipes` (`Amdkn/adk-recipes` ← `google/adk-recipes`) — Horizon 2 : Google **AQuA** (*Ambient Quality Agent*, `core/python/ambient-quality-agent`).
 - `rrsi` (`Amdkn/rrsi` ← `google-research/rrsi`) — Horizon 3 (Long terme) : *Recursive Self-Improvement* par évolution de worktrees Git.
 - `dream-rsi` (`Amdkn/dream-rsi` ← `google-research/dream-rsi`) — Horizon 3 : auto-amélioration hors-ligne à 0 $ par recherche d'arbre et replay de trajectoires.
+
+---
+
+## 06. [`06_Sovereign_Bot_Coworkers`](./06_Sovereign_Bot_Coworkers) — Coéquipiers Souverains (Bots)
+Les 4 bots sont 1 fonction × 4 (coéquipier incarné : workspace + navigateur + terminal). Fusion F8 (§D7) : la surface unique est native (RigInfinity), spécifiée depuis les quatre — **OpenBot comme référence de base**, avec les fonctions distinctives portées comme traits (OpenDots : coworkers always-on ; OpenDuet : humain dans la boucle, proactif ; OpenMuse : agent personnel). Au pas 7, les 3 pointeurs (OpenMuse, OpenDots, OpenDuet) quittent `.gitmodules` ; le pointeur OpenBot quitte au pas 8, quand la surface native est vérifiée.
+- `openbot` (`Amdkn/openbot` ← `CopilotKit/OpenBot`) — Référence de la surface unique ; gel `2b5b14f`.
+- `openmuse` (`Amdkn/openmuse` ← `CopilotKit/openmuse`) — Agent personnel ; gel `a4944f4`.
+- `OpenDots` (`Amdkn/OpenDots` ← `CopilotKit/OpenDots`) — Coworkers always-on ; gel `d4214af`.
+- `OpenDuet` (`Amdkn/OpenDuet` ← `CopilotKit/OpenDuet`) — Humain dans la boucle, proactif ; gel `f52288f`.

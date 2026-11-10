@@ -86,8 +86,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 - **Fonction :** le triptyque Âme / Système nerveux / Corps, en natif.
 - **Déjà existant :** structure posée (FKB00 index, 6 pôles) et code natif existant (`a0_recursive_factory.py`, `a0_holon_swarm_runtime.py`, `a0_egm_bridge.py`, `aspace_freecompute_router.py`). Fusion la plus lourde : **en dernier**, FKB00 étant sanctuarisé.
 - **Preuve attendue :** le Runtime tourne sans aucun des 11 sous-modules d'origine ; présence prouvée par heartbeat, pas par cron.
-- **État :** proposée
-- **Mesures :** — (H : — / C : — / D : —)
+- **État :** en cours (D-N051, pas 0)
+- **Mesures :** compteur états 0–3 — 10 en état 0, 1 en état 1 (cordis, D-N047), 0 en état 2, 0 en état 3 ; pas 0 : re-pin cordis sur l'adapter `6aab659`, index FKB00 corrigé (pôle 06 + sanctuarisation), bind cordis re-appliqué sur `main` (`726291d`)
 
 ## F9 — Moteur prédictif et wargame unique (FKB00)
 
