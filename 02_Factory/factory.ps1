@@ -189,6 +189,12 @@ con.commit()
   "subagents" {
     if ($Target -and $Action -eq "status") { $Action = $Target }
     $now = (Get-Date).ToString("o")
+    # D-N051 F8 pas 2 §D4 : la chaîne modelPool est lue depuis 02_Factory/config.json
+    # (forme canonique : noms nus, sauf le premier maillon freellmapi/auto) ; le fournisseur
+    # est préfixé au moment de l'appel — jamais une seconde liste stockée.
+    $poolCfg = Get-Content "$root\02_Factory\config.json" -Raw | ConvertFrom-Json
+    $poolChain = ($poolCfg.modelPool.chain | ForEach-Object { if ($_ -match "/") { $_ } else { "freellmapi/$_" } }) -join ","
+    $poolFirst = $poolCfg.modelPool.firstLink.model
     switch ($Action) {
       "agents" {
         $agents = Get-ChildItem "$root\.claude\agents" -Filter "*.md" -EA SilentlyContinue | ForEach-Object { $_.BaseName }
@@ -197,7 +203,7 @@ con.commit()
           factoryAgents = $agents
           hcTemplates = $hcTpls
           harnesses = @("pi", "dsh", "dsh-superagent", "opencode", "claude-code", "codex", "agy")
-          modelPool = @("freellmapi/auto", "freellmapi/claude-sonnet-4-5", "freellmapi/qwen3.8-max", "freellmapi/gemini-3.8-flash", "freellmapi/deepseek-v4-flash")
+          modelPool = @($poolChain -split ",")
         } | ConvertTo-Json -Depth 5
       }
       "run" {
@@ -208,7 +214,7 @@ con.commit()
         $wrInt = if ($Writer) { 1 } else { 0 }
         @'
 import sqlite3, sys, json
-db, wid, req_id, agent, harness, task, writer, wt, now = sys.argv[1:10]
+db, wid, req_id, agent, harness, task, writer, wt, now, pool_chain, pool_first = sys.argv[1:12]
 writer = int(writer)
 con = sqlite3.connect(db)
 cur = con.cursor()
@@ -224,14 +230,14 @@ else:
     if writer:
         cur.execute("INSERT OR REPLACE INTO writer_locks VALUES (?,?,?,?)", (wt, wid, "step-1", now))
 cur.execute("INSERT INTO durable_workflows VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-  (wid, req_id, "conversation", "main", "single", step_status, "freellmapi/auto,claude-sonnet-4-5,qwen3.8-max", "freellmapi/auto", task[:60], now, now))
+  (wid, req_id, "conversation", "main", "single", step_status, pool_chain, pool_first, task[:60], now, now))
 cur.execute("INSERT INTO durable_steps VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
   (wid, "step-1", 1, agent, harness, task, writer, wt, "", step_status, "safe", "Checkpoint committed before execution.", "[]", 1, now))
 cur.execute("INSERT INTO events (ticket_id, phase, actor, verdict, detail, ts) VALUES (?,?,?,?,?,?)",
   (wid, "durable_subagent", f"{harness}:{agent}", step_status.upper(), task[:80], now))
 con.commit()
 print(json.dumps({"wid": wid, "key": "step-1", "agent": agent, "harness": harness, "status": step_status, "writerLock": bool(writer)}))
-'@ | python - $dbPath $w $reqId $Agent $Harness $Task $wrInt $Worktree $now
+'@ | python - $dbPath $w $reqId $Agent $Harness $Task $wrInt $Worktree $now $poolChain $poolFirst
       }
       "chain" {
         if (-not $ChainJson) { throw "Usage: factory.ps1 subagents -Action chain -ChainJson '[...]'" }
@@ -239,12 +245,12 @@ print(json.dumps({"wid": wid, "key": "step-1", "agent": agent, "harness": harnes
         $reqId = if ($RequestId) { $RequestId } else { "req-$w" }
         @'
 import sqlite3, sys, json
-db, wid, req_id, chain_raw, harness, wt, now = sys.argv[1:8]
+db, wid, req_id, chain_raw, harness, wt, now, pool_chain, pool_first = sys.argv[1:10]
 steps = json.loads(chain_raw)
 con = sqlite3.connect(db)
 cur = con.cursor()
 cur.execute("INSERT OR IGNORE INTO durable_workflows VALUES (?,?,?,?,?,?,?,?,?,?,?)",
-  (wid, req_id, "conversation", "main", "chain", "running", "freellmapi/auto,claude-sonnet-4-5,qwen3.8-max", "freellmapi/auto", f"chain({len(steps)} steps)", now, now))
+  (wid, req_id, "conversation", "main", "chain", "running", pool_chain, pool_first, f"chain({len(steps)} steps)", now, now))
 prev_out = "Initial context"
 for idx, s in enumerate(steps, 1):
     ag = s.get("agent", "worker")
@@ -257,7 +263,7 @@ for idx, s in enumerate(steps, 1):
     prev_out = f"[Output of {key} ({ag})]"
 con.commit()
 print(json.dumps({"wid": wid, "mode": "chain", "steps": len(steps), "status": "running"}))
-'@ | python - $dbPath $w $reqId $ChainJson $Harness $Worktree $now
+'@ | python - $dbPath $w $reqId $ChainJson $Harness $Worktree $now $poolChain $poolFirst
       }
       "send" {
         if (-not $To -or -not $Message) { throw "Usage: factory.ps1 subagents -Action send -To <wid/key> -Kind steer|notify -Message <msg>" }

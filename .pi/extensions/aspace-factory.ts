@@ -1,5 +1,5 @@
 import type { ExtensionAPI } from "@earendil-works/pi-coding-agent";
-import { Type } from "@earendil-works/pi-ai";
+import { Type } from "typebox"; // D-N051 F8 pas 2 : Type n'est pas exporté par @earendil-works/pi-ai 1.5.0 (TS2305) — convention amont
 import { execFileSync } from "node:child_process";
 
 function runPwsh(args: string[], cwd: string): string {
