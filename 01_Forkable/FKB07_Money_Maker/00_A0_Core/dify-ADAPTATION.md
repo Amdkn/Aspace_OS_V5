@@ -1,6 +1,6 @@
 # Fiche d'adaptation — dify (D-N048 V4, FKB07)
 
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, tests verts — voir § Tests)
+**Statut :** état 2 Vérifié (fiche + adapter + manifeste, tests verts — voir § Tests)
 **Fork :** https://github.com/Amdkn/dify (gel `b29552aae0acb1801eeb2870a552cd939fe36a20`, branche `main`, parent `langgenius/dify`)
 **Dossier :** `aspace-dify-adapter/` (contract.json + validate.py + smoke_test.py + README.md + AGENTS.md local), commit `0f860ba5` sur le fork. **Seul code A'Space du fork** — le code amont est byte-identique au gel (diff gel→adapter = 5 fichiers, vérifié à l'API, H-M2).
 **Version amont :** 1.19.0 (`api/pyproject.toml` et `web/package.json` concordent).

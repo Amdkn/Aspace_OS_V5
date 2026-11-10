@@ -1,6 +1,6 @@
 # Fiche d'adaptation — Scrapling (D-N048 V4, FKB07)
 
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, smoke 6/6, suite 2 418 passés / 7 échecs qualifiés environnementaux / 0 ignorés — voir § Tests)
+**Statut :** état 2 Vérifié (fiche + adapter + manifeste, smoke 6/6, suite 2 418 passés / 7 échecs qualifiés environnementaux / 0 ignorés — voir § Tests)
 
 ## Commit gelé
 

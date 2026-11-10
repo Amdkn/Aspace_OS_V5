@@ -130,10 +130,10 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | space-agent | 2 | `10f4ffd` | `fiber:a0:space-agent` | MIT |
 | caveman | 2 | `3dc497a` | `fiber:a0:caveman` | Apache-2.0 |
 | claude-mem | 2 | `a926f57` | `fiber:a0:claude-mem` | Apache-2.0 |
-| nansen-cli | 0 | `0b39ae5` | `fiber:a0:nansen-cli` | MIT |
-| Scrapling | 0 | `c5121c7` | `fiber:a0:scrapling` | BSD-3-Clause |
-| dify | 0 | `b29552a` | `fiber:a0:dify` | Apache-2.0 modifiée (§0.1) |
-| presenton | 0 | `9af2b47` | `fiber:a0:presenton` | Apache-2.0 |
+| nansen-cli | 2 | `0b39ae5` | `fiber:a0:nansen-cli` | MIT |
+| Scrapling | 2 | `c5121c7` | `fiber:a0:scrapling` | BSD-3-Clause |
+| dify | 2 | `b29552a` | `fiber:a0:dify` | Apache-2.0 modifiée (§0.1) |
+| presenton | 2 | `9af2b47` | `fiber:a0:presenton` | Apache-2.0 |
 | mattpocock-skills | 0 | `4ae2317` | `fiber:a0:mattpocock-skills` | MIT |
 | openai-plugins | 0 | `d420d13` | — (D12, référence seule) | **sans licence** |
 | claude-video | 0 | `03ceb42` | `fiber:a0:claude-video` | MIT |

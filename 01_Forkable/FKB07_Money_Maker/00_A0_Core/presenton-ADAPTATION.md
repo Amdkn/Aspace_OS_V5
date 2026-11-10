@@ -1,6 +1,6 @@
 # Fiche d'adaptation — presenton (D-N048 V4, FKB07)
 
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste,
+**Statut :** état 2 Vérifié (fiche + adapter + manifeste,
 smoke 8/8, suite 1 347 passés / 8 échecs prouvés environnementaux — voir § Tests)
 **Fork :** https://github.com/Amdkn/presenton (gel `9af2b47`,
 `9af2b47dda31060d3d5070e020a0825b15c94b32`, branche `main`)

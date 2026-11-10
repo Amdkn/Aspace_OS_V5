@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:nansen-cli`
 **Manifeste :** `nansen-cli.manifest.json` (même domicile)
 **Audit télémétrie :** `nansen-cli-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, smoke 8/8, suite amont 5 943 passés / 7 échecs qualifiés environnementaux / 10 ignorés — voir § Tests)
+**Statut :** état 2 Vérifié (fiche + adapter + manifeste, smoke 8/8, suite amont 5 943 passés / 7 échecs qualifiés environnementaux / 10 ignorés — voir § Tests)
 **Licence :** MIT (Copyright (c) 2026 Nansen — `LICENSE` vérifié au fichier)
 
 ## Commit gelé
