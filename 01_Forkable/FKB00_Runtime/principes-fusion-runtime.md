@@ -254,6 +254,30 @@ qui génère des phrases. Ils passent par des décisions typées,
 calibrées, en millisecondes. Le LLM reste le System 2 :
 raisonnement lent, strings, création.
 
+### Agent Zero (agent0ai)
+Principe : le cœur qui court — l'agent comme un ordinateur complet.
+- « Give your agent a full Linux computer. » Un agent open source
+  avec son propre workspace Linux : terminal, navigateur, applications
+  de bureau, sandbox — et l'humain peut intervenir à tout moment,
+  brancher ses fichiers locaux quand il le faut.
+- Il recherche, écrit du code, crée et travaille des documents.
+  Il ne gouverne pas, il exécute : c'est le moteur d'agent autonome,
+  le cœur d'A0. Automaton gouverne, Agent Zero court.
+- Le moteur sous la doctrine : la boucle qui prend les ordres
+  de la constitution et les transforme en actions sur un ordinateur.
+  Sans lui, la doctrine n'a pas de mains.
+- Le natif l'esquisse déjà : `a0_recursive_factory.py` et
+  `a0_egm_bridge.py` greffent encore le fork aujourd'hui ; au pas 5
+  de la fusion, ils cessent de le greffer et deviennent le moteur.
+  Le fork cesse alors d'être le cœur ; le natif l'est.
+- Licence MIT (fichier, Copyright (c) 2025 Agent Zero, s.r.o).
+  Le fork `Amdkn/agent-zero` est gelé sur `ba9b67d` (2026-11-01).
+Apport à Automaton : le cœur. Automaton donne la doctrine, le
+heartbeat, la mémoire 5 tiers ; Agent Zero donne le moteur qui
+tourne sous la doctrine. Pi rend le moteur durable, Cordis le rend
+composable. Un cœur sans doctrine dérive ; une doctrine sans cœur
+ne bouge pas.
+
 ## 2.bis. Le Triptyque Core Fusion : Automaton + Infinity + OpenRig
 
 Pour que le Runtime vive sans dérive, trois couches forment un triptyque indissociable
