@@ -125,7 +125,7 @@
 	url = https://github.com/Amdkn/TradingView-Unified-MCP.git
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli
-	url = https://github.com/nansen-ai/nansen-cli.git
+	url = https://github.com/Amdkn/nansen-cli.git
 [submodule "01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills"]
 	path = 01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills
 	url = https://github.com/Amdkn/claude-trading-skills.git
@@ -398,10 +398,10 @@
 	url = https://github.com/Amdkn/claude-mem.git
 [submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling"]
 	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling
-	url = https://github.com/D4Vinci/Scrapling.git
+	url = https://github.com/Amdkn/Scrapling.git
 [submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify"]
 	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify
-	url = https://github.com/langgenius/dify.git
+	url = https://github.com/Amdkn/dify.git
 [submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton"]
 	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton
-	url = https://github.com/presenton/presenton.git
+	url = https://github.com/Amdkn/presenton.git
