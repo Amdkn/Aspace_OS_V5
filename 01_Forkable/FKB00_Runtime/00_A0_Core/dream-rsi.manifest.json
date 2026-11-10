@@ -14,7 +14,7 @@
   "id": "fiber:a0:dream-rsi",
   "issued_by": "Ryan (Factory), dispatch D-N048, vague V3a",
   "levels": {
-    "current": 0,
+    "current": 2,
     "states": [
       "0 Basique (fork Amdkn non adapté)",
       "1 Adapté (fiche + adapter + manifeste, tests verts)",
@@ -26,7 +26,7 @@
     {
       "name": "dream-rsi",
       "path": "dream_rsi",
-      "state": 0,
+      "state": 2,
       "version": "0.1.0"
     }
   ],
