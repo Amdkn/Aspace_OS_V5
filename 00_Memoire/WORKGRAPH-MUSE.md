@@ -7,17 +7,17 @@ Rapport dans Muse toutes les 1–5 min : qui travaille, sur quoi, dernier avance
 Jamais 10 min de heartbeat sans avancement dans l'évolution de V5.
 Mission : développement de V5 sur ses modules Git — adapter 1 par 1, fusionner 1 par 1, incorporation native.
 
-## État — 2026-11-10 15:30 EST (vérifié à la source)
+## État — 2026-11-10 15:35 EST (vérifié à la source)
 
 | Qui | Quoi | État | Dernier avancement | Heure (EST) | Prochaine étape |
 |---|---|---|---|---|---|
-| Ryan (S3) | F8 pas 1 — automaton (l'Âme) | En cours | PR #15 ouverte 15:30 (b3d1354, +433/−2, 6 fichiers, mergeable) — H-F8 11/17, H-M3 ROUGE réserve ; réponse directe 15:26, engagement 15:55 tenu en avance | 15:30 | Jugement 13e sur PR #15, puis merge |
+| Ryan (S3) | F8 pas 1 — automaton (l'Âme) | En cours | PR #15 ouverte 15:30 (b3d1354, +433/−2, 6 fichiers, mergeable) — H-F8 11/17, H-M3 ROUGE réserve ; 10/10 checks verts 15:35 ; accusé Ryan piste D 15:33 (journal 476) | 15:33 | Jugement 13e sur PR #15, puis merge |
 | Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | Pas 1 automaton : PR #15 ouverte 15:30 (design signé 14:15, fiche 15:21, adapter 2d25016) ; ordre S0 parallélisme des couches 15:26 | 15:30 | Pas 2 (infinity) — Discover en parallèle ; jugement 13e PR #15 |
 | Nardole (S3) | T2 — transmission | En cours | Typée 11:03, V4 dispatchée par elle | 11:03 | T3 (Clara) quand T2 verte |
-| 13e (S2) | Jugement PR #15 | En cours | PR #15 à juger (H-F8 11/17, H-M3 ROUGE réserve, 7/10 checks verts, 3 CodeQL en cours) | 15:30 | Jugement PR #15 ; H-C2 en attente |
+| 13e (S2) | Jugement PR #15 | En cours | PR #15 à juger (H-F8 11/17, H-M3 ROUGE réserve, 10/10 checks verts) | 15:35 | Jugement PR #15 ; H-C2 en attente |
 | Bill (S3) | F8 Discover | Fait | Discover livré | 14:12 | — |
-| A0 | Pulse + vérification | En cours | Pulse 15:31 : PR #15 vérifiée à l'API (b3d1354, mergeable, 7/10 checks verts, 3 CodeQL en cours), registre 474 lignes | 15:31 | Rapport 1–5 min, alerte 10 min |
-| V5 — F8 pas 1 | À juger puis merger | En cours | PR #15 ouverte 15:30 (b3d1354) — F8 pas 1 automaton ; D-N048 CLOSE (PR #14 mergée 15:01) | 15:30 | Jugement 13e PR #15, puis merge ; H-C2 jugement en attente |
+| A0 | Pulse + vérification | En cours | Pulse 15:36 : PR #15 vérifiée à l'API (b3d1354, mergeable, 10/10 checks verts), registre 478 lignes (+4) | 15:36 | Rapport 1–5 min, alerte 10 min |
+| V5 — F8 pas 1 | À juger puis merger | En cours | PR #15 ouverte 15:30 (b3d1354) — F8 pas 1 automaton ; 10/10 checks verts 15:35 ; accusé Ryan piste D 15:33 ; D-N048 CLOSE (PR #14 mergée 15:01) | 15:35 | Jugement 13e PR #15, puis merge ; H-C2 jugement en attente |
 
 ## Mise à jour
 
