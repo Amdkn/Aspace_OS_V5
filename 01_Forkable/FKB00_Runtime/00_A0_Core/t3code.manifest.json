@@ -1,0 +1,23 @@
+{
+ "adapter": {
+  "commit": "4eedddf448f25ef8823bd4f71fc9a171e43cc3c2",
+  "name": "aspace-t3code-adapter",
+  "path": "aspace-t3code-adapter/"
+ },
+ "fork": "Amdkn/t3code",
+ "frozen_commit": "dc7270581800518b9d7d4db6c8e13852067c8c2d",
+ "id": "fiber:a0:t3code",
+ "levels": {
+  "current": 0,
+  "history": [
+   {
+    "level": 0,
+    "reason": "fork Amdkn, adaptation livr\u00e9e, hold-outs en cours"
+   }
+  ]
+ },
+ "license": "MIT",
+ "module": "t3code",
+ "upstream": "pingdotgg/t3code",
+ "version": "0.1.7"
+}
