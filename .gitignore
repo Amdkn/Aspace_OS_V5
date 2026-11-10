@@ -8,7 +8,6 @@ test-projet/
 00_Memoire/wikillm/
 00_Memoire/dox/
 00_Memoire/knowledge-catalog/
-00_Memoire/dsh-superagent/
 .claude/*.bak*
 01_Forkable/**/node_modules/
 node_modules/
