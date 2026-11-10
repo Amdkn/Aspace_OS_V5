@@ -15,7 +15,7 @@
   "id": "fiber:a0:cordis",
   "issued_by": "Ryan (Factory), dispatch D-N047, Phase B",
   "levels": {
-    "current": 0,
+    "current": 2,
     "states": [
       "0 Basique (fork Amdkn non adapté)",
       "1 Adapté (fiche + adapter + manifeste, tests verts)",

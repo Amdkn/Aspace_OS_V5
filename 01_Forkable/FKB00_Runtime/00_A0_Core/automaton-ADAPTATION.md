@@ -4,7 +4,7 @@
 validateur 13e)
 **Manifeste :** `automaton.manifest.json` (même domicile)
 **Audit télémétrie :** `automaton-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste ;
+**Statut :** état 2 Vérifié (jugement 13e, journal 482, PR #15 mergée 7b46cf8 ; H-M3 vert avec réserve : test 500 000 car. non exécuté, ~7 h) (fiche + adapter + manifeste ;
 **H-M3 ROUGE, jugement 13e requis** — voir § Tests)
 
 ## Commit gelé

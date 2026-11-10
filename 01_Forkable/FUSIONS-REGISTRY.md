@@ -86,8 +86,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 - **Fonction :** le triptyque Âme / Système nerveux / Corps, en natif.
 - **Déjà existant :** structure posée (FKB00 index, 6 pôles) et code natif existant (`a0_recursive_factory.py`, `a0_holon_swarm_runtime.py`, `a0_egm_bridge.py`, `aspace_freecompute_router.py`). Fusion la plus lourde : **en dernier**, FKB00 étant sanctuarisé.
 - **Preuve attendue :** le Runtime tourne sans aucun des 11 sous-modules d'origine ; présence prouvée par heartbeat, pas par cron.
-- **État :** en cours (D-N051, pas 1)
-- **Mesures :** compteur états 0–3 — 9 en état 0, 0 en état 1, 2 en état 2 (cordis, automaton), 0 en état 3 ; pas 0 : re-pin cordis sur l'adapter `6aab659`, index FKB00 corrigé (pôle 06 + sanctuarisation), bind cordis re-appliqué sur `main` (`726291d`) ; pas 1 : automaton adapté (adapter `7cdaa00`, 2 commits, smoke 21/21, suite 1 646/0/1, H-M3 ROUGE réserve js-tiktoken, jugement 13e), bind automaton re-appliqué sur `main` (`9728a0f`), doctrine native (LICENSE Apache-2.0, constitution, templates S1/S2/S3, heartbeat) déposée dans RigInfinity
+- **État :** en cours (D-N051, pas 1 mergé, pas 2 en cours)
+- **Mesures :** compteur états 0–3 — 9 en état 0, 0 en état 1, 2 en état 2 (cordis, automaton), 0 en état 3 ; pas 0 : re-pin cordis sur l'adapter `6aab659`, index FKB00 corrigé (pôle 06 + sanctuarisation), bind cordis re-appliqué sur `main` (`726291d`) ; pas 1 : automaton adapté (adapter `7cdaa00`, 2 commits, smoke 21/21, suite 1 646/0/1, H-M3 ROUGE réserve js-tiktoken, jugement 13e), bind automaton re-appliqué sur `main` (`9728a0f`), doctrine native (LICENSE Apache-2.0, constitution, templates S1/S2/S3, heartbeat) déposée dans RigInfinity ; pas 1 mergé `7b46cf8` (jugement 482, H-M3 vert avec réserve : test 500 000 car. non exécuté, ~7 h, à borner ou courir sur une machine plus rapide à un pas ultérieur)
 
 ## F9 — Moteur prédictif et wargame unique (FKB00)
 

@@ -32,7 +32,7 @@
   "id": "fiber:a0:automaton",
   "issued_by": "Adaptation D-N051 F8 pas 1 (dispatch D-N051)",
   "levels": {
-    "current": 0,
+    "current": 2,
     "states": [
       "0 Basique (fork Amdkn non adapté)",
       "1 Adapté (fiche + adapter + manifeste, tests verts)",

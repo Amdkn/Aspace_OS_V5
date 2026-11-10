@@ -3,7 +3,7 @@
 **Adresse :** `fiber:a0:cordis` (D2 — émetteur : exécution ; validateur : 13e)
 **Manifeste :** `cordis.manifest.json` (même domicile)
 **Audit télémétrie :** `cordis-TELEMETRY-AUDIT.md` (même domicile)
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, tests verts)
+**Statut :** état 2 Vérifié (D-N051 pas 1, jugement 13e, journal 482, PR #15 mergée 7b46cf8 — cordis utilisé comme substrat de la fusion) (fiche + adapter + manifeste, tests verts)
 
 ## Commit gelé
 
