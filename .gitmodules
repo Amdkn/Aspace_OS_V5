@@ -230,7 +230,7 @@
 
 [submodule "01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness"]
 	path = 01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness
-	url = https://github.com/deepseek-ai/deepseek-harness.git
+	url = https://github.com/Amdkn/deepseek-harness.git
 
 [submodule "01_Forkable/FKB00_Runtime/00_A0_Core/pi"]
 	path = 01_Forkable/FKB00_Runtime/00_A0_Core/pi
@@ -254,19 +254,19 @@
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/t3code"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/t3code
-	url = https://github.com/pingdotgg/t3code.git
+	url = https://github.com/Amdkn/t3code.git
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/openclaw"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/openclaw
-	url = https://github.com/openclaw/openclaw.git
+	url = https://github.com/Amdkn/openclaw.git
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/claude-code"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/claude-code
-	url = https://github.com/anthropics/claude-code.git
+	url = https://github.com/Amdkn/claude-code.git
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex
-	url = https://github.com/openai/codex.git
+	url = https://github.com/Amdkn/codex.git
 
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent"]
@@ -279,7 +279,7 @@
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes
-	url = https://github.com/google/adk-recipes.git
+	url = https://github.com/Amdkn/adk-recipes.git
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi

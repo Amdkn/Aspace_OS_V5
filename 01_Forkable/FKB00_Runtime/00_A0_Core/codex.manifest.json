@@ -1,0 +1,26 @@
+{
+  "$schema": "aspace.module.manifest.v1",
+  "adapter": {
+    "commit": "0a0094de9ea1d5a8aaae559b52d0476fc2138407",
+    "name": "aspace-codex-adapter",
+    "path": "aspace-codex-adapter/",
+    "seam": "contract-only"
+  },
+  "fork": {
+    "branch": "main",
+    "license": "Apache-2.0",
+    "parent": "openai/codex",
+    "pinned_commit": "27fcd7cbedd7efd63fd704bd01a0cfe1d7b85a26",
+    "repo": "Amdkn/codex"
+  },
+  "id": "fiber:a0:codex",
+  "levels": {
+    "current": 0
+  },
+  "name": "codex",
+  "owner": "cœur Buzz (lane Clara / 12e)",
+  "telemetry": {
+    "audit": "codex-TELEMETRY-AUDIT.md",
+    "verdict": "zéro par contrat — analytics premier parti coupés (-c analytics.enabled=false), Sentry feedback explicite seulement (coupé), OTEL sans exporteur, zéro SDK tiers"
+  }
+}
