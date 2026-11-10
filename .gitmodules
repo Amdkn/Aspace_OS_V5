@@ -162,13 +162,13 @@
 	url = https://github.com/Amdkn/skills.git
 [submodule "01_Forkable/FKB08_Plugins/mattpocock-skills"]
 	path = 01_Forkable/FKB08_Plugins/mattpocock-skills
-	url = https://github.com/mattpocock/skills.git
+	url = https://github.com/Amdkn/mattpocock-skills.git
 [submodule "01_Forkable/FKB08_Plugins/openai-plugins"]
 	path = 01_Forkable/FKB08_Plugins/openai-plugins
-	url = https://github.com/openai/plugins.git
+	url = https://github.com/Amdkn/openai-plugins.git
 [submodule "01_Forkable/FKB08_Plugins/claude-video"]
 	path = 01_Forkable/FKB08_Plugins/claude-video
-	url = https://github.com/bradautomates/claude-video.git
+	url = https://github.com/Amdkn/claude-video.git
 [submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/PathFM"]
 	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/PathFM
 	url = https://github.com/Amdkn/PathFM.git
