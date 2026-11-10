@@ -1,6 +1,6 @@
 # claude-video — Fiche d'adaptation (D-N048, V5, FKB08)
 
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, smoke 7/7, suite 248 passés / 0 échec / 1 ignoré — voir § Tests)
+**Statut :** état 2 Vérifié (jugement 13e, journal 468, PR #14 mergée d8d7973) (fiche + adapter + manifeste, smoke 7/7, suite 248 passés / 0 échec / 1 ignoré — voir § Tests)
 **Module :** `claude-video` — Agent Skills package : donne à un agent une entrée vidéo (`/watch <url-ou-chemin> [question]`) — téléchargement yt-dlp, frames ffmpeg, transcript (captions, Whisper local/cloud, ou Gemini).
 **Amont :** `bradautomates/claude-video` — **Fork :** `Amdkn/claude-video` — **Branche :** `main` — **Commit gelé :** `03ceb42f7fa2c4439aca01752118044baabffb8f` (release 0.3.2, 2026-11-09) — **Licence :** MIT (Copyright (c) 2026 Bradley Bonanno, lue au fichier) — **Adresse :** `fiber:a0:claude-video` — **Propriétaire :** cœur Buzz (lane Clara / 12e) — **Domicile :** `01_Forkable/FKB08_Plugins/00_A0_Core/`
 

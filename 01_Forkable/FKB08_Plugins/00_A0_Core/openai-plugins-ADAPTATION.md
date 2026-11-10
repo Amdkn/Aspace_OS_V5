@@ -1,6 +1,6 @@
 # openai-plugins — ADAPTATION (D12, clean-room)
 
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, smoke 8/8, suite amont qualifiée — voir § Tests)
+**Statut :** état 2 Vérifié (jugement 13e, journal 468, PR #14 mergée d8d7973) (fiche + adapter + manifeste, smoke 8/8, suite amont qualifiée — voir § Tests)
 
 **Module :** `openai-plugins` — catalogue de 62 plugins Codex (manifestes
 `.codex-plugin/plugin.json`, skills Markdown, serveurs MCP distants).

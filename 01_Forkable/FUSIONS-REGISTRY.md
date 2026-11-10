@@ -134,9 +134,9 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | Scrapling | 2 | `c5121c7` | `fiber:a0:scrapling` | BSD-3-Clause |
 | dify | 2 | `b29552a` | `fiber:a0:dify` | Apache-2.0 modifiée (§0.1) |
 | presenton | 2 | `9af2b47` | `fiber:a0:presenton` | Apache-2.0 |
-| mattpocock-skills | 0 | `4ae2317` | `fiber:a0:mattpocock-skills` | MIT |
-| openai-plugins | 0 | `d420d13` | — (D12, référence seule) | **sans licence** |
-| claude-video | 0 | `03ceb42` | `fiber:a0:claude-video` | MIT |
+| mattpocock-skills | 2 | `4ae2317` | `fiber:a0:mattpocock-skills` | MIT |
+| openai-plugins | 2 | `d420d13` | `fiber:a0:openai-plugins` | **sans licence** |
+| claude-video | 2 | `03ceb42` | `fiber:a0:claude-video` | MIT |
 | llm-wiki (gist) | rapatrié | — | — (pas un module) | — (propre) |
 
 **Baseline V0 (D-N048) :** C = 0/21 forkés, 0 adaptés ; D = 8. Renommage enregistré : `Amdkn/mattpocock-skills`, `fiber:a0:mattpocock-skills` (§D2). Gist rapatrié : `00_Memoire/bundle/concepts/llm-wiki.md`, pointeur retiré, compte 119 → 118 (§D3).

@@ -1,6 +1,6 @@
 # Fiche d'adaptation — mattpocock-skills (D-N048 V5, FKB08)
 
-**Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste, smoke 12/12, suite statique : 39/39 frontmatter, 5/5 bash -n, 27/27 plugin, 1 écart de documentation nommé — voir § Tests)
+**Statut :** état 2 Vérifié (jugement 13e, journal 468, PR #14 mergée d8d7973) (fiche + adapter + manifeste, smoke 12/12, suite statique : 39/39 frontmatter, 5/5 bash -n, 27/27 plugin, 1 écart de documentation nommé — voir § Tests)
 **Fork :** https://github.com/Amdkn/mattpocock-skills (gel `4ae2317ddb22b046e26455e4f9c9b3aaaf62212d`, branche `main`, parent `mattpocock/skills`)
 **Dossier :** `aspace-mattpocock-skills-adapter/` (contract.json + smoke_test.sh + README.md), commit `d6ebe3b` sur le fork. **Seul code A'Space du fork** — le code amont est byte-identique au gel (diff gel→adapter = 3 fichiers, vérifié à l'API, H-M2).
 
