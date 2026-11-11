@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 A'Space OS V5 — a0_egm_bridge.py
-Pont d'Inférence & d'Orchestration Natif greffant `00_A0_Core/agent-zero` sur :
+Pont d'Inférence & d'Orchestration Natif — moteur agent-zero natif (RigInfinity) sur :
   1. Le Routeur Unifié EGM (`http://127.0.0.1:31415/v1/chat/completions`)
   2. Le Ledger SQLite WAL (`00_Memoire/egm_missions.db`)
   3. Les Exécuteurs Poissons Rouges (Jules 100/j, Codex-ChatGPT-Web, Herdr/Orca ADE)
@@ -22,7 +22,7 @@ GATEWAY_URL = "http://127.0.0.1:31415/v1/chat/completions"
 
 class AgentZeroEgmBridge:
     """
-    Adaptateur natif pour la classe `models.py` / `Agent` d'Agent Zero (`00_A0_Core/agent-zero`).
+    Moteur natif agent-zero (boucle Agent + providers, RigInfinity).
     Sépare la planification macroscopique (Couche Éléphant) de l'exécution jetable (Couche Poisson Rouge).
     """
 
