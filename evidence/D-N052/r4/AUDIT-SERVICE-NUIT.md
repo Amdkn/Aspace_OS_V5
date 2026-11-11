@@ -158,6 +158,7 @@ Preuves complémentaires (vérifiées 17:30 EST) :
 | Snapshot, checkpoint, unit installée, procédure de reprise, audit absents du dépôt | **Corrigé par ce commit** (fichiers `evidence/D-N052/r4/…`) |
 | `aqua_factory_reader.py` absent du dépôt (dépendance d'exécution, `ModuleNotFoundError` prouvé sans lui) | **Corrigé par ce commit** (`evidence/D-N052/r0/aspace-aqua-adapter/…`) |
 | Unit committée cassée sous systemd root + snapshot `/tmp` | **Non corrigé dans la branche** — unit installée versionnée comme référence ; report du correctif à R5 / jugement |
+| Sous-module `wikiskill` non initialisable depuis la branche seule (pas de `.gitmodules` sur la branche) — cycle en échec `ModuleNotFoundError` sur clone frais | **Corrigé par le commit de test** — étape 1b ajoutée à `REPRISE.md` (`.gitmodules` de master + init `wikiskill` @ `59a6a04`) ; voir §10 |
 | Preuves phase de jour locales seulement | **Reste à faire** — à committer à R4 CLOSE avec les preuves de nuit |
 | Registre local seulement (miroir partiel sur master) | **Noté** — le miroir `00_Memoire/WORKGRAPH-MUSE.md` porte l'état ; le registre complet reste local |
 | Reçus R10 locaux seulement | **Bloqué** — V4 archivé, consignation impossible (dépôt local) |
@@ -225,3 +226,46 @@ de fin de fenêtre (05h, exit 0).
 4. **Ne jamais** redémarrer quoi que ce soit sur le PC du Capitaine
    (cible de déploiement du système fini, pas machine de calcul de
    Muse) — la copie de sauvegarde R4 qui s'y trouve est inerte.
+
+## 10. Test destruction/reconstruction Git-first (2026-11-11 ~17:38 EST)
+
+But : prouver qu'un worker frais reprend exactement au bon endroit
+depuis Git seul. Protocole : tuer le daemon vivant, supprimer l'unit
+`/etc` (simulation de remplacement de VM), reconstruire depuis la
+branche seule, vérifier.
+
+**Destruction (17:35 EST) :** `systemctl stop` (SIGTERM 17:35:35,
+57 s — le `sleep(60)` du daemon retarde l'arrêt) puis `rm` de l'unit
+`/etc`. État après destruction : daemon mort, unit absente, checkpoint
+local INTERRUPTED inchangé (sha `9f95a768…`), snapshot `305c5a28…`
+inchangé.
+
+**Reconstruction depuis la branche seule :** clone frais
+`--branch a0/dn052-r4-dream` → tête `df85c6e7` ; rrsi @ `cc424cc` et
+dream-rsi @ `fa0c8f0` clonés aux SHAs épinglés ; snapshot + checkpoint
+copiés depuis la branche (`git show HEAD:evidence/…`) — snapshot sha
+`305c5a28…` vérifié après copie.
+
+**Premier run `--run-now` : ÉCHEC (trou trouvé par le test).**
+`ModuleNotFoundError: No module named 'wikiskill'`, exit 1, checkpoint
+FAILED, snapshot intact. Cause : clone frais = sous-modules vides
+(`dream-rsi`, `rrsi`, `wikiskill` vides) et la branche ne porte pas de
+`.gitmodules` (vérifié : `fatal: path '.gitmodules' does not exist in
+'HEAD'`). Le test du coordinateur à 14:28 avait passé parce qu'il
+utilisait le clone `~/workspace/v5-r4` où `wikiskill` était déjà
+initialisé — le chemin « clone frais » n'avait jamais été prouvé.
+
+**Correctif appliqué et prouvé :** `.gitmodules` récupéré de master
+(117 entrées) + `git submodule update --init` pour `wikiskill` →
+checked out `59a6a041ba2267ba82e0fce52e2c4c039da0a48e`, `import wikiskill`
+OK. **Deuxième run `--run-now` : SUCCÈS** — cycle terminé < 1 s,
+exit 0, checkpoint DONE (nuit 2026-11-11, snapshot `305c5a28…`,
+promu `v-loose-7d`, R_best 1.0, dream_selected `incumbent`, RRSI
+winner `None`) — identique au test du coordinateur à 14:28.
+Snapshot sha inchangé après le cycle.
+
+**Conséquence :** étape 1b ajoutée à `REPRISE.md` (ce commit) ;
+le chemin Git-first complet est désormais prouvé de bout en bout
+(code + dépendances + snapshot, depuis la branche seule).
+Le test d'hibernation systemd + la remise en production suivent
+(registre, journaux suivants).

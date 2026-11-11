@@ -27,6 +27,24 @@ git clone --branch a0/dn052-r4-dream --single-branch \
 cd v5-r4 && git rev-parse HEAD   # noter le SHA
 ```
 
+### 1b. Initialiser le sous-module wikiskill (OBLIGATOIRE)
+
+Le cycle importe `wikiskill` (`dream_loop.py`) depuis
+`01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill`. La branche ne
+porte pas de `.gitmodules` — prendre celui de master :
+
+```bash
+gh api "repos/Amdkn/Aspace_OS_V5/contents/.gitmodules?ref=master" --jq '.content' \
+  | tr -d '\n' | base64 -d > .gitmodules
+git submodule update --init -- 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
+# attendu : checked out '59a6a041ba2267ba82e0fce52e2c4c039da0a48e'
+python3 -c "import sys; sys.path.insert(0, '01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill'); import wikiskill; print('import wikiskill OK')"
+```
+
+Sans cette étape, le cycle échoue (`ModuleNotFoundError: No module named
+'wikiskill'`, exit 1, checkpoint FAILED) — prouvé par le test Git-first
+du 2026-11-11 17:38 EST sur clone frais (voir AUDIT-SERVICE-NUIT.md §10).
+
 ## 2. Récupérer rrsi et dream-rsi aux SHAs épinglés
 
 (La branche porte les gitlinks mais pas de `.gitmodules` ; les URLs sont
