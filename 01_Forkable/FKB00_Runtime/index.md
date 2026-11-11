@@ -17,6 +17,7 @@ Réécriture souveraine d'Agent Zero greffée sur le micro-noyau spatio-temporel
 - `spynel` (`Amdkn/spynel` ← `agent0ai/spynel`) — Télémétrie et sentinelle temps réel Agent0.
 - `tuxee` (`Amdkn/tuxee` ← `agent0ai/tuxee`) — Exécution système et environnement Linux/conteneur Agent0.
 - `cordis` (`Amdkn/cordis` ← `cordiverse/cordis`) — Micro-noyau TypeScript de composabilité spatio-temporelle (< 50 Ko).
+- `fondation-13-1` (code A'Space neuf, pas de fork) — Fonction Recevoir de la Fondation 13 → 1 (D-N055 F1-2) : validateur R10 v1 + consignateur (`r10-receive`), adresse `fiber:a0:fondation-13-1`, zéro dépendance, zéro télémétrie.
 - `deepseek-harness` (`Amdkn/deepseek-harness` ← `deepseek-ai/deepseek-harness`) — Harness modulaire construit sur Cordis.
 - `pi` (`Amdkn/pi` ← `earendil-works/pi`) — Moteur minimaliste à 4 outils atomiques (`Read`, `Write`, `Edit`, `Bash`) et arbre de sessions durable.
 - [`a0_recursive_factory.py`](./00_A0_Core/a0_recursive_factory.py) — Implémentation exécutable du moteur récursif A0 à 3 Horizons (Cordis Fiber + Prime-Agent RLM `/refine` + AQuA/WikiSkill + Dream-RSI/RRSI).
