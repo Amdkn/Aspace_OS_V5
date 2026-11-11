@@ -43,7 +43,7 @@ GWS_FRAMEWORKS = {
     },
     "22_Wheel_Discovery": {
         "commander": "A2 Discovery / Zora (USS Discovery)",
-        "officers_a3": ["Book (LD01)", "Stamets (LD02)", "Culber (LD03)", "Tilly (LD04)", "Saru (LD05)", "Burnham (LD06)", "Spock (LD07)", "Georgiou (LD08)"],
+        "officers_a3": ["Book (LD01)", "Saru (LD02)", "Culber (LD03)", "Tilly (LD04)", "Stamets (LD05)", "Burnham (LD06)", "Reno (LD07)", "Georgiou (LD08)"],
         "gws_surface": "Google Sheets (00 — LIFE OS 2026 · Cockpit 6 Frameworks x 8 Domaines = 48 intersections)",
     },
     "23_12WY_SNW": {
@@ -89,7 +89,7 @@ AREAS_SPEC = [
         "ld": "LD02",
         "title": "Finances & Patrimoine",
         "director_code": "C1",
-        "coach_a3": "Stamets",
+        "coach_a3": "Saru",
         "summer": "Summer-LD02",
         "gatekeeper": "A1-Morty",
         "dc_managers": [f"C2.{i}_Playbook_DC" for i in range(1, 9)],
@@ -122,7 +122,7 @@ AREAS_SPEC = [
         "ld": "LD05",
         "title": "Famille, Relations & Communauté",
         "director_code": "F1",
-        "coach_a3": "Saru",
+        "coach_a3": "Stamets",
         "summer": "Summer-LD05",
         "gatekeeper": "A1-Beth / A1-Morty",
         "dc_managers": [f"F2.{i}_Playbook_DC" for i in range(1, 9)],
@@ -144,7 +144,7 @@ AREAS_SPEC = [
         "ld": "LD07",
         "title": "Créativité, Art & Récréation",
         "director_code": "H1",
-        "coach_a3": "Spock",
+        "coach_a3": "Reno",
         "summer": "Summer-LD07",
         "gatekeeper": "A1-Morty",
         "dc_managers": [f"H2.{i}_Playbook_DC" for i in range(1, 9)],
@@ -286,12 +286,13 @@ def scaffold_areas_os() -> dict[str, Any]:
     holon_registry = {
         "total_holons": 578,
         "breakdown": {
+            "tech_os_13_roles_s1_s2_s3": 13,
             "life_os_canon_a1_a2_a3": 43,
-            "sovereign_and_tech_os_core": 4,
-            "areas_os_coordination_j1_and_8_summers": 9,
+            "areas_os_ld00_beth_morty": 1,
             "areas_os_directors_b1_to_i1": 8,
+            "areas_os_j1_meta_jerry": 1,
             "areas_os_dc_managers_b2_to_i2": 64,
-            "areas_os_marvel_squad_specialists_and_canaries_b3_to_i3": 450,
+            "areas_os_marvel_squad_specialists_b3_to_i3": 448,
         },
         "canonical_8_files": CANONICAL_8_FILES,
         "gws_surfaces": GWS_FRAMEWORKS,
@@ -307,12 +308,13 @@ def scaffold_areas_os() -> dict[str, Any]:
         "Imbriqué dans `24_PARA_Enterprise` (`Troi` Areas) et `22_Wheel_Discovery`, **`Areas OS`** unifie "
         "`Business OS` (`Colonne B / LD01`) avec les 7 autres domaines de la Roue de la Vie (`Colonnes C à I / LD02..LD08`) "
         "selon la loi des **578 Holons** :\n\n"
+        "- **13 Holons `Tech OS`** (`S1 Rick` + `3 Doctors` + `9 Compagnons` du Rick's Verse)\n"
         "- **43 Holons Canon `Life OS`** (`2 A1` Beth/Morty + `6 A2` Vaisseaux + `35 A3` Officiers)\n"
-        "- **4 Holons Souverains & Noyau `Tech OS`** (`A0 Amadeus` + `S1 Rick` + `S2 Sol/Doctor11` + `S3 Graham`)\n"
-        "- **9 Holons de Coordination `Areas OS`** (`1 J1 Jerry Macro` + `8 Summers Micro`)\n"
+        "- **1 Holon `LD00` Beth-Morty** (supervision transversale `Areas OS`)\n"
         "- **8 Directeurs d'Areas (`B1` à `I1`)** (`8 OwnerBooks v0.2`)\n"
+        "- **1 Holon `J1` Meta-Jerry** (coordination Cross-OS)\n"
         "- **64 Managers Tactiques DC (`B2` à `I2` : 8×8)** (`8 B2` + `56 Playbooks DC C2–I2`)\n"
-        "- **450 Holons d'Exécution & Squads Marvel (`B3` à `I3` : 64 Squads × 7 Spécialistes + 2 Sentinelles Canary)**\n"
+        "- **448 Spécialistes Marvel (`B3` à `I3` : 64 Squads × 7 Spécialistes)**\n"
         "- **Total = 578 Holons** dotés du contrat à 8 fichiers (`README.md`, `SOUL.md`, `AGENTS.md`, `CONTRACTS.md`, `CAPABILITIES.md`, `RUNBOOK.md`, `STATE.md`, `MEMORY.md`).\n",
         encoding="utf-8",
     )

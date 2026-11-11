@@ -1,4 +1,4 @@
-# CAPABILITIES — Surfaces Google Workspace & Outillage A0 (H1-SPOCK)
+# CAPABILITIES — Surfaces Google Workspace & Outillage A0 (H1-RENO)
 
 - **21_Ikigai_Orville** (`A2 Orville (USS Orville)`) : Google Slides (Matrice 4 Piliers Ikigai x 5 Horizons = 20 combinaisons)
 - **22_Wheel_Discovery** (`A2 Discovery / Zora (USS Discovery)`) : Google Sheets (00 — LIFE OS 2026 · Cockpit 6 Frameworks x 8 Domaines = 48 intersections)

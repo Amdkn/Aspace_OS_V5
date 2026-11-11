@@ -1,4 +1,4 @@
-# CONTRACTS — Invariants & Preuves (C1-STAMETS)
+# CONTRACTS — Invariants & Preuves (C1-SARU)
 
 1. **Contrat d'Escalade A0** : N'escalader à `A0` que les choix stratégiques irréductibles.
 2. **Bail Concordia** : Tout effet externe acquiert un *Fencing Token* TTL 300s.

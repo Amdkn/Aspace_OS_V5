@@ -1,4 +1,4 @@
-# STATE — État Courant (F1-SARU)
+# STATE — État Courant (F1-STAMETS)
 
 - **Statut Homéostatique** : `GREEN`
 - **Mode d'Exécution** : `EGM_ACTIVE` (Elephant-Goldfish Model)

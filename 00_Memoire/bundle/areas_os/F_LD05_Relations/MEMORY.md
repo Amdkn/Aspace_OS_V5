@@ -1,4 +1,4 @@
-# MEMORY — Liens Graphe & Continuité (F1-SARU)
+# MEMORY — Liens Graphe & Continuité (F1-STAMETS)
 
 - **Graphe MCP Partagé** : `00_Memoire/shared_brain/memory.jsonl`
 - **Wiki OKF v0.2** : `00_Memoire/bundle/index.md`
