@@ -1,0 +1,10 @@
+# C3 — 8 Squads d'Exécution Marvel (LD02)
+
+- `C3.1_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.2_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.3_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.4_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.5_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.6_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.7_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `C3.8_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)

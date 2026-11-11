@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: "💬 GitHub Discussions (Idées, Architecture & RFCs)"
+    url: https://github.com/Amdkn/Aspace-OS-V5/discussions
+    about: "Discuter d'une architecture ou d'une idée avant qu'elle ne devienne un Ticket Factory"

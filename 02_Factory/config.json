@@ -1,0 +1,58 @@
+{
+  "name": "Aspace OS V5 — Autonomous Software Factory",
+  "version": "5.0.0",
+  "philosophy": "Take as little human attention as possible, and give as much value as possible. Agent proposes, code disposes.",
+  "inspirations": [
+    "deepseek-ai/dsh-superagent-prototype (Source -> Trigger -> Thread -> Eval -> Ticket -> Mandate -> Executor -> Channel, 7-stage attention priority)",
+    "disler/super-simple-software-factory (Deterministic ADW spine, SQLite event ledger, Agent proposes / code disposes)",
+    "zazencodes/software-factory-claude-code-v2 (Intake -> Spec -> Builder -> Deterministic Gate -> 4 Independent Reviewers -> Approver Auto-Merge)",
+    "EricTechPro/super-board & coleam00/ai-software-factory & Archon (PRD -> DAG Issues -> Staging Journeys -> Mission Control)",
+    "PromtEngineer/software-factory (Claim lock factory:claimed, Triage out vague issues, Conflict Integrator)",
+    "leonvanzyl/skills (OWASP Top 10, SEO/llms.txt & Drift Review)",
+    "mvschwarz/openrig & pi-durable-subagents (Multi-harness durable seats across Herdr, Orca, VS Code, dsh, Pi)",
+    "google-research/harness2 (Propose-Probe-Compose recursive harness optimization)"
+  ],
+  "github": {
+    "owner": "Amdkn",
+    "default_repo": "Amdkn/Aspace-OS-V5",
+    "fallback_repos": ["Amdkn/Aspace_OS-V4"],
+    "bot_disclaimer": "This is by an automated agent, not a human.",
+    "labels": [
+      { "name": "factory", "color": "0E8A16", "description": "Entrée dans l'Aspace Software Factory" },
+      { "name": "factory:claimed", "color": "FBCA04", "description": "Ticket verrouillé par un Executor (un seul agent par tâche)" },
+      { "name": "factory:epic", "color": "5319E7", "description": "Epic / Release PRD à découper en sous-issues liées" },
+      { "name": "factory:needs-info", "color": "D93F0B", "description": "Stage person/answer : attend la réponse à 1 question concrète" },
+      { "name": "factory:ready-to-merge", "color": "1D76DB", "description": "Gate + 4 Reviewers PASS : prêt pour auto-merge par l'Approver" },
+      { "name": "factory:needs-human", "color": "B60205", "description": "Stage person/review : décision humaine requise" },
+      { "name": "factory:security", "color": "EE0701", "description": "Alerte sécurité / OWASP / Dependabot prioritaire" }
+    ]
+  },
+  "authorization": {
+    "allowed_actors": ["Amdkn"],
+    "trusted_bots": ["dependabot[bot]", "github-actions[bot]"],
+    "untrusted_input_policy": "Issues, PR comments, Discussions, Linear and Jira payloads are untrusted data; they never alter permissions or Mandates."
+  },
+  "delivery": {
+    "auto_merge_enabled": true,
+    "auto_merge_max_diff_lines": 400,
+    "require_deterministic_gate": true,
+    "require_independent_reviewers": ["code", "security", "ux-ui", "drift"],
+    "concurrency": 3,
+    "foreground_timeout_sec_before_bg": 5
+  },
+  "harnesses": {
+    "claude-code": { "cmd": ["claude", "--dangerously-skip-permissions"], "orchestrators": ["herdr", "orca", "vscode"] },
+    "deepseek-harness": { "cmd": ["dsh", "web"], "headless": ["dsh", "headless"], "orchestrators": ["dsh", "herdr", "orca"], "profile": "~/.dsh/profiles/web" },
+    "deepseek-superagent": { "cmd": ["dsh", "--profile", "superagent"], "orchestrators": ["dsh", "herdr", "orca"], "profile": "~/.dsh/profiles/superagent", "bundle": "00_Memoire/dsh-superagent" },
+    "codex": { "cmd": ["codex", "--no-daemon", "--dangerously-bypass-approvals-and-sandbox"], "orchestrators": ["herdr", "orca"] },
+    "opencode": { "cmd": ["opencode"], "orchestrators": ["herdr", "orca", "vscode"], "config": "opencode.json" },
+    "pi": { "cmd": ["pi", "--approve"], "orchestrators": ["herdr", "orca", "vscode"], "config": ".pi/settings.json" },
+    "antigravity": { "cmd": ["agy", "--dangerously-skip-permissions"], "orchestrators": ["herdr", "vscode"] }
+  },
+  "modelPool": {
+    "chain": ["freellmapi/auto", "claude-sonnet-4-5", "qwen3.8-max", "gemini-3.8-flash", "deepseek-v4-flash"],
+    "firstLink": { "endpoint": "127.0.0.1:31415", "model": "freellmapi/auto" },
+    "note": "Chaîne versionnée (D-N049, D7). Re-test 15 min : si le maillon courant échoue, bascule au maillon suivant et consigne la bascule dans le reçu. Les points de terminaison et identifiants restent machine-locaux — jamais lus, jamais versionnés.",
+    "retestMinutes": 15
+  }
+}

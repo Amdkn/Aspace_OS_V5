@@ -1,0 +1,10 @@
+# H2 — 8 Managers Tactiques DC (LD07)
+
+- `H2.1_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.2_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.3_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.4_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.5_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.6_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.7_Playbook_DC` (Playbook Patrimonial DC)
+- `H2.8_Playbook_DC` (Playbook Patrimonial DC)

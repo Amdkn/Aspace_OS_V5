@@ -1,0 +1,189 @@
+{
+  "spreadsheet_title": "00 — LIFE OS 2026 · Cockpit 6 Frameworks × 8 Domaines (Areas OS Master Ledger)",
+  "sheets": [
+    {
+      "index": 0,
+      "name": "00_WARGAME_RADAR",
+      "purpose": "Surveillance prédictive MiroFish × Mitra-v2 × TimesFM 3.0",
+      "columns": [
+        "Timestamp",
+        "Scenario_ID",
+        "Target_Area",
+        "Weak_Point_Detected",
+        "Mitra_Win_Prob",
+        "TimesFM_q10_Downside",
+        "TimesFM_Median",
+        "PathFM_Chaos_Risk",
+        "Action_Prescribed",
+        "Git_Commit_SHA"
+      ]
+    },
+    {
+      "index": 1,
+      "name": "B_LD01_BUSINESS_OS",
+      "purpose": "Pipeline commercial & facturation AMP A'Space MarketPlace (300 $/an × 100 clients)",
+      "columns": [
+        "Deal_ID",
+        "Client_Segment",
+        "Offre_OMK",
+        "Squad_Marvel_Assignee",
+        "Manager_DC",
+        "Statut_Pipeline",
+        "MRR_ARR_USD",
+        "Cout_Tokens_Compute",
+        "Lien_Artefact_Drive_5TB",
+        "Commit_Preuve_GitHub"
+      ]
+    },
+    {
+      "index": 2,
+      "name": "C_LD02_FINANCES",
+      "purpose": "Consolidation Trésorerie, Dividendes A0 & FreeCompute Savings",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 3,
+      "name": "D_LD03_SANTE_VITAL",
+      "purpose": "Bouclier Homéostatique Beth LD03 (Sommeil, VRC, Sanctuaire 00h-05h)",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 4,
+      "name": "E_LD04_COGNITION",
+      "purpose": "Focus Deep Work, Anti-Burnout & Modèles Inférence Souverains",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 5,
+      "name": "F_LD05_RELATIONS",
+      "purpose": "Cercle Intime, Famille & Alignement Éthique",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 6,
+      "name": "G_LD06_ENVIRONNEMENT",
+      "purpose": "Espaces physiques, Infrastructure VPS/WSL, Domotique",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 7,
+      "name": "H_LD07_CREATIVITE",
+      "purpose": "Design, Production Vidéo SaaS (10 Moteurs FKB07), 3D Worlds",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 8,
+      "name": "I_LD08_IMPACT_ASPACE",
+      "purpose": "Rayonnement Planétaire A'Space OS, Open Source & 578 Holons",
+      "columns": [
+        "Holon_Owner",
+        "Objectif_12WY",
+        "KPI_Actuel",
+        "Cible_Quantile_q90",
+        "Statut_Gate_Beth",
+        "Dernier_Artefact_Drive_URI",
+        "Dernier_Commit_SHA"
+      ]
+    },
+    {
+      "index": 9,
+      "name": "99_CAS_BUCKET_5TB_INDEX",
+      "purpose": "Indexation globale du Bucket Google Drive 5 To (Actifs Multimédias & 3D)",
+      "columns": [
+        "SHA256_Hash",
+        "Nom_Fichier",
+        "Categorie",
+        "Taille_Mo",
+        "Area_LD",
+        "Drive_URI",
+        "Produit_Par_Noeud",
+        "Commit_Git_Associe"
+      ],
+      "initial_seed_assets": [
+        {
+          "Nom_Fichier": "OS_Souverain__Liberté_Digitale.mp4",
+          "Taille_Mo": 48.4,
+          "Categorie": "Video_MP4",
+          "Area_LD": "LD01",
+          "Drive_URI": "https://drive.google.com/file/d/1B1-video-os-souverain/view"
+        },
+        {
+          "Nom_Fichier": "Legal_OS__Le_Cabinet_Zéro-Admin.mp4",
+          "Taille_Mo": 45.6,
+          "Categorie": "Video_MP4",
+          "Area_LD": "LD01",
+          "Drive_URI": "https://drive.google.com/file/d/1B1-video-legal-os/view"
+        },
+        {
+          "Nom_Fichier": "A_Space_OS__Haute_Performance.mp4",
+          "Taille_Mo": 44.2,
+          "Categorie": "Video_MP4",
+          "Area_LD": "LD08",
+          "Drive_URI": "https://drive.google.com/file/d/1B1-video-haute-perf/view"
+        },
+        {
+          "Nom_Fichier": "Le_Jardin_des_Pensées.mp4",
+          "Taille_Mo": 35.6,
+          "Categorie": "Video_MP4",
+          "Area_LD": "LD04",
+          "Drive_URI": "https://drive.google.com/file/d/1B1-video-jardin-pensees/view"
+        },
+        {
+          "Nom_Fichier": "Designing A'Space Planetary World Map.png",
+          "Taille_Mo": 111.7,
+          "Categorie": "Image_Design_Map",
+          "Area_LD": "LD08",
+          "Drive_URI": "https://drive.google.com/file/d/1B1-design-world-map/view"
+        }
+      ]
+    }
+  ]
+}

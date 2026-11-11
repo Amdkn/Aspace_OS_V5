@@ -1,0 +1,74 @@
+{
+  "generated_at_utc": "2026-11-09T01:40:06.683171+00:00",
+  "strategic_mandate": "Activation du Road to Market A'Space MarketPlace (Projet Picard LD01 / AMP A'Space MarketPlace)",
+  "assigned_squad": "B1-BOOK -> B2.5-ALLIANCES-DC -> B3.5-MARVEL-GTME",
+  "campaigns": [
+    {
+      "campaign_id": "CAMP-01-RADAR-SCRAPLING",
+      "offer_name": "Radar Prix & Stock Concurrentiel",
+      "target_segment": "Marques D2C, E-commerce Shopify (France & US)",
+      "open_source_engine": "Amdkn/scrapling",
+      "setup_price_usd": 500.0,
+      "monthly_price_usd": 300.0,
+      "proof_first_asset": "Alerte comparative temps réel générée avant le premier contact",
+      "target_accounts_count": 25,
+      "expected_conversion_rate": 0.16,
+      "projected_mrr_usd": 1200.0
+    },
+    {
+      "campaign_id": "CAMP-02-DIFY-SOP-ONBOARDING",
+      "offer_name": "Assistant Privé SOP & Onboarding Entreprise",
+      "target_segment": "PME 20 à 100 salariés (Logistique, Services, BTP)",
+      "open_source_engine": "Amdkn/dify",
+      "setup_price_usd": 1500.0,
+      "monthly_price_usd": 250.0,
+      "proof_first_asset": "Bot de démo entraîné sur 3 pages publiques du site du prospect",
+      "target_accounts_count": 20,
+      "expected_conversion_rate": 0.2,
+      "projected_mrr_usd": 1000.0
+    },
+    {
+      "campaign_id": "CAMP-03-OPENSEO-SCORECARD",
+      "offer_name": "Scorecard SEO Traditionnel & AEO (Moteurs IA)",
+      "target_segment": "Cabinets d'avocats, Cliniques médicales, Consultants",
+      "open_source_engine": "Amdkn/openseo",
+      "setup_price_usd": 499.0,
+      "monthly_price_usd": 199.0,
+      "proof_first_asset": "Rapport d'audit de visibilité sur ChatGPT/Perplexity/Google Maps",
+      "target_accounts_count": 25,
+      "expected_conversion_rate": 0.24,
+      "projected_mrr_usd": 1194.0
+    },
+    {
+      "campaign_id": "CAMP-04-OPENSHORTS-STUDIO",
+      "offer_name": "Studio Clips Viraux & Repurposing Vidéo",
+      "target_segment": "Podcasts, Formateurs, Conférenciers, Dirigeants B2B",
+      "open_source_engine": "Amdkn/openshorts + Amdkn/flute",
+      "setup_price_usd": 0.0,
+      "monthly_price_usd": 400.0,
+      "proof_first_asset": "3 Shorts verticaux montés et sous-titrés offerts en direct",
+      "target_accounts_count": 15,
+      "expected_conversion_rate": 0.27,
+      "projected_mrr_usd": 1600.0
+    },
+    {
+      "campaign_id": "CAMP-05-PRESENTON-LIVE-DEVIS",
+      "offer_name": "Générateur de Propositions & Devis Post-Appel",
+      "target_segment": "Équipes commerciales B2B et agences de services",
+      "open_source_engine": "Amdkn/presenton",
+      "setup_price_usd": 2500.0,
+      "monthly_price_usd": 200.0,
+      "proof_first_asset": "Modèle de présentation charté injecté automatiquement en 3 minutes",
+      "target_accounts_count": 15,
+      "expected_conversion_rate": 0.2,
+      "projected_mrr_usd": 600.0
+    }
+  ],
+  "total_target_accounts": 100,
+  "total_projected_mrr_usd": 5594.0,
+  "total_projected_arr_usd": 67128.0,
+  "timesfm_q10_floor_mrr": 3500.0,
+  "timesfm_q50_median_mrr": 10000.0,
+  "timesfm_q90_upside_mrr": 25000.0,
+  "execution_status": "READY_FOR_OUTBOUND_DISPATCH"
+}

@@ -1,0 +1,44 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/wikiskill-ADAPTATION.md",
+  "adapter": {
+    "commit": "59a6a04",
+    "package": "aspace-wikiskill-adapter",
+    "surface": [
+      "wikiskill.cli:main(argv) -> int",
+      "wikiskill init <domain> --ws <dir> [--seed N]",
+      "wikiskill status <domain> --ws <dir>"
+    ],
+    "version": "0.1.0"
+  },
+  "entry": "aspace-wikiskill-adapter/smoke_test.py",
+  "id": "fiber:a0:wikiskill",
+  "issued_by": "Ryan (Factory), dispatch D-N048, vague V3a",
+  "levels": {
+    "current": 2,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "packages": [
+    {
+      "name": "wikiskill",
+      "path": "wikiskill",
+      "state": 2,
+      "version": "0.1.5"
+    }
+  ],
+  "schema_authority": "Clara (design D-N048, D7)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/wikiskill-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/wikiskill",
+    "frozen_commit": "cdc291c",
+    "license": "MIT",
+    "repository": "ashutoshsinghpr7/wikiskill"
+  },
+  "validated_by": "13e Doctor",
+  "version": "0.1.0"
+}

@@ -1,0 +1,48 @@
+{
+  "model": "opus",
+  "theme": "dark",
+  "permissions": {
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "hooks": {
+    "UserPromptSubmit": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "timeout": 30,
+            "command": "pwsh -NoProfile -ExecutionPolicy Bypass -File \"C:/Users/amado/Aspace OS V5/00_Memoire/hooks/recall.ps1\""
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": ".*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python 02_Factory/hooks/aspace_deterministic_hooks.py stop"
+          }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      {
+        "matcher": "Read|Edit|Write|MultiEdit|Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python 02_Factory/hooks/aspace_deterministic_hooks.py pre-tool"
+          }
+        ]
+      }
+    ]
+  },
+  "env": {
+    "PATH": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\.venv\\Scripts;C:\\Users\\amado\\bin;C:\\Users\\amado\\.local\\bin;C:\\Users\\amado\\AppData\\Roaming\\npm;C:\\Users\\amado\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\amado\\AppData\\Local\\Programs\\supabase;C:\\Users\\amado\\AppData\\Local\\agy\\bin;C:\\Program Files\\PowerShell\\7;C:\\Program Files\\Git\\cmd;C:\\Program Files\\GitHub CLI;C:\\Program Files\\nodejs;C:\\Python314;C:\\Python314\\Scripts;C:\\Program Files\\PowerShell\\7;C:\\Users\\amado\\AppData\\Local\\Temp\\agy-plugin-cli-1600276831;C:/Users/amado/.gemini/antigravity/bin;C:\\Users\\amado\\AppData\\Roaming\\Antigravity\\bin;C:\\Python314\\Scripts\\;C:\\Python314\\;C:\\Python313\\Scripts\\;C:\\Python313\\;c:\\Users\\amado\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\dotnet\\;C:\\Users\\amado\\AppData\\Local\\Microsoft\\WindowsApps;c:\\Users\\amado\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;c:\\Users\\amado\\AppData\\Local\\Programs\\cursor\\resources\\app\\bin;C:\\Program Files\\Microsoft SQL Server\\150\\Tools\\Binn\\;C:\\Program Files\\Microsoft SQL Server\\Client SDK\\ODBC\\170\\Tools\\Binn\\;C:\\Program Files (x86)\\Windows Kits\\10\\Windows Performance Toolkit\\;C:\\ProgramData\\chocolatey\\bin;C:\\Users\\amado\\AppData\\Roaming\\Python\\Python313\\Scripts;C:\\Program Files\\PuTTY\\;C:\\Program Files\\RedHat\\Podman\\;C:\\Program Files (x86)\\cloudflared\\;C:\\Program Files\\PowerShell\\7-preview\\preview;C:\\Program Files\\nodejs\\;C:\\Program Files\\GitHub CLI\\;C:\\Program Files\\Docker\\Docker\\resources\\bin;C:\\Program Files\\Git\\cmd;C:\\Program Files\\Tailscale\\;C:\\Program Files\\WSL\\;C:\\Program Files\\PowerShell\\7\\;C:\\Users\\amado\\AppData\\Local\\Programs\\Herdr\\bin;C:\\Users\\amado\\.qoder\\entry;C:\\Users\\amado\\.minimax\\bin;C:\\Users\\amado\\.unsloth\\studio\\bin;C:\\Users\\amado\\AppData\\Local\\hermes\\bin;C:\\Users\\amado\\AppData\\Local\\agy\\bin;C:\\Users\\amado\\AppData\\Local\\Programs\\Python\\Python312\\Scripts\\;C:\\Users\\amado\\AppData\\Local\\Programs\\Python\\Python312\\;C:\\Users\\amado\\AppData\\Local\\Programs\\Automa;C:\\Users\\amado\\.local\\bin;C:\\Users\\amado\\AppData\\Local\\Microsoft\\WindowsApps;C:\\Users\\amado\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\amado\\.dotnet\\tools;C:\\Users\\amado\\AppData\\Local\\Programs\\Ollama;C:\\Users\\amado\\AppData\\Local\\GitHubDesktop\\bin;C:\\Users\\amado\\.lmstudio\\bin;c:\\users\\amado\\.local\\bin;c:\\users\\amado\\appdata\\roaming\\python\\python313\\scripts;C:\\Users\\amado\\AppData\\Local\\Programs\\Antigravity\\bin;C:\\Users\\amado\\AppData\\Roaming\\npm;C:\\Users\\amado\\.dotnet\\tools;C:\\Users\\amado\\AppData\\Local\\Programs\\Espanso;C:\\Users\\amado\\AppData\\Local\\OpenAI\\Codex\\bin;C:\\Users\\amado\\AppData\\Local\\Programs\\printing-press;C:\\Users\\amado\\AppData\\Local\\Programs\\supabase;C:\\Users\\amado\\AppData\\Local\\Programs\\go\\bin;C:\\Users\\amado\\go\\bin;C:\\Users\\amado\\AppData\\Local\\Programs\\pp-clis;C:\\Users\\amado\\AppData\\Local\\Programs\\Zed\\bin;C:\\Users\\amado\\AppData\\Local\\Microsoft\\WinGet\\Links;C:\\Users\\amado\\.bun\\bin;C:\\Users\\amado\\.bun\\bin;C:\\Users\\amado\\bin;C:\\Users\\amado\\AppData\\Local\\Programs\\orca\\resources\\bin;C:\\Program Files\\mitmproxy\\bin;C:\\Users\\amado\\.qoderwake\\bin;C:\\Users\\amado\\AppData\\Local\\Programs\\Qoder IDE\\bin;C:\\Users\\amado\\.qoder\\bin\\qodercli;C:\\Users\\amado\\.claude\\custom-models;C:\\Users\\amado;C:\\Users\\amado\\AppData\\Local\\Programs\\Antigravity IDE\\bin;C:\\Program Files\\Git\\bin;C:\\Program Files\\Git\\usr\\bin;C:\\Users\\amado\\.opencode\\bin;C:\\Users\\amado\\.hermes\\bin;C:\\Users\\amado\\.hermes\\venv\\Scripts;C:\\Users\\amado\\AppData\\Local\\GitHubCopilotCLI\\;C:\\Users\\amado\\AppData\\Local\\Programs\\Microsoft VS Code\\bin\\copilot-shim;C:\\Users\\amado\\AppData\\Local\\Programs\\herdr-app;C:\\Users\\amado\\AppData\\Local\\Programs\\herdr-core",
+    "PYTHONUTF8": "1",
+    "DO_NOT_TRACK": "1"
+  }
+}

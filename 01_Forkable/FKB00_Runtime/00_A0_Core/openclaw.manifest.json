@@ -1,0 +1,44 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/openclaw-ADAPTATION.md",
+  "adapter": {
+    "commit": "f6fd7aaf",
+    "package": "aspace-openclaw-adapter",
+    "surface": [
+      "node openclaw.mjs --version",
+      "node openclaw.mjs --help",
+      "node openclaw.mjs telemetry show"
+    ],
+    "version": "0.1.0"
+  },
+  "entry": "aspace-openclaw-adapter/smoke_test.sh",
+  "id": "fiber:a0:openclaw",
+  "issued_by": "Ryan (Factory), dispatch D-N048, vague V3b",
+  "levels": {
+    "current": 2,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, télémétrie 98/98 verte, suite partielle qualifiée)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "packages": [
+    {
+      "name": "openclaw",
+      "path": ".",
+      "state": 0,
+      "version": "2026.11.2"
+    }
+  ],
+  "schema_authority": "Clara (design D-N048, D7)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/openclaw-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/openclaw",
+    "frozen_commit": "ce7788f",
+    "license": "MIT",
+    "repository": "openclaw/openclaw"
+  },
+  "validated_by": "13e Doctor",
+  "version": "0.1.0"
+}

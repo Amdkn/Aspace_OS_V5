@@ -1,0 +1,10 @@
+# I3 — 8 Squads d'Exécution Marvel (LD08)
+
+- `I3.1_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.2_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.3_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.4_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.5_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.6_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.7_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)
+- `I3.8_Marvel_Squad` (7 Spécialistes + Runbook Opérationnel)

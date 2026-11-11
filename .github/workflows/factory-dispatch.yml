@@ -1,0 +1,68 @@
+name: "Aspace Factory — Dispatch & Auto-Merge"
+
+on:
+  issues:
+    types: [opened, labeled]
+  issue_comment:
+    types: [created]
+  discussion:
+    types: [created, labeled]
+  pull_request_review:
+    types: [submitted]
+  workflow_dispatch:
+    inputs:
+      action:
+        description: "Factory action (triage, status, sync-wiki, insights)"
+        required: true
+        default: "status"
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  discussions: write
+
+jobs:
+  triage-and-route:
+    name: "DeepSeek Superagent Eval & Triage"
+    if: >
+      (github.event_name == 'issues' && contains(github.event.issue.labels.*.name, 'factory')) ||
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '/factory'))
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Evaluate Trigger & Stamp Claim Label
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          ISSUE_NUMBER: ${{ github.event.issue.number }}
+          ACTOR: ${{ github.actor }}
+        run: |
+          ALLOWED=$(jq -r '.authorization.allowed_actors[]' 02_Factory/config.json)
+          if ! echo "$ALLOWED" | grep -qx "$ACTOR"; then
+            echo "Actor $ACTOR is not in 02_Factory/config.json allowed_actors. Ignoring trigger."
+            exit 0
+          fi
+          gh issue edit "$ISSUE_NUMBER" --add-label "factory:claimed" || true
+          gh issue comment "$ISSUE_NUMBER" --body "This is by an automated agent, not a human.
+
+          **Aspace Factory — Ticket Claimed** (\`#$ISSUE_NUMBER\`)
+          - **Stage**: \`working / queued\`
+          - **Pipeline**: \`Intake → Spec → Builder (Worktree) → Gate (02_Factory/checks.ps1) → 4 Reviewers → Approver\`
+          - Exécution locale/hybride prête via \`pwsh 02_Factory/factory.ps1 run --issue $ISSUE_NUMBER\`."
+
+  auto-merge-approved:
+    name: "Approver Auto-Merge (Low/Medium Risk PRs)"
+    if: github.event_name == 'pull_request_review' && github.event.review.state == 'approved'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Merge PR if labeled factory:ready-to-merge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          PR_NUMBER: ${{ github.event.pull_request.number }}
+        run: |
+          LABELS=$(gh pr view "$PR_NUMBER" --json labels -q '.labels[].name')
+          if echo "$LABELS" | grep -qx "factory:ready-to-merge" && ! echo "$LABELS" | grep -qx "factory:needs-human"; then
+            gh pr merge "$PR_NUMBER" --squash --delete-branch --auto
+          fi

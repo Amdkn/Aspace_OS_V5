@@ -1,0 +1,7 @@
+# CODEOWNERS — Aspace OS V5 Software Factory
+* @Amdkn
+/.github/ @Amdkn
+/02_Factory/ @Amdkn
+/00_Memoire/ @Amdkn
+/CLAUDE.md @Amdkn
+/AGENTS.md @Amdkn

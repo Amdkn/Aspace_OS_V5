@@ -1,0 +1,112 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "model": "freellmapi/auto",
+  "small_model": "freellmapi/gemini-3.8-flash",
+  "instructions": [
+    "AGENTS.md",
+    "CLAUDE.md",
+    "00_Memoire/AGENTS.md",
+    "01_Forkable/AGENTS.md",
+    "00_Memoire/bundle/index.md"
+  ],
+  "permission": {
+    "edit": "allow",
+    "bash": "allow",
+    "webfetch": "allow",
+    "doom_loop": "allow",
+    "external_directory": "allow"
+  },
+  "mcp": {
+    "filesystem": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "c:/Users/amado/Aspace OS V5"
+      ],
+      "enabled": true
+    },
+    "memory": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-memory"
+      ],
+      "enabled": true,
+      "environment": {
+        "MEMORY_FILE_PATH": "C:/Users/amado/Aspace OS V5/00_Memoire/shared_brain/memory.jsonl"
+      }
+    },
+    "sequential-thinking": {
+      "type": "local",
+      "command": [
+        "npx",
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "enabled": true
+    }
+  },
+  "agent": {
+    "intake-assessor": {
+      "description": "DeepSeek Superagent Eval & Intake Assessor (max 1 concrete question, assigns Mandate)",
+      "prompt": "{file:.claude/agents/intake-assessor.md}"
+    },
+    "spec-writer": {
+      "description": "Specification & Architecture Planner (turns Mandate into executable spec and DAG)",
+      "prompt": "{file:.claude/agents/spec-writer.md}"
+    },
+    "builder": {
+      "description": "Autonomous Code Builder & Executor (implements Mandate and runs 02_Factory/checks.ps1)",
+      "prompt": "{file:.claude/agents/builder.md}"
+    },
+    "reviewer-code": {
+      "description": "Specialist Code & Test Reviewer",
+      "prompt": "{file:.claude/agents/reviewer-code.md}"
+    },
+    "reviewer-security": {
+      "description": "Specialist Security & Supply-Chain Reviewer",
+      "prompt": "{file:.claude/agents/reviewer-security.md}"
+    },
+    "reviewer-ux-ui": {
+      "description": "Specialist UX/UI & DeepSeek 3-Question Panel Reviewer",
+      "prompt": "{file:.claude/agents/reviewer-ux-ui.md}"
+    },
+    "reviewer-drift": {
+      "description": "Specialist Spec, DOX & WikiLLM Drift Reviewer",
+      "prompt": "{file:.claude/agents/reviewer-drift.md}"
+    },
+    "approver": {
+      "description": "Autonomous Merge Approver & Delivery Agent",
+      "prompt": "{file:.claude/agents/approver.md}"
+    }
+  },
+  "command": {
+    "factory-status": {
+      "description": "Show Aspace Software Factory Mission Control (DeepSeek 3-Question Panel)",
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 status` and summarize the result concisely in French."
+    },
+    "factory-gate": {
+      "description": "Run the 6 deterministic Aspace Factory checks",
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/checks.ps1` and fix any failure automatically."
+    },
+    "factory-intake": {
+      "description": "Create a new Ticket with Mandate in the Aspace Software Factory",
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 intake -Title \"$ARGUMENTS\" -Mandate \"$ARGUMENTS\"` and report the created ticket ID."
+    },
+    "subagents-status": {
+      "description": "List all Pi Durable Subagent workflows and active Worktree Writer Locks",
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 subagents -Action status` and summarize active workflows and locks."
+    },
+    "subagents-run": {
+      "description": "Launch a crash-safe, idempotent durable subagent workflow",
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 subagents -Action run -Agent builder -Task \"$ARGUMENTS\"` and report the workflow ID (wid)."
+    },
+    "subagents-resume": {
+      "description": "Resume any paused or interrupted durable subagent workflows from their last SQLite checkpoint",
+      "template": "Run `pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/factory.ps1 subagents -Action resume` and report resumed workflows."
+    }
+  }
+}

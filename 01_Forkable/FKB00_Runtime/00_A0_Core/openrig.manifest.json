@@ -1,0 +1,100 @@
+{
+ "adaptation_sheet": "openrig-ADAPTATION.md",
+ "adapter": {
+  "commit": "649376c803f76ea3b5bdb10097179e06c0645743",
+  "commit_short": "649376c",
+  "commits": [
+   "b71bf870c4bd6a11799c053e9ec2a0f2dccb5b3c",
+   "ef00f30909ae3b97f0cdea54896557d7a4cef5c8",
+   "649376c803f76ea3b5bdb10097179e06c0645743"
+  ],
+  "package": "@aspace/openrig-adapter",
+  "surface": [
+   "resolveAspaceBind() -> { hosts: ['127.0.0.1'], mode: 'aspace-localhost-only' } (overrides the upstream default that adds the tailscale IP)",
+   "LineageScheduler.spawnRigId(areaCode, childHolon) -> RIG-<area>-<holon>-<ULID26> (ULID, never Date.now()); worktreePath(rigId) -> .worktrees/<rigId>",
+   "validateRigSpec(spec) -> { errors: string[] } (pods -> members -> edges; role optional — the YAML declares none, the daemon sets Node.role at runtime; when present, lead|worker|reviewer|kernel operator; edges resolve bare ids and pod.member)",
+   "HERDR_SOCKET_METHODS (8 pinned methods); resolveHerdrSocketPath(env); assertNoDirectHcCall(cmd); findOrphanSessions(panes, bindings) -> string[]",
+   "UniqueDaemonLifecycle contract: resolveUniqueDaemonEndpoint(port), probeDaemon(baseUrl), acquireDaemonLock(home), releaseDaemonLock(home); resolveTuiEndpoint(uniqueDaemon)",
+   "ASPACE_TELEMETRY_CONTRACT { context: 'noop', exporters: [] }; installOutboundGuard({ allowHosts }) wraps global fetch; default allow-list is loopback only; telemetry/analytics hosts are blocklisted even when allow-listed",
+   "validateContextPackManifest(manifest) -> { errors: string[] }; ATOM_TAXONOMIES; resolveContextPackRoot(home)",
+   "getFrozenRepoInfo() -> { branch, headHash, headMessage }; verifyFrozenCommit() -> { ok, head } (pre-commit); verifyAdapterCommit() -> { ok, head, headFull, firstParentIsGel, ahead } (post-commit); verifyFrozenLineage() -> { ok, head, headFull, gelAncestor, ahead, nonAdapterFiles }",
+   "PINNED_OPENRIG_COMMIT = bd39da9 (0.7.1); PINNED_OPENRIG_COMMIT_FULL = bd39da9872afc39cbe0c8e839a322b4cb8955cbe",
+   "VERSION_DRIFT: gel 0.7.1; docs cite 0.7.5/0.7.8 (pin parent 781b5fb teaches 0.7.8) — the gel and the tags are not the same"
+  ],
+  "version": "0.1.0"
+ },
+ "entry": "aspace-openrig-adapter/src/index.ts",
+ "holdouts": {
+  "H-F8-2": "PARTIEL — mécanisme natif livré (4 modules + smoke adapter 61/61) ; le cycle du Runtime sans le fork = harnais du parent",
+  "H-F8-4": "PASS (construction) — le pas 4 ne retire qu'un daemon (openrig) et n'en ajoute aucun ; herdr-core reste jusqu'au pas 8 ; comptage vérifié à l'intégration",
+  "H-F8-9": "À JUGER — tailles : adapter 13 fichiers (3 commits, 1 435 + 39 + 17 lignes) ; port natif 4 modules (1 551 lignes + correctif fmt) ; le parent juge les plafonds (1 % module, 5 % pas, 20 % mission)",
+  "H-M1": "PASS — HEAD du fork = gel avant adaptation ; commits adapter b71bf87 (parent = gel), ef00f30, 649376c ; consigné dans la fiche",
+  "H-M2": "PASS — vérifié à l'API : compare gel..HEAD = ahead 3, behind 0, 13 fichiers adapter uniquement ; smoke verifyFrozenLineage vert",
+  "H-M3": "PARTIEL — test:repo VERT au re-run complet (334 tests, 333 pass, 0 fail, 1 skipped, 669 779 ms ; isolation ✔ 16 848 ms ; first-run references 528 checked, 0 failure ; context-packs --check OK, 57 packs ; log logs-npm-test-rerun.log). lint VERT (npm run lint, exit 0, log logs-openrig-lint.log). test:workspaces cli COMPLET (368 fichiers : 6 en échec ; 12 tests en échec / 6 213 pass / 22 skipped ; log logs-openrig-workspaces-cli-tui.log) et tui COMPLET (128 fichiers : 1 test en échec / 1 201 pass). test:workspaces daemon INCOMPLET : 2 passes tuées par un SIGTERM externe à ~35-36 min (plafond d'exécution de la VM, pas un échec de test) ; 162/1 326 fichiers terminés en 2 passes. Échecs STABLES amont, 0 imputable à l'adapter (0 référence à aspace-openrig-adapter hors du dossier adapter, diff = adapter seul, H-M2 API) : daemon 13 — bundle-routes 4 (root lit les fichiers 'unreadable'), codex-runtime-adapter 1, queue-repository 1, skill-catalog-loadout 1, seat-launch-additions 1 (root), transcript-store 2 (root), bundle-local-skills 2, claude-activity-hook-delivery 1 (mode 0755 perdu au checkout, umask 0007) ; cli 8 — front-door 3 (timeouts 5 s, binaire réel sous charge), preflight 1 (root), scope-commands 1 (unreadable, root), chatroom-watch-tmux-args 1 (tmux réel + $HOME), scope-slice-claims 2 (batches 8 processus). FLAKY (passent en isolé ou varient) : queue-routes 0/3/2, doctor 2→3, slice-claims 2 autres, s03-bound-launch 16→0, claude-bootstrap-config-home 8→0, send-prompt-guard 1→0, refresh-activity (tui) 1→0. Re-runs ciblés : daemon 12 fichiers — 15 en échec / 1 125 pass (log logs-openrig-failing12-rerun.log) ; cli 6 fichiers — 11 en échec / 283 pass (log logs-openrig-failing-cli-rerun.log) ; tui 1 fichier — PASSE (log logs-openrig-failing-tui-rerun.log). Cargo natif complet VERT (lib 27/27 + daemon_proof 4/4).",
+  "H-M4": "PASS — télémétrie zéro vérifiée au fichier (audit versionné, avec la correction : la surface de lecture locale /api/telemetry existe, 0 exporteur, 0 SDK) ; garde-fou prouvé par le smoke",
+  "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:openrig ; fiche openrig-ADAPTATION.md + audit télémétrie versionnés",
+  "H-M6": "PASS — adapter seul code A'Space du fork ; divergence remplie ; propriétaire : cœur Buzz, lane Clara / 12e",
+  "H-M7": "PASS — cette fiche",
+  "H-P4-1": "PARTIEL — gel vérifié HEAD ; le bind est re-appliqué VERBATIM par le parent (pas par cet exécutant) + re-pin à l'intégration",
+  "H-P4-10": "PARTIEL — mécanisme natif livré (4 modules + smoke adapter 61/61) ; le cycle du Runtime sans le fork = harnais du parent (H-F8-2)",
+  "H-P4-2": "PARTIEL — structure validée par le smoke (starter 1/2/1 + code-review 2/3/2, edges qualifiées) ; démarrage réel avec le runtime natif = preuve machine (herdr + tmux + daemon unique) ; rôles : le YAML n'en déclare aucun (correction fiche §2)",
+  "H-P4-3": "PARTIEL — zéro orpheline prouvé au niveau code (détection adapter + store natif + registre, tests unitaires + socket mock) ; cockpit live + relais avec adresses persistantes = preuve machine",
+  "H-P4-4": "PARTIEL — les 3 fonctions vivent dans le daemon unique (4 modules natifs) ; le cycle de vie CLI est celui du daemon unique (contrat) ; l'absence de processus openrig est vérifiée à l'intégration (H-F8-4)",
+  "H-P4-5": "PARTIEL — interfaces des harnais épinglées (runtimes claude-code/codex/pi/omp dans le modèle rig) ; exécution live via le daemon unique = intégration",
+  "H-P4-6": "PASS — aucun appel hc direct : garde-fou adapter (smoke) + aucun Command dans le module natif ; le rig unique est la seule voie (code)",
+  "H-P4-7": "PASS — audit versionné ; surface Hono + websocket auditée ; binding 127.0.0.1 seulement (avec la surcharge tailscale documentée et refusée)",
+  "H-P4-8": "PASS — manifeste + fiche dans evidence/D-N051/p4/ (dépôt V5 00_A0_Core/ = parent)",
+  "H-P4-9": "PARTIEL — comme H-M3 : test:repo vert, lint vert, cli+tui complets avec échecs amont qualifiés, daemon incomplet (plafond ~35 min, 162/1 326 fichiers) ; 13 échecs daemon stables + 8 cli stables, tous environnementaux (root uid 0, umask 0007, charge/timing), 0 imputable à l'adapter ; 7 fichiers flaky passent en isolé. Jugement 13e requis."
+ },
+ "id": "fiber:a0:openrig",
+ "issued_by": "Adaptation D-N051 F8 pas 4 (dispatch D-N051)",
+ "levels": {
+  "current": 2,
+  "note": "État 2 à l'intégration (adapté + fusionné, §D10) — PR #20, jugement 13e à venir.",
+  "states": [
+   "0 Basique (fork Amdkn non adapté)",
+   "1 Adapté (fiche + adapter + manifeste, tests verts)",
+   "2 Vérifié (hold-outs verts + validation 13e)",
+   "3 Publié (état 2 + registre à jour)"
+  ]
+ },
+ "native_port": {
+  "branch": "aspace-v5-native",
+  "commits": [
+   "a372582a2100c3a9dc46f7f2b5e33165688554ce",
+   "e19064552714eec535e0ac7345fd5d13e9e081f5"
+  ],
+  "head": "e19064552714eec535e0ac7345fd5d13e9e081f5",
+  "head_short": "e190645",
+  "modules": [
+   "openrig_state.rs (SQLite rusqlite, 8 tables cœur, usage_series, orphelins)",
+   "openrig_context_packs.rs (serde_yaml, validation manifeste + taxonomie, bibliothèque en mémoire)",
+   "openrig_terminal.rs (client socket Unix std-only, 8 méthodes épinglées, registre + orphelins)",
+   "openrig_lineage.rs (ULID std-only, scheduler + SpawnRecord)"
+  ],
+  "parent": "aad4993",
+  "repo": "Amdkn/RigInfinity",
+  "tests": "cargo test -p infinity-daemon COMPLET, exit 0 : lib 27/27, bin 0, intégration daemon_proof 4/4, doc 0 — log logs-riginfinity-pas4-cargo-test-full.log ; clippy 0 warning, fmt 0 (workspace check)",
+  "head_note": "Branche avancée après mon push par le pas 5 (agent-zero, commit e866578032b6ded80b8573cec579413a37cd3a92, 2026-11-11T01:17:46Z, auteur 'Agent-Zero Adapter (A\\'Space V5)') : 1 commit devant e190645, 0 derrière — mes 2 commits intacts comme ancêtres ; le pas 5 a touché lib.rs (ajout de ses modules) + agent.rs, job.rs, memory.rs, provider.rs, tests/agent_zero_proof.rs."
+ },
+ "schema_authority": "Clara (design D-N051, D4 ; design pas 4, D1-D14)",
+ "smoke": {
+  "command": "node --experimental-strip-types aspace-openrig-adapter/smoke_test.ts",
+  "result": "61/61 PASS ; tsc -p aspace-openrig-adapter/tsconfig.json 0 erreur"
+ },
+ "telemetry_audit": "openrig-TELEMETRY-AUDIT.md",
+ "upstream": {
+  "branch": "main",
+  "drift": "226 commits derrière le gel (amont main 52cc63d, dernier push 2026-11-10T21:45:02Z) ; pin 232 derrière — signal de revisite, PAS de re-gel (D1)",
+  "fork": "Amdkn/openrig",
+  "frozen_commit": "bd39da9",
+  "frozen_commit_full": "bd39da9872afc39cbe0c8e839a322b4cb8955cbe",
+  "frozen_date": "2026-11-05T21:03:09Z",
+  "frozen_title": "fix(compaction): deliver a held post-compaction step after two idle unreadable polls (#2576)",
+  "frozen_version": "0.7.1",
+  "license": "Apache-2.0",
+  "repository": "mvschwarz/openrig"
+ },
+ "validated_by": "13e Doctor",
+ "version": "0.1.0"
+}

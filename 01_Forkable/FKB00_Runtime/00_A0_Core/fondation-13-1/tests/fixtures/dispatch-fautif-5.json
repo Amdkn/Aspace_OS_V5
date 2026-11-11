@@ -1,0 +1,1 @@
+{"event_id":"EVT-20261111-905","type":"dispatch_ack","dispatch_id":"D-N055-F1-3-JAMAIS-TYPE","actor_from":"executor","actor_to":"router","at":"2026-11-11T01:55:00-05:00","design_ref":"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)","payload":"Accuser réception d'un dispatch jamais typé","proof":["aucune preuve"]}

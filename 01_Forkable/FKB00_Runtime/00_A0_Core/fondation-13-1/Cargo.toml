@@ -1,0 +1,21 @@
+[package]
+name = "fondation-13-1"
+version = "0.2.0"
+edition = "2021"
+description = "Fonctions Recevoir (F1-2) et Router (F1-3) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch — code A'Space neuf, zéro dépendance, zéro télémétrie"
+license = "Apache-2.0"
+
+[lib]
+name = "r10_validator"
+path = "src/lib.rs"
+
+[[bin]]
+name = "r10-receive"
+path = "src/bin/r10-receive.rs"
+
+[[bin]]
+name = "route-dispatch"
+path = "src/bin/route-dispatch.rs"
+
+[profile.release]
+debug = false

@@ -1,0 +1,10 @@
+# D2 — 8 Managers Tactiques DC (LD03)
+
+- `D2.1_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.2_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.3_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.4_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.5_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.6_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.7_Playbook_DC` (Playbook Patrimonial DC)
+- `D2.8_Playbook_DC` (Playbook Patrimonial DC)

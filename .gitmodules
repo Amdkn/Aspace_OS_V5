@@ -1,0 +1,403 @@
+[submodule "01_Forkable/FKB00_Runtime/infinity"]
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity
+	url = https://github.com/Amdkn/infinity.git
+[submodule "01_Forkable/FKB00_Runtime/openrig"]
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig
+	url = https://github.com/Amdkn/openrig.git
+[submodule "01_Forkable/FKB00_Runtime/automaton"]
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/automaton
+	url = https://github.com/Amdkn/automaton.git
+
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/needle"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/needle
+	url = https://github.com/Amdkn/needle.git
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/moshi"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/moshi
+	url = https://github.com/Amdkn/moshi.git
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/LoRA"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/LoRA
+	url = https://github.com/Amdkn/LoRA.git
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/GLiNER2.5-multi-Decide"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/GLiNER2.5-multi-Decide
+	url = https://github.com/Amdkn/GLiNER2.5-multi-Decide.git
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/mimi"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/mimi
+	url = https://github.com/Amdkn/mimi.git
+[submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/LFM3-Omni-2B"]
+	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/LFM3-Omni-2B
+	url = https://github.com/Amdkn/LFM3-Omni-2B.git
+
+[submodule "01_Forkable/FKB01_Inference/02_Inference_Cooperative/DeepInfer"]
+	path = 01_Forkable/FKB01_Inference/02_Inference_Cooperative/DeepInfer
+	url = https://github.com/Amdkn/DeepInfer.git
+[submodule "01_Forkable/FKB01_Inference/02_Inference_Cooperative/mesh-llm"]
+	path = 01_Forkable/FKB01_Inference/02_Inference_Cooperative/mesh-llm
+	url = https://github.com/Amdkn/mesh-llm.git
+[submodule "01_Forkable/FKB01_Inference/02_Inference_Cooperative/cross-platform-llm-client"]
+	path = 01_Forkable/FKB01_Inference/02_Inference_Cooperative/cross-platform-llm-client
+	url = https://github.com/Amdkn/cross-platform-llm-client.git
+
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freellmapi"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freellmapi
+	url = https://github.com/Amdkn/freellmapi.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web
+	url = https://github.com/Amdkn/codex-chatgpt-web.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freebuff"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freebuff
+	url = https://github.com/Amdkn/freebuff.git
+
+[submodule "01_Forkable/FKB02_Video_SaaS/argo"]
+	path = 01_Forkable/FKB06_Video_SaaS/argo
+	url = https://github.com/Amdkn/argo.git
+[submodule "01_Forkable/FKB02_Video_SaaS/earshot"]
+	path = 01_Forkable/FKB06_Video_SaaS/earshot
+	url = https://github.com/Amdkn/earshot.git
+[submodule "01_Forkable/FKB02_Video_SaaS/explainroo"]
+	path = 01_Forkable/FKB06_Video_SaaS/explainroo
+	url = https://github.com/Amdkn/explainroo.git
+[submodule "01_Forkable/FKB02_Video_SaaS/huashu-motion"]
+	path = 01_Forkable/FKB06_Video_SaaS/huashu-motion
+	url = https://github.com/Amdkn/huashu-motion.git
+[submodule "01_Forkable/FKB02_Video_SaaS/reanimate"]
+	path = 01_Forkable/FKB06_Video_SaaS/reanimate
+	url = https://github.com/Amdkn/reanimate.git
+[submodule "01_Forkable/FKB02_Video_SaaS/rossark-motion-skill"]
+	path = 01_Forkable/FKB06_Video_SaaS/rossark-motion-skill
+	url = https://github.com/Amdkn/rossark-motion-skill.git
+[submodule "01_Forkable/FKB02_Video_SaaS/take-one"]
+	path = 01_Forkable/FKB06_Video_SaaS/take-one
+	url = https://github.com/Amdkn/take-one.git
+[submodule "01_Forkable/FKB02_Video_SaaS/video-director"]
+	path = 01_Forkable/FKB06_Video_SaaS/video-director
+	url = https://github.com/Amdkn/video-director.git
+
+[submodule "01_Forkable/FKB03_3DWorlds/cubefarm"]
+	path = 01_Forkable/FKB03_3DWorlds/cubefarm
+	url = https://github.com/Amdkn/cubefarm.git
+[submodule "01_Forkable/FKB03_3DWorlds/agent-office"]
+	path = 01_Forkable/FKB03_3DWorlds/agent-office
+	url = https://github.com/Amdkn/agent-office.git
+
+[submodule "01_Forkable/FKB04_Tools_Anything/api-anything"]
+	path = 01_Forkable/FKB04_Tools_Anything/api-anything
+	url = https://github.com/Amdkn/api-anything.git
+[submodule "01_Forkable/FKB04_Tools_Anything/CLI-Anything"]
+	path = 01_Forkable/FKB04_Tools_Anything/CLI-Anything
+	url = https://github.com/Amdkn/CLI-Anything.git
+[submodule "01_Forkable/FKB04_Tools_Anything/rea"]
+	path = 01_Forkable/FKB04_Tools_Anything/rea
+	url = https://github.com/Amdkn/rea.git
+
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/elephant-goldfish-model"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/elephant-goldfish-model
+	url = https://github.com/Amdkn/elephant-goldfish-model.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish
+	url = https://github.com/Amdkn/MiroFish.git
+[submodule "01_Forkable/FKB02_Memory/graphify"]
+	path = 01_Forkable/FKB02_Memory/graphify
+	url = https://github.com/Amdkn/graphify.git
+[submodule "01_Forkable/FKB02_Memory/dox"]
+	path = 01_Forkable/FKB02_Memory/dox
+	url = https://github.com/Amdkn/dox.git
+[submodule "01_Forkable/FKB02_Memory/knowledge-catalog"]
+	path = 01_Forkable/FKB02_Memory/knowledge-catalog
+	url = https://github.com/Amdkn/knowledge-catalog.git
+[submodule "01_Forkable/FKB02_Memory/servers"]
+	path = 01_Forkable/FKB02_Memory/servers
+	url = https://github.com/Amdkn/servers.git
+[submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context"]
+	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context
+	url = https://github.com/Amdkn/billion-context.git
+[submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology"]
+	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology
+	url = https://github.com/Amdkn/auto-ontology.git
+[submodule "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models"]
+	path = 01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models
+	url = https://github.com/Amdkn/context-language-models.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server
+	url = https://github.com/Amdkn/tradingview-indicator-search-mcp-server.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP
+	url = https://github.com/Amdkn/TradingView-Unified-MCP.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli
+	url = https://github.com/Amdkn/nansen-cli.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills
+	url = https://github.com/Amdkn/claude-trading-skills.git
+[submodule "01_Forkable/FKB03_3DWorlds/city-office"]
+	path = 01_Forkable/FKB03_3DWorlds/city-office
+	url = https://github.com/Amdkn/city-office.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab
+	url = https://github.com/Amdkn/LLM-Trading-Lab.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade
+	url = https://github.com/Amdkn/freqtrade.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis
+	url = https://github.com/Amdkn/daily_stock_analysis.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund
+	url = https://github.com/Amdkn/ai-hedge-fund.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading
+	url = https://github.com/Amdkn/Vibe-Trading.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/financial-services
+	url = https://github.com/Amdkn/financial-services.git
+[submodule "01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents"]
+	path = 01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents
+	url = https://github.com/Amdkn/TradingAgents.git
+[submodule "01_Forkable/FKB04_Tools_Anything/hermes-agent"]
+	path = 01_Forkable/FKB04_Tools_Anything/hermes-agent
+	url = https://github.com/Amdkn/hermes-agent.git
+[submodule "01_Forkable/FKB08_Plugins/anthropic-skills"]
+	path = 01_Forkable/FKB08_Plugins/anthropic-skills
+	url = https://github.com/Amdkn/skills.git
+[submodule "01_Forkable/FKB08_Plugins/mattpocock-skills"]
+	path = 01_Forkable/FKB08_Plugins/mattpocock-skills
+	url = https://github.com/Amdkn/mattpocock-skills.git
+[submodule "01_Forkable/FKB08_Plugins/openai-plugins"]
+	path = 01_Forkable/FKB08_Plugins/openai-plugins
+	url = https://github.com/Amdkn/openai-plugins.git
+[submodule "01_Forkable/FKB08_Plugins/claude-video"]
+	path = 01_Forkable/FKB08_Plugins/claude-video
+	url = https://github.com/Amdkn/claude-video.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/PathFM"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/PathFM
+	url = https://github.com/Amdkn/PathFM.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/autogluon
+	url = https://github.com/Amdkn/autogluon.git
+[submodule "01_Forkable/FKB02_Memory/gbrain"]
+	path = 01_Forkable/FKB02_Memory/gbrain
+	url = https://github.com/Amdkn/gbrain.git
+[submodule "01_Forkable/FKB02_Memory/infinite-brain-os"]
+	path = 01_Forkable/FKB02_Memory/infinite-brain-os
+	url = https://github.com/Amdkn/infinite-brain-os.git
+[submodule "01_Forkable/FKB02_Memory/infinite-brain-harness"]
+	path = 01_Forkable/FKB02_Memory/infinite-brain-harness
+	url = https://github.com/Amdkn/infinite-brain-harness.git
+
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gstack"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gstack
+	url = https://github.com/Amdkn/gstack.git
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/superpowers"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/superpowers
+	url = https://github.com/Amdkn/superpowers.git
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/get-shit-done"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/get-shit-done
+	url = https://github.com/Amdkn/get-shit-done.git
+
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm
+	url = https://github.com/Amdkn/timesfm.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/chronos-forecasting"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/chronos-forecasting
+	url = https://github.com/Amdkn/chronos-forecasting.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/tabfm
+	url = https://github.com/Amdkn/tabfm.git
+[submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2"]
+	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2
+	url = https://github.com/Amdkn/mitra-2.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins
+	url = https://github.com/Amdkn/a0-plugins.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/spynel"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/spynel
+	url = https://github.com/Amdkn/spynel.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/tuxee"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/tuxee
+	url = https://github.com/Amdkn/tuxee.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/cordis"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/cordis
+	url = https://github.com/Amdkn/cordis.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness
+	url = https://github.com/Amdkn/deepseek-harness.git
+
+[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/pi"]
+	path = 01_Forkable/FKB00_Runtime/00_A0_Core/pi
+	url = https://github.com/Amdkn/pi.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr
+	url = https://github.com/Amdkn/herdr.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core
+	url = https://github.com/Amdkn/herdr-core.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app
+	url = https://github.com/Amdkn/herdr-app.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/orca"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/orca
+	url = https://github.com/Amdkn/orca.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/t3code"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/t3code
+	url = https://github.com/Amdkn/t3code.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/openclaw"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/openclaw
+	url = https://github.com/Amdkn/openclaw.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/claude-code"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/claude-code
+	url = https://github.com/Amdkn/claude-code.git
+
+[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex"]
+	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex
+	url = https://github.com/Amdkn/codex.git
+
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent
+	url = https://github.com/Amdkn/prime-agent.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
+	url = https://github.com/Amdkn/wikiskill.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes
+	url = https://github.com/Amdkn/adk-recipes.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi
+	url = https://github.com/Amdkn/rrsi.git
+
+[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi"]
+	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi
+	url = https://github.com/Amdkn/dream-rsi.git
+
+[submodule "01_Forkable/FKB03_3DWorlds/space-agent"]
+	path = 01_Forkable/FKB03_3DWorlds/space-agent
+	url = https://github.com/Amdkn/space-agent.git
+
+[submodule "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity"]
+	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity
+	url = https://github.com/Amdkn/RigInfinity.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage
+	url = https://github.com/Amdkn/OpenMontage.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/flute"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/flute
+	url = https://github.com/Amdkn/flute.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable"]
+	path = 01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable
+	url = https://github.com/Amdkn/impeccable.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma"]
+	path = 01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma
+	url = https://github.com/Amdkn/uptime-kuma.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/changedetection.io"]
+	path = 01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/changedetection.io
+	url = https://github.com/Amdkn/changedetection.io.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor"]
+	path = 01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor
+	url = https://github.com/Amdkn/DeepTutor.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook"]
+	path = 01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook
+	url = https://github.com/Amdkn/open-notebook.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot
+	url = https://github.com/Amdkn/OpenMausBot.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/powerbi-to-ai-visuals"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/powerbi-to-ai-visuals
+	url = https://github.com/Amdkn/powerbi-to-ai-visuals.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad"]
+	path = 01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad
+	url = https://github.com/Amdkn/text-to-cad.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld"]
+	path = 01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld
+	url = https://github.com/Amdkn/BlenderWorld.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/argo"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/argo
+	url = https://github.com/Amdkn/argo.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/earshot"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/earshot
+	url = https://github.com/Amdkn/earshot.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/explainroo"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/explainroo
+	url = https://github.com/Amdkn/explainroo.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion
+	url = https://github.com/Amdkn/huashu-motion.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/reanimate"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/reanimate
+	url = https://github.com/Amdkn/reanimate.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/rossark-motion-skill"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/rossark-motion-skill
+	url = https://github.com/Amdkn/rossark-motion-skill.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/take-one"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/take-one
+	url = https://github.com/Amdkn/take-one.git
+
+[submodule "01_Forkable/FKB07_Money_Maker/02_Video/video-director"]
+	path = 01_Forkable/FKB07_Money_Maker/02_Video/video-director
+	url = https://github.com/Amdkn/video-director.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS
+	url = https://github.com/Amdkn/FreeVPS.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot
+	url = https://github.com/Amdkn/openbot.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse
+	url = https://github.com/Amdkn/openmuse.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots
+	url = https://github.com/Amdkn/OpenDots.git
+[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet"]
+	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet
+	url = https://github.com/Amdkn/OpenDuet.git
+[submodule "01_Forkable/FKB07_Money_Maker/BusinessOS"]
+	path = 01_Forkable/FKB07_Money_Maker/BusinessOS
+	url = https://github.com/Amdkn/BusinessOS.git
+[submodule "01_Forkable/FKB04_Tools_Anything/caveman"]
+	path = 01_Forkable/FKB04_Tools_Anything/caveman
+	url = https://github.com/Amdkn/caveman.git
+[submodule "01_Forkable/FKB04_Tools_Anything/claude-mem"]
+	path = 01_Forkable/FKB04_Tools_Anything/claude-mem
+	url = https://github.com/Amdkn/claude-mem.git
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling
+	url = https://github.com/Amdkn/Scrapling.git
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify
+	url = https://github.com/Amdkn/dify.git
+[submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton"]
+	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton
+	url = https://github.com/Amdkn/presenton.git

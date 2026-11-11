@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(herdr-app do *)",
+      "Bash(dir \"C:\\Users\\amado\\Aspace V5\")",
+      "Bash(dir C:\\\\Users\\\\amado\\\\Aspace OS V5 *)"
+    ],
+    "defaultMode": "bypassPermissions"
+  },
+  "skipDangerousModePermissionPrompt": true,
+  "enabledMcpjsonServers": [
+    "memory",
+    "desktop-commander",
+    "playwright",
+    "chrome-devtools",
+    "context7",
+    "jules"
+  ]
+}

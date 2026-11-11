@@ -1,0 +1,31 @@
+{
+  "mcpServers": {
+    "memory": {
+      "command": "C:/Users/amado/AppData/Roaming/npm/mcp-server-memory.cmd",
+      "args": [],
+      "env": {
+        "MEMORY_FILE_PATH": "C:/Users/amado/Aspace OS V5/00_Memoire/shared_brain/memory.jsonl"
+      }
+    },
+    "desktop-commander": {
+      "command": "C:/Users/amado/AppData/Roaming/npm/desktop-commander.cmd",
+      "args": []
+    },
+    "playwright": {
+      "command": "C:/Users/amado/AppData/Roaming/npm/playwright-mcp.cmd",
+      "args": []
+    },
+    "chrome-devtools": {
+      "command": "C:/Users/amado/AppData/Roaming/npm/chrome-devtools-mcp.cmd",
+      "args": []
+    },
+    "context7": {
+      "command": "C:/Users/amado/AppData/Roaming/npm/context7-mcp.cmd",
+      "args": []
+    },
+    "jules": {
+      "command": "C:/Users/amado/AppData/Roaming/npm/jules.cmd",
+      "args": []
+    }
+  }
+}

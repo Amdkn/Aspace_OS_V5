@@ -1,0 +1,10 @@
+# G2 — 8 Managers Tactiques DC (LD06)
+
+- `G2.1_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.2_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.3_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.4_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.5_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.6_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.7_Playbook_DC` (Playbook Patrimonial DC)
+- `G2.8_Playbook_DC` (Playbook Patrimonial DC)

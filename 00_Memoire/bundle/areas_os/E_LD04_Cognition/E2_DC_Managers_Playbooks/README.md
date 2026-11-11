@@ -1,0 +1,10 @@
+# E2 — 8 Managers Tactiques DC (LD04)
+
+- `E2.1_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.2_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.3_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.4_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.5_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.6_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.7_Playbook_DC` (Playbook Patrimonial DC)
+- `E2.8_Playbook_DC` (Playbook Patrimonial DC)

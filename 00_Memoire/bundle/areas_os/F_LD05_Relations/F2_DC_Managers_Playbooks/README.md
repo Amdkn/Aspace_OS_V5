@@ -1,0 +1,10 @@
+# F2 — 8 Managers Tactiques DC (LD05)
+
+- `F2.1_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.2_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.3_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.4_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.5_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.6_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.7_Playbook_DC` (Playbook Patrimonial DC)
+- `F2.8_Playbook_DC` (Playbook Patrimonial DC)

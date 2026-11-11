@@ -1,0 +1,10 @@
+# B2 — 8 Managers Tactiques DC (LD01)
+
+- `B2.1_Operations` (Playbook Patrimonial DC)
+- `B2.2_Tresorerie` (Playbook Patrimonial DC)
+- `B2.3_Legal` (Playbook Patrimonial DC)
+- `B2.4_RD` (Playbook Patrimonial DC)
+- `B2.5_Alliances` (Playbook Patrimonial DC)
+- `B2.6_Infra` (Playbook Patrimonial DC)
+- `B2.7_IT` (Playbook Patrimonial DC)
+- `B2.8_Gouvernance` (Playbook Patrimonial DC)

@@ -1,0 +1,106 @@
+{
+  "total_holons": 578,
+  "breakdown": {
+    "tech_os_13_roles_s1_s2_s3": 13,
+    "life_os_canon_a1_a2_a3": 43,
+    "areas_os_ld00_beth_morty": 1,
+    "areas_os_directors_b1_to_i1": 8,
+    "areas_os_j1_meta_jerry": 1,
+    "areas_os_dc_managers_b2_to_i2": 64,
+    "areas_os_marvel_squad_specialists_b3_to_i3": 448
+  },
+  "canonical_8_files": [
+    "README.md",
+    "SOUL.md",
+    "AGENTS.md",
+    "CONTRACTS.md",
+    "CAPABILITIES.md",
+    "RUNBOOK.md",
+    "STATE.md",
+    "MEMORY.md"
+  ],
+  "gws_surfaces": {
+    "21_Ikigai_Orville": {
+      "commander": "A2 Orville (USS Orville)",
+      "officers_a3": [
+        "Mercer",
+        "Grayson",
+        "Malloy",
+        "Finn",
+        "Isaac",
+        "Lamarr",
+        "Bortus",
+        "Alara",
+        "Klyden"
+      ],
+      "gws_surface": "Google Slides (Matrice 4 Piliers Ikigai x 5 Horizons = 20 combinaisons)"
+    },
+    "22_Wheel_Discovery": {
+      "commander": "A2 Discovery / Zora (USS Discovery)",
+      "officers_a3": [
+        "Book (LD01)",
+        "Saru (LD02)",
+        "Culber (LD03)",
+        "Tilly (LD04)",
+        "Stamets (LD05)",
+        "Burnham (LD06)",
+        "Reno (LD07)",
+        "Georgiou (LD08)"
+      ],
+      "gws_surface": "Google Sheets (00 — LIFE OS 2026 · Cockpit 6 Frameworks x 8 Domaines = 48 intersections)"
+    },
+    "23_12WY_SNW": {
+      "commander": "A2 Curie (Strange New Worlds)",
+      "officers_a3": [
+        "Pike (Vision)",
+        "Una (Planification)",
+        "La'an (Process Control)",
+        "Uhura (Scorecard)",
+        "Ortegas (Time Use)"
+      ],
+      "gws_surface": "Google Calendar (5 disciplines Curie x 8 LD = 40 contextualisations)"
+    },
+    "24_PARA_Enterprise": {
+      "commander": "A2 Enterprise (USS Enterprise)",
+      "officers_a3": [
+        "Riker (Projects)",
+        "Troi (Areas — point d'ancrage d'Areas OS)",
+        "Geordi (Resources)",
+        "Worf (Archives)"
+      ],
+      "gws_surface": "Google Drive (Hiérarchie documentaire & SSOT)"
+    },
+    "25_GTD_Cerritos": {
+      "commander": "A2 HoloDeck (USS Cerritos)",
+      "officers_a3": [
+        "Mariner (Capture)",
+        "Boimler (Clarify)",
+        "Tendi (Organize)",
+        "Rutherford (Reflect)",
+        "T'Lyn (Engage)"
+      ],
+      "gws_surface": "Google Tasks (Flux d'actions atomiques)"
+    },
+    "26_DEAL_Protostar": {
+      "commander": "A2 HoloJaneway (USS Protostar)",
+      "officers_a3": [
+        "Dal (Define)",
+        "Rok-Tahk (Eliminate)",
+        "Zero (Automate)",
+        "Gwyn (Liberate)"
+      ],
+      "gws_surface": "Google Chat (4 Spaces : Define, Eliminate, Automate, Liberate ; remplace Google Keep)"
+    }
+  },
+  "areas_columns": [
+    "B_LD01_Business_AMP",
+    "C_LD02_Finances",
+    "D_LD03_Sante",
+    "E_LD04_Cognition",
+    "F_LD05_Relations",
+    "G_LD06_Habitat_Solarpunk",
+    "H_LD07_Creativite",
+    "I_LD08_Impact_MetaAspace",
+    "J1_Jerry_Macro_CrossOS"
+  ]
+}
