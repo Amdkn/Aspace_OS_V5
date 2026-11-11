@@ -1,0 +1,17 @@
+[package]
+name = "fondation-13-1"
+version = "0.1.0"
+edition = "2021"
+description = "Fonction Recevoir de la Fondation 13 → 1 (D-N055 F1-2) : validateur R10 v1 + consignateur — code A'Space neuf, zéro dépendance, zéro télémétrie"
+license = "Apache-2.0"
+
+[lib]
+name = "r10_validator"
+path = "src/lib.rs"
+
+[[bin]]
+name = "r10-receive"
+path = "src/bin/r10-receive.rs"
+
+[profile.release]
+debug = false
