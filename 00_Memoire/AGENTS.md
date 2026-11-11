@@ -13,7 +13,7 @@ Tous les agents de V5 lisent.
 - **Trois couches WikiLLM** :
   1. **Raw (`raw/`)** : sources brutes immuables.
   2. **Wiki (`bundle/`)** : bundle OKF v0.2 (`knowledge-catalog/okf/SPEC.md`) composé de `index.md` (catalogue par catégories), `log.md` (journal chronologique append-only) et `concepts/*.md` (pages avec frontmatter YAML `type:` obligatoire).
-  3. **Schema (`AGENTS.md` + `CLAUDE.md`)** : définit les workflows **Ingest**, **Query** et **Lint**.
+  3. **Schema (`AGENTS.md`, `CLAUDE.md` et `GEMINI.md`)** : définit les workflows **Ingest**, **Query** et **Lint**.
 - **`bundle/log.md` et `ledger.jsonl` sont APPEND-ONLY** : ne jamais modifier, réordonner ni supprimer une ligne existante. Ajouter à la fin uniquement (`Add-Content` / `>>`).
 - Nouvelle connaissance durable (Ingest ou Query) → créer ou mettre à jour une page dans `bundle/concepts/`, mettre à jour `bundle/index.md`, et consigner un `* **Note**: ...` dans `bundle/log.md`.
 - `hooks/recall.ps1` (UserPromptSubmit) injecte `index.md`, les concepts et la fin de `log.md`. `hooks/record.ps1` (Stop) ajoute l'entrée `**Auto**`. Ne pas les contourner.

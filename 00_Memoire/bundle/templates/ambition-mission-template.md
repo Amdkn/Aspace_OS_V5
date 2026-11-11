@@ -9,7 +9,7 @@ sources:
     title: "How to be more ambitious: A tutorial for humans with models"
     author: human:felix-rieseberg
   - id: v5-source-notes
-    resource: ../raw/felix-rieseberg-ambition-2026.md
+    resource: ../../raw/felix-rieseberg-ambition-2026.md
     title: "Distillation V5 du protocole Modo de Volar"
 generated:
   by: process:aspace-ambition-protocol
