@@ -55,3 +55,10 @@ Ces clés sont des extensions Aspace, pas de nouvelles clés obligatoires de la 
 - `dox/AGENTS.md` : framework DOX d'origine (référence).
 - `wikillm/llm-wiki.md` : spécification du pattern WikiLLM de Karpathy (référence).
 - `knowledge-catalog/okf/SPEC.md` : spécification OKF v0.2 (référence).
+
+- `bundle/index.md` : index OKF v0.2 des concepts, templates et domaines de Mémoire.
+- `bundle/concepts/ambition-modo-de-volar.md` : doctrine des quatre dimensions et du Outside Judge.
+- `bundle/templates/ambition-mission-template.md` : template canonique de compilation d’intention en Mission Contract expert et Workgraph continu.
+- `../.agents/skills/ambition-mission/SKILL.md` : skill agnostique de compilation et exécution des missions.
+- `bundle/areas_os/B_LD01_Business_AMP/AGENTS.md` à `bundle/areas_os/I_LD08_Impact_MetaAspace/AGENTS.md` : contrats locaux des huit OwnerBooks LD01–LD08.
+- `bundle/areas_os/J1_Jerry_Macro_CrossOS/AGENTS.md` : contrat transversal de J1 Meta-Jerry.
