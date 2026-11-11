@@ -3,7 +3,7 @@ type: concept
 id: ambition-modo-de-volar
 title: "Protocole d'Ambition « Modo de Volar » (Felix Rieseberg — 4 Vecteurs & Outside Judge)"
 created: "2026-11-03"
-updated: "2026-11-03"
+updated: "2026-11-11"
 sources:
   - "../../raw/felix-rieseberg-ambition-2026.md"
   - "../../../AGENTS.md"
