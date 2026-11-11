@@ -1,5 +1,8 @@
 //! Validateur R10 v1 — fonction Recevoir (D-N055 F1-2, Fondation 13 → 1).
 //!
+//! Routeur — fonction Router (D-N055 F1-3) : voir le module `router`
+//! (validation R1–R8, inscription append-only, relais comme événement).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -26,6 +29,8 @@
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
 //! Adresse : `fiber:a0:fondation-13-1` (fonction Recevoir).
+
+pub mod router;
 
 use std::collections::HashSet;
 use std::fmt;
@@ -476,7 +481,7 @@ fn civil_from_days(z: i64) -> (i64, i64, i64) {
     (if m <= 2 { y + 1 } else { y }, m, d)
 }
 
-fn days_in_month(y: i64, m: i64) -> i64 {
+pub(crate) fn days_in_month(y: i64, m: i64) -> i64 {
     match m {
         1 | 3 | 5 | 7 | 8 | 10 | 12 => 31,
         4 | 6 | 9 | 11 => 30,
