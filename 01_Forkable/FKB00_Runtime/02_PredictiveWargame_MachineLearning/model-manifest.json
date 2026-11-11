@@ -1,6 +1,7 @@
 {
   "module": "02_PredictiveWargame_MachineLearning",
   "fractal_layer": "20L",
+  "weight_verification": "CORRECTION R1 (2026-11-10) : les poids sont des fichiers LFS — l'oid de l'arbre Hub est le sha1 du POINTEUR LFS (134 o), jamais celui du contenu. Vérification correcte : taille + sha256 du contenu == lfs.oid de l'arbre Hub (confirmé par SHA256SUMS du Hub pour PathFM). Les mount-weights.sh des 4 miroirs (acte 1) utilisent l'ancien contrôle git blob oid et doivent être corrigés de même.",
   "swarm_engine": {
     "name": "MiroFish (OASIS + MindGraph)",
     "upstream": "https://github.com/666ghj/MiroFish",
@@ -58,7 +59,8 @@
       "weight_size": "75M-300M params",
       "license": "Non-Commercial (CC-BY-NC-4.0 — PathFM-Chaotic-75M vérifié en R1 ; autres variantes non vérifiées)",
       "sovereign_mirror": "Amdkn/PathFM",
-      "mirror_note": "Amdkn/PathFM existait déjà avant D-N052 (non recréé)."
+      "mirror_note": "Amdkn/PathFM existait déjà avant D-N052 (non recréé).",
+      "r1_mount": "pathfm-chaotic-75m @ af1a159695126b5b91be5499d3709c3bf25a3c44, model.safetensors 294572852 o, sha256 LFS 6958980c5d72823f7505615bfa4a7751eeb8a21c26c6c70bcb4a800613a8177e"
     },
     {
       "pillar": "4_Internal_Calibration_Jury_Google",
