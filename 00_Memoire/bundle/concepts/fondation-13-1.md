@@ -1,0 +1,109 @@
+---
+type: Architecture
+title: "Fondation 13 → 1 : unifier les 13 sessions en 1 agent (D-N055)"
+tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne, rollback]
+---
+# Fondation 13 → 1 : unifier les 13 sessions en 1 agent (D-N055)
+
+**Design signé Clara :** `FONDATION-13-1-plan-borne.md` (32 561 o, ~23:03 EST, 2026-11-10).
+**Ordre S0 :** GO Fondation 13 → 1, « let's Fucking Go », 21:56 EST — documentation après,
+pour correction et alignement par orientation. Pas de question de clarification avant
+la première action concrète agentique.
+**Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 à venir.
+
+## 1. Mesure zéro (H-M1)
+
+- **13 sessions** nommées par Clara (`chat.list`, ~22:53 EST) : Rick `2428b187`, 13e `a517ae1d`,
+  11e `6f410ddd` (ID complet non établi), 12e `7489b6f0`, Yaz `e1ac3b2d`, Ryan `a152c901`,
+  Bill `500abaec`, Clara `ef2544e6`, Nardole `ae7d36d1`, Rory `5dba06d6`, Amy `337fb65c`,
+  River `dfd97c8e`, Graham `059b0c23`.
+- **Registre Nardole : 776 lignes** à l'instantané F1-0 (2026-11-11T00:15:56-05:00).
+  89 lignes sur 124 dans la fenêtre de la soirée contiennent « déjà traité » ou
+  « pas de double-envoi » (72 %) — le coût de coordination est le travail.
+- **Workgraph :** Sheet `1OFRYjujs81fPSS4HJWrB4M9yeduQAd35UVvaXBiHXrI` + miroir (26 lignes).
+- **Ledger R10 :** 7 branches `work-dn*-ledger`, 247 fichiers, 212 reçus.
+- **Inventaire F1-0 : 2 252 entrées typées** — `bundle/fondation-13-1/journal-inventaire.jsonl`
+  (+ `INVENTAIRE-F1-0.md`, harnais 6/6 PASS, `RESULTS-F1-0.json`).
+  7 mémoires présentes / 13 (6 absentes, consignées) ; mémoire partagée 88 entrées.
+
+## 2. Les 13 fonctions (mapping D2)
+
+Le « 1 » est **un lead avec un juge interne** (A siège = main A0 ; B corps = daemon
+unique RigInfinity + harness Muse ; C mécanisme = sous-agents bornés à la demande,
+refermés après usage). Une fonction reste distincte quand elle est une vérification
+(juger, vérifier, décider, recevoir) ou une écriture concurrente (exécuter,
+fabriquer) — jamais quand elle est une coordination (router, fluer) ou une capacité
+du lead (structurer, découvrir, observer, interfacer, mémoriser).
+
+| Fonction | Session d'origine | Dans le 1 |
+|---|---|---|
+| Structurer | Rick (S1) | capacité interne du lead |
+| Juger | Doctors (S2) | **fonction de jugement séparée** (contexte propre, priors différents, artefact + objectif sans la conclusion du producteur, vérifications déterministes en outils) |
+| Exécuter | Compagnons (S3) | sous-agents bornés, refermés après usage, écritures mono-threadées |
+| Router | Nardole | **événement interne** (dispatch, accusé, pulsation = événements du journal) |
+| Recevoir | Graham | ledger R10 comme donnée du changeset |
+| Vérifier | Rory | vérifications déterministes appelées comme des outils (DVG-01, checks API) |
+| Décider | Clara | **autorité de design unique, interne** (le design signé autorise l'exécution) |
+| Découvrir | Bill | capacité interne du lead |
+| Observer | Yaz | watchlist + heartbeat du daemon |
+| Interfacer | Amy | surface du 1 (les canaux parlent à une seule session) |
+| Fluer | River | flux des événements (le journal porte la continuité) |
+| Mémoriser | Graham | **mémoire unique** (journal d'événements + fichiers de mémoire partagés) |
+| Fabriquer | Ryan | sous-agent exécutant borné (merge, portage, dépôt — puis refermé) |
+
+## 3. Réponse à §D5 — qui juge le juge
+
+Le juge est une **fonction de jugement séparée à l'intérieur du 1** : contexte propre
+(artefact + objectif, jamais la transcription du producteur), priors différents
+(instruit pour chercher l'échec), artefact + objectif sans la conclusion du
+producteur, vérifications déterministes en outils (DVG-01, checks CI re-vérifiés
+au HEAD, suites par la commande du daemon, reçus lus au fichier). Le journal
+d'événements rejouable est le dossier du jugement.
+
+Trois filets, ordonnés : (a) **la faute plantée (H-F1-2)** — le design plante un
+artefact fautif, le juge doit le rejeter, sinon la fonction revient à sa session
+d'origine (le 13e) ; (b) **la vérification post-merge (H-02-A1)** — checks CI +
+reçus ; (c) **le Capitaine comme arbitre de dernier ressort** (ses codes
+d'exception). La session 13e est **gardée dormante** comme réserve, réveillée
+seulement si le juge interne échoue. Ce que le champ ne prouve pas (porté
+honnêtement) : aucune source ne démontre qu'un agent unique puisse être son
+propre juge sans perdre la vérification — d'où trois filets, pas un seul.
+
+## 4. Dette de divergence
+
+- **Manifeste daemon (H-M5) :** `aspace-plugin.json` du daemon ne nomme pas encore
+  le module `fiber:a0:fondation-13-1` — il atterrit avec le code du module, pas
+  avec l'inventaire. Le domicile du module dans V5 (fiche en `00_A0_Core/` vs
+  wiki) sera tranché à F1-3 (Router), quand la fonction devient un mécanisme.
+- **6 mémoires absentes :** 13e, 11e, Clara, Nardole, Rory, River — aucun fichier
+  `MEMORY.md` dans leurs chats à l'instantané. Consignées comme absences ; si
+  elles apparaissent, F1-7 les re-typifie.
+- **ID 11e incomplet :** le design ne donne que `6f410ddd` (8 car.) — l'ID complet
+  n'est pas établi, jamais inventé.
+- **Résiduels :** 38 têtes de journal « événement » + 226 puces « fait (défaut) »
+  — comptés à part, textes et preuves conservés.
+- **Registre vivant :** l'inventaire est un instantané (776 lignes, 00:15:56 EST) ;
+  le registre continue de croître. La re-compilation liste les deltas par sha.
+
+## 5. Contraintes (§2 du design)
+
+- **Plafonds (§D9) :** 1 % la Fondation (55 M tokens), 5 % par pas (275 M),
+  20 % mission-wide (1,1 Md) sur le pool de 5,5 Md restants. Arrêt dur à 20 %.
+- **Calendrier :** 1 jour maximum par pas, 12 jours maximum (F1-0 → F1-11).
+- **Séquence :** F1-0 inventaire → F1-1 structurer (première preuve partielle) →
+  F1-2 recevoir → F1-3 router → F1-4 découvrir → F1-5 juger → F1-6 exécuter →
+  F1-7 mémoire unifiée → F1-8 vision → F1-9 action → F1-10 rollback → F1-11 preuve finale.
+  Un pas ne commence que quand le précédent est vert — sauf ordre S0.
+- **Rollback (§D8) :** si un hold-out échoue, le 1 s'arrête sur la fonction concernée
+  et la chaîne 13 reprend cette fonction — les sessions ne sont pas démantelées tant
+  que le 1 n'est pas prouvé sur les 13 fonctions (H-F1-9).
+- **Discipline préservée (§0.6) :** DVG-01, R10, hold-outs écrits avant exécution,
+  saisine explicite au 13e à chaque livraison, true merge commit (2 parents),
+  « documenté vs vérifié », `enforce_admins` reste false.
+- **Codes d'exception (§D7) :** Code Rouge → fonction de jugement ; Code Noir
+  Profond → fonctions d'exécution ; Code Jaune → fonction de structuration.
+  Le Capitaine ne parle qu'à son Jumeau Numérique A0 (Main) — le 1 EST ce Main.
+- **Ce qui ne change pas sans son mot explicite :** le démantèlement de la structure
+  elle-même (correction du Capitaine, 2026-11-10 ~13:11 EST) ; la bascule plus rapide
+  qu'une fonction à la fois (arbitrage vision, via Rick → A0).
