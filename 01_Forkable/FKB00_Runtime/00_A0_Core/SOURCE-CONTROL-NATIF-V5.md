@@ -28,8 +28,19 @@
 
 ## Dette de divergence
 
-- **Le manifeste du daemon (`aspace-plugin.json` dans RigInfinity) ne nomme pas encore le module source-control-natif** — à ajouter quand le module atterrit (SC-1), pas un blocage du re-pin. Ce manifeste V5 est la nomination en attendant.
+- **Dette SC-0 CLOSE (SC-1) :** le manifeste du daemon (`aspace-plugin.json` dans RigInfinity, pin `c6adc8d`) nomme désormais le module — capability `source_control_natif_read_api`. Le module a atterri : `crates/infinity-daemon/src/source_control.rs` + `tests/source_control_proof.rs`.
 - Aucune divergence de code au SC-0 : le re-pin n'ajoute aucune ligne (changement de pointeur seul).
+
+## SC-1 — API de lecture : diff, blame, ancêtre sans clone (D-N054)
+
+- **Module :** `crates/infinity-daemon/src/source_control.rs` (1035 lignes) + `tests/source_control_proof.rs` (359 lignes), pin daemon **`c6adc8d`** (parent `ee5c838`, vérifié à l'API) ; **36 fichiers suivis** au pin (34 au SC-0 + module + test).
+- **Contrat D4 — 6 requêtes exactement :** `diff`, `blame`, `ancêtre` vivent à SC-1, servies au-dessus de l'API GitHub (reqwest, déjà dépendance du daemon — 0 dépendance ajoutée) ; `reçu` (SC-3), `jugement` (SC-4), `hold-out` (SC-5) répondent `pending` structuré — jamais de fausse donnée.
+- **Diff / ancêtre :** API compare (`/compare/{base}...{head}`) — fichiers + ajouts/suppressions + `merge_base_commit`.
+- **Blame :** pas d'endpoint REST blame chez GitHub — calcul à la demande (différé, D3) par application avant des patches (*forward-application*) des commits touchant le chemin, vérifié contre le contenu au ref ; plafonds 100 commits / 2 000 lignes ; tout écart (historique tronqué, patch absent, contenu divergent) est une erreur, pas une attribution silencieuse. Cas renommage : contenu au commit de renommage pris comme base. Cas merge (correctif `ee5c838`, trouvé par la preuve live sur `AGENTS.md`) : un fichier introduit par un merge (la liste `commits?path=` nomme le merge, pas la création) est amorcé depuis le contenu au merge, attribué au merge — sinon le replay partirait à mi-fichier (hunk ligne 6, curseur ligne 1) et refuserait à tort. Cas racine + troncature (correctif `c6adc8d`, trouvé par la même preuve) : l'API plafonne la liste `files[]` d'un commit à 300 entrées — le commit racine de V5 (`877ebc8`, 1 631 fichiers) cache la création d'`AGENTS.md`, et `caf85c0` (300 fichiers) cache sa modification ; une racine sans entrée est amorcée depuis son propre contenu, tout autre gros commit sans entrée utilisable est un refus (`PatchUnavailable`), jamais un replay avec un trou — `AGENTS.md` lui-même n'est donc pas blâmable par cette API, et la preuve live choisit un fichier qualifié (chaque commit touchant porte une entrée, ou est un merge / une racine).
+- **Preuve H-SC-3 (première preuve partielle, D10) :** une question servie sans clone de 28,33 Go — preuve live dans `RESULTS-D-N054-SC1.json` (diff + blame + ancêtre réels sur `Amdkn/Aspace_OS_V5`, recoupés à `gh api`).
+- **Sans clone, par construction :** le module n'invoque jamais `git`, ne lance aucun sous-processus ; seul trafic sortant = HTTPS vers l'API GitHub, sur requête uniquement. Token par env (`GITHUB_TOKEN` / `GH_TOKEN`) — jamais en dur, jamais logué.
+- **Suite (H-M3) :** `cargo test -p infinity-daemon` **64/64** au pin (lib 51/51 — dont 4 tests `source_control` — + `agent_zero_proof` 5/5 + `daemon_proof` 4/4 + `source_control_proof` 4/4, dont les cas merge et racine) ; clippy 0 warning ; rustfmt clean.
+- **Clean-room :** écrit à partir de la surface REST GitHub et de l'algorithme standard d'attribution par lignes — aucun code copié de `CarterT27/scion`.
 
 ## Contraintes (§2 du design)
 
