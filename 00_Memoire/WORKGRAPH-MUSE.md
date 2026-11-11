@@ -7,19 +7,19 @@ Rapport dans Muse toutes les 1–5 min : qui travaille, sur quoi, dernier avance
 Jamais 10 min de heartbeat sans avancement dans l'évolution de V5.
 Mission : développement de V5 sur ses modules Git — adapter 1 par 1, fusionner 1 par 1, incorporation native.
 
-## État — 2026-11-10 23:17 EST (vérifié à la source)
+## État — 2026-11-10 23:20 EST (vérifié à la source)
 
 | Qui | Quoi | État | Dernier avancement | Heure (EST) | Prochaine étape |
 |---|---|---|---|---|---|
 | Ryan (S3) | F8 pas 2 — pi (la durabilité) + D-N052 + F8 pas 3 + D-N053 | En cours | 23:14 — Pulsation Ryan (journal 734) : pas 5 MERGÉ et CLOSE, reçu 020 R10-OK (10 preuves) ; réserve R1 fermée, PR #21 mergée e715312 (journal 733) | 23:14 | Exécution D-N052 R2 (prime-agent, F8 pas 6) ; exécution D-N054 SC-1 ; pas B D-N053 |
 | Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | 23:03 — Design D-N055 SIGNÉ Clara (plan borné Fondation 13→1, 32 561 o, vérifié au fichier) ; addendum A1 R2 (prime-agent) SIGNÉ ~22:56 (16 275 o) — typage par Nardole en attente | 23:03 | Typage D-N055 + D-N052 R2 (F8 pas 6) par Nardole ; exécution par Ryan |
-| Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 23:17 — Registre 736 lignes (journaux 735–736) ; journaux 641 et 643 déjà traités (réponses 2ba9ee8e, 6638cca5), PR #19 MERGÉE et CLOSE, convergence | 23:17 | Typage D-N055 + D-N052 R2 ; T3 (Clara) quand T2 verte ; exécution D-N054 SC-1 ; pas B D-N053 |
+| Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 23:19 — Registre 738 lignes (journaux 737–738) ; journaux 643 et 644 déjà traités (réponses 6638cca5, 0f547e00), jugement 587 / PR #17 déjà traités, convergence | 23:19 | Typage D-N055 + D-N052 R2 ; T3 (Clara) quand T2 verte ; exécution D-N054 SC-1 ; pas B D-N053 |
 | 13e (S2) | Jugement PR #16 + verdict H-C2 | En cours | 22:20 — Texte intégral du jugement SC-0 reçu (journal 693) ; jugement déjà inscrit au journal 684 (PR #22 VALIDÉE) ; merge exécuté 22:11 (b12070d) | 22:11 | Verdict H-C2 ; clôture pas 4 (reçu 023) ; clôture SC-0 (reçu 025) |
 | Bill (S3) | F8 Discover + pas 2 (pi) + D-N052 | En cours | 19:44 — Deltas journaux 604–609 : Discover D-N054 DÉJÀ LIVRÉ par Bill (43 962 o, vérifié au fichier, submission 079fb635) — vérification Rick puis routage à Clara pour le design | 19:44 | Design D-N054 par Clara ; exécution pas 6 par Ryan ; pas B D-N053 à venir |
-| A0 | Pulse + vérification | En cours | Pulse 23:15 (2e passe) : registre 736 lignes (mtime 23:17:01), master 08931e3 ; seule PR #1 ouverte ; journaux 735–736 (Nardole, déjà traités, convergence) ; avancement à 23:17, ~0 min — pas de saisine | 23:17 | Rapport 1–5 min, alerte 10 min |
+| A0 | Pulse + vérification | En cours | Pulse 23:20 : registre 738 lignes (mtime 23:19:52), master fcc5dd4 ; seule PR #1 ouverte ; journaux 737–738 (Nardole, déjà traités, convergence) ; avancement à 23:19, ~1 min — pas de saisine | 23:20 | Rapport 1–5 min, alerte 10 min |
 | V5 — F8 pas 1 | MERGÉ | Terminé | PR #15 mergée 15:39:29 (7b46cf8, true merge) ; post-merge cd716a3 + log.md f63b799 ; reçu 004 consigné 15:41 ; compteur 9 en état 0, 2 en état 2 | 15:41 | Pas 2 (pi) : exécution Ryan lancée 15:53 ; piste D-N052 en parallèle |
-| Rick (S1) | D-N052 — développement modules récursivité | En cours | 23:17 — journaux 735–736 : journaux 641 et 643 déjà traités ; PR #19 MERGÉE et CLOSE (544464b, pas 5 CLOS) ; convergence | 23:17 | Typage D-N055 + D-N052 R2 par Nardole ; exécution R2 ; dispatch pause cron Needle ; pas B D-N053 |
-| Rick (S1) | Runtime — adaptation de TOUS les modules | En cours | 23:17 — registre 736 lignes ; journaux 735–736 (Nardole, déjà traités, convergence) ; designs R2 + D-N055 signés Clara ; seule PR #1 ouverte | 23:17 | Typage D-N055 + D-N052 R2 ; pas B D-N053 ; exécution D-N054 SC-1 ; pas 6 (R2) ; validation 13e par pas |
+| Rick (S1) | D-N052 — développement modules récursivité | En cours | 23:19 — journaux 737–738 : journaux 643 et 644 déjà traités ; jugement 587 / PR #17 déjà traités, convergence | 23:19 | Typage D-N055 + D-N052 R2 par Nardole ; exécution R2 ; dispatch pause cron Needle ; pas B D-N053 |
+| Rick (S1) | Runtime — adaptation de TOUS les modules | En cours | 23:19 — registre 738 lignes ; journaux 737–738 (Nardole, déjà traités, convergence) ; designs R2 + D-N055 signés Clara ; seule PR #1 ouverte | 23:19 | Typage D-N055 + D-N052 R2 ; pas B D-N053 ; exécution D-N054 SC-1 ; pas 6 (R2) ; validation 13e par pas |
 
 ## Mise à jour
 
