@@ -42,6 +42,18 @@
 - **Suite (H-M3) :** `cargo test -p infinity-daemon` **64/64** au pin (lib 51/51 — dont 4 tests `source_control` — + `agent_zero_proof` 5/5 + `daemon_proof` 4/4 + `source_control_proof` 4/4, dont les cas merge et racine) ; clippy 0 warning ; rustfmt clean.
 - **Clean-room :** écrit à partir de la surface REST GitHub et de l'algorithme standard d'attribution par lignes — aucun code copié de `CarterT27/scion`.
 
+## SC-2 — Changeset WAL : entrée + pointeurs adressés par contenu (D-N054)
+
+- **Module :** `crates/infinity-daemon/src/changeset.rs` (627 lignes) + `tests/changeset_proof.rs` (317 lignes), pin daemon **`655b2a4`** (parent `c83b281`, vérifié à l'API) ; **38 fichiers suivis** au pin (36 au SC-1 + module + test). Correctifs : `c83b281` (`tmp_path` sans appel processus) + `655b2a4` (commentaire sans le littéral greppé) — la preuve no-subprocess reste littérale.
+- **Le changeset (H-SC-1, D2) :** une entrée append-only du WAL — id ULID maison, parent = tête de chaîne, auteur, message, instant ISO-8601 UTC, `entry_hash`, `prev_hash` ; tables `changeset_blobs` / `changesets` / `changeset_files` dans le même store SQLite que `factory.sqlite`, étendu (pas un second store) — `from_connection` applique le schéma à une connexion existante, preuve par test (`extends_existing_store` : table `rigs` pré-existante intacte). Mode WAL (`PRAGMA journal_mode=WAL`) sur fichier ; reprise prouvée par réouverture (`wal_mode_on_file_and_reopen`).
+- **Sans copie :** chaque blob est stocké une fois (`INSERT OR IGNORE`, clé = SHA-256 hex) ; l'entrée ne stocke que le hash (64 car.) — un changeset se crée sans copie, preuve `changeset_created_without_copy` : blob 1 Mio, 1 seule ligne blob, 1 048 576 o stockés, entrée = hash seul ; même contenu dans 2 changesets → toujours 1 ligne blob.
+- **Chaîne à l'épreuve des falsifications :** `entry_hash` = SHA-256 de la sérialisation canonique incluant `prev_hash` ; `verify_chain` + `replay` refusent toute rupture (preuve `tamper_detected` : `prev_hash` corrompu → erreur au verify et au replay). Caps : 1 000 fichiers / 64 Mio par blob, chemins repo-relatifs, refus avec motif — jamais d'écriture partielle (transaction unique).
+- **Ce qui n'est PAS là :** ni jugement ni reçu dans le changeset — SC-3 (données dérivées), SC-4 (check `r10-receipt`), SC-5 (hold-outs comme gates). Un changeset sans verdict est une donnée, pas un gate.
+- **Dépendance ajoutée :** `sha2 0.10` seule (SHA-256 — std n'en a pas, DefaultHasher instable inter-versions) ; ids ULID maison, horodatage `iso_now()` std-only. 0 appel réseau, 0 sous-processus, 0 invocation `git` (vérifié par grep). Note lock : la résolution offline a re-pinné les crates wasm-only `wasm-bindgen` 0.2.130 → 0.2.126 et `js-sys`/`web-sys` 0.3.107 → 0.3.103 — jamais compilées sur cette cible Linux, suite verte.
+- **Suite (H-M3) :** `cargo test -p infinity-daemon` **75/75** au pin (lib 54/54 — dont 3 tests `changeset` — + `agent_zero_proof` 5/5 + `daemon_proof` 4/4 + `source_control_proof` 4/4 + `changeset_proof` 8/8) ; clippy `-D warnings` 0 ; rustfmt clean.
+- **Plugin :** `aspace-plugin.json` nomme désormais `source_control_natif_changeset_wal` (capability, en plus de `source_control_natif_read_api`).
+- **Clean-room :** écrit à partir du design et de la sémantique WAL de SQLite — aucun code copié de `CarterT27/scion`.
+
 ## Contraintes (§2 du design)
 
 - Plafonds : 1 % le natif, 5 % par pas (SC-0..SC-10), 20 % mission-wide, alerte 80 %.
