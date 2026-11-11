@@ -1,0 +1,881 @@
+{
+  "$schema": "https://aspaceos.tech/schemas/modules-lock-v1.json",
+  "version": 1,
+  "generated_at": "2026-11-11T01:39:44-05:00",
+  "generated_by": "piste-F P0 (LE1-FAB-PISTE-F-001)",
+  "v5_head": "38daa7b737a3cac5461fc8657349fbd18b4caf32",
+  "pin_rule": "adapter",
+  "pin_rule_note": "Règle tranchée par le 13e en D-N053 pas A (journal 587) : pin = adapter. Le pin enregistré ici est le gitlink V5 EFFECTIF au v5_head — la vérité actuelle, pas la cible : les re-pins (cordis 6aab659, automaton e1f361d vers leurs adapters / mains) sont un pas P0-b séparé, après le verrouillage. A0-plugins a déjà été re-pinné sur l'adapter (fa8df85) par D-N053 pas B (PR #27, 2026-11-11) pendant la construction du lock. Aucun fast-forward silencieux : tout re-pin exige PR dédiée + compare API joint + harnais vert + jugement 13e (cf. §8.2 du Discover).",
+  "modules": [
+    {
+      "id": "fiber:a0:cordis",
+      "repo": "Amdkn/cordis",
+      "upstream_repo": "cordiverse/cordis",
+      "license": "MIT",
+      "gel": "b38ef5847a0f60662efc78fdde2c89f4943b77d4",
+      "adapter_commit": "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
+      "adapter_commits": [
+        "a40cc749c0a7611dc87da1262ad0874f378fdeb3"
+      ],
+      "adapter_parent": "b38ef5847a0f60662efc78fdde2c89f4943b77d4",
+      "bind_commit": "726291db3df128eb8a2c463476b38623b766c2de",
+      "pin": "6aab659432b23e94e8c8b797bcc986db256c0656",
+      "pin_branch": "main",
+      "pin_extra_commits": [
+        {
+          "sha": "6aab659432b23e94e8c8b797bcc986db256c0656",
+          "note": "mise en forme package.json post-adapter (pas un bind, pas un adapter)"
+        }
+      ],
+      "gitlink": "6aab659432b23e94e8c8b797bcc986db256c0656",
+      "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/cordis",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/cordis.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 375 (registre ligne 382, 2026-11-09 ~12:26 EST, D-N047 Phase B) ; PR #4 merge 31fcdf4497e9268774b3efdb95690cb588c6adf2 ; re-pin PR #13 merge d52140467c8443f020dc8a7cb5681514dc175b15 (jugement 462, F8 pas 0).",
+      "capabilities_owned": [],
+      "capabilities_claimed_elsewhere": [
+        "egm_bridge_31415 — revendiqué par le bind cordis, propriétaire agent-zero",
+        "holon_578_dispatch — revendiqué par le bind cordis, sans propriétaire",
+        "cordis_fiber_host — revendiqué par le bind cordis, sans propriétaire (P1)"
+      ],
+      "holdouts": {},
+      "upstream_drift": {
+        "ahead": 4,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 2,
+        "behind": 0,
+        "commits": [
+          "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
+          "6aab659432b23e94e8c8b797bcc986db256c0656"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = 6aab659 (formatage post-adapter), pas l'adapter a40cc74 : re-pin P0-b prévu vers l'adapter / main (D-F0-2, pin_rule=adapter). Branche native bc732a6d5f8ab08a0f6b45dbb4bd8e196089e067 divergée (ahead 1 / behind 3, base pré-gel 7f92195) : elle perd gel + adapter. API amont instable (manifeste). Manifeste sans champ holdouts ; fiche : smoke 3/3, suite fork 694 passés / 2 rouges identiques / 11 skipped.",
+      "provenance": {
+        "gel": {
+          "commit": "b38ef5847a0f60662efc78fdde2c89f4943b77d4",
+          "source": "amont cordiverse/cordis PR #298 (2026-11-09)"
+        },
+        "adapter": {
+          "commit": "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
+          "source": "D-N047 Phase B, PR #4"
+        },
+        "bind": {
+          "commit": "726291db3df128eb8a2c463476b38623b766c2de",
+          "source": "bind re-appliqué sur main (F8 pas 0)"
+        },
+        "pin": {
+          "commit": "6aab659432b23e94e8c8b797bcc986db256c0656",
+          "source": "PR #13 (F8 pas 0)"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 375,
+          "register_line": 382,
+          "merge_sha": "31fcdf4497e9268774b3efdb95690cb588c6adf2",
+          "source": "REGISTRE-NARDOLE.md l.382-383 (jugement cité journal 375, mtime 12:26:44 EST) ; re-pin pas 0 : jugement 462, PR #13"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:a0-plugins",
+      "repo": "Amdkn/a0-plugins",
+      "upstream_repo": "agent0ai/a0-plugins",
+      "license": "MIT",
+      "gel": "d040c3fd8d7ca9486cabf2761cbcc51c47d9b7d8",
+      "adapter_commit": "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
+      "adapter_commits": [
+        "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa"
+      ],
+      "adapter_parent": "d040c3fd8d7ca9486cabf2761cbcc51c47d9b7d8",
+      "bind_commit": "f436cdfb66677be5356736ca17a437236a40d804",
+      "pin": "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
+      "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins.manifest.json",
+      "state": 1,
+      "state_owner": "13e Doctor — jugement 798 (registre ligne 798, 2026-11-11 ~01:36 EST, Jugement pas B) ; PR #27 merge 5dd790050fb22e00ac350983d43f9fadc95bb032 (D-N053 pas B, état 0 → 1).",
+      "capabilities_owned": [],
+      "capabilities_claimed_elsewhere": [
+        "egm_bridge_31415 — revendiqué par le bind a0-plugins, propriétaire agent-zero",
+        "holon_578_dispatch — revendiqué par le bind a0-plugins, sans propriétaire",
+        "cordis_fiber_host — revendiqué par le bind a0-plugins, sans propriétaire (P1)"
+      ],
+      "holdouts": {},
+      "upstream_drift": {
+        "ahead": 0,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:39:00-05:00"
+      },
+      "notes": "Adapter 0.1.0 livré à V5 par D-N053 pas B (PR #27, merge 5dd7900) : gitlink re-pinné sur l'adapter fa8df85 lui-même (pin_rule=adapter appliquée par le pas B, pendant la construction du lock) ; fiche + audit télémétrie + manifeste livrés (levels.current 1). Bind natif f73f767 (ancien pin) ; bind re-appliqué sur main f436cdf. Gel d040c3fd = commit amont agent0ai/a0-plugins (PR #682), parent de l'adapter. Réserve : le manifeste porte validated_by = 13e Doctor (en attente — intégration par le coordinateur) ; le jugement 798 (registre) a validé la PR #27 pour merge.",
+      "provenance": {
+        "gel": {
+          "commit": "d040c3fd8d7ca9486cabf2761cbcc51c47d9b7d8",
+          "source": "amont agent0ai/a0-plugins PR #682"
+        },
+        "adapter": {
+          "commit": "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
+          "source": "D-N053 pas B, sur main (non livré à V5)"
+        },
+        "bind": {
+          "commit": "f436cdfb66677be5356736ca17a437236a40d804",
+          "source": "bind re-appliqué sur main (D-N053 pas B)"
+        },
+        "pin": {
+          "commit": "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
+          "source": "PR #27 (D-N053 pas B), re-pin sur l'adapter"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 798,
+          "register_line": 798,
+          "merge_sha": "5dd790050fb22e00ac350983d43f9fadc95bb032",
+          "source": "REGISTRE-NARDOLE.md l.798 (Jugement pas B, PR #27 VALIDÉE, fonction de jugement interne)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:agent-zero",
+      "repo": "Amdkn/agent-zero",
+      "upstream_repo": "agent0ai/agent-zero",
+      "license": "NOASSERTION",
+      "gel": "ba9b67df0f54ac78106ae85c552ef5d2458f7c9a",
+      "adapter_commit": "a042ddde19e5938e13ee1896fdd91cf4551c6cff",
+      "adapter_commits": [
+        "a042ddde19e5938e13ee1896fdd91cf4551c6cff"
+      ],
+      "adapter_parent": "ba9b67df0f54ac78106ae85c552ef5d2458f7c9a",
+      "bind_commit": "1a801ebc7b81dddd9780c5997fad3cee60d59258",
+      "pin": "a042ddde19e5938e13ee1896fdd91cf4551c6cff",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": null,
+      "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 640 (registre, 2026-11-10 ~23:10 EST) ; PR #19 merge 544464bac0661b2b54116078a10a085632b53e68 (F8 pas 5).",
+      "capabilities_owned": [
+        "egm_bridge_31415"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "egm_bridge_31415 — revendiqué aussi par cordis et a0-plugins (binds)",
+        "holon_578_dispatch — revendiqué par le bind agent-zero, sans propriétaire",
+        "cordis_fiber_host — revendiqué par le bind agent-zero, sans propriétaire (P1)"
+      ],
+      "holdouts": {
+        "H-F8-2": "PARTIEL — mécanisme natif livré (4 modules Rust + adapter Python + preuves) ; le cycle du Runtime sans le fork = harnais du parent",
+        "H-F8-4": "PASS (construction) — le pas 5 ne retire aucun daemon et n'en ajoute aucun ; run_ui.py est une surface, pas un daemon (D3) ; comptage vérifié à l'intégration",
+        "H-F8-5": "PASS — aucun cron nulle part : ni l'adapter ni les modules natifs ne contiennent de cron (le job loop EST le scheduler, D7) ; la présence est par heartbeat, pas par sondage",
+        "H-F8-9": "À JUGER — tailles : adapter 17 fichiers (+1654 lignes, 1 commit) ; port natif 4 modules Rust ; le parent juge les plafonds (1 % module, 5 % pas, 20 % mission)",
+        "H-M1": "PASS — HEAD du fork = gel ba9b67d avant adaptation ; commit adapter a042ddde, parent = gel (vérifié à l'API)",
+        "H-M2": "PASS — vérifié à l'API : push ba9b67df..a042ddde sur main, 17 fichiers adapter uniquement",
+        "H-M3": "PARTIEL — suite adapter 36/36 verte (pytest, venv pas 5) ; suite propre au fork NON exécutable sur cette VM : tests/test_litellm_sdk.py ne collecte pas (models.py:20 importe litellm, non installé) — réserve R-A1",
+        "H-M4": "QUALIFIÉ — 1 signal dans le fork (update check, api.agent-zero.ai, anonymisé, défaut ON), 0 dans le natif (audit versionné)",
+        "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:agent-zero ; fiche agent-zero-ADAPTATION.md + audit télémétrie versionnés",
+        "H-M6": "PASS — adapter seul code A'Space du fork ; divergence remplie ; propriétaire A0-AMADEUS / S1-RICK (cœur Kernel) ; précision §0.2 dans la fiche",
+        "H-M7": "PASS — cette fiche",
+        "H-P5-1": "PASS — gel vérifié HEAD (ba9b67df, compare identical, dérive 0) ; 10 épingles de surface vérifiées par le contenu au gel",
+        "H-P5-10": "PARTIEL — smoke sans l'original au niveau module (adapter 36/36, natif lib 47/47 + agent_zero_proof 5/5) ; le cycle complet du Runtime sans l'original = harnais du parent",
+        "H-P5-2": "PASS — la boucle Agent tourne sans le fork (smoke adapter + preuve native agent_zero_proof.rs) ; agent.py / models.py absents du chemin d'exécution",
+        "H-P5-3": "CONDITIONNELLE — durabilité : le vert du pas 2 (pi) est la condition (design) ; consignée comme telle, pas comme PASS",
+        "H-P5-4": "PASS — providers par le gateway :31415 seul, chaîne modelPool, failover prouvé (transport stub + stub HTTP local 500 -> 200, bascule enregistrée) ; aucune clé lue ni acceptée",
+        "H-P5-5": "PASS — mémoire unifiée : Shared Brain JSONL fait foi, FAISS = index dérivé reconstruit depuis le JSONL, divergence vérifiée (test + preuve native)",
+        "H-P5-6": "PASS — tâche planifiée exécutée et prouvée par reçu (ledger JSONL) ; cron refusé (adapter ValueError, natif deny_unknown_fields)",
+        "H-P5-7": "PASS — liste des 47 avec, pour chacun, porté / surface / abandonné ; compte vérifié au gel (47, _a0_connector présent) et tri vérifié mécaniquement contre le design D5 (écart 0)",
+        "H-P5-8": "QUALIFIÉ — audit versionné : 1 signal dans le fork (update check, défaut ON, abandonné avec le fork), 0 signal dans le natif ; surface uvicorn + websocket + tunnel 55520 auditée, binding localhost seulement",
+        "H-P5-9": "PASS — manifeste + fiche dans evidence/D-N051/p5/ (dépôt V5 00_A0_Core/ = parent)"
+      },
+      "upstream_drift": {
+        "ahead": 0,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "a042ddde19e5938e13ee1896fdd91cf4551c6cff"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "AUCUN gitlink dans V5 : greffe coupée (F8 pas 5, retrait documenté au registre) ; le chemin v5_path est déclaré par le bind et le superviseur mais absent de l'arbre V5. Portage natif dans RigInfinity (e866578, lib 47/47). Pin = adapter sur main. Bind natif 176d23f (parent = gel) ; bind main 1a801ebc (parent = adapter). Licence amont non déclarée (NOASSERTION côté fork).",
+      "provenance": {
+        "gel": {
+          "commit": "ba9b67df0f54ac78106ae85c552ef5d2458f7c9a",
+          "source": "fork Amdkn/agent-zero HEAD avant adaptation"
+        },
+        "adapter": {
+          "commit": "a042ddde19e5938e13ee1896fdd91cf4551c6cff",
+          "source": "F8 pas 5, PR #19 (17 fichiers)"
+        },
+        "bind": {
+          "commit": "1a801ebc7b81dddd9780c5997fad3cee60d59258",
+          "source": "bind re-appliqué sur main (parent = adapter)"
+        },
+        "pin": {
+          "commit": "a042ddde19e5938e13ee1896fdd91cf4551c6cff",
+          "source": "PR #19"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 640,
+          "merge_sha": "544464bac0661b2b54116078a10a085632b53e68",
+          "source": "REGISTRE-NARDOLE.md (jugement 640 reçu, PR #19 VALIDÉE, avec réserves nommées)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:automaton",
+      "repo": "Amdkn/automaton",
+      "upstream_repo": "Conway-Research/automaton",
+      "license": "MIT",
+      "gel": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
+      "adapter_commit": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
+      "adapter_commits": [
+        "2d2501613f8bd42cc270f02a0e12986866f06edf",
+        "7cdaa00fb7464046dcb2016896f48f60b5426a8b"
+      ],
+      "adapter_parent": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
+      "bind_commit": "9728a0fb848939873d9ba5784ea3ecd1e40b678d",
+      "pin": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
+      "pin_branch": "aspace-v5-native",
+      "pin_extra_commits": [
+        {
+          "sha": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
+          "note": "bind natif aspace-v5-native (bind seul, pas d'adapter)"
+        }
+      ],
+      "gitlink": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
+      "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/automaton",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/automaton.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 482 (FUSIONS-REGISTRY.md l.90) ; PR #15 merge 7b46cf8d2c1cf7d767b020767b370f20afc83d08 (F8 pas 1, H-M3 vert avec réserve).",
+      "capabilities_owned": [
+        "automaton_reserve_lease"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "openrig_worktree_lineage — revendiqué par le bind automaton, propriétaire openrig",
+        "infinity_75k_scheduler — revendiqué par le bind automaton, propriétaire infinity"
+      ],
+      "holdouts": {
+        "H-M1": "PASS — HEAD du fork = gel e025526, diff relu, aucun autre commit amont",
+        "H-M2": "PASS — compare API gel...HEAD : ahead 2, behind 0, 6 fichiers adapter uniquement (2 commits), amont byte-identique",
+        "H-M3": "ROUGE — suite 1646 passés / 0 échoué / 1 test bloqué (~7 h prédites, cause racine nommée, voir fiche § Tests) ; jugement 13e requis",
+        "H-M4": "PASS — télémétrie zéro par contrat, audit versionné, garde-fou exécuté (smoke 21/21, dont 21/21 sous unshare -n)",
+        "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:automaton",
+        "H-M6": "PASS — aspace-automaton-adapter seul code A'Space du fork ; section divergence remplie ; propriétaire cœur Buzz",
+        "H-M7": "PASS — automaton-ADAPTATION.md au domicile FKB00"
+      },
+      "upstream_drift": {
+        "ahead": 0,
+        "behind": 1,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = bind natif, pas l'adapter : re-pin P0-b prévu vers main (adapter 7cdaa00 + bind 9728a0f). Main a divergé (ahead 3 / behind 1). Gel e025526 = commit fork Aspace (doctrine CEO Holon), 1 commit devant l'amont — pas un commit amont pur. H-M3 ROUGE avec réserve (suite 1646/0/1, 1 test bloqué ~7 h). Garde fetch() reconnue insuffisante (P3).",
+      "provenance": {
+        "gel": {
+          "commit": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
+          "source": "fork Amdkn/automaton (commit Aspace, 2026-11-06)"
+        },
+        "adapter": {
+          "commit": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
+          "source": "F8 pas 1, PR #15 (2 commits adapter)"
+        },
+        "bind": {
+          "commit": "9728a0fb848939873d9ba5784ea3ecd1e40b678d",
+          "source": "bind re-appliqué sur main"
+        },
+        "pin": {
+          "commit": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
+          "source": "bind natif aspace-v5-native"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 482,
+          "merge_sha": "7b46cf8d2c1cf7d767b020767b370f20afc83d08",
+          "source": "FUSIONS-REGISTRY.md l.90"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:openrig",
+      "repo": "Amdkn/openrig",
+      "upstream_repo": "mvschwarz/openrig",
+      "license": "Apache-2.0",
+      "gel": "bd39da9872afc39cbe0c8e839a322b4cb8955cbe",
+      "adapter_commit": "649376c803f76ea3b5bdb10097179e06c0645743",
+      "adapter_commits": [
+        "b71bf870c4bd6a11799c053e9ec2a0f2dccb5b3c",
+        "ef00f30909ae3b97f0cdea54896557d7a4cef5c8",
+        "649376c803f76ea3b5bdb10097179e06c0645743"
+      ],
+      "adapter_parent": "bd39da9872afc39cbe0c8e839a322b4cb8955cbe",
+      "bind_commit": "89f49c9f53337cb497676f3e522be6087c6ae133",
+      "pin": "649376c803f76ea3b5bdb10097179e06c0645743",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "649376c803f76ea3b5bdb10097179e06c0645743",
+      "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/openrig.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 663 (registre ligne 663, mtime 21:32:52 EST, vérifié au fichier par le 13e) ; PR #20 merge 3dbb791f06f0fa2c06067fffb2994fd236b7aedd (F8 pas 4).",
+      "capabilities_owned": [
+        "openrig_worktree_lineage"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "automaton_reserve_lease — revendiqué par le bind openrig, propriétaire automaton",
+        "infinity_75k_scheduler — revendiqué par le bind openrig, propriétaire infinity"
+      ],
+      "holdouts": {
+        "H-F8-2": "PARTIEL — mécanisme natif livré (4 modules + smoke adapter 61/61) ; le cycle du Runtime sans le fork = harnais du parent",
+        "H-F8-4": "PASS (construction) — le pas 4 ne retire qu'un daemon (openrig) et n'en ajoute aucun ; herdr-core reste jusqu'au pas 8 ; comptage vérifié à l'intégration",
+        "H-F8-9": "À JUGER — tailles : adapter 13 fichiers (3 commits, 1 435 + 39 + 17 lignes) ; port natif 4 modules (1 551 lignes + correctif fmt) ; le parent juge les plafonds (1 % module, 5 % pas, 20 % mission)",
+        "H-M1": "PASS — HEAD du fork = gel avant adaptation ; commits adapter b71bf87 (parent = gel), ef00f30, 649376c ; consigné dans la fiche",
+        "H-M2": "PASS — vérifié à l'API : compare gel..HEAD = ahead 3, behind 0, 13 fichiers adapter uniquement ; smoke verifyFrozenLineage vert",
+        "H-M3": "PARTIEL — test:repo VERT au re-run complet (334 tests, 333 pass, 0 fail, 1 skipped, 669 779 ms ; isolation ✔ 16 848 ms ; first-run references 528 checked, 0 failure ; context-packs --check OK, 57 packs ; log logs-npm-test-rerun.log). lint VERT (npm run lint, exit 0, log logs-openrig-lint.log). test:workspaces cli COMPLET (368 fichiers : 6 en échec ; 12 tests en échec / 6 213 pass / 22 skipped ; log logs-openrig-workspaces-cli-tui.log) et tui COMPLET (128 fichiers : 1 test en échec / 1 201 pass). test:workspaces daemon INCOMPLET : 2 passes tuées par un SIGTERM externe à ~35-36 min (plafond d'exécution de la VM, pas un échec de test) ; 162/1 326 fichiers terminés en 2 passes. Échecs STABLES amont, 0 imputable à l'adapter (0 référence à aspace-openrig-adapter hors du dossier adapter, diff = adapter seul, H-M2 API) : daemon 13 — bundle-routes 4 (root lit les fichiers 'unreadable'), codex-runtime-adapter 1, queue-repository 1, skill-catalog-loadout 1, seat-launch-additions 1 (root), transcript-store 2 (root), bundle-local-skills 2, claude-activity-hook-delivery 1 (mode 0755 perdu au checkout, umask 0007) ; cli 8 — front-door 3 (timeouts 5 s, binaire réel sous charge), preflight 1 (root), scope-commands 1 (unreadable, root), chatroom-watch-tmux-args 1 (tmux réel + $HOME), scope-slice-claims 2 (batches 8 processus). FLAKY (passent en isolé ou varient) : queue-routes 0/3/2, doctor 2→3, slice-claims 2 autres, s03-bound-launch 16→0, claude-bootstrap-config-home 8→0, send-prompt-guard 1→0, refresh-activity (tui) 1→0. Re-runs ciblés : daemon 12 fichiers — 15 en échec / 1 125 pass (log logs-openrig-failing12-rerun.log) ; cli 6 fichiers — 11 en échec / 283 pass (log logs-openrig-failing-cli-rerun.log) ; tui 1 fichier — PASSE (log logs-openrig-failing-tui-rerun.log). Cargo natif complet VERT (lib 27/27 + daemon_proof 4/4).",
+        "H-M4": "PASS — télémétrie zéro vérifiée au fichier (audit versionné, avec la correction : la surface de lecture locale /api/telemetry existe, 0 exporteur, 0 SDK) ; garde-fou prouvé par le smoke",
+        "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:openrig ; fiche openrig-ADAPTATION.md + audit télémétrie versionnés",
+        "H-M6": "PASS — adapter seul code A'Space du fork ; divergence remplie ; propriétaire : cœur Buzz, lane Clara / 12e",
+        "H-M7": "PASS — cette fiche",
+        "H-P4-1": "PARTIEL — gel vérifié HEAD ; le bind est re-appliqué VERBATIM par le parent (pas par cet exécutant) + re-pin à l'intégration",
+        "H-P4-10": "PARTIEL — mécanisme natif livré (4 modules + smoke adapter 61/61) ; le cycle du Runtime sans le fork = harnais du parent (H-F8-2)",
+        "H-P4-2": "PARTIEL — structure validée par le smoke (starter 1/2/1 + code-review 2/3/2, edges qualifiées) ; démarrage réel avec le runtime natif = preuve machine (herdr + tmux + daemon unique) ; rôles : le YAML n'en déclare aucun (correction fiche §2)",
+        "H-P4-3": "PARTIEL — zéro orpheline prouvé au niveau code (détection adapter + store natif + registre, tests unitaires + socket mock) ; cockpit live + relais avec adresses persistantes = preuve machine",
+        "H-P4-4": "PARTIEL — les 3 fonctions vivent dans le daemon unique (4 modules natifs) ; le cycle de vie CLI est celui du daemon unique (contrat) ; l'absence de processus openrig est vérifiée à l'intégration (H-F8-4)",
+        "H-P4-5": "PARTIEL — interfaces des harnais épinglées (runtimes claude-code/codex/pi/omp dans le modèle rig) ; exécution live via le daemon unique = intégration",
+        "H-P4-6": "PASS — aucun appel hc direct : garde-fou adapter (smoke) + aucun Command dans le module natif ; le rig unique est la seule voie (code)",
+        "H-P4-7": "PASS — audit versionné ; surface Hono + websocket auditée ; binding 127.0.0.1 seulement (avec la surcharge tailscale documentée et refusée)",
+        "H-P4-8": "PASS — manifeste + fiche dans evidence/D-N051/p4/ (dépôt V5 00_A0_Core/ = parent)",
+        "H-P4-9": "PARTIEL — comme H-M3 : test:repo vert, lint vert, cli+tui complets avec échecs amont qualifiés, daemon incomplet (plafond ~35 min, 162/1 326 fichiers) ; 13 échecs daemon stables + 8 cli stables, tous environnementaux (root uid 0, umask 0007, charge/timing), 0 imputable à l'adapter ; 7 fichiers flaky passent en isolé. Jugement 13e requis."
+      },
+      "upstream_drift": {
+        "ahead": 249,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 3,
+        "behind": 0,
+        "commits": [
+          "b71bf870c4bd6a11799c053e9ec2a0f2dccb5b3c",
+          "ef00f30909ae3b97f0cdea54896557d7a4cef5c8",
+          "649376c803f76ea3b5bdb10097179e06c0645743"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = adapter sur main (3 commits, parent du 1er = gel). Branche native adafb0d16a83dd557c524bbe9d19c9a11e188f15 divergée (ahead 1 / behind 9, base pré-gel 781b5fb). Dérive amont 249 commits (le manifeste disait 226 — périmé au 2026-11-11) : signal de revisite, PAS de re-gel. Daemon incomplet (162/1 326 fichiers, plafond ~35 min).",
+      "provenance": {
+        "gel": {
+          "commit": "bd39da9872afc39cbe0c8e839a322b4cb8955cbe",
+          "source": "amont mvschwarz/openrig #2576 (2026-11-05)"
+        },
+        "adapter": {
+          "commit": "649376c803f76ea3b5bdb10097179e06c0645743",
+          "source": "F8 pas 4, PR #20 (3 commits adapter)"
+        },
+        "bind": {
+          "commit": "89f49c9f53337cb497676f3e522be6087c6ae133",
+          "source": "bind re-appliqué sur main"
+        },
+        "pin": {
+          "commit": "649376c803f76ea3b5bdb10097179e06c0645743",
+          "source": "PR #20"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 663,
+          "register_line": 663,
+          "merge_sha": "3dbb791f06f0fa2c06067fffb2994fd236b7aedd",
+          "source": "REGISTRE-NARDOLE.md l.668 (jugement inscrit journal 663, ligne 663, mtime 21:32:52 EST)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:infinity",
+      "repo": "Amdkn/infinity",
+      "upstream_repo": "hydro-project/infinity",
+      "license": "Apache-2.0",
+      "gel": "e1a3e4b36e5f6143e03a59a7ad86e1abacfd22e8",
+      "adapter_commit": "007409e242f208545b003785cbe3aa24b45cd08e",
+      "adapter_commits": [
+        "007409e242f208545b003785cbe3aa24b45cd08e"
+      ],
+      "adapter_parent": "e1a3e4b36e5f6143e03a59a7ad86e1abacfd22e8",
+      "bind_commit": "b0e611039f245b7d6369ed4ecc5d1eaf8618c515",
+      "pin": "007409e242f208545b003785cbe3aa24b45cd08e",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "007409e242f208545b003785cbe3aa24b45cd08e",
+      "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/infinity.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 610 (registre ligne 612, 2026-11-10 ~19:51 EST) ; PR #18 merge ae818fb9aafcc6df43d99e82cc7d9d14ccf18b59 (F8 pas 3).",
+      "capabilities_owned": [
+        "infinity_75k_scheduler"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "automaton_reserve_lease — revendiqué par le bind infinity, propriétaire automaton",
+        "openrig_worktree_lineage — revendiqué par le bind infinity, propriétaire openrig"
+      ],
+      "holdouts": {
+        "H-M1": "PASS — HEAD du fork = gel e1a3e4b, dérive 0 (API)",
+        "H-M2": "PASS — compare API gel...HEAD : ahead 1, behind 0, 7 fichiers adapter uniquement",
+        "H-M3": "ROUGE QUALIFIE — suite complete 385 passes / 42 echoues (tous environnementaux pre-existants au gel : jj absent 36, pre-build hydro --locked 6) ; 0 imputable a l'adapter ; daemon 100% vert ; doc 45/0 ; fmt + clippy propres ; jugement 13e requis",
+        "H-M4": "PASS — télémétrie zéro par défaut, audit versionné (fork entier, 0 signal, surface 127.0.0.1)",
+        "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:infinity",
+        "H-M6": "PASS — aspace-infinity-adapter seul code A'Space du fork ; section divergence remplie ; propriétaire cœur Buzz",
+        "H-M7": "PASS — infinity-ADAPTATION.md au domicile FKB00",
+        "H-P3-10": "ROUGE QUALIFIE — voir H-M3 (385/42, 42 environnementaux pre-existants ; daemon vert ; THIRD-PARTY PASS, diff vide)",
+        "H-P3-3": "PASS — hibernation prouvée par le daemon (amont : rap_callback_flow ; natif : daemon_proof, idle -> shut_down, réveil sur texte utilisateur seul)",
+        "H-P3-4": "PASS — RAP : résultat livré à un agent sans processus (adapter RapOutbox + test amont rap_callback_flow + test natif daemon_proof)",
+        "H-P3-5": "PASS (portage) — les 4 fonctions du daemon portées dans le stub RigInfinity ; le cron 30 min est retiré par Ryan dans la PR (§D5)",
+        "H-P3-6": "PASS — test amont mcp_proxy_callback.rs vert + vrais serveurs rap-test-servers inchangés (image + diff) + vrai serveur MCP stdio (Python) via le proxy natif",
+        "H-P3-7": "CONDITIONNELLE — reprise au checkpoint dépend des checkpoints de pi (pas 2 non vert) ; consignée comme telle (§D4)",
+        "H-P3-8": "PASS — audit fork entier, 0 signal, surface 127.0.0.1 seulement",
+        "H-P3-9": "PASS — ce manifeste + infinity-ADAPTATION.md"
+      },
+      "upstream_drift": {
+        "ahead": 0,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "007409e242f208545b003785cbe3aa24b45cd08e"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = adapter sur main. Branche native be616bfc007a7970b533abf80caca10915a42810 divergée (ahead 1 / behind 2, base pré-gel c1a7b05). H-M3 ROUGE QUALIFIÉ (385/42, 42 environnementaux pré-existants, 0 imputable à l'adapter ; daemon 100 % vert). Le chiffre « daemon 8/8 » de l'audit est sans source (Discover §1).",
+      "provenance": {
+        "gel": {
+          "commit": "e1a3e4b36e5f6143e03a59a7ad86e1abacfd22e8",
+          "source": "amont hydro-project/infinity #188 (2026-11-05)"
+        },
+        "adapter": {
+          "commit": "007409e242f208545b003785cbe3aa24b45cd08e",
+          "source": "F8 pas 3, PR #18"
+        },
+        "bind": {
+          "commit": "b0e611039f245b7d6369ed4ecc5d1eaf8618c515",
+          "source": "bind re-appliqué sur main"
+        },
+        "pin": {
+          "commit": "007409e242f208545b003785cbe3aa24b45cd08e",
+          "source": "PR #18"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 610,
+          "register_line": 612,
+          "merge_sha": "ae818fb9aafcc6df43d99e82cc7d9d14ccf18b59",
+          "source": "REGISTRE-NARDOLE.md l.612 + l.616/l.678 (jugement pas 3, journal 610)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:prime-agent",
+      "repo": "Amdkn/prime-agent",
+      "upstream_repo": "PrimeIntellect-ai/prime-agent",
+      "license": "NOASSERTION",
+      "gel": "74591cddef28d11249c3171112114fc4755375d7",
+      "adapter_commit": "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a",
+      "adapter_commits": [
+        "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a"
+      ],
+      "adapter_parent": "74591cddef28d11249c3171112114fc4755375d7",
+      "bind_commit": "2054f538bbbd472fe12d5b3eef225aaadc7a3683",
+      "pin": "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a",
+      "v5_path": "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/prime-agent.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 788 (registre ligne 788, 2026-11-11 ~00:56 EST, Jugement R2) ; PR #24 merge e686dd2f3afed22fc9dbca267ef1f1c84c3c7bee (F8 pas 6, D-N052 R2).",
+      "capabilities_owned": [
+        "prime_rlm_refine"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "wikiskill_4role_compiler — revendiqué par le bind prime-agent, propriétaire wikiskill",
+        "aqua_ambient_auditor — revendiqué par le bind prime-agent, propriétaire aqua",
+        "dream_rsi_0usd_replay — revendiqué par le bind prime-agent, propriétaire dream-rsi",
+        "rrsi_worktree_evolver — revendiqué par le bind prime-agent, sans propriétaire"
+      ],
+      "holdouts": {
+        "H-F8-1": "PARTIEL — le doublon nommé (pa-daemon autonome) est déposé comme référence, jamais lancé ; le retrait du pointeur prime-agent de .gitmodules est à l'intégration (parent)",
+        "H-F8-2": "PARTIEL — mécanisme natif livré (4 modules Rust + adapter + preuves) ; le cycle du Runtime sans l'original = harnais du parent",
+        "H-F8-3": "À JUGER — incorporation native : 4 conditions (code natif + pointeur retiré + smoke sans l'original + validation 13e) ; retrait du pointeur et validation à l'intégration",
+        "H-F8-4": "PASS (construction) — le pas 6 ne retire aucun daemon et n'en ajoute aucun ; pa-daemon est une référence, pas un daemon (A1) ; comptage vérifié à l'intégration",
+        "H-F8-5": "PASS — aucun cron nulle part : ni l'adapter ni les modules natifs ne contiennent de cron ; la présence est par heartbeat, pas par sondage",
+        "H-F8-9": "À JUGER — tailles : adapter 13 fichiers (+1787 lignes, 1 commit) ; port natif 4 modules Rust + 1 preuve (+1506 lignes, 1 commit) ; le parent juge les plafonds (1 % module, 5 % pas, 20 % mission) ; la dépense n'est pas mesurable depuis la factory",
+        "H-M1": "PASS — HEAD du fork = gel 74591cd avant adaptation ; commit adapter 3bac96af, parent = gel (vérifié)",
+        "H-M2": "PASS — vérifié : 13 fichiers adapter uniquement, parent = gel 74591cddef28d11249c3171112114fc4755375d7",
+        "H-M3": "PARTIEL — suite adapter 18/18 verte ; suite propre au fork NON re-courue en entier sur cette VM — réserve R-A2 ; test TabFM PARTIEL non touché (A6, réserve R-1)",
+        "H-M4": "QUALIFIÉ — 1 signal dans le fork (analytics produit, api.primeintellect.ai, défaut ON en release, abandonné avec le fork), 0 dans le natif (audit versionné + garde structurelle)",
+        "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:prime-agent ; fiche prime-agent-ADAPTATION.md + audit télémétrie versionnés",
+        "H-M6": "PASS — adapter seul code A'Space du fork ; divergence remplie ; propriétaire A0-AMADEUS / S1-RICK (cœur Kernel)",
+        "H-M7": "PASS — cette fiche",
+        "H-R3": "PASS — rlm.spawn + /refine + rollback sur le vrai harness sans appel modèle : smoke adapter 5/5 + preuve native 6/6, cycle H1 contre un vrai stub gateway HTTP loopback"
+      },
+      "upstream_drift": {
+        "ahead": 21,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = adapter sur main. Branche native 3ba6791f723635ce89dcf79f69bdfa101e340576 = bind seul (parent = gel) : elle NE contient PAS l'adapter — « pin cohérent avec la native » (audit §7) est faux. Port natif RigInfinity 9050a1fbb7f8da25c4cae11326016dbd200b36de (branche ryan/d-n052-r2-native) non encore mergé dans RigInfinity. Licence amont non déclarée (NOASSERTION côté fork).",
+      "provenance": {
+        "gel": {
+          "commit": "74591cddef28d11249c3171112114fc4755375d7",
+          "source": "fork Amdkn/prime-agent HEAD avant adaptation (2026-11-04)"
+        },
+        "adapter": {
+          "commit": "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a",
+          "source": "F8 pas 6 (D-N052 R2), PR #24 (13 fichiers)"
+        },
+        "bind": {
+          "commit": "2054f538bbbd472fe12d5b3eef225aaadc7a3683",
+          "source": "bind re-appliqué sur main (blob byte-identique)"
+        },
+        "pin": {
+          "commit": "3bac96af34511fde1f0d3bbf4e7bc94ad605e69a",
+          "source": "PR #24"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 788,
+          "register_line": 788,
+          "merge_sha": "e686dd2f3afed22fc9dbca267ef1f1c84c3c7bee",
+          "source": "REGISTRE-NARDOLE.md l.788 (Jugement R2, PR #24 VALIDÉE, fonction de jugement interne)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:wikiskill",
+      "repo": "Amdkn/wikiskill",
+      "upstream_repo": "ashutoshsinghpr7/wikiskill",
+      "license": "MIT",
+      "gel": "cdc291c4296e30488a5922860dc596763704ede4",
+      "adapter_commit": "59a6a041ba2267ba82e0fce52e2c4c039da0a48e",
+      "adapter_commits": [
+        "59a6a041ba2267ba82e0fce52e2c4c039da0a48e"
+      ],
+      "adapter_parent": "cdc291c4296e30488a5922860dc596763704ede4",
+      "bind_commit": null,
+      "pin": "59a6a041ba2267ba82e0fce52e2c4c039da0a48e",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "59a6a041ba2267ba82e0fce52e2c4c039da0a48e",
+      "v5_path": "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/wikiskill.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 413 (registre ligne 420, 2026-11-09 ~18:34 EST, V3a) ; PR #9 merge d0631f178455d16aca8794429484913365c1fdf4 (D-N048 V3a).",
+      "capabilities_owned": [
+        "wikiskill_4role_compiler"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "wikiskill_4role_compiler — revendiqué aussi par prime-agent (bind)"
+      ],
+      "holdouts": {},
+      "upstream_drift": {
+        "ahead": 0,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "59a6a041ba2267ba82e0fce52e2c4c039da0a48e"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = adapter = main HEAD (identical, ahead 0 / behind 0). Pas de branche native (404), pas de bind. Manifeste sans champ holdouts ; fiche : smoke 4/4 ; au gel 73 passés, 1 skipped (74). Implémentation de wikiskill_4role_compiler : WikiSkillPlaybookCompiler dans 01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py (modèle local, 4 rôles : Note-Taker / Playbook Writer / Strict Manager + gate holdout) — pas dans l'adapter wikiskill, qui est un contrat CLI seul.",
+      "provenance": {
+        "gel": {
+          "commit": "cdc291c4296e30488a5922860dc596763704ede4",
+          "source": "amont ashutoshsinghpr7/wikiskill"
+        },
+        "adapter": {
+          "commit": "59a6a041ba2267ba82e0fce52e2c4c039da0a48e",
+          "source": "D-N048 V3a, PR #9"
+        },
+        "bind": null,
+        "pin": {
+          "commit": "59a6a041ba2267ba82e0fce52e2c4c039da0a48e",
+          "source": "PR #9"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 413,
+          "register_line": 420,
+          "merge_sha": "d0631f178455d16aca8794429484913365c1fdf4",
+          "source": "REGISTRE-NARDOLE.md l.420 (JUGEMENT V3a, PR #9 VALIDÉE) ; journal 413 dérivé de 5 ancres ligne-7 dans la région (l.414→407, l.417→410, l.421→414, l.424→417)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:dream-rsi",
+      "repo": "Amdkn/dream-rsi",
+      "upstream_repo": "google-research/dream-rsi",
+      "license": "Apache-2.0",
+      "gel": "8ec35bd2538220517ce1bfca4282db21b8c518db",
+      "adapter_commit": "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053",
+      "adapter_commits": [
+        "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053"
+      ],
+      "adapter_parent": "8ec35bd2538220517ce1bfca4282db21b8c518db",
+      "bind_commit": null,
+      "pin": "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053",
+      "v5_path": "01_Forkable/FKB00_Runtime/05_Recursive_RSI/dream-rsi",
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/dream-rsi.manifest.json",
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 413 (registre ligne 420, 2026-11-09 ~18:34 EST, V3a) ; PR #9 merge d0631f178455d16aca8794429484913365c1fdf4 (D-N048 V3a).",
+      "capabilities_owned": [
+        "dream_rsi_0usd_replay"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "dream_rsi_0usd_replay — revendiqué aussi par prime-agent (bind)"
+      ],
+      "holdouts": {},
+      "upstream_drift": {
+        "ahead": 0,
+        "behind": 0,
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "gel_pin_compare": {
+        "ahead": 1,
+        "behind": 0,
+        "commits": [
+          "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053"
+        ],
+        "status": "ahead",
+        "last_checked": "2026-11-11T01:30:00-05:00"
+      },
+      "notes": "Pin = adapter = main HEAD (identical, ahead 0 / behind 0). Pas de branche native (404), pas de bind. Manifeste sans champ holdouts ; fiche : smoke 5/5 ; au gel 96 passés, 10 skipped, 1 deselected (107). Exploration réelle interdite par l'adaptateur (replay hors ligne seul).",
+      "provenance": {
+        "gel": {
+          "commit": "8ec35bd2538220517ce1bfca4282db21b8c518db",
+          "source": "amont google-research/dream-rsi"
+        },
+        "adapter": {
+          "commit": "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053",
+          "source": "D-N048 V3a, PR #9"
+        },
+        "bind": null,
+        "pin": {
+          "commit": "fa0c8f0859558fc2a2e101a4b3ef4f3b67807053",
+          "source": "PR #9"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 413,
+          "register_line": 420,
+          "merge_sha": "d0631f178455d16aca8794429484913365c1fdf4",
+          "source": "REGISTRE-NARDOLE.md l.420 (JUGEMENT V3a, PR #9 VALIDÉE — même jugement que wikiskill)"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:aqua",
+      "repo": null,
+      "upstream_repo": "google/adk-recipes (AQuA : Ambient Quality Agent — le SDK réel n'est PAS porté ; l'adapter local lit factory.sqlite)",
+      "license": null,
+      "gel": null,
+      "adapter_commit": "7cbaf2bc2e50f1a8641a734c62fa1cd3adab3b85",
+      "adapter_commits": [
+        "7cbaf2bc2e50f1a8641a734c62fa1cd3adab3b85"
+      ],
+      "adapter_parent": null,
+      "bind_commit": null,
+      "pin": null,
+      "pin_branch": null,
+      "pin_extra_commits": [],
+      "gitlink": null,
+      "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/aspace-aqua-adapter",
+      "manifest": null,
+      "state": 0,
+      "state_owner": "— (état 0, aucune montée d'état)",
+      "capabilities_owned": [
+        "aqua_ambient_auditor"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "aqua_ambient_auditor — revendiqué aussi par prime-agent (bind)"
+      ],
+      "holdouts": {
+        "SMOKE": "6/6 PASS, 0,195 s, base non modifiée (sha256 avant == après) — SMOKE-RESULTS.md"
+      },
+      "upstream_drift": null,
+      "gel_pin_compare": null,
+      "notes": "Adapter LOCAL versionné dans V5 (pas de fork Amdkn/aqua — API 404 ; pas de gitlink, pas de gel amont). adapter_commit = commit V5 D-N052 R0 qui a livré l'adapter (PR #16, merge d3b54bc9cf0313bd9acb4f2ea5037a977440c4f2). Ni fiche ni manifeste : état 0, consigné honnêtement — ne pas gonfler. Contrat : mode=ro + PRAGMA query_only, réseau none, écritures base false. SDK AQuA réel non validé. Implémentation de aqua_ambient_auditor : lecteur local (src/aqua_factory_reader.py) + AquaDiagnostic.diagnose() dans a0_recursive_factory.py.",
+      "provenance": {
+        "gel": null,
+        "adapter": {
+          "commit": "7cbaf2bc2e50f1a8641a734c62fa1cd3adab3b85",
+          "source": "V5, D-N052 R0, PR #16 (adapter local, pas un fork)"
+        },
+        "bind": null,
+        "pin": null,
+        "judgment": {
+          "status": "not_applicable",
+          "note": "état 0, aucune montée"
+        }
+      }
+    },
+    {
+      "id": "fiber:a0:riginfinity",
+      "repo": "Amdkn/RigInfinity",
+      "upstream_repo": null,
+      "license": "Apache-2.0",
+      "gel": null,
+      "adapter_commit": null,
+      "adapter_commits": [],
+      "adapter_parent": null,
+      "bind_commit": null,
+      "pin": "c6adc8d32e435bd7594b2731cae95ecb46532f80",
+      "pin_branch": "aspace-v5-native",
+      "pin_extra_commits": [],
+      "gitlink": "c6adc8d32e435bd7594b2731cae95ecb46532f80",
+      "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity",
+      "manifest": null,
+      "state": 2,
+      "state_owner": "13e Doctor — jugement 793 (registre ligne 793, 2026-11-11 ~01:13 EST, Jugement SC-1) ; PR #25 merge f5ccc76fb48f5b6321460b75f4b6c9815d56a6b6 (D-N054 SC-1) ; SC-0 PR #22 merge b12070dd608f892b82e827ecb710444fcba29ec2.",
+      "capabilities_owned": [
+        "rust_deterministic_ownership",
+        "infinity_daemon_rap_protocol",
+        "source_control_natif_read_api"
+      ],
+      "capabilities_claimed_elsewhere": [
+        "openrig_demo_qc_578_holons — revendiqué par le bind RigInfinity, sans propriétaire (aucune preuve de 578 holons dans l'arbre)",
+        "reviewer_security_owasp_top10 — revendiqué par le bind RigInfinity, sans propriétaire (aucun module security dans l'arbre)",
+        "infinity_daemon_rap_protocol — chevauche l'adapter infinity (RapOutbox, mcp_rap_proof 3 tests)"
+      ],
+      "holdouts": {
+        "SC-1": "cargo test -p infinity-daemon 64/64 au pin c6adc8d (lib 51/51 + agent_zero_proof 5/5 + daemon_proof 4/4 + source_control_proof 4/4) — source-control-natif.manifest.json H-M3"
+      },
+      "upstream_drift": null,
+      "gel_pin_compare": null,
+      "notes": "Module NATIF Amdkn (pas de fork, pas de gel amont, pas d'adapter : le pin EST la référence). Gitlink = native HEAD c6adc8d (branche par défaut aspace-v5-native) ; branche main distincte 86f1139af083793a167aab8421d06477ecf7d98f. Arbre : 36 blobs (l'audit disait 42 — corrigé), 0 fichier .ts, pas de daemon TypeScript OpenRig, pas de CLI/TUI, pas de security-harness. Portages natifs : agent-zero e866578, openrig a372582+e190645, infinity bd7c946+aad4993, prime-agent 9050a1f (non mergé). TROU : pas de manifeste ni fiche V5 pour RigInfinity (harnais §6).",
+      "provenance": {
+        "gel": null,
+        "adapter": null,
+        "bind": null,
+        "pin": {
+          "commit": "c6adc8d32e435bd7594b2731cae95ecb46532f80",
+          "source": "PR #25 (D-N054 SC-1), re-pin e866578 -> c6adc8d"
+        },
+        "native_ports": {
+          "agent-zero": "e866578032b6ded80b8573cec579413a37cd3a92",
+          "openrig": [
+            "a372582",
+            "e190645"
+          ],
+          "infinity": [
+            "bd7c946",
+            "aad4993"
+          ],
+          "prime-agent": "9050a1fbb7f8da25c4cae11326016dbd200b36de (non mergé)"
+        },
+        "judgment": {
+          "status": "found",
+          "journal": 793,
+          "register_line": 793,
+          "merge_sha": "f5ccc76fb48f5b6321460b75f4b6c9815d56a6b6",
+          "source": "REGISTRE-NARDOLE.md l.793 (Jugement SC-1, PR #25 VALIDÉE, fonction de jugement interne)"
+        }
+      }
+    }
+  ],
+  "capabilities_unassigned": [
+    {
+      "capability": "holon_578_dispatch",
+      "claimed_by": [
+        "cordis",
+        "agent-zero",
+        "a0-plugins"
+      ],
+      "reason": "Aucune implémentation chez aucun revendicateur (surfaces adapter vérifiées) ; registry-578-holons.json existe comme données, aucun code de dispatch des 578 holons."
+    },
+    {
+      "capability": "cordis_fiber_host",
+      "claimed_by": [
+        "cordis",
+        "agent-zero",
+        "a0-plugins"
+      ],
+      "reason": "Aucune implémentation : AspaceFiberHost = 0 occurrence dans V5. Attend P1 (hôte Fiber Cordis)."
+    },
+    {
+      "capability": "openrig_demo_qc_578_holons",
+      "claimed_by": [
+        "RigInfinity"
+      ],
+      "reason": "Aucune preuve de 578 holons dans l'arbre RigInfinity ; la déclaration dépasse l'implémentation."
+    },
+    {
+      "capability": "reviewer_security_owasp_top10",
+      "claimed_by": [
+        "RigInfinity"
+      ],
+      "reason": "Aucun module security dans l'arbre RigInfinity (0 fichier security)."
+    },
+    {
+      "capability": "rrsi_worktree_evolver",
+      "claimed_by": [
+        "prime-agent"
+      ],
+      "reason": "RrsiWorktreeEvolver.build_worktree_evolution_spec() ne produit qu'une spec (a0_recursive_factory.py) et ne crée aucun worktree ; le module rrsi lui-même est hors périmètre v1 (11 modules de l'audit)."
+    }
+  ],
+  "gaps": [
+    "Jugements 13e : tous les 9 modules en état 2 citent un jugement (375, 413, 462, 482, 610, 640, 663, 788, 793) — retrouvés au REGISTRE-NARDOLE.md, pas sur GitHub (les PR n'ont ni review ni commentaire 13e). Réserve : le journal 413 (V3a, wikiskill/dream-rsi) est dérivé de 5 ancres ligne-7 dans la région du registre, pas nommé explicitement — à confirmer par le coordinateur.",
+    "RigInfinity : état 2 sans manifeste ni fiche V5 (harnais §6 en échec sur ce module).",
+    "A0-Plugins : re-pinné sur l'adapter + manifeste et fiche livrés par D-N053 pas B (PR #27) pendant la construction du lock — état 1, jugement 798.",
+    "Aqua : pas de manifeste ni fiche dans V5 (état 0, honnête) ; SDK AQuA réel non validé.",
+    "Agent Zero : pas de gitlink dans V5 (greffe coupée F8 pas 5) ; v5_path déclaré mais absent de l'arbre.",
+    "Cordis / Automaton : pins non conformes à pin_rule=adapter (6aab659 formatage, e1f361d bind natif) — re-pins P0-b séparés.",
+    "OpenRig : dérive amont 249 commits (manifeste disait 226 — périmé) ; daemon incomplet.",
+    "Wikiskill : wikiskill_4role_compiler implémenté comme modèle local (a0_recursive_factory.py), pas dans l'adapter — réserve consignée."
+  ]
+}
