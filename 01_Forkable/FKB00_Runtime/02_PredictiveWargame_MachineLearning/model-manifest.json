@@ -48,7 +48,7 @@
       ],
       "specs": "Continuous trajectory foundation model, 512-8192 context, 256-480 horizon, rollout & predict_quantiles",
       "weight_size": "75M-300M params",
-      "license": "Apache-2.0",
+      "license": "Non-Commercial (CC-BY-NC-4.0 — PathFM-Chaotic-75M vérifié en R1 ; autres variantes non vérifiées)",
       "sovereign_mirror": "Amdkn/PathFM"
     },
     {

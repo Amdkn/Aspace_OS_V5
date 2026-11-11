@@ -96,7 +96,7 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 - **Déjà existant :** fiches modèles dans `02_PredictiveWargame_MachineLearning/models/`, moteurs natifs (`triptych_autogluon_engine.py`, `wargame_tabular_engine.py`, `wargame_business_launch_auditor.py`), registre HF (`HF-SOVEREIGN-INDEX.md`).
 - **Preuve attendue :** une prévision validée sur données écartées (hold-out), jamais sur les données d'entraînement.
 - **État :** proposée
-- **Mesures :** — (H : — / C : — / D : —)
+- **Mesures :** 7 modules ML en état 1 (pas A, D-N053) ; 4 modules MasterSpec en état 0 (pas C) ; C (F9) : 4
 
 ## F10 — Catalogue de skills unique (FKB08)
 
@@ -140,6 +140,44 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | llm-wiki (gist) | rapatrié | — | — (pas un module) | — (propre) |
 
 **Baseline V0 (D-N048) :** C = 0/21 forkés, 0 adaptés ; D = 8. Renommage enregistré : `Amdkn/mattpocock-skills`, `fiber:a0:mattpocock-skills` (§D2). Gist rapatrié : `00_Memoire/bundle/concepts/llm-wiki.md`, pointeur retiré, compte 119 → 118 (§D3).
+
+---
+
+## Adaptations (D-N053 — Runtime, §D16)
+
+**Compteur d'état 0 du Runtime : 25 → 18 (pas A).** 7 modules ML adaptés (état 0 → 1) ; 18 restent en état 0 (pas B, C, F1, F2 + 8 coordonnés par leur propre piste). Mesuré au registre, pas déclaré (H-A8).
+
+**États :** 0 Basique (fork Amdkn non adapté) ; 1 Adapté (fiche + adapter + manifeste, tests verts) ; 2 Vérifié (hold-outs verts + validation 13e) ; 3 Publié (état 2 + registre à jour).
+
+| Module (fork Amdkn) | État | Pin (adapter) | Manifeste | Licence |
+|---|---|---|---|---|
+| autogluon | 1 | `2de7c39` | `fiber:a0:autogluon` | Apache-2.0 |
+| mitra-2 (natif) | 1 | `2676f75` | `fiber:a0:mitra-2` | Apache-2.0 |
+| chronos-forecasting | 1 | `c749362` | `fiber:a0:chronos-forecasting` | Apache-2.0 |
+| timesfm | 1 | `7cb4f64` | `fiber:a0:timesfm` | Apache-2.0 |
+| tabfm | 1 | `0a56dff` | `fiber:a0:tabfm` | Apache-2.0 |
+| PathFM | 1 | `8bcdd5b` | `fiber:a0:PathFM` | CC BY-NC 4.0 |
+| MiroFish | 1 | `dff2f01` | `fiber:a0:mirofish` | AGPL-3.0 |
+| elephant-goldfish-model | 0 | `3d643fe` | — | Apache-2.0 |
+| get-shit-done → gsd-core | 0 | (nouveau fork) | — | MIT |
+| gstack | 0 | `a79170c` | — | MIT |
+| superpowers (canonique) | 0 | `4ca2922` | — | MIT |
+| a0-plugins | 0 | `f73f767` | — | MIT |
+| agent-zero (F8 pas 5) | 0 | `176d23f` | — | MIT |
+| spynel | 0 | `3e076a1` | — | MIT |
+| tuxee | 0 | `5c51b78` | — | MIT |
+| infinity (F8 pas 3) | 0 | `be616bf` | — | Apache-2.0 |
+| openrig (F8 pas 4) | 0 | `adafb0d` | — | Apache-2.0 |
+| herdr (F1) | 0 | `df9b626` | — | Apache-2.0 |
+| herdr-core (F1) | 0 | `14a3772` | — | Apache-2.0 |
+| orca (F2) | 0 | `b659760` | — | MIT |
+| OpenDots (F8 pas 7) | 0 | `d4214af` | — | MIT |
+| OpenDuet (F8 pas 7) | 0 | `f52288f` | — | MIT |
+| openbot (F8 pas 7) | 0 | `2b5b14f` | — | MIT |
+| openmuse (F8 pas 7) | 0 | `a4944f4` | — | MIT |
+| prime-agent (F8 pas 6 + R2) | 0 | `3ba6791` | — | MIT |
+
+**Pas A (ML socle) :** 7/7 adaptés, H-M1..M7 + H-A1..H-A5 verts (bornes nommées : suite autogluon bornée ; PathFM sans suite amont ; MiroFish : aucune simulation réelle, le smoke prouve la frontière) ; MiroFish isolé en service (§D2) ; PathFM confiné au profil interne, ligne du manifeste ML corrigée à CC BY-NC 4.0 (§D3) ; pin = commit adapter (§D8, patron F8 D4 — la proposition « pin = adapter+bind HEAD » des groupes 1 et 3 est consignée à la PR pour arbitrage du 13e).
 
 ---
 

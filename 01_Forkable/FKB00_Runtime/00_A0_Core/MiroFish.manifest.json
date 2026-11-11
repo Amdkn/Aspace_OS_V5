@@ -1,0 +1,51 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish-ADAPTATION.md",
+  "adapter": {
+    "commit": "dff2f017d97015319f080738aa4944c74c565206",
+    "package": "aspace-mirofish-adapter",
+    "pin_proposed": "65d327eba68c0729edbfbb29d2ff2105ce2a5525",
+    "surface": [
+      "python3 aspace-mirofish-adapter/service.py start|stop|status|restart -> backend MiroFish en processus separe sur 127.0.0.1:5150",
+      "python3 aspace-mirofish-adapter/client.py health|list|reports -> interface cliente HTTP locale (stdlib)",
+      "python3 aspace-mirofish-adapter/test_adapter.py -> suite 12/12",
+      "python3 aspace-mirofish-adapter/smoke_test.py -> smoke reel 6/6 (vrai backend, PID separe, /health, arret propre)"
+    ],
+    "version": "0.1.0"
+  },
+  "bind": {
+    "bind_commit": "9b49ac4fc6823ee033cf5c3f6e589e8cb721eff5",
+    "reapplied_commit": "65d327eba68c0729edbfbb29d2ff2105ce2a5525",
+    "sha256": "6db9d8bf8bf8c1e352d9eb34f12ad6adc80c382803f9b8feeb78500428cd7bc1"
+  },
+  "entry": "aspace-mirofish-adapter/service.py",
+  "id": "fiber:a0:mirofish",
+  "isolation": {
+    "host": "127.0.0.1",
+    "mode": "service_separe",
+    "no_import": "aucun import MiroFish dans le code du Runtime (scan H-A5)",
+    "no_shared_process": "service en processus separe (PID verifie au smoke)",
+    "transport": "HTTP local uniquement"
+  },
+  "issued_by": "Ryan (Factory), dispatch D-N053, pas A (Groupe 3)",
+  "levels": {
+    "current": 1,
+    "states": [
+      "0 Basique (fork Amdkn non adapte)",
+      "1 Adapte (fiche + adapter + manifeste, tests verts)",
+      "2 Verifie (hold-outs verts + validation 13e)",
+      "3 Publie (etat 2 + registre a jour)"
+    ]
+  },
+  "schema_authority": "Clara (design D-N053, D2)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/MiroFish-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/MiroFish",
+    "frozen_commit": "7657031ac01184afe2cb220f5ee3545573b5e843",
+    "license": "AGPL-3.0",
+    "repository": "666ghj/MiroFish",
+    "upstream_version": "0.1.0"
+  },
+  "validated_by": "13e Doctor (jugement en attente)",
+  "version": "0.1.0"
+}

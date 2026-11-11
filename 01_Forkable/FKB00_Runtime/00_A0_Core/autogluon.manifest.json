@@ -1,0 +1,47 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/autogluon-ADAPTATION.md",
+  "adapter": {
+    "commit": "2de7c39",
+    "package": "@aspace/autogluon-adapter",
+    "surface": [
+      "describe() -> { fiber_id, pinned_commit, pinned_version, license }",
+      "disable_telemetry() -> { TABPFN_DISABLE_TELEMETRY: 1 }",
+      "create_predictor(*args, **kwargs) -> TabularPredictor (import paresseux, telemetrie coupee)",
+      "telemetry_guard() -> { network_calls_by_adapter: 0 }"
+    ],
+    "version": "0.1.0"
+  },
+  "bind": {
+    "branch": "aspace-v5-native",
+    "commit": "efadb39",
+    "file": "aspace-plugin.json",
+    "reapplied_blob": "5a576e941bd4f35c9500b5334216d4241d8d2bfe",
+    "reapplied_on_master": "02e547a"
+  },
+  "entry": "aspace-autogluon-adapter/autogluon_aspace_adapter/__init__.py",
+  "id": "fiber:a0:autogluon",
+  "issued_by": "Ryan (Factory), dispatch D-N053 pas A, groupe 1",
+  "levels": {
+    "current": 1,
+    "states": [
+      "0 Basique (fork Amdkn non adapte)",
+      "1 Adapte (fiche + adapter + manifeste, tests verts)",
+      "2 Verifie (hold-outs verts + validation 13e)",
+      "3 Publie (etat 2 + registre a jour)"
+    ]
+  },
+  "schema_authority": "Clara (design D-N053, D8)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/autogluon-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "master",
+    "drift_ahead": 13,
+    "fork": "Amdkn/autogluon",
+    "frozen_commit": "e3cb3b7",
+    "frozen_title": "[tabular] A model with a NaN validation score is not listed as trained (#6048)",
+    "frozen_version": "1.6.4",
+    "license": "Apache-2.0",
+    "repository": "autogluon/autogluon"
+  },
+  "validated_by": "13e Doctor (validation en attente — jugement du pas A)",
+  "version": "0.1.0"
+}
