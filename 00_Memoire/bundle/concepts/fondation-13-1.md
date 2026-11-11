@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -161,6 +161,85 @@ par un exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR
 `v4-factory/evidence/D-N055/RESULTS-F1-2.json` — **non consigné au ledger
 par ce pas** (le coordinateur consigne).
 
+## 7. F1-3 — Router (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md` (fonction de
+design interne, journal 806, 2026-11-11 ~01:53 EST). Décisions D-F1-3-1..6,
+amendements A-F1-3-1 / A-F1-3-2, précisions P-F1-3-1..3.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `router`,
+binaire `route-dispatch`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router nommées) ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Router ajouté).
+
+**Ce qui est livré :** le routeur (R1–R8, ordre R1 → R2 → R3 → R4 → R5 →
+R6 → R7 → R8 ; rejet motivé, jamais de correction silencieuse, jamais de
+routage quand même) + l'inscripteur (`seq` = numéro de ligne, append-only)
++ le relais comme événement lu par la destinataire + la CLI
+`route-dispatch` (`validate` / `type` / `relay` / `ack` / `pulse` /
+`request-judgment` / `render-judgment`).
+
+**Suite H-M3 — VERTE :** `cargo test` — 44 tests, 0 échec (7 unitaires lib +
+17 d'intégration R10 + 20 d'intégration router) : cas passants = un dispatch
+valide typé, relayé, accusé ; demande de jugement puis jugement rendu ;
+relais après demande de jugement (correction R8) ; pulsation ; correction
+référençant un événement existant ; cas rejetés =
+les 5 fautifs du Discover §6 (raisons nommées : R2 sans design signé, R3
+double-envoi, R4 destinataire = session, R5 `at` non ISO, R8 ack sans
+typed) + relais sans acte préalable (R8). Log :
+`v4-factory/evidence/D-N055/harness-F1-3.log`. Les 20 tests
+F1-2 restent verts (régression : 0 échec).
+
+**Dispatch fautif planté (D-F1-3-6, amendement A-F1-3-1) :** fautif n° 1
+(sans design signé, `design_ref` vide, `dispatch_id`
+`D-N055-F1-3-FAUTIF-1` + `event_id` `EVT-20261111-901` frais) — planté à
+`v4-factory/evidence/D-N055/DISPATCH-FAUTIF-1.json` et en fixture de la
+suite. Rejet vérifié par la CLI : `REJET R2 — champ 'design_ref' : aucun
+design signé référencé — un dispatch sans design signé n'est jamais routé`
+(sortie 2). Le garde-fou R4 est vérifié aussi (destinataire `Nardole` →
+R4, `actor_to`).
+
+**Mesure H-M1 re-mesurée à l'exécution** (base du Discover : registre 805
+lignes) : registre 806 lignes (design F1-3 signé, journal 806) ; master
+`29f52e9` (pulse Workgraph 01:53, parent `1947fab` — la base de la branche
+`a0/f1-3-router` reste `1947fab`, mergeable) ; F1-2 clos (PR #26,
+`1f89b56`, reçu 006).
+
+**Correction portée en avant (R8) :** le Discover §4 et le design §3
+disent « le relais suit le typage ». En usage réel, le routeur a rejeté
+(R8, sortie 2) le relais de la demande de jugement — parce qu'une demande
+de jugement (`judgment_requested`) est elle-même un acte de création de
+dispatch, pas un `dispatch_typed`. La règle est corrigée : le relais suit
+tout acte de création — `dispatch_typed` OU `judgment_requested` ; l'accusé
+suit seulement le typage d'un dispatch de livraison. Le rejet R8 en direct
+est conservé comme preuve que le routeur applique la règle (il a rejeté
+avant la correction, pas après). Le design signé n'est pas réécrit : la
+correction est portée en avant ici et dans le reçu de livraison 015.
+
+**Correction portée en avant (R1) :** le Discover §4 et le design §3
+disent « le dispatch porte exactement les 10 clés » — c'est l'ÉVÉNEMENT
+inscrit qui porte 10 clés. Le dispatch soumis en porte 9 : `seq` est
+assigné par le routeur à l'inscription (le numéro de séquence est le
+numéro de ligne, il ne peut pas être dans la soumission). Le code
+implémente R1 = 9 clés pour le dispatch ; une soumission portant `seq`
+est rejetée R1 (clé inconnue — test `seq_soumis_rejete_r1`). Le design
+signé n'est pas réécrit : la correction est portée en avant ici et dans
+le reçu de livraison 015.
+
+**Hold-outs F1-3 :** H-M1 mesuré (ci-dessus) ; H-M2 diff vide sur l'amont
+(code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4 télémétrie zéro
+(audit joint, 0 dépendance, 0 appel sortant) ; H-M5 levé au niveau du
+module (fonctions Recevoir + Router nommées dans le manifeste — le
+manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6 frontière (seul
+le code A'Space du routeur ; voir Divergence) ; H-M7 cette fiche. H-F1-4
+= le reçu du merge qui clôt F1-3 (mission `LE1-FAB-D-N055-006`) — **après
+le merge, par un exécutant dédié, pas dans ce pas**. Le reçu de livraison
+de la PR (mission `LE1-FAB-D-N055-005`) est préparé dans
+`v4-factory/evidence/D-N055/RESULTS-F1-3.json` — **non consigné au ledger
+par ce pas** (le coordinateur consigne).
+
 ## Divergence (H-M6)
 
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
@@ -176,6 +255,15 @@ par ce pas** (le coordinateur consigne).
   (vérifiés par l'opérateur au git local ou à l'API). C'est un choix de
   frontière (zéro appel sortant dans le code), pas une lacune : la suite
   et la CLI reçoivent leurs SHA de l'opérateur.
+- **La liste des designs signés est injectée, pas intégrée (F1-3).** Le
+  routeur ne contacte ni le système de fichiers ni l'API pour prouver
+  qu'un design est signé : l'appelant fournit la liste des designs signés
+  (vérifiés par l'opérateur au fichier). Même choix de frontière que le
+  résolveur de SHA (zéro appel sortant dans le code).
+- **`seq` assigné à l'inscription, pas soumis (F1-3).** Le dispatch soumis
+  porte 9 clés ; l'événement inscrit en porte 10 (`seq` = numéro de
+  ligne). Une soumission portant `seq` est rejetée R1. Voir fiche §7 —
+  correction portée en avant du Discover §4 / design §3.
 - **Le manifeste du daemon (RigInfinity) n'est pas dans V5.** H-M5 est
   satisfait au niveau du module (manifeste posé ici) ; l'inscription dans
   le manifeste du daemon lui-même reste due côté RigInfinity.
