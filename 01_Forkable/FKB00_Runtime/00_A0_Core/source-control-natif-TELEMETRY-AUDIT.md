@@ -27,9 +27,9 @@
 
 **0 exporteur, 0 SDK, 0 appel sortant par défaut au pin `c6adc8d`.** Le seul trafic sortant nouveau est celui des 3 requêtes de lecture, vers l'API GitHub uniquement, sur demande explicite — c'est la fonction du module, pas de la télémétrie.
 
-## SC-2 — le module `changeset` (pin `c83b281`)
+## SC-2 — le module `changeset` (pin `655b2a4`)
 
-**Portée :** le pas SC-2 ajoute le module WAL (`crates/infinity-daemon/src/changeset.rs`, 627 lignes) + son test (`tests/changeset_proof.rs`, 317 lignes). Correctif `c83b281` (parent `814b83c`) : `tmp_path` sans `std::process` — la preuve no-subprocess reste littérale. **1 dépendance ajoutée** (`sha2` 0.10 — hachage seul, aucune émission réseau ; son arbre : `digest`, `crypto-common`, `block-buffer`, `typenum`, `generic-array`, `cpufeatures`).
+**Portée :** le pas SC-2 ajoute le module WAL (`crates/infinity-daemon/src/changeset.rs`, 627 lignes) + son test (`tests/changeset_proof.rs`, 317 lignes). Correctifs `c83b281` (parent `814b83c`) + `655b2a4` : `tmp_path` sans appel processus, commentaire sans le littéral greppé — la preuve no-subprocess reste littérale. **1 dépendance ajoutée** (`sha2` 0.10 — hachage seul, aucune émission réseau ; son arbre : `digest`, `crypto-common`, `block-buffer`, `typenum`, `generic-array`, `cpufeatures`).
 
 **Déclencheur tranché — aucun :** le module n'émet rien. SQLite local seul (`changeset_blobs` / `changesets` / `changeset_files` dans le store de la factory, mode WAL) ; 0 invocation `git`, 0 sous-processus, 0 socket (vérifié par grep : 0 occurrence de `Command` / `reqwest` / `TcpStream` / `git clone` dans le module et son test) ; aucun token, aucun secret, aucune donnée sortante — le changeset ne quitte jamais la machine.
 
@@ -37,4 +37,4 @@
 
 ## Verdict SC-2
 
-**0 exporteur, 0 SDK, 0 appel sortant par défaut au pin `c83b281`.** Le WAL est purement local ; le seul trafic sortant du natif reste celui des 3 requêtes de lecture SC-1, vers l'API GitHub uniquement, sur demande explicite.
+**0 exporteur, 0 SDK, 0 appel sortant par défaut au pin `655b2a4`.** Le WAL est purement local ; le seul trafic sortant du natif reste celui des 3 requêtes de lecture SC-1, vers l'API GitHub uniquement, sur demande explicite.
