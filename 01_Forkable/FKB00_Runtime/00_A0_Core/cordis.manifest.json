@@ -100,5 +100,6 @@
     "repository": "cordiverse/cordis"
   },
   "validated_by": "13e Doctor",
-  "version": "0.1.0"
+  "version": "0.1.0",
+  "fiber_host": "01_Forkable/FKB00_Runtime/00_A0_Core/aspace-fiber-host"
 }
