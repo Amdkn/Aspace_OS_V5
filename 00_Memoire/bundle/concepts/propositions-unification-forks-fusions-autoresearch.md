@@ -81,14 +81,14 @@ L'inventaire ci-dessus porte sur les **pointeurs** (`.gitmodules`, arborescence,
 |---|---|---|
 | 0 | **Basique** | Publication grand public telle quelle, pointeur seul, aucune adaptation A'Space. |
 | 1 | **Adapté** | Fork souverain + adaptation documentée à l'univers A'Space (noms, chemins, licences, télémétrie coupée, ports et contrats A'Space). |
-| 2 | **Fusionné** | Fonction absorbée dans un module unifié avec un ou plusieurs complémentaires ; le doublon est retiré. |
-| 3 | **Natif** | Fonction réécrite ou intégrée dans le code propre du mono-repo ; le sous-module n'existe plus. |
+| 2 | **Vérifié** | Hold-outs verts + validation 13e. |
+| 3 | **Publié** | État 2 + registre à jour. |
 
 ### 3.2 Les règles
 
 1. **Tout nouveau fork entre en état 0 avec une date de sortie.** Pas d'entrée sans échéance.
 2. **Le compteur public, c'est le nombre de modules en état 0.** L'objectif est 0, pas « moins qu'hier ».
-3. **Un module ne monte d'un état que sur preuve** : adaptation relue (état 1), fusion avec hold-outs verts et doublon retiré (état 2), fonction couverte en natif sans régression (état 3).
+3. **Un module ne monte d'un état que sur preuve** : adaptation relue (état 1), hold-outs verts + validation 13e (état 2), état 2 + registre à jour (état 3).
 4. **Un module en état 0 ne peut pas être une dépendance du Runtime.** Le Runtime ne s'appuie que sur de l'adapté ou mieux.
 5. **Les 21 pointeurs amont sont de l'état 0 aggravé** : ils ne sont même pas des forks. Leur sortie de l'état 0 commence par un fork Amdkn.
 
