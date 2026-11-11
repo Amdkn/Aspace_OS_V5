@@ -86,8 +86,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 - **Fonction :** le triptyque Âme / Système nerveux / Corps, en natif.
 - **Déjà existant :** structure posée (FKB00 index, 6 pôles) et code natif existant (`a0_recursive_factory.py`, `a0_holon_swarm_runtime.py`, `a0_egm_bridge.py`, `aspace_freecompute_router.py`). Fusion la plus lourde : **en dernier**, FKB00 étant sanctuarisé.
 - **Preuve attendue :** le Runtime tourne sans aucun des 11 sous-modules d'origine ; présence prouvée par heartbeat, pas par cron.
-- **État :** en cours (D-N051, pas 1 mergé, pas 2 en cours)
-- **Mesures :** compteur états 0–3 — 9 en état 0, 0 en état 1, 2 en état 2 (cordis, automaton), 0 en état 3 ; pas 0 : re-pin cordis sur l'adapter `6aab659`, index FKB00 corrigé (pôle 06 + sanctuarisation), bind cordis re-appliqué sur `main` (`726291d`) ; pas 1 : automaton adapté (adapter `7cdaa00`, 2 commits, smoke 21/21, suite 1 646/0/1, H-M3 ROUGE réserve js-tiktoken, jugement 13e), bind automaton re-appliqué sur `main` (`9728a0f`), doctrine native (LICENSE Apache-2.0, constitution, templates S1/S2/S3, heartbeat) déposée dans RigInfinity ; pas 1 mergé `7b46cf8` (jugement 482, H-M3 vert avec réserve : test 500 000 car. non exécuté, ~7 h, à borner ou courir sur une machine plus rapide à un pas ultérieur)
+- **État :** en cours (D-N051, pas 1 mergé, pas 2 en cours — Phase D, pas 3 mergé)
+- **Mesures :** compteur états 0–3 — 8 en état 0, 0 en état 1, 3 en état 2 (cordis, automaton, infinity), 0 en état 3 ; pas 0 : re-pin cordis sur l'adapter `6aab659`, index FKB00 corrigé (pôle 06 + sanctuarisation), bind cordis re-appliqué sur `main` (`726291d`) ; pas 1 : automaton adapté (adapter `7cdaa00`, 2 commits, smoke 21/21, suite 1 646/0/1, H-M3 ROUGE réserve js-tiktoken, jugement 13e), bind automaton re-appliqué sur `main` (`9728a0f`), doctrine native (LICENSE Apache-2.0, constitution, templates S1/S2/S3, heartbeat) déposée dans RigInfinity ; pas 1 mergé `7b46cf8` (jugement 482, H-M3 vert avec réserve : test 500 000 car. non exécuté, ~7 h, à borner ou courir sur une machine plus rapide à un pas ultérieur) ; pas 3 : infinity adapté (adapter `007409e`, smoke 13/13, suite 385/42 ROUGE QUALIFIÉ — 42 environnementaux pré-existants au gel, 0 imputable à l'adapter, daemon 100 % vert ; H-P3-3 hibernation PROUVÉE, H-P3-4 RAP PROUVÉE, H-P3-6 MCP PROUVÉE, H-P3-7 CONDITIONNELLE au pas 2), portage natif des 4 fonctions dans RigInfinity (`bd7c946` + `aad4993`, tests natifs 12/12), bind infinity re-appliqué sur `main` (`b0e6110`), cron 30 min absent (vérifié au fichier — aucune définition dans le repo ; heartbeat événementiel)
 
 ## F9 — Moteur prédictif et wargame unique (FKB00)
 
@@ -145,7 +145,7 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 
 ## Adaptations (D-N053 — Runtime, §D16)
 
-**Compteur d'état 0 du Runtime : 25 → 18 (pas A).** 7 modules ML adaptés (état 0 → 1) ; 18 restent en état 0 (pas B, C, F1, F2 + 8 coordonnés par leur propre piste). Mesuré au registre, pas déclaré (H-A8).
+**Compteur d'état 0 du Runtime : 25 → 17 (pas A + F8 pas 3).** 7 modules ML adaptés (état 0 → 1) ; infinity adapté + fusionné par F8 pas 3 (état 0 → 2) ; 17 restent en état 0 (pas B, C, F1, F2 + 7 coordonnés par leur propre piste). Mesuré au registre, pas déclaré (H-A8).
 
 **États :** 0 Basique (fork Amdkn non adapté) ; 1 Adapté (fiche + adapter + manifeste, tests verts) ; 2 Vérifié (hold-outs verts + validation 13e) ; 3 Publié (état 2 + registre à jour).
 
@@ -166,7 +166,7 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | agent-zero (F8 pas 5) | 0 | `176d23f` | — | MIT |
 | spynel | 0 | `3e076a1` | — | MIT |
 | tuxee | 0 | `5c51b78` | — | MIT |
-| infinity (F8 pas 3) | 0 | `be616bf` | — | Apache-2.0 |
+| infinity (F8 pas 3) | 2 | `007409e` | `fiber:a0:infinity` | Apache-2.0 |
 | openrig (F8 pas 4) | 0 | `adafb0d` | — | Apache-2.0 |
 | herdr (F1) | 0 | `df9b626` | — | Apache-2.0 |
 | herdr-core (F1) | 0 | `14a3772` | — | Apache-2.0 |
