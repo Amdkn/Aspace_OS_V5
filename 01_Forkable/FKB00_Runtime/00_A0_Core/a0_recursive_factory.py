@@ -366,7 +366,7 @@ def run_a0_recursive_cycle_demo() -> Dict[str, Any]:
         variant_name="Cordis_Fiber_HotSwap_v2", simulated_reward=0.912
     )
     rrsi_spec = RrsiWorktreeEvolver.build_worktree_evolution_spec(
-        best_dream, target_fork="Amdkn/agent-zero"
+        best_dream, target_fork="Amdkn/RigInfinity"
     )
 
     return {

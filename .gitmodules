@@ -208,10 +208,6 @@
 	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/mitra-2
 	url = https://github.com/Amdkn/mitra-2.git
 
-[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero"]
-	path = 01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero
-	url = https://github.com/Amdkn/agent-zero.git
-
 [submodule "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins"]
 	path = 01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins
 	url = https://github.com/Amdkn/a0-plugins.git

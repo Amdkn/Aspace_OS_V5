@@ -129,7 +129,7 @@ if __name__ == "__main__":
         parent_holon="A0-AMADEUS",
         assigned_holon="B3.4-MARVEL-SQUAD",
         area_code="LD01",
-        submodule_target="01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero",
+        submodule_target="Amdkn/RigInfinity",
         harness_engine="prime-agent",
         fractal_layer="8L",
     )
