@@ -1,6 +1,7 @@
 {
   "module": "02_PredictiveWargame_MachineLearning",
   "fractal_layer": "20L",
+  "weight_verification": "CORRECTION R1 (2026-11-10) : les poids sont des fichiers LFS — l'oid de l'arbre Hub est le sha1 du POINTEUR LFS (134 o), jamais celui du contenu. Vérification correcte : taille + sha256 du contenu == lfs.oid de l'arbre Hub (confirmé par SHA256SUMS du Hub pour PathFM). Les mount-weights.sh des 4 miroirs (acte 1) utilisent l'ancien contrôle git blob oid et doivent être corrigés de même.",
   "swarm_engine": {
     "name": "MiroFish (OASIS + MindGraph)",
     "upstream": "https://github.com/666ghj/MiroFish",
@@ -25,7 +26,11 @@
       "specs": "12 layers, 75.7M/76.7M params, 2D Row/Column Attention, 8 copies consensus vote",
       "weight_size": "~300 MB",
       "license": "Apache-2.0",
-      "sovereign_mirror": "Amdkn/mitra-classifier-2"
+      "sovereign_mirror": "Amdkn/mitra-classifier-2",
+      "mirror_url": "https://github.com/Amdkn/mitra-classifier-2",
+      "mirror_head": "54a8f2285f0f9b00af6a978730c23f40451c7349",
+      "mirror_mechanism": "Miroir sans poids (D-N052 R1, §D2) : petits fichiers du Hub verbatim + MIRROR-MANIFEST.json (révision Hub edada0d20759c58ada8c8605c25f22f6e98ea5f0, oid + tailles) + mount-weights.sh (télécharge les poids UNE FOIS à la révision épinglée, vérifie taille + oid). Poids : model.safetensors 302717904 o, non poussés (limite GitHub 100 Mo/fichier ; LFS gratuit 1 Go < 3,7 Go).",
+      "mirror_created": "2026-11-10"
     },
     {
       "pillar": "2_Temporal_Universal_Commercial",
@@ -36,7 +41,11 @@
       "specs": "120M / 28M params, >300 series/s, past and future covariates support",
       "weight_size": "~480 MB",
       "license": "Apache-2.0",
-      "sovereign_mirror": "Amdkn/chronos-2"
+      "sovereign_mirror": "Amdkn/chronos-2",
+      "mirror_url": "https://github.com/Amdkn/chronos-2",
+      "mirror_head": "e33cbc8cafa16e9e490dcc8d2c9d48c83cad9da1",
+      "mirror_mechanism": "Miroir sans poids (D-N052 R1, §D2) : petits fichiers du Hub verbatim + MIRROR-MANIFEST.json (révision Hub 60088152a34e242427b44c3100014473a0157d53, oid + tailles) + mount-weights.sh. Poids : model.safetensors 477930472 o, non poussés (limite GitHub 100 Mo/fichier).",
+      "mirror_created": "2026-11-10"
     },
     {
       "pillar": "3_Trajectory_Chaotic_Systems",
@@ -49,7 +58,9 @@
       "specs": "Continuous trajectory foundation model, 512-8192 context, 256-480 horizon, rollout & predict_quantiles",
       "weight_size": "75M-300M params",
       "license": "Non-Commercial (CC-BY-NC-4.0 — PathFM-Chaotic-75M vérifié en R1 ; autres variantes non vérifiées)",
-      "sovereign_mirror": "Amdkn/PathFM"
+      "sovereign_mirror": "Amdkn/PathFM",
+      "mirror_note": "Amdkn/PathFM existait déjà avant D-N052 (non recréé).",
+      "r1_mount": "pathfm-chaotic-75m @ af1a159695126b5b91be5499d3709c3bf25a3c44, model.safetensors 294572852 o, sha256 LFS 6958980c5d72823f7505615bfa4a7751eeb8a21c26c6c70bcb4a800613a8177e"
     },
     {
       "pillar": "4_Internal_Calibration_Jury_Google",
@@ -60,7 +71,23 @@
       "specs": "TabFM (24 ICL blocks, /classification & /regression) + TimesFM 3.0 (20L, 16H, Variate Attention, patch 32->64)",
       "weight_size": "1.65 GB + 1.32 GB",
       "license": "Non-Commercial",
-      "sovereign_mirror": "Amdkn/tabfm-1.1.0-pytorch & Amdkn/timesfm-3.0-pytorch"
+      "sovereign_mirror": "Amdkn/tabfm-1.1.0-pytorch & Amdkn/timesfm-3.0-pytorch",
+      "mirrors": [
+        {
+          "name": "Amdkn/tabfm-1.1.0-pytorch",
+          "mirror_url": "https://github.com/Amdkn/tabfm-1.1.0-pytorch",
+          "mirror_head": "84657eace9a5915936a916e12fa3bb8354c3385d",
+          "mirror_mechanism": "Miroir sans poids (D-N052 R1, §D2) : petits fichiers du Hub verbatim + MIRROR-MANIFEST.json (révision Hub d7cfd3b8d184d7c8fed4210aeba9e1c967d45f2a, oid + tailles) + mount-weights.sh. Poids : classification/model.safetensors 820550772 o + regression/model.safetensors 824695714 o, non poussés. Confinement §D3 : profil interne uniquement, jamais B2B.",
+          "mirror_created": "2026-11-10"
+        },
+        {
+          "name": "Amdkn/timesfm-3.0-pytorch",
+          "mirror_url": "https://github.com/Amdkn/timesfm-3.0-pytorch",
+          "mirror_head": "5cb70e78ec4f8a5fa816b15ee9a81163d5a63165",
+          "mirror_mechanism": "Miroir sans poids (D-N052 R1, §D2) : petits fichiers du Hub verbatim + MIRROR-MANIFEST.json (révision Hub 43046b85ec22d584a13f8098c2ed39c889e129c2, oid + tailles) + mount-weights.sh. Poids : model.safetensors 1322898824 o, non poussés. Confinement §D3 : profil interne uniquement, jamais B2B.",
+          "mirror_created": "2026-11-10"
+        }
+      ]
     }
   ]
 }

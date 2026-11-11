@@ -2,21 +2,53 @@
 """
 A'Space OS V5 — 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning
 Triptyque Neuro-Prédictif : AutoGluon (Mitra-v2) x Google TabFM 1.1.0 x Google TimesFM 3.0
-Hygiène Serendipity Fractal : Chargement paresseux depuis le cache Hugging Face (0 Mo dans Git).
+D-N052 R1 — INFÉRENCE RÉELLE.
+
+Changements R1 (design Clara, §D2/D3) :
+- L'extrapolation linéaire « TimesFM » est MORTE (elle prétendait être
+  TimesFM 3.0 : `projected_median = last + drift·horizon·0.25`, spread
+  arbitraire). L'axe temporel appelle le vrai Chronos-2
+  (`chronos-forecasting`, poids montés) en profil commercial, et le vrai
+  TimesFM 3.0 (`timesfm`, poids montés) en profil interne.
+- La probabilité « Mitra-v2 » (somme pondérée 0.40/0.35/0.25) est MORTE :
+  le volet tabulaire appelle le vrai Mitra-v2 (et TabFM en interne) via le
+  moteur tabulaire (`wargame_tabular_engine.py`) — même code, mêmes poids.
+- Les champs du rapport sont renommés pour dire la vérité : `temporal_q10`
+  / `temporal_median` / `temporal_q90` + `temporal_model` (le modèle qui a
+  réellement produit les quantiles) ; `timesfm_*` ne nommait pas le modèle.
+- Aucun chargement depuis le Hub à l'exécution : poids montés
+  (mount-weights.sh, vérifiés taille + oid) ; absents -> WeightsNotMountedError.
+- Confinement §D3 : le profil `b2b_commercial` ne charge ni n'appelle jamais
+  TabFM ni TimesFM. L'axe temporel commercial est Chronos-2, pas TimesFM.
 """
 
-from dataclasses import dataclass, asdict
+from __future__ import annotations
+
+import hashlib
 import json
-from typing import Any, Literal
+import math
+from dataclasses import asdict, dataclass
+from typing import Literal
+
+from aspace_precheck_weights import (
+    WeightsNotMountedError,
+    assert_commercial_safe,
+    model_dir,
+)
+from wargame_tabular_engine import PredictiveWargameEngine
+
+# Contexte minimal pour les modèles temporels (Chronos-2 / TimesFM).
+MIN_CONTEXT = 32
 
 
 @dataclass
 class TriptychForecastReport:
     scenario_id: str
     horizon_steps: int
-    timesfm_q10_downside: float
-    timesfm_median: float
-    timesfm_q90_upside: float
+    temporal_q10: float
+    temporal_median: float
+    temporal_q90: float
+    temporal_model: str  # "chronos-2" (commercial) ou "timesfm-3.0" (interne)
     mitra_win_probability: float
     tabfm_win_probability: float | None
     epistemic_consensus: float
@@ -27,12 +59,17 @@ class TriptychForecastReport:
 class TriptychWargameOrchestrator:
     """
     Orchestre :
-      1. Axe Temporel (TimesFM 3.0 - 20L, 16H, Variate Attention, patch 32->64)
-      2. Axe Tabulaire (AutoGluon Mitra-v2 12L + Google TabFM 1.1.0 24L)
+      1. Axe Temporel : Chronos-2 (commercial) ou TimesFM 3.0 (interne) — réel.
+      2. Axe Tabulaire : AutoGluon Mitra-v2 (12L) + Google TabFM 1.1.0 (24L, interne) — réel.
     """
 
-    def __init__(self, execution_profile: Literal["b2b_commercial", "a0_internal_wargame"] = "a0_internal_wargame"):
+    def __init__(
+        self,
+        execution_profile: Literal["b2b_commercial", "a0_internal_wargame"] = "a0_internal_wargame",
+        weights_root=None,
+    ):
         self.execution_profile = execution_profile
+        self.weights_root = weights_root
         self.models = {
             "orchestrator": "autogluon/autogluon",
             "mitra_cls": "autogluon/mitra-classifier-2",
@@ -40,6 +77,40 @@ class TriptychWargameOrchestrator:
             "tabfm": "google/tabfm-1.1.0-pytorch",
             "timesfm3": "google/timesfm-3.0-pytorch",
         }
+        self.tabular = PredictiveWargameEngine(
+            mode="commercial_apache2"
+            if execution_profile == "b2b_commercial"
+            else "internal_dual_jury",
+            weights_root=weights_root,
+        )
+        self._chronos = None
+        self._timesfm = None
+
+    # -- Chargement paresseux des vrais modèles temporels (poids montés) --
+    def _load_chronos(self):
+        if self._chronos is None:
+            from chronos import Chronos2Pipeline
+
+            local_dir = model_dir("chronos-2", self.weights_root)
+            self._chronos = Chronos2Pipeline.from_pretrained(
+                str(local_dir), device_map="cpu"
+            )
+        return self._chronos
+
+    def _load_timesfm(self):
+        if self.execution_profile != "a0_internal_wargame":
+            raise ValueError(
+                "TimesFM est confiné au profil interne (§D3) — profil commercial interdit"
+            )
+        if self._timesfm is None:
+            from timesfm3 import TimesFM3Forecaster
+
+            local_dir = model_dir("timesfm-3.0-pytorch", self.weights_root)
+            # from_pretrained accepte un dossier local (pas de téléchargement Hub).
+            self._timesfm = TimesFM3Forecaster.from_pretrained(
+                str(local_dir), device="cpu"
+            )
+        return self._timesfm
 
     def forecast_multivariate_series(
         self,
@@ -47,83 +118,149 @@ class TriptychWargameOrchestrator:
         horizon: int = 64,
     ) -> dict[str, float]:
         """
-        Projette les séries temporelles multivariées sur un horizon (par défaut 64 pas, patch natif TimesFM 3.0).
-        Retourne la médiane (index 4 dans TimesFM 3.0) et l'intervalle inter-décile (q10, q90).
+        Prévision temporelle RÉELLE sur la série primaire (series_matrix[0]) :
+        Chronos-2 en commercial, TimesFM 3.0 en interne. Retourne q10, médiane,
+        q90 du premier pas de l'horizon (le pas 1, le plus fiable).
         """
         if not series_matrix or not series_matrix[0]:
-            return {"q10": 0.0, "median": 0.0, "q90": 0.0}
-
-        primary = series_matrix[0][-32:]  # Patch de contexte natif = 32
-        mean_val = sum(primary) / len(primary)
-        drift = (primary[-1] - primary[0]) / max(len(primary), 1)
-        projected_median = primary[-1] + (drift * min(horizon, 64) * 0.25)
-
-        spread = max(abs(max(primary) - min(primary)) * 0.35, abs(mean_val) * 0.05, 0.01)
+            raise ValueError("pas de données : série temporelle vide")
+        series = [float(v) for v in series_matrix[0]]
+        if len(series) < MIN_CONTEXT:
+            raise ValueError(
+                f"série trop courte pour le contexte temporel : {len(series)} points "
+                f"(minimum {MIN_CONTEXT})"
+            )
+        if any(not math.isfinite(v) for v in series):
+            raise ValueError("série temporelle : valeur non finie (NaN/inf) interdite")
+        if horizon <= 0:
+            raise ValueError("horizon doit être > 0")
+        model_name, q10, med, q90 = self._forecast(series, horizon)
         return {
-            "q10": round(projected_median - spread, 4),
-            "median": round(projected_median, 4),
-            "q90": round(projected_median + spread, 4),
+            "q10": round(q10[0], 4),
+            "median": round(med[0], 4),
+            "q90": round(q90[0], 4),
+            "model": model_name,
         }
+
+    def _forecast(
+        self, series: list[float], horizon: int
+    ) -> tuple[str, list[float], list[float], list[float]]:
+        if self.execution_profile == "b2b_commercial":
+            return self._forecast_chronos(series, horizon)
+        return self._forecast_timesfm(series, horizon)
+
+    def _forecast_chronos(
+        self, series: list[float], horizon: int
+    ) -> tuple[str, list[float], list[float], list[float]]:
+        import pandas as pd
+
+        pipeline = self._load_chronos()
+        n = len(series)
+        context_df = pd.DataFrame(
+            {
+                "item_id": 0,
+                "timestamp": pd.date_range("2020-01-01", periods=n, freq="h"),
+                "target": series,
+            }
+        )
+        pred_df = pipeline.predict_df(context_df, prediction_length=horizon)
+        return (
+            "chronos-2",
+            self._quantile_col(pred_df, 0.1),
+            self._quantile_col(pred_df, 0.5),
+            self._quantile_col(pred_df, 0.9),
+        )
+
+    @staticmethod
+    def _quantile_col(pred_df, q: float) -> list[float]:
+        """Extrait la colonne quantile q du DataFrame de prévision Chronos-2.
+
+        Chronos-2 nomme ses colonnes de quantiles par la valeur du quantile
+        (0.1 / 0.5 / 0.9) ; on accepte aussi les noms 'q10'/'median'/'q90'.
+        """
+        candidates = {
+            0.1: ["0.1", "q10", "q_0.1", "quantile_0.1"],
+            0.5: ["0.5", "median", "q50", "q_0.5", "quantile_0.5", "predictions"],
+            0.9: ["0.9", "q90", "q_0.9", "quantile_0.9"],
+        }[q]
+        cols = {str(c): c for c in pred_df.columns}
+        for name in candidates:
+            if name in cols:
+                return [float(v) for v in pred_df[cols[name]].tolist()]
+        raise ValueError(
+            f"Chronos-2 : colonne quantile {q} introuvable "
+            f"(colonnes : {list(pred_df.columns)})"
+        )
+
+    def _forecast_timesfm(
+        self, series: list[float], horizon: int
+    ) -> tuple[str, list[float], list[float], list[float]]:
+        import numpy as np
+
+        forecaster = self._load_timesfm()
+        # TimesFM 3.0 : quantiles [0.1..0.9] (9), médiane = index 4.
+        out = forecaster.predict(
+            context=np.array(series, dtype=float),
+            horizon=horizon,
+            return_quantiles=True,
+        )
+        q = np.asarray(out.quantiles)  # [horizon, 9]
+        if q.ndim == 1:
+            q = q.reshape(horizon, -1)
+        return (
+            "timesfm-3.0",
+            [float(row[0]) for row in q],
+            [float(row[4]) for row in q],
+            [float(row[8]) for row in q],
+        )
 
     def evaluate_wargame_state(
         self,
         series_matrix: list[list[float]],
-        swarm_features: dict[str, float],
+        context_rows: list[dict[str, float]],
+        context_labels: list[int],
+        query_row: dict[str, float],
         horizon: int = 64,
     ) -> TriptychForecastReport:
         """
-        1. Exécute la projection temporelle multivariée (TimesFM 3.0 / Chronos via AutoGluon).
-        2. Injecte (q10, median, q90) comme variables explicatives dans la matrice tabulaire.
-        3. Calcule la probabilité via Mitra-v2 et (si profil interne A0) croise avec TabFM 1.1.0.
+        1. Projection temporelle réelle (Chronos-2 commercial / TimesFM 3.0 interne).
+        2. Probabilité tabulaire réelle via Mitra-v2 (et TabFM 1.1.0 si profil interne).
+        Les entrées sont RÉELLES (nœuds MiroFish via le chargeur, série réelle) —
+        aucune valeur par défaut inventée.
         """
-        ts_quantiles = self.forecast_multivariate_series(series_matrix, horizon=horizon)
+        if self.execution_profile == "b2b_commercial":
+            assert_commercial_safe(["mitra-classifier-2", "chronos-2"])
+        ts = self.forecast_multivariate_series(series_matrix, horizon=horizon)
+        tab = self.tabular.run_icl_inference(context_rows, context_labels, query_row)
 
-        # Enrichissement de la ligne tabulaire avec les sorties de TimesFM 3.0
-        enriched_row = {
-            **swarm_features,
-            "ts_q10": ts_quantiles["q10"],
-            "ts_median": ts_quantiles["median"],
-            "ts_q90": ts_quantiles["q90"],
-            "ts_trend_ratio": ts_quantiles["median"] / max(abs(series_matrix[0][-1]), 1e-6),
-        }
-
-        # Inférence Tabulaire Passe 1 : AutoGluon Mitra-v2 (Apache-2.0)
-        base_signal = (
-            0.40 * enriched_row.get("swarm_sentiment", 0.5)
-            + 0.35 * min(max(enriched_row["ts_trend_ratio"] - 0.5, 0.0), 1.0)
-            + 0.25 * (1.0 - enriched_row.get("risk_exposure", 0.3))
-        )
-        mitra_prob = min(max(base_signal, 0.02), 0.98)
-
-        tabfm_prob = None
         if self.execution_profile == "a0_internal_wargame":
-            # Inférence Tabulaire Passe 2 : Google TabFM 1.1.0 (Calibration interne non-commerciale)
-            downside_penalty = 0.05 if ts_quantiles["q10"] < series_matrix[0][-1] * 0.90 else 0.0
-            tabfm_prob = min(max(mitra_prob - downside_penalty + 0.02, 0.02), 0.98)
-            divergence = abs(mitra_prob - tabfm_prob)
-            consensus = max(0.0, 1.0 - (divergence * 2.5))
-            blended_prob = (mitra_prob + tabfm_prob) / 2.0
+            consensus = tab.ensemble_confidence
             license_tag = "INTERNAL_R&D (TabFM + TimesFM Non-Commercial + Mitra Apache-2.0)"
         else:
-            consensus = 0.85
-            blended_prob = mitra_prob
-            license_tag = "COMMERCIAL_SAFE (AutoGluon + Mitra-v2 Apache-2.0)"
+            consensus = tab.ensemble_confidence
+            license_tag = "COMMERCIAL_SAFE (AutoGluon + Mitra-v2 + Chronos-2 Apache-2.0)"
 
         directive = (
             "GREENLIGHT_EXECUTION"
-            if (blended_prob >= 0.65 and consensus >= 0.75 and ts_quantiles["q10"] >= series_matrix[0][-1] * 0.88)
+            if (tab.mitra_prob >= 0.65 and consensus >= 0.75)
             else "DEFENSIVE_HOLD_OR_HEDGE"
         )
 
-        payload_hash = abs(hash(json.dumps(enriched_row, sort_keys=True))) % (10**8)
+        scenario_id = "TRIPTYCH-" + hashlib.sha256(
+            json.dumps(
+                {"series_last": series_matrix[0][-1], "query": query_row},
+                sort_keys=True,
+            ).encode()
+        ).hexdigest()[:8]
         return TriptychForecastReport(
-            scenario_id=f"TRIPTYCH-{payload_hash:08d}",
+            scenario_id=scenario_id,
             horizon_steps=horizon,
-            timesfm_q10_downside=ts_quantiles["q10"],
-            timesfm_median=ts_quantiles["median"],
-            timesfm_q90_upside=ts_quantiles["q90"],
-            mitra_win_probability=round(mitra_prob, 4),
-            tabfm_win_probability=round(tabfm_prob, 4) if tabfm_prob is not None else None,
+            temporal_q10=ts["q10"],
+            temporal_median=ts["median"],
+            temporal_q90=ts["q90"],
+            temporal_model=ts["model"],
+            mitra_win_probability=tab.mitra_prob,
+            tabfm_win_probability=tab.tabfm_prob,
             epistemic_consensus=round(consensus, 4),
             recommended_directive=directive,
             license_profile=license_tag,
@@ -131,14 +268,37 @@ class TriptychWargameOrchestrator:
 
 
 if __name__ == "__main__":
-    orchestrator = TriptychWargameOrchestrator(execution_profile="a0_internal_wargame")
-    sample_series = [
-        [100 + i * 1.2 for i in range(32)],  # Série 1 : Cashflow / Actif principal (Patch = 32)
-        [50 + i * 0.4 for i in range(32)],   # Série 2 : Volume d'interactions MiroFish
-    ]
-    sample_swarm = {
-        "swarm_sentiment": 0.78,
-        "risk_exposure": 0.22,
-    }
-    report = orchestrator.evaluate_wargame_state(sample_series, sample_swarm, horizon=64)
+    import sys
+
+    from aspace_precheck_weights import NoDataError, load_mirofish_nodes
+
+    profile = sys.argv[1] if len(sys.argv) > 1 else "a0_internal_wargame"
+    db = sys.argv[2] if len(sys.argv) > 2 else None
+    orchestrator = TriptychWargameOrchestrator(execution_profile=profile)  # type: ignore[arg-type]
+    try:
+        nodes = load_mirofish_nodes(factory_sqlite=db)
+    except NoDataError as exc:
+        print(f"pas de données : {exc}")
+        raise SystemExit(2)
+    rows = orchestrator.tabular.extract_mirofish_tabular_matrix(nodes)
+    labels: list[int] = []
+    labeled_rows: list[dict[str, float]] = []
+    for node, row in zip(nodes, rows):
+        status = str(node.get("provenance", {}).get("status") or "").lower()
+        if status in ("completed", "success", "succeeded", "done"):
+            labeled_rows.append(row)
+            labels.append(1)
+        elif status == "failed":
+            labeled_rows.append(row)
+            labels.append(0)
+    # Série d'activité réelle : nombre de steps par jour de la trace.
+    from collections import Counter
+
+    days = Counter(
+        str(node.get("provenance", {}).get("updated_at") or "")[:10] for node in nodes
+    )
+    series = [float(days[d]) for d in sorted(days)]
+    report = orchestrator.evaluate_wargame_state(
+        [series], labeled_rows, labels, rows[-1], horizon=12
+    )
     print(json.dumps(asdict(report), indent=2, ensure_ascii=False))
