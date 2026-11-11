@@ -50,3 +50,4 @@ okf_version: "0.2"
 - [secrets_and_vault_registry.md](concepts/secrets_and_vault_registry.md) — Registre des Secrets, Vaults GitHub & Politique de Rotation (Zero Fuite en Clair).
 - [propositions-unification-forks-fusions-autoresearch.md](concepts/propositions-unification-forks-fusions-autoresearch.md) — Propositions A0 : Unification des forks V5, Auto Research des fusions, intégration native en mono-repo (zéro module en publication basique).
 - [adaptation-cordis-aspace-roadmap-forks.md](concepts/adaptation-cordis-aspace-roadmap-forks.md) — Adaptation de Cordis à A'Space + roadmap de l'ordre d'adaptation des forks (Cordis d'abord).
+- [ricks-verse.md](concepts/ricks-verse.md) — Le Rick's Verse : Rick (S1) intègre ses 3 Doctors (13e Kernel, 11e Life, 12e Buzz), chacun avec ses Compagnons dans son Tardis ; Fondation 13 → 1, chaîne d'artefacts Mission → PRD/ADR → TDD → R10, registres LD08 Georgiou.
