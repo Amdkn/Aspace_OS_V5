@@ -7,19 +7,19 @@ Rapport dans Muse toutes les 1–5 min : qui travaille, sur quoi, dernier avance
 Jamais 10 min de heartbeat sans avancement dans l'évolution de V5.
 Mission : développement de V5 sur ses modules Git — adapter 1 par 1, fusionner 1 par 1, incorporation native.
 
-## État — 2026-11-10 22:02 EST (vérifié à la source)
+## État — 2026-11-10 22:04 EST (vérifié à la source)
 
 | Qui | Quoi | État | Dernier avancement | Heure (EST) | Prochaine étape |
 |---|---|---|---|---|---|
-| Ryan (S3) | F8 pas 2 — pi (la durabilité) + D-N052 + F8 pas 3 + D-N053 | En cours | 22:00 — PR #20 MERGÉE (F8 pas 4 openrig, état 0→2, 3dbb791, 2 parents, true merge) ; master afc7703 ; PR #22 OUVERTE (D-N054 SC-0, tête 0c9015d) ; PR #21 OUVERTE (D-N052 R1) | 22:00 | Jugement PR #22 par le 13e ; jugement PR #21 ; exécution D-N054 + pas 6 (prime-agent) ; pas B D-N053 ; dépôt R10 022 |
+| Ryan (S3) | F8 pas 2 — pi (la durabilité) + D-N052 + F8 pas 3 + D-N053 | En cours | 22:02 — PR #20 MERGÉE confirmée au registre (journal 674, 3dbb791, 2 parents dc36b5a + 56e47d0, true merge) ; correction : reçu 022 = D-N054 SC-0, pas le merge pas 4 ; PR #22 + #21 ouvertes | 22:02 | Jugement PR #22 par le 13e ; jugement PR #21 ; exécution D-N054 + pas 6 (prime-agent) ; pas B D-N053 ; dépôt R10 merge pas 4 (numéro ultérieur) |
 | Clara (S2) | F8 — fusion Runtime triptyque natif | En cours | 21:31 — Design D-N054 TYPÉ à Ryan (journal 662, plan 28 728 o vérifié au fichier) ; jugement PR #20 VALIDÉE 21:32 ; merge PR #20 exécuté 22:00 | 21:31 | Exécution D-N054 par Ryan ; design pas 6 / D-N055 |
-| Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 22:00 — PR #20 MERGÉE (pas 4 CLOSE) ; registre 673 lignes, inchangé depuis 21:53 ; PR #22 + #21 ouvertes | 22:00 | T3 (Clara) quand T2 verte ; exécution D-N054 ; pas B D-N053 |
+| Nardole (S3) | T2 — transmission + typage D-N052 + D-N053 | En cours | 22:03 — Registre 675 lignes (journaux 674–675) ; journal 674 : PR #20 MERGÉE confirmée + correction reçu 022 ; journal 675 : accusé Rick pas 5 déjà traité, convergence | 22:03 | T3 (Clara) quand T2 verte ; exécution D-N054 ; pas B D-N053 |
 | 13e (S2) | Jugement PR #16 + verdict H-C2 | En cours | 21:32 — JUGEMENT consigné (journal 663) : PR #20 VALIDÉE pour merge (avec réserves : H-M4 télémétrie corrigée, H-M3 PARTIEL), harnais P4 23 checks, 14 PASS, 8 PARTIEL, 1 QUALIFIÉ, 0 FAIL ; merge exécuté 22:00 (3dbb791) | 21:32 | Verdict H-C2 ; jugement PR #22 ; jugement PR #21 ; clôture pas 4 |
 | Bill (S3) | F8 Discover + pas 2 (pi) + D-N052 | En cours | 19:44 — Deltas journaux 604–609 : Discover D-N054 DÉJÀ LIVRÉ par Bill (43 962 o, vérifié au fichier, submission 079fb635) — vérification Rick puis routage à Clara pour le design | 19:44 | Design D-N054 par Clara ; exécution pas 6 par Ryan ; pas B D-N053 à venir |
-| A0 | Pulse + vérification | En cours | Pulse 22:02 : PR #20 MERGÉE 22:00 (3dbb791), master afc7703, registre 673 lignes (mtime 21:53:56), PR #22 + #21 + #1 ; avancement à 22:00, ~2 min — pas de saisine | 22:02 | Rapport 1–5 min, alerte 10 min |
+| A0 | Pulse + vérification | En cours | Pulse 22:04 (2e passe) : registre 675 lignes (mtime 22:03:33), master cecd3ed, PR #22 + #21 + #1 ; avancement à 22:03, ~1 min — pas de saisine | 22:04 | Rapport 1–5 min, alerte 10 min |
 | V5 — F8 pas 1 | MERGÉ | Terminé | PR #15 mergée 15:39:29 (7b46cf8, true merge) ; post-merge cd716a3 + log.md f63b799 ; reçu 004 consigné 15:41 ; compteur 9 en état 0, 2 en état 2 | 15:41 | Pas 2 (pi) : exécution Ryan lancée 15:53 ; piste D-N052 en parallèle |
-| Rick (S1) | D-N052 — développement modules récursivité | En cours | 22:00 — PR #20 MERGÉE (pas 4, 3dbb791) ; registre 673 lignes ; PR #22 OUVERTE (D-N054 SC-0) ; PR #21 OUVERTE (D-N052 R1) | 22:00 | Exécution D-N052 R0–R5 ; validation 13e par pas ; dispatch pause cron Needle ; pas B D-N053 |
-| Rick (S1) | Runtime — adaptation de TOUS les modules | En cours | 22:00 — PR #20 MERGÉE (pas 4) ; PR #22 OUVERTE (D-N054 SC-0) ; registre 673 lignes ; PR #21 ouverte | 22:00 | Pas B D-N053 ; exécution D-N054 ; pas 6 ; validation 13e par pas |
+| Rick (S1) | D-N052 — développement modules récursivité | En cours | 22:03 — Registre 675 lignes ; PR #20 MERGÉE (pas 4, 3dbb791) ; PR #22 OUVERTE (D-N054 SC-0) ; PR #21 OUVERTE (D-N052 R1) | 22:03 | Exécution D-N052 R0–R5 ; validation 13e par pas ; dispatch pause cron Needle ; pas B D-N053 |
+| Rick (S1) | Runtime — adaptation de TOUS les modules | En cours | 22:03 — PR #20 MERGÉE (pas 4) ; PR #22 OUVERTE (D-N054 SC-0) ; registre 675 lignes ; PR #21 ouverte | 22:03 | Pas B D-N053 ; exécution D-N054 ; pas 6 ; validation 13e par pas |
 
 ## Mise à jour
 
