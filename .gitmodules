@@ -191,9 +191,9 @@
 [submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/superpowers"]
 	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/superpowers
 	url = https://github.com/Amdkn/superpowers.git
-[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/get-shit-done"]
-	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/get-shit-done
-	url = https://github.com/Amdkn/get-shit-done.git
+[submodule "01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gsd-core"]
+	path = 01_Forkable/FKB00_Runtime/03_MasterSpec_CleanPlan/gsd-core
+	url = https://github.com/Amdkn/gsd-core.git
 
 [submodule "01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm"]
 	path = 01_Forkable/FKB00_Runtime/02_PredictiveWargame_MachineLearning/timesfm
