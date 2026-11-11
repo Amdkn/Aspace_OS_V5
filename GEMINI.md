@@ -137,6 +137,34 @@ Chaque agent et sous-agent d'Aspace OS V5 élève automatiquement son niveau d'a
    - **Remplacer les noms par des verbes d'effet réel** : ne pas « faire un document/plan », mais *construire, automatiser, tester, déployer et prouver de bout en bout*.
    - **Équipage Holonique Multi-Domaines** : mobiliser les méthodes réelles de chaque discipline à travers les 3 OS (incluant systématiquement un critique Red Team `S1-RICK` / `A1-MORTY`).
 
+
+## 7.1 Compilateur de Mission — du Prompt Humain au Mandat Exécutable
+
+Le prompt utilisateur exprime une destination, un problème ou une intention. **L’agent est responsable de produire lui-même le cadrage expert complet.** Ne demande jamais à l’utilisateur de rédiger les prompts spécialisés, les sous-tâches ou les prompts de relance que les modèles peuvent concevoir à partir du contexte, du dépôt, des données et des outils disponibles.
+
+Pour toute mission qui dépasse une action atomique :
+1. Charge le contexte pertinent, la chaîne DOX, la Mémoire V5, le Workgraph, les décisions, les contrats, les données brutes et l’état Git réel.
+2. Compile un **Mission Contract** durable : résultat ultime, état final attendu, périmètre inclus/exclu, critères d’acceptation, dépendances, risques, ressources, permissions, preuves attendues et mécanisme de continuité.
+3. Applique ensemble les quatre dimensions Speed, Altitude, Depth et Range. Le détail exécutable et le méta-prompt réutilisable sont dans `00_Memoire/bundle/templates/ambition-mission-template.md` et la skill `ambition-mission`.
+4. Construis ou actualise le DAG complet des travaux, assigne des agents à de vrais livrables disciplinaires, parallélise les branches indépendantes et conserve un propriétaire d’écriture par worktree.
+5. **Exécute immédiatement.** Le Mission Contract et le Workgraph ne sont pas des livrables de substitution à l’implémentation. N’attends pas un nouveau prompt pour enchaîner les tâches révélées par le travail.
+6. Après chaque résultat, intègre les preuves, ferme uniquement les tâches réellement terminées, active les dépendances débloquées et continue jusqu’aux critères finaux. Une phase, un ticket, P0–P7, un commit ou une réponse ne constitue jamais à lui seul la fin d’une mission plus large.
+7. Si la session ou la machine disparaît, reprends depuis le dépôt distant et les checkpoints versionnés. **Compute is disposable; Git is durable.** Aucun état nécessaire à la reprise ne doit exister uniquement dans une sandbox, une mémoire conversationnelle, un disque temporaire ou une base locale non sauvegardée.
+8. Ne sollicite l’humain que pour une décision réellement indispensable, une autorisation externe absente ou un effet irréversible non couvert par le mandat. Déduis les détails récupérables, choisis des valeurs par défaut réversibles, consigne les hypothèses et poursuis tous les travaux indépendants.
+
+### Boucle d’ambition continue
+
+- **Speed :** accélérer le résultat global par les outils réels, les sous-agents, les worktrees, l’automatisation, les tests en parallèle et la réduction des temps morts.
+- **Altitude :** remonter de la tâche au résultat au-delà du résultat, puis concevoir les mécanismes durables qui préviennent la répétition du problème.
+- **Depth :** repartir de la matière première, utiliser les instruments et méthodes des experts de pointe, confronter les hypothèses, mesurer et demander une validation à un Outside Judge indépendant.
+- **Range :** mobiliser les méthodes réelles des disciplines et domaines pertinents ; distribuer des missions substantielles plutôt que jouer des personnages ou simuler une équipe.
+
+### Continuité et finalité
+
+Le travail doit survivre aux sessions et aux remplacements de workers. Les commits, manifests, décisions, Workgraph, checkpoints exportables, handoffs et preuves nécessaires à la reprise doivent être persistés dans Git distant ou dans un stockage durable explicitement référencé par Git. Les index et caches locaux restent reconstructibles. N’annonce jamais un service 24/7 si aucun scheduler, runner ou déploiement durable ne le maintient réellement.
+
+Le protocole ne crée pas une expansion infinie et indéfinie : il poursuit intégralement la destination confiée, garde les critères d’acceptation visibles, ajoute les travaux nécessaires à la finalité, et place les opportunités adjacentes dans un backlog évolutif sans détourner la mission principale.
+
 ---
 
 ## 8. Architecture Holonique 3 OS (578 Holons), Jumeau Numérique CEO 24/7 (`A0 Amadeus`) & Cube Farm (`01_Forkable/`)
@@ -212,3 +240,5 @@ Lorsque **Gemini 3.8 Flash** prend le relais (ou opère en mode rapide), il comp
 - `CLAUDE.md` : miroir opérationnel pour les outils qui chargent `CLAUDE.md` en priorité.
 - `02_Factory/config.json` & `02_Factory/factory.ps1` : colonne vertébrale ADW & Durable Subagents de l'Aspace Software Factory.
 - `00_Memoire/bundle/index.md` : point d'entrée de toutes les pages de concepts V5 (`aspace-factory.md`, `pi-durable-subagents.md`, `fable5-traces.md`, `vscode-antifragile.md`, `herdr.md`, `outils-memoire.md`, `regles-utilisateur.md`, `contexte-v5.md`, `ambition-modo-de-volar.md`, `aspace-3os-holons.md`, `ceo-automaton-cubefarm.md`, `argon-flash38-distillation.md`).
+- `00_Memoire/bundle/templates/ambition-mission-template.md` : template canonique de compilation d’intention en mission experte continue.
+- `.agents/skills/ambition-mission/SKILL.md` et `.claude/skills/ambition-mission/SKILL.md` : invocation agnostique du protocole d’ambition.

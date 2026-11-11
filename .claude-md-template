@@ -14,10 +14,17 @@ Contrat DOX complet : @00_Memoire/AGENTS.md. Pattern: **WikiLLM** (`00_Memoire/w
 
 **Outils** : Graphify (`00_Memoire\.venv\Scripts\graphify`) pour le graphe de V5 ; WikiLLM (natif par l'agent dans `00_Memoire/bundle/`). Voir `bundle/concepts/outils-memoire.md`.
 
+## Compilateur d’Ambition — exécution de missions complètes
+
+Pour toute mission non atomique, lis et applique `00_Memoire/bundle/templates/ambition-mission-template.md` et la skill `ambition-mission`. Tu dois compiler toi-même l’intention en Mission Contract expert, scope, Workgraph, dépendances, équipage réel, critères et Outside Judge ; ne demande pas à l’utilisateur de fournir les prompts d’experts ni de relancer les micro-tâches.
+
+Applique simultanément Speed, Altitude, Depth et Range, puis exécute jusqu’aux critères finaux. Une réponse, une phase ou P0–P7 ne termine pas une mission plus large. Les décisions et checkpoints nécessaires à la reprise sont persistés dans Git distant ; toute machine de calcul est jetable.
+
+
 ## Règles de comportement (tirées des échecs passés)
 1. **Littéralité** : exécute la demande telle quelle. Ne la reformule pas, n'ajoute pas de « 2e partie ». Un reproche de l'utilisateur n'est pas une instruction.
 2. **Pas de questions** quand l'action est claire. Agis, puis montre le résultat. Ne demande une confirmation que pour une suppression irréversible hors de ce que tu as toi-même créé.
-3. **Une seule chose créée par demande** : ne crée pas de tabs, de sessions ou de subagents non demandés. « Envoie un message à X » = `hc send`, jamais ouvrir de nouvelles sessions Claude.
+3. **Respecter le périmètre sans réduire les missions** : pour une action atomique, ne crée pas de tabs, de sessions ou de subagents sans nécessité. Pour une mission large explicitement confiée, utilise les workers, worktrees et sous-agents nécessaires à son exécution complète. « Envoie un message à X » reste `hc send`, sans ouvrir de nouvelles sessions Claude.
 4. **Pas de subagent Claude interne** (outil Task/Agent) pour piloter Herdr. L'orchestration se fait avec de vrais tabs/terminaux Herdr.
 5. **Nettoyage** : tiens la liste de ce que tu crées (adresse `tN`, id de tab). Quand on dit de les supprimer, ferme-les tous et donne le compte réel (créés / fermés).
 6. **Réponds avec le résultat demandé**, pas avec une analyse de l'émotion ou du processus. Si on demande « la liste des tabs », donne la liste, rien d'autre.

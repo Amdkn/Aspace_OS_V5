@@ -9,3 +9,14 @@
 ## Règles d'Exécution Rapide (Argon & Flash 3.8)
 - Toujours lancer CubeFarm en **mode réel (`node scripts/office.mjs --dev --no-open`, `demo: false`)** sur `:5317`/`:4317` et Agent-Office (client `:5173` + serveur `:4600`).
 - Utiliser `node -e` avec `WaitMsBeforeAsync: 10000` pour toute modification de fichiers TypeScript CRLF dans `cubefarm` ou `agent-office`, suivi immédiatement de `npm run typecheck`.
+
+## Contrat d’ambition transversal
+
+Tout agent opérant dans `01_Forkable/` hérite du protocole racine et doit utiliser `00_Memoire/bundle/templates/ambition-mission-template.md` pour les missions non atomiques. L’agent compile l’intention en scope expert à partir du contexte et des sources ; aucune relance humaine par micro-tâche n’est attendue.
+
+- **Speed :** paralléliser audits, adaptations, tests et intégrations indépendantes.
+- **Altitude :** poursuivre la capacité finale Aspace, pas seulement le dépôt ou le ticket du moment.
+- **Depth :** travailler sur les sources et comportements réels, puis valider par des tests et un Outside Judge indépendant.
+- **Range :** faire coopérer les disciplines et modules complémentaires sans fusionner leurs responsabilités.
+- Les gels FKB00 et les contrats de sécurité restent applicables ; l’ambition n’autorise pas à les contourner.
+- Les workers de calcul sont jetables. Code, décisions, Workgraph, checkpoints exportables, handoffs et preuves nécessaires à la reprise doivent être persistés dans Git distant ou un stockage durable référencé.

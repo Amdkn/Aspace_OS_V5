@@ -46,3 +46,20 @@ Application obligatoire du protocole de profondeur en **4 étapes** :
 ### Vecteur 4 — Range (Envergure Multi-Disciplinaire & Verbes d'Impact)
 - **Remplacer les noms par des verbes d'effet réel** : ne pas livrer « un mémo » ou « un tableau », mais *architecturer, automatiser, tester, déployer et prouver de bout en bout*.
 - **Équipage Holonique Multi-Domaines** : mobiliser les méthodes réelles de chaque discipline à travers `Tech OS`, `Life OS 2026` et `Areas OS`, en incluant systématiquement un critique Red Team (`S1-RICK` / `A1-MORTY`).
+
+## 3. De la demande au prompt expert : le compilateur de mission
+
+Le levier est de ne plus demander à l’humain d’écrire lui-même un prompt d’expert à chaque mission. L’agent utilise le contexte, les fichiers, les données et les outils disponibles pour compiler l’intention en Mission Contract complet, puis il l’exécute. Le template réutilisable est [`templates/ambition-mission-template.md`](../templates/ambition-mission-template.md).
+
+Le prompt expert devient un artefact de gouvernance réutilisable, appliqué par DOX et les harnesses, et relié au Workgraph.
+
+## 4. Exécution continue et mémoire de mission
+
+- L’agent maintient le graphe des travaux actif jusqu’aux critères finaux, sans arrêt artificiel à la fin d’une phase, d’un ticket, d’un commit ou d’une réponse.
+- Chaque mission possède un état durable, des dépendances, des checkpoints, des preuves et une prochaine action exécutable.
+- Les workers de calcul sont remplaçables ; Git distant porte le code et les artefacts de reprise. Les bases et index locaux sont des caches reconstructibles, sauf contrat de stockage durable explicite.
+- Une capacité 24/7 n’est revendiquée qu’après validation d’un scheduler ou d’un runner persistant et d’une reprise après remplacement de worker.
+
+## 5. Profil OKF V5
+
+Le template utilise OKF v0.2 et ajoute des champs producteur Aspace compatibles avec son extensibilité : `ambition`, `execution_contract` et les métadonnées de mission. Ces extensions ne modifient pas la spécification OKF upstream.
