@@ -1,11 +1,11 @@
 {
   "$schema": "https://aspaceos.tech/schemas/modules-lock-v1.json",
   "version": 1,
-  "generated_at": "2026-11-11T01:39:44-05:00",
-  "generated_by": "piste-F P0 (LE1-FAB-PISTE-F-001)",
-  "v5_head": "38daa7b737a3cac5461fc8657349fbd18b4caf32",
+  "generated_at": "2026-11-11T01:55:29-05:00",
+  "generated_by": "piste-F P0-b (LE1-FAB-PISTE-F-003)",
+  "v5_head": "1947fab40869adecba38b1500cec9f77e74fd4b7",
   "pin_rule": "adapter",
-  "pin_rule_note": "Règle tranchée par le 13e en D-N053 pas A (journal 587) : pin = adapter. Le pin enregistré ici est le gitlink V5 EFFECTIF au v5_head — la vérité actuelle, pas la cible : les re-pins (cordis 6aab659, automaton e1f361d vers leurs adapters / mains) sont un pas P0-b séparé, après le verrouillage. A0-plugins a déjà été re-pinné sur l'adapter (fa8df85) par D-N053 pas B (PR #27, 2026-11-11) pendant la construction du lock. Aucun fast-forward silencieux : tout re-pin exige PR dédiée + compare API joint + harnais vert + jugement 13e (cf. §8.2 du Discover).",
+  "pin_rule_note": "Règle tranchée par le 13e en D-N053 pas A (journal 587) : pin = adapter. Le pin enregistré ici est le gitlink V5 EFFECTIF au v5_head — la vérité actuelle, pas la cible : les re-pins P0-b sont livrés par cette PR (PR #29) : cordis 6aab659 → a40cc74, automaton e1f361d → 7cdaa00 (D-F0-2, pin_rule=adapter). A0-plugins a déjà été re-pinné sur l'adapter (fa8df85) par D-N053 pas B (PR #27, 2026-11-11) pendant la construction du lock. Aucun fast-forward silencieux : tout re-pin exige PR dédiée + compare API joint + harnais vert + jugement 13e (cf. §8.2 du Discover).",
   "modules": [
     {
       "id": "fiber:a0:cordis",
@@ -19,15 +19,10 @@
       ],
       "adapter_parent": "b38ef5847a0f60662efc78fdde2c89f4943b77d4",
       "bind_commit": "726291db3df128eb8a2c463476b38623b766c2de",
-      "pin": "6aab659432b23e94e8c8b797bcc986db256c0656",
+      "pin": "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
       "pin_branch": "main",
-      "pin_extra_commits": [
-        {
-          "sha": "6aab659432b23e94e8c8b797bcc986db256c0656",
-          "note": "mise en forme package.json post-adapter (pas un bind, pas un adapter)"
-        }
-      ],
-      "gitlink": "6aab659432b23e94e8c8b797bcc986db256c0656",
+      "pin_extra_commits": [],
+      "gitlink": "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
       "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/cordis",
       "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/cordis.manifest.json",
       "state": 2,
@@ -42,19 +37,18 @@
       "upstream_drift": {
         "ahead": 4,
         "behind": 0,
-        "last_checked": "2026-11-11T01:30:00-05:00"
+        "last_checked": "2026-11-11T01:55:29-05:00"
       },
       "gel_pin_compare": {
-        "ahead": 2,
+        "ahead": 1,
         "behind": 0,
         "commits": [
-          "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
-          "6aab659432b23e94e8c8b797bcc986db256c0656"
+          "a40cc749c0a7611dc87da1262ad0874f378fdeb3"
         ],
         "status": "ahead",
-        "last_checked": "2026-11-11T01:30:00-05:00"
+        "last_checked": "2026-11-11T01:55:29-05:00"
       },
-      "notes": "Pin = 6aab659 (formatage post-adapter), pas l'adapter a40cc74 : re-pin P0-b prévu vers l'adapter / main (D-F0-2, pin_rule=adapter). Branche native bc732a6d5f8ab08a0f6b45dbb4bd8e196089e067 divergée (ahead 1 / behind 3, base pré-gel 7f92195) : elle perd gel + adapter. API amont instable (manifeste). Manifeste sans champ holdouts ; fiche : smoke 3/3, suite fork 694 passés / 2 rouges identiques / 11 skipped.",
+      "notes": "Pin = a40cc74 (adapter, pin_rule=adapter) depuis P0-b (PR #29) : l'ancien pin 6aab659 n'ajoutait qu'une mise en forme de package.json (1 fichier, contenu identique, vérifié au commit) ; le bind 726291d reste sur main (aspace-plugin.json blob c80723e3, byte-identique au bind natif bc732a6, vérifié à l'API). Branche native bc732a6 divergée (ahead 1 / behind 3, base pré-gel 7f92195) : elle perd gel + adapter — écartée par D-F0-2. Dérive amont : 4 commits après le gel (#307, #303, #311, #308 ; tête 261c5fd, 2026-11-10) — consignée, jamais fast-forwardée. API amont instable (manifeste). Manifeste sans champ holdouts ; fiche : smoke 3/3, suite fork 694 passés / 2 rouges identiques / 11 skipped.",
       "provenance": {
         "gel": {
           "commit": "b38ef5847a0f60662efc78fdde2c89f4943b77d4",
@@ -69,8 +63,8 @@
           "source": "bind re-appliqué sur main (F8 pas 0)"
         },
         "pin": {
-          "commit": "6aab659432b23e94e8c8b797bcc986db256c0656",
-          "source": "PR #13 (F8 pas 0)"
+          "commit": "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
+          "source": "P0-b, PR #29 (branche a0/p0b-repins), re-pin sur l'adapter (D-F0-2, pin_rule=adapter)"
         },
         "judgment": {
           "status": "found",
@@ -130,7 +124,7 @@
         },
         "adapter": {
           "commit": "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
-          "source": "D-N053 pas B, sur main (non livré à V5)"
+          "source": "D-N053 pas B, sur main (livré à V5 par PR #27)"
         },
         "bind": {
           "commit": "f436cdfb66677be5356736ca17a437236a40d804",
@@ -168,7 +162,7 @@
       "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero",
       "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero.manifest.json",
       "state": 2,
-      "state_owner": "13e Doctor — jugement 640 (registre, 2026-11-10 ~23:10 EST) ; PR #19 merge 544464bac0661b2b54116078a10a085632b53e68 (F8 pas 5).",
+      "state_owner": "13e Doctor — jugement 640 (registre ligne 642, 2026-11-10 ~20:41 EST) ; PR #19 merge 544464bac0661b2b54116078a10a085632b53e68 (F8 pas 5).",
       "capabilities_owned": [
         "egm_bridge_31415"
       ],
@@ -253,19 +247,14 @@
       ],
       "adapter_parent": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
       "bind_commit": "9728a0fb848939873d9ba5784ea3ecd1e40b678d",
-      "pin": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
-      "pin_branch": "aspace-v5-native",
-      "pin_extra_commits": [
-        {
-          "sha": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
-          "note": "bind natif aspace-v5-native (bind seul, pas d'adapter)"
-        }
-      ],
-      "gitlink": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
+      "pin": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
+      "pin_branch": "main",
+      "pin_extra_commits": [],
+      "gitlink": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
       "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/automaton",
       "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/automaton.manifest.json",
       "state": 2,
-      "state_owner": "13e Doctor — jugement 482 (FUSIONS-REGISTRY.md l.90) ; PR #15 merge 7b46cf8d2c1cf7d767b020767b370f20afc83d08 (F8 pas 1, H-M3 vert avec réserve).",
+      "state_owner": "13e Doctor — jugement 482 (REGISTRE l.486–487) ; PR #15 merge 7b46cf8d2c1cf7d767b020767b370f20afc83d08 (F8 pas 1, H-M3 vert avec réserve).",
       "capabilities_owned": [
         "automaton_reserve_lease"
       ],
@@ -285,18 +274,19 @@
       "upstream_drift": {
         "ahead": 0,
         "behind": 1,
-        "last_checked": "2026-11-11T01:30:00-05:00"
+        "last_checked": "2026-11-11T01:55:29-05:00"
       },
       "gel_pin_compare": {
-        "ahead": 1,
+        "ahead": 2,
         "behind": 0,
         "commits": [
-          "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3"
+          "2d2501613f8bd42cc270f02a0e12986866f06edf",
+          "7cdaa00fb7464046dcb2016896f48f60b5426a8b"
         ],
         "status": "ahead",
-        "last_checked": "2026-11-11T01:30:00-05:00"
+        "last_checked": "2026-11-11T01:55:29-05:00"
       },
-      "notes": "Pin = bind natif, pas l'adapter : re-pin P0-b prévu vers main (adapter 7cdaa00 + bind 9728a0f). Main a divergé (ahead 3 / behind 1). Gel e025526 = commit fork Aspace (doctrine CEO Holon), 1 commit devant l'amont — pas un commit amont pur. H-M3 ROUGE avec réserve (suite 1646/0/1, 1 test bloqué ~7 h). Garde fetch() reconnue insuffisante (P3).",
+      "notes": "Pin = 7cdaa00 (adapter, pin_rule=adapter) depuis P0-b (PR #29) : l'ancien pin e1f361d était le bind natif seul, sans adapter — son contenu est byte-identique au bind main 9728a0f (aspace-plugin.json 99313537, governor 654dc338, vérifiés à l'API), rien n'est perdu ; le bind 9728a0f reste sur main. Main = adapter (2d25016 + 7cdaa00) + bind 9728a0f ; native = bind seul sur le gel. Gel e025526 = commit fork Aspace (doctrine CEO Holon), 1 commit devant l'amont — pas un commit amont pur. H-M3 ROUGE avec réserve (suite 1646/0/1, 1 test bloqué ~7 h). Garde fetch() reconnue insuffisante (P3).",
       "provenance": {
         "gel": {
           "commit": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
@@ -311,14 +301,14 @@
           "source": "bind re-appliqué sur main"
         },
         "pin": {
-          "commit": "e1f361d5cfdb644b44cdd61c5d208c0f4a1a0ae3",
-          "source": "bind natif aspace-v5-native"
+          "commit": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
+          "source": "P0-b, PR #29 (branche a0/p0b-repins), re-pin sur l'adapter (D-F0-2, pin_rule=adapter)"
         },
         "judgment": {
           "status": "found",
           "journal": 482,
           "merge_sha": "7b46cf8d2c1cf7d767b020767b370f20afc83d08",
-          "source": "FUSIONS-REGISTRY.md l.90"
+          "source": "REGISTRE-NARDOLE.md l.486–487 (jugement inscrit journal 482, ligne 486 ; accusé ligne 487)"
         }
       }
     },
@@ -343,7 +333,7 @@
       "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig",
       "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/openrig.manifest.json",
       "state": 2,
-      "state_owner": "13e Doctor — jugement 663 (registre ligne 663, mtime 21:32:52 EST, vérifié au fichier par le 13e) ; PR #20 merge 3dbb791f06f0fa2c06067fffb2994fd236b7aedd (F8 pas 4).",
+      "state_owner": "13e Doctor — jugement 663 (registre ligne 664, mtime 21:32:52 EST, vérifié au fichier par le 13e) ; PR #20 merge 3dbb791f06f0fa2c06067fffb2994fd236b7aedd (F8 pas 4).",
       "capabilities_owned": [
         "openrig_worktree_lineage"
       ],
@@ -410,9 +400,9 @@
         "judgment": {
           "status": "found",
           "journal": 663,
-          "register_line": 663,
+          "register_line": 664,
           "merge_sha": "3dbb791f06f0fa2c06067fffb2994fd236b7aedd",
-          "source": "REGISTRE-NARDOLE.md l.668 (jugement inscrit journal 663, ligne 663, mtime 21:32:52 EST)"
+          "source": "REGISTRE-NARDOLE.md l.664 (jugement inscrit journal 663, ligne 664, mtime 21:32:52 EST ; la ligne 668 cite l'ancienne valeur 663, erronée)"
         }
       }
     },
@@ -874,7 +864,7 @@
     "A0-Plugins : re-pinné sur l'adapter + manifeste et fiche livrés par D-N053 pas B (PR #27) pendant la construction du lock — état 1, jugement 798.",
     "Aqua : pas de manifeste ni fiche dans V5 (état 0, honnête) ; SDK AQuA réel non validé.",
     "Agent Zero : pas de gitlink dans V5 (greffe coupée F8 pas 5) ; v5_path déclaré mais absent de l'arbre.",
-    "Cordis / Automaton : pins non conformes à pin_rule=adapter (6aab659 formatage, e1f361d bind natif) — re-pins P0-b séparés.",
+    "Cordis / Automaton : re-pinnés sur leurs adapters par P0-b (PR #29) — pins conformes à pin_rule=adapter (a40cc74, 7cdaa00) ; binds 726291d / 9728a0f sur main.",
     "OpenRig : dérive amont 249 commits (manifeste disait 226 — périmé) ; daemon incomplet.",
     "Wikiskill : wikiskill_4role_compiler implémenté comme modèle local (a0_recursive_factory.py), pas dans l'adapter — réserve consignée."
   ]
