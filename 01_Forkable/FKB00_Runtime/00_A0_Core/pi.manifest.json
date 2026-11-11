@@ -30,13 +30,13 @@
   "holdouts": {
     "H-P2-1": "PASS — HEAD du fork = gel 6e2222a + 1 commit adapter (13be830) ; diff gel..HEAD = 6 fichiers adapter uniquement, amont byte-identique",
     "H-P2-10": "PASS — ce manifeste, schéma §D4, id fiber:a0:pi ; fiche pi-ADAPTATION.md + audit télémétrie versionnés",
-    "H-P2-11": "MACHINE — boucle de crash sur le PC (factory.sqlite, borne 3), procédure p2/machine-holdouts-procedure.md ; pas exécuté ici (borne OUT)",
+    "H-P2-11": "NON VERIFIABLE SUR MACHINE 2026-11-11 — crash_counts ABSENTE de factory.sqlite, aucun retry ni rapport dans factory.ps1 (grep: ni crash ni retry), attempts reste 1 apres 120 s, aucun daemon ; la borne 3 (D9) n'existe que dans l'adapter du fork, non deployee sur la spine du PC ; recu R10 logs-p2-machine-h-p2-11.log ; le 13e juge",
     "H-P2-2": "PASS — exactly-once prouvé en local par le smoke (45/45) : 2e soumission du même requestId retourne la soumission existante, le producteur n'est invoqué qu'une fois",
-    "H-P2-3": "MACHINE — checkpoint / reprise sur le PC (factory.sqlite), procédure p2/machine-holdouts-procedure.md ; pas exécuté ici (borne OUT)",
+    "H-P2-3": "PARTIEL (store) 2026-11-11 — checkpoint present dans factory.sqlite ; 2e soumission meme requestId h-p2-3-20261111-1255 -> idempotentReplay:true, 1 seule ligne ; crash simule -> interrupted ; resume -> running, checkpoint intact, attempts=1 ; niveau effet NON TESTE (la spine n'execute pas la tache, aucun processus pi, aucun appel modele) ; recu R10 logs-p2-machine-h-p2-3.log ; le 13e juge",
     "H-P2-4": "PASS — cartographie writerlock.md lue, inchangée par ce pas ; le design D-N049 D6 n'est pas modifié",
     "H-P2-5": "PARTIEL — orthographe unique vérifiée ici (chaîne lue depuis config.json, 5 noms nus, préfixe fournisseur au moment de l'appel) ; le failover live sur freellmapi/auto est machine (PC), non vérifiable ici",
-    "H-P2-6": "MACHINE — hibernation / réveil sur le PC (factory.sqlite, --wake caller), procédure p2/machine-holdouts-procedure.md ; pas exécuté ici (borne OUT)",
-    "H-P2-7": "RÉSERVE — pwsh absent de cette VM Linux, factory.ps1 status + gate non exécutables ici ; les 6 garanties de la spine sont vérifiées au fichier (voir fiche § Spine) ; le 13e juge",
+    "H-P2-6": "PARTIEL (store) 2026-11-11 — asking constate ; send bleu -> 1 seul steer ; resume -> running, toujours 1 seul steer, pas de double reveil ; liberation de slot NON VERIFIEE (aucune notion de slot dans la spine, aucun --wake caller dans factory.ps1) ; recu R10 logs-p2-machine-h-p2-6.log ; le 13e juge",
+    "H-P2-7": "CARACTERISE SUR MACHINE 2026-11-11 — status RC=0 sous pwsh 7 ; gate 7/7 PASS ; agents 8/8 ; subagents agents/status/run/chain/send/resume repondent ; chain 2 etapes ; skills presentes (19 .agents/skills) ; reserve restante : factory.ps1 ne se parse pas sous PowerShell 5.1 (pwsh 7 requis) ; recu R10 logs-p2-machine-h-p2-7-gate.log ; le 13e juge",
     "H-P2-8": "PASS — télémétrie zéro vérifiée au fichier (audit versionné) : 0 fetch dans packages/durable/src et packages/telemetry/src, NOOP par défaut, zéro exporteur, zéro SDK",
     "H-P2-9": "RÉSERVE — interface de l'extension épinglée verbatim (6 actions, 13 paramètres, smoke 45/45) mais aspace-factory.ts ne typecheck pas contre le gel : 1 erreur TS2305, `Type` non exporté par @earendil-works/pi-ai 1.5.0 ; correctif = importer Type depuis \"typebox\" (convention amont) ; le 13e juge"
   },

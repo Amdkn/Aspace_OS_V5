@@ -5,9 +5,12 @@ validateur 13e)
 **Manifeste :** `pi.manifest.json` (même domicile)
 **Audit télémétrie :** `pi-TELEMETRY-AUDIT.md` (même domicile)
 **Statut :** état 0 Basique → 1 Adapté en cours (fiche + adapter + manifeste ;
-**H-P2-7 RÉSERVE (pwsh absent), H-P2-9 RÉSERVE (1 erreur de type de
-l'extension), H-P2-3/6/11 MACHINE (PC) — jugement 13e requis** — voir §
-Hold-outs)
+**Phase D exécutée sur le PC le 2026-11-11 ~12:47–12:56 EST : H-P2-3
+PARTIEL (niveau store), H-P2-6 PARTIEL (niveau store), H-P2-11 NON
+VÉRIFIABLE (mécanisme absent de la spine du PC), H-P2-7 CARACTÉRISÉ
+sur machine (status + gate 7/7 PASS sous pwsh 7)** ; H-P2-9 RÉSERVE
+(1 erreur de type de l'extension, correctif dans la branche) —
+**jugement 13e requis** — voir § Hold-outs et § Phase D)
 
 ## Commit gelé
 
@@ -166,14 +169,26 @@ Hold-outs)
   `freellmapi/auto` (`127.0.0.1:31415`) est machine : il exige le PC
   (le premier maillon est injoignable depuis cette VM) — réserve
   nommée, pas un vert inventé.
-- **H-P2-7 (spine) : RÉSERVE — `pwsh` absent de cette VM Linux.**
-  `factory.ps1 status` + `gate` ne sont pas exécutables ici. Ce qui
-  est vérifié au fichier : les 6 garanties de la spine survivent
-  (les fichiers du §0 du design ne changent pas de comportement —
-  la seule modification intentionnelle est l'unification `modelPool`
-  §D4, une correction, pas une rupture) ; les 12 skills et les 8
-  agents sont ceux du gel ; les commandes `subagents` répondent par
-  l'outil épinglé. **Le 13e juge.**
+- **H-P2-7 (spine) : CARACTÉRISÉ SUR MACHINE (PC), réserve levée en
+  partie.** Exécuté par Ryan sur le PC le 2026-11-11 ~12:54–12:56 EST
+  (reçu R10 : `logs-p2-machine-h-p2-7-gate.log`) :
+  `factory.ps1 status` RC=0 sous **pwsh 7** ; `factory.ps1 gate`
+  **7/7 PASS** (« GATE RESULT: PASS (Ready for Independent
+  Reviewers) » — doctor, OpenWiki, JSON, DOX/OKF, append-only, secret
+  scan, Level 5 Semantic Gate) ; `subagents agents` → **8 agents**
+  (approver, builder, intake-assessor, reviewer-code, reviewer-drift,
+  reviewer-security, reviewer-ux-ui, spec-writer) ; les commandes
+  `subagents` **agents / status / run / chain / send / resume
+  répondent toutes** sur le PC (chain 2 étapes : step-1 running,
+  step-2 queued, `h-p2-7-20261111-1255`) ; skills présentes (19 dans
+  `.agents/skills`, 18 dans `.claude/skills`, dont
+  `pi-durable-subagents` et `aspace-factory`). **Réserves restantes :**
+  (a) `factory.ps1` **ne se parse pas sous Windows PowerShell 5.1**
+  (erreurs de parsing, here-strings — le fichier est UTF-8 sans BOM,
+  CRLF) — **pwsh 7 requis** (la commande `gate` appelle elle-même
+  `pwsh`) ; (b) les « 12 skills » du design ne sont pas dénombrées
+  une par une (19 présentes sur le PC, sur-ensemble — présence
+  vérifiée, fonctionnement individuel non invoqué). **Le 13e juge.**
 - **H-P2-9 (extension) : RÉSERVE — 1 erreur de type.** L'interface
   est épinglée verbatim (outil `subagents`, 6 actions
   `agents`/`status`/`run`/`chain`/`send`/`resume`, 13 paramètres —
@@ -187,11 +202,120 @@ Hold-outs)
   (le fichier vit dans le repo V5, pas dans le fork) ; le
   comportement d'exécution (enregistrement de l'outil) n'est pas
   affecté. **Le 13e juge.**
-- **H-P2-3 / H-P2-6 / H-P2-11 : MACHINE (PC).** Non exécutés ici
-  (borne OUT : toute exécution d'un hold-out machine hors du PC).
-  Procédure exacte dans `p2/machine-holdouts-procedure.md` :
-  checkpoint/reprise, hibernation/réveil (`--wake caller`), boucle
-  de crash (borne 3, rapport + arrêt).
+- **H-P2-3 / H-P2-6 / H-P2-11 : EXÉCUTÉS SUR LE PC le 2026-11-11
+  ~12:47–12:56 EST** (reçus R10 : `logs-p2-machine-h-p2-3.log`,
+  `logs-p2-machine-h-p2-6.log`, `logs-p2-machine-h-p2-11.log`,
+  `logs-p2-machine-final-state.log`). Détail complet au § Phase D
+  ci-dessous — résumé : **H-P2-3 PARTIEL** (niveau store vérifié :
+  checkpoint, exactly-once, reprise ; niveau effet non testé — la
+  spine n'exécute pas la tâche) ; **H-P2-6 PARTIEL** (niveau store
+  vérifié : asking, 1 seul steer, reprise exactement une fois ;
+  libération de slot non vérifiée — pas de notion de slot dans la
+  spine) ; **H-P2-11 NON VÉRIFIABLE** (table `crash_counts` absente,
+  aucun chemin de reprise automatique ni de rapport dans la spine —
+  la borne 3 n'existe que dans l'adapter du fork). **Le 13e juge.**
+
+## Phase D — Hold-outs machine exécutés sur le PC (Ryan, 2026-11-11 ~12:47–12:56 EST)
+
+**Accès :** SSH `umbrel@100.77.242.27` via le proxy
+`~/workspace/v4-factory/first-light/g6d/ssh-proxy.py` (clé hôte
+SHA256:9rt2IJ28FeaWk0dRH9ZMGmS5qtVuCgqN5ai2GnQaGFE vérifiée).
+**Spine réelle :** `C:\Users\amado\Aspace OS V5\02_Factory\`
+(`factory.ps1`, `config.json`, `factory.sqlite`) — **le chemin
+`C:\Users\amado\ASpace_OS_V2` de la procédure est périmé**
+(inexistant sur le PC). **Shell : pwsh 7** (`C:\Program Files\
+PowerShell\7\pwsh.exe`) — Windows PowerShell 5.1 ne parse pas
+`factory.ps1`. **SQLite : python3** (`sqlite3` CLI absent du PC).
+**Aucun processus du Capitaine tué, Alpha et FreeLLMAPI intacts**
+(listeners 9931 / 31415 / 31416 vérifiés présents avant et après ;
+aucun appel modèle effectué — les hold-outs n'utilisent que la
+comptabilité SQLite de la spine). État final vérifié
+2026-11-11T12:56:34-05:00 : 7 workflows (2 pré-existants Nov-3 + 5
+miens), 9 steps, **locks inchangés** (1 seul, Nov-3).
+
+**Constat structurel (vaut pour les trois hold-outs) :**
+`factory.ps1 subagents run` **n'exécute pas la tâche** — il
+insère une ligne `durable_workflows` (avec `request_id` UNIQUE),
+une ligne `durable_steps` (« Checkpoint committed before
+execution. ») et, si écrivain, prend le writer lock. **Aucun
+processus `pi` n'est lancé** (vérifié : aucun processus `pi` en
+cours avant, pendant, après). Les hold-outs machine testent donc
+la **durabilité du store**, pas l'exécution d'un agent réel —
+c'est ce qui est mesuré ci-dessous, sans vert inventé.
+
+- **H-P2-3 — PARTIEL (niveau store).** `requestId`
+  `h-p2-3-20261111-1255`, wid `wid-20261111-124717`
+  (observed_at reprise : 2026-11-11T12:48:12-05:00). **Vérifié :**
+  checkpoint présent dans `factory.sqlite` (step « Checkpoint
+  committed before execution. », attempts=1) ; 2e soumission du
+  même `requestId` → `idempotentReplay: true`, toujours **1 seule**
+  ligne workflow et **1 seul** step (exactly-once au store) ;
+  crash **simulé** au store (statuts → `interrupted`, la spine
+  n'offre aucun chemin kill/interrupt et aucun processus `pi`
+  n'existe à tuer) ; `resume` → workflow + step `running`,
+  checkpoint intact, attempts toujours 1, aucune double soumission.
+  **Non testé :** le niveau effet (« chaque nombre exactement une
+  fois » dans un fichier de preuve) — il exigerait un run `pi`
+  réel avec appel modèle via FreeLLMAPI, hors périmètre autorisé.
+  Log : `logs-p2-machine-h-p2-3.log` (+ reçu R10 en tête).
+- **H-P2-6 — PARTIEL (niveau store).** `requestId`
+  `h-p2-6-20261111-1250`, wid `wid-20261111-124933`
+  (steer enregistré : 2026-11-11T12:50:14.9480468-05:00).
+  **Vérifié :** état `asking` constaté en détail (`subagents
+  status`, steers `[]`) ; `send` « bleu » → `delivered: true`,
+  **1 seul** steer dans `steers_json` ; `resume` → `running`,
+  checkpoint intact, attempts=1, **toujours 1 seul steer** (pas
+  de double réveil). **Non vérifié :** « libère son slot » — la
+  spine n'a ni notion de slot ni libération de lock sur `asking`
+  (aucune action ne libère jamais un writer lock) ; **aucun
+  drapeau `--wake caller` n'existe dans `factory.ps1`** (le réveil
+  est `send` + `resume`). Log : `logs-p2-machine-h-p2-6.log`
+  (+ reçu R10 en tête).
+- **H-P2-11 — NON VÉRIFIABLE sur le PC tel que désigné.**
+  `requestId` `h-p2-11-20261111-1255`, wid `wid-20261111-125100`
+  (re-vérification après 120 s : 2026-11-11T12:53:29-05:00).
+  **Faits :** table `crash_counts` **absente** de
+  `factory.sqlite` (0) ; `factory.ps1` ne contient ni « crash »
+  ni « retry » (seule occurrence d'« attempts » : la définition
+  de colonne) ; **aucune reprise automatique n'existe**
+  (attempts reste 1 après 120 s, aucun daemon — 3 processus pwsh
+  pré-existants observés, aucun touché, aucun processus `pi`) ;
+  aucun mécanisme de rapport (Rick/Yaz) dans la spine. La borne 3
+  (D9) n'existe que dans le code de l'adapter du fork (smoke
+  45/45 en VM), **non déployée sur la spine du PC**. Pour rendre
+  H-P2-11 vérifiable sur machine, il faudrait déployer
+  `CRASH_COUNT_DDL` + comptage dans `factory.ps1` — décision
+  d'intégration (Clara / 13e), non improvisée sur le PC du
+  Capitaine. Log : `logs-p2-machine-h-p2-11.log` (+ reçu R10 en
+  tête).
+
+**Écarts à la procédure relevés sur le PC (à porter au design,
+pas masqués) :**
+- Chemin `ASpace_OS_V2` périmé → `Aspace OS V5`.
+- `sqlite3` CLI absent → requêtes via `python3 -c` (mêmes
+  lectures, schéma non modifié).
+- `writerlock.md` **absent du PC** (introuvable dans `Aspace OS
+  V5`, profondeur 4) — la cartographie citée par la fiche vit
+  dans le repo V5, pas sur le PC.
+- `config.json` du PC **sans clé `modelPool`** (la chaîne
+  `modelPool` existe dans la branche, pas dans la copie locale) —
+  le `model_pool` stocké par mes runs est l'ancienne forme à 3
+  maillons (`freellmapi/auto,claude-sonnet-4-5,qwen3.8-max`).
+- **Lock écrivain périmé :** `writer_locks` tient 1 lock depuis
+  le 2026-11-03 (`wid-20261103-170251`, smoke « Verify durable
+  checkpoint », workflow toujours `running`) — mes runs
+  écrivains se sont mis en `waiting for writer lock` (wid
+  `wid-20261111-124503`, laissé tel quel) ; **aucune action de la
+  spine ne libère jamais un lock** (pas de `unlock`, `resume` ne
+  touche pas aux locks). Mes hold-outs ont donc tourné en
+  `Writer=false` (lecteur) — le lock Nov-3 n'a été ni remplacé
+  ni libéré.
+- `-Writer:$false` via `pwsh -File` ne lie pas le booléen (les
+  arguments arrivent en chaînes) — contourné par `pwsh
+  -Command -` (stdin), vrai booléen.
+- **H-P2-4 (writerLock) observé en passant :** le run écrivain
+  a été correctement mis en attente au lieu d'écraser le lock
+  (preuve au log H-P2-3, step 1) — le garde-fou fonctionne.
 
 ## Télémétrie
 
@@ -280,5 +404,15 @@ pas de la télémétrie.
   `logs-pi-suite-retention.log` (passe rétention 1 923/4/4),
   `logs-pi-suite-store.log` (547/2/5),
   `logs-pi-suite-workers.log` (37/37).
+- **Phase D (machine, Ryan, 2026-11-11 ~12:47–12:56 EST, reçus R10
+  en tête de chaque log) :** `logs-p2-machine-baseline.log`
+  (status pwsh 7 RC=0 + échec de parse PS 5.1),
+  `logs-p2-machine-h-p2-3.log` (PARTIEL, store),
+  `logs-p2-machine-h-p2-6.log` (PARTIEL, store),
+  `logs-p2-machine-h-p2-11.log` (NON VÉRIFIABLE, mécanisme absent),
+  `logs-p2-machine-h-p2-7-gate.log` (gate 7/7 PASS, agents 8/8,
+  chain 2 étapes), `logs-p2-machine-final-state.log` (état final
+  2026-11-11T12:56:34-05:00 : 7 workflows, 9 steps, locks
+  inchangés). **Aucun secret dans les logs** (vérifié au grep).
 - Fork : https://github.com/Amdkn/pi (gel `6e2222a`, adapter
   `13be830` — 1 commit, 6 fichiers, 892 insertions).
