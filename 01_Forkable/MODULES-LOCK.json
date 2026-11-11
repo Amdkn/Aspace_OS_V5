@@ -5,7 +5,7 @@
   "generated_by": "piste-F P0-b (LE1-FAB-PISTE-F-003)",
   "v5_head": "1947fab40869adecba38b1500cec9f77e74fd4b7",
   "pin_rule": "adapter",
-  "pin_rule_note": "Règle tranchée par le 13e en D-N053 pas A (journal 587) : pin = adapter. Le pin enregistré ici est le gitlink V5 EFFECTIF au v5_head — la vérité actuelle, pas la cible : les re-pins P0-b sont livrés par cette PR (PR #N) : cordis 6aab659 → a40cc74, automaton e1f361d → 7cdaa00 (D-F0-2, pin_rule=adapter). A0-plugins a déjà été re-pinné sur l'adapter (fa8df85) par D-N053 pas B (PR #27, 2026-11-11) pendant la construction du lock. Aucun fast-forward silencieux : tout re-pin exige PR dédiée + compare API joint + harnais vert + jugement 13e (cf. §8.2 du Discover).",
+  "pin_rule_note": "Règle tranchée par le 13e en D-N053 pas A (journal 587) : pin = adapter. Le pin enregistré ici est le gitlink V5 EFFECTIF au v5_head — la vérité actuelle, pas la cible : les re-pins P0-b sont livrés par cette PR (PR #29) : cordis 6aab659 → a40cc74, automaton e1f361d → 7cdaa00 (D-F0-2, pin_rule=adapter). A0-plugins a déjà été re-pinné sur l'adapter (fa8df85) par D-N053 pas B (PR #27, 2026-11-11) pendant la construction du lock. Aucun fast-forward silencieux : tout re-pin exige PR dédiée + compare API joint + harnais vert + jugement 13e (cf. §8.2 du Discover).",
   "modules": [
     {
       "id": "fiber:a0:cordis",
@@ -48,7 +48,7 @@
         "status": "ahead",
         "last_checked": "2026-11-11T01:55:29-05:00"
       },
-      "notes": "Pin = a40cc74 (adapter, pin_rule=adapter) depuis P0-b (PR #N) : l'ancien pin 6aab659 n'ajoutait qu'une mise en forme de package.json (1 fichier, contenu identique, vérifié au commit) ; le bind 726291d reste sur main (aspace-plugin.json blob c80723e3, byte-identique au bind natif bc732a6, vérifié à l'API). Branche native bc732a6 divergée (ahead 1 / behind 3, base pré-gel 7f92195) : elle perd gel + adapter — écartée par D-F0-2. Dérive amont : 4 commits après le gel (#307, #303, #311, #308 ; tête 261c5fd, 2026-11-10) — consignée, jamais fast-forwardée. API amont instable (manifeste). Manifeste sans champ holdouts ; fiche : smoke 3/3, suite fork 694 passés / 2 rouges identiques / 11 skipped.",
+      "notes": "Pin = a40cc74 (adapter, pin_rule=adapter) depuis P0-b (PR #29) : l'ancien pin 6aab659 n'ajoutait qu'une mise en forme de package.json (1 fichier, contenu identique, vérifié au commit) ; le bind 726291d reste sur main (aspace-plugin.json blob c80723e3, byte-identique au bind natif bc732a6, vérifié à l'API). Branche native bc732a6 divergée (ahead 1 / behind 3, base pré-gel 7f92195) : elle perd gel + adapter — écartée par D-F0-2. Dérive amont : 4 commits après le gel (#307, #303, #311, #308 ; tête 261c5fd, 2026-11-10) — consignée, jamais fast-forwardée. API amont instable (manifeste). Manifeste sans champ holdouts ; fiche : smoke 3/3, suite fork 694 passés / 2 rouges identiques / 11 skipped.",
       "provenance": {
         "gel": {
           "commit": "b38ef5847a0f60662efc78fdde2c89f4943b77d4",
@@ -64,7 +64,7 @@
         },
         "pin": {
           "commit": "a40cc749c0a7611dc87da1262ad0874f378fdeb3",
-          "source": "P0-b, PR #N (branche a0/p0b-repins), re-pin sur l'adapter (D-F0-2, pin_rule=adapter)"
+          "source": "P0-b, PR #29 (branche a0/p0b-repins), re-pin sur l'adapter (D-F0-2, pin_rule=adapter)"
         },
         "judgment": {
           "status": "found",
@@ -286,7 +286,7 @@
         "status": "ahead",
         "last_checked": "2026-11-11T01:55:29-05:00"
       },
-      "notes": "Pin = 7cdaa00 (adapter, pin_rule=adapter) depuis P0-b (PR #N) : l'ancien pin e1f361d était le bind natif seul, sans adapter — son contenu est byte-identique au bind main 9728a0f (aspace-plugin.json 99313537, governor 654dc338, vérifiés à l'API), rien n'est perdu ; le bind 9728a0f reste sur main. Main = adapter (2d25016 + 7cdaa00) + bind 9728a0f ; native = bind seul sur le gel. Gel e025526 = commit fork Aspace (doctrine CEO Holon), 1 commit devant l'amont — pas un commit amont pur. H-M3 ROUGE avec réserve (suite 1646/0/1, 1 test bloqué ~7 h). Garde fetch() reconnue insuffisante (P3).",
+      "notes": "Pin = 7cdaa00 (adapter, pin_rule=adapter) depuis P0-b (PR #29) : l'ancien pin e1f361d était le bind natif seul, sans adapter — son contenu est byte-identique au bind main 9728a0f (aspace-plugin.json 99313537, governor 654dc338, vérifiés à l'API), rien n'est perdu ; le bind 9728a0f reste sur main. Main = adapter (2d25016 + 7cdaa00) + bind 9728a0f ; native = bind seul sur le gel. Gel e025526 = commit fork Aspace (doctrine CEO Holon), 1 commit devant l'amont — pas un commit amont pur. H-M3 ROUGE avec réserve (suite 1646/0/1, 1 test bloqué ~7 h). Garde fetch() reconnue insuffisante (P3).",
       "provenance": {
         "gel": {
           "commit": "e0255269f2fd6b3940a8398424fdff3aec940ba0",
@@ -302,7 +302,7 @@
         },
         "pin": {
           "commit": "7cdaa00fb7464046dcb2016896f48f60b5426a8b",
-          "source": "P0-b, PR #N (branche a0/p0b-repins), re-pin sur l'adapter (D-F0-2, pin_rule=adapter)"
+          "source": "P0-b, PR #29 (branche a0/p0b-repins), re-pin sur l'adapter (D-F0-2, pin_rule=adapter)"
         },
         "judgment": {
           "status": "found",
@@ -864,7 +864,7 @@
     "A0-Plugins : re-pinné sur l'adapter + manifeste et fiche livrés par D-N053 pas B (PR #27) pendant la construction du lock — état 1, jugement 798.",
     "Aqua : pas de manifeste ni fiche dans V5 (état 0, honnête) ; SDK AQuA réel non validé.",
     "Agent Zero : pas de gitlink dans V5 (greffe coupée F8 pas 5) ; v5_path déclaré mais absent de l'arbre.",
-    "Cordis / Automaton : re-pinnés sur leurs adapters par P0-b (PR #N) — pins conformes à pin_rule=adapter (a40cc74, 7cdaa00) ; binds 726291d / 9728a0f sur main.",
+    "Cordis / Automaton : re-pinnés sur leurs adapters par P0-b (PR #29) — pins conformes à pin_rule=adapter (a40cc74, 7cdaa00) ; binds 726291d / 9728a0f sur main.",
     "OpenRig : dérive amont 249 commits (manifeste disait 226 — périmé) ; daemon incomplet.",
     "Wikiskill : wikiskill_4role_compiler implémenté comme modèle local (a0_recursive_factory.py), pas dans l'adapter — réserve consignée."
   ]
