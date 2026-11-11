@@ -1,0 +1,55 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/spynel-ADAPTATION.md",
+  "adapter": {
+    "commit": "fa9fe416159d95ef6f837d2265f0e91a2c5cd2b3",
+    "package": "aspace_spynel_adapter",
+    "surface": [
+      "validate() -> dict",
+      "doctor() -> list[check]",
+      "describe() -> dict",
+      "PINNED_UPSTREAM_COMMIT",
+      "FIBER_ADDRESS"
+    ],
+    "version": "0.1.0"
+  },
+  "bind": {
+    "commit": "3e076a1494364343cdafd703134b3fb46cbe7144",
+    "commit_reapplied_on_main": "630ac6d0401a2f397d4e7eb916deaf9a1f339cf4",
+    "file": "aspace-plugin.json",
+    "layer": "2L",
+    "verbatim": true
+  },
+  "confinement": "Aucun confinement commercial : code MIT. Usage B2B autorise par la licence. Les canaux telegram/whatsapp exigent des secrets fournis par l'utilisateur (jamais lus ni stockes ici).",
+  "coordination": {
+    "agent_zero_state": 2,
+    "note": "spynel orchestre agent-zero : reference fiber:a0:agent-zero comme cible d'orchestration, sans dupliquer le loop agent-zero (0 code de loop dans l'adapter). agent-zero en coordination seulement (F8 pas 5, PR #19 mergee 544464b) — non touche par ce pas.",
+    "orchestration_target": "fiber:a0:agent-zero"
+  },
+  "dox_exception": "H-M2 QUALIFIE : diff gel->adapter = 7 fichiers (6 adapter + 1 ligne d'index au Child DOX Index racine de AGENTS.md, requise par le contrat DOX sans exception du repo). Porte DOX verte sur l'adapte (50 repertoires). A juger par le 13e.",
+  "entry": "aspace-spynel-adapter/aspace_spynel_adapter/__init__.py",
+  "id": "fiber:a0:spynel",
+  "issued_by": "Ryan (Factory), dispatch D-N053 pas B",
+  "levels": {
+    "current": 1,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "note": "spynel : chat d'orchestration (Go). 'One chat, unlimited AI orchestration' — classic, non-AI program that coordinates and oversees external AI/coding harnesses. Mesures au gel : 395 fichiers .go, 27 paquets internal/, 202 fichiers _test.go (188 internal/, 3 scripts/, 11 third_party/bubbletea). Entree cmd/spynel/main.go -> cli.Run ; workers acp/claude/codex/pi ; canaux telegram/whatsapp/tui ; API locale socket Unix prive.",
+  "schema_authority": "Clara (design D-N053) + design signe pas B (D-B0..D-B3)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/spynel-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/spynel",
+    "frozen_commit": "685ac65db967446d4e1cff65971ba0dc4827262f",
+    "frozen_commit_short": "685ac65",
+    "frozen_title": "Support /models through the shared model selection path",
+    "license": "MIT",
+    "repository": "agent0ai/spynel"
+  },
+  "validated_by": "13e Doctor (en attente — integration par le coordinateur)",
+  "version": "0.1.0"
+}

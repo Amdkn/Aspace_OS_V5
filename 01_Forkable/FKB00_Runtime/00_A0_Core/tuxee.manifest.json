@@ -1,0 +1,59 @@
+{
+  "adaptation_sheet": "01_Forkable/FKB00_Runtime/00_A0_Core/tuxee-ADAPTATION.md",
+  "adapter": {
+    "commit": "5cad42ae0682f9e54e4c452ed79d1c4e18922a6b",
+    "package": "aspace_tuxee_adapter",
+    "surface": [
+      "validate() -> dict",
+      "doctor() -> list[check]",
+      "describe() -> dict",
+      "PINNED_UPSTREAM_COMMIT",
+      "FIBER_ADDRESS"
+    ],
+    "version": "0.1.0"
+  },
+  "bind": {
+    "commit": "5c51b78b5e6ff98492efab09de306f517ddeb35d",
+    "commit_reapplied_on_main": "0b3e473e44e28bdef9ccf79e54af5834d40e58d0",
+    "file": "aspace-plugin.json",
+    "layer": "2L",
+    "verbatim": true
+  },
+  "confinement": "Aucun confinement commercial : code MIT. Usage B2B autorise par la licence. L'installation telecharge la release GitHub officielle (checksum sha256 verifie) ; les secrets (ROOT_PASSWORD) sont fournis par l'operateur, jamais lus ni stockes ici.",
+  "coordination": {
+    "agent_zero_state": 2,
+    "note": "tuxee heberge la pile : references fiber:a0:agent-zero + fiber:a0:spynel + fiber:a0:a0-plugins, sans re-adapter ni le framework ni le chat. agent-zero en coordination seulement (F8 pas 5, PR #19 mergee 544464b) — non touche par ce pas.",
+    "provisioned_stack": [
+      "fiber:a0:agent-zero",
+      "fiber:a0:spynel",
+      "fiber:a0:a0-plugins"
+    ]
+  },
+  "dox_exception": "H-M2 QUALIFIE : diff gel->adapter = 7 fichiers (6 adapter + 1 ligne d'index au Child DOX Index racine de AGENTS.md, requise par le contrat DOX du repo). A juger par le 13e.",
+  "entry": "aspace-tuxee-adapter/aspace_tuxee_adapter/__init__.py",
+  "id": "fiber:a0:tuxee",
+  "issued_by": "Ryan (Factory), dispatch D-N053 pas B",
+  "levels": {
+    "current": 1,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "note": "tuxee : OS pour serveurs et agents — 'the most convenient Linux for servers and agents'. Adapter d'interface D10 seulement (install.sh 61 lignes, compose.yaml 19 lignes, Dockerfile 82 lignes, cmd/tuxee, docker/). Ports 80/443 par defaut. Mesures au gel : 144 fichiers .go, 70 fichiers _test.go. Derive amont 2 (gel tenu, revisite par signal).",
+  "schema_authority": "Clara (design D-N053) + design signe pas B (D-B0..D-B3)",
+  "telemetry_audit": "01_Forkable/FKB00_Runtime/00_A0_Core/tuxee-TELEMETRY-AUDIT.md",
+  "upstream": {
+    "branch": "main",
+    "fork": "Amdkn/tuxee",
+    "frozen_commit": "a7e2061abce616b62951cb132e39d34d25bed3a3",
+    "frozen_commit_short": "a7e2061",
+    "frozen_title": "Keep shortcut terminals open after commands finish",
+    "license": "MIT",
+    "repository": "agent0ai/tuxee"
+  },
+  "validated_by": "13e Doctor (en attente — integration par le coordinateur)",
+  "version": "0.1.0"
+}
