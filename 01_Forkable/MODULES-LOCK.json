@@ -834,8 +834,8 @@
       "gitlink": null,
       "v5_path": "01_Forkable/FKB00_Runtime/00_A0_Core/aspace-fiber-host",
       "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/aspace-fiber-host.manifest.json",
-      "state": 0,
-      "state_owner": "— (état 0, jugement 13e à rendre — P1 AspaceFiberHost, PR a0/p1-fiber-host)",
+      "state": 1,
+      "state_owner": "13e Doctor — jugement 825 (registre ligne 825, 2026-11-11, P1 AspaceFiberHost) ; PR #33, tête jugée 6382cd92001c30ad8c7d06b17ac99fc01eaf76ae ; merge SHA consigné au reçu G-20261111-014",
       "capabilities_owned": [
         "cordis_fiber_host"
       ],
@@ -864,8 +864,10 @@
         "bind": null,
         "pin": null,
         "judgment": {
-          "status": "pending",
-          "note": "état 0, jugement 13e à rendre sur la PR"
+          "status": "found",
+          "journal": 825,
+          "head_judged": "6382cd92001c30ad8c7d06b17ac99fc01eaf76ae",
+          "verdict": "APPROUVÉ pour merge (réserves R1-R5, JUGEMENT-P1-FIBER-HOST.md)"
         }
       }
     }
