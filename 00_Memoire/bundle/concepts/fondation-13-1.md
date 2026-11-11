@@ -181,13 +181,15 @@ routage quand même) + l'inscripteur (`seq` = numéro de ligne, append-only)
 `route-dispatch` (`validate` / `type` / `relay` / `ack` / `pulse` /
 `request-judgment` / `render-judgment`).
 
-**Suite H-M3 — VERTE :** `cargo test` — 42 tests, 0 échec (7 unitaires lib +
-17 d'intégration R10 + 18 d'intégration router) : cas passants = un dispatch
+**Suite H-M3 — VERTE :** `cargo test` — 44 tests, 0 échec (7 unitaires lib +
+17 d'intégration R10 + 20 d'intégration router) : cas passants = un dispatch
 valide typé, relayé, accusé ; demande de jugement puis jugement rendu ;
-pulsation ; correction référençant un événement existant ; cas rejetés =
+relais après demande de jugement (correction R8) ; pulsation ; correction
+référençant un événement existant ; cas rejetés =
 les 5 fautifs du Discover §6 (raisons nommées : R2 sans design signé, R3
 double-envoi, R4 destinataire = session, R5 `at` non ISO, R8 ack sans
-typed). Log : `v4-factory/evidence/D-N055/harness-F1-3.log`. Les 20 tests
+typed) + relais sans acte préalable (R8). Log :
+`v4-factory/evidence/D-N055/harness-F1-3.log`. Les 20 tests
 F1-2 restent verts (régression : 0 échec).
 
 **Dispatch fautif planté (D-F1-3-6, amendement A-F1-3-1) :** fautif n° 1
@@ -204,6 +206,17 @@ lignes) : registre 806 lignes (design F1-3 signé, journal 806) ; master
 `29f52e9` (pulse Workgraph 01:53, parent `1947fab` — la base de la branche
 `a0/f1-3-router` reste `1947fab`, mergeable) ; F1-2 clos (PR #26,
 `1f89b56`, reçu 006).
+
+**Correction portée en avant (R8) :** le Discover §4 et le design §3
+disent « le relais suit le typage ». En usage réel, le routeur a rejeté
+(R8, sortie 2) le relais de la demande de jugement — parce qu'une demande
+de jugement (`judgment_requested`) est elle-même un acte de création de
+dispatch, pas un `dispatch_typed`. La règle est corrigée : le relais suit
+tout acte de création — `dispatch_typed` OU `judgment_requested` ; l'accusé
+suit seulement le typage d'un dispatch de livraison. Le rejet R8 en direct
+est conservé comme preuve que le routeur applique la règle (il a rejeté
+avant la correction, pas après). Le design signé n'est pas réécrit : la
+correction est portée en avant ici et dans le reçu de livraison 015.
 
 **Correction portée en avant (R1) :** le Discover §4 et le design §3
 disent « le dispatch porte exactement les 10 clés » — c'est l'ÉVÉNEMENT

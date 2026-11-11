@@ -243,6 +243,26 @@ fn fixtures_rejettent_avec_la_raison_nommee() {
 }
 
 #[test]
+fn relais_apres_demande_de_jugement() {
+    // Correction portée en avant (fiche §7) : le relais suit tout acte de
+    // création du dispatch — un typage ou une demande de jugement.
+    let designs = designs();
+    let dq = parse_json(r#"{"event_id":"EVT-20261111-004","type":"judgment_requested","dispatch_id":"D-N055-F1-3-JUDGE","actor_from":"router","actor_to":"judge","at":"2026-11-11T01:59:00-05:00","design_ref":"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)","payload":"Demander le jugement de la PR F1-3","proof":[]}"#).unwrap();
+    let j0 = journal_empty();
+    let l1 = inscribe(&dq, &j0, &designs, NOW).unwrap();
+    let j1 = Journal::from_jsonl(&l1).unwrap();
+    let dr = parse_json(r#"{"event_id":"EVT-20261111-005","type":"dispatch_relayed","dispatch_id":"D-N055-F1-3-JUDGE","actor_from":"router","actor_to":"judge","at":"2026-11-11T01:59:00-05:00","design_ref":"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)","payload":"Relayer la demande de jugement F1-3 à la fonction de jugement","proof":[]}"#).unwrap();
+    assert!(validate_dispatch(&dr, &j1, &designs, NOW).is_ok());
+}
+
+#[test]
+fn relais_sans_acte_prealable_rejete_r8() {
+    let d = parse_json(r#"{"event_id":"EVT-20261111-908","type":"dispatch_relayed","dispatch_id":"D-N055-F1-3-JAMAIS-CREE","actor_from":"router","actor_to":"judge","at":"2026-11-11T01:55:00-05:00","design_ref":"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)","payload":"Relayer un dispatch jamais créé","proof":[]}"#).unwrap();
+    let err = validate_dispatch(&d, &journal_empty(), &designs(), NOW).unwrap_err();
+    assert_eq!(err.rule, "R8");
+}
+
+#[test]
 fn iso_reference() {
     // 2026-11-11T01:55:00-05:00 = 2026-11-11T06:55:00Z.
     assert_eq!(

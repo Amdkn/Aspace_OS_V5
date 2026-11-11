@@ -23,6 +23,11 @@
 //! * R7 — `proof[]` non vide pour `dispatch_ack` et `judgment_rendered`.
 //! * R8 — `type` connu et transition légale (ack/relayed après typed ;
 //!   rendered après requested ; correction référence un événement existant).
+//!   Correction portée en avant (fiche §7) : le relais suit tout acte de
+//!   création du dispatch — `dispatch_typed` OU `judgment_requested` —
+//!   car une demande de jugement est elle-même un dispatch (même garanties
+//!   : design_ref, payload, preuve). L'accusé, lui, suit seulement le
+//!   typage d'un dispatch de livraison.
 //!
 //! Un dispatch mal formé est rejeté avec sa raison nommée — jamais corrigé
 //! silencieusement, jamais routé quand même (D-F1-3-4).
@@ -451,13 +456,28 @@ pub fn validate_dispatch(
         ));
     }
     match typ.as_str() {
-        "dispatch_relayed" | "dispatch_ack" => {
+        "dispatch_relayed" => {
+            // Le relais suit tout acte de création du dispatch : un typage
+            // ou une demande de jugement (correction portée en avant, fiche
+            // §7 — une demande de jugement est elle-même un dispatch).
+            if !journal.typed.contains(&dispatch_id)
+                && !journal.requested.contains(&dispatch_id)
+            {
+                return Err(rejection(
+                    "R8",
+                    "dispatch_id",
+                    &dispatch_id,
+                    "aucun dispatch_typed ni judgment_requested pour ce dispatch_id — le relais suit l'acte qu'il relaie, il ne le précède pas",
+                ));
+            }
+        }
+        "dispatch_ack" => {
             if !journal.typed.contains(&dispatch_id) {
                 return Err(rejection(
                     "R8",
                     "dispatch_id",
                     &dispatch_id,
-                    "aucun dispatch_typed pour ce dispatch_id — le relais et l'accusé suivent le typage, ils ne le précèdent pas",
+                    "aucun dispatch_typed pour ce dispatch_id — l'accusé suit le typage d'un dispatch de livraison, il ne le précède pas",
                 ));
             }
         }
