@@ -768,7 +768,7 @@
       "pin_extra_commits": [],
       "gitlink": "c6adc8d32e435bd7594b2731cae95ecb46532f80",
       "v5_path": "01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity",
-      "manifest": null,
+      "manifest": "01_Forkable/FKB00_Runtime/00_A0_Core/riginfinity.manifest.json",
       "state": 2,
       "state_owner": "13e Doctor — jugement 793 (registre ligne 793, 2026-11-11 ~01:13 EST, Jugement SC-1) ; PR #25 merge f5ccc76fb48f5b6321460b75f4b6c9815d56a6b6 (D-N054 SC-1) ; SC-0 PR #22 merge b12070dd608f892b82e827ecb710444fcba29ec2.",
       "capabilities_owned": [
@@ -786,7 +786,7 @@
       },
       "upstream_drift": null,
       "gel_pin_compare": null,
-      "notes": "Module NATIF Amdkn (pas de fork, pas de gel amont, pas d'adapter : le pin EST la référence). Gitlink = native HEAD c6adc8d (branche par défaut aspace-v5-native) ; branche main distincte 86f1139af083793a167aab8421d06477ecf7d98f. Arbre : 36 blobs (l'audit disait 42 — corrigé), 0 fichier .ts, pas de daemon TypeScript OpenRig, pas de CLI/TUI, pas de security-harness. Portages natifs : agent-zero e866578, openrig a372582+e190645, infinity bd7c946+aad4993, prime-agent 9050a1f (non mergé). TROU : pas de manifeste ni fiche V5 pour RigInfinity (harnais §6).",
+      "notes": "Module NATIF Amdkn (pas de fork, pas de gel amont, pas d'adapter : le pin EST la référence). Gitlink = native HEAD c6adc8d (branche par défaut aspace-v5-native) ; branche main distincte 86f1139af083793a167aab8421d06477ecf7d98f. Arbre : 36 blobs (l'audit disait 42 — corrigé), 0 fichier .ts, pas de daemon TypeScript OpenRig, pas de CLI/TUI, pas de security-harness. Portages natifs : agent-zero e866578, openrig a372582+e190645, infinity bd7c946+aad4993, prime-agent 9050a1f (non mergé). TROU COMBLÉ (piste F, PR en cours) : manifeste riginfinity.manifest.json + fiche RIGINFINITY-V5.md ; dette restante F-RIG-1 : aspace-plugin.json du daemon déclare encore 578-holons + OWASP sans preuve.",
       "provenance": {
         "gel": null,
         "adapter": null,
@@ -860,7 +860,7 @@
   ],
   "gaps": [
     "Jugements 13e : tous les 9 modules en état 2 citent un jugement (375, 413, 462, 482, 610, 640, 663, 788, 793) — retrouvés au REGISTRE-NARDOLE.md, pas sur GitHub (les PR n'ont ni review ni commentaire 13e). Réserve : le journal 413 (V3a, wikiskill/dream-rsi) est dérivé de 5 ancres ligne-7 dans la région du registre, pas nommé explicitement — à confirmer par le coordinateur.",
-    "RigInfinity : état 2 sans manifeste ni fiche V5 (harnais §6 en échec sur ce module).",
+    "RigInfinity : manifeste + fiche V5 livrés par la piste F (AspaceFiberManifest v1, pin c6adc8d) ; dette restante F-RIG-1 (aspace-plugin.json : 578-holons + OWASP sans preuve).",
     "A0-Plugins : re-pinné sur l'adapter + manifeste et fiche livrés par D-N053 pas B (PR #27) pendant la construction du lock — état 1, jugement 798.",
     "Aqua : pas de manifeste ni fiche dans V5 (état 0, honnête) ; SDK AQuA réel non validé.",
     "Agent Zero : pas de gitlink dans V5 (greffe coupée F8 pas 5) ; v5_path déclaré mais absent de l'arbre.",
