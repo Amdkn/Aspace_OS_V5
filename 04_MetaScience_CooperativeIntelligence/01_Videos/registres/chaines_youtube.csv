@@ -1,7 +1,0 @@
-id_chaine,nom,url,createur,discipline_principale,nb_abonnes_approx,frequence_analyse,statut_audit,dossier_relatif
-ch_fouloscopie,"Fouloscopie","https://www.youtube.com/@Fouloscopie","Mehdi Moussaid","Fouloscopie, Intelligence Collective, Ethologie, Dynamique des Foules","550k+","Continue","Audite","01_Videos/chaines/fouloscopie"
-ch_discoverai,"Discover AI","https://www.youtube.com/@code4AI","Discover AI Team","Architectures LLM, SSSM, GPU Blackwell, Fiabilite des Agents","250k+","Continue","Audite","01_Videos/chaines/discovery_ia"
-ch_scienceetonnante,"Science Etonnante","https://www.youtube.com/@ScienceEtonnante","David Louapre","Physique, Complexite, Informatique Theorique","1.3M+","Trimestrielle","Planifie","01_Videos/chaines/science_etonnante"
-ch_3blue1brown,"3Blue1Brown","https://www.youtube.com/@3blue1brown","Grant Sanderson","Mathematiques, Geometrie, Reseaux Neuronaux","6.5M+","Trimestrielle","Planifie","01_Videos/chaines/3blue1brown"
-ch_veritasium,"Veritasium","https://www.youtube.com/@veritasium","Derek Muller","Physique Experimentale, Epistemologie","16M+","Trimestrielle","Planifie","01_Videos/chaines/veritasium"
-ch_bradb,"Brad Bonanno","https://www.youtube.com/@brad_bonanno","Brad Bonanno","Agentic Compilers, Video-to-Skill, Multi-agent Systems","100k+","Hebdomadaire","Audite","01_Videos/chaines/brad_bonanno"
