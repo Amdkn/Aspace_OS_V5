@@ -1,12 +1,13 @@
 {
   "total_holons": 578,
   "breakdown": {
+    "tech_os_13_roles_s1_s2_s3": 13,
     "life_os_canon_a1_a2_a3": 43,
-    "sovereign_and_tech_os_core": 4,
-    "areas_os_coordination_j1_and_8_summers": 9,
+    "areas_os_ld00_beth_morty": 1,
     "areas_os_directors_b1_to_i1": 8,
+    "areas_os_j1_meta_jerry": 1,
     "areas_os_dc_managers_b2_to_i2": 64,
-    "areas_os_marvel_squad_specialists_and_canaries_b3_to_i3": 450
+    "areas_os_marvel_squad_specialists_b3_to_i3": 448
   },
   "canonical_8_files": [
     "README.md",
@@ -38,12 +39,12 @@
       "commander": "A2 Discovery / Zora (USS Discovery)",
       "officers_a3": [
         "Book (LD01)",
-        "Stamets (LD02)",
+        "Saru (LD02)",
         "Culber (LD03)",
         "Tilly (LD04)",
-        "Saru (LD05)",
+        "Stamets (LD05)",
         "Burnham (LD06)",
-        "Spock (LD07)",
+        "Reno (LD07)",
         "Georgiou (LD08)"
       ],
       "gws_surface": "Google Sheets (00 — LIFE OS 2026 · Cockpit 6 Frameworks x 8 Domaines = 48 intersections)"

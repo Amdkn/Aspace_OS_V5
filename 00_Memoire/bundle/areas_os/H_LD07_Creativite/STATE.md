@@ -1,4 +1,4 @@
-# STATE — État Courant (H1-SPOCK)
+# STATE — État Courant (H1-RENO)
 
 - **Statut Homéostatique** : `GREEN`
 - **Mode d'Exécution** : `EGM_ACTIVE` (Elephant-Goldfish Model)
