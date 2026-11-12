@@ -83,8 +83,12 @@ jobs:
             --tz America/New_York $EXTRA > "$STATE_DIR/daemon-stdout.log" 2>&1 &
           echo $! > "$STATE_DIR/daemon.pid"
           sleep 5
-          if ! kill -0 "$(cat "$STATE_DIR/daemon.pid")" 2>/dev/null; then
-            echo "daemon exited early"
+          if kill -0 "$(cat "$STATE_DIR/daemon.pid")" 2>/dev/null; then
+            echo "daemon running (pid $(cat "$STATE_DIR/daemon.pid"))"
+          elif grep -q '"DONE"' "$STATE_DIR/checkpoint.json" 2>/dev/null; then
+            echo "daemon already finished its cycle (checkpoint DONE)"
+          else
+            echo "daemon exited early without completing a cycle"
             cat "$STATE_DIR/daemon-stdout.log"
             exit 1
           fi
