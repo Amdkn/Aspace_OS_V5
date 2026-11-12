@@ -11,6 +11,7 @@ VÉRIFIABLE (mécanisme absent de la spine du PC), H-P2-7 CARACTÉRISÉ
 sur machine (status + gate 7/7 PASS sous pwsh 7)** ; H-P2-9 RÉSERVE
 (1 erreur de type de l'extension, correctif dans la branche) —
 **jugement 13e requis** — voir § Hold-outs et § Phase D)
+pi en état 3 **sous condition H-P8-pi** (vert de la Phase D du pas 2, plan pas 8 §D5)
 
 ## Commit gelé
 
@@ -21,6 +22,8 @@ sur machine (status + gate 7/7 PASS sous pwsh 7)** ; H-P2-9 RÉSERVE
   2026-11-07 23:51:39 UTC (18:51:39 -05:00). Version **1.5.0**
   (`packages/durable/package.json` : `@earendil-works/pi-durable`
   1.5.0, Node ≥ 22.19.0).
+- **Pin V5 : `13be830`** (retiré au pas 8) — l'adapter (`13be83055b4ac6b8281fc9dd9cff523226f23e94`).
+- **Bind : `ee5d586`** — `main` HEAD du fork (bind re-appliqué au-dessus de l'adapter).
 - **Vérifié au fichier :** clone local `~/workspace/pi-repo`, HEAD =
   gel avant adaptation, arbre propre. `npm ci --ignore-scripts`
   terminé (338 paquets, 58 s) ; le monorepo utilise **npm workspaces**

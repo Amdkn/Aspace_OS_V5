@@ -1,13 +1,3 @@
-[submodule "01_Forkable/FKB00_Runtime/infinity"]
-	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity
-	url = https://github.com/Amdkn/infinity.git
-[submodule "01_Forkable/FKB00_Runtime/openrig"]
-	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig
-	url = https://github.com/Amdkn/openrig.git
-[submodule "01_Forkable/FKB00_Runtime/automaton"]
-	path = 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/automaton
-	url = https://github.com/Amdkn/automaton.git
-
 [submodule "01_Forkable/FKB01_Inference/01_Inference_Locale/needle"]
 	path = 01_Forkable/FKB01_Inference/01_Inference_Locale/needle
 	url = https://github.com/Amdkn/needle.git
@@ -220,25 +210,13 @@
 	path = 01_Forkable/FKB00_Runtime/00_A0_Core/tuxee
 	url = https://github.com/Amdkn/tuxee.git
 
-[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/cordis"]
-	path = 01_Forkable/FKB00_Runtime/00_A0_Core/cordis
-	url = https://github.com/Amdkn/cordis.git
-
 [submodule "01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness"]
 	path = 01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness
 	url = https://github.com/Amdkn/deepseek-harness.git
 
-[submodule "01_Forkable/FKB00_Runtime/00_A0_Core/pi"]
-	path = 01_Forkable/FKB00_Runtime/00_A0_Core/pi
-	url = https://github.com/Amdkn/pi.git
-
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr
 	url = https://github.com/Amdkn/herdr.git
-
-[submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core"]
-	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core
-	url = https://github.com/Amdkn/herdr-core.git
 
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-app
@@ -264,10 +242,6 @@
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex
 	url = https://github.com/Amdkn/codex.git
 
-
-[submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent"]
-	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent
-	url = https://github.com/Amdkn/prime-agent.git
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
@@ -371,9 +345,6 @@
 [submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS"]
 	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS
 	url = https://github.com/Amdkn/FreeVPS.git
-[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot"]
-	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot
-	url = https://github.com/Amdkn/openbot.git
 [submodule "01_Forkable/FKB07_Money_Maker/BusinessOS"]
 	path = 01_Forkable/FKB07_Money_Maker/BusinessOS
 	url = https://github.com/Amdkn/BusinessOS.git

@@ -141,50 +141,9 @@ def parse_gitmodules() -> list[dict[str, str]]:
 
 def inject_family_specific_adapters(abs_dir: Path, sub_path: str) -> list[str]:
     extra_files: list[str] = []
-    if sub_path.endswith("/automaton"):
-        target = abs_dir / "src" / "aspace_reserve_governor.ts"
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(
-            "// A'Space OS V5 — Automaton Reserve Governor & A1-Beth Circuit Breaker\n"
-            "export type BethState = 'GREEN' | 'ORANGE' | 'RED' | 'HALT_LD03' | 'HALT_LD04';\n"
-            "export interface LeaseToken { leaseId: string; holonId: string; tier: 0 | 1 | 2 | 3; ttlSec: number; approved: boolean; }\n"
-            "export function issueSovereignLease(holonId: string, bethState: BethState, wargameProb: number): LeaseToken {\n"
-            "  if (bethState === 'HALT_LD03' || bethState === 'HALT_LD04') {\n"
-            "    return { leaseId: `HALT-${Date.now()}`, holonId, tier: 0, ttlSec: 0, approved: false };\n"
-            "  }\n"
-            "  return { leaseId: `LEASE-${holonId}-${Date.now()}`, holonId, tier: wargameProb >= 0.6 ? 1 : 0, ttlSec: 300, approved: true };\n"
-            "}\n",
-            encoding="utf-8",
-        )
-        extra_files.append("src/aspace_reserve_governor.ts")
-    elif sub_path.endswith("/openrig"):
-        target = abs_dir / "src" / "lineage_spawner.ts"
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(
-            "// A'Space OS V5 — OpenRig Genealogical Lineage & Worktree Spawner (578 Holons)\n"
-            "export interface RigLineage { rigId: string; parentHolon: string; childHolon: string; areaCode: string; worktreePath: string; }\n"
-            "export function spawnHolonRig(parentHolon: string, childHolon: string, areaCode: string): RigLineage {\n"
-            "  const rigId = `RIG-${areaCode}-${childHolon}-${Date.now()}`;\n"
-            "  return { rigId, parentHolon, childHolon, areaCode, worktreePath: `.worktrees/${rigId}` };\n"
-            "}\n",
-            encoding="utf-8",
-        )
-        extra_files.append("src/lineage_spawner.ts")
-    elif sub_path.endswith("/infinity"):
-        target = abs_dir / "src" / "population_scheduler.py"
-        target.parent.mkdir(parents=True, exist_ok=True)
-        target.write_text(
-            "# A'Space OS V5 — Infinity Population Scheduler (578 Active Holons -> 75,000 Micro-Agents)\n"
-            "class InfinityPopulationScheduler:\n"
-            "    def __init__(self, cap: int = 75000):\n"
-            "        self.cap = cap\n"
-            "        self.active_holons = {}\n"
-            "    def schedule_goldfish(self, holon_id: str, fractal_layer: str = '8L') -> dict:\n"
-            "        self.active_holons[holon_id] = {'layer': fractal_layer, 'state': 'ACTIVE'}\n"
-            "        return self.active_holons[holon_id]\n",
-            encoding="utf-8",
-        )
-        extra_files.append("src/population_scheduler.py")
+    # F8 pas 8 : les 3 branches d'injection (automaton, openrig, infinity) sont
+    # retirees — leurs fonctions vivent dans le natif RigInfinity. La fonction
+    # reste un no-op pour les modules restants (aucune branche par famille).
     return extra_files
 
 

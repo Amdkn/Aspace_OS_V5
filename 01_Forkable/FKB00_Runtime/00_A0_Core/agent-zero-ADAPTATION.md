@@ -21,8 +21,9 @@ parent), H-F8-9 À JUGER (plafonds, parent)** — voir § Hold-outs)
   compare identical, dérive 0.
 - **Vérifié au fichier :** clone local `~/workspace/agent-zero-repo`,
   HEAD = gel avant adaptation, arbre propre.
-- **Pin (bind) : `176d23f`** — 1 fichier : `aspace-plugin.json`.
+- **Pin V5 : `176d23f`** (retiré au pas 5) — 1 fichier : `aspace-plugin.json`.
   Parent du pin : `ba9b67d` (le gel). Plugin
+- **Bind : `1a801ebc`** — `main` HEAD du fork (bind re-appliqué au-dessus de l'adapter).
   `@aspace-v5/agent-zero`, famille `CORE_A0_KERNEL`, propriétaire
   `A0-AMADEUS / S1-RICK`, 2L. Licence MIT (fichier ; l'API dit
   NOASSERTION, le fichier fait foi).

@@ -15,10 +15,11 @@ reste requis pour la montée d'état.
   « docs: explain Linux sandbox prerequisites (#188) »,
   2026-11-05T20:10:40Z. **Identique à l'amont, dérive 0** (vérifié
   à l'API : compare gel...amont `main` = identical, 0/0).
-- **Pin V5 : `be616bf`** — le bind (2026-11-08, parent `c1a7b05`),
-  **1 derrière le gel**. Le bind est re-appliqué **verbatim sur
-  `main` au gel par Ryan à l'intégration** (§D2), puis re-pin —
-  pas par cet agent.
+- **Pin V5 : `007409e`** (retiré au pas 8) — l'adapter
+  (`007409e242f208545b003785cbe3aa24b45cd08e`, parent = gel).
+- **Bind : `b0e6110`** — `main` HEAD du fork. Le bind est re-appliqué
+  **verbatim sur `main` au gel par Ryan à l'intégration** (§D2), puis
+  re-pin — pas par cet agent.
 - Tout commit amont ultérieur exige un amendement de design, jamais
   un fast-forward silencieux (D1).
 

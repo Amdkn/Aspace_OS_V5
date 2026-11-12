@@ -6,7 +6,7 @@ param(
 
 # Re-clone tous les 52 forks souverains de 01_Forkable via Amdkn (GitHub). Idempotent.
 # Profils: Core (frugal <2GB), Heavy (video/IA massive/3D), Business (monetisation), All (complet)
-# FKB00: automaton, infinity, openrig
+# FKB00: — (automaton, infinity, openrig incorpores en natif, F8 pas 8 — plus clones)
 # FKB01 01_Inference_Locale: needle, moshi, LoRA, GLiNER2.5-multi-Decide, mimi, LFM3-Omni-2B
 # FKB01 02_Inference_Cooperative: DeepInfer, mesh-llm, cross-platform-llm-client
 # FKB01 03_Inference_FreeCloud: freellmapi, codex-chatgpt-web, freebuff
@@ -23,7 +23,6 @@ $env:GIT_LFS_SKIP_SMUDGE = "1"
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
 
 $repos = @{
-  "automaton"                 = "https://github.com/Amdkn/automaton.git"
   "cubefarm"                  = "https://github.com/Amdkn/cubefarm.git"
   "codex-chatgpt-web"         = "https://github.com/Amdkn/codex-chatgpt-web.git"
   "freebuff"                  = "https://github.com/Amdkn/freebuff.git"
@@ -32,9 +31,7 @@ $repos = @{
   "api-anything"              = "https://github.com/Amdkn/api-anything.git"
   "CLI-Anything"              = "https://github.com/Amdkn/CLI-Anything.git"
   "elephant-goldfish-model"   = "https://github.com/Amdkn/elephant-goldfish-model.git"
-  "infinity"                  = "https://github.com/Amdkn/infinity.git"
   "MiroFish"                  = "https://github.com/Amdkn/MiroFish.git"
-  "openrig"                   = "https://github.com/Amdkn/openrig.git"
   "rea"                       = "https://github.com/Amdkn/rea.git"
   "freellmapi"                = "https://github.com/Amdkn/freellmapi.git"
   "needle"                    = "https://github.com/Amdkn/needle.git"
@@ -78,7 +75,6 @@ $repos = @{
 }
 
 $paths = @{
-  "automaton"                 = "FKB00_Runtime/automaton"
   "cubefarm"                  = "FKB03_3DWorlds/cubefarm"
   "codex-chatgpt-web"         = "FKB01_Inference/03_Inference_FreeCloud/codex-chatgpt-web"
   "freebuff"                  = "FKB01_Inference/03_Inference_FreeCloud/freebuff"
@@ -87,8 +83,6 @@ $paths = @{
   "city-office"               = "FKB03_3DWorlds/city-office"
   "api-anything"              = "FKB04_Tools_Anything/api-anything"
   "CLI-Anything"              = "FKB04_Tools_Anything/CLI-Anything"
-  "infinity"                  = "FKB00_Runtime/infinity"
-  "openrig"                   = "FKB00_Runtime/openrig"
   "rea"                       = "FKB04_Tools_Anything/rea"
   "needle"                    = "FKB01_Inference/01_Inference_Locale/needle"
   "moshi"                     = "FKB01_Inference/01_Inference_Locale/moshi"
@@ -131,7 +125,7 @@ $paths = @{
 }
 
 $coreModules = @(
-  "automaton", "infinity", "openrig", "freellmapi", "codex-chatgpt-web", "freebuff",
+  "freellmapi", "codex-chatgpt-web", "freebuff",
   "needle", "GLiNER2.5-multi-Decide", "LFM3-Omni-2B", "servers", "graphify", "dox",
   "knowledge-catalog", "llm-wiki"
 )
