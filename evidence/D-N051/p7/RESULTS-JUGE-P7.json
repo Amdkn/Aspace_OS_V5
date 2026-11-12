@@ -1,0 +1,186 @@
+{
+  "pas": 7,
+  "juge": "13e-rejeu",
+  "checks": {
+    "H-P7-1-PIN": {
+      "status": "FAIL",
+      "detail": "gitlink V5 openbot = 2b5b14f (attendu main-avec-bind 6e62238, ou adapter 91f711c — précédent p3) ; gel 2b5b14f = NON re-piné"
+    },
+    "H-M1-openbot": {
+      "status": "PASS",
+      "detail": "gel 2b5b14f consigné ; fork main HEAD = 6e62238 (fix attendu 6e62238)"
+    },
+    "H-M2-openbot": {
+      "status": "PASS",
+      "detail": "compare gel..fix ahead 3/behind 0, 14 fichiers A'Space seuls"
+    },
+    "H-M3-openbot-ADAPTER": {
+      "status": "PASS",
+      "detail": "suite adapter re-courue par le juge (log juge-openbot-adapter.log)"
+    },
+    "H-M4-openbot": {
+      "status": "PASS",
+      "detail": "audit versionné, 5 déclencheurs tranchés ; strace juge : 2 connect(), 0 non-loopback"
+    },
+    "H-M5-openbot": {
+      "status": "PASS",
+      "detail": "id fiber:a0:openbot, levels.current = 2 en 00_A0_Core/"
+    },
+    "H-M6-openbot": {
+      "status": "PASS",
+      "detail": "adapter seul code A'Space du fork (+ bind aspace-plugin.json) ; triage rempli ; propriétaire A0-AMADEUS / S1-RICK"
+    },
+    "H-M7-openbot": {
+      "status": "PASS",
+      "detail": "fiche en 00_A0_Core/"
+    },
+    "H-M1-openmuse": {
+      "status": "PASS",
+      "detail": "gel a4944f4 consigné ; fork main HEAD = e606af2 (fix attendu e606af2)"
+    },
+    "H-M2-openmuse": {
+      "status": "PASS",
+      "detail": "compare gel..fix ahead 3/behind 0, 14 fichiers A'Space seuls"
+    },
+    "H-M3-openmuse-ADAPTER": {
+      "status": "PASS",
+      "detail": "suite adapter re-courue par le juge (log juge-openmuse-adapter.log)"
+    },
+    "H-M4-openmuse": {
+      "status": "PASS",
+      "detail": "audit versionné, 5 déclencheurs tranchés ; strace juge : 2 connect(), 0 non-loopback"
+    },
+    "H-M5-openmuse": {
+      "status": "PASS",
+      "detail": "id fiber:a0:openmuse, levels.current = 2 en 00_A0_Core/"
+    },
+    "H-M6-openmuse": {
+      "status": "PASS",
+      "detail": "adapter seul code A'Space du fork (+ bind aspace-plugin.json) ; triage rempli ; propriétaire A0-AMADEUS / S1-RICK"
+    },
+    "H-M7-openmuse": {
+      "status": "PASS",
+      "detail": "fiche en 00_A0_Core/"
+    },
+    "H-M1-OpenDots": {
+      "status": "PASS",
+      "detail": "gel d4214af consigné ; fork main HEAD = c423bcf (fix attendu c423bcf)"
+    },
+    "H-M2-OpenDots": {
+      "status": "PASS",
+      "detail": "compare gel..fix ahead 3/behind 0, 14 fichiers A'Space seuls"
+    },
+    "H-M3-OpenDots-ADAPTER": {
+      "status": "PASS",
+      "detail": "suite adapter re-courue par le juge (log juge-opendots-adapter.log)"
+    },
+    "H-M4-OpenDots": {
+      "status": "PASS",
+      "detail": "audit versionné, 5 déclencheurs tranchés ; strace juge : 2 connect(), 0 non-loopback"
+    },
+    "H-M5-OpenDots": {
+      "status": "PASS",
+      "detail": "id fiber:a0:opendots, levels.current = 2 en 00_A0_Core/"
+    },
+    "H-M6-OpenDots": {
+      "status": "PASS",
+      "detail": "adapter seul code A'Space du fork (+ bind aspace-plugin.json) ; triage rempli ; propriétaire A0-AMADEUS / S1-RICK"
+    },
+    "H-M7-OpenDots": {
+      "status": "PASS",
+      "detail": "fiche en 00_A0_Core/"
+    },
+    "H-M1-OpenDuet": {
+      "status": "PASS",
+      "detail": "gel f52288f consigné ; fork main HEAD = 4b6bf40 (fix attendu 4b6bf40)"
+    },
+    "H-M2-OpenDuet": {
+      "status": "PASS",
+      "detail": "compare gel..fix ahead 3/behind 0, 14 fichiers A'Space seuls"
+    },
+    "H-M3-OpenDuet-ADAPTER": {
+      "status": "PASS",
+      "detail": "suite adapter re-courue par le juge (log juge-openduet-adapter.log)"
+    },
+    "H-M4-OpenDuet": {
+      "status": "PASS",
+      "detail": "audit versionné, 5 déclencheurs tranchés ; strace juge : 2 connect(), 0 non-loopback"
+    },
+    "H-M5-OpenDuet": {
+      "status": "PASS",
+      "detail": "id fiber:a0:openduet, levels.current = 2 en 00_A0_Core/"
+    },
+    "H-M6-OpenDuet": {
+      "status": "PASS",
+      "detail": "adapter seul code A'Space du fork (+ bind aspace-plugin.json) ; triage rempli ; propriétaire A0-AMADEUS / S1-RICK"
+    },
+    "H-M7-OpenDuet": {
+      "status": "PASS",
+      "detail": "fiche en 00_A0_Core/"
+    },
+    "H-P7-2": {
+      "status": "PASS",
+      "detail": "portage natif 11a82ba parent 655b2a4, bots.rs présent, bots_proof 7/7 (re-couru juge)"
+    },
+    "H-P7-3": {
+      "status": "PASS",
+      "detail": "SKILL.md FKB07 : conteneur OpenBot / console OpenMuse re-pointés vers la surface native"
+    },
+    "H-P7-4": {
+      "status": "PASS",
+      "detail": "plateforme + 3 skins enregistrées ; coworker survit au redémarrage sans Intelligence"
+    },
+    "H-P7-5": {
+      "status": "PASS",
+      "detail": "routines dans le job loop, preuve par reçu ; intervalle < 15 min refusé ; aucun parseur cron"
+    },
+    "H-P7-6": {
+      "status": "QUALIFIE",
+      "detail": "coworker sans Intelligence ; gateway :31415 + modelPool, failover 500→200 sans clé ; /refine CONDITIONNEL au merge pas 6 (9050a1f)"
+    },
+    "H-P7-7": {
+      "status": "PASS",
+      "detail": "4 audits versionnés ; strace juge bots_proof 7/7 : 2 connect(), 0 non-loopback"
+    },
+    "H-P7-8": {
+      "status": "PASS",
+      "detail": "commit natif 11a82ba : 4 fichiers seulement, aucun vendu 0.2.0"
+    },
+    "H-P7-9": {
+      "status": "PASS",
+      "detail": "section OpenBot réécrite (annexe §7) : titre nightly-labs retiré, nightly-labs nommé explicitement hors périmètre, lien CopilotKit/OpenBot présent"
+    },
+    "H-P7-10": {
+      "status": "PARTIEL",
+      "detail": "smoke module : adapters 9/9, 8/8, 8/8, 9/9 (re-courus juge) + natif 7/7 ; cycle complet du Runtime = ce harnais"
+    },
+    "H-F8-1": {
+      "status": "PASS",
+      "detail": ".gitmodules : OpenMuse/OpenDots/OpenDuet retirés, pointeur OpenBot conservé (pas 8)"
+    },
+    "H-F8-2": {
+      "status": "PARTIEL",
+      "detail": "mécanisme natif livré (H-P7-2) ; cycle complet sans les originaux = ce harnais"
+    },
+    "H-F8-4": {
+      "status": "PASS",
+      "detail": "un seul daemon (le daemon unique porte la surface) ; compteurs F8 0/1/10/0 au registre"
+    },
+    "H-F8-5": {
+      "status": "PASS",
+      "detail": "aucun cron nulle part (adapters + natif, clones frais) ; le job loop EST le scheduler ; heartbeat événementiel"
+    },
+    "H-F8-9": {
+      "status": "QUALIFIE",
+      "detail": "dépense non mesurable depuis la factory (patron F8 D12) ; adapters 13 fichiers x4 ; natif 1 module + 1 preuve + 2 lignes lint"
+    },
+    "COMPTEUR-F8": {
+      "status": "PASS",
+      "detail": "registre F8 : 0/1/10/0"
+    },
+    "COMPTEUR-D-N053": {
+      "status": "PASS",
+      "detail": "registre D-N053 : 25 → 3"
+    }
+  }
+}
