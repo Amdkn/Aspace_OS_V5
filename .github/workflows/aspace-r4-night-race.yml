@@ -1,0 +1,116 @@
+# Aspace Factory — Night Race R4 (Git-first trigger)
+# Déclencheur durable de la course de nuit D-N052 R4 (Dream-RSI + RRSI).
+# Rectificatif Git-first (2026-11-11) §6 : la continuité passe par GitHub
+# Actions, pas par un service vivant sur une machine jetable.
+# Le cron ne tourne que depuis master (branche par défaut). La course
+# elle-même vit sur la branche a0/dn052-r4-dream (snapshot + checkpoint
+# versionnés) ; ce workflow ne fait que la déclencher et commiter le
+# rapport de cycle sur la branche.
+name: Aspace Factory — Night Race R4 (Git-first trigger)
+on:
+  schedule:
+    - cron: "0 5 * * *" # 00:00 EST = 05:00 UTC
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "race = hibernate to 00:00 EST, run one cycle, commit report; smoke = immediate cycle on a scratch copy, no commit"
+        required: false
+        default: "race"
+        type: choice
+        options:
+          - race
+          - smoke
+permissions:
+  contents: write
+concurrency:
+  group: r4-night-race
+  cancel-in-progress: false
+jobs:
+  night-race-r4:
+    runs-on: ubuntu-latest
+    timeout-minutes: 360
+    env:
+      R4_BRANCH: a0/dn052-r4-dream
+      RRSI_SHA: cc424ccde51d091bbd88d926e2a2306ae89e996d
+      DREAM_RSI_SHA: fa0c8f0859558fc2a2e101a4b3ef4f3b67807053
+      SNAPSHOT_SHA256: 305c5a28ec0b1076bcd636efe6d158119d404cae093dcb6c5f663ac06cba3595
+    steps:
+      - name: Checkout R4 branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.R4_BRANCH }}
+          fetch-depth: 0
+      - name: Init wikiskill submodule (from master .gitmodules)
+        run: |
+          gh api "repos/Amdkn/Aspace_OS_V5/contents/.gitmodules?ref=master" --jq '.content' | tr -d '\n' | base64 -d > .gitmodules
+          git submodule update --init -- 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
+          python3 -c "import sys; sys.path.insert(0, '01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill'); import wikiskill; print('import wikiskill OK')"
+        env:
+          GH_TOKEN: ${{ github.token }}
+      - name: Clone pinned rrsi and dream-rsi
+        run: |
+          git clone https://github.com/Amdkn/rrsi.git rrsi-repo
+          git -C rrsi-repo checkout "$RRSI_SHA"
+          git clone https://github.com/Amdkn/dream-rsi.git dream-rsi-repo
+          git -C dream-rsi-repo checkout "$DREAM_RSI_SHA"
+      - name: Restore snapshot + checkpoint, verify sha
+        run: |
+          mkdir -p state
+          git show "$R4_BRANCH:evidence/D-N052/r4/night/factory-night-snapshot.sqlite" > state/factory-night-snapshot.sqlite
+          git show "$R4_BRANCH:evidence/D-N052/r4/night/checkpoint.json" > state/checkpoint.json
+          echo "$SNAPSHOT_SHA256  state/factory-night-snapshot.sqlite" | sha256sum -c -
+          cat state/checkpoint.json
+      - name: Start daemon (background)
+        run: |
+          if [ "${{ inputs.mode }}" = "smoke" ]; then
+            mkdir -p smoke-state
+            cp state/factory-night-snapshot.sqlite smoke-state/
+            cp state/checkpoint.json smoke-state/
+            STATE_DIR="$PWD/smoke-state"
+            EXTRA="--run-now"
+          else
+            STATE_DIR="$PWD/state"
+            EXTRA=""
+          fi
+          echo "STATE_DIR=$STATE_DIR" >> "$GITHUB_ENV"
+          python3 01_Forkable/FKB00_Runtime/00_A0_Core/aspace-dream-daemon/src/dream_daemon.py \
+            --v5 "$PWD" \
+            --snapshot "$STATE_DIR/factory-night-snapshot.sqlite" \
+            --state-dir "$STATE_DIR" \
+            --reader-src "$PWD/evidence/D-N052/r0/aspace-aqua-adapter/src" \
+            --rrsi "$PWD/rrsi-repo" \
+            --dream-rsi "$PWD/dream-rsi-repo" \
+            --tz America/New_York $EXTRA > "$STATE_DIR/daemon-stdout.log" 2>&1 &
+          echo $! > "$STATE_DIR/daemon.pid"
+          sleep 5
+          if ! kill -0 "$(cat "$STATE_DIR/daemon.pid")" 2>/dev/null; then
+            echo "daemon exited early"
+            cat "$STATE_DIR/daemon-stdout.log"
+            exit 1
+          fi
+          cat "$STATE_DIR/checkpoint.json"
+      - name: Wait for cycle DONE, then stop daemon
+        run: |
+          if [ "${{ inputs.mode }}" = "smoke" ]; then WAIT_MIN=30; else WAIT_MIN=330; fi
+          for i in $(seq 1 "$WAIT_MIN"); do
+            if grep -q '"DONE"' "$STATE_DIR/checkpoint.json" 2>/dev/null; then
+              echo "cycle DONE after ${i} min"
+              break
+            fi
+            sleep 60
+          done
+          grep -q '"DONE"' "$STATE_DIR/checkpoint.json" || { echo "checkpoint never reached DONE"; cat "$STATE_DIR/checkpoint.json"; tail -50 "$STATE_DIR/daemon-stdout.log"; exit 1; }
+          PID="$(cat "$STATE_DIR/daemon.pid")"
+          kill "$PID" 2>/dev/null || true
+          for i in $(seq 1 14); do kill -0 "$PID" 2>/dev/null || break; sleep 5; done
+          ls -la "$STATE_DIR"
+      - name: Commit cycle report + checkpoint (race only)
+        if: ${{ inputs.mode != 'smoke' }}
+        run: |
+          git config user.name "Aspace Factory"
+          git config user.email "factory@aspace.local"
+          git add state/checkpoint.json || true
+          find state -type f \( -iname '*report*' -o -iname '*results*' -o -iname '*proof*' \) -exec git add {} + || true
+          git status --porcelain
+          git commit -m "R4 night race: cycle report 2026-11-12 (GitHub trigger)" || echo "nothing to commit"
+          git push origin "HEAD:$R4_BRANCH"
