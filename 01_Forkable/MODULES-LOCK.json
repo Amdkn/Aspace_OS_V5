@@ -1,9 +1,9 @@
 {
   "$schema": "https://aspaceos.tech/schemas/modules-lock-v1.json",
   "version": 1,
-  "generated_at": "2026-11-11T02:10:23-05:00",
-  "generated_by": "piste-A P1 (mise à jour verrou, PR a0/p1-fiber-host, rebase 7fe71a3)",
-  "v5_head": "7fe71a39dda4e4f6ba7544318f77b56b05c2f4e1",
+  "generated_at": "2026-11-12T13:26:00-05:00",
+  "generated_by": "piste-A P1 (mise à jour verrou, PR a0/p1-fiber-host, rebase 7fe71a3) ; S4 F8 pas 8 (v5_head + riginfinity, PR #43 merge 6a58b6c)",
+  "v5_head": "6a58b6cea175643f90c3eb1c5ae9349c295ae02f",
   "pin_rule": "adapter",
   "pin_rule_note": "Règle tranchée par le 13e en D-N053 pas A (journal 587) : pin = adapter. Le pin enregistré ici est le gitlink V5 EFFECTIF au v5_head — la vérité actuelle, pas la cible : les re-pins P0-b sont livrés par cette PR (PR #29) : cordis 6aab659 → a40cc74, automaton e1f361d → 7cdaa00 (D-F0-2, pin_rule=adapter). A0-plugins a déjà été re-pinné sur l'adapter (fa8df85) par D-N053 pas B (PR #27, 2026-11-11) pendant la construction du lock. Aucun fast-forward silencieux : tout re-pin exige PR dédiée + compare API joint + harnais vert + jugement 13e (cf. §8.2 du Discover).",
   "modules": [
@@ -759,8 +759,8 @@
       "upstream_repo": null,
       "license": "Apache-2.0",
       "gel": null,
-      "adapter_commit": null,
-      "adapter_commits": [],
+      "adapter_commit": "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
+      "adapter_commits": ["95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4"],
       "adapter_parent": null,
       "bind_commit": null,
       "pin": "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
@@ -786,14 +786,14 @@
       },
       "upstream_drift": null,
       "gel_pin_compare": null,
-      "notes": "Module NATIF Amdkn (pas de fork, pas de gel amont, pas d'adapter : le pin EST la référence). Gitlink = native HEAD c6adc8d (branche par défaut aspace-v5-native) ; branche main distincte 86f1139af083793a167aab8421d06477ecf7d98f. Arbre : 36 blobs (l'audit disait 42 — corrigé), 0 fichier .ts, pas de daemon TypeScript OpenRig, pas de CLI/TUI, pas de security-harness. Portages natifs : agent-zero e866578, openrig a372582+e190645, infinity bd7c946+aad4993, prime-agent 9050a1f (non mergé). TROU COMBLÉ (piste F, PR en cours) : manifeste riginfinity.manifest.json + fiche RIGINFINITY-V5.md ; dette restante F-RIG-1 : aspace-plugin.json du daemon déclare encore 578-holons + OWASP sans preuve.",
+      "notes": "Module NATIF Amdkn (pas de fork, pas de gel amont, pas d'adapter : le pin EST la référence). Gitlink = pin 95e95f9 (précédent c6adc8d, branche par défaut aspace-v5-native) ; branche main distincte 86f1139af083793a167aab8421d06477ecf7d98f. Arbre : 36 blobs (l'audit disait 42 — corrigé), 0 fichier .ts, pas de daemon TypeScript OpenRig, pas de CLI/TUI, pas de security-harness. Portages natifs : agent-zero e866578, openrig a372582+e190645, infinity bd7c946+aad4993, prime-agent 9050a1f (mergé en 95e95f9, F8 pas 8, PR #43 merge 6a58b6c). TROU COMBLÉ (piste F, PR en cours) : manifeste riginfinity.manifest.json + fiche RIGINFINITY-V5.md ; dette restante F-RIG-1 : aspace-plugin.json du daemon déclare encore 578-holons + OWASP sans preuve. Fiche riginfinity-ADAPTATION.md créée (S4, F8 pas 8) ; adapter_commit = pin 95e95f9 (le natif n'a pas d'adapter : le pin EST la référence).",
       "provenance": {
         "gel": null,
         "adapter": null,
         "bind": null,
         "pin": {
-          "commit": "c6adc8d32e435bd7594b2731cae95ecb46532f80",
-          "source": "PR #25 (D-N054 SC-1), re-pin e866578 -> c6adc8d"
+          "commit": "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
+          "source": "F8 pas 8, PR #43 (merge 95e95f9, 2 parents 11a82ba + 9050a1f) ; pin précédent c6adc8d (PR #25, D-N054 SC-1)"
         },
         "native_ports": {
           "agent-zero": "e866578032b6ded80b8573cec579413a37cd3a92",
@@ -805,7 +805,7 @@
             "bd7c946",
             "aad4993"
           ],
-          "prime-agent": "9050a1fbb7f8da25c4cae11326016dbd200b36de (non mergé)"
+          "prime-agent": "9050a1fbb7f8da25c4cae11326016dbd200b36de (mergé en 95e95f9, F8 pas 8, PR #43 merge 6a58b6c)"
         },
         "judgment": {
           "status": "found",
