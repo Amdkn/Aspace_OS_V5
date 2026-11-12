@@ -1,0 +1,671 @@
+{
+  "cycle": "H3-dry-run",
+  "snapshot": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/factory-night-snapshot.sqlite",
+  "reference_time": "2026-11-12T00:10:06.630258-05:00",
+  "n_traces": 7,
+  "splits": {
+    "compile": "h-p2-3-20261111-1245",
+    "validation": [
+      "smoke-durable-01",
+      "h-p2-6-20261111-1250",
+      "h-p2-7-20261111-1255"
+    ],
+    "holdout_v5": [
+      "smoke-chain-01",
+      "h-p2-11-20261111-1255",
+      "h-p2-3-20261111-1255"
+    ]
+  },
+  "variants": [
+    "incumbent",
+    "v-loose-7d",
+    "v-regress",
+    "v-single-clause",
+    "v-tight-1h"
+  ],
+  "replays": {
+    "incumbent": {
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "grid": [
+        {
+          "beta": 0.0,
+          "budget": 1,
+          "attainment": 1.0,
+          "n_evaluated": 1
+        },
+        {
+          "beta": 0.25,
+          "budget": 2,
+          "attainment": 1.0,
+          "n_evaluated": 2
+        },
+        {
+          "beta": 0.5,
+          "budget": 4,
+          "attainment": 1.0,
+          "n_evaluated": 4
+        },
+        {
+          "beta": 0.75,
+          "budget": 6,
+          "attainment": 1.0,
+          "n_evaluated": 6
+        },
+        {
+          "beta": 1.0,
+          "budget": 7,
+          "attainment": 1.0,
+          "n_evaluated": 7
+        }
+      ],
+      "auc": 0.8571,
+      "front": [
+        {
+          "beta": 0.0,
+          "total_budget": 1.0,
+          "attain": 1.0
+        }
+      ],
+      "parallel_penalty": 1.0,
+      "parallelism_weight": 0.05,
+      "reward": 0.8071,
+      "full_pool_R": 1.0,
+      "cost": 14
+    },
+    "v-tight-1h": {
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "grid": [
+        {
+          "beta": 0.0,
+          "budget": 1,
+          "attainment": 1.0,
+          "n_evaluated": 1
+        },
+        {
+          "beta": 0.25,
+          "budget": 2,
+          "attainment": 1.0,
+          "n_evaluated": 2
+        },
+        {
+          "beta": 0.5,
+          "budget": 4,
+          "attainment": 0.75,
+          "n_evaluated": 4
+        },
+        {
+          "beta": 0.75,
+          "budget": 6,
+          "attainment": 0.5,
+          "n_evaluated": 6
+        },
+        {
+          "beta": 1.0,
+          "budget": 7,
+          "attainment": 0.4286,
+          "n_evaluated": 7
+        }
+      ],
+      "auc": 0.8571,
+      "front": [
+        {
+          "beta": 0.0,
+          "total_budget": 1.0,
+          "attain": 1.0
+        }
+      ],
+      "parallel_penalty": 1.0,
+      "parallelism_weight": 0.05,
+      "reward": 0.8071,
+      "full_pool_R": 0.4286,
+      "cost": 14
+    },
+    "v-loose-7d": {
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "grid": [
+        {
+          "beta": 0.0,
+          "budget": 1,
+          "attainment": 1.0,
+          "n_evaluated": 1
+        },
+        {
+          "beta": 0.25,
+          "budget": 2,
+          "attainment": 1.0,
+          "n_evaluated": 2
+        },
+        {
+          "beta": 0.5,
+          "budget": 4,
+          "attainment": 1.0,
+          "n_evaluated": 4
+        },
+        {
+          "beta": 0.75,
+          "budget": 6,
+          "attainment": 1.0,
+          "n_evaluated": 6
+        },
+        {
+          "beta": 1.0,
+          "budget": 7,
+          "attainment": 1.0,
+          "n_evaluated": 7
+        }
+      ],
+      "auc": 0.8571,
+      "front": [
+        {
+          "beta": 0.0,
+          "total_budget": 1.0,
+          "attain": 1.0
+        }
+      ],
+      "parallel_penalty": 1.0,
+      "parallelism_weight": 0.05,
+      "reward": 0.8071,
+      "full_pool_R": 1.0,
+      "cost": 14
+    },
+    "v-single-clause": {
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "grid": [
+        {
+          "beta": 0.0,
+          "budget": 1,
+          "attainment": 0.0,
+          "n_evaluated": 1
+        },
+        {
+          "beta": 0.25,
+          "budget": 2,
+          "attainment": 0.0,
+          "n_evaluated": 2
+        },
+        {
+          "beta": 0.5,
+          "budget": 4,
+          "attainment": 0.5,
+          "n_evaluated": 4
+        },
+        {
+          "beta": 0.75,
+          "budget": 6,
+          "attainment": 0.6667,
+          "n_evaluated": 6
+        },
+        {
+          "beta": 1.0,
+          "budget": 7,
+          "attainment": 0.7143,
+          "n_evaluated": 7
+        }
+      ],
+      "auc": 0.2381,
+      "front": [
+        {
+          "beta": 0.0,
+          "total_budget": 1.0,
+          "attain": 0.0
+        },
+        {
+          "beta": 0.5,
+          "total_budget": 4.0,
+          "attain": 0.5
+        },
+        {
+          "beta": 0.75,
+          "total_budget": 6.0,
+          "attain": 0.6667
+        },
+        {
+          "beta": 1.0,
+          "total_budget": 7.0,
+          "attain": 0.7143
+        }
+      ],
+      "parallel_penalty": 1.0,
+      "parallelism_weight": 0.05,
+      "reward": 0.1881,
+      "full_pool_R": 0.7143,
+      "cost": 7
+    },
+    "v-regress": {
+      "betas": [
+        0.0,
+        0.25,
+        0.5,
+        0.75,
+        1.0
+      ],
+      "grid": [
+        {
+          "beta": 0.0,
+          "budget": 1,
+          "attainment": 1.0,
+          "n_evaluated": 1
+        },
+        {
+          "beta": 0.25,
+          "budget": 2,
+          "attainment": 1.0,
+          "n_evaluated": 2
+        },
+        {
+          "beta": 0.5,
+          "budget": 4,
+          "attainment": 0.5,
+          "n_evaluated": 4
+        },
+        {
+          "beta": 0.75,
+          "budget": 6,
+          "attainment": 0.3333,
+          "n_evaluated": 6
+        },
+        {
+          "beta": 1.0,
+          "budget": 7,
+          "attainment": 0.2857,
+          "n_evaluated": 7
+        }
+      ],
+      "auc": 0.8571,
+      "front": [
+        {
+          "beta": 0.0,
+          "total_budget": 1.0,
+          "attain": 1.0
+        }
+      ],
+      "parallel_penalty": 1.0,
+      "parallelism_weight": 0.05,
+      "reward": 0.8071,
+      "full_pool_R": 0.2857,
+      "cost": 7
+    }
+  },
+  "ranking": [
+    "incumbent",
+    "v-loose-7d",
+    "v-tight-1h",
+    "v-regress",
+    "v-single-clause"
+  ],
+  "dream_selected": "incumbent",
+  "candidates": {
+    "v-tight-1h": {
+      "name": "v-tight-1h",
+      "worktree": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/worktrees/v-tight-1h",
+      "branch": "candidate/v-tight-1h",
+      "commit": "039e38752670fe284397d91002c84aa27460df63"
+    },
+    "v-loose-7d": {
+      "name": "v-loose-7d",
+      "worktree": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/worktrees/v-loose-7d",
+      "branch": "candidate/v-loose-7d",
+      "commit": "b229b39b9fa33f60989b7316c04355a3a56812de"
+    },
+    "v-single-clause": {
+      "name": "v-single-clause",
+      "worktree": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/worktrees/v-single-clause",
+      "branch": "candidate/v-single-clause",
+      "commit": "3c5b1bf29c0732c3c67af40615c22f4ece451eda"
+    },
+    "v-regress": {
+      "name": "v-regress",
+      "worktree": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/worktrees/v-regress",
+      "branch": "candidate/v-regress",
+      "commit": "18ce7a48c6f98367a969d0b8e2fac5ea487a2175"
+    }
+  },
+  "evaluations": [
+    {
+      "name": "v-tight-1h",
+      "critic_ok": true,
+      "critic_note": "critic pass: clauses contain no trace literal",
+      "S": 0.3333,
+      "C": 6,
+      "per_trace": [
+        {
+          "task_id": "smoke-durable-01",
+          "expected": "DEFECT_DETECTED",
+          "got": "DEFECT_DETECTED",
+          "score": 1.0
+        },
+        {
+          "task_id": "h-p2-6-20261111-1250",
+          "expected": "PENDING",
+          "got": "DEFECT_DETECTED",
+          "score": 0.0
+        },
+        {
+          "task_id": "h-p2-7-20261111-1255",
+          "expected": "PENDING",
+          "got": "DEFECT_DETECTED",
+          "score": 0.0
+        }
+      ]
+    },
+    {
+      "name": "v-loose-7d",
+      "critic_ok": true,
+      "critic_note": "critic pass: clauses contain no trace literal",
+      "S": 1.0,
+      "C": 6,
+      "per_trace": [
+        {
+          "task_id": "smoke-durable-01",
+          "expected": "DEFECT_DETECTED",
+          "got": "DEFECT_DETECTED",
+          "score": 1.0
+        },
+        {
+          "task_id": "h-p2-6-20261111-1250",
+          "expected": "PENDING",
+          "got": "PENDING",
+          "score": 1.0
+        },
+        {
+          "task_id": "h-p2-7-20261111-1255",
+          "expected": "PENDING",
+          "got": "PENDING",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "name": "v-single-clause",
+      "critic_ok": true,
+      "critic_note": "critic pass: clauses contain no trace literal",
+      "S": 0.6667,
+      "C": 3,
+      "per_trace": [
+        {
+          "task_id": "smoke-durable-01",
+          "expected": "DEFECT_DETECTED",
+          "got": "PENDING",
+          "score": 0.0
+        },
+        {
+          "task_id": "h-p2-6-20261111-1250",
+          "expected": "PENDING",
+          "got": "PENDING",
+          "score": 1.0
+        },
+        {
+          "task_id": "h-p2-7-20261111-1255",
+          "expected": "PENDING",
+          "got": "PENDING",
+          "score": 1.0
+        }
+      ]
+    },
+    {
+      "name": "v-regress",
+      "critic_ok": true,
+      "critic_note": "critic pass: clauses contain no trace literal",
+      "S": 0.3333,
+      "C": 3,
+      "per_trace": [
+        {
+          "task_id": "smoke-durable-01",
+          "expected": "DEFECT_DETECTED",
+          "got": "DEFECT_DETECTED",
+          "score": 1.0
+        },
+        {
+          "task_id": "h-p2-6-20261111-1250",
+          "expected": "PENDING",
+          "got": "DEFECT_DETECTED",
+          "score": 0.0
+        },
+        {
+          "task_id": "h-p2-7-20261111-1255",
+          "expected": "PENDING",
+          "got": "DEFECT_DETECTED",
+          "score": 0.0
+        }
+      ]
+    }
+  ],
+  "rrsi_selection": {
+    "winner": null,
+    "decisions": [
+      {
+        "variant": "v-tight-1h",
+        "admissible": false,
+        "reason": "below noise-adjusted floor: S' 0.3333 < S* 1.0000 - delta 0.0170",
+        "S": 0.3333,
+        "C": 6.0,
+        "delta_S": -0.6667000000000001,
+        "delta_C": 0.0,
+        "novelty": 0,
+        "guards": []
+      },
+      {
+        "variant": "v-loose-7d",
+        "admissible": false,
+        "reason": "cost rule failed: gain +0.0000 within delta 0.0170; shaped 0.0*dS - 15.0*dC + 0.5*nu = +0.0000 <= 0 (nu=0)",
+        "S": 1.0,
+        "C": 6.0,
+        "delta_S": 0.0,
+        "delta_C": 0.0,
+        "novelty": 0,
+        "guards": []
+      },
+      {
+        "variant": "v-single-clause",
+        "admissible": false,
+        "reason": "below noise-adjusted floor: S' 0.6667 < S* 1.0000 - delta 0.0170",
+        "S": 0.6667,
+        "C": 3.0,
+        "delta_S": -0.33330000000000004,
+        "delta_C": -0.5,
+        "novelty": 0,
+        "guards": []
+      },
+      {
+        "variant": "v-regress",
+        "admissible": false,
+        "reason": "below noise-adjusted floor: S' 0.3333 < S* 1.0000 - delta 0.0170",
+        "S": 0.3333,
+        "C": 3.0,
+        "delta_S": -0.6667000000000001,
+        "delta_C": -0.5,
+        "novelty": 0,
+        "guards": []
+      }
+    ],
+    "delta": 0.017,
+    "cfg": {
+      "beta0": 0.1,
+      "beta1": 44.5,
+      "w_s": 0.0,
+      "w_c": 15.0,
+      "w_n": 0.5
+    },
+    "incumbent": {
+      "S": 1.0,
+      "C": 6
+    }
+  },
+  "gate": {
+    "baseline_R": 0.6667,
+    "r_best": 1.0,
+    "iterations": [
+      {
+        "iter": 1,
+        "r_val": 0.3333,
+        "prev_best": 0.6667,
+        "accepted": false,
+        "gate": {
+          "iter": 1,
+          "results": [
+            {
+              "task_id": "smoke-durable-01",
+              "expected": "DEFECT_DETECTED",
+              "got": "DEFECT_DETECTED",
+              "score": 1.0
+            },
+            {
+              "task_id": "h-p2-6-20261111-1250",
+              "expected": "PENDING",
+              "got": "DEFECT_DETECTED",
+              "score": 0.0
+            },
+            {
+              "task_id": "h-p2-7-20261111-1255",
+              "expected": "PENDING",
+              "got": "DEFECT_DETECTED",
+              "score": 0.0
+            }
+          ],
+          "mean": 0.3333
+        },
+        "delta_min": 0.0267,
+        "margin": -0.3334,
+        "variant": "v-regress",
+        "wiki_conserved": true,
+        "active_rules": []
+      },
+      {
+        "iter": 2,
+        "r_val": 0.6667,
+        "prev_best": 0.6667,
+        "accepted": false,
+        "gate": {
+          "iter": 2,
+          "results": [
+            {
+              "task_id": "smoke-durable-01",
+              "expected": "DEFECT_DETECTED",
+              "got": "PENDING",
+              "score": 0.0
+            },
+            {
+              "task_id": "h-p2-6-20261111-1250",
+              "expected": "PENDING",
+              "got": "PENDING",
+              "score": 1.0
+            },
+            {
+              "task_id": "h-p2-7-20261111-1255",
+              "expected": "PENDING",
+              "got": "PENDING",
+              "score": 1.0
+            }
+          ],
+          "mean": 0.6667
+        },
+        "delta_min": 0.0267,
+        "margin": 0.0,
+        "variant": "v-single-clause",
+        "wiki_conserved": true,
+        "active_rules": []
+      },
+      {
+        "iter": 3,
+        "r_val": 0.3333,
+        "prev_best": 0.6667,
+        "accepted": false,
+        "gate": {
+          "iter": 3,
+          "results": [
+            {
+              "task_id": "smoke-durable-01",
+              "expected": "DEFECT_DETECTED",
+              "got": "DEFECT_DETECTED",
+              "score": 1.0
+            },
+            {
+              "task_id": "h-p2-6-20261111-1250",
+              "expected": "PENDING",
+              "got": "DEFECT_DETECTED",
+              "score": 0.0
+            },
+            {
+              "task_id": "h-p2-7-20261111-1255",
+              "expected": "PENDING",
+              "got": "DEFECT_DETECTED",
+              "score": 0.0
+            }
+          ],
+          "mean": 0.3333
+        },
+        "delta_min": 0.0267,
+        "margin": -0.3334,
+        "variant": "v-tight-1h",
+        "wiki_conserved": true,
+        "active_rules": []
+      },
+      {
+        "iter": 4,
+        "r_val": 1.0,
+        "prev_best": 0.6667,
+        "accepted": true,
+        "gate": {
+          "iter": 4,
+          "results": [
+            {
+              "task_id": "smoke-durable-01",
+              "expected": "DEFECT_DETECTED",
+              "got": "DEFECT_DETECTED",
+              "score": 1.0
+            },
+            {
+              "task_id": "h-p2-6-20261111-1250",
+              "expected": "PENDING",
+              "got": "PENDING",
+              "score": 1.0
+            },
+            {
+              "task_id": "h-p2-7-20261111-1255",
+              "expected": "PENDING",
+              "got": "PENDING",
+              "score": 1.0
+            }
+          ],
+          "mean": 1.0
+        },
+        "delta_min": 0.0267,
+        "margin": 0.3333,
+        "variant": "v-loose-7d",
+        "wiki_conserved": true,
+        "active_rules": [
+          "v-loose-7d"
+        ]
+      }
+    ],
+    "promoted": "v-loose-7d"
+  },
+  "holdout_v5": {
+    "baseline_R": 0.6667,
+    "promoted_R": 1.0
+  }
+}

@@ -1,0 +1,22 @@
+[Unit]
+Description=A'Space Dream Daemon (SUBSTITUTION du daemon RigInfinity) — boucle H3 00h-05h, D-N052 R4
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+# Le daemon est lance par le coordinateur (pas un cron) ; il s'arrete seul a 05h.
+# Adaptations d'installation (branche inchangee a 9f5a5bb) :
+#  - Environment=HOME=/home/hatch (l'unit committe casse sous systemd root : ~ = /root)
+#  - snapshot en chemin persistant (pas /tmp : vide a chaque remplacement de VM)
+Environment=HOME=/home/hatch
+ExecStart=/usr/bin/python3 /home/hatch/workspace/v5-r4/01_Forkable/FKB00_Runtime/00_A0_Core/aspace-dream-daemon/src/dream_daemon.py --v5 /home/hatch/workspace/v5-r4 --snapshot /home/hatch/workspace/v4-factory/evidence/D-N052/r4/night/factory-night-snapshot.sqlite --state-dir /home/hatch/workspace/v4-factory/evidence/D-N052/r4/night --tz America/New_York
+Restart=on-failure
+RestartSec=30
+StartLimitBurst=3
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier=aspace-dream-daemon
+
+[Install]
+WantedBy=multi-user.target
