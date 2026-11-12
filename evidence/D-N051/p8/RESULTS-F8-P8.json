@@ -42,7 +42,7 @@
   },
   "H-P8-7": {
    "status": "PARTIEL",
-   "detail": "smoke du harnais : daemon lance (H-P8-6) + cycle Intake -> Eveil -> Rig -> Resolution -> Validation prouve en suite (runtime_cycle_with_h1_over_a_real_gateway_stub vert, oui) + PTY 1/1, sans les 11 d'origine (.gitmodules 106, gitlinks retires) ; cycle COMPLET sur machine reelle (Alpha/PC) = SUIVI du apres le merge (§D9–D10)"
+   "detail": "smoke du harnais : daemon lance (H-P8-6) + cycle H1 + refinement prouvés en suite (`runtime_cycle_with_h1_over_a_real_gateway_stub` vert) ; cycle complet 5 étapes en suivi machine réelle + PTY 1/1, sans les 11 d'origine (.gitmodules 106, gitlinks retires) ; cycle COMPLET sur machine reelle (Alpha/PC) = SUIVI du apres le merge (§D9–D10)"
   },
   "H-P8-8": {
    "status": "PASS",
@@ -398,7 +398,7 @@
   },
   "COMPTEUR-F8": {
    "status": "PASS",
-   "detail": "0/0/11/0 visés au registre ligne 90 (0 état 0, 0 état 1, 11 état 2, 0 état 3 — état 3 effectif au jugement, pi sous condition H-P8-pi) ; dérive amont 774 commits consignée comme candidats de revisite, jamais suivie (§D15)"
+   "detail": "0/0/0/11 au registre ligne 90 (0 état 0, 0 état 1, 0 état 2, 11 état 3 — état 3 effectif au jugement, pi sous condition H-P8-pi) ; dérive amont 774 commits consignée comme candidats de revisite, jamais suivie (§D15)"
   },
   "COMPTEUR-D-N053": {
    "status": "PASS",

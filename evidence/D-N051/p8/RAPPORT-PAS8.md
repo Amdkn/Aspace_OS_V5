@@ -92,7 +92,7 @@ Les suites complètes des forks sont citées de leur pas, pas re-courues (§D18)
 
 ## 6. Suivis dus après le merge (§D9–D10, H-P8-pi)
 
-- **Reçu de suivi n° 1 (Ryan)** : cycle complet Intake → Éveil → Rig → Résolution → Validation + comptage live du daemon unique sur machine réelle (Alpha / PC). Un seul reçu couvre cycle + comptage.
+- **Reçu de suivi n° 1 (Ryan)** : cycle H1 + refinement prouvés en suite (`runtime_cycle_with_h1_over_a_real_gateway_stub` vert) ; cycle complet 5 étapes en suivi machine réelle + comptage live du daemon unique sur machine réelle (Alpha / PC). Un seul reçu couvre cycle + comptage.
 - **Reçu de suivi n° 2 (pi, H-P8-pi)** : quand la Phase D du pas 2 devient verte, re-preuve de la durabilité native de pi et levée de la condition sur son état 3.
 - **Mesure du pool à la comptabilité fournisseur (D12)** : due en principe, jamais mesurée dans aucun reçu.
 - **Registre Nardole** : non touché par Ryan (append-only, coordinateur seul).
@@ -102,10 +102,10 @@ Les suites complètes des forks sont citées de leur pas, pas re-courues (§D18)
 Dossier de preuves local : `~/workspace/v4-factory/evidence/D-N051/p8/` — `RESULTS-F8-P8.json` (97 checks), `RAPPORT-PAS8.md` (ce fichier), `logs/` (25 logs : cargo/clippy/fmt/strace/daemon du merge, 7 suites adapter, tsc extension pi, install cordis, merge commit+tree).
 Déposés dans la PR (sous `evidence/D-N051/p8/`) : `RESULTS-F8-P8.json` + `RAPPORT-PAS8.md` (suivant le précédent du pas 7).
 
-## 8. PR — contenu (28 chemins, base `0b16b3a`)
+## 8. PR — contenu (30 chemins, base `0b16b3a`)
 
 - **Ajoutés (3)** : `LICENSE`, `evidence/D-N051/p8/RESULTS-F8-P8.json`, `evidence/D-N051/p8/RAPPORT-PAS8.md`.
-- **Modifiés (17)** : 8 fiches `*-ADAPTATION.md`, `riginfinity.manifest.json`, `FUSIONS-REGISTRY.md`, `MODULES-LOCK.json`, `.gitmodules`, `clone-forkables.ps1`, `daemon_supervisor_cordis.py`, `mutate-and-push-forks.py`, `sync-a0-sovereign-factory.ps1`, `mount-fractal.ps1`, `02_Factory/README.md`, gitlink RigInfinity (`11a82ba` → `95e95f9`).
+- **Modifiés (19)** : `01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/automaton-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/cordis-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/infinity-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/openbot-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/openrig-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/pi-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/00_A0_Core/prime-agent-ADAPTATION.md`, `riginfinity.manifest.json`, `FUSIONS-REGISTRY.md`, `MODULES-LOCK.json`, `.gitmodules`, `clone-forkables.ps1`, `daemon_supervisor_cordis.py`, `mutate-and-push-forks.py`, `sync-a0-sovereign-factory.ps1`, `mount-fractal.ps1`, `02_Factory/README.md`, gitlink RigInfinity (`11a82ba` → `95e95f9`).
 - **Supprimés (8 gitlinks)** : cordis, pi, automaton, infinity, openrig, herdr-core, prime-agent, openbot.
 - Arbre local de référence (index stagé) : `6237df09…` avant ajout des preuves (re-mesuré après ajout, voir reçu de dépôt).
 

@@ -11,6 +11,7 @@ VÉRIFIABLE (mécanisme absent de la spine du PC), H-P2-7 CARACTÉRISÉ
 sur machine (status + gate 7/7 PASS sous pwsh 7)** ; H-P2-9 RÉSERVE
 (1 erreur de type de l'extension, correctif dans la branche) —
 **jugement 13e requis** — voir § Hold-outs et § Phase D)
+pi en état 3 **sous condition H-P8-pi** (vert de la Phase D du pas 2, plan pas 8 §D5)
 
 ## Commit gelé
 
