@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -161,7 +161,12 @@ par un exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR
 `v4-factory/evidence/D-N055/RESULTS-F1-2.json` — **non consigné au ledger
 par ce pas** (le coordinateur consigne).
 
-## 7. F1-3 — Router (PR ouverte, non mergée)
+## 7. F1-3 — Router (PR #30 mergée `4668305`)
+
+**Correction portée en avant :** l'en-tête de cette section disait « PR
+ouverte, non mergée » — la PR #30 a été mergée `4668305` (2 parents,
+DVG-01, reçu H-F1-4 G-20261111-016, journal 814). La fiche n'est pas
+réécrite : la correction est portée ici.
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md` (fonction de
 design interne, journal 806, 2026-11-11 ~01:53 EST). Décisions D-F1-3-1..6,
@@ -240,6 +245,80 @@ de la PR (mission `LE1-FAB-D-N055-005`) est préparé dans
 `v4-factory/evidence/D-N055/RESULTS-F1-3.json` — **non consigné au ledger
 par ce pas** (le coordinateur consigne).
 
+## 8. F1-4 — Découvrir (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-4-PROJET.md` (fonction de
+design interne, journal 923, 2026-11-12 ~14:10 EST). Décisions D-F1-4-1..6,
+amendements A-F1-4-1 / A-F1-4-2 / A-F1-4-3, précisions P-F1-4-1..3.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `discover`,
+binaire `validate-discover`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir nommées) ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Découvrir ajouté).
+
+**Ce qui est livré :** la fonction Découvrir (D1–D8, ordre D1 → D4 → D5 →
+D7 → D2 → D3 → D6 → D8 ; rejet motivé, jamais de correction silencieuse)
++ la CLI `validate-discover` (`check` : contrôle de recevabilité d'un
+fichier Discover ; les contrôles D2/D3/D7 appellent les lectures au fichier
+et à l'API par l'opérateur — les SHA qui résolvent sont injectés, même
+frontière que le validateur R10).
+
+**Suite H-M3 — VERTE :** `cargo test` — 51 tests, 0 échec (7 unitaires lib +
+7 d'intégration discover + 17 d'intégration R10 + 20 d'intégration router) :
+cas passant = ce Discover-ci (`discover-f1-4.md`, copie byte-identique de
+`evidence/D-N055/DISCOVER-F1-4.md`, doit passer D1–D8) ; cas rejetés =
+les 5 fautifs du Discover §6, dérivés chacun par UNE SEULE différence
+(raisons nommées : D2 fait non vérifié, D4 décision tranchée, D7 source
+citée non lue, D6 correction silencieuse, D5 exécution déguisée) — dont le
+Discover fautif planté n° 1. Log :
+`v4-factory/evidence/D-N055/harness-F1-4.log`. Les 44 tests F1-2/F1-3
+restent verts (régression : 0 échec).
+
+**Discover fautif planté (D-F1-4-4, amendement A-F1-4-1) :** fautif n° 1
+(fait non vérifié — le merge de la PR #30 affirmé sans ancre, repris du
+récit de l'exécutant F1-3) — planté à
+`v4-factory/evidence/D-N055/DISCOVER-FAUTIF-1.md` (une seule différence,
+ligne 45) et dérivé en suite. Rejet vérifié par la CLI : `REJET D2 —
+champ 'ancre' : le merge de la PR #30 est affirmé sans ancre — ni SHA
+complet du merge, ni vérification à l'API` (sortie 2). Les garde-fous D4,
+D7, D6 et D5 sont vérifiés aussi par la CLI (fautifs n° 2, 3, 4, 5 →
+rejets D4, D7, D6, D5, sortie 2).
+
+**Re-validation de ce Discover-ci par la fonction (étape 4) :** la CLI
+`validate-discover check` sur `DISCOVER-F1-4.md` — **ACCEPTÉ, D1–D8
+passés (3 SHA complets vérifiés)**, en accord avec l'acceptation consignée
+au design §9. Le hold-out H-F1-1 (variante) ne brise pas ici : la fonction
+écrite après re-valide ce Discover avec le même verdict que l'acceptation
+indépendante.
+
+**Mesure H-M1 re-mesurée à l'exécution** (base du Discover : registre 922
+lignes, 185 lignes « Bill », 198 « découvrir »/« discover », 3 occurrences
+« F1-4 ») : registre 924 lignes (design F1-4 signé, journal 923) ; 186
+lignes « Bill », 200 « découvrir »/« discover », 4 occurrences « F1-4 » ;
+master `96d64ce` (tête vérifiée à l'API, base de la branche
+`a0/f1-4-discover`) ; F1-3 clos (PR #30, `4668305`, reçu 016).
+
+**Correction portée en avant (D7) :** la première version du contrôle D7
+acceptait « non lu en entier » comme attestation, parce que la chaîne
+contient « lu en entier » — le fautif n° 3 passait la suite. Le contrôle
+exige désormais l'attestation positive : une ligne « non lu en entier »
+n'atteste rien (leçon §0.4.5.1). La correction est portée ici et dans le
+reçu de livraison 020 ; le design signé n'est pas réécrit.
+
+**Hold-outs F1-4 :** H-M1 mesuré (ci-dessus) ; H-M2 diff vide sur l'amont
+(code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4 télémétrie zéro
+(audit joint, 0 dépendance, 0 appel sortant) ; H-M5 levé au niveau du
+module (fonctions Recevoir + Router + Découvrir nommées dans le manifeste
+— le manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6 frontière
+(seul le code A'Space de la fonction Découvrir ; voir Divergence) ; H-M7
+cette fiche. H-F1-1 (variante) = le reçu du merge qui clôt F1-4 (mission
+`LE1-FAB-D-N055-008`) — **après le merge, par un exécutant dédié, pas dans
+ce pas**. Le reçu de livraison de la PR (mission `LE1-FAB-D-N055-007`,
+entry_id `G-20261112-020`) est consigné à l'ouverture de la PR — voir
+`v4-factory/evidence/D-N055/RESULTS-F1-4.json`.
+
 ## Divergence (H-M6)
 
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
@@ -267,3 +346,20 @@ par ce pas** (le coordinateur consigne).
 - **Le manifeste du daemon (RigInfinity) n'est pas dans V5.** H-M5 est
   satisfait au niveau du module (manifeste posé ici) ; l'inscription dans
   le manifeste du daemon lui-même reste due côté RigInfinity.
+- **Un SHA court est une référence, pas une citation (F1-4, D2).** Le
+  Discover cite des SHA courts (`63b5816`, `12b7928`, `1f89b56`,
+  `d972235`) comme abréviations ou en récit — le contrôle D2 ne les
+  rejette pas : il exige la forme complète (40 hex, qui résout) là où le
+  fait est affirmé comme preuve (merge PR #30 / PR #26, Master HEAD, §2).
+  C'est le sens de l'acceptation du design §9, qui a accepté ce Discover
+  avec ses SHA courts présents.
+- **D4 et D6 sont portés par les sections, pas par le mot (F1-4).** D4 ne
+  rejette « ADOPTÉE » que hors des §4 (la règle) et §6 (le rejet motivé,
+  qui décrit les fautifs) — ces sections décrivent, elles ne tranchent
+  pas. D6 vérifie la correction déclarée au §2 (compte BYB F1-2 v2 :
+  14 214 o, écart de 146 o portés en avant) — une réécriture silencieuse
+  l'efface du §2 et D6 la détecte ; les mentions du même compte aux §6/§7
+  ne la remplacent pas.
+- **D7 exige l'attestation positive (F1-4).** Une ligne « non lu en
+  entier » au §10 n'atteste rien — le contrôle l'exclut (correction
+  portée en avant, voir fiche §8).

@@ -3,6 +3,10 @@
 //! Routeur — fonction Router (D-N055 F1-3) : voir le module `router`
 //! (validation R1–R8, inscription append-only, relais comme événement).
 //!
+//! Découvrir — fonction Découvrir (D-N055 F1-4) : voir le module
+//! `discover` (validation D1–D8 d'un Discover, contrôle de recevabilité
+//! du dossier, sans Bill comme session séparée).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -28,8 +32,10 @@
 //! l'horloge système, pour `recorded_at`.
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
-//! Adresse : `fiber:a0:fondation-13-1` (fonction Recevoir).
+//! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router et
+//! Découvrir).
 
+pub mod discover;
 pub mod router;
 
 use std::collections::HashSet;
