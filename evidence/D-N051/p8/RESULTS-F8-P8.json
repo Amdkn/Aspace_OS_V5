@@ -50,7 +50,7 @@
   },
   "H-P8-9": {
    "status": "PASS",
-   "detail": "registre : ligne 89 corrigee (pas 6 CLOSE 789, pas 7 CLOSE 914, pas 8 en cours) ; ligne 90 compteurs 0/0/11/0, segment pas 8 consigne, cordis corrige a40cc74 ; 0 occurrence 'Pin (bind)' dans les 11 fiches (grep : 'vide')"
+   "detail": "registre : ligne 89 corrigee (pas 6 CLOSE 789, pas 7 CLOSE 914, pas 8 en cours) ; ligne 90 compteurs 0/0/0/11 (corrigés par C3), segment pas 8 consigne, cordis corrige a40cc74 ; 0 occurrence 'Pin (bind)' dans les 11 fiches (grep : 'vide')"
   },
   "H-P8-10": {
    "status": "PASS",
