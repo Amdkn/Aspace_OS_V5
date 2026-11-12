@@ -1,1 +1,95 @@
-IyBQcmV1dmUgSC1SNSDigJQgRC1OMDUyIFI0IChEcmVhbS1SU0kgKyBSUlNJLCBIMykKCioqVmVyZGljdCA6IFBBU1Mg4oCUIDE4LzE4IGNoZWNrcyoqIChgUkVTVUxUUy1SNC5qc29uYCwgcmVqb3VhYmxlIDoKYHB5dGhvbjMgcnVuX2hvbGRvdXRzX3I0LnB5IC0tc25hcHNob3QgL3RtcC9mYWN0b3J5LXI0LXNuYXBzaG90LnNxbGl0ZSAtLXY1IDxjbG9uZT4gLS1vdXRkaXIgLmApLgpCcmFuY2hlIGBhMC9kbjA1Mi1yNC1kcmVhbWAgQCBgOWY1YTViYjVhNjJkNjNjZGUzODBiYTcxNmZhMGViZTA2MDNjYTRjMGAsCmJhc2UgbWFzdGVyIGBkZjExNWY5YCwgcGFyZW50IFIzIGA1YmZhMmRiYC4KCiMjIENlIHF1aSBlc3QgcHJvdXbDqQoKRHJlYW0tUlNJIHByb2R1aXQgdW5lIHZhcmlhbnRlLCBSUlNJIGwnw6l2YWx1ZSBlbiB3b3JrdHJlZSwgcHJvbW90aW9uCnNldWxlbWVudCBzaSBsZSBnYXRlIGwnYWNjZXB0ZSAoYmV0YSBtZXN1csOpIHN1ciBsZSBjb2RlLCBwYXMgMC4zNSkuCgojIyBUcmFjZXMgKHLDqWVsbGVzKQoKU25hcHNob3QgbGl2ZSBkZSBgZmFjdG9yeS5zcWxpdGVgIGR1IFBDCihgL21udC9jL1VzZXJzL2FtYWRvL0FzcGFjZSBPUyBWNS8wMl9GYWN0b3J5L2ZhY3Rvcnkuc3FsaXRlYCksIGNvcGllIHBhcgpBUEkgYmFja3VwIFNRTGl0ZSwgc2hhMjU2CmAzMDVjNWEyOGVjMGIxMDc2YmNkNjM2ZWZlNmQxNTgxMTlkNDA0Y2FlMDkzZGNiNmM1ZjY2M2FjMDZjYmEzNTk1YCwKNjEgNDQwIG8sIGluc3RhbnRhbsOpIDIwMjYtMTEtMTFUMTQ6MDg6MjgtMDU6MDAuICoqQnl0ZS1pZGVudGlxdWUgYXUKc25hcHNob3QgUjMqKiA6IGxhIGJhc2UgbidhIHBhcyBib3Vnw6kgZGVwdWlzIDEzOjIxLiBMaXZlIHNoYSBhdmFudCA9PQphcHLDqHMgKGBlYTkwNDNjZuKApmApLiA3IHdvcmtmbG93cyAvIDkgc3RlcHMgLyA2IGV2ZW50cywgbHVzIHBhciBsZQpsZWN0ZXVyIEFRdUEgUjAgKDcgdHJhY2VzLCBiYXNlIG5vbiBtb2RpZmnDqWUpLiBEaWFnbm9zdGljIG3DqWNhbmlxdWUgOgozIERFRkVDVCAvIDQgUEVORElORy4gRMOpdGVudGV1ciBkdSBsb2NrIDogw6JnZSA2ODAgNzM2IHMgKOKJiCA3LDkgaikuCgp8IFLDtGxlIHwgVHJhY2VzIHwKfC0tLXwtLS18CnwgQ29tcGlsYXRpb24gfCBgaC1wMi0zLTIwMjYxMTExLTEyNDVgIChhdHRlbnRlIHdyaXRlciBsb2NrKSB8CnwgVmFsaWRhdGlvbiBUX3ZhbCB8IGBzbW9rZS1kdXJhYmxlLTAxYCwgYGgtcDItNi0yMDI2MTExMS0xMjUwYCwgYGgtcDItNy0yMDI2MTExMS0xMjU1YCB8CnwgSG9sZG91dCBWNSB8IGBzbW9rZS1jaGFpbi0wMWAsIGBoLXAyLTExLTIwMjYxMTExLTEyNTVgLCBgaC1wMi0zLTIwMjYxMTExLTEyNTVgIHwKCiMjIEJldGEgbWVzdXLDqSAocGFzIDAuMzUpCgotIEdyaWxsZSDOsiA6IGAwLCAwLjI1LCAwLjUsIDAuNzUsIDFgIOKAlCBgZHJlYW1fcnNpL2xlYXJuaW5nLwogIGhldXJpc3RpY19zZWFyY2gvZXZhbC5weTozOTdgLCBSRUFETUUgKHRhYmxlIGRlcyB2YXJpYWJsZXMpLgotIM67ID0gMC4wNSDigJQgYGV2YWwucHk6NzlgIChgREVGQVVMVF9QQVJBTExFTElTTV9QRU5BTFRZYCkuCi0gKiowLjM1IDogMCBvY2N1cnJlbmNlIGRhbnMgdG91dCBsZSBkw6lww7R0IGRyZWFtLXJzaSoqIChncmVwIG1lc3Vyw6ksCiAgYHRoaXJkX3BhcnR5L2AgaW5jbHVzKS4KLSBSUlNJIGNvZGluZyA6IGRlbHRhIDAuMDE3LCBiZXRhMCAwLjEwLCBiZXRhMSA0NC41LCB3X3MgMC4wLCB3X2MgMTUuMCwKICB3X24gMC41IChgZG9tYWlucy9jb2RpbmcvcnJzaS5qc29uYCkuCgojIyBSZXBsYXkgKERyZWFtKQoKQ2lucSB2YXJpYW50ZXMgZGVwdWlzIGxhIHRyYWNlIGRlIGNvbXBpbGF0aW9uLiBSZXdhcmQgPSBBVUMg4oiSIDAuMDUKKG1pcm9pciBgX3RyYWNlX2F1Y2AgdsOpcmlmacOpIMOpZ2FsIMOgIGxhIHZyYWllIGZvbmN0aW9uIGR1IGZvcmsgOgowLjIzODEgPT0gMC4yMzgxKS4gUXVhdHJlIHZhcmlhbnRlcyDDoCDDqWdhbGl0w6kgYXUgcmV3YXJkIDAuODA3MSAocGxhZm9uZApBVUMg4oCUIGF0dGVpbmRyZSAxLjAgc3VyIGxhIHByZW1pw6hyZSBzb25kZSBtYXhpbWlzZSBsYSBmcm9udGnDqHJlKSA7CmxhIHPDqXBhcmF0aW9uIHZpZW50IGR1IFIgcG9vbCA6IGluY3VtYmVudCAxLjAsIGB2LWxvb3NlLTdkYCAxLjAsCmB2LXRpZ2h0LTFoYCAwLjQyODYsIGB2LXJlZ3Jlc3NgIDAuMjg1NywgYHYtc2luZ2xlLWNsYXVzZWAgMC43MTQzCihyZXdhcmQgMC4xODgxKS4gRHJlYW0gZ2FyZGUgbCdpbmN1bWJlbnQgc3VyIGwnw6lnYWxpdMOpLgoKKipEw6ljb3V2ZXJ0ZSBtZXN1csOpZSA6IGxlIFRUTCAxIGggYSBleHBpcsOpIGVudHJlIFIzIGV0IFI0LioqIMOAIDEzOjIxIGxlcwp0cmFjZXMgZnJhw65jaGVzIGF2YWllbnQgfjMwIG1pbiA7IMOgIDE0OjA4IGVsbGVzIG9udCA0IDM5MOKAkzUgMDA0IHMsIGRvbmMKYHYtdGlnaHQtMWhgIGRpYWdub3N0aXF1ZSBERUZFQ1QgbGVzIHF1YXRyZSB0cmFjZXMgUEVORElORy4gTCdpbnRlcnZhbGxlCmludmFyaWFudCBtZXN1csOpIMOgIFI0IGVzdCBbMiBoLCA3IGpdLCBwYXMgWzEgaCwgNyBqXS4KCiMjIMOJdmFsdWF0aW9uIFJSU0kgKHZyYWlzIHdvcmt0cmVlcywgdnJhaSBBbGdvcml0aG0gMikKClF1YXRyZSBjYW5kaWRhdHMgZW4gdnJhaXMgd29ya3RyZWVzIChgY2FuZGlkYXRlLzxub20+YCwgY29tbWl0cyB2w6lyaWZpw6lzLAp2YXJpYW50ZSBjaGFyZ8OpZSBkZXB1aXMgbGUgd29ya3RyZWUpLiBDcml0aXF1ZSA6IDQvNCBwYXNzIChhdWN1bmUKbG9naXF1ZSBzcMOpY2lmaXF1ZSDDoCB1bmUgdHJhY2UgZGFucyBsZXMgY2xhdXNlcykuIGBzZWxlY3Rfcm91bmRgIHLDqWVsIDoKKipnYWduYW50ID0gYXVjdW4qKiDigJQgaW5jdW1iZW50IFMqID0gMS4wIChwbGFmb25kKSA6IGB2LXNpbmdsZWAsCmB2LXJlZ3Jlc3NgLCBgdi10aWdodGAgYmxvcXXDqWVzIHBhciBsZSBwbGFuY2hlciBhanVzdMOpIGF1IGJydWl0CihTIDAuNjY2NyAvIDAuMzMzMyAvIDAuMzMzMyA8IDAuOTgzKSA7IGB2LWxvb3NlYCByZWpldMOpZSBwYXIgbGEgcsOoZ2xlIGRlCmNvw7t0IGRhbnMgbGEgYmFuZGUgKGZhw6dvbm7DqWUgMCwgd19zID0gMCkuIENlIG4nZXN0IHBhcyB1biDDqWNoZWMgOiBsYQpzw6lsZWN0aW9uIGp1Z2UgY29udHJlIGwnaW5jdW1iZW50LCBsZSBnYXRlIGp1Z2UgY29udHJlIGxlIGpldSB2aWRlLgoKIyMgR2F0ZSAodnJhaSBgZ2F0aW5nLnB5YCwgQWxnb3JpdGhtIDEpCgotIEJhc2VsaW5lIFRfdmFsIChTMCB2aWRlKSA6ICoqUiA9IDAuNjY2NyoqLCBSX2Jlc3QgPSAwLjY2NjcuCi0gSXTDqXJhdGlvbiAxIOKAlCBgdi1yZWdyZXNzYCA6ICoqUiA9IDAuMzMzMyDihpIgUkVKRVTDiUUqKiA7IHJvbGxiYWNrIHbDqXJpZmnDqSwKICB3aWtpIGNvbnNlcnbDqWUuCi0gSXTDqXJhdGlvbiAyIOKAlCBgdi1zaW5nbGUtY2xhdXNlYCA6ICoqUiA9IDAuNjY2NyDihpIgUkVKRVTDiUUqKgogICgwLjY2Njcgbidlc3QgcGFzID4gMC42NjY3KS4KLSBJdMOpcmF0aW9uIDMg4oCUIGB2LXRpZ2h0LTFoYCA6ICoqUiA9IDAuMzMzMyDihpIgUkVKRVTDiUUqKiAoVFRMIDEgaCBleHBpcsOpKS4KLSBJdMOpcmF0aW9uIDQg4oCUIGB2LWxvb3NlLTdkYCA6ICoqUiA9IDEuMCDihpIgQUNDRVBUw4lFKiogOyBtYXJnZSAwLjMzMzMg4omlCiAgZGVsdGEgMC4wMjY3IDsgUl9iZXN0IDAuNjY2NyDihpIgMS4wIDsgc2tpbGwgY29tbWl0dMOpZS4KLSBIb2xkb3V0IFY1IChkaXNqb2ludCkgOiBiYXNlbGluZSAwLjY2Njcg4oaSIGF2ZWMgcsOoZ2xlICoqMS4wKiogKDMvMykuCi0gUHJvbW90aW9uIDogYHYtbG9vc2UtN2RgIHNldWxlbWVudCAocsOoZ2xlIGFjdGl2ZSB1bmlxdWUgOyBzZXVsZSBzYQogIGJyYW5jaGUgY2FuZGlkYXRlIGVzdCBmYXN0LWZvcndhcmTDqWUgc3VyIGBldm9sdmUvdjUtdHJhY2VzYCkuCgojIyBEYWVtb24gKHN1YnN0aXR1dGlvbiwgdGVzdCBkZSBqb3VyKQoKYGFzcGFjZS1kcmVhbS1kYWVtb25gIOKAlCAqKlNVQlNUSVRVVElPTiBkdSBkYWVtb24gUmlnSW5maW5pdHkqKiAoRjggRDgsCnBhcyBsaXZyw6kpLCBjb25kaXRpb24gZGUgcmV0cmFpdCBjb25zaWduw6llIGRhbnMgc29uIFJFQURNRS4gVGVzdApgLS1ydW4tbm93YCA6IGN5Y2xlIERPTkUgZW4gPCAxIHMsIGNoZWNrcG9pbnQgw6ljcml0LCBwcm9tdSBgdi1sb29zZS03ZGAsClJfYmVzdCAxLjAsIGV4aXQgMC4gTm9uIGTDqW1hcnLDqSBlbiBkw6l0YWNow6kgOiBsZSBjb29yZGluYXRldXIgbCdpbnN0YWxsZQpldCBsZSBkw6ltYXJyZSAoc3VwZXJ2aXPDqSkgYXZhbnQgMDBoLiBMYSBjb3Vyc2UgZGUgbnVpdCBuJ2EgcGFzIGV1IGxpZXUKcGVuZGFudCBjZXR0ZSBzZXNzaW9uLgoKIyMgRMOpY291dmVydGUgaW5jaWRlbnRlCgpMb2NrIG9ycGhlbGluIHZpdmFudCA6IGB3aWQtMjAyNjExMDMtMTcwMjUxL3N0ZXAtMWAgdGllbnQgbGUgd3JpdGVyIGxvY2sKZGVwdWlzIGxlIDIwMjYtMTEtMDMgKDggam91cnMpIGV0IGJsb3F1ZSBgaC1wMi0zLTIwMjYxMTExLTEyNDVgLiBGYWl0Cm9ww6lyYXRpb25uZWwgcsOpZWwsIMOgIHJvdXRlciAoaG9ycyBSNCkg4oCUIGTDqWNpc2lvbiBEb2N0b3IgcmVxdWlzZSwgYXVjdW5lCnB1cmdlIHVuaWxhdMOpcmFsZS4K
+# Preuve H-R5 — D-N052 R4 (Dream-RSI + RRSI, H3)
+
+**Verdict : PASS — 18/18 checks** (`RESULTS-R4.json`, rejouable :
+`python3 run_holdouts_r4.py --snapshot /tmp/factory-r4-snapshot.sqlite --v5 <clone> --outdir .`).
+Branche `a0/dn052-r4-dream` @ `9f5a5bb5a62d63cde380ba716fa0ebe0603ca4c0`,
+base master `df115f9`, parent R3 `5bfa2db`.
+
+## Ce qui est prouvé
+
+Dream-RSI produit une variante, RRSI l'évalue en worktree, promotion
+seulement si le gate l'accepte (beta mesuré sur le code, pas 0.35).
+
+## Traces (réelles)
+
+Snapshot live de `factory.sqlite` du PC
+(`/mnt/c/Users/amado/Aspace OS V5/02_Factory/factory.sqlite`), copie par
+API backup SQLite, sha256
+`305c5a28ec0b1076bcd636efe6d158119d404cae093dcb6c5f663ac06cba3595`,
+61 440 o, instantané 2026-11-11T14:08:28-05:00. **Byte-identique au
+snapshot R3** : la base n'a pas bougé depuis 13:21. Live sha avant ==
+après (`ea9043cf…`). 7 workflows / 9 steps / 6 events, lus par le
+lecteur AQuA R0 (7 traces, base non modifiée). Diagnostic mécanique :
+3 DEFECT / 4 PENDING. Détenteur du lock : âge 680 736 s (≈ 7,9 j).
+
+| Rôle | Traces |
+|---|---|
+| Compilation | `h-p2-3-20261111-1245` (attente writer lock) |
+| Validation T_val | `smoke-durable-01`, `h-p2-6-20261111-1250`, `h-p2-7-20261111-1255` |
+| Holdout V5 | `smoke-chain-01`, `h-p2-11-20261111-1255`, `h-p2-3-20261111-1255` |
+
+## Beta mesuré (pas 0.35)
+
+- Grille β : `0, 0.25, 0.5, 0.75, 1` — `dream_rsi/learning/
+  heuristic_search/eval.py:397`, README (table des variables).
+- λ = 0.05 — `eval.py:79` (`DEFAULT_PARALLELISM_PENALTY`).
+- **0.35 : 0 occurrence dans tout le dépôt dream-rsi** (grep mesuré,
+  `third_party/` inclus).
+- RRSI coding : delta 0.017, beta0 0.10, beta1 44.5, w_s 0.0, w_c 15.0,
+  w_n 0.5 (`domains/coding/rrsi.json`).
+
+## Replay (Dream)
+
+Cinq variantes depuis la trace de compilation. Reward = AUC − 0.05
+(miroir `_trace_auc` vérifié égal à la vraie fonction du fork :
+0.2381 == 0.2381). Quatre variantes à égalité au reward 0.8071 (plafond
+AUC — atteindre 1.0 sur la première sonde maximise la frontière) ;
+la séparation vient du R pool : incumbent 1.0, `v-loose-7d` 1.0,
+`v-tight-1h` 0.4286, `v-regress` 0.2857, `v-single-clause` 0.7143
+(reward 0.1881). Dream garde l'incumbent sur l'égalité.
+
+**Découverte mesurée : le TTL 1 h a expiré entre R3 et R4.** À 13:21 les
+traces fraîches avaient ~30 min ; à 14:08 elles ont 4 390–5 004 s, donc
+`v-tight-1h` diagnostique DEFECT les quatre traces PENDING. L'intervalle
+invariant mesuré à R4 est [2 h, 7 j], pas [1 h, 7 j].
+
+## Évaluation RRSI (vrais worktrees, vrai Algorithm 2)
+
+Quatre candidats en vrais worktrees (`candidate/<nom>`, commits vérifiés,
+variante chargée depuis le worktree). Critique : 4/4 pass (aucune
+logique spécifique à une trace dans les clauses). `select_round` réel :
+**gagnant = aucun** — incumbent S* = 1.0 (plafond) : `v-single`,
+`v-regress`, `v-tight` bloquées par le plancher ajusté au bruit
+(S 0.6667 / 0.3333 / 0.3333 < 0.983) ; `v-loose` rejetée par la règle de
+coût dans la bande (façonnée 0, w_s = 0). Ce n'est pas un échec : la
+sélection juge contre l'incumbent, le gate juge contre le jeu vide.
+
+## Gate (vrai `gating.py`, Algorithm 1)
+
+- Baseline T_val (S0 vide) : **R = 0.6667**, R_best = 0.6667.
+- Itération 1 — `v-regress` : **R = 0.3333 → REJETÉE** ; rollback vérifié,
+  wiki conservée.
+- Itération 2 — `v-single-clause` : **R = 0.6667 → REJETÉE**
+  (0.6667 n'est pas > 0.6667).
+- Itération 3 — `v-tight-1h` : **R = 0.3333 → REJETÉE** (TTL 1 h expiré).
+- Itération 4 — `v-loose-7d` : **R = 1.0 → ACCEPTÉE** ; marge 0.3333 ≥
+  delta 0.0267 ; R_best 0.6667 → 1.0 ; skill committée.
+- Holdout V5 (disjoint) : baseline 0.6667 → avec règle **1.0** (3/3).
+- Promotion : `v-loose-7d` seulement (règle active unique ; seule sa
+  branche candidate est fast-forwardée sur `evolve/v5-traces`).
+
+## Daemon (substitution, test de jour)
+
+`aspace-dream-daemon` — **SUBSTITUTION du daemon RigInfinity** (F8 D8,
+pas livré), condition de retrait consignée dans son README. Test
+`--run-now` : cycle DONE en < 1 s, checkpoint écrit, promu `v-loose-7d`,
+R_best 1.0, exit 0. Non démarré en détaché : le coordinateur l'installe
+et le démarre (supervisé) avant 00h. La course de nuit n'a pas eu lieu
+pendant cette session.
+
+## Découverte incidente
+
+Lock orphelin vivant : `wid-20261103-170251/step-1` tient le writer lock
+depuis le 2026-11-03 (8 jours) et bloque `h-p2-3-20261111-1245`. Fait
+opérationnel réel, à router (hors R4) — décision Doctor requise, aucune
+purge unilatérale.
