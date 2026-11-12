@@ -1,0 +1,177 @@
+{
+  "H-C1/superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "gitlink 5813de0 == adapter, gel 22f0b463, bind verbatim"
+  },
+  "H-C1/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "gitlink 4f4a076 == adapter, gel 113a3afc, bind verbatim"
+  },
+  "H-C1/gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "gitlink 6cb6da7 == adapter, gel 3742ee95, bind verbatim"
+  },
+  "H-C1/gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "gitlink adc42da == adapter, gel cb15dcf1, bind verbatim"
+  },
+  "H-C2/superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "diff gel→adapter = 3 fichiers adapter seuls ( 3 files changed, 378 insertions(+))"
+  },
+  "H-C2/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "diff gel→adapter = 3 fichiers adapter seuls ( 3 files changed, 365 insertions(+))"
+  },
+  "H-C2/gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "diff gel→adapter = 3 fichiers adapter seuls ( 3 files changed, 326 insertions(+))"
+  },
+  "H-C2/gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "diff gel→adapter = 3 fichiers adapter seuls ( 3 files changed, 356 insertions(+))"
+  },
+  "H-C3/superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "npm test 139 PASS au gel et sur l'adapté (9 sections, 0 failed)"
+  },
+  "H-C3/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "pytest tests/unit 336 passed, 2 skipped au gel et sur l'adapté"
+  },
+  "H-C3/gstack": {
+    "pass": false,
+    "status": "qualified",
+    "detail": "--quick NON VERT strict : gel 726 tests en échec / 65 fichiers, adapté 729 / 66 — mêmes grappes (browse E2E, QA E2E, autoplan, CSO, codex-cli), 0 imputable à l'adaptateur, à juger"
+  },
+  "H-C3/gsd-core": {
+    "pass": false,
+    "status": "fail",
+    "detail": "NON VERT : gel (50086, 3), adapté (50087, 2) — à juger"
+  },
+  "H-C3/smoke-superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "smoke 6/6 (superpowers)"
+  },
+  "H-C3/smoke-elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "smoke 6/6 (elephant-goldfish-model)"
+  },
+  "H-C3/smoke-gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "smoke 6/6 (gstack)"
+  },
+  "H-C3/smoke-gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "smoke 6/6 (gsd-core)"
+  },
+  "H-C4/superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "audit 3610 o, verdict TÉLÉMÉTRIE ZÉRO, 0 SDK"
+  },
+  "H-C4/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "audit 3254 o, verdict TÉLÉMÉTRIE ZÉRO, 0 SDK"
+  },
+  "H-C4/gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "audit 2767 o, verdict TÉLÉMÉTRIE ZÉRO, 0 SDK"
+  },
+  "H-C4/gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "audit 3360 o, verdict TÉLÉMÉTRIE ZÉRO, 0 SDK"
+  },
+  "H-C5/superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "id fiber:a0:superpowers, levels=1"
+  },
+  "H-C5/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "id fiber:a0:elephant-goldfish-model, levels=1"
+  },
+  "H-C5/gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "id fiber:a0:gstack, levels=1"
+  },
+  "H-C5/gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "id fiber:a0:gsd-core, levels=1"
+  },
+  "H-C5/sans-doublon": {
+    "pass": true,
+    "status": "pass",
+    "detail": "ids distincts : ['fiber:a0:superpowers', 'fiber:a0:elephant-goldfish-model', 'fiber:a0:gstack', 'fiber:a0:gsd-core']"
+  },
+  "H-C6/canonique": {
+    "pass": true,
+    "status": "pass",
+    "detail": "superpowers canonique MasterSpec (§D5), 3 références nommées"
+  },
+  "H-C6/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "référence du canonique superpowers"
+  },
+  "H-C6/gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "référence du canonique superpowers"
+  },
+  "H-C6/gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "référence du canonique superpowers"
+  },
+  "H-C6/gsd-core-ancien-fork": {
+    "pass": true,
+    "status": "pass",
+    "detail": "ancien fork Amdkn/get-shit-done non touché (H-A7)"
+  },
+  "H-C7/superpowers": {
+    "pass": true,
+    "status": "pass",
+    "detail": "fiche 4957 o (gel, licence, audit)"
+  },
+  "H-C7/elephant-goldfish-model": {
+    "pass": true,
+    "status": "pass",
+    "detail": "fiche 5624 o (gel, licence, audit)"
+  },
+  "H-C7/gstack": {
+    "pass": true,
+    "status": "pass",
+    "detail": "fiche 5977 o (gel, licence, audit)"
+  },
+  "H-C7/gsd-core": {
+    "pass": true,
+    "status": "pass",
+    "detail": "fiche 5746 o (gel, licence, audit)"
+  },
+  "H-C8/compteur": {
+    "pass": true,
+    "status": "pass",
+    "detail": "compteur 11 → 7, 7 lignes à l'état 0, 4 modules du pas en état 1"
+  }
+}
