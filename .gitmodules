@@ -374,15 +374,6 @@
 [submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot"]
 	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot
 	url = https://github.com/Amdkn/openbot.git
-[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse"]
-	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse
-	url = https://github.com/Amdkn/openmuse.git
-[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots"]
-	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots
-	url = https://github.com/Amdkn/OpenDots.git
-[submodule "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet"]
-	path = 01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet
-	url = https://github.com/Amdkn/OpenDuet.git
 [submodule "01_Forkable/FKB07_Money_Maker/BusinessOS"]
 	path = 01_Forkable/FKB07_Money_Maker/BusinessOS
 	url = https://github.com/Amdkn/BusinessOS.git
