@@ -16,7 +16,8 @@ reste requis pour la montée d'état.
   compare gel...amont `main` : behind 1, ahead 0 (amont 46eaf96 — README-only, déjà reprise).
 - **Vérifié au fichier :** clone local `~/workspace/f8-p7/OpenDots`,
   HEAD = gel avant adaptation, arbre propre, 207 fichiers.
-- **Pin (bind) : `abcb35d`** — 1 fichier :
+- **Pin V5 : retiré au pas 7 (H-F8-1)** — pointeur retiré de `.gitmodules` au pas 7 ; pin sans objet.
+- **Bind : `abcb35d`** — 1 fichier :
   `aspace-plugin.json` (blob `83c6b9b`, byte-identique
   entre la branche `aspace-v5-native` `7e21c95` et
   `main`). Parent du bind : le gel `d4214af` (bind AVANT

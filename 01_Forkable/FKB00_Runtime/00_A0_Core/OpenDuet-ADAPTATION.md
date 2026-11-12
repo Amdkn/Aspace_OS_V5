@@ -16,7 +16,8 @@ reste requis pour la montée d'état.
   compare gel...amont `main` : behind 8, ahead 0 (amont edb9126 ; dont 093e3b0 « skin », déjà reprise).
 - **Vérifié au fichier :** clone local `~/workspace/f8-p7/OpenDuet`,
   HEAD = gel avant adaptation, arbre propre, 2365 fichiers.
-- **Pin (bind) : `be7ec83`** — 1 fichier :
+- **Pin V5 : retiré au pas 7 (H-F8-1)** — pointeur retiré de `.gitmodules` au pas 7 ; pin sans objet.
+- **Bind : `be7ec83`** — 1 fichier :
   `aspace-plugin.json` (blob `002690a`, byte-identique
   entre la branche `aspace-v5-native` `aa4121c` et
   `main`). Parent du bind : le gel `f52288f` (bind AVANT
@@ -64,7 +65,7 @@ reste requis pour la montée d'état.
   fichier de checks s'appelle `adapter.checks.ts` (pas `.test.ts`)
   pour que les suites des forks ne le ramassent pas — découvert
   quand vitest a échoué 1 suite parasite sur OpenDots.
-- **Réserve R-A1 :** 0 test propre — H-M3 = evals en fixtures (triage, reply-chips, voice, exécutées contre la surface native) + suite openbot 0.3.3 (§D15) ; la suite openbot est EN COURS.
+- **Réserve R-A1 :** 0 test propre — H-M3 = evals en fixtures (triage, reply-chips, voice, exécutées contre la surface native) + suite openbot 0.3.3 (§D15) ; **H-M3 QUALIFIÉ** (amendement C3 du jugement 13e) : eval triage rules-only 12/62 décidées, 0 wrong ; suite openbot 0.3.3 = H-M3-openbot (ROUGE QUALIFIÉ, 10 929 pass / 306 fail / 263 errors, 1 205 fichiers, identique au gel).
 
 ## Le tri (12 portés / 1 surfaces / 4 abandonnés, total 17)
 
@@ -136,7 +137,7 @@ c'eût été adapter openbot deux fois à deux versions différentes.
 
 ## Divergence (dette portée par le cœur Buzz)
 
-- **R-A1** — 0 test propre — H-M3 = evals en fixtures (triage, reply-chips, voice, exécutées contre la surface native) + suite openbot 0.3.3 (§D15) ; la suite openbot est EN COURS.
+- **R-A1** — 0 test propre — H-M3 = evals en fixtures (triage, reply-chips, voice, exécutées contre la surface native) + suite openbot 0.3.3 (§D15) ; **H-M3 QUALIFIÉ** (amendement C3 du jugement 13e) : eval triage rules-only 12/62 décidées, 0 wrong ; suite openbot 0.3.3 = H-M3-openbot (ROUGE QUALIFIÉ, 10 929 pass / 306 fail / 263 errors, 1 205 fichiers, identique au gel).
 - **R-A2** — H-P7-6 CONDITIONNELLE au merge pas 6 pour le chemin
   `/refine` seul ; plateforme + skins + computer-service
   inconditionnels (§D9).
@@ -152,7 +153,7 @@ c'eût été adapter openbot deux fois à deux versions différentes.
   parent = gel ; adapter parent = bind (vérifié à l'API).
 - **H-M2 PASS** — compare gel...tête = ahead 3, behind 0,
   14 fichiers A'Space seuls (vérifié à l'API).
-- **H-M3 EN COURS (evals + suite openbot)** — evals en fixtures (3 dossiers, formats vérifiés) + suite openbot 0.3.3 EN COURS (bun test).
+- **H-M3 QUALIFIÉ (evals + suite openbot)** — eval triage rules-only 12/62 décidées, 0 wrong (100 % sur les décidées) + suite openbot 0.3.3 = H-M3-openbot (ROUGE QUALIFIÉ : 10 929 pass / 306 fail / 263 errors, 1 205 fichiers, identique au gel).
 - **H-M4 PASS** — audit versionné ; 5 déclencheurs tranchés ;
   0 émetteur dans le natif (R-A1 pour la suite propre, voir § Télémétrie).
 - **H-M5 PASS** — ce manifeste (`fiber:a0:openduet`).

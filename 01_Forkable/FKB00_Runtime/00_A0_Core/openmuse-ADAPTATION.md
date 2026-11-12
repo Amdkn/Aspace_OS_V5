@@ -16,7 +16,8 @@ reste requis pour la montée d'état.
   compare gel...amont `main` : identical, ahead 0, behind 0 — dérive 0.
 - **Vérifié au fichier :** clone local `~/workspace/f8-p7/openmuse`,
   HEAD = gel avant adaptation, arbre propre, 231 fichiers.
-- **Pin (bind) : `01d57a7`** — 1 fichier :
+- **Pin V5 : retiré au pas 7 (H-F8-1)** — pointeur retiré de `.gitmodules` au pas 7 ; pin sans objet.
+- **Bind : `01d57a7`** — 1 fichier :
   `aspace-plugin.json` (blob `0ccaccc`, byte-identique
   entre la branche `aspace-v5-native` `72821ec` et
   `main`). Parent du bind : le gel `a4944f4` (bind AVANT

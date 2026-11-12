@@ -16,7 +16,8 @@ reste requis pour la montée d'état.
   compare gel...amont `main` : behind 181, ahead 0 (amont HEAD 68fe327, 2026-11-12T01:17:42Z).
 - **Vérifié au fichier :** clone local `~/workspace/f8-p7/openbot`,
   HEAD = gel avant adaptation, arbre propre, 3376 fichiers.
-- **Pin (bind) : `fea2371`** — 1 fichier :
+- **Pin V5 : `6e62238`** — gitlink V5 re-piné sur le main avec bind (amendement C1 du jugement 13e, §D8(c)) ; tête `main` `6e622380d32e131e7688b6eebbd1d2afbe650c42`.
+- **Bind : `fea2371`** — 1 fichier :
   `aspace-plugin.json` (blob `087bd7f`, byte-identique
   entre la branche `aspace-v5-native` `dbf1693` et
   `main`). Parent du bind : le gel `2b5b14f` (bind AVANT
