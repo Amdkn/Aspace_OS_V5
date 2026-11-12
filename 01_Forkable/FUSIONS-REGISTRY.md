@@ -91,12 +91,12 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 
 ## F9 — Moteur prédictif et wargame unique (FKB00)
 
-- **Modules :** MiroFish + PathFM + autogluon + timesfm + chronos-forecasting + mitra-2 + tabfm + elephant-goldfish-model + gstack + superpowers + get-shit-done.
+- **Modules :** MiroFish + PathFM + autogluon + timesfm + chronos-forecasting + mitra-2 + tabfm + elephant-goldfish-model + gstack + superpowers + gsd-core.
 - **Fonction :** un seul moteur de prédiction (séries, tableaux, wargames) et de spécifications propres.
 - **Déjà existant :** fiches modèles dans `02_PredictiveWargame_MachineLearning/models/`, moteurs natifs (`triptych_autogluon_engine.py`, `wargame_tabular_engine.py`, `wargame_business_launch_auditor.py`), registre HF (`HF-SOVEREIGN-INDEX.md`).
 - **Preuve attendue :** une prévision validée sur données écartées (hold-out), jamais sur les données d'entraînement.
 - **État :** proposée
-- **Mesures :** 7 modules ML en état 1 (pas A, D-N053) ; 4 modules MasterSpec en état 0 (pas C) ; C (F9) : 4
+- **Mesures :** 7 modules ML en état 1 (pas A, D-N053) ; 4 modules MasterSpec en état 1 (pas C) ; C (F9) : 4
 
 ## F10 — Catalogue de skills unique (FKB08)
 
@@ -145,7 +145,7 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 
 ## Adaptations (D-N053 — Runtime, §D16)
 
-**Compteur d'état 0 du Runtime : 25 → 11 (pas A + F8 pas 3 + F8 pas 5 + F8 pas 4 + F8 pas 6 + pas B).** 7 modules ML adaptés (état 0 → 1) ; infinity adapté + fusionné par F8 pas 3 (état 0 → 2) ; agent-zero adapté + fusionné par F8 pas 5 (état 0 → 2) ; openrig adapté + fusionné par F8 pas 4 (état 0 → 2) ; prime-agent adapté + fusionné par F8 pas 6 (état 0 → 2) ; 3 modules Core adaptés par le pas B (état 0 → 1) ; 11 restent en état 0 (pas C, F1, F2 + 4 coordonnés par leur propre piste). Mesuré au registre, pas déclaré (H-A8).
+**Compteur d'état 0 du Runtime : 25 → 7 (pas A + F8 pas 3 + F8 pas 5 + F8 pas 4 + F8 pas 6 + pas B + pas C).** 7 modules ML adaptés (état 0 → 1) ; infinity adapté + fusionné par F8 pas 3 (état 0 → 2) ; agent-zero adapté + fusionné par F8 pas 5 (état 0 → 2) ; openrig adapté + fusionné par F8 pas 4 (état 0 → 2) ; prime-agent adapté + fusionné par F8 pas 6 (état 0 → 2) ; 3 modules Core adaptés par le pas B (état 0 → 1) ; 4 modules MasterSpec adaptés par le pas C (état 0 → 1) ; 7 restent en état 0 (herdr, herdr-core, orca, OpenDots, OpenDuet, openbot, openmuse). Mesuré au registre, pas déclaré (H-A8).
 
 **États :** 0 Basique (fork Amdkn non adapté) ; 1 Adapté (fiche + adapter + manifeste, tests verts) ; 2 Vérifié (hold-outs verts + validation 13e) ; 3 Publié (état 2 + registre à jour).
 
@@ -158,10 +158,10 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | tabfm | 1 | `0a56dff` | `fiber:a0:tabfm` | Apache-2.0 |
 | PathFM | 1 | `8bcdd5b` | `fiber:a0:PathFM` | CC BY-NC 4.0 |
 | MiroFish | 1 | `dff2f01` | `fiber:a0:mirofish` | AGPL-3.0 |
-| elephant-goldfish-model | 0 | `3d643fe` | — | Apache-2.0 |
-| get-shit-done → gsd-core | 0 | (nouveau fork) | — | MIT |
-| gstack | 0 | `a79170c` | — | MIT |
-| superpowers (canonique) | 0 | `4ca2922` | — | MIT |
+| elephant-goldfish-model | 1 | `4f4a076` | `fiber:a0:elephant-goldfish-model` | Apache-2.0 |
+| gsd-core | 1 | `adc42da` | `fiber:a0:gsd-core` | MIT |
+| gstack | 1 | `6cb6da7` | `fiber:a0:gstack` | MIT |
+| superpowers (canonique) | 1 | `5813de0` | `fiber:a0:superpowers` | MIT |
 | a0-plugins | 1 | `fa8df85` | `fiber:a0:a0-plugins` | MIT |
 | agent-zero (F8 pas 5) | 2 | `a042ddde` | `fiber:a0:agent-zero` | MIT |
 | spynel | 1 | `fa9fe41` | `fiber:a0:spynel` | MIT |
@@ -180,6 +180,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 **Pas A (ML socle) :** 7/7 adaptés, H-M1..M7 + H-A1..H-A5 verts (bornes nommées : suite autogluon bornée ; PathFM sans suite amont ; MiroFish : aucune simulation réelle, le smoke prouve la frontière) ; MiroFish isolé en service (§D2) ; PathFM confiné au profil interne, ligne du manifeste ML corrigée à CC BY-NC 4.0 (§D3) ; pin = commit adapter (§D8, patron F8 D4 — tranché par le 13e au journal 587, reçu G-20261110-016 : la proposition « pin = adapter+bind HEAD » est rejetée).
 
 **Pas B (Agent Zero, la famille) :** 3/3 adaptés (a0-plugins `fa8df85`, spynel `fa9fe41`, tuxee `5cad42a`, binds re-appliqués verbatim au-dessus, pin = commit adapter) ; agent-zero en coordination seulement (F8 pas 5, non touché) ; a0-plugins : index 235 dossiers / 232 noms résolus / 230 indexés, smoke 7/7, suite amont verte ; spynel : adapter d'orchestration complet, smoke 5/5, suite Go complète 25 ok / 3 FAIL (H-B3 non vert strict — 1 test stable pré-existant au gel + 2 tests de timing dont l'ensemble varie d'un run à l'autre, décision D-B2 attendue du coordinateur, liste exacte des tests proposés à l'exclusion dans le rapport) ; tuxee : adapter d'interface D10 (0 code de l'OS), smoke 6/6, suite Go complète 14 ok / 2 FAIL identiques au gel et sur l'adapté (H-B3 non vert strict — décision D-B2 attendue) ; H-B2 QUALIFIÉ sur spynel et tuxee (1 ligne d'index DOX ajoutée à la racine `AGENTS.md` de chaque fork, contrat DOX sans exception, porte DOX verte) ; H-B1, H-B4, H-B5, H-B6, H-B7 verts sur les 3 ; compteur 14 → 11, mesuré au registre (H-B8).
+
+**Pas C (MasterSpec, les skills) :** 4/4 adaptés (superpowers `5813de0`, elephant-goldfish-model `4f4a076`, gstack `6cb6da7`, gsd-core `adc42da`, binds re-appliqués verbatim au-dessus, pin = commit adapter) ; gitlink renommé get-shit-done → gsd-core (D-C1 option (a), nouveau fork `Amdkn/gsd-core`, ancien fork `Amdkn/get-shit-done` non touché, bind 4L `d8c51c5` créé pendant le pas) ; superpowers (canonique) : smoke 6/6, suite `npm test` 139/139 verte au gel et sur l'adapté ; elephant-goldfish-model : smoke 6/6, `pytest tests/unit` 336 passed / 2 skipped, verte ; gstack : smoke 6/6, `--quick` 726 échecs / 65 fichiers au gel, 729 / 66 sur l'adapté (H-C3 non vert strict — grappes pré-existantes environnementales, 0 imputable à l'adapter, écarts aux marges = flakiness, décision attendue du coordinateur, même posture que D-B2) ; gsd-core : smoke 6/6, suite unit 50 086 pass / 3 fail au gel, 50 087 / 2 sur l'adapté (H-C3 non vert strict — 2 échecs environnementaux identiques : #1634 umask, npm-audit 403 proxy VM ; delta = test flaky pi-package, 0 imputable à l'adapter) ; compteur 11 → 7, mesuré au registre (H-C8).
 
 ---
 
