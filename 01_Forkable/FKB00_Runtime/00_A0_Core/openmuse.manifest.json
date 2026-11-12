@@ -1,0 +1,70 @@
+{
+  "id": "fiber:a0:openmuse",
+  "adaptation_sheet": "openmuse-ADAPTATION.md",
+  "adapter": {
+    "package": "aspace-openmuse-adapter",
+    "version": "0.1.0",
+    "commit": "e606af28e41083912dff883f5c15e0be9f10d121",
+    "commit_short": "e606af2",
+    "commits": [
+      "01d57a787946abf04dc15db521ead0e3cf1ecd3c",
+      "51baa4ac895512a099dbda9408c23b06147e7ea4",
+      "e606af28e41083912dff883f5c15e0be9f10d121"
+    ],
+    "surface": [
+      "verifyGelLineage(head) — gel a4944f4 (a4944f4c471d3dc93b8bfc060b5da309b5216ab2) ; bind 01d57a7",
+      "registerSkin(skin) / platformConfigured() — pont d'enregistrement des skins (§D10)",
+      "computerServiceUrl() -> http://127.0.0.1:4100 ; computerHeaders(botId) -> {x-openbot-bot-id} ; holder bot|human ; takeover() (§D11)",
+      "telemetryEmitters() -> [] ; TRIGGERS (5 déclencheurs §D4 tranchés) ; 0 appel sortant par défaut",
+      "routineToJob() — cron refusé, minimum 15 min, entrée du job loop, preuve par reçu (§D5)",
+      "GatewayProvider :31415 seul, chaîne modelPool, getApiKey() -> 'None' (§D6)",
+      "TRIAGE : 5 portés / 3 surfaces / 4 abandonnés (total 12), vérifié mécaniquement"
+    ]
+  },
+  "entry": "aspace-openmuse-adapter/src/index.ts",
+  "holdouts": {
+    "H-M1": "PASS",
+    "H-M2": "PASS",
+    "H-M3": "ROUGE QUALIFIÉ (2/3 pré-existants au gel + 1 flake de charge)",
+    "H-M4": "PASS",
+    "H-M5": "PASS — ce manifeste, schéma §D4, id fiber:a0:openmuse",
+    "H-M6": "PASS — adapter seul code A'Space du fork (+ bind aspace-plugin.json) ; triage rempli ; propriétaire A0-AMADEUS / S1-RICK",
+    "H-M7": "PASS — cette fiche",
+    "H-P7-1": "PASS",
+    "H-P7-6": "CONDITIONNELLE (/refine)",
+    "H-P7-7": "PASS",
+    "H-P7-8": "N/A",
+    "H-F8-9": "À JUGER — adapter 13 fichiers ; natif 1 module + preuve ; le parent juge les plafonds (1 % module, 5 % pas, 20 % mission)"
+  },
+  "issued_by": "Adaptation D-N051 F8 pas 7 (dispatch D-N051)",
+  "levels": {
+    "current": 2,
+    "note": "Monté à 2 à l'intégration (adapté + fusionné, §D12). Évidence du sous-agent = 0.",
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + adapter + manifeste, tests verts)",
+      "2 Vérifié (hold-outs verts + validation 13e)",
+      "3 Publié (état 2 + registre à jour)"
+    ]
+  },
+  "native_port": {
+    "repo": "Amdkn/RigInfinity",
+    "branch": "aspace-v5-native",
+    "head": "11a82bab611f849bfdebb19692776ca6da94fac6",
+    "head_short": "11a82bab",
+    "parent": "655b2a4",
+    "commits": [
+      "11a82bab611f849bfdebb19692776ca6da94fac6"
+    ],
+    "modules": [
+      "bots.rs (plateforme + 3 skins, computer-service :4100 + x-openbot-bot-id, routines dans le job loop, coworker Shared Brain sans Intelligence, /refine conditionnel pas 6)"
+    ],
+    "tests": "cargo test complet vert : lib 62/62, agent_zero_proof 5/5, bots_proof 7/7, changeset_proof 8/8, daemon_proof 4/4, source_control_proof 4/4 (rc=0)"
+  },
+  "schema_authority": "Clara (design D-N051, D4 ; design pas 7, D1-D16)",
+  "smoke": {
+    "adapter_suite": "8/8 verte (`node --test tests/adapter.checks.ts`)",
+    "fork_suite": "node --test (re-run propre, TMPDIR sur /home, 0 ENOSPC) : 499 sous-tests passent ; 3 fichiers échouent (browser, conversation-calendar, conversation-jev — « Agent execution failed: Connection interrupted ») ; au gel a4944f4 les mêmes browser + conversation-jev échouent (29 ✔, 2 fichiers en échec) ; conversation-calendar passe seul sur la tête adaptée (12/12, rc=0) — flake de charge du run complet.",
+    "native_cargo_test": "cargo test complet vert : lib 62/62, agent_zero_proof 5/5, bots_proof 7/7, changeset_proof 8/8, daemon_proof 4/4, source_control_proof 4/4 (rc=0)"
+  }
+}

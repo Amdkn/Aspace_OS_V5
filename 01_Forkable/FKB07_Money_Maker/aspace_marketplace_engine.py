@@ -5,7 +5,7 @@ Projet Picard LD01 : A'Space MarketPlace (L'Amazon.com qui justifie CoolEmbrl AW
 
 Fusionne :
   - Pyramide d'offres C0 (Infra CoolEmbrl) -> C1 (FDE/GTME/FOA) -> C2 (OMK/Kalybana 1P) -> C3 (Grand Public)
-  - Vaccination Post-Moltbook/RentAHuman/x.ai-bot via CopilotKit (OpenBot + OpenMuse + OpenDots + OpenDuet)
+  - Vaccination Post-Moltbook/RentAHuman/x.ai-bot via la surface native RigInfinity (plateforme OpenBot + skins OpenMuse, OpenDots, OpenDuet)
   - Production directe par les Holons RigInfinity + GitHub Actions n8n avec Garantie de ROI mesurable
 """
 
@@ -98,7 +98,7 @@ class AspaceMarketplaceEngine:
                 setup_fee_usd=1000.0,
                 monthly_retainer_usd=3500.0,
                 assigned_holon_squad="B1-BOOK -> B2.4-RD-DC -> B3.4-MARVEL-FDE",
-                copilotkit_isolation="openbot_container + openmuse_takeover + CEL_policy",
+                copilotkit_isolation="native_computer_service_4100 + native_takeover + CEL_policy",
                 guarantee=OutcomeGuaranteeContract(
                     metric_bucket="COST_SAVINGS",
                     target_roi_multiple=3.0,
@@ -121,7 +121,7 @@ class AspaceMarketplaceEngine:
                 setup_fee_usd=5000.0,
                 monthly_retainer_usd=1500.0,
                 assigned_holon_squad="C1-STAMETS -> C2.2-TREASURY-DC -> C3.2-MARVEL-FOA",
-                copilotkit_isolation="openbot_airgapped_vault + OpenDuet_CPA_Legal_Sync",
+                copilotkit_isolation="native_computer_service_airgapped + OpenDuet_CPA_Legal_Sync",
                 guarantee=OutcomeGuaranteeContract(
                     metric_bucket="RISK_MITIGATION",
                     target_roi_multiple=5.0,
@@ -161,9 +161,6 @@ class AspaceMarketplaceEngine:
                 corps="HYBRID_BOT_HUMAN",
                 open_source_engines=[
                     "Amdkn/openbot",
-                    "Amdkn/openmuse",
-                    "Amdkn/OpenDots",
-                    "Amdkn/OpenDuet",
                     "Amdkn/caveman",
                 ],
                 setup_fee_usd=299.0,
@@ -194,7 +191,7 @@ class AspaceMarketplaceEngine:
             client_org=client_org,
             timestamp_utc=now_iso,
             n8n_github_workflow=".github/workflows/aspace-n8n-gws-orchestrator.yml",
-            openbot_container_id=f"openbot-{digest}",
+            openbot_container_id=f"native-computer-{digest}",
             openmuse_takeover_url=f"https://city.aspaceos.tech/takeover/{digest}",
             status="PRODUCTION_IN_PROGRESS_RIGINFINITY",
             wargame_mitra_confidence=0.91,

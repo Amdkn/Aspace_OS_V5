@@ -193,24 +193,15 @@ Apport à Automaton : la séparation gateway / exécution, et la politique
 en code comme frontière de confiance. Le daemon est fiable,
 l'exécution ne l'est pas par défaut.
 
-### OpenBot (nightly-labs)
-Principe : coéquipiers persistants, chacun son workspace, son navigateur.
-- Workspace desktop local-first pour coéquipiers IA persistants.
-  Codex App Server, Claude Code, Grok CLI, OpenCode, Gemini, Cursor,
-  Cline, Kimi, Devin, Copilot CLI, Hermes Agent, via ACP.
-- Chaque agent a son workspace et sa conversation, ses files locales,
-  transferts de fichiers, navigateur embarqué, messagerie agent-à-agent.
-- Suivi de contexte par agent avec compaction automatique avant
-  l'épuisement de la fenêtre.
-- Files FIFO avec pause, reprise, annulation, persistance crash-safe.
-- Navigateur embarqué persistant que les agents ouvrent, inspectent,
-  contrôlent. Computer Use optionnel via pilote cua-driver.
-- Avertissement honnête : preview de développement, agents en
-  danger-full-access avec approvalPolicy never après le consentement
-  initial. À ne pas copier : cette politique d'approbation.
-Apport à Automaton : la persistance incarnée. Un coéquipier n'est pas
-une session, c'est un workspace + une conversation + un navigateur
-qui survivent.
+### OpenBot (CopilotKit)
+
+Principe : coéquipiers persistants, chacun son workspace, son ordinateur, son navigateur.
+- Workspace auto-hébergeable pour coworkers IA : donner un travail à un Bot, connecter les outils, travailler avec lui sur sa machine ou en équipe. Un Bot utilise un navigateur, travaille avec des fichiers, appelle les outils qu'on lui accorde. On peut le regarder travailler, reprendre la main pour se connecter, et lui rendre le navigateur.
+- N'importe quel agent AG-UI arrive comme coworker avec son propre canal (16 adaptateurs d'agents au gel 0.3.3 — la plateforme accueille, elle ne choisit pas le harness).
+- Chaque Bot a son ordinateur (`agent-computer`, `:4100`, en-tête `x-openbot-bot-id`) ; la frontière d'approbation et la piste d'audit sont dans la plateforme.
+- Apport à Automaton : la persistance incarnée. Un coéquipier n'est pas une session, c'est un workspace + une conversation + un navigateur qui survivent.
+- À ne pas copier : la télémétrie par défaut (sink CopilotKit → PostHog), CopilotKit Intelligence hébergée (threads + mémoire), les routines cron, le sprawl de processus (10 par bot), la copie vendue (OpenDuet 0.2.0).
+- Hors périmètre : le projet nightly-labs/openbot (un autre logiciel — ACP, cua-driver, `approvalPolicy never` ne décrivent pas ce gel et ne sont pas portés).
 
 ### OpenMuse, OpenDots, OpenDuet (CopilotKit)
 Principe : chaque agent a son ordinateur, le travail continue,
@@ -384,7 +375,7 @@ la file globale de merge. Le bridge reste le bridge.
 - Vu sur tes captures : Environments = un seul environnement, VS CODE,
   sans secrets ni variables, sans restriction de branches.
   Webhooks = aucun webhook configuré. General = master par défaut.
-- Ne pas copier : approvalPolicy never (OpenBot), le cloud Conway,
+- Ne pas copier : la télémétrie par défaut et Intelligence hébergée (OpenBot/CopilotKit), le cloud Conway,
   le rebuild git (Scion), les prototypes vendus comme production
   (SuperAgent, DSH, Cordis, OpenMuse, OpenDots, OpenDuet en preview/alpha).
 
@@ -509,7 +500,7 @@ de la pile locale. Il orchestre trois couches d'inférence :
 - https://github.com/nousresearch/hermes-agent
 - https://github.com/PrimeIntellect-ai/prime-agent
 - https://github.com/openclaw/openclaw
-- https://github.com/nightly-labs/openbot
+- https://github.com/CopilotKit/OpenBot
 - https://github.com/CopilotKit/openmuse
 - https://github.com/CopilotKit/OpenDots
 - https://github.com/CopilotKit/OpenDuet

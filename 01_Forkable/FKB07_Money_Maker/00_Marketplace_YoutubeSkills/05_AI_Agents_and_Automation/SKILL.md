@@ -23,6 +23,6 @@ Transforme l'ingénierie d'agents (CrewAI, LangGraph, OpenRig), le scraping de d
 - `https://youtu.be/AFRL9dtUHeI` : Voice AI & Audio Generation
 
 ## 3. Protocole d'Exécution RigInfinity
-1. **Isolation** : Déploiement dans un conteneur `OpenBot` sous politiques d'accès CEL strictes.
-2. **Supervision** : Intégration de la console `OpenMuse` pour reprise en main humaine instantanée.
+1. **Isolation** : Déploiement sur le computer-service natif du daemon unique (`:4100`, un ordinateur par Bot) sous politiques d'accès CEL strictes.
+2. **Supervision** : Intégration de la surface native de reprise en main (takeover, même session navigateur) pour reprise en main humaine instantanée.
 3. **Escalade** : Routage des alertes vers les espaces Google Chat de `SOB Hub`.
