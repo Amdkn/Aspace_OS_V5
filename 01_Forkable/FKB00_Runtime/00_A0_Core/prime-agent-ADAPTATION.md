@@ -26,11 +26,12 @@ F8 pas 6 consomme R2, ne le refait pas. Dépôts R10 : 005 (livraison) / 006 (me
   behind 0) — candidat de revisite, pas un gate, pas de re-gel (A4).
 - Version 0.10.2, Rust edition 2021, workspace 10 crates (pa-agent, pa-ai, pa-cli,
   pa-core, **pa-daemon**, pa-models, pa-perf, **pa-telemetry**, pa-tui, pa-types).
-- Pin V5 : `3ba6791` (bind) dans `05_Recursive_RSI` — mis à jour sur l'adapter
-  (A10) à l'intégration : gitlink → `3bac96af` (adapter
-  `3bac96af34511fde1f0d3bbf4e7bc94ad605e69a`, parent = gel) ; bind re-appliqué sur
-  `main` du fork : `2054f538b` (parent = adapter, 1 fichier `aspace-plugin.json`,
+- **Pin V5 : `3bac96a`** (retiré au pas 8) — l'adapter
+  (`3bac96af34511fde1f0d3bbf4e7bc94ad605e69a`, parent = gel), dans
+  `05_Recursive_RSI` ; bind re-appliqué sur `main` du fork :
+  `2054f538b` (parent = adapter, 1 fichier `aspace-plugin.json`,
   blob byte-identique au bind `3ba6791`, vérifié à l'API).
+- **Bind : `2054f53`** — `main` HEAD du fork (bind re-appliqué au-dessus de l'adapter).
 - Aucun manifeste V5 avant R2 — créé ici, état 2 dès le départ (A3,
   `fiber:a0:prime-agent`).
 - Master V5 au moment de l'intégration : `107006b` (vérifié à l'API, base de la

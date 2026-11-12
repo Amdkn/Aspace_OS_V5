@@ -18,6 +18,8 @@ validateur 13e)
   `src/aspace/holon-topology.ts`, `src/agent/aspace-holon-tools.ts` et les
   ajouts `src/heartbeat/tasks.ts` (40 lignes) — code A'Space sur `main`,
   non touché par l'adapter, qui part en natif via Ryan à ce pas.
+- **Pin V5 : `7cdaa00`** (retiré au pas 8) — l'adapter (`7cdaa00fb7464046dcb2016896f48f60b5426a8b`).
+- **Bind : `9728a0f`** — `main` HEAD du fork (bind re-appliqué au-dessus de l'adapter).
 - **Vérifié au fichier :** clone local `~/workspace/automaton-repo`,
   216 fichiers, HEAD = gel, arbre propre avant adaptation.
 - **Tout commit amont ultérieur exige un amendement de design**, jamais un

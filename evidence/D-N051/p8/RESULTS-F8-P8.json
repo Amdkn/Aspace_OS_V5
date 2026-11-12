@@ -1,0 +1,408 @@
+{
+ "pas": 8,
+ "modules": [
+  "cordis",
+  "automaton",
+  "pi",
+  "infinity",
+  "openrig",
+  "agent-zero",
+  "prime-agent",
+  "openbot",
+  "openmuse",
+  "OpenDots",
+  "OpenDuet"
+ ],
+ "base": "0b16b3a",
+ "merge_riginfinity": "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
+ "checks": {
+  "H-P8-3": {
+   "status": "PASS",
+   "detail": "H-P7-1-PIN 7/7 re-couru a l'API avant tout retrait : cordis pin=a40cc74 ancetre-du-main(ahead 2/0) contient-adapter(identical 0/0) pin!=gel ; automaton pin=7cdaa00 ancetre-du-main(ahead 1/0) contient-adapter(identical 0/0) pin!=gel ; pi pin=13be830 ancetre-du-main(ahead 1/0) contient-adapter(identical 0/0) pin!=gel ; infinity pin=007409e ancetre-du-main(ahead 1/0) contient-adapter(identical 0/0) pin!=gel ; openrig pin=649376c ancetre-du-main(ahead 1/0) contient-adapter(ahead 2/0) pin!=gel ; prime-agent pin=3bac96a ancetre-du-main(ahead 1/0) contient-adapter(identical 0/0) pin!=gel ; openbot pin=6e62238 ancetre-du-main(identical 0/0) contient-adapter(ahead 1/0) pin!=gel ; cordis gitlink V5 @0b16b3a = a40cc74 (pin a40cc74) ; automaton gitlink V5 @0b16b3a = 7cdaa00 (pin 7cdaa00) ; pi gitlink V5 @0b16b3a = 13be830 (pin 13be830) ; infinity gitlink V5 @0b16b3a = 007409e (pin 007409e) ; openrig gitlink V5 @0b16b3a = 649376c (pin 649376c) ; prime-agent gitlink V5 @0b16b3a = 3bac96a (pin 3bac96a) ; openbot gitlink V5 @0b16b3a = 6e62238 (pin 6e62238)"
+  },
+  "H-P8-1": {
+   "status": "PASS",
+   "detail": "vrai merge 95e95f9 (2 parents 11a82ba + 9050a1f, tete aspace-v5-native) ; cargo test re-couru sur le merge : 105/105, 0 echec, EXIT 0 (lib 70 + 5 + 7 + 8 + 4 + 6 + 1 + 4) ; clippy -D warnings EXIT 0 ; fmt EXIT 0 ; refine_available() avec preuve (bots.rs + bots_proof 7/7 + pty_proof 1/1) ; arbre natif 46 fichiers dont 5 prime* ; gitlink V5 re-pine sur 95e95f9 (index)"
+  },
+  "H-P8-2": {
+   "status": "PASS",
+   "detail": "LICENSE a la racine de V5, 11 338 o, diff vs LICENSE RigInfinity = 1 seule ligne (Appendix : Copyright 2026 A'space)"
+  },
+  "H-P8-4": {
+   "status": "PASS",
+   "detail": "fibre herdr-core retiree du superviseur (commentaire de retrait consigne) ; gitlink 14a3772 retire de .gitmodules ; socket /tmp/herdr-core.sock absent (muet) ; 0 processus hc/herdr sur la machine ; test PTY pty_proof.rs 1/1 vert (session PTY native, commande echo pas8-pty-ok avec recu)"
+  },
+  "H-P8-5": {
+   "status": "PASS",
+   "detail": "liste fermee §D14 coupee : fibre superviseur + 3 entrees clone-forkables + 3 entrees matrice sync + 3 branches mutate-and-push-forks + 1 chemin mount-fractal + 1 phrase 02_Factory/README ; survivants verifies : aucune reference d'execution restante ; extension pi compilee sans le gitlink (tsc --strict EXIT 0, imports npm seuls, log logs-pi-ext-tsc.log)"
+  },
+  "H-P8-6": {
+   "status": "PASS",
+   "detail": "fn main unique dans le natif (1) ; daemon lance et compte live : 1 processus riginfinity-daemon, 0 hc ; log 'infinity-daemon ready' ; strace re-couru sur le merge : 0 connect(), 0 non-loopback"
+  },
+  "H-P8-7": {
+   "status": "PARTIEL",
+   "detail": "smoke du harnais : daemon lance (H-P8-6) + cycle Intake -> Eveil -> Rig -> Resolution -> Validation prouve en suite (runtime_cycle_with_h1_over_a_real_gateway_stub vert, oui) + PTY 1/1, sans les 11 d'origine (.gitmodules 106, gitlinks retires) ; cycle COMPLET sur machine reelle (Alpha/PC) = SUIVI du apres le merge (§D9–D10)"
+  },
+  "H-P8-8": {
+   "status": "PASS",
+   "detail": "manifeste a jour dans le pas : pin 95e95f9, 46 fichiers (26 src / 7 tests, 9 203 + 2 082 lignes), suite 105/105, ports D-N054 SC-2 + pas 7 + pas 8, single_daemon PROUVE (H-P8-6), prime_agent_non_merge RESOLU, prime-agent raye de restant_a_integrer (4 dettes restantes), state 2 (natif, §D1)"
+  },
+  "H-P8-9": {
+   "status": "PASS",
+   "detail": "registre : ligne 89 corrigee (pas 6 CLOSE 789, pas 7 CLOSE 914, pas 8 en cours) ; ligne 90 compteurs 0/0/11/0, segment pas 8 consigne, cordis corrige a40cc74 ; 0 occurrence 'Pin (bind)' dans les 11 fiches (grep : 'vide')"
+  },
+  "H-P8-10": {
+   "status": "PASS",
+   "detail": "H-P8-pi nommee et consignee : pi en etat 3 SOUS CONDITION du vert de la Phase D du pas 2 (patron H-P3-7) ; recu de suivi du quand la Phase D devient verte (§D5) ; retrait du pointeur pi, coupure des references, smoke sans l'original et compilation de l'extension (tsc strict EXIT 0) inconditionnels"
+  },
+  "H-P8-11": {
+   "status": "QUALIFIE",
+   "detail": "H-F8-9 QUALIFIE (patron p5) : 0 appel sortant (strace 0 connect), 0 secret lu, 0 credit provider ; plafonds 1 %/5 %/20 % affirmes non mesurables depuis la factory ; mesure a la comptabilite fournisseur restant due en principe (§D12)"
+  },
+  "H-F8-1": {
+   "status": "PASS",
+   "detail": ".gitmodules 114 -> 106 ; les 8 entrees nommees absentes (.gitmodules + index git : 98 gitlinks restants) ; pointeur RigInfinity present et re-pine 95e95f9"
+  },
+  "H-F8-2": {
+   "status": "PARTIEL",
+   "detail": "voir H-P8-7 (smoke PARTIEL, cycle complet en suivi machine reelle)"
+  },
+  "H-F8-3": {
+   "status": "PARTIEL",
+   "detail": "incorporation : (a) fonction native (suite 105/105) ; (b) pointeurs retires (H-F8-1) ; (c) smoke sans les originaux (H-P8-7 PARTIEL) ; (d) validation 13e A RENDRE au jugement du pas 8"
+  },
+  "H-F8-4": {
+   "status": "PASS",
+   "detail": "voir H-P8-6 (fn main unique + comptage live : 1 daemon, 0 hc)"
+  },
+  "H-F8-5": {
+   "status": "PASS",
+   "detail": "presence par heartbeat, pas de cron : aucune crate cron dans Cargo.lock ; aucun identifiant CronExpressionParser dans src/ (les mentions 'cron' restantes sont des commentaires/tests d'abandon et de refus) ; tests de refus verts dans la suite 105/105 (cron_is_refused_by_the_spec, routine_in_job_loop_proved_by_receipt_and_cron_refused)"
+  },
+  "H-F8-8": {
+   "status": "PARTIEL",
+   "detail": ".gitmodules : 0 des 11 pointeurs ; LICENSE a la racine ; manifeste a jour ; les 11 en etat 3 = validation 13e A RENDRE (pi sous condition H-P8-pi) ; recu R10 du apres le jugement"
+  },
+  "H-F8-9": {
+   "status": "QUALIFIE",
+   "detail": "voir H-P8-11 (patron p5)"
+  },
+  "H-M1-cordis": {
+   "status": "PASS",
+   "detail": "pin a40cc74 = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-cordis": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-cordis-adapter diffère) ; fiche consigne l'adapter (a40cc74) ; aucun paquet amont modifié"
+  },
+  "H-M3-cordis": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 3/3 verts (vitest tests/smoke.spec.ts, log logs-adapter-cordis3.log) ; suite complète : cite du pas 0 : harnais 9/9 (reçu G-20261110-007)"
+  },
+  "H-M4-cordis": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-cordis": {
+   "status": "PASS",
+   "detail": "manifeste cordis.manifest.json, id fiber:a0:cordis, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-cordis": {
+   "status": "PASS",
+   "detail": "aspace-cordis-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-cordis": {
+   "status": "PASS",
+   "detail": "fiche cordis-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-automaton": {
+   "status": "PASS",
+   "detail": "pin 7cdaa00 = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-automaton": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-automaton-adapter diffère) ; fiche consigne l'adapter (7cdaa00) ; aucun paquet amont modifié"
+  },
+  "H-M3-automaton": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 21/21 verts (bun smoke_test.ts (runner TS ; canonique npx tsx, meme checks), log logs-adapter-automaton-bun.log) ; suite complète : cite du pas 1 : suite 1 646/0/1, H-M3 ROUGE réserve js-tiktoken (jugement 482)"
+  },
+  "H-M4-automaton": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-automaton": {
+   "status": "PASS",
+   "detail": "manifeste automaton.manifest.json, id fiber:a0:automaton, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-automaton": {
+   "status": "PASS",
+   "detail": "aspace-automaton-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-automaton": {
+   "status": "PASS",
+   "detail": "fiche automaton-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-pi": {
+   "status": "PASS",
+   "detail": "pin 13be830 = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-pi": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-pi-adapter diffère) ; fiche consigne l'adapter (13be830) ; aucun paquet amont modifié"
+  },
+  "H-M3-pi": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 45/45 verts (node --experimental-strip-types smoke_test.ts, log logs-adapter-pi.log) ; suite complète : cite du pas 2 : suite durable 4 431 passés / 9 échecs qualifiés environnementaux pré-existants au gel"
+  },
+  "H-M4-pi": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-pi": {
+   "status": "PASS",
+   "detail": "manifeste pi.manifest.json, id fiber:a0:pi, levels.current = 1 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-pi": {
+   "status": "PASS",
+   "detail": "aspace-pi-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-pi": {
+   "status": "PASS",
+   "detail": "fiche pi-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-infinity": {
+   "status": "PASS",
+   "detail": "pin 007409e = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-infinity": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-infinity-adapter diffère) ; fiche consigne l'adapter (007409e) ; aucun paquet amont modifié"
+  },
+  "H-M3-infinity": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 13/13 verts (cargo test aspace-infinity-adapter (lib 4 + smoke 3 + mcp_rap_proof 6), log logs-adapter-infinity.log) ; suite complète : cite du pas 3 : cargo test --all-targets 385 passés / 42 échecs ROUGE QUALIFIÉ (0 imputable à l'adapter)"
+  },
+  "H-M4-infinity": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-infinity": {
+   "status": "PASS",
+   "detail": "manifeste infinity.manifest.json, id fiber:a0:infinity, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-infinity": {
+   "status": "PASS",
+   "detail": "aspace-infinity-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-infinity": {
+   "status": "PASS",
+   "detail": "fiche infinity-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-openrig": {
+   "status": "PASS",
+   "detail": "pin 649376c = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-openrig": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-openrig-adapter diffère) ; fiche consigne l'adapter (649376c) ; aucun paquet amont modifié"
+  },
+  "H-M3-openrig": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 61/61 verts (node --experimental-strip-types smoke_test.ts (branche main), tsc EXIT 0, log logs-adapter-openrig2.log) ; suite complète : cite du pas 4 : test:repo 334 (333 pass, 0 fail, 1 skipped) ; cli/tui qualifiés, 0 imputable à l'adapter"
+  },
+  "H-M4-openrig": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-openrig": {
+   "status": "PASS",
+   "detail": "manifeste openrig.manifest.json, id fiber:a0:openrig, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-openrig": {
+   "status": "PASS",
+   "detail": "aspace-openrig-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-openrig": {
+   "status": "PASS",
+   "detail": "fiche openrig-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-agent-zero": {
+   "status": "PASS",
+   "detail": "pin = 'retiré au pas 5' (pointeur déjà retiré, fiche corrigée C2)"
+  },
+  "H-M2-agent-zero": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-agent-zero-adapter diffère) ; fiche consigne l'adapter (voir fiche) ; aucun paquet amont modifié"
+  },
+  "H-M3-agent-zero": {
+   "status": "QUALIFIE",
+   "detail": "petit check adapter cité du pas 5 (suites re-courues alors, verts) ; suite complète : cite du pas 5 : suite adapter 36/36 ; suite propre non exécutable sur cette VM (litellm absent, R-A1)"
+  },
+  "H-M4-agent-zero": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-agent-zero": {
+   "status": "PASS",
+   "detail": "manifeste agent-zero.manifest.json, id fiber:a0:agent-zero, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-agent-zero": {
+   "status": "PASS",
+   "detail": "aspace-agent-zero-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-agent-zero": {
+   "status": "PASS",
+   "detail": "fiche agent-zero-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-prime-agent": {
+   "status": "PASS",
+   "detail": "pin 3bac96a = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-prime-agent": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-prime-agent-adapter diffère) ; fiche consigne l'adapter (3bac96a) ; aucun paquet amont modifié"
+  },
+  "H-M3-prime-agent": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 18/18 verts (cargo test aspace-prime-agent-adapter (lib 12 + smoke 5 + guard 1), fmt EXIT 0, log logs-adapter-prime-agent.log) ; suite complète : cite du pas 6 : suite propre au fork non re-courue en entier (R-A2)"
+  },
+  "H-M4-prime-agent": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-prime-agent": {
+   "status": "PASS",
+   "detail": "manifeste prime-agent.manifest.json, id fiber:a0:prime-agent, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-prime-agent": {
+   "status": "PASS",
+   "detail": "aspace-prime-agent-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-prime-agent": {
+   "status": "PASS",
+   "detail": "fiche prime-agent-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-openbot": {
+   "status": "PASS",
+   "detail": "pin 6e62238 = gitlink V5 @0b16b3a, ancetre du main HEAD, contient l'adapter, != gel (H-P8-3)"
+  },
+  "H-M2-openbot": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-openbot-adapter diffère) ; fiche consigne l'adapter (6e62238) ; aucun paquet amont modifié"
+  },
+  "H-M3-openbot": {
+   "status": "PASS",
+   "detail": "petit check adapter re-couru au pas 8 : 9/9 verts (bun test tests/adapter.checks.ts, log logs-adapter-openbot.log) ; suite complète : cite du pas 7 : bun test 10 891 pass / 345 fail / 285 errors ROUGE QUALIFIÉ (0 imputable à l'adapter)"
+  },
+  "H-M4-openbot": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-openbot": {
+   "status": "PASS",
+   "detail": "manifeste openbot.manifest.json, id fiber:a0:openbot, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-openbot": {
+   "status": "PASS",
+   "detail": "aspace-openbot-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-openbot": {
+   "status": "PASS",
+   "detail": "fiche openbot-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-openmuse": {
+   "status": "PASS",
+   "detail": "pin = 'retiré au pas 7' (pointeur déjà retiré, fiche corrigée C2)"
+  },
+  "H-M2-openmuse": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-openmuse-adapter diffère) ; fiche consigne l'adapter (voir fiche) ; aucun paquet amont modifié"
+  },
+  "H-M3-openmuse": {
+   "status": "QUALIFIE",
+   "detail": "petit check adapter cité du pas 7 (suites re-courues alors, verts) ; suite complète : cite du pas 7 : adapter 8/8 ; fork node --test 499 pass, 3 fichiers en échec ROUGE QUALIFIÉ"
+  },
+  "H-M4-openmuse": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-openmuse": {
+   "status": "PASS",
+   "detail": "manifeste openmuse.manifest.json, id fiber:a0:openmuse, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-openmuse": {
+   "status": "PASS",
+   "detail": "aspace-openmuse-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-openmuse": {
+   "status": "PASS",
+   "detail": "fiche openmuse-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-OpenDots": {
+   "status": "PASS",
+   "detail": "pin = 'retiré au pas 7' (pointeur déjà retiré, fiche corrigée C2)"
+  },
+  "H-M2-OpenDots": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-OpenDots-adapter diffère) ; fiche consigne l'adapter (voir fiche) ; aucun paquet amont modifié"
+  },
+  "H-M3-OpenDots": {
+   "status": "QUALIFIE",
+   "detail": "petit check adapter cité du pas 7 (suites re-courues alors, verts) ; suite complète : cite du pas 7 : adapter 8/8 ; fork vitest 340/351 ROUGE QUALIFIÉ"
+  },
+  "H-M4-OpenDots": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-OpenDots": {
+   "status": "PASS",
+   "detail": "manifeste OpenDots.manifest.json, id fiber:a0:opendots, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-OpenDots": {
+   "status": "PASS",
+   "detail": "aspace-OpenDots-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-OpenDots": {
+   "status": "PASS",
+   "detail": "fiche OpenDots-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "H-M1-OpenDuet": {
+   "status": "PASS",
+   "detail": "pin = 'retiré au pas 7' (pointeur déjà retiré, fiche corrigée C2)"
+  },
+  "H-M2-OpenDuet": {
+   "status": "PASS",
+   "detail": "diff gel...pin relu et cité du pas d'adaptation (seul aspace-OpenDuet-adapter diffère) ; fiche consigne l'adapter (voir fiche) ; aucun paquet amont modifié"
+  },
+  "H-M3-OpenDuet": {
+   "status": "QUALIFIE",
+   "detail": "petit check adapter cité du pas 7 (suites re-courues alors, verts) ; suite complète : cite du pas 7 : adapter 9/9 ; eval triage rules-only 12/62 décidées 0 wrong"
+  },
+  "H-M4-OpenDuet": {
+   "status": "PASS",
+   "detail": "audit télémétrie versionné (présent) ; strace natif re-couru au pas 8 : 0 connect(), 0 non-loopback"
+  },
+  "H-M5-OpenDuet": {
+   "status": "PASS",
+   "detail": "manifeste OpenDuet.manifest.json, id fiber:a0:openduet, levels.current = 2 (2 -> 3 au jugement ; pi 1 -> 3 sous condition H-P8-pi)"
+  },
+  "H-M6-OpenDuet": {
+   "status": "PASS",
+   "detail": "aspace-OpenDuet-adapter seul code A'Space du fork ; fiche : section divergence remplie, propriétaire cœur Buzz"
+  },
+  "H-M7-OpenDuet": {
+   "status": "PASS",
+   "detail": "fiche OpenDuet-ADAPTATION.md versionnée, corrigée C2 ('Pin V5' + 'Bind' distincts, 0 occurrence 'Pin (bind)')"
+  },
+  "COMPTEUR-F8": {
+   "status": "PASS",
+   "detail": "0/0/11/0 visés au registre ligne 90 (0 état 0, 0 état 1, 11 état 2, 0 état 3 — état 3 effectif au jugement, pi sous condition H-P8-pi) ; dérive amont 774 commits consignée comme candidats de revisite, jamais suivie (§D15)"
+  },
+  "COMPTEUR-D-N053": {
+   "status": "PASS",
+   "detail": "25 -> 3 INCHANGÉ (herdr, herdr-core, orca en état 0, registre ligne 148) ; le retrait du gitlink herdr-core est un acte F8 (daemon), pas un développement D-N053 (§D14)"
+  }
+ }
+}

@@ -104,16 +104,8 @@ class CordisAutomatonDaemonSupervisor:
                 state="DORMANT_FIBER",
                 revertible_cleanup_steps=["snapshot_continual_harness", "discard_goldfish_context"],
             ),
-            "fiber:ade:herdr-core-pty": ManagedDaemonFiber(
-                fiber_id="fiber:ade:herdr-core-pty",
-                submodule_path="01_Forkable/FKB00_Runtime/04_ADE_OpenRig/herdr-core",
-                native_daemon_entry="src/main.rs",
-                language_runtime="rust",
-                assigned_port_or_socket="unix:///tmp/herdr-core.sock",
-                state="LEASED_ACTIVE",
-                active_holon_borrower="A1-MORTY",
-                revertible_cleanup_steps=["detach_pty_panes", "save_terminal_scrollback"],
-            ),
+            # F8 pas 8 : fibre herdr-core retiree — daemon unique natif ;
+            # le module herdr-core (D-N053 F1) est intact, seul le processus hc est retire.
             "fiber:core:dsh-cordis": ManagedDaemonFiber(
                 fiber_id="fiber:core:dsh-cordis",
                 submodule_path="01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness",

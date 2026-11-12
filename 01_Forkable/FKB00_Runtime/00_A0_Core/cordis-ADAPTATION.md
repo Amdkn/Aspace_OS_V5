@@ -9,6 +9,8 @@
 
 - **Fork :** `Amdkn/cordis` (parent `cordiverse/cordis`, MIT, branche `main`).
 - **Gel : `b38ef58`** — « feat(hmr): invalidate resolution caches and package manifests (#298) », 2026-11-09.
+- **Pin V5 : `a40cc74`** (retiré au pas 8) — l'adapter, parent de `6aab659` (mise en forme seule) ; le pin réel, corrigé au pas 8 (le registre nommait `6aab659`, §D6).
+- **Bind : `726291d`** — `main` HEAD du fork (bind re-appliqué au-dessus de l'adapter).
 - **Reprise #298 :** diff relu avant application (26 fichiers, +2741/−516, un seul commit). Réécriture HMR : runtime propre (`hmr/src/runtime/` — invalidation des caches de résolution et des manifests), README mécanisme transactionnel ; suppression du paquet `loader-utils` (absorbé par `loader/src/internal.ts` + `hmr/src/runtime/`) ; `loader` importe désormais depuis son propre `./internal.ts` ; tests HMR réécrits.
 - **Correction de prémisse consignée :** le design porte « 11 paquets » (inventaire à #297). Au gel `b38ef58`, il reste **10 paquets** — `loader-utils` n'existe plus. Le manifeste liste les 10 paquets existants au gel. Porté au jugement du 13e.
 - **Tout commit amont ultérieur exige un amendement de design**, jamais un fast-forward silencieux (D1).

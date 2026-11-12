@@ -25,11 +25,15 @@ re-appliqué par le parent à l'intégration) — jugement 13e requis**
   gel avant adaptation, arbre propre. `npm ci --ignore-scripts`
   terminé (444 paquets, 53 s, `node_modules` 271 Mo) ; le monorepo
   utilise **npm workspaces**.
-- **Pin (bind) : `adafb0d`**
+- **Pin V5 : `649376c`** (retiré au pas 8) — l'adapter `b71bf87` + 2
+  commits de lignée (13 fichiers A'Space seuls) ; le pin réel, corrigé
+  au pas 8 (la fiche nommait le bind `adafb0d` comme pin).
+- **Bind : `89f49c9`** — `main` HEAD du fork (bind re-appliqué
+  au-dessus de l'adapter). Le bind d'origine `adafb0d`
   (`adafb0d16a83dd557c524bbe9d19c9a11e188f15`, 2026-11-07T22:38:15-05:00,
   « feat(aspace-v5): bind openrig as Cordis Fiber (4L) to A0 EGM Core »)
   — 2 fichiers : `aspace-plugin.json` (+23) et
-  `src/lineage_spawner.ts` (+6). Parent du pin : `781b5fb`
+  `src/lineage_spawner.ts` (+6). Parent du pin d'origine : `781b5fb`
   (2026-11-05, « docs(capability-map): teach what 0.7.8 added and drop
   three sentences it made false (#2568) »).
 - **Dérive (D1) :** gel **226 commits derrière l'amont** (amont main

@@ -17,9 +17,7 @@ $SubmoduleMatrix = @(
     @{ Upstream = "agent0ai/a0-plugins";          Target = "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins" },
     @{ Upstream = "agent0ai/spynel";              Target = "01_Forkable/FKB00_Runtime/00_A0_Core/spynel" },
     @{ Upstream = "agent0ai/tuxee";               Target = "01_Forkable/FKB00_Runtime/00_A0_Core/tuxee" },
-    @{ Upstream = "cordiverse/cordis";            Target = "01_Forkable/FKB00_Runtime/00_A0_Core/cordis" },
     @{ Upstream = "deepseek-ai/deepseek-harness"; Target = "01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness" },
-    @{ Upstream = "earendil-works/pi";            Target = "01_Forkable/FKB00_Runtime/00_A0_Core/pi" },
 
     # --- PÔLE 03_3DWORLDS : PONT SPATIAL AGENT ZERO ---
     @{ Upstream = "agent0ai/space-agent";         Target = "01_Forkable/FKB03_3DWorlds/space-agent" },
@@ -36,7 +34,6 @@ $SubmoduleMatrix = @(
     @{ Upstream = "nousresearch/hermes-agent";    Target = "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/hermes-agent" },
 
     # --- PÔLE 05 : MOTEURS DE RÉCURSIVITÉ & AUTO-AMÉLIORATION (3 HORIZONS) ---
-    @{ Upstream = "PrimeIntellect-ai/prime-agent"; Target = "01_Forkable/FKB00_Runtime/05_Recursive_RSI/prime-agent" },
     @{ Upstream = "ashutoshsinghpr7/wikiskill";    Target = "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill" },
     @{ Upstream = "google/adk-recipes";            Target = "01_Forkable/FKB00_Runtime/05_Recursive_RSI/adk-recipes" },
     @{ Upstream = "google-research/rrsi";          Target = "01_Forkable/FKB00_Runtime/05_Recursive_RSI/rrsi" },

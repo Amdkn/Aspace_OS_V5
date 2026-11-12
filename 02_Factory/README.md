@@ -19,7 +19,7 @@ Ce répertoire contient l'usine logicielle autonome d'**A'Space OS V5**, organis
 ## Architecture par Catégories (`01` à `07`)
 
 ### 1. [`01_Kernel_Gates/`](./01_Kernel_Gates) — Hyperviseur de Daemons (`Cordis × Automaton`) & Gates Noyau
-* [`daemon_supervisor_cordis.py`](./01_Kernel_Gates/daemon_supervisor_cordis.py) — Hyperviseur unique résolvant le *Daemon Sprawl* : `Cordis` en Daemon Maître (`PID 1`), `Automaton` en Runtime de baux, et tous les sous-daemons (`RigInfinity`, `herdr-core`, `dsh`, `openclaw`, `agent-zero`) gérés comme Fibers paresseuses avec emprunt exclusif de style Rust (`borrow_fiber_rust_style`) et nettoyage réversible (`release_and_dispose_fiber`).
+* [`daemon_supervisor_cordis.py`](./01_Kernel_Gates/daemon_supervisor_cordis.py) — Hyperviseur unique résolvant le *Daemon Sprawl* : `Cordis` en Daemon Maître (`PID 1`), `Automaton` en Runtime de baux, et tous les sous-daemons (`RigInfinity`, `dsh`, `openclaw`, `agent-zero`) gérés comme Fibers paresseuses avec emprunt exclusif de style Rust (`borrow_fiber_rust_style`) et nettoyage réversible (`release_and_dispose_fiber`).
 
 ### 2. [`02_Holons_578_QualityControl/`](./02_Holons_578_QualityControl) — Standard Quality Control des 578 Holons (`OpenRig Demo × Rust`)
 * [`openrig_demo_qc_578.py`](./02_Holons_578_QualityControl/openrig_demo_qc_578.py) — Applique la méthodologie Quality Control des agents Demo d'`OpenRig` et le déterminisme algorithmique de style Rust (`RigInfinityQualityContract`, `FencingToken`, `context_pack_sha256`, `leak_guard`) aux 578 Holons d'`Areas OS`.
