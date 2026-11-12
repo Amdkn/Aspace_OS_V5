@@ -96,7 +96,7 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 - **Déjà existant :** fiches modèles dans `02_PredictiveWargame_MachineLearning/models/`, moteurs natifs (`triptych_autogluon_engine.py`, `wargame_tabular_engine.py`, `wargame_business_launch_auditor.py`), registre HF (`HF-SOVEREIGN-INDEX.md`).
 - **Preuve attendue :** une prévision validée sur données écartées (hold-out), jamais sur les données d'entraînement.
 - **État :** proposée
-- **Mesures :** 7 modules ML en état 1 (pas A, D-N053) ; 4 modules MasterSpec en état 1 (pas C) ; C (F9) : 4
+- **Mesures :** 7 modules ML en état 1 (pas A, D-N053) ; 4 modules MasterSpec en état 1 (pas C) ; 2 modules ADE en état 1 (pas F1) ; C (F9) : 4
 
 ## F10 — Catalogue de skills unique (FKB08)
 
@@ -145,7 +145,7 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 
 ## Adaptations (D-N053 — Runtime, §D16)
 
-**Compteur d'état 0 du Runtime : 25 → 3 (pas A + F8 pas 3 + F8 pas 5 + F8 pas 4 + F8 pas 6 + pas B + pas C + F8 pas 7).** 7 modules ML adaptés (état 0 → 1) ; infinity adapté + fusionné par F8 pas 3 (état 0 → 2) ; agent-zero adapté + fusionné par F8 pas 5 (état 0 → 2) ; openrig adapté + fusionné par F8 pas 4 (état 0 → 2) ; prime-agent adapté + fusionné par F8 pas 6 (état 0 → 2) ; les 4 bots adaptés + fusionnés par F8 pas 7 (état 0 → 2 : openbot, openmuse, OpenDots, OpenDuet) ; 3 modules Core adaptés par le pas B (état 0 → 1) ; 4 modules MasterSpec adaptés par le pas C (état 0 → 1) ; 3 restent en état 0 (herdr, herdr-core, orca). Mesuré au registre, pas déclaré (H-A8).
+**Compteur d'état 0 du Runtime : 25 → 1 (pas A + F8 pas 3 + F8 pas 5 + F8 pas 4 + F8 pas 6 + pas B + pas C + F8 pas 7 + pas F1).** 7 modules ML adaptés (état 0 → 1) ; infinity adapté + fusionné par F8 pas 3 (état 0 → 2) ; agent-zero adapté + fusionné par F8 pas 5 (état 0 → 2) ; openrig adapté + fusionné par F8 pas 4 (état 0 → 2) ; prime-agent adapté + fusionné par F8 pas 6 (état 0 → 2) ; les 4 bots adaptés + fusionnés par F8 pas 7 (état 0 → 2 : openbot, openmuse, OpenDots, OpenDuet) ; 3 modules Core adaptés par le pas B (état 0 → 1) ; 4 modules MasterSpec adaptés par le pas C (état 0 → 1) ; 2 modules ADE adaptés par le pas F1 (état 0 → 1) ; 1 reste en état 0 (orca). Mesuré au registre, pas déclaré (H-A8).
 
 **États :** 0 Basique (fork Amdkn non adapté) ; 1 Adapté (fiche + adapter + manifeste, tests verts) ; 2 Vérifié (hold-outs verts + validation 13e) ; 3 Publié (état 2 + registre à jour).
 
@@ -168,8 +168,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 | tuxee | 1 | `5cad42a` | `fiber:a0:tuxee` | MIT |
 | infinity (F8 pas 3) | 2 | `007409e` | `fiber:a0:infinity` | Apache-2.0 |
 | openrig (F8 pas 4) | 2 | `649376c` | `fiber:a0:openrig` | Apache-2.0 |
-| herdr (F1) | 0 | `df9b626` | — | Apache-2.0 |
-| herdr-core (F1) | 0 | `14a3772` | — | Apache-2.0 |
+| herdr (F1) | 1 | `2387c8a` | `fiber:a0:herdr` | Apache-2.0 |
+| herdr-core (F1) | 1 | `d50ebd8` | `fiber:a0:herdr-core` | Apache-2.0 |
 | orca (F2) | 0 | `b659760` | — | MIT |
 | OpenDots (F8 pas 7) | 2 | `4051f5c` | `fiber:a0:opendots` | MIT |
 | OpenDuet (F8 pas 7) | 2 | `3a48a22` | `fiber:a0:openduet` | MIT |
@@ -182,6 +182,8 @@ Les transitions d'état des modules (0→3) y sont enregistrées comme **effets*
 **Pas B (Agent Zero, la famille) :** 3/3 adaptés (a0-plugins `fa8df85`, spynel `fa9fe41`, tuxee `5cad42a`, binds re-appliqués verbatim au-dessus, pin = commit adapter) ; agent-zero en coordination seulement (F8 pas 5, non touché) ; a0-plugins : index 235 dossiers / 232 noms résolus / 230 indexés, smoke 7/7, suite amont verte ; spynel : adapter d'orchestration complet, smoke 5/5, suite Go complète 25 ok / 3 FAIL (H-B3 non vert strict — 1 test stable pré-existant au gel + 2 tests de timing dont l'ensemble varie d'un run à l'autre, décision D-B2 attendue du coordinateur, liste exacte des tests proposés à l'exclusion dans le rapport) ; tuxee : adapter d'interface D10 (0 code de l'OS), smoke 6/6, suite Go complète 14 ok / 2 FAIL identiques au gel et sur l'adapté (H-B3 non vert strict — décision D-B2 attendue) ; H-B2 QUALIFIÉ sur spynel et tuxee (1 ligne d'index DOX ajoutée à la racine `AGENTS.md` de chaque fork, contrat DOX sans exception, porte DOX verte) ; H-B1, H-B4, H-B5, H-B6, H-B7 verts sur les 3 ; compteur 14 → 11, mesuré au registre (H-B8).
 
 **Pas C (MasterSpec, les skills) :** 4/4 adaptés (superpowers `5813de0`, elephant-goldfish-model `4f4a076`, gstack `6cb6da7`, gsd-core `adc42da`, binds re-appliqués verbatim au-dessus, pin = commit adapter) ; gitlink renommé get-shit-done → gsd-core (D-C1 option (a), nouveau fork `Amdkn/gsd-core`, ancien fork `Amdkn/get-shit-done` non touché, bind 4L `d8c51c5` créé pendant le pas) ; superpowers (canonique) : smoke 6/6, suite `npm test` 139/139 verte au gel et sur l'adapté ; elephant-goldfish-model : smoke 6/6, `pytest tests/unit` 336 passed / 2 skipped, verte ; gstack : smoke 6/6, `--quick` 726 échecs / 65 fichiers au gel, 729 / 66 sur l'adapté (H-C3 non vert strict — grappes pré-existantes environnementales, 0 imputable à l'adapter, écarts aux marges = flakiness, décision attendue du coordinateur, même posture que D-B2) ; gsd-core : smoke 6/6, suite unit 50 086 pass / 3 fail au gel, 50 087 / 2 sur l'adapté (H-C3 non vert strict — 2 échecs environnementaux identiques : #1634 umask, npm-audit 403 proxy VM ; delta = test flaky pi-package, 0 imputable à l'adapter) ; compteur 11 → 7, mesuré au registre (H-C8).
+
+**Pas F1 (ADE, herdr + herdr-core) :** 2/2 adaptés (herdr-core `d50ebd8`, herdr `2387c8a`, binds re-appliqués verbatim au-dessus — herdr-core `be144c8`, herdr `637cc7b` — pin = commit adapter) ; herdr-core : vraie crate (lib 33/35 modules pub + binaire `hc` client, pas de daemon), smoke vert, preuve client H-F1-3 (round-trip trames + JSON-RPC canal 0 contre stub local), suite 158/0/1 sur l'adapté (baseline 157/1, 1 échec timing pré-existant résolu en série) ; herdr : contrat CLI seul (patron herdr-app), smoke vert, strace 0 connect() / 0 socket() ; télémétrie zéro des deux côtés (audits versionnés, interrupteurs forcés : notes=false, version_check=false, manifest_check=false) ; gitlink herdr re-pointé sur l'adapter (`2387c8a`), gitlink herdr-core RESTE absent (acte F8 maintenu) ; H-F1-3 NON vert strict — 2 rouges pré-existants au gel, 0 imputable à l'adapter, décision attendue du coordinateur (liste exacte dans le rapport) : ghostty-vt `snapshot_is_independent_and_preserves_borrowed_fd_offset_when_supported` (FICLONERANGE → EPERM sur tmpfs /var/tmp, strace prouvé) + main.rs `herdr --bin herdr` incomplet (SIGPIPE, 3141 ok / 1 échec artefact root en série) ; compteur 3 → 1, mesuré au registre (H-F1-8).
 
 ---
 
