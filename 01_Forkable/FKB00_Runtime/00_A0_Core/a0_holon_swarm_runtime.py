@@ -10,6 +10,7 @@ Unifie en un seul cycle d'exécution :
 
 from __future__ import annotations
 import json
+import os
 import sqlite3
 import time
 from dataclasses import dataclass, asdict
@@ -123,7 +124,26 @@ class A0SovereignRuntime:
 
 
 if __name__ == "__main__":
-    runtime = A0SovereignRuntime(beth_state="GREEN", max_active_population=64)
+    import argparse
+    import signal
+    import sys
+
+    # D-N052 R5 : la démo sans argument sort aussitôt (exit 0) — elle ne
+    # suffit pas à prouver un spawn tenu par un bail. `--serve` rejoue la
+    # même démo (lease + spawn, mêmes valeurs), l'imprime en JSON, puis
+    # TIENT le bail jusqu'à son TTL ou jusqu'à SIGTERM/SIGINT (sortie 0
+    # propre). Sans argument, le comportement historique est inchangé.
+    parser = argparse.ArgumentParser(description="A0 sovereign runtime")
+    parser.add_argument("--serve", action="store_true",
+                        help="tenir le bail TTL secondes après la démo")
+    parser.add_argument("--ttl", type=int, default=300,
+                        help="bail TTL en secondes (défaut 300, §D8)")
+    parser.add_argument("--max-population", type=int, default=64,
+                        help="cap de population active (défaut 64)")
+    args = parser.parse_args()
+
+    runtime = A0SovereignRuntime(beth_state="GREEN",
+                                 max_active_population=args.max_population)
     lease = runtime.request_automaton_lease("B2.4-RD-DC", "LD01", wargame_win_prob=0.82, requested_tier=1)
     rig = runtime.spawn_openrig_descendant(
         parent_holon="A0-AMADEUS",
@@ -133,4 +153,26 @@ if __name__ == "__main__":
         harness_engine="prime-agent",
         fractal_layer="8L",
     )
-    print(json.dumps({"lease": asdict(lease), "spawned_rig": asdict(rig) if rig else None}, indent=2))
+    print(json.dumps({"lease": asdict(lease), "spawned_rig": asdict(rig) if rig else None}, indent=2), flush=True)
+    if not args.serve:
+        raise SystemExit(0)
+
+    stop = {"flag": False}
+
+    def _on_signal(signum, frame):  # noqa: ARG001
+        stop["flag"] = True
+
+    signal.signal(signal.SIGTERM, _on_signal)
+    signal.signal(signal.SIGINT, _on_signal)
+    deadline = time.monotonic() + max(0, args.ttl)
+    print(json.dumps({"serving": True, "pid": os.getpid(),
+                      "ttl_sec": args.ttl,
+                      "max_active_population": args.max_population,
+                      "worktree_path": rig.worktree_path if rig else None}),
+          flush=True)
+    while not stop["flag"] and time.monotonic() < deadline:
+        time.sleep(0.2)
+    print(json.dumps({"serving": False,
+                      "reason": "signal" if stop["flag"] else "ttl_expired",
+                      "exit": 0}), flush=True)
+    raise SystemExit(0)
