@@ -64,7 +64,7 @@ reste requis pour la montée d'état.
   fichier de checks s'appelle `adapter.checks.ts` (pas `.test.ts`)
   pour que les suites des forks ne le ramassent pas — découvert
   quand vitest a échoué 1 suite parasite sur OpenDots.
-- **Réserve R-A1 :** suite propre au fork : 10 891 pass / 345 fail / 285 errors (11 528 tests, 1 206 fichiers, 2 191 s) — 38 fichiers en échec, causes apparentes : provider modèle absent, clés Composio/Arcade absentes, garde réseau DNS, timeouts d'intégration ; comparaison complète au gel 2b5b14f EN COURS pour établir le pré-existant (§D15).
+- **Réserve R-A1 :** suite propre au fork : 10 891 pass / 345 fail / 285 errors (11 528 tests, 1 206 fichiers, 2 191 s — run sous charge : cargo + vitest + node --test en parallèle sur 1,5 CPU partagé, d'où des timeouts) ; gel 2b5b14f : 10 929 pass / 306 fail / 263 errors (11 527 tests, 792 s) ; 20 fichiers en échec communs (mêmes causes) ; 18 fichiers en échec seulement sur la tête adaptée, re-courus seuls : 362/363 passent ; production-loader-boundary passe seul des deux côtés (1/1, rc=0) — flake de charge ; triggers.test.ts échoue des deux côtés (111 vs 73 — cascade sous charge, même fichier, défauts de clé modèle). 0 échec imputable à l'adapter (l'adapter n'est importé par aucun code du fork ; bun test ne ramasse plus ses checks depuis le renommage).
 
 ## Le tri (7 portés / 5 surfaces / 22 abandonnés, total 34)
 
@@ -154,7 +154,7 @@ dans une surface portée — pas de re-gel (voir
 
 ## Divergence (dette portée par le cœur Buzz)
 
-- **R-A1** — suite propre au fork : 10 891 pass / 345 fail / 285 errors (11 528 tests, 1 206 fichiers, 2 191 s) — 38 fichiers en échec, causes apparentes : provider modèle absent, clés Composio/Arcade absentes, garde réseau DNS, timeouts d'intégration ; comparaison complète au gel 2b5b14f EN COURS pour établir le pré-existant (§D15).
+- **R-A1** — suite propre au fork : 10 891 pass / 345 fail / 285 errors (11 528 tests, 1 206 fichiers, 2 191 s — run sous charge : cargo + vitest + node --test en parallèle sur 1,5 CPU partagé, d'où des timeouts) ; gel 2b5b14f : 10 929 pass / 306 fail / 263 errors (11 527 tests, 792 s) ; 20 fichiers en échec communs (mêmes causes) ; 18 fichiers en échec seulement sur la tête adaptée, re-courus seuls : 362/363 passent ; production-loader-boundary passe seul des deux côtés (1/1, rc=0) — flake de charge ; triggers.test.ts échoue des deux côtés (111 vs 73 — cascade sous charge, même fichier, défauts de clé modèle). 0 échec imputable à l'adapter (l'adapter n'est importé par aucun code du fork ; bun test ne ramasse plus ses checks depuis le renommage).
 - **R-A2** — H-P7-6 CONDITIONNELLE au merge pas 6 pour le chemin
   `/refine` seul ; plateforme + skins + computer-service
   inconditionnels (§D9).
@@ -170,7 +170,7 @@ dans une surface portée — pas de re-gel (voir
   parent = gel ; adapter parent = bind (vérifié à l'API).
 - **H-M2 PASS** — compare gel...tête = ahead 3, behind 0,
   14 fichiers A'Space seuls (vérifié à l'API).
-- **H-M3 EN COURS (comparaison au gel en cours)** — bun test : 10 891 pass, 292 skip, 345 fail, 285 errors, 11 528 tests, 1 206 fichiers, 2 191 s — 38 fichiers en échec (dont triggers.test.ts 111 échecs en cascade) ; comparaison complète au gel 2b5b14f EN COURS (bun install + bun test, ~40 min).
+- **H-M3 ROUGE QUALIFIÉ (0 échec imputable à l'adapter)** — bun test : 10 891 pass, 292 skip, 345 fail, 285 errors, 11 528 tests, 1 206 fichiers, 2 191 s ; gel 2b5b14f : 10 929 pass, 292 skip, 306 fail, 263 errors, 11 527 tests, 1 205 fichiers, 792 s ; 20 fichiers en échec des deux côtés (mêmes causes : provider modèle absent, clés Composio/Arcade absentes, garde réseau DNS, timeouts) ; 18 fichiers en échec seulement sur la tête adaptée — re-courus seuls : 362/363 passent (le 1 restant, production-loader-boundary timeout 5 038 ms, passe seul des deux côtés, 1/1 rc=0) ; 1 fichier en échec seulement au gel (desktop cli-bundle). 0 échec imputable à l'adapter.
 - **H-M4 PASS** — audit versionné ; 5 déclencheurs tranchés ;
   0 émetteur dans le natif (R-A1 pour la suite propre, voir § Télémétrie).
 - **H-M5 PASS** — ce manifeste (`fiber:a0:openbot`).
