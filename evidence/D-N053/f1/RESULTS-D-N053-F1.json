@@ -1,0 +1,142 @@
+{
+  "passed": 32,
+  "total": 34,
+  "checks": {
+    "H-F1-1/herdr-gitlink": {
+      "pass": true,
+      "detail": "gitlink herdr 2387c8a == adapter 2387c8a"
+    },
+    "H-F1-1/herdr-core-absent": {
+      "pass": true,
+      "detail": "gitlink herdr-core absent (acte F8 maintenu), pin vit dans fiche + registre"
+    },
+    "H-F1-1/herdr-core-manifeste": {
+      "pass": true,
+      "detail": "manifeste : adapter d50ebd8, gel cd12ddd"
+    },
+    "H-F1-1/herdr-manifeste": {
+      "pass": true,
+      "detail": "manifeste : adapter 2387c8a, gel ee5bfb5"
+    },
+    "H-F1-2/herdr-core": {
+      "pass": true,
+      "detail": "fiche : amont byte-identique, adapter seul code A'Space"
+    },
+    "H-F1-2/herdr": {
+      "pass": true,
+      "detail": "fiche : amont byte-identique, adapter seul code A'Space"
+    },
+    "H-F1-3/herdr-core-baseline": {
+      "pass": true,
+      "detail": "baseline gel : {'passed': 157, 'failed': 1, 'ignored': 1}"
+    },
+    "H-F1-3/herdr-core-adapte": {
+      "pass": true,
+      "detail": "adapté brut : {'passed': 152, 'failed': 6, 'ignored': 1} (distribution parallèle) + série : {'passed': 8, 'failed': 0, 'ignored': 0} → consolidé 158/0"
+    },
+    "H-F1-3/herdr-core-preuve-client": {
+      "pass": true,
+      "detail": "round-trip trames + JSON-RPC canal 0 contre stub local (logs-smoke-adapte.log)"
+    },
+    "H-F1-3/herdr-core-smoke": {
+      "pass": true,
+      "detail": "smoke adapter vert"
+    },
+    "H-F1-3/herdr-baseline-chiffres": {
+      "pass": true,
+      "detail": "baseline gel brut (18 binaires) : {'passed': 384, 'failed': 4, 'ignored': 2} ; live_handoff série : {'passed': 24, 'failed': 0, 'ignored': 0} → net 1 : snapshot_is_independent_and_preserves_borrowed_fd_offset_when_supported"
+    },
+    "H-F1-3/herdr-baseline-verte": {
+      "pass": false,
+      "detail": "ROUGE : 1 échec ghostty-vt EPERM (FICLONERANGE, strace prouvé) + main.rs incomplet (SIGPIPE, 3141 ok / 1 échec artefact root) — décision coordinateur requise"
+    },
+    "H-F1-3/herdr-adapte-chiffres": {
+      "pass": true,
+      "detail": "adapté brut (18 binaires) : {'passed': 384, 'failed': 4, 'ignored': 2} ; live_handoff série : {'passed': 24, 'failed': 0, 'ignored': 0} → net même 1 seul échec, 0 régression"
+    },
+    "H-F1-3/herdr-adapte-verte": {
+      "pass": false,
+      "detail": "ROUGE : même 1 échec pré-existant + main.rs incomplet (SIGPIPE, binaire byte-identique) — décision coordinateur requise"
+    },
+    "H-F1-3/herdr-main-rs-diagnostic": {
+      "pass": true,
+      "detail": "main.rs : SIGPIPE baseline + adapté, 3141 ok en série, 1 échec artefact root — diagnostic consigné, rien exclu"
+    },
+    "H-F1-3/herdr-smoke": {
+      "pass": true,
+      "detail": "smoke adapter vert"
+    },
+    "H-F1-3/herdr-maintenance": {
+      "pass": true,
+      "detail": "maintenance-test Python 150 tests OK"
+    },
+    "H-F1-3/herdr-docs": {
+      "pass": true,
+      "detail": "docs-contract-test 7/7"
+    },
+    "H-F1-3/herdr-adapte-maintenance": {
+      "pass": true,
+      "detail": "adapté : maintenance 150 OK + release-workflows 5/5 + docs 7/7"
+    },
+    "H-F1-4/herdr-core-audit": {
+      "pass": true,
+      "detail": "audit 2970 o, 0 appel sortant"
+    },
+    "H-F1-4/herdr-audit": {
+      "pass": true,
+      "detail": "audit 3567 o, 0 appel sortant"
+    },
+    "H-F1-4/herdr-core-notes-off": {
+      "pass": true,
+      "detail": "notes = false forcé (fiche + preuve de protocole)"
+    },
+    "H-F1-4/herdr-switches-off": {
+      "pass": true,
+      "detail": "version_check + manifest_check = false forcés (fiche + config check)"
+    },
+    "H-F1-5/herdr-core": {
+      "pass": true,
+      "detail": "id fiber:a0:herdr-core, levels.current = 0"
+    },
+    "H-F1-5/herdr": {
+      "pass": true,
+      "detail": "id fiber:a0:herdr, levels.current = 0"
+    },
+    "H-F1-5/sans-doublon": {
+      "pass": true,
+      "detail": "ids distincts, herdr-app fiber:a0:herdr-app non confondue"
+    },
+    "H-F1-6/herdr-core-sans-daemon": {
+      "pass": true,
+      "detail": "server::serve() + hc server start exclus (fiche)"
+    },
+    "H-F1-6/couture": {
+      "pass": true,
+      "detail": "couture herdr ↔ herdr-core nommée dans les deux fiches"
+    },
+    "H-F1-6/divergence": {
+      "pass": true,
+      "detail": "section divergence remplie, propriétaire cœur Buzz nommé"
+    },
+    "H-F1-7/herdr-core": {
+      "pass": true,
+      "detail": "gel + licence + audit + divergence + socket + 31415 + triage 53"
+    },
+    "H-F1-7/herdr": {
+      "pass": true,
+      "detail": "gel + licence + audit + divergence + ghostty + 31415"
+    },
+    "H-F1-8/compteur": {
+      "pass": true,
+      "detail": "compteur 3 → 1 au registre"
+    },
+    "H-F1-8/table": {
+      "pass": true,
+      "detail": "paragraphe Pas F1 + pins adapters au registre"
+    },
+    "H-F1-8/orca-etat-0": {
+      "pass": true,
+      "detail": "orca toujours présente au registre (F2, état 0)"
+    }
+  }
+}
