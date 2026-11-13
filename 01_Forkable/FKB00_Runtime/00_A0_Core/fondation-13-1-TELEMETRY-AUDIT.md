@@ -203,3 +203,48 @@ fixtures (le `G-20261112-901` du fautif n° 5 est un identifiant de test,
 jamais consigné — le vrai reçu de livraison est `G-20261112-031` à
 l'ouverture de la PR, mission `LE1-FAB-D-N055-011` PROPOSÉE, assignation
 au dépôt).
+
+---
+
+# Audit télémétrie — fonction Mémoriser (D-N055 F1-7)
+
+**Module :** `fiber:a0:fondation-13-1` — citation de fait
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/memory.rs`,
+CLI `recall-fact`).
+**Date :** 2026-11-13 (pas F1-7). **Verdict : 0 appel sortant.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` sans téléchargement de dépendance).
+- **Appels réseau du code :** 0. Le module `memory` ne fait aucun appel
+  sortant (ni HTTP, ni DNS, ni socket). La ligne source (M2), la date de
+  la source (M3), les corroborations (M5) et le fautif planté (M6) sont
+  injectés par l'appelant — la fonction ne contacte ni le fichier local
+  ni l'API elle-même.
+- **CLI `recall-fact` :** ne lit que des fichiers locaux (`--citation`,
+  `--source`, `--corroboration`, `--fautif`) et n'écrit que sur
+  stdout/stderr. Aucun appel sortant — elle ne fait pas de recherche
+  sémantique (A-F1-7-5) : elle lit un index re-compilé et relit la source
+  au fichier. Les lectures sont nommées, comptées et tracées (1 source +
+  N corroborations + 1 fautif).
+- **Horloge :** la CLI lit l'horloge système pour l'horodatage de la
+  consignation (UTC, comme `recorded_at` du validateur R10) — la
+  validation M1–M8 elle-même ne dépend pas de l'instant (la date de la
+  citation est un fait du dossier, pas l'état courant).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub R10-OK du reçu de livraison (lecture du HEAD
+   master, de la PR, du commit tête, des check-runs) — effectuées par
+   l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (les chemins `~/MEMORY.md` et `~/side-chats/…/MEMORY.md` des
+fixtures sont des chemins de sources personnelles, pas des secrets ; les
+identifiants de test `G-20261112-901` des pas précédents ne sont pas repris
+ici — le vrai reçu de livraison est `G-20261112-034` PROPOSÉ à l'ouverture
+de la PR, mission `LE1-FAB-D-N055-013` PROPOSÉE, assignation au dépôt).
