@@ -23,6 +23,10 @@
 //! (état de vision V1–V8 — la fonction EST l'état de vision, sans
 //! L00/N2/pulses comme sessions séparées).
 //!
+//! Action — fonction Action (D-N055 F1-9) : voir le module `action`
+//! (action A1–A8 — la fonction EST l'acte, sans question de clarification
+//! préalable quand l'action est autorisée).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -49,8 +53,9 @@
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
 //! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router,
-//! Découvrir, Juger, Exécuter, Mémoriser et Vision).
+//! Découvrir, Juger, Exécuter, Mémoriser, Vision et Action).
 
+pub mod action;
 pub mod discover;
 pub mod execute;
 pub mod judge;

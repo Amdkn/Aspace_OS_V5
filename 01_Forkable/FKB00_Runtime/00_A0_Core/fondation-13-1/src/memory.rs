@@ -633,14 +633,18 @@ pub fn validate_citation(
     })
 }
 
-/// Les 11 types du journal (A-F1-8-3) : les 10 du routeur (les 7 du
+/// Les 12 types du journal (A-F1-9-3) : les 11 du routeur (les 7 du
 /// design F1-3 + `closure_pulse` légalisé A-F1-5-3 + `merge_executed`
 /// légalisé A-F1-6-4 + `fact_recalled` légalisé A-F1-7-3) + `vision_held`
 /// (11e, émis par le routeur au rendu d'un état de vision — preuve : les
 /// lectures datées + les comparaisons rejouables + les divergences
-/// portées avec statut). Même ordre que `router::EVENT_TYPES`,
-/// `fact_recalled` et `vision_held` insérés à leur place alphabétique.
-pub const JOURNAL_EVENT_TYPES: [&str; 11] = [
+/// portées avec statut) + `action_taken` (12e, émis par le routeur au
+/// rendu d'un acte — preuve : autorisation nommée + acte posé + rapport
+/// fait/échoué). Même ordre que `router::EVENT_TYPES`,
+/// `fact_recalled`, `vision_held` et `action_taken` insérés à leur place
+/// alphabétique.
+pub const JOURNAL_EVENT_TYPES: [&str; 12] = [
+    "action_taken",
     "closure_pulse",
     "correction",
     "dispatch_ack",

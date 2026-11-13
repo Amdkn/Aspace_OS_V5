@@ -272,10 +272,11 @@ fn iso_reference() {
 }
 
 #[test]
-fn onze_types_dont_vision_held() {
-    // A-F1-8-3 : la F1-8 changeset porte la liste des types du routeur
-    // à 11 (`vision_held`) ; le design F1-3 n'est pas réécrit.
-    assert_eq!(EVENT_TYPES.len(), 11);
+fn douze_types_dont_action_taken() {
+    // A-F1-9-3 : la F1-9 changeset porte la liste des types du routeur
+    // à 12 (`action_taken`) ; le design F1-3 n'est pas réécrit.
+    assert_eq!(EVENT_TYPES.len(), 12);
+    assert!(EVENT_TYPES.contains(&"action_taken"));
     assert!(EVENT_TYPES.contains(&"vision_held"));
     assert!(EVENT_TYPES.contains(&"fact_recalled"));
     assert!(EVENT_TYPES.contains(&"merge_executed"));

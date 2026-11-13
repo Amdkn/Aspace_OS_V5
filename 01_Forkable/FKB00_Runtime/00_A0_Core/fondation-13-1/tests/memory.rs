@@ -376,11 +376,12 @@ fn limite_jugement_rejete_m7() {
     assert_rejet("M7", result);
 }
 
-// --- Journal : vision_held, 11e type ---
+// --- Journal : action_taken, 12e type ---
 
 #[test]
-fn onze_types_dont_vision_held() {
-    assert_eq!(JOURNAL_EVENT_TYPES.len(), 11);
+fn douze_types_dont_action_taken() {
+    assert_eq!(JOURNAL_EVENT_TYPES.len(), 12);
+    assert!(JOURNAL_EVENT_TYPES.contains(&"action_taken"));
     assert!(JOURNAL_EVENT_TYPES.contains(&"vision_held"));
     assert!(JOURNAL_EVENT_TYPES.contains(&"fact_recalled"));
     assert!(JOURNAL_EVENT_TYPES.contains(&"closure_pulse"));

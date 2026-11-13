@@ -298,3 +298,57 @@ fixtures (le dossier fautif `vision-fautif-1.md` ne porte que des numéros
 de journal et des SHA déjà publics au registre ; le vrai reçu de livraison
 est `G-20261112-037` PROPOSÉ à l'ouverture de la PR, mission
 `LE1-FAB-D-N055-016` PROPOSÉE, assignation au dépôt).
+
+---
+
+# Audit télémétrie — fonction Action (D-N055 F1-9)
+
+**Module :** `fiber:a0:fondation-13-1` — action sans question préalable
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/action.rs`,
+CLI `take-action`).
+**Date :** 2026-11-13 (pas F1-9). **Verdict : 0 appel sortant.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` sans téléchargement de dépendance).
+- **Appels réseau du code :** 0. Le module `action` ne fait aucun appel
+  sortant (ni HTTP, ni DNS, ni socket). L'autorisation nommée (A1), l'acte,
+  le rapport et les faits du journal sont injectés par l'appelant — la
+  fonction ne contacte ni le fichier local ni l'API elle-même.
+- **CLI `take-action` :** ne lit que des fichiers locaux (`--dossier`,
+  `--journal`, `--design`, `--fautif`) et n'écrit que dans le dossier
+  d'action (`--dossier`, section `## Rendus CLI`, consignation de la
+  commande exacte, ses paramètres, son horodatage et sa sortie) et sur
+  stdout/stderr. Aucun appel sortant — elle ne fait pas de recherche
+  sémantique (A-F1-9-5) : elle relit le journal au fichier et vérifie la
+  signature du design. Les lectures sont nommées, comptées et tracées
+  (3 lectures + 1 fautif quand il est donné) : dossier d'action (bloc du
+  cas), journal-router (seq contigus, événements par dispatch_id — le
+  journal fait foi pour `judgment_rendered`, `merge_executed` et le
+  routage), design signé (la signature « SIGNÉ » y est vérifiée).
+- **0 appel en écriture d'état (O3 conservée, D-F1-9-3, A-F1-9-4) :** la
+  CLI ne gagne pas le HTTPS dans ce pas ; le seul appel en écriture
+  d'état reste celui de l'opérateur (`gh pr merge N --merge`, nommé,
+  compté, tracé E6 — patron R1 de F1-6). Lever O3 est un pas à part,
+  pas F1-9.
+- **Horloge :** la CLI lit l'horloge système pour l'horodatage du rendu
+  (UTC, comme `recorded_at` du validateur R10) — la validation A1–A8
+  elle-même ne dépend de l'instant que pour un contrôle (A1 : la date de
+  l'autorisation ne doit pas être dans le futur).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub du HEAD master et des PR ouvertes (injectées
+   à la CLI par `--pr`, avec son horodatage de lecture) — effectuées par
+   l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (les dossiers fautifs `action-fautif-*.md` ne portent que des
+numéros de journal, des SHA déjà publics au registre et des numéros de
+mission PROPOSÉS ; le journal-scénario `journal-f1-9-scenario.jsonl` est
+une fixture de test — un événement `judgment_rendered` SCÉNARIO, jamais
+consigné au journal réel).

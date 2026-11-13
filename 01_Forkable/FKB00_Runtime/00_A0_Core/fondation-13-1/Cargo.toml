@@ -2,7 +2,7 @@
 name = "fondation-13-1"
 version = "0.2.0"
 edition = "2021"
-description = "Fonctions Recevoir (F1-2), Router (F1-3), Découvrir (F1-4), Juger (F1-5), Exécuter (F1-6), Mémoriser (F1-7) et Vision (F1-8) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch, validateur de Discover, jugement de PR, exécution de merge, citation de fait et état de vision — code A'Space neuf, zéro dépendance, zéro télémétrie"
+description = "Fonctions Recevoir (F1-2), Router (F1-3), Découvrir (F1-4), Juger (F1-5), Exécuter (F1-6), Mémoriser (F1-7), Vision (F1-8) et Action (F1-9) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch, validateur de Discover, jugement de PR, exécution de merge, citation de fait, état de vision et action sans question préalable — code A'Space neuf, zéro dépendance, zéro télémétrie"
 license = "Apache-2.0"
 
 [lib]
@@ -36,6 +36,10 @@ path = "src/bin/recall-fact.rs"
 [[bin]]
 name = "hold-vision"
 path = "src/bin/hold-vision.rs"
+
+[[bin]]
+name = "take-action"
+path = "src/bin/take-action.rs"
 
 [profile.release]
 debug = false
