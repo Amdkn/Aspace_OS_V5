@@ -27,6 +27,10 @@
 //! (action A1–A8 — la fonction EST l'acte, sans question de clarification
 //! préalable quand l'action est autorisée).
 //!
+//! Rollback — fonction Rollback (D-N055 F1-10) : voir le module
+//! `rollback` (retour R1–R8 — le 1 revient à la chaîne 13 si un hold-out
+//! échoue, sans perte, au checkpoint du journal).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -53,13 +57,14 @@
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
 //! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router,
-//! Découvrir, Juger, Exécuter, Mémoriser, Vision et Action).
+//! Découvrir, Juger, Exécuter, Mémoriser, Vision, Action et Rollback).
 
 pub mod action;
 pub mod discover;
 pub mod execute;
 pub mod judge;
 pub mod memory;
+pub mod rollback;
 pub mod router;
 pub mod vision;
 

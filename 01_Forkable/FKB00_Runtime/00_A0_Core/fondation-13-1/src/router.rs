@@ -58,11 +58,12 @@ pub const DISPATCH_KEYS: [&str; 9] = [
     "type",
 ];
 
-/// Les 12 types d'événements du journal (Discover F1-3 §3, + `closure_pulse`
+/// Les 14 types d'événements du journal (Discover F1-3 §3, + `closure_pulse`
 /// légalisé A-F1-5-3, + `merge_executed` légalisé A-F1-6-4, + `fact_recalled`
 /// légalisé A-F1-7-3, + `vision_held` légalisé A-F1-8-3, + `action_taken`
-/// légalisé A-F1-9-3).
-pub const EVENT_TYPES: [&str; 12] = [
+/// légalisé A-F1-9-3, + `rollback_decided` et `rollback_executed` légalisés
+/// A-F1-10-3).
+pub const EVENT_TYPES: [&str; 14] = [
     "action_taken",
     "closure_pulse",
     "correction",
@@ -74,6 +75,8 @@ pub const EVENT_TYPES: [&str; 12] = [
     "judgment_requested",
     "merge_executed",
     "pulse",
+    "rollback_decided",
+    "rollback_executed",
     "vision_held",
 ];
 
@@ -108,6 +111,10 @@ pub struct Journal {
     pub typed: HashSet<String>,
     /// `dispatch_id` pour lesquels un `judgment_requested` est inscrit.
     pub requested: HashSet<String>,
+    /// `dispatch_id` pour lesquels un `rollback_decided` est inscrit
+    /// (A-F1-10-3 : la reprise rendue suit la décision, elle ne la
+    /// précède pas ; un retour n'est décidé qu'une fois).
+    pub decided: HashSet<String>,
     /// `event_id` déjà inscrits.
     pub event_ids: HashSet<String>,
 }
@@ -148,6 +155,9 @@ impl Journal {
                 }
                 "judgment_requested" => {
                     journal.requested.insert(dispatch_id);
+                }
+                "rollback_decided" => {
+                    journal.decided.insert(dispatch_id);
                 }
                 _ => {}
             }
@@ -460,7 +470,7 @@ pub fn validate_dispatch(
             "R8",
             "type",
             &typ,
-            "type inconnu — l'un des 12 types du journal (Discover F1-3 §3, + `closure_pulse` A-F1-5-3, + `merge_executed` A-F1-6-4, + `fact_recalled` A-F1-7-3, + `vision_held` A-F1-8-3, + `action_taken` A-F1-9-3)",
+            "type inconnu — l'un des 14 types du journal (Discover F1-3 §3, + `closure_pulse` A-F1-5-3, + `merge_executed` A-F1-6-4, + `fact_recalled` A-F1-7-3, + `vision_held` A-F1-8-3, + `action_taken` A-F1-9-3, + `rollback_decided` et `rollback_executed` A-F1-10-3)",
         ));
     }
     match typ.as_str() {
@@ -496,6 +506,26 @@ pub fn validate_dispatch(
                     "dispatch_id",
                     &dispatch_id,
                     "aucun judgment_requested pour ce dispatch_id — le jugement rendu suit la demande, il ne la précède pas",
+                ));
+            }
+        }
+        "rollback_decided" => {
+            if journal.decided.contains(&dispatch_id) {
+                return Err(rejection(
+                    "R8",
+                    "dispatch_id",
+                    &dispatch_id,
+                    "un retour n'est décidé qu'une fois — un second rollback_decided pour ce dispatch_id est une seconde décision pour un seul retour",
+                ));
+            }
+        }
+        "rollback_executed" => {
+            if !journal.decided.contains(&dispatch_id) {
+                return Err(rejection(
+                    "R8",
+                    "dispatch_id",
+                    &dispatch_id,
+                    "aucun rollback_decided pour ce dispatch_id — la reprise rendue suit la décision, elle ne la précède pas",
                 ));
             }
         }

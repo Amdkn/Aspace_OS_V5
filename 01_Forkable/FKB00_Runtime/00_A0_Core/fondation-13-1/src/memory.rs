@@ -633,17 +633,22 @@ pub fn validate_citation(
     })
 }
 
-/// Les 12 types du journal (A-F1-9-3) : les 11 du routeur (les 7 du
+/// Les 14 types du journal (A-F1-10-3) : les 12 du routeur (les 7 du
 /// design F1-3 + `closure_pulse` légalisé A-F1-5-3 + `merge_executed`
 /// légalisé A-F1-6-4 + `fact_recalled` légalisé A-F1-7-3) + `vision_held`
 /// (11e, émis par le routeur au rendu d'un état de vision — preuve : les
 /// lectures datées + les comparaisons rejouables + les divergences
 /// portées avec statut) + `action_taken` (12e, émis par le routeur au
 /// rendu d'un acte — preuve : autorisation nommée + acte posé + rapport
-/// fait/échoué). Même ordre que `router::EVENT_TYPES`,
-/// `fact_recalled`, `vision_held` et `action_taken` insérés à leur place
-/// alphabétique.
-pub const JOURNAL_EVENT_TYPES: [&str; 12] = [
+/// fait/échoué) + `rollback_decided` (13e, émis par le coordinateur — ou
+/// le 13e en secours — au moment de la décision ; preuve : fonction +
+/// hold-out + échec simulé nommé + repreneur + checkpoint seq + `event_id`
+/// + `at`) + `rollback_executed` (14e, émis par le routeur au rendu de la
+/// reprise ; preuve : repreneur + checkpoint + révocation + résultat de
+/// la re-preuve). Même ordre que `router::EVENT_TYPES`,
+/// `fact_recalled`, `vision_held`, `action_taken`, `rollback_decided` et
+/// `rollback_executed` insérés à leur place alphabétique.
+pub const JOURNAL_EVENT_TYPES: [&str; 14] = [
     "action_taken",
     "closure_pulse",
     "correction",
@@ -655,5 +660,7 @@ pub const JOURNAL_EVENT_TYPES: [&str; 12] = [
     "judgment_requested",
     "merge_executed",
     "pulse",
+    "rollback_decided",
+    "rollback_executed",
     "vision_held",
 ];

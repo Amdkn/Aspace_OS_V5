@@ -272,10 +272,13 @@ fn iso_reference() {
 }
 
 #[test]
-fn douze_types_dont_action_taken() {
-    // A-F1-9-3 : la F1-9 changeset porte la liste des types du routeur
-    // à 12 (`action_taken`) ; le design F1-3 n'est pas réécrit.
-    assert_eq!(EVENT_TYPES.len(), 12);
+fn quatorze_types_dont_rollback() {
+    // A-F1-10-3 : la F1-10 changeset porte la liste des types du routeur
+    // à 14 (`rollback_decided` et `rollback_executed`) ; le design F1-3
+    // n'est pas réécrit.
+    assert_eq!(EVENT_TYPES.len(), 14);
+    assert!(EVENT_TYPES.contains(&"rollback_decided"));
+    assert!(EVENT_TYPES.contains(&"rollback_executed"));
     assert!(EVENT_TYPES.contains(&"action_taken"));
     assert!(EVENT_TYPES.contains(&"vision_held"));
     assert!(EVENT_TYPES.contains(&"fact_recalled"));
@@ -283,4 +286,53 @@ fn douze_types_dont_action_taken() {
     assert!(EVENT_TYPES.contains(&"closure_pulse"));
     assert!(EVENT_TYPES.contains(&"judgment_rendered"));
     assert!(!EVENT_TYPES.contains(&"type_inconnu"));
+}
+
+// --- Rollback (F1-10, A-F1-10-3) : transitions des deux nouveaux types ---
+
+fn rollback_dispatch(event: &str, typ: &str, dispatch: &str) -> String {
+    format!(
+        r#"{{"event_id":"{}","type":"{}","dispatch_id":"{}","actor_from":"router","actor_to":"executor","at":"2026-11-11T01:55:00-05:00","design_ref":"{}","payload":"Décider le retour de la fonction Juger","proof":["fonction F1-5, hold-out H-F1-2, checkpoint seq 20"]}}"#,
+        event, typ, dispatch, DESIGN
+    )
+}
+
+#[test]
+fn rollback_executed_exige_decided() {
+    let d = parse_json(&rollback_dispatch(
+        "EVT-20261111-910",
+        "rollback_executed",
+        "D-N055-F1-10-SIM-T1",
+    ))
+    .unwrap();
+    let err = validate_dispatch(&d, &journal_empty(), &designs(), NOW).unwrap_err();
+    assert_eq!(err.rule, "R8");
+}
+
+#[test]
+fn rollback_decided_puis_executed() {
+    let text = "{\"seq\":1,\"event_id\":\"EVT-20261111-909\",\"type\":\"rollback_decided\",\"dispatch_id\":\"D-N055-F1-10-SIM-T1\",\"actor_from\":\"router\",\"actor_to\":\"executor\",\"at\":\"2026-11-11T01:55:00-05:00\",\"design_ref\":\"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)\",\"payload\":\"Décider le retour de la fonction Juger\",\"proof\":[\"fonction F1-5, hold-out H-F1-2, checkpoint seq 20\"]}\n";
+    let journal = Journal::from_jsonl(text).unwrap();
+    assert!(journal.decided.contains("D-N055-F1-10-SIM-T1"));
+    let d = parse_json(&rollback_dispatch(
+        "EVT-20261111-911",
+        "rollback_executed",
+        "D-N055-F1-10-SIM-T1",
+    ))
+    .unwrap();
+    assert!(validate_dispatch(&d, &journal, &designs(), NOW).is_ok());
+}
+
+#[test]
+fn rollback_decided_une_seule_fois() {
+    let text = "{\"seq\":1,\"event_id\":\"EVT-20261111-909\",\"type\":\"rollback_decided\",\"dispatch_id\":\"D-N055-F1-10-SIM-T1\",\"actor_from\":\"router\",\"actor_to\":\"executor\",\"at\":\"2026-11-11T01:55:00-05:00\",\"design_ref\":\"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)\",\"payload\":\"Décider le retour de la fonction Juger\",\"proof\":[\"fonction F1-5, hold-out H-F1-2, checkpoint seq 20\"]}\n";
+    let journal = Journal::from_jsonl(text).unwrap();
+    let d = parse_json(&rollback_dispatch(
+        "EVT-20261111-912",
+        "rollback_decided",
+        "D-N055-F1-10-SIM-T1",
+    ))
+    .unwrap();
+    let err = validate_dispatch(&d, &journal, &designs(), NOW).unwrap_err();
+    assert_eq!(err.rule, "R8");
 }
