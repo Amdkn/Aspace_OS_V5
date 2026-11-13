@@ -7,7 +7,7 @@
 //!   `--scenario <journal-f1-10-scenario.jsonl>`
 //!   `--design <design F1-10>`
 //!   `[--fautif <rollback-fautif-N.md>] [--planted-rule <R3|R4|R6>]`
-//!   `[--now <iso>]`
+//!   `[--now <iso>] [--checkpoint latest-proved]`
 //!   — rendu d'un retour (R1–R8, ordre R1 → R4 → R3 → R2 → R5 → R6 →
 //!   R7 → R8) ; sort 0 si le retour est ACCEPTÉ ou NON APPLICABLE (T0 :
 //!   hold-out vert, 0 événement de rollback), 2 si REJETÉ (raison
@@ -15,6 +15,13 @@
 //!   La règle attendue du rejet du fautif est R3 par défaut (F-R1),
 //!   R4 pour F-R2/F-R3/F-R5, R6 pour F-R4 — surchargeable par
 //!   `--planted-rule`.
+//!
+//! `--checkpoint latest-proved` (D-F1-11-5) : le seq du checkpoint est
+//! dérivé du journal réel — le dernier événement AVEC preuve du dispatch
+//! (patron D-F1-10-1) — au lieu du seq explicite du dossier. Le seq
+//! explicite reste pour les fixtures et les simulations (T0–T9 rejoués
+//! à l'identique) ; sans aucun événement avec preuve du dispatch, la
+//! dérivation échoue nommément.
 //!
 //! Lectures au fichier local, nommées, comptées et tracées (A-F1-10-5) :
 //! le dossier de rollback (bloc du cas + autorisation nommée), le
@@ -33,13 +40,16 @@
 //! sa sortie dans le dossier de rollback (section `## Rendus CLI`,
 //! A-F1-10-5).
 
-use r10_validator::rollback::{parse_case, validate_rollback, RollbackOutcome};
+use r10_validator::rollback::{
+    latest_proved_checkpoint, parse_case, validate_rollback, CheckpointCandidate,
+    RollbackOutcome,
+};
 use r10_validator::{format_iso_utc, now_unix, parse_iso8601_offset, parse_json, Json};
 use std::fs;
 use std::process::ExitCode;
 
 fn usage() -> String {
-    "usage: prove-rollback check --case <t0|t1|t2|t3|t4|t5|t6|t7|t8|t9|f-r1|f-r2|f-r3|f-r4|f-r5> --dossier <ROLLBACK-F1-10.md> --journal <journal-router.jsonl> --scenario <journal-f1-10-scenario.jsonl> --design <DESIGN-FONDATION-13-1-F1-10-PROJET.md> [--fautif <rollback-fautif-N.md>] [--planted-rule <R3|R4|R6>] [--now <iso>]".to_string()
+    "usage: prove-rollback check --case <t0|t1|t2|t3|t4|t5|t6|t7|t8|t9|f-r1|f-r2|f-r3|f-r4|f-r5> --dossier <ROLLBACK-F1-10.md> --journal <journal-router.jsonl> --scenario <journal-f1-10-scenario.jsonl> --design <DESIGN-FONDATION-13-1-F1-10-PROJET.md> [--fautif <rollback-fautif-N.md>] [--planted-rule <R3|R4|R6>] [--now <iso>] [--checkpoint latest-proved]".to_string()
 }
 
 fn arg_value(args: &[String], name: &str) -> Result<String, String> {
@@ -252,6 +262,14 @@ fn main() -> ExitCode {
     };
     let fautif_path = arg_value(rest, "--fautif").ok();
     let now_iso = arg_value(rest, "--now").ok();
+    let checkpoint_latest = match arg_value(rest, "--checkpoint") {
+        Ok(v) if v == "latest-proved" => true,
+        Ok(v) => {
+            eprintln!("--checkpoint attend 'latest-proved', reçu '{}'", v);
+            return ExitCode::from(2);
+        }
+        Err(_) => false,
+    };
     let now_epoch = match &now_iso {
         Some(s) => match parse_iso8601_offset(s) {
             Some(epoch) => epoch,
@@ -321,7 +339,7 @@ fn main() -> ExitCode {
             }
         },
     };
-    let data = match parse_case(&case_text, heading) {
+    let mut data = match parse_case(&case_text, heading) {
         Ok(d) => d,
         Err(e) => {
             eprintln!("parse du bloc {} dans {} : {}", heading, case_source, e);
@@ -352,6 +370,86 @@ fn main() -> ExitCode {
             return ExitCode::from(2);
         }
     };
+    // D-F1-11-5 : avec --checkpoint latest-proved, le seq du checkpoint
+    // est dérivé du journal réel (dernier événement AVEC preuve du
+    // dispatch) au lieu du seq explicite du dossier — la vérification
+    // qui suit (read_checkpoint) le re-vérifie au journal.
+    if checkpoint_latest {
+        let mut candidates: Vec<CheckpointCandidate> = Vec::new();
+        for (n, line) in journal_text.lines().enumerate() {
+            let line = line.trim();
+            if line.is_empty() {
+                continue;
+            }
+            let json = match parse_json(line) {
+                Ok(j) => j,
+                Err(e) => {
+                    eprintln!("journal {} ligne {} : JSON invalide ({})", journal_path, n + 1, e);
+                    return ExitCode::from(2);
+                }
+            };
+            let seq = match json.get("seq") {
+                Some(Json::Num(s)) => match s.parse::<usize>() {
+                    Ok(v) => v,
+                    Err(_) => {
+                        eprintln!("journal {} ligne {} : seq non numérique", journal_path, n + 1);
+                        return ExitCode::from(2);
+                    }
+                },
+                _ => {
+                    eprintln!("journal {} ligne {} : seq absent", journal_path, n + 1);
+                    return ExitCode::from(2);
+                }
+            };
+            let has_proof = match json.get("proof") {
+                Some(Json::Arr(items)) => {
+                    !items.is_empty()
+                        && items.iter().all(|v| match v {
+                            Json::Str(s) => !s.trim().is_empty(),
+                            _ => false,
+                        })
+                }
+                _ => false,
+            };
+            candidates.push(CheckpointCandidate {
+                seq,
+                event_id: json
+                    .get("event_id")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("")
+                    .to_string(),
+                at: json
+                    .get("at")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("")
+                    .to_string(),
+                dispatch_id: json
+                    .get("dispatch_id")
+                    .and_then(|v| v.as_str())
+                    .unwrap_or("")
+                    .to_string(),
+                has_proof,
+            });
+        }
+        match latest_proved_checkpoint(&candidates, &data.dispatch_id) {
+            Some((seq, event_id, at)) => {
+                println!(
+                    "checkpoint dérivé (latest-proved) : seq {} ({} à {}) pour {} — le seq explicite du dossier ({}) est remplacé",
+                    seq, event_id, at, data.dispatch_id, data.checkpoint_seq
+                );
+                data.checkpoint_seq = seq;
+                data.checkpoint_event_id = event_id;
+                data.checkpoint_at = at;
+            }
+            None => {
+                eprintln!(
+                    "aucun événement avec preuve pour {} au journal — le checkpoint latest-proved ne peut pas être dérivé",
+                    data.dispatch_id
+                );
+                return ExitCode::from(2);
+            }
+        }
+    }
     let mut case = data.as_case();
     if data.checkpoint_seq > 0 {
         let facts = match read_checkpoint(

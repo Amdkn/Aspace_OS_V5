@@ -417,3 +417,61 @@ mission PROPOSÉS ; le journal-scénario `journal-f1-10-scenario.jsonl` est
 une fixture de test — 26 événements `rollback_decided` / `rollback_executed`
 / `correction` SIMULÉS + 4 décisions simulées de fautifs, jamais consignés
 au journal réel).
+
+**Module :** `fiber:a0:fondation-13-1` — preuve finale, le 1 tient les 13
+fonctions sans le routeur
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/final.rs`,
+CLI `prove-final` ; généralisation de `hold-vision` :
+`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/bin/hold-vision.rs`).
+**Date :** 2026-11-13 (pas F1-11). **Verdict : 0 appel sortant.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` sans téléchargement de dépendance).
+- **Module `final` — 0 appel sortant :** le module est pur (règles P1–P8
+  sur données injectées — jugements, merges, journal, états de vision,
+  actes, absorptions — 0 appel réseau, 0 lecture de fichier, 0 horloge).
+- **CLI `prove-final` — lectures au fichier local nommées, comptées et
+  tracées :** le dossier de preuve, le log de suite (les « N passed » y
+  sont re-comptés, jamais repris du producteur), les 10 jugements, le
+  registre (F1-1/F1-2), le fichier des merges (parents vérifiés à l'API
+  par l'opérateur, DVG-01), le journal réel et sa copie tronquée à 47
+  lignes (une fixture, jamais le fichier réel), les 2 sorties
+  `hold-vision`, le rejet F-V5, la re-vérification F-A3, le dossier
+  d'action, la fiche, le manifeste, le design signé. 0 appel réseau, 0
+  recherche sémantique, 0 appel en écriture d'état (O3 conservée :
+  l'appel de merge reste celui de l'opérateur, D-F1-11-7).
+- **CLI `hold-vision` généralisée — pas de HTTPS gagné :** les lectures
+  API (master, PR ouvertes, Sheet) sont injectées par l'opérateur avec
+  leur horodatage de lecture, comme avant ; la généralisation ne fait que
+  remplacer des constantes par des recherches et des sorties calculées
+  (dernière ligne nommant le dispatch, dernier merge, dernier reçu compté,
+  seuils re-calculés, absences comptées, libellés datés V9). 0 appel
+  réseau, 0 recherche sémantique.
+- **Option `--checkpoint latest-proved` (`prove-rollback`) — 0 appel
+  sortant :** le seq est dérivé du journal réel lu au fichier (dernier
+  événement AVEC preuve du dispatch), puis re-vérifié au journal par
+  `read_checkpoint` — aucun appel réseau ajouté.
+- **Horloge :** les CLI lisent l'horloge système pour l'horodatage du rendu
+  (UTC, comme `recorded_at` du validateur R10) — la validation P1–P8
+  elle-même ne dépend pas de l'instant (aucun contrôle de date dans le
+  module, les dates sont relues au journal et au dossier).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub du HEAD master, des PR ouvertes et des 9
+   merges (2 parents, DVG-01) — injectées aux CLI par les lectures au
+   fichier et le fichier des merges, avec leur horodatage — effectuées par
+   l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+3. L'ouverture de la PR F1-11 (acte T4, autorisé par le design signé,
+   sans question) et le merge (après jugement, par l'opérateur) — actes
+   de l'opérateur, pas de la télémétrie.
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (le dossier fautif `vision-fautif-5.md` ne porte que des libellés
+périmés et des numéros de journal ; le fichier `merges-f1-11.txt` ne porte
+que des SHA déjà publics au registre).

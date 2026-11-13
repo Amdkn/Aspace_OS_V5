@@ -293,15 +293,15 @@ fn main() -> ExitCode {
     let (line, code) = match &outcome {
         Ok(ActionOutcome::Accepted(valid)) => (
             format!(
-                "ACCEPTÉ — Action {} : {} — A1–A8 passés, 0 question posée — rapport : {}",
-                valid.dispatch_id, valid.act, valid.report
+                "ACCEPTÉ — Action {} ({}) : {} — A1–A8 passés, 0 question posée — rapport : {}",
+                heading, valid.dispatch_id, valid.act, valid.report
             ),
             ExitCode::SUCCESS,
         ),
         Ok(ActionOutcome::NotPosed { reason }) => (
             format!(
-                "NON POSÉE — Action {} : {} — {}",
-                case.dispatch_id, case.act, reason
+                "NON POSÉE — Action {} ({}) : {} — {}",
+                heading, case.dispatch_id, case.act, reason
             ),
             ExitCode::SUCCESS,
         ),

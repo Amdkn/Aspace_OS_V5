@@ -58,12 +58,12 @@ pub const DISPATCH_KEYS: [&str; 9] = [
     "type",
 ];
 
-/// Les 14 types d'événements du journal (Discover F1-3 §3, + `closure_pulse`
+/// Les 15 types d'événements du journal (Discover F1-3 §3, + `closure_pulse`
 /// légalisé A-F1-5-3, + `merge_executed` légalisé A-F1-6-4, + `fact_recalled`
 /// légalisé A-F1-7-3, + `vision_held` légalisé A-F1-8-3, + `action_taken`
 /// légalisé A-F1-9-3, + `rollback_decided` et `rollback_executed` légalisés
-/// A-F1-10-3).
-pub const EVENT_TYPES: [&str; 14] = [
+/// A-F1-10-3, + `proof_rendered` légalisé A-F1-11-2).
+pub const EVENT_TYPES: [&str; 15] = [
     "action_taken",
     "closure_pulse",
     "correction",
@@ -74,6 +74,7 @@ pub const EVENT_TYPES: [&str; 14] = [
     "judgment_rendered",
     "judgment_requested",
     "merge_executed",
+    "proof_rendered",
     "pulse",
     "rollback_decided",
     "rollback_executed",

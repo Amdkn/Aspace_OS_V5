@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 clos (PR #52 mergée `691b0a0`, jugement VALIDÉE AVEC RÉSERVES, journal 942, reçus G-20261112-040/041) ; F1-10 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 clos (PR #52 mergée `691b0a0`, jugement VALIDÉE AVEC RÉSERVES, journal 942, reçus G-20261112-040/041) ; F1-10 clos (PR #53 mergée `28d32f7`, jugement VALIDÉE AVEC RÉSERVES, journal 944, reçus G-20261112-043/044) ; F1-11 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -835,7 +835,7 @@ consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
 PR #52 mergée `691b0a0` (2 parents, DVG-01), jugement VALIDÉE AVEC
 RÉSERVES, journal 942, reçus G-20261112-040 (livraison) / 041 (merge).
 
-## 14. F1-10 — Rollback (PR ouverte, non mergée)
+## 14. F1-10 — Rollback (F1-10 CLOSE — PR #53 mergée `28d32f7`, jugement VALIDÉE AVEC RÉSERVES, journal 944)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-10-PROJET.md` (fonction de
 design interne, journal 943, 2026-11-13 ~05:12 EST). Décisions D-F1-10-1..12,
@@ -953,8 +953,143 @@ de la PR (mission `LE1-FAB-D-N055-022` PROPOSÉE, entry_id `G-20261112-043`
 PROPOSÉ) est consigné à l'ouverture de la PR par un exécutant dédié — pas
 dans ce pas.
 
+## 15. F1-11 — Preuve finale
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-11-PROJET.md` (fonction de
+design interne, journal 945, 2026-11-13 ~06:08 EST). Décisions D-F1-11-1..12
+ADOPTÉES, amendements A-F1-11-1..6, précisions P-F1-11-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `final`,
+binaire `prove-final`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser +
+Vision + Action + Rollback + Preuve finale nommées, `validated_by` corrigé
+jusqu'à F1-10 : « F1-10 VALIDÉE AVEC RÉSERVES, PR #53 mergée `28d32f7`,
+jugement journal 944 ») ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Preuve finale ajouté : 0
+appel sortant ; CLI lectrice, lectures au fichier local nommées, comptées
+et tracées, 0 appel réseau, 0 recherche sémantique, 0 appel en écriture
+d'état — O3 conservée).
+
+**Ce qui est livré :** la fonction Preuve finale (P1–P8, ordre
+P1 → P2 → P6 → P3 → P4 → P5 → P7 → P8 ; rejet motivé, jamais de
+correction silencieuse) + la CLI `prove-final` (`check` : rendu de la
+preuve finale — la preuve est un rejeu, pas une re-déclaration : la suite
+est re-courue, les jugements relus au fichier, les merges re-vérifiés 2
+parents à l'API, les absorptions citées avec leurs preuves, les états de
+vision rendus par la CLI généralisée, l'acte autorisé sans question, le
+comptage « 0 routeur » mesuré au journal, F-A3 re-vérifié contre le
+journal réel, R3 aligné, fiche et manifeste corrigés). Le module `final`
+est pur (0 appel sortant, données injectées) ; la CLI est la lectrice
+(lectures au fichier local nommées, comptées et tracées ; 0 appel réseau,
+0 recherche sémantique, 0 appel en écriture d'état — A-F1-11-5). La
+généralisation de `hold-vision` (D-F1-11-4) : les 9 gates A1–A9 sont des
+recherches (dernière ligne / dernier événement / dernière valeur — le
+numéro est une sortie, pas une entrée), les 11 libellés B1–B11 sont des
+sorties calculées, les entrées non lisibles sont injectées par l'opérateur
+(`--dispatch-a`, `--dispatch-b`, `--workgraph-key`, `--sheet-value`,
+`--sheet-read-at`, patron `--master` / `--open-prs`) ; la règle V9
+(D-F1-11-10) rejette un libellé daté qui ne correspond pas à la valeur
+lue au journal / au registre / à l'API. `prove-rollback` gagne l'option
+`--checkpoint latest-proved` (D-F1-11-5 : le seq du dernier événement AVEC
+preuve du dispatch, patron D-F1-10-1 ; le seq explicite reste pour les
+fixtures et les simulations T0–T9). Le type `proof_rendered` est le 15e
+type du journal (A-F1-11-2).
+
+**Preuve H-F1-10 telle que designée :** les 13 fonctions, 0 routeur —
+7 fonctions dédiées (Recevoir, Router, Découvrir, Juger, Exécuter,
+Mémoriser, Rollback) + 6 absorptions (Vérifier : DVG-01 + CI 8/8 dans les
+8 jugements F1-3..F1-10 ; Décider : designs signés journaux
+790/806/923/931/934/937/939/941/943 ; Observer : L00 tête + N2 re-mesurés ;
+Interfacer : surface unique main + WhatsApp, `chat.list` re-vérifié ;
+Fluer : journal 90 événements, seq 1–90, 0 trou ; Fabriquer : 9 merges
+true merge, commits `1f89b56`, `4668305`, `573cad4`, `4a68288`, `e2e9c14`,
+`055745b`, `94fcda8`, `691b0a0`, `28d32f7`) — Vision, Action et Rollback
+sont des capacités transverses, pas des fonctions absorbées
+(D-F1-11-3). « 0 routeur » = 0 événement acteur session Nardole
+(`ae7d36d1`) + 100 % des routages comme événements du journal, mesuré au
+`grep` pendant la fenêtre (signature du design → merge PR F1-11)
+(D-F1-11-2). La semaine ne fait PAS partie de H-F1-10 (D-F1-11-1, voie
+(b)) — voir Divergence ci-dessous.
+
+**Suite H-M3 — VERTE :** `cargo test` — 249 tests, 0 échec (34 unitaires lib +
+13 d'intégration final + 25 d'intégration vision + 43 d'intégration rollback +
+38 d'intégration action + 24 d'intégration router + 24 d'intégration memory +
+17 d'intégration R10 + 13 d'intégration execute + 11 d'intégration judge +
+7 d'intégration discover) : cas passants = le rejeu conjoint (doit passer
+P1–P8) ; cas rejetés = le fautif planté F-V5 (doit être rejeté V9) et les
+fautifs F-V1..F-V4 en régression (rejets V3/V2/V1/V4 inchangés) ; cas limites
+= §5.4 (semaine exigée → P8 ; routeur non nul → P5 ; absorption sans preuve
+→ P2 ; ancre non généralisée → P6 ; F-A3 rejeté par une autre règle → P7 ;
+fiche en retard au merge → P7 ; coordinateur indisponible → P7). Log :
+`v4-factory/evidence/D-N055/suite-f1-11.txt`. Les 213 tests F1-2..F1-10
+restent verts (régression : 0 échec).
+
+**Rendus par la CLI (H-F1-10, preuve du pas) :**
+`v4-factory/evidence/D-N055/PROOF-F1-11.md` — preuve finale rendue par la
+CLI `prove-final check` (sortie 0, P1–P8 passés), sur le dossier de preuve
+(section `## Rendus CLI`). Les 2 états de vision sont rendus par la CLI
+`hold-vision` généralisée : `VISION-F1-11-47.md` (journal tronqué à 47
+lignes, re-rendu de l'état F1-8) et `VISION-F1-11-90.md` (journal réel à 90
+lignes), sans modification du code entre les deux — la copie tronquée est
+une fixture, jamais le fichier réel.
+
+**Fait fautif planté (D-F1-11-10, amendement A-F1-11-1) :** fautif F-V5
+(dossier de vision identique à un état valide rendu par la CLI généralisée,
+sauf UNE différence : il cite « seq 37 » et « 0 PR ouverte » comme valeurs
+courantes sur un journal à 90 lignes) — planté à
+`v4-factory/evidence/D-N055/VISION-FAUTIF-5.md` et dérivé en suite +
+fixture `tests/fixtures/vision-fautif-5.md`. Rejet vérifié par la CLI :
+`REJET V9 — champ 'libellé', valeur reçue 'journal (dernier seq)' : le
+libellé dit seq 37, le journal lu porte seq 90 — un libellé daté qui ne
+correspond pas à la valeur lue au journal / au registre / à l'API est
+rejeté` (sortie 2). F-V1..F-V4 vérifiés en régression par la suite
+(rejets V3/V2/V1/V4 inchangés).
+
+**F-A3 re-vérifié (D-F1-11-6) :** `take-action` re-couru sur le dossier
+F-A3 contre le journal réel à 90 seq — le `judgment_rendered` F1-9 seq 56
+et le merge seq 57 y sont désormais ; rejet attendu A3 (si A2 sort encore,
+sa raison exacte est portée et la propriété est relue comme « première
+règle applicable dans l'ordre A1→A4→A2→A3 », F-A3 re-classé cas à deux
+différences, ACCEPTÉ sous cette lecture — il n'échoue pas le pas ; ce qui
+échouerait : un rejet sans règle nommée, ou un rejet A1/A4/A6/A7).
+
+**Correction portée en avant (liste miroir, A-F1-11-2) :** la liste
+`JOURNAL_EVENT_TYPES` du module Mémoriser suit celle du routeur (même
+ordre, mêmes contenus — une dérive entre les deux serait une seconde
+vérité, test F1-7) : elle passe à 15 types (`proof_rendered`) avec ce pas.
+Les listes du Juge (8 types, F1-5) et d'Exécuter (9 types, F1-6) restent
+figées à leur pas, comme F1-8, F1-9 et F1-10 les ont laissées — ce sont des
+instantanés de leur pas, pas des miroirs du routeur.
+
+**Divergence :** **DETTE-H-F1-7-SEMAINE — la tenue vision + action sur 7
+jours consécutifs n'est pas prouvée ; cause : borne d'1 jour par pas (plan
+§2) ; clôture : mission séparée, sur ordre S0 uniquement, 7 jours de
+rendus datés** (A-F1-11-6). La dette est nommée à trois endroits : cette
+fiche (§15), le dossier de preuve `PROOF-F1-11.md` (§ Limites, P8) et le
+reçu H-F1-10 (047, après le merge, par un exécutant dédié).
+
+**Hold-outs F1-11 :** H-M1 mesuré (registre 945 lignes, journal-router 90
+lignes seq 1–90, master base `191200c` (pulse 06:10, journal 945 consigné —
+design F1-11 signé), re-mesuré à l'API à l'ouverture de la PR) ; H-M2 diff
+vide sur l'amont (code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4
+télémétrie (audit joint, 0 dépendance, 0 appel sortant, 0 recherche
+sémantique, 0 appel en écriture d'état) ; H-M5 levé au niveau du module
+(fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser +
+Vision + Action + Rollback + Preuve finale nommées dans le manifeste — le
+manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6 frontière (seul
+le code A'Space de la fonction Preuve finale et de la généralisation
+`hold-vision` ; voir Divergence) ; H-M7 cette fiche. H-F1-10 = le reçu du
+merge qui clôt F1-11 et D-N055 (mission `LE1-FAB-D-N055-025` PROPOSÉE,
+entry_id `G-20261112-047` PROPOSÉ) — **après le merge, par un exécutant
+dédié, pas dans ce pas**. Le reçu de livraison de la PR (mission
+`LE1-FAB-D-N055-024` PROPOSÉE, entry_id `G-20261112-046` PROPOSÉ) est
+consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
+
 ## Divergence (H-M6)
 
+- **DETTE-H-F1-7-SEMAINE — la tenue vision + action sur 7 jours consécutifs n'est pas prouvée ; cause : borne d'1 jour par pas (plan §2) ; clôture : mission séparée, sur ordre S0 uniquement, 7 jours de rendus datés** (A-F1-11-6, fiche §15). La dette est nommée à trois endroits : la fiche §15, le dossier de preuve `PROOF-F1-11.md` (§ Limites, P8) et le reçu H-F1-10 (047).
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
   R10 exige ISO 8601 avec offset et `recorded_at` ≥ `observed_at` ; la
   bibliothèque standard Rust n'expose pas l'offset local sans dépendance

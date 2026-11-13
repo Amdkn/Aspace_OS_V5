@@ -272,11 +272,11 @@ fn iso_reference() {
 }
 
 #[test]
-fn quatorze_types_dont_rollback() {
-    // A-F1-10-3 : la F1-10 changeset porte la liste des types du routeur
-    // à 14 (`rollback_decided` et `rollback_executed`) ; le design F1-3
-    // n'est pas réécrit.
-    assert_eq!(EVENT_TYPES.len(), 14);
+fn quinze_types_dont_proof_rendered() {
+    // A-F1-11-2 : la F1-11 changeset porte la liste des types du routeur
+    // à 15 (`proof_rendered`) ; le design F1-3 n'est pas réécrit.
+    assert_eq!(EVENT_TYPES.len(), 15);
+    assert!(EVENT_TYPES.contains(&"proof_rendered"));
     assert!(EVENT_TYPES.contains(&"rollback_decided"));
     assert!(EVENT_TYPES.contains(&"rollback_executed"));
     assert!(EVENT_TYPES.contains(&"action_taken"));

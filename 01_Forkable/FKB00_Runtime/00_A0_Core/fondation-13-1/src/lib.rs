@@ -31,6 +31,10 @@
 //! `rollback` (retour R1–R8 — le 1 revient à la chaîne 13 si un hold-out
 //! échoue, sans perte, au checkpoint du journal).
 //!
+//! Preuve finale — fonction Preuve finale (D-N055 F1-11) : voir le
+//! module `final` (preuve P1–P8 — le 1 tient les 13 fonctions sans le
+//! routeur, un rejeu, pas une re-déclaration).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -62,6 +66,7 @@
 pub mod action;
 pub mod discover;
 pub mod execute;
+pub mod r#final;
 pub mod judge;
 pub mod memory;
 pub mod rollback;

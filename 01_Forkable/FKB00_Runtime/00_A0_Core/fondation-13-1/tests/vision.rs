@@ -3,11 +3,13 @@
 //! Cas passants : les 3 cas d'essai du Discover §5.2 (T1 cohérence F1-7
 //! registre ↔ journal ↔ master ↔ reçu ; T2 seuils D-N055/D-N053 non
 //! franchis sur leurs ancres ; T3 divergence classée N2 portée — doivent
-//! passer V1–V8). Cas rejetés : les 4 fautifs du Discover §5.3, dérivés
+//! passer V1–V9). Cas rejetés : les 4 fautifs du Discover §5.3, dérivés
 //! chacun par UNE SEULE différence (raisons nommées : V3 ancre fausse,
 //! V2 seq inexistant, V1 lecture non datée, V4 divergence lissée), dont
 //! le fait fautif planté F-V1 (ancre journal 938 pour D-N053, D-F1-8-6,
-//! amendement A-F1-8-1). Cas limites (§5.4) : (a) master qui bouge
+//! amendement A-F1-8-1) — et le fautif planté F-V5 (D-F1-11-10,
+//! A-F1-11-1 : libellés « seq 37 » et « 0 PR ouverte » présentés comme
+//! courants sur un journal à 90 lignes — rejet V9). Cas limites (§5.4) : (a) master qui bouge
 //! (dérive datée, pas contradiction), (b) N2 ombre classée, (c) fenêtre
 //! L00 trouée (absence consignée), (d) fuseaux normalisés (EDT périmé),
 //! (e) `pulse_2110` portée non re-vérifiée, (f) fiche/manifeste périmés
@@ -19,8 +21,9 @@
 //! CLI le lit au fichier.
 
 use r10_validator::vision::{
-    normalize_timestamp, parse_fautif, threshold_after, validate_vision, Comparison,
-    DatedReading, Divergence, Outcome, PlantedFautif, Threshold, VisionState,
+    canonical_label_value, normalize_timestamp, parse_fautif, parse_fautif_labels,
+    threshold_after, valid_status, validate_vision, Comparison, DatedReading, Divergence,
+    Outcome, PlantedFautif, Threshold, VisionLabel, VisionState,
 };
 use r10_validator::parse_iso8601_offset;
 
@@ -213,6 +216,30 @@ fn base_state<'a>(
     known_absences: &'a [&'a str],
     limits: &'a [&'a str],
 ) -> VisionState<'a> {
+    base_state_labels(
+        readings,
+        comparisons,
+        divergences,
+        thresholds,
+        known_divergences,
+        absences,
+        known_absences,
+        limits,
+        &[],
+    )
+}
+
+fn base_state_labels<'a>(
+    readings: &'a [DatedReading<'a>],
+    comparisons: &'a [Comparison<'a>],
+    divergences: &'a [Divergence<'a>],
+    thresholds: &'a [Threshold<'a>],
+    known_divergences: &'a [&'a str],
+    absences: &'a [&'a str],
+    known_absences: &'a [&'a str],
+    limits: &'a [&'a str],
+    labels: &'a [VisionLabel<'a>],
+) -> VisionState<'a> {
     VisionState {
         readings,
         comparisons,
@@ -228,6 +255,7 @@ fn base_state<'a>(
         consigns_receipt: false,
         planted_fautif: None,
         max_seq: 37,
+        labels,
     }
 }
 
@@ -764,4 +792,182 @@ fn seuil_plus_12h_coherent() {
         threshold_after(ANCHOR_D_N053).as_deref(),
         Some(THRESHOLD_D_N053)
     );
+}
+
+const FAUTIF_5: &str = include_str!("fixtures/vision-fautif-5.md");
+
+/// Les libellés d'un état valide rendu par la CLI généralisée : sorties
+/// calculées, égales aux valeurs lues (journal 90 lignes, 0 PR ouverte).
+fn labels_valides_90() -> Vec<VisionLabel<'static>> {
+    vec![
+        VisionLabel {
+            name: "journal (dernier seq)",
+            claimed: "seq 90",
+            read: "seq 90",
+            read_at: READ_AT,
+        },
+        VisionLabel {
+            name: "PR ouvertes (L00 Run #711 vs API)",
+            claimed: "0 PR ouverte(s)",
+            read: "0 PR ouverte(s)",
+            read_at: READ_AT,
+        },
+    ]
+}
+
+#[test]
+fn f_v5_rejet_v9_libelles_perimes() {
+    // Le fautif planté (A-F1-11-1) : UNE SEULE différence — les libellés
+    // « seq 37 » et « 0 PR ouverte » présentés comme courants sur un
+    // journal à 90 lignes. Aucune autre règle ne doit se déclencher avant
+    // V9 (l'état est valide par ailleurs, max_seq 90).
+    let claims = parse_fautif_labels(FAUTIF_5).unwrap();
+    assert_eq!(claims.len(), 2);
+    let readings = readings();
+    let divergences = divergences();
+    let known = known_divergences();
+    let absences = absences();
+    let known_abs = known_absences();
+    let limits = limits();
+    let labels = vec![
+        VisionLabel {
+            name: "journal (dernier seq)",
+            claimed: Box::leak(
+                canonical_label_value(&claims[0].claimed).into_boxed_str(),
+            ),
+            read: "seq 90",
+            read_at: READ_AT,
+        },
+        VisionLabel {
+            name: "PR ouvertes (L00 Run #711 vs API)",
+            claimed: Box::leak(
+                canonical_label_value(&claims[1].claimed).into_boxed_str(),
+            ),
+            read: "0 PR ouverte(s)",
+            read_at: READ_AT,
+        },
+    ];
+    let comparisons = vec![Comparison {
+        name: "registre ligne 938 = journal seq 37",
+        left: DatedReading {
+            source: "registre, ligne 938",
+            value: "merge PR #50, 055745b, 01:47:15 EST",
+            read_at: READ_AT,
+        },
+        right: DatedReading {
+            source: "journal-router, seq 37",
+            value: "merge_executed PR #50, 055745b, 2026-11-13T01:47:15-05:00",
+            read_at: READ_AT,
+        },
+        outcome: Outcome::Coherent,
+        cited_seq: Some(37),
+    }];
+    let mut state = base_state_labels(
+        &readings, &comparisons, &divergences, &[], &known, &absences, &known_abs,
+        &limits, &labels,
+    );
+    state.max_seq = 90;
+    let err = validate_vision(&state, now()).unwrap_err();
+    assert_eq!(err.rule, "V9");
+    assert!(err.detail.contains("seq 37"));
+    assert!(err.detail.contains("seq 90"));
+}
+
+#[test]
+fn f_v5_pr_mismatch_rejet_v9() {
+    // Seconde moitié de la raison V9 : le libellé dit « 0 PR ouverte »,
+    // l'API lue porte 1 PR (PR F1-11 ouverte).
+    let readings = readings();
+    let divergences = divergences();
+    let known = known_divergences();
+    let absences = absences();
+    let known_abs = known_absences();
+    let limits = limits();
+    let labels = vec![
+        VisionLabel {
+            name: "journal (dernier seq)",
+            claimed: "seq 90",
+            read: "seq 90",
+            read_at: READ_AT,
+        },
+        VisionLabel {
+            name: "PR ouvertes (L00 Run #711 vs API)",
+            claimed: "0 PR ouverte(s)",
+            read: "1 PR ouverte(s)",
+            read_at: READ_AT,
+        },
+    ];
+    let mut state = base_state_labels(
+        &readings, &[], &divergences, &[], &known, &absences, &known_abs, &limits,
+        &labels,
+    );
+    state.max_seq = 90;
+    let err = validate_vision(&state, now()).unwrap_err();
+    assert_eq!(err.rule, "V9");
+    assert!(err.detail.contains("0 PR ouverte(s)"));
+    assert!(err.detail.contains("1 PR ouverte(s)"));
+}
+
+#[test]
+fn v9_libelles_conformes_passent() {
+    // Les libellés calculés d'un état valide ne déclenchent pas V9.
+    let readings = readings();
+    let divergences = divergences();
+    let known = known_divergences();
+    let absences = absences();
+    let known_abs = known_absences();
+    let limits = limits();
+    let labels = labels_valides_90();
+    let mut state = base_state_labels(
+        &readings, &[], &divergences, &[], &known, &absences, &known_abs, &limits,
+        &labels,
+    );
+    state.max_seq = 90;
+    let valid = validate_vision(&state, now()).unwrap();
+    assert_eq!(valid.unported_contradictions, 0);
+}
+
+#[test]
+fn v9_apres_v8_ordre() {
+    // L'ordre V1 → V6 → V2 → V3 → V4 → V7 → V5 → V8 → V9 est respecté :
+    // un état qui viole V8 et V9 est rejeté V8, pas V9.
+    let readings = readings();
+    let divergences = divergences();
+    let known = known_divergences();
+    let absences = absences();
+    let known_abs = known_absences();
+    let limits: Vec<&str> = vec![];
+    let labels = vec![VisionLabel {
+        name: "journal (dernier seq)",
+        claimed: "seq 37",
+        read: "seq 90",
+        read_at: READ_AT,
+    }];
+    let mut state = base_state_labels(
+        &readings, &[], &divergences, &[], &known, &absences, &known_abs, &limits,
+        &labels,
+    );
+    state.max_seq = 90;
+    let err = validate_vision(&state, now()).unwrap_err();
+    assert_eq!(err.rule, "V8");
+}
+
+#[test]
+fn v4_statut_non_reverifie_passe() {
+    // D-F1-11-4 B7 : une divergence dont la source n'est pas lisible
+    // depuis ce poste porte « non re-vérifié au AAAA-MM-JJ » — statut
+    // valide, pas une contradiction locale.
+    assert!(valid_status("non re-vérifié au 2026-11-13"));
+    let readings = readings();
+    let mut divergences = divergences();
+    divergences[5].status = "non re-vérifié au 2026-11-13";
+    let known = known_divergences();
+    let absences = absences();
+    let known_abs = known_absences();
+    let limits = limits();
+    let state = base_state(
+        &readings, &[], &divergences, &[], &known, &absences, &known_abs, &limits,
+    );
+    let valid = validate_vision(&state, now()).unwrap();
+    assert_eq!(valid.unported_contradictions, 0);
 }
