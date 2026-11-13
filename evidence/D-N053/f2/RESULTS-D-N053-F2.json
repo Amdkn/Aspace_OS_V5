@@ -1,0 +1,114 @@
+{
+  "passed": 25,
+  "total": 27,
+  "checks": {
+    "H-F2-1/orca-gitlink": {
+      "pass": true,
+      "detail": "gitlink orca 5d15464 == adapter 5d15464"
+    },
+    "H-F2-1/gitmodules-intact": {
+      "pass": true,
+      "detail": ".gitmodules pointe toujours Amdkn/orca (inchangé)"
+    },
+    "H-F2-1/manifeste": {
+      "pass": true,
+      "detail": "manifeste : adapter 5d15464, gel 708aca6"
+    },
+    "H-F2-1/bind": {
+      "pass": true,
+      "detail": "bind 8beacf3 re-appliqué, blob 736c2e1 byte-identique au bind b659760"
+    },
+    "H-F2-2/fiche": {
+      "pass": true,
+      "detail": "fiche : amont byte-identique, adapter seul code A'Space"
+    },
+    "H-F2-3/baseline-chiffres": {
+      "pass": true,
+      "detail": "baseline gel : {'files_failed': 2, 'files_passed': 254, 'files_skipped': 7, 'files_total': 263, 'tests_failed': 1, 'tests_passed': 2094, 'tests_skipped': 29, 'tests_total': 2124}"
+    },
+    "H-F2-3/adapte-chiffres": {
+      "pass": true,
+      "detail": "adapté : {'files_failed': 2, 'files_passed': 254, 'files_skipped': 7, 'files_total': 263, 'tests_failed': 1, 'tests_passed': 2094, 'tests_skipped': 29, 'tests_total': 2124} — chiffres identiques, test pour test"
+    },
+    "H-F2-3/baseline-verte": {
+      "pass": false,
+      "detail": "ROUGE : 1 test en échec (plugin-release-entry, TMPDIR du full run dans le repo) + 1 fichier en échec (index-omitted beforeAll timeout 60 s, charge) — décision coordinateur requise"
+    },
+    "H-F2-3/adapte-verte": {
+      "pass": false,
+      "detail": "ROUGE : 1 test en échec (runtime-listener-probe, artefact root — reproduit au gel seul) + 1 fichier en échec (index-omitted beforeAll timeout 60 s, charge) — décision coordinateur requise"
+    },
+    "H-F2-3/rouges-diagnostiques": {
+      "pass": true,
+      "detail": "les 3 rouges nommés dans les logs, diagnostics consignés au rapport"
+    },
+    "H-F2-3/smoke": {
+      "pass": true,
+      "detail": "smoke adapter vert"
+    },
+    "H-F2-3/preuve-client": {
+      "pass": true,
+      "detail": "round-trip readiness + WS server.status contre stub local 127.0.0.1 (4/4)"
+    },
+    "H-F2-3/typecheck": {
+      "pass": true,
+      "detail": "tc:cli + tc:node verts (tc:node après récupération des locales à la demande)"
+    },
+    "H-F2-3/lint": {
+      "pass": true,
+      "detail": "oxlint borné 0/0 (790 fichiers)"
+    },
+    "H-F2-4/audit": {
+      "pass": true,
+      "detail": "audit 6621 o, 0 appel sortant"
+    },
+    "H-F2-4/switches-off": {
+      "pass": true,
+      "detail": "ORCA_TELEMETRY_DISABLED + DO_NOT_TRACK forcés, coupure auto-update nommée (fiche + smoke)"
+    },
+    "H-F2-4/strace": {
+      "pass": true,
+      "detail": "strace smoke : 0 AF_INET hors loopback (12 AF_INET, toutes 127.0.0.1)"
+    },
+    "H-F2-5/manifeste": {
+      "pass": true,
+      "detail": "id fiber:a0:orca, levels.current = 0"
+    },
+    "H-F2-5/sans-doublon": {
+      "pass": true,
+      "detail": "fiber:a0:orca unique parmi 41 manifestes"
+    },
+    "H-F2-6/sans-daemon": {
+      "pass": true,
+      "detail": "orcad jamais lancé comme service V5 ; --bind 0.0.0.0 / allowPublic exclus (fiche)"
+    },
+    "H-F2-6/couture-absente": {
+      "pass": true,
+      "detail": "couture orca ↔ herdr actée absente"
+    },
+    "H-F2-6/divergence": {
+      "pass": true,
+      "detail": "section divergence remplie, propriétaire cœur Buzz nommé"
+    },
+    "H-F2-7/fiche": {
+      "pass": true,
+      "detail": "gel + licence + audit + divergence + orca-ide + 31415 + triage 142"
+    },
+    "H-F2-7/triage-joint": {
+      "pass": true,
+      "detail": "liste exhaustive par chemin jointe (145 lignes = 3 en-tête + 142 commits)"
+    },
+    "H-F2-8/compteur": {
+      "pass": true,
+      "detail": "compteur 25 → 0 au registre"
+    },
+    "H-F2-8/table": {
+      "pass": true,
+      "detail": "paragraphe Pas F2 + pin adapter + manifeste au registre"
+    },
+    "H-F2-8/plus-etat-0": {
+      "pass": true,
+      "detail": "plus aucun module en état 0"
+    }
+  }
+}
