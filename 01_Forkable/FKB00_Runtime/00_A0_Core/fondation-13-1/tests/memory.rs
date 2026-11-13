@@ -376,11 +376,13 @@ fn limite_jugement_rejete_m7() {
     assert_rejet("M7", result);
 }
 
-// --- Journal : action_taken, 12e type ---
+// --- Journal : rollback_decided / rollback_executed, 13e et 14e types ---
 
 #[test]
-fn douze_types_dont_action_taken() {
-    assert_eq!(JOURNAL_EVENT_TYPES.len(), 12);
+fn quatorze_types_dont_rollback() {
+    assert_eq!(JOURNAL_EVENT_TYPES.len(), 14);
+    assert!(JOURNAL_EVENT_TYPES.contains(&"rollback_decided"));
+    assert!(JOURNAL_EVENT_TYPES.contains(&"rollback_executed"));
     assert!(JOURNAL_EVENT_TYPES.contains(&"action_taken"));
     assert!(JOURNAL_EVENT_TYPES.contains(&"vision_held"));
     assert!(JOURNAL_EVENT_TYPES.contains(&"fact_recalled"));

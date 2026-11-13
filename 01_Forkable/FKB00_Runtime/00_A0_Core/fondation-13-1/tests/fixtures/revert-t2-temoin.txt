@@ -1,0 +1,20 @@
+# Témoin du revert documenté — cas T2 (D-N055 F1-10, D-F1-10-9)
+#
+# Le merge erroné de T2 est posé sur une base jetable (branche locale
+# `jetable/f1-10-t2`, jamais poussée, jamais master) puis reverté par un
+# revert documenté. SIMULÉ — échec simulé, pas un échec réel.
+#
+# Procédure (exécutée le 2026-11-13 ~05:23 EST dans le clone frais) :
+#   git checkout -b jetable/f1-10-t2 9622c50e7e703a4ec04b411cdc06325846c74a9b
+#   (fichier T2-MERGE-ERRONE-SIMULE.md, commit « T2 : merge erroné simulé »)
+#   git revert --no-edit HEAD
+#   git checkout a0/f1-10-rollback
+#
+# La branche jetable n'est pas poussée et ne fait pas partie de la PR :
+# ce fichier est le témoin du revert, comme `shas-temoin-f1-6.txt` l'était
+# du merge témoin de F1-6.
+
+base : 9622c50e7e703a4ec04b411cdc06325846c74a9b
+merge erroné simulé : 5e73cc33a17e3265c42ad9dad884f455523ad018
+revert documenté : d02039f2a64797570d1f9bc3607594d604ccdd81
+branche jetable : jetable/f1-10-t2 (locale, jamais poussée, jamais master)

@@ -352,3 +352,68 @@ numéros de journal, des SHA déjà publics au registre et des numéros de
 mission PROPOSÉS ; le journal-scénario `journal-f1-9-scenario.jsonl` est
 une fixture de test — un événement `judgment_rendered` SCÉNARIO, jamais
 consigné au journal réel).
+
+---
+
+# Audit télémétrie — fonction Rollback (D-N055 F1-10)
+
+**Module :** `fiber:a0:fondation-13-1` — retour à la chaîne 13 si un
+hold-out échoue
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/rollback.rs`,
+CLI `prove-rollback`).
+**Date :** 2026-11-13 (pas F1-10). **Verdict : 0 appel sortant.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` sans téléchargement de dépendance).
+- **Appels réseau du code :** 0. Le module `rollback` ne fait aucun appel
+  sortant (ni HTTP, ni DNS, ni socket). L'échec nommé (R1), la décision,
+  le repreneur, le checkpoint et la re-preuve sont injectés par
+  l'appelant — la fonction ne contacte ni le fichier local ni l'API
+  elle-même.
+- **CLI `prove-rollback` :** ne lit que des fichiers locaux (`--dossier`,
+  `--journal`, `--scenario`, `--design`, `--fautif`) et n'écrit que dans le
+  dossier de rollback (`--dossier`, section `## Rendus CLI`,
+  consignation de la commande exacte, ses paramètres, son horodatage et
+  sa sortie) et sur stdout/stderr. Aucun appel sortant — elle ne fait
+  pas de recherche sémantique (A-F1-10-5) : elle relit le journal réel au
+  fichier (checkpoints), le journal-scénario (décisions simulées) et
+  vérifie la signature du design. Les lectures sont nommées, comptées et
+  tracées (4 lectures + 1 fautif quand il est donné) : dossier de
+  rollback (bloc du cas + autorisation nommée), journal-router réel (seq
+  contigus, checkpoints : seq + `event_id` + `at` + preuve — le journal
+  réel fait foi), journal-scénario (événements `rollback_decided` /
+  `rollback_executed` simulés — la fixture fait foi pour les décisions
+  simulées, jamais consignées au journal réel), design signé (la
+  signature « SIGNÉ » y est vérifiée).
+- **0 appel en écriture d'état (O3 conservée, D-F1-10-11, A-F1-10-4) :** la
+  CLI ne gagne pas le HTTPS dans ce pas ; le seul appel en écriture
+  d'état reste celui de l'opérateur (`gh pr merge N --merge`, nommé,
+  compté, tracé E6 — patron R1 de F1-6). Lever O3 est un pas à part,
+  pas F1-10.
+- **Horloge :** la CLI lit l'horloge système pour l'horodatage du rendu
+  (UTC, comme `recorded_at` du validateur R10) — la validation R1–R8
+  elle-même ne dépend pas de l'instant (aucun contrôle de date dans le
+  module, les dates sont relues au journal).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub du HEAD master et des PR ouvertes (injectées
+   à la CLI par les lectures au fichier, avec leur horodatage) —
+   effectuées par l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+3. Le revert documenté de T2 (merge erroné simulé `5e73cc3` reverté par
+   `d02039f` sur la branche locale jetable `jetable/f1-10-t2`, jamais
+   poussée, jamais master) — acte local de l'exécutant, pas de la
+   télémétrie.
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (les dossiers fautifs `rollback-fautif-*.md` ne portent que des
+numéros de journal, des SHA déjà publics au registre et des numéros de
+mission PROPOSÉS ; le journal-scénario `journal-f1-10-scenario.jsonl` est
+une fixture de test — 26 événements `rollback_decided` / `rollback_executed`
+/ `correction` SIMULÉS + 4 décisions simulées de fautifs, jamais consignés
+au journal réel).

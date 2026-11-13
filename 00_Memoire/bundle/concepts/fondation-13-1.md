@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 clos (PR #52 mergée `691b0a0`, jugement VALIDÉE AVEC RÉSERVES, journal 942, reçus G-20261112-040/041) ; F1-10 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -714,7 +714,7 @@ ouverte, non mergée » de ce §12 et de l'en-tête était celui du pas au
 moment de sa livraison ; la clôture est portée ici, en avant, sans
 réécrire le récit du pas.
 
-## 13. F1-9 — Action (PR ouverte, non mergée)
+## 13. F1-9 — Action (PR #52 mergée `691b0a0`, CLOSE, journal 942)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-9-PROJET.md` (fonction de
 design interne, journal 941, 2026-11-13 ~03:40 EST). Décisions D-F1-9-1..12,
@@ -830,6 +830,128 @@ PROPOSÉE, entry_id `G-20261112-041` PROPOSÉ) — **après le merge, par un
 exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR (mission
 `LE1-FAB-D-N055-019` PROPOSÉE, entry_id `G-20261112-040` PROPOSÉ) est
 consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
+
+**Correction portée en avant (clôture F1-9, à F1-10) :** F1-9 est CLOSE —
+PR #52 mergée `691b0a0` (2 parents, DVG-01), jugement VALIDÉE AVEC
+RÉSERVES, journal 942, reçus G-20261112-040 (livraison) / 041 (merge).
+
+## 14. F1-10 — Rollback (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-10-PROJET.md` (fonction de
+design interne, journal 943, 2026-11-13 ~05:12 EST). Décisions D-F1-10-1..12,
+amendements A-F1-10-1 / A-F1-10-2 / A-F1-10-3 / A-F1-10-4 / A-F1-10-5 /
+A-F1-10-6 / A-F1-10-7, précisions P-F1-10-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `rollback`,
+binaire `prove-rollback`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser +
+Vision + Action + Rollback nommées, `validated_by` corrigé : F1-8 VALIDÉE
+AVEC RÉSERVES, PR #51 mergée `94fcda8`, jugement journal 940 — **et F1-9
+VALIDÉE AVEC RÉSERVES, PR #52 mergée `691b0a0`, jugement journal 942**) ;
+audit télémétrie `00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Rollback
+ajouté : 0 appel sortant ; CLI lectrice, lectures au fichier local nommées,
+comptées et tracées, 0 appel réseau, 0 recherche sémantique, 0 appel en
+écriture d'état — O3 conservée).
+
+**Ce qui est livré :** la fonction Rollback (R1–R8, ordre R1 → R4 → R3 → R2 →
+R5 → R6 → R7 → R8 ; rejet motivé, jamais de correction silencieuse) + la CLI
+`prove-rollback` (`check` : rendu d'un retour — les contrôles R1/R4/R3/R2/
+R5/R6/R7/R8 sont structurels et locaux au dossier de rollback ; R7 appelle
+la re-preuve, comme le fait le retour en prose — la fonction est un
+mécanisme, pas une session). Le module `rollback` est pur (0 appel sortant,
+données injectées) ; la CLI est la lectrice (lectures au fichier local
+nommées, comptées et tracées ; 0 appel réseau, 0 recherche sémantique, 0
+appel en écriture d'état — A-F1-10-5). Le checkpoint est le dernier
+événement *avec preuve* du dispatch (seq + `event_id` + `at` + preuve,
+D-F1-10-1) ; « sans perte » veut dire reprise de l'histoire vérifiable,
+3 cas à 0 ; F1-1 → Rick, F1-2 → Graham, F1-3 → Nardole (typage à la main),
+F1-4 → Bill avec décideur coordinateur (D-F1-10-3) ; le réveil est une
+ré-instanciation par sous-agent borné étiqueté, jamais un désarchivage
+littéral (D-F1-10-5, A-F1-10-6) ; le 13e est décideur de secours
+(D-F1-10-4) ; la re-preuve est dans le même pas (R7, D-F1-10-6) ; un seul
+réveil par session et par pas, T3 avant T8 (D-F1-10-8) ; le revert
+documenté est exigé pour T2, sur base jetable, jamais master (D-F1-10-9) ;
+F-A3 n'est PAS l'échec simulé de T5 (D-F1-10-10) ; O3 est CONSERVÉE
+pendant la reprise (D-F1-10-11, A-F1-10-4).
+
+**Suite H-M3 — VERTE :** `cargo test` — 213 tests, 0 échec (16 unitaires lib +
+7 d'intégration discover + 13 d'intégration execute + 11 d'intégration judge +
+24 d'intégration memory + 17 d'intégration R10 + 43 d'intégration rollback +
+24 d'intégration router + 20 d'intégration vision + 38 d'intégration action) :
+cas passants = les 10 cas d'essai rendus (T0 contrôle négatif : hold-out vert
+→ 0 événement de rollback ; T1–T9 ACCEPTÉS R1–R8, un par fonction) ; cas
+rejetés = les 5 fautifs du Discover §5.3, dérivés chacun par UNE SEULE
+différence (raisons nommées : R3 reprise auto-déclarée, R4 checkpoint à
+preuve vide / fonction saine / mauvais repreneur, R6 révocation par
+effacement) — dont le fait fautif planté F-R1 ; cas limites = §5.4 (a)
+fonction saine, (b) reprise partielle, (c) deux hold-outs échoués à la fois,
+(d) session d'origine indisponible, (e) checkpoint ambigu, (f) révocation
+d'un merge (revert documenté, pas correction par événement), (g)
+démantèlement déguisé, (h) coordinateur indisponible (13e décideur de
+secours), (i) échec pendant la reprise ; types `rollback_decided` /
+`rollback_executed` légaux comme 13e et 14e types (A-F1-10-3), avec leurs
+transitions R8 (l'exécution suit la décision, une seule décision par
+retour). Log : `v4-factory/evidence/D-N055/suite-f1-10.txt`. Les 170 tests
+F1-2/F1-3/F1-4/F1-5/F1-6/F1-7/F1-8/F1-9 restent verts (régression : 0 échec).
+
+**Retours rendus par la CLI (H-F1-9, preuve du pas) :**
+`v4-factory/evidence/D-N055/ROLLBACK-F1-10.md` — T0 NON APPLICABLE R1–R8
+(hold-out vert, 0 événement de rollback, sortie 0), T1–T9 ACCEPTÉS R1–R8
+(sortie 0), F-R1 REJET R3 par la CLI (sortie 2, « le retour est décidé par
+le coordinateur, par événement du journal, jamais par la fonction
+elle-même »). Sorties CLI consignées dans le dossier (section
+`## Rendus CLI`). Les garde-fous R1, R2, R4, R5, R6, R7 et R8 sont vérifiés
+aussi par la suite (fautifs F-R2/F-R3/F-R4/F-R5 → rejets R4/R4/R6/R4 ;
+fautif non rejeté ou rejeté par la mauvaise règle → attrapé par la CLI,
+règle attendue `--planted-rule`).
+
+**Fait fautif planté (D-F1-10-6, amendement A-F1-10-1) :** fautif F-R1
+(reprise auto-déclarée sans décision du coordinateur) — planté à
+`v4-factory/evidence/D-N055/ROLLBACK-FAUTIF-1.md` (fichier distinct, une
+seule différence : la décision absente) et dérivé en suite + fixture
+`tests/fixtures/rollback-fautif-1.md`. Rejet vérifié par la CLI : `REJET R3
+— champ 'décideur', valeur reçue '' : le retour est décidé par le
+coordinateur (ou le 13e en secours, D-F1-10-4), par événement du journal —
+jamais par la fonction elle-même` (sortie 2). F-R2/F-R3/F-R4/F-R5 vérifiés
+par la CLI contre le journal réel + le journal-scénario (fixture
+`tests/fixtures/journal-f1-10-scenario.jsonl` : les 57 lignes du journal
+réel + 26 événements `rollback_decided` / `rollback_executed` /
+`correction` SIMULÉS seq 58–83 + 4 décisions simulées de fautifs seq
+84–87, jamais consignés au journal réel) : F-R2 REJET R4 (« un checkpoint
+sans preuve ne porte rien à re-vérifier »), F-R3 REJET R4 (« une fonction
+saine n'est pas reprise »), F-R4 REJET R6 (« une révocation qui efface est
+une perte, pas une correction »), F-R5 REJET R4 (« le repreneur est celui
+que le design nomme »). Leçon portée : la CLI surcharge les faits de
+décision, d'arrêt et de checkpoint par les lectures au fichier (le journal
+fait foi, le dossier affirme) — un dossier affirmant une décision sans
+événement `rollback_decided` au journal est rejeté R3.
+
+**Correction portée en avant (liste miroir, A-F1-10-3) :** la liste
+`JOURNAL_EVENT_TYPES` du module Mémoriser suit celle du routeur (même
+ordre, mêmes contenus — une dérive entre les deux serait une seconde
+vérité, test F1-7) : elle passe à 14 types (`rollback_decided`,
+`rollback_executed`) avec ce pas. Les listes du Juge (8 types, F1-5) et
+d'Exécuter (9 types, F1-6) restent figées à leur pas, comme F1-8 et F1-9
+les ont laissées — ce sont des instantanés de leur pas, pas des miroirs
+du routeur.
+
+**Hold-outs F1-10 :** H-M1 mesuré (registre 943 lignes, journal-router 57
+lignes seq 1–57, master base `c0b6dce` (pulse 05:15, journal 943 consigné —
+design F1-10 signé), re-mesuré à l'API à l'ouverture de la PR) ; H-M2 diff vide sur l'amont (code A'Space neuf) ;
+H-M3 suite verte (ci-dessus) ; H-M4 télémétrie (audit joint, 0 dépendance,
+0 appel sortant, 0 recherche sémantique, 0 appel en écriture d'état) ;
+H-M5 levé au niveau du module (fonctions Recevoir + Router + Découvrir +
+Juger + Exécuter + Mémoriser + Vision + Action + Rollback nommées dans le
+manifeste — le manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6
+frontière (seul le code A'Space de la fonction Rollback ; voir Divergence) ;
+H-M7 cette fiche. H-F1-9 = le reçu du merge qui clôt F1-10 (mission
+`LE1-FAB-D-N055-023` PROPOSÉE, entry_id `G-20261112-044` PROPOSÉ) — **après
+le merge, par un exécutant dédié, pas dans ce pas**. Le reçu de livraison
+de la PR (mission `LE1-FAB-D-N055-022` PROPOSÉE, entry_id `G-20261112-043`
+PROPOSÉ) est consigné à l'ouverture de la PR par un exécutant dédié — pas
+dans ce pas.
 
 ## Divergence (H-M6)
 
@@ -987,3 +1109,34 @@ consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
   livraison (le jugement est cherché sous `D-N055-<pas>-JUDGE`, le merge
   et le routage sous le dispatch de l'acte). La suite, elle, injecte les
   faits du journal — elle ne dépend pas de cette règle de nommage.
+- **`rollback_decided` / `rollback_executed` légalisés 13e et 14e types
+  (F1-10, A-F1-10-3).** La F1-10 changeset porte la liste `EVENT_TYPES`
+  du routeur à 14 types ; le retour est rendu comme deux événements
+  (`rollback_decided` : l'arrêt + la décision du coordinateur ou du 13e
+  en secours, preuve : checkpoint + repreneur + re-preuve ; puis
+  `rollback_executed` : le retour au checkpoint, preuve : re-preuve
+  dans le même pas) ; le design F1-3 n'est pas réécrit. La liste miroir
+  du module Mémoriser suit (14 types) ; les listes du Juge (8) et
+  d'Exécuter (9) restent figées à leur pas.
+- **Le réveil est une ré-instanciation, pas un désarchivage (F1-10,
+  D-F1-10-5, A-F1-10-6).** Le repreneur est une ré-instanciation par
+  sous-agent borné étiqueté session d'origine ; le désarchivage littéral
+  est exclu (arbitrage vision §8a du design F1-10 — une session
+  archivée ne revient pas par désarchivage, elle est ré-instanciée). La
+  ré-instanciation d'une session dont la session d'origine n'a pas
+  d'archive (F1-1, F1-2) est un retour au reçu ou au registre, pas à
+  une session (T7, T8).
+- **F-A3 n'est pas l'échec simulé de T5 (F1-10, D-F1-10-10).** T5
+  (opérateur + sous-agents + coordinateur reprend F1-9) garde l'échec
+  simulé F-A1 accepté ; F-A3 n'est pas utilisé comme échec simulé —
+  réserve R4 du jugement F1-9, suivi F1-11. Les événements simulés des
+  cas T1–T9 sont marqués « SIMULÉ — échec simulé, pas un échec réel »
+  dans le journal-scénario, jamais consignés au journal réel.
+- **O3 conservée, portée comme limite nommée (F1-10, D-F1-10-11,
+  A-F1-10-4).** L'opérateur reste l'acteur du seul appel en écriture
+  d'état pendant la reprise ; la CLI `prove-rollback` ne gagne pas le
+  HTTPS dans ce pas — la fonction décide et instruit, l'opérateur pose
+  l'appel. Lever O3 (la fonction appellerait elle-même) est un pas à
+  part, pas F1-10 : il rouvrirait le contrat `execute-merge` (F1-6). La
+  Divergence O3 n'est pas résolue par F1-10 : elle est portée comme
+  limite nommée, comme F1-9 (A8).
