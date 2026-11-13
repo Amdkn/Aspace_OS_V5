@@ -146,3 +146,60 @@ Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
 fixtures (le `G-20261112-901` du fautif n° 5 est un identifiant de test,
 jamais consigné — le vrai reçu de livraison est `G-20261112-028` à
 l'ouverture de la PR, mission `LE1-FAB-D-N055-009`).
+---
+
+# Audit télémétrie — fonction Exécuter (D-N055 F1-6)
+
+**Module :** `fiber:a0:fondation-13-1` — exécution de merge
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/execute.rs`,
+CLI `execute-merge`).
+**Date :** 2026-11-12 (pas F1-6). **Verdict : 0 appel sortant dans le code ; 1 appel en écriture d'état nommé, compté et tracé, par la CLI.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` sans téléchargement de dépendance).
+- **Appels réseau du code :** 0. Le module `execute` ne fait aucun appel
+  sortant (ni HTTP, ni DNS, ni socket). La résolution des SHA complets
+  (E1/E2/E6/E7), la lecture CI (E3), le mergeable (E4) et les preuves
+  post-merge (E7) sont injectés par l'appelant — la fonction ne contacte
+  ni le git local ni l'API elle-même.
+- **CLI `execute-merge` :** ne lit que des fichiers locaux (`--execution`,
+  `--shas`, `--ci`) et n'écrit que sur stdout/stderr. Aucun appel sortant
+  dans la CLI elle-même — elle ne fait pas d'HTTPS (std seul, zéro
+  dépendance).
+- **Horloge :** aucune lecture d'horloge — l'exécution E1–E8 ne dépend
+  pas de l'instant (la date de l'exécution est un fait du dossier, pas
+  l'état courant).
+
+## Le seul appel en écriture d'état du pas (hors code — opérateur, nommé, compté et tracé)
+
+1. **Le merge** (`gh pr merge --merge`, ou `POST /pulls/{n}/merge`,
+   méthode `merge`) — 1 appel par merge exécuté, effectué par l'opérateur
+   sur instruction du dossier validé en pré-merge par la CLI
+   (`execute-merge check --pre-merge`, ACCEPTÉ E1–E5), et consigné dans
+   le dossier d'exécution (E6 : commande exacte, paramètres, horodatage,
+   sortie — merge commit SHA, `merged: true`), puis vérifié post-merge
+   par un tiers (E7). C'est le premier appel API en écriture d'état du 1
+   (D-F1-6-7, A-F1-6-3) : les vérifications R10-OK sont des lectures, le
+   transport `clone`/`push`/`pr create` est une écriture de contenu — le
+   merge est une écriture d'état (il change `merged`, il crée le commit
+   de merge, il ferme la PR).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub R10-OK du reçu de livraison (lecture du HEAD
+   master, de la PR, du commit tête, des check-runs, du mergeable) —
+   effectuées par l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+3. `gh workflow run` (déclenchement manuel de la CI du témoin sur sa tête,
+   base jetable hors `pull_request` branches master) + `gh pr merge
+   --merge` (l'appel de merge, § ci-dessus).
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (le `G-20261112-901` du fautif n° 5 est un identifiant de test,
+jamais consigné — le vrai reçu de livraison est `G-20261112-031` à
+l'ouverture de la PR, mission `LE1-FAB-D-N055-011` PROPOSÉE, assignation
+au dépôt).

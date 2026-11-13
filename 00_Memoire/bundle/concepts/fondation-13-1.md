@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -324,7 +324,7 @@ ce pas**. Le reçu de livraison de la PR (mission `LE1-FAB-D-N055-007`,
 entry_id `G-20261112-020`) est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-4.json`.
 
-## 9. F1-5 — Juger (PR ouverte, non mergée)
+## 9. F1-5 — Juger (PR #47 mergée `4a68288`, journal 933)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-5-PROJET.md` (fonction de
 design interne, journal 931, 2026-11-12 ~21:24 EST). Décisions D-F1-5-1..9,
@@ -410,6 +410,106 @@ ce pas**. Le reçu de livraison de la PR (mission `LE1-FAB-D-N055-009`,
 entry_id `G-20261112-028`) est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-5.json`.
 
+## 10. F1-6 — Exécuter (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-6-PROJET.md` (fonction de
+design interne, journal 934, 2026-11-12 ~22:49 EST). Décisions D-F1-6-1..12,
+amendements A-F1-6-1 / A-F1-6-2 / A-F1-6-3 / A-F1-6-4 / A-F1-6-5, précisions P-F1-6-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `execute`,
+binaire `execute-merge`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger + Exécuter nommées,
+`validated_by` corrigé : F1-5 VALIDÉE, PR #47 mergée `4a68288`, jugement
+journal 933) ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Exécuter ajouté, H-M4
+reformulé : 0 appel sortant dans le code ; 1 appel en écriture d'état nommé,
+compté et tracé, par la CLI).
+
+**Ce qui est livré :** la fonction Exécuter (E1–E8, ordre E1 → E8 → E2 → E4 →
+E3 → E5 → E6 → E7 ; rejet motivé, jamais de correction silencieuse) + la
+CLI `execute-merge` (`check` : contrôle d'un dossier d'exécution — les
+contrôles E1/E8/E2/E4 sont structurels et locaux au dossier ; E3/E5/E6
+appellent les lectures à l'API et l'appel de merge par l'opérateur — SHA, CI,
+mergeable et preuves post-merge injectés, même frontière que le validateur
+R10). Le module `execute` est pur (0 appel sortant) ; la CLI est l'appelante
+(lectures API nommées + le seul appel en écriture d'état, consigné E6).
+La fonction EST l'exécution (D-F1-6-5) : pas de contrôle de recevabilité
+séparé avant le merge.
+
+**Suite H-M3 — VERTE :** `cargo test` — 76 tests, 0 échec (7 unitaires lib +
+13 d'intégration execute + 11 d'intégration judge + 7 d'intégration discover +
+17 d'intégration R10 + 21 d'intégration router) : cas passant = une exécution
+valide du merge de la PR #44 (`execution-valide.md`, faits vérifiés à l'API
+par le Discover F1-6) ; cas rejetés = les 5 fautifs du Discover §6, dérivés
+chacun par UNE SEULE différence (raisons nommées : E2 tête non autorisée, E3
+CI non verte, E1 merge sans jugement, E5 méthode squash, E8 exécutant qui
+juge) — dont le merge fautif planté n° 1 ; cas limites = document vide (E1),
+dossier sans limites nommées (E8), PR non mergeable (E4), appel non consigné
+(E6), parent 2 non autorisé (E7), stade pré-merge (E1–E5), type
+`merge_executed` légal comme 9e type (A-F1-6-4). Log :
+`v4-factory/evidence/D-N055/suite-f1-6.txt`. Les 62 tests F1-2/F1-3/F1-4/F1-5
+restent verts (régression : 0 échec).
+
+**Merge fautif planté (D-F1-6-4, amendement A-F1-6-1) :** fautif n° 1
+(tête non autorisée — le verdict autorise l'ancienne tête, la base
+`96d64ce`, alors que la tête vérifiée est `2d38798`) — planté à
+`v4-factory/evidence/D-N055/EXECUTION-FAUTIF-1.md` (une seule différence,
+ligne 12, `diff` vérifié) et dérivé en suite. Rejet vérifié par la CLI :
+`REJET E2 — champ 'tête autorisée' : la tête autorisée n'est pas la tête
+vérifiée à l'API au moment du merge — un merge qui merge une tête qu'il n'a
+pas vérifiée au moment de l'acte n'est pas une exécution, c'est un clic`
+(sortie 2). Les garde-fous E3, E1, E5 et E8 sont vérifiés aussi par la CLI
+(fautifs n° 2, 3, 4, 5 → rejets E3, E1, E5, E8, sortie 2).
+
+**Merge témoin (A-F1-6-5) :** PR #48 (base jetable `a0/f1-6-witness-base` à
+master HEAD `2cb56d0`, tête `a0/f1-6-witness` `7126b40`, changement trivial,
+1 fichier +3/−0) — jugée VALIDÉE par la fonction Juger (contrôle CLI
+`judge-pr` ACCEPTÉ J1–J8, sortie 0 — pas un verdict 13e ; CI 6/6 success,
+les 2 jobs CodeQL et Analyze ne courant que sur PR vers master), mergée par
+la fonction selon E1–E8 via la CLI `execute-merge` (pré-merge ACCEPTÉ, puis
+`gh pr merge 48 --merge`, 1 seul appel en écriture d'état, consigné E6),
+vérifiée E7 par un tiers : merge commit `5d86ff5` (2 parents `2cb56d0` +
+`7126b40`, DVG-01, parent 2 = tête autorisée, merged true, merged_at
+2026-11-13T04:31:19Z, base HEAD = merge commit, 0 PR ouverte). Branches
+jetables supprimées après le merge (vérifié 404 à l'API). Le témoin précède
+le merge de la PR du pas — jamais l'inverse. Le témoin ne touche pas à
+master.
+
+**Correction portée en avant (E2) :** la première version du contrôle E2
+retenait la première ligne « tête autorisée » du dossier — l'en-tête cite
+la tête autorisée en référence, et le fautif n° 1 passait la suite. E2 ne
+retient désormais que la ligne « tête autorisée » de la section Instruction
+(l'autorité), comme J2 ne retient que la ligne portant un SHA complet. La
+correction est portée ici et dans le reçu de livraison ; le design signé
+n'est pas réécrit.
+
+**Correction portée en avant (routeur 7 → 9 types, A-F1-6-4) :** la F1-6
+changeset porte la liste `EVENT_TYPES` du routeur à 9 types
+(`closure_pulse` + `merge_executed`), réparant la réserve R2 du jugement
+F1-5. Le design F1-3 n'est pas réécrit.
+
+**Correction portée en avant (§9) :** l'en-tête « F1-5 PR ouverte, non
+mergée » était périmé (PR #47 mergée `4a68288`, reçu 029, journal 933)
+— correction portée en avant (fiche §9 et Statut ci-dessus).
+
+**Hold-outs F1-6 :** H-M1 mesuré (registre 934 lignes, 6 merges mesurés,
+aucun mécanisme codé, journal-router 20 lignes seq 1–20, master base
+`2cb56d0` re-mesuré `f693e2b` à l'ouverture de la PR) ; H-M2 diff vide sur
+l'amont (code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4
+télémétrie reformulée (audit joint, 0 dépendance, 0 appel sortant dans le
+code, 1 appel en écriture d'état nommé, compté et tracé) ; H-M5 levé au
+niveau du module (fonctions Recevoir + Router + Découvrir + Juger +
+Exécuter nommées dans le manifeste — le manifeste du daemon RigInfinity
+reste dû, voir §4) ; H-M6 frontière (seul le code A'Space de la fonction
+Exécuter ; voir Divergence) ; H-M7 cette fiche. H-F1-3 = le reçu du merge
+qui clôt F1-6 (mission `LE1-FAB-D-N055-012` PROPOSÉE) — **après le merge,
+par un exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR
+(mission `LE1-FAB-D-N055-011` PROPOSÉE, entry_id `G-20261112-031` PROPOSÉ)
+est consigné à l'ouverture de la PR — voir
+`v4-factory/evidence/D-N055/RESULTS-F1-6.json`.
+
 ## Divergence (H-M6)
 
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
@@ -479,3 +579,21 @@ entry_id `G-20261112-028`) est consigné à l'ouverture de la PR — voir
   n'est rouvert ; le design F1-3 n'est pas réécrit. À partir de F1-5,
   « fonction de jugement » ne désigne que le mécanisme codé (module
   `judge` + CLI + suite).
+- **E2 ne retient que la ligne « tête autorisée » de la section Instruction
+  (F1-6).** L'en-tête du dossier d'exécution cite la tête autorisée en
+  référence ; seule la ligne de la section Instruction l'autorise — sinon
+  le fautif n° 1 (tête autorisée = base) passerait E2 en gardant la tête
+  vérifiée dans l'en-tête. Même patron que J2 (F1-5).
+- **`merge_executed` légalisé 9e type (F1-6, A-F1-6-4).** La F1-6 changeset
+  porte la liste `EVENT_TYPES` du routeur à 9 types (`closure_pulse` +
+  `merge_executed`) ; le design F1-3 n'est pas réécrit. La réserve R2 du
+  jugement F1-5 (routeur à 7 types) est réparée par ce pas.
+- **L'appel de merge est effectué par l'opérateur, pas par la CLI (F1-6,
+  A-F1-6-3).** La CLI `execute-merge`, std seul sans dépendance, ne fait
+  pas d'HTTPS : elle contrôle le dossier d'exécution (E1–E8, `--pre-merge`
+  avant l'appel, complet après), et l'opérateur effectue le seul appel en
+  écriture d'état (`gh pr merge --merge`, ou `POST /pulls/{n}/merge`,
+  méthode `merge`) sur instruction du dossier validé, puis le consigne
+  (E6). C'est le même partage que les pas F1-2 à F1-5 (preuves injectées
+  par l'opérateur, vérifiées à l'API) — la frontière est documentée, pas
+  contournée.

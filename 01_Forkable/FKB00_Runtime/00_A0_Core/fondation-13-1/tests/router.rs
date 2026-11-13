@@ -11,7 +11,7 @@
 //! non ISO (rejet R5 sur la forme, pas sur le futur).
 
 use r10_validator::router::{
-    inscribe, validate_dispatch, Journal, StaticDesignResolver,
+    inscribe, validate_dispatch, Journal, StaticDesignResolver, EVENT_TYPES,
 };
 use r10_validator::{parse_iso8601_offset, parse_json};
 
@@ -269,4 +269,16 @@ fn iso_reference() {
         parse_iso8601_offset("2026-11-11T01:55:00-05:00"),
         Some(1794380100)
     );
+}
+
+#[test]
+fn neuf_types_dont_merge_executed() {
+    // A-F1-6-4 : la F1-6 changeset porte la liste des types du routeur
+    // à 9 (`closure_pulse` + `merge_executed`) ; le design F1-3 n'est
+    // pas réécrit.
+    assert_eq!(EVENT_TYPES.len(), 9);
+    assert!(EVENT_TYPES.contains(&"merge_executed"));
+    assert!(EVENT_TYPES.contains(&"closure_pulse"));
+    assert!(EVENT_TYPES.contains(&"judgment_rendered"));
+    assert!(!EVENT_TYPES.contains(&"type_inconnu"));
 }
