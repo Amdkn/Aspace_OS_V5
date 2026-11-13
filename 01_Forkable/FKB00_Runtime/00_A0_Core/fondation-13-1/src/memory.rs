@@ -645,10 +645,13 @@ pub fn validate_citation(
 /// hold-out + échec simulé nommé + repreneur + checkpoint seq + `event_id`
 /// + `at`) + `rollback_executed` (14e, émis par le routeur au rendu de la
 /// reprise ; preuve : repreneur + checkpoint + révocation + résultat de
-/// la re-preuve). Même ordre que `router::EVENT_TYPES`,
-/// `fact_recalled`, `vision_held`, `action_taken`, `rollback_decided` et
-/// `rollback_executed` insérés à leur place alphabétique.
-pub const JOURNAL_EVENT_TYPES: [&str; 14] = [
+/// la re-preuve) + `proof_rendered` (15e, émis par l'opérateur au rendu
+/// de la preuve finale ; preuve : les 10 conditions du Discover §8,
+/// vérifiées une à une). Même ordre que `router::EVENT_TYPES`,
+/// `fact_recalled`, `vision_held`, `action_taken`, `rollback_decided`,
+/// `rollback_executed` et `proof_rendered` insérés à leur place
+/// alphabétique.
+pub const JOURNAL_EVENT_TYPES: [&str; 15] = [
     "action_taken",
     "closure_pulse",
     "correction",
@@ -659,6 +662,7 @@ pub const JOURNAL_EVENT_TYPES: [&str; 14] = [
     "judgment_rendered",
     "judgment_requested",
     "merge_executed",
+    "proof_rendered",
     "pulse",
     "rollback_decided",
     "rollback_executed",

@@ -123,6 +123,36 @@ pub struct Checkpoint<'a> {
     pub ambiguous: bool,
 }
 
+/// Un événement candidat au checkpoint « latest-proved » (D-F1-11-5) :
+/// le seq, l'`event_id`, l'`at` et la présence d'une preuve non vide.
+/// La CLI construit ces candidats depuis le journal réel ; la fonction
+/// pure choisit le dernier avec preuve.
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct CheckpointCandidate {
+    pub seq: usize,
+    pub event_id: String,
+    pub at: String,
+    pub dispatch_id: String,
+    pub has_proof: bool,
+}
+
+/// Le dernier événement *avec preuve* d'un dispatch (D-F1-11-5, patron
+/// D-F1-10-1) : le checkpoint « latest-proved » — le seq du dernier
+/// événement du dispatch dont la preuve est non vide, avec son
+/// `event_id` et son `at`. `None` si aucun événement du dispatch ne
+/// porte de preuve : le checkpoint ne peut pas être dérivé, le seq
+/// explicite reste alors la seule voie (fixtures, simulations T0–T9).
+pub fn latest_proved_checkpoint(
+    events: &[CheckpointCandidate],
+    dispatch_id: &str,
+) -> Option<(usize, String, String)> {
+    events
+        .iter()
+        .filter(|e| e.dispatch_id == dispatch_id && e.has_proof)
+        .max_by_key(|e| e.seq)
+        .map(|e| (e.seq, e.event_id.clone(), e.at.clone()))
+}
+
 /// La décision du retour (R3, R2) : le coordinateur, par événement du
 /// journal — ou le 13e en secours (D-F1-10-4).
 #[derive(Debug, Clone)]
@@ -838,5 +868,61 @@ mod unit_tests {
     fn parse_case_bad_seq() {
         let text = "## T1\n- Fonction : F1-5\n- Checkpoint — seq : vingt\n";
         assert!(parse_case(text, "T1").is_err());
+    }
+
+    #[test]
+    fn latest_proved_checkpoint_dernier_avec_preuve() {
+        // D-F1-11-5 : le checkpoint dérivé est le dernier événement AVEC
+        // preuve du dispatch — le merge seq 90 (avec preuve) prime sur
+        // le jugement seq 89, et un événement sans preuve après lui ne
+        // le déplace pas.
+        let events = vec![
+            CheckpointCandidate {
+                seq: 89,
+                event_id: "EVT-20261113-060".to_string(),
+                at: "2026-11-13T05:38:58-05:00".to_string(),
+                dispatch_id: "D-N055-F1-10-JUDGE".to_string(),
+                has_proof: true,
+            },
+            CheckpointCandidate {
+                seq: 90,
+                event_id: "EVT-20261113-061".to_string(),
+                at: "2026-11-13T05:40:32-05:00".to_string(),
+                dispatch_id: "D-N055-F1-10-MERGE".to_string(),
+                has_proof: true,
+            },
+            CheckpointCandidate {
+                seq: 91,
+                event_id: "EVT-20261113-062".to_string(),
+                at: "2026-11-13T06:30:00-05:00".to_string(),
+                dispatch_id: "D-N055-F1-10-MERGE".to_string(),
+                has_proof: false,
+            },
+        ];
+        assert_eq!(
+            latest_proved_checkpoint(&events, "D-N055-F1-10-MERGE"),
+            Some((
+                90,
+                "EVT-20261113-061".to_string(),
+                "2026-11-13T05:40:32-05:00".to_string()
+            ))
+        );
+        assert_eq!(
+            latest_proved_checkpoint(&events, "D-N055-F1-10-JUDGE"),
+            Some((
+                89,
+                "EVT-20261113-060".to_string(),
+                "2026-11-13T05:38:58-05:00".to_string()
+            ))
+        );
+        assert_eq!(latest_proved_checkpoint(&events, "D-N055-F1-99"), None);
+        let sans_preuve: Vec<CheckpointCandidate> = events
+            .iter()
+            .map(|e| CheckpointCandidate { has_proof: false, ..e.clone() })
+            .collect();
+        assert_eq!(
+            latest_proved_checkpoint(&sans_preuve, "D-N055-F1-10-MERGE"),
+            None
+        );
     }
 }

@@ -45,5 +45,9 @@ path = "src/bin/take-action.rs"
 name = "prove-rollback"
 path = "src/bin/prove-rollback.rs"
 
+[[bin]]
+name = "prove-final"
+path = "src/bin/prove-final.rs"
+
 [profile.release]
 debug = false

@@ -9,7 +9,7 @@
 //! nommées (Discover F1-8 §5.1).
 //!
 //! Règles (Discover F1-8 §6), appliquées dans l'ordre
-//! V1 → V6 → V2 → V3 → V4 → V7 → V5 → V8 (du moins cher au plus cher) :
+//! V1 → V6 → V2 → V3 → V4 → V7 → V5 → V8 → V9 (du moins cher au plus cher) :
 //! * V1 — Lecture datée. Chaque affirmation de vision porte sa source
 //!   exacte (chemin + ligne/seq/SHA) ET son horodatage de lecture (ISO
 //!   8601 avec offset, pas dans le futur). Une affirmation sans
@@ -45,6 +45,15 @@
 //!   13 mémoires, le bundle, FKB02 — Discover §2.8 hors périmètre) et ses
 //!   réserves (fenêtre trouée, lectures datées). Une vision qui se
 //!   présente comme complète sans limites nommées = rejet.
+//! * V9 — Libellé daté conforme à la valeur lue (D-F1-11-10). Un libellé
+//!   daté (seq du journal, nombre de PR ouvertes) qui ne correspond pas
+//!   à la valeur lue au journal / au registre / à l'API est rejeté —
+//!   c'est le fautif F-V5 (un état valide sauf ses libellés périmés
+//!   présentés comme courants). Les libellés sont des sorties calculées
+//!   (D-F1-11-4) : un état rendu par la CLI généralisée porte ses
+//!   libellés égaux aux valeurs lues ; un dossier qui cite « seq 37 »
+//!   sur un journal à 90 lignes, ou « 0 PR ouverte » quand l'API en
+//!   porte N, est rejeté V9 avec la raison nommée.
 //!
 //! V2/V3 sont les seuls qui touchent aux sources au moment de la vision ;
 //! V5 est le contrôle qui prouve que la vision distingue le vrai du
@@ -159,6 +168,57 @@ pub struct Threshold<'a> {
     pub correct_anchor: &'a str,
 }
 
+/// Un libellé daté (V9) : la valeur affirmée par l'état et la valeur lue
+/// à la source, toutes deux sous forme canonique (voir
+/// `canonical_label_value`). Un libellé est une sortie calculée
+/// (D-F1-11-4) : rendu par la CLI généralisée, `claimed` égale `read` ;
+/// cité d'un dossier, il est comparé à la lecture.
+#[derive(Debug, Clone)]
+pub struct VisionLabel<'a> {
+    /// Le nom du libellé (ex. « journal (dernier seq) »,
+    /// « PR ouvertes (L00 Run #711 vs API) »).
+    pub name: &'a str,
+    /// La valeur affirmée par le libellé (forme canonique).
+    pub claimed: &'a str,
+    /// La valeur lue à la source (forme canonique).
+    pub read: &'a str,
+    /// L'horodatage de la lecture (ISO 8601 avec offset).
+    pub read_at: &'a str,
+}
+
+/// Le libellé de seq canonique : « seq N ».
+pub fn seq_label(seq: usize) -> String {
+    format!("seq {}", seq)
+}
+
+/// Le libellé de PR ouvertes canonique : « N PR ouverte(s) ».
+pub fn pr_label(n: usize) -> String {
+    format!("{} PR ouverte(s)", n)
+}
+
+/// Canonise une valeur de libellé citée (dossier fautif, L00) : le
+/// premier entier lu devient « seq N » (libellé de seq) ou
+/// « N PR ouverte(s) » (libellé de PR) ; toute autre valeur est
+/// reprise telle quelle, sans espaces superflus. Les deux côtés d'un
+/// libellé sont canonisés par l'appelant avant comparaison — « 0 PR
+/// ouverte » et « 0 PR ouverte(s) » disent la même valeur, pas deux
+/// valeurs.
+pub fn canonical_label_value(raw: &str) -> String {
+    let raw = raw.trim();
+    let digits: String = raw.chars().filter(|c| c.is_ascii_digit()).collect();
+    if raw.contains("seq") {
+        if let Ok(n) = digits.parse::<usize>() {
+            return seq_label(n);
+        }
+    }
+    if raw.contains("PR") {
+        if let Ok(n) = digits.parse::<usize>() {
+            return pr_label(n);
+        }
+    }
+    raw.to_string()
+}
+
 /// Le fait fautif planté (V5) : le triplet qui l'identifie
 /// (dispatch, ancre, franchissement affirmé).
 #[derive(Debug, Clone)]
@@ -200,6 +260,8 @@ pub struct VisionState<'a> {
     /// Le dernier seq du journal au moment de la vision (V2 : un seq cité
     /// au-delà n'existe pas).
     pub max_seq: usize,
+    /// Les libellés datés (V9) : chaque libellé affirme une valeur lue.
+    pub labels: &'a [VisionLabel<'a>],
 }
 
 /// Un état de vision accepté : ses comptes, 0 contradiction non portée.
@@ -284,7 +346,7 @@ fn dated(read_at: &str, now_unix: i64) -> Result<i64, Rejection> {
 }
 
 /// Valide un état de vision, dans l'ordre
-/// V1 → V6 → V2 → V3 → V4 → V7 → V5 → V8.
+/// V1 → V6 → V2 → V3 → V4 → V7 → V5 → V8 → V9.
 ///
 /// `now_unix` est l'instant de la vision (V1 : aucune lecture dans le
 /// futur ; V3 : le franchissement porté doit être cohérent avec lui).
@@ -434,12 +496,12 @@ pub fn validate_vision(
     // portée (même nom, statut valide, source non vide) ; une comparaison
     // cohérente qui recouvre une divergence connue la lisse.
     for divergence in state.divergences {
-        if !VISION_STATUSES.contains(&divergence.status) {
+        if !valid_status(divergence.status) {
             return Err(rejection(
                 "V4",
                 "status",
                 divergence.status,
-                "une divergence portée sans statut valide (ouverte / classée / résolue / absente) est une contradiction locale",
+                "une divergence portée sans statut valide (ouverte / classée / résolue / absente / non re-vérifié au AAAA-MM-JJ) est une contradiction locale",
             ));
         }
         if divergence.source.trim().is_empty() {
@@ -532,6 +594,37 @@ pub fn validate_vision(
             "la vision se présente comme complète",
             "la vision ne couvre pas tout (13 mémoires, bundle, FKB02 hors périmètre) — une vision qui se présente comme complète sans limites nommées est rejetée",
         ));
+    }
+
+    // V9 — Libellé daté conforme à la valeur lue : chaque libellé
+    // affirme une valeur lue à sa source (journal, registre, API). Un
+    // libellé daté qui ne correspond pas à la valeur lue est rejeté
+    // (F-V5 : un état valide sauf ses libellés périmés présentés comme
+    // courants). Le libellé doit être daté (V9, comme V1) ; la
+    // comparaison porte sur les valeurs canoniques (voir
+    // `canonical_label_value`).
+    for label in state.labels {
+        if parse_iso8601_offset(label.read_at).is_none()
+            || parse_iso8601_offset(label.read_at).unwrap() > now_unix
+        {
+            return Err(rejection(
+                "V9",
+                "libellé",
+                label.name,
+                "le libellé n'est pas daté (ISO 8601 avec offset, pas dans le futur) — un libellé sans horodatage de lecture est déjà périmé",
+            ));
+        }
+        if label.claimed != label.read {
+            return Err(rejection(
+                "V9",
+                "libellé",
+                label.name,
+                &format!(
+                    "le libellé dit {}, la valeur lue porte {} — un libellé daté qui ne correspond pas à la valeur lue au journal / au registre / à l'API est rejeté",
+                    label.claimed, label.read
+                ),
+            ));
+        }
     }
 
     Ok(ValidVision {
@@ -770,6 +863,65 @@ pub fn parse_fautif(text: &str) -> Result<FautifClaim, String> {
     })
 }
 
+/// Un statut de divergence est-il valide (V4) : l'un des quatre
+/// (`VISION_STATUSES`), ou « non re-vérifié au AAAA-MM-JJ » (D-F1-11-4
+/// B7 : une divergence dont la source n'est pas lisible depuis ce poste
+/// au rendu porte ce statut, jamais « ouvert »/« résolu » figé).
+pub fn valid_status(status: &str) -> bool {
+    if VISION_STATUSES.contains(&status) {
+        return true;
+    }
+    if let Some(date) = status.strip_prefix("non re-vérifié au ") {
+        let b = date.as_bytes();
+        return b.len() == 10
+            && b[4] == b'-'
+            && b[7] == b'-'
+            && b.iter()
+                .enumerate()
+                .all(|(i, c)| i == 4 || i == 7 || c.is_ascii_digit());
+    }
+    false
+}
+
+/// Un libellé fautif planté (F-V5) : le nom du libellé et la valeur
+/// affirmée par le dossier (forme brute, à canoniser par l'appelant).
+#[derive(Debug, Clone, PartialEq, Eq)]
+pub struct FautifLabel {
+    pub name: String,
+    pub claimed: String,
+}
+
+/// Extrait les libellés fautifs d'un dossier F-V5
+/// (`VISION-FAUTIF-5.md`) : lignes `**Libellé <nom> :** <valeur>`.
+/// Au moins un libellé est exigé ; un dossier sans libellé n'est pas
+/// un dossier F-V5.
+pub fn parse_fautif_labels(text: &str) -> Result<Vec<FautifLabel>, String> {
+    let mut out = Vec::new();
+    for line in text.lines() {
+        let trimmed = line.trim_start();
+        if let Some(rest) = trimmed.strip_prefix("**Libellé ") {
+            if let Some((name, value)) = rest.split_once(":**") {
+                let name = name.trim().to_string();
+                let claimed = value.trim().to_string();
+                if name.is_empty() || claimed.is_empty() {
+                    return Err(format!(
+                        "libellé fautif mal formé dans la ligne '{}'",
+                        line.trim()
+                    ));
+                }
+                out.push(FautifLabel { name, claimed });
+            }
+        }
+    }
+    if out.is_empty() {
+        return Err(
+            "aucun libellé fautif dans le dossier (attendu au moins une ligne `**Libellé <nom> :** <valeur>`)"
+                .to_string(),
+        );
+    }
+    Ok(out)
+}
+
 #[cfg(test)]
 mod unit_tests {
     use super::*;
@@ -822,5 +974,38 @@ mod unit_tests {
             claim.correct_anchor,
             "journal 930, ~21:00, seuil ~09:00, non franchi"
         );
+    }
+
+    #[test]
+    fn statut_non_reverifie_accepte() {
+        assert!(valid_status("ouverte"));
+        assert!(valid_status("classée"));
+        assert!(valid_status("résolue"));
+        assert!(valid_status("absente"));
+        assert!(valid_status("non re-vérifié au 2026-11-13"));
+        assert!(!valid_status("non re-vérifié au 13/11/2026"));
+        assert!(!valid_status("non re-vérifié"));
+        assert!(!valid_status("en cours"));
+    }
+
+    #[test]
+    fn libelle_canonique() {
+        assert_eq!(canonical_label_value("seq 37"), "seq 37");
+        assert_eq!(canonical_label_value("seq 90"), "seq 90");
+        assert_eq!(canonical_label_value("0 PR ouverte"), "0 PR ouverte(s)");
+        assert_eq!(canonical_label_value("1 PR ouverte"), "1 PR ouverte(s)");
+        assert_eq!(canonical_label_value("0 PR ouverte(s)"), "0 PR ouverte(s)");
+    }
+
+    #[test]
+    fn parse_fautif_labels_champs() {
+        let text = "# Dossier de vision fautif F-V5\n\n**Libellé seq :** seq 37\n**Libellé PR :** 0 PR ouverte\n";
+        let labels = parse_fautif_labels(text).unwrap();
+        assert_eq!(labels.len(), 2);
+        assert_eq!(labels[0].name, "seq");
+        assert_eq!(labels[0].claimed, "seq 37");
+        assert_eq!(labels[1].name, "PR");
+        assert_eq!(labels[1].claimed, "0 PR ouverte");
+        assert!(parse_fautif_labels("aucun libellé ici").is_err());
     }
 }
