@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 clos (PR #52 mergée `691b0a0`, jugement VALIDÉE AVEC RÉSERVES, journal 942, reçus G-20261112-040/041) ; F1-10 clos (PR #53 mergée `28d32f7`, jugement VALIDÉE AVEC RÉSERVES, journal 944, reçus G-20261112-043/044) ; F1-11 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 clos (PR #52 mergée `691b0a0`, jugement VALIDÉE AVEC RÉSERVES, journal 942, reçus G-20261112-040/041) ; F1-10 clos (PR #53 mergée `28d32f7`, jugement VALIDÉE AVEC RÉSERVES, journal 944, reçus G-20261112-043/044) ; F1-11 clos (PR #54 mergée a40a96c, jugement VALIDÉE AVEC RÉSERVES, journal 946, reçu G-20261112-047).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -965,8 +965,7 @@ binaire `prove-final`) ; manifeste
 `00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
 fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser +
 Vision + Action + Rollback + Preuve finale nommées, `validated_by` corrigé
-jusqu'à F1-10 : « F1-10 VALIDÉE AVEC RÉSERVES, PR #53 mergée `28d32f7`,
-jugement journal 944 ») ; audit télémétrie
+jusqu'à F1-11 : « F1-11 VALIDÉE AVEC RÉSERVES, PR #54 mergée `a40a96c`, jugement journal 946 ») ; audit télémétrie
 `00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Preuve finale ajouté : 0
 appel sortant ; CLI lectrice, lectures au fichier local nommées, comptées
 et tracées, 0 appel réseau, 0 recherche sémantique, 0 appel en écriture
