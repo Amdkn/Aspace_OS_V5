@@ -248,3 +248,53 @@ fixtures sont des chemins de sources personnelles, pas des secrets ; les
 identifiants de test `G-20261112-901` des pas précédents ne sont pas repris
 ici — le vrai reçu de livraison est `G-20261112-034` PROPOSÉ à l'ouverture
 de la PR, mission `LE1-FAB-D-N055-013` PROPOSÉE, assignation au dépôt).
+
+---
+
+# Audit télémétrie — fonction Vision (D-N055 F1-8)
+
+**Module :** `fiber:a0:fondation-13-1` — état de vision
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/vision.rs`,
+CLI `hold-vision`).
+**Date :** 2026-11-13 (pas F1-8). **Verdict : 0 appel sortant.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` sans téléchargement de dépendance).
+- **Appels réseau du code :** 0. Le module `vision` ne fait aucun appel
+  sortant (ni HTTP, ni DNS, ni socket). Les lectures datées (V1), les
+  comparaisons (V2), les divergences avec statut (V4) et le fautif planté
+  (V5) sont injectés par l'appelant — la fonction ne contacte ni le
+  fichier local ni l'API elle-même.
+- **CLI `hold-vision` :** ne lit que des fichiers locaux (`--registre`,
+  `--journal`, `--l00`, `--n2`, `--miroir`, `--fiche`, `--manifeste`,
+  `--workgraph-state`, `--inventaire`, `--ledger-dir`, `--fautif`) et
+  n'écrit que sur stdout/stderr. Aucun appel sortant — elle ne fait pas
+  de recherche sémantique (A-F1-8-5) : elle relit les registres au
+  fichier et normalise les fuseaux. Les lectures sont nommées, comptées
+  et tracées (9 lectures R1–R9 + 1 reçu + 1 fautif quand il est donné).
+  La Google Sheet Workgraph n'est pas relue en direct (0 appel réseau) :
+  sa lecture est citée du Discover F1-8 §2.5, avec son horodatage
+  (2026-11-13T02:13:32-05:00) — une re-citation datée, pas une lecture
+  fraîche (limite nommée, V8).
+- **Horloge :** la CLI lit l'horloge système pour l'horodatage de la
+  vision (UTC, comme `recorded_at` du validateur R10) — la validation
+  V1–V8 elle-même ne dépend de l'instant que pour deux contrôles (V1 :
+  aucune lecture dans le futur ; V3 : le franchissement porté doit être
+  cohérent avec l'instant de la vision).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub du HEAD master et des PR ouvertes (injectées
+   à la CLI par `--master` / `--open-prs`, avec leurs horodatages de
+   lecture) — effectuées par l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (le dossier fautif `vision-fautif-1.md` ne porte que des numéros
+de journal et des SHA déjà publics au registre ; le vrai reçu de livraison
+est `G-20261112-037` PROPOSÉ à l'ouverture de la PR, mission
+`LE1-FAB-D-N055-016` PROPOSÉE, assignation au dépôt).

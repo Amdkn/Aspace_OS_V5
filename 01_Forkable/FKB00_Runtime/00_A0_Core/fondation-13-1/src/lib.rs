@@ -15,6 +15,14 @@
 //! (exécution E1–E8 d'un merge — la fonction EST l'exécution, sans Ryan
 //! comme session séparée).
 //!
+//! Mémoriser — fonction Mémoriser (D-N055 F1-7) : voir le module `memory`
+//! (citation M1–M8 d'un fait — la fonction EST la citation, sans Graham
+//! comme session séparée).
+//!
+//! Vision — fonction Vision (D-N055 F1-8) : voir le module `vision`
+//! (état de vision V1–V8 — la fonction EST l'état de vision, sans
+//! L00/N2/pulses comme sessions séparées).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -41,13 +49,14 @@
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
 //! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router,
-//! Découvrir, Juger, Exécuter et Mémoriser).
+//! Découvrir, Juger, Exécuter, Mémoriser et Vision).
 
 pub mod discover;
 pub mod execute;
 pub mod judge;
 pub mod memory;
 pub mod router;
+pub mod vision;
 
 use std::collections::HashSet;
 use std::fmt;

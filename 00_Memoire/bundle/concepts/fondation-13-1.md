@@ -10,12 +10,12 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
 - **13 sessions** nommées par Clara (`chat.list`, ~22:53 EST) : Rick `2428b187`, 13e `a517ae1d`,
-  11e `6f410ddd` (ID complet non établi), 12e `7489b6f0`, Yaz `e1ac3b2d`, Ryan `a152c901`,
+  11e `6f410ddd-4ef8-4834-805a-0b38ede9ba76` (ID complet établi F1-7 T3, source `~/memory/2026-10-09.md:146`), 12e `7489b6f0`, Yaz `e1ac3b2d`, Ryan `a152c901`,
   Bill `500abaec`, Clara `ef2544e6`, Nardole `ae7d36d1`, Rory `5dba06d6`, Amy `337fb65c`,
   River `dfd97c8e`, Graham `059b0c23`.
 - **Registre Nardole : 776 lignes** à l'instantané F1-0 (2026-11-11T00:15:56-05:00).
@@ -513,7 +513,7 @@ par un exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR
 est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-6.json`.
 
-## 11. F1-7 — Mémoriser (PR ouverte, non mergée)
+## 11. F1-7 — Mémoriser (PR #50 mergée `055745b`, journal 938)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-7-PROJET.md` (fonction de
 design interne, journal 937, 2026-11-13 ~01:08 EST). Décisions D-F1-7-1..12,
@@ -611,6 +611,100 @@ reçu de livraison de la PR (mission `LE1-FAB-D-N055-013` PROPOSÉE, entry_id
 `G-20261112-034` PROPOSÉ) est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-7.json`.
 
+## 12. F1-8 — Vision (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-8-PROJET.md` (fonction de
+design interne, journal 939, 2026-11-13 ~02:35 EST). Décisions D-F1-8-1..12,
+amendements A-F1-8-1 / A-F1-8-2 / A-F1-8-3 / A-F1-8-4 / A-F1-8-5 / A-F1-8-6,
+précisions P-F1-8-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `vision`,
+binaire `hold-vision`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser +
+Vision nommées, `validated_by` corrigé : F1-7 VALIDÉE, PR #50 mergée
+`055745b`, jugement journal 938) ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Vision ajouté : 0 appel
+sortant ; CLI lectrice, lectures au fichier local nommées, comptées et tracées,
+0 appel réseau, 0 recherche sémantique).
+
+**Ce qui est livré :** la fonction Vision (V1–V8, ordre V1 → V6 → V2 → V3 →
+V4 → V7 → V5 → V8 ; rejet motivé, jamais de correction silencieuse) + la CLI
+`hold-vision` (`check` : rendu d'un état de vision — les contrôles V1/V6/V2/
+V3/V4 sont structurels et locaux au dossier de vision ; V7/V5 appellent la
+re-lecture au fichier et le rejet du fautif — la fonction est un mécanisme,
+pas une session). Le module `vision` est pur (0 appel sortant, données
+injectées) ; la CLI est la lectrice (lectures au fichier local nommées R1–R9
++ normalisation des fuseaux, lectures comptées, tracées ; 0 appel réseau,
+0 recherche sémantique — A-F1-8-5). La fonction EST l'état de vision
+(D-F1-8-5) : pas de contrôle de recevabilité séparé avant un acte tiers.
+
+**Suite H-M3 — VERTE :** `cargo test` — 123 tests, 0 échec (10 unitaires lib +
+7 d'intégration discover + 13 d'intégration execute + 11 d'intégration judge +
+24 d'intégration memory + 17 d'intégration R10 + 21 d'intégration router +
+20 d'intégration vision) : cas passants = les 3 cas d'essai rendus (T1
+cohérence F1-7, T2 seuils D-N055/D-N053 non franchis, T3 divergence classée
+N2 portée — lectures datées, comparaisons rejouables) ; cas rejetés = les 4
+fautifs du Discover §5.3, dérivés chacun par UNE SEULE différence (raisons
+nommées : V3 ancre fausse, V2 seq inexistant, V1 lecture non datée, V4
+divergence lissée) — dont le fait fautif planté F-V1 ; cas limites = §5.4
+(a) master qui bouge (dérive datée), (b) N2 ombre classée, (c) fenêtre L00
+trouée (absence consignée), (d) fuseaux normalisés (EDT périmé → 02:13 EST),
+(e) `pulse_2110` portée non re-vérifiée, (f) fiche/manifeste périmés portés ;
+type `vision_held` légal comme 11e type (A-F1-8-3) ; premier événement
+`correction` (seq 38+) corrigeant la liste des types elle-même. Log :
+`v4-factory/evidence/D-N055/suite-f1-8.txt` (copie workspace
+`v5-f1-8-scratch/suite-f1-8.txt`). Les 100 tests F1-2/F1-3/F1-4/F1-5/F1-6/F1-7
+restent verts (régression : 0 échec).
+
+**États de vision rendus par la CLI (H-F1-7, preuve du pas) :**
+`v4-factory/evidence/D-N055/VISION-F1-8.md` — T1 ACCEPTÉ V1–V8 (cohérence
+registre 938 = journal seq 37 = reçu G-20261112-035 = master `055745b` au
+merge ; master lu `7feb8b0`, dérive datée ; 0 PR ouverte), T2 ACCEPTÉ V1–V8
+(D-N055 seuil ~13:52, D-N053 seuil ~09:00, non franchis sur leurs ancres),
+T3 ACCEPTÉ V1–V8 (divergence N2/L00 portée, statut `classée`), F-V1 REJET V3
+par la CLI (sortie 2, ancre fausse : le journal 938 nomme D-N055, pas
+D-N053). Sorties CLI : `cli-t1.txt`, `cli-t2.txt`, `cli-t3.txt`,
+`cli-fautif-1.txt` (copies workspace `v5-f1-8-scratch/`).
+
+**Fait fautif planté (D-F1-8-6, amendement A-F1-8-1) :** fautif F-V1 (seuil
+D-N053 franchi sur l'ancre journal 938) — planté à
+`v4-factory/evidence/D-N055/VISION-FAUTIF-1.md` (une seule différence,
+l'ancre) et dérivé en suite. Rejet vérifié par la CLI : `REJET V3 — champ
+'anchor_journal', valeur reçue 'journal 938 pour D-N053' : le journal 938
+nomme D-N055, pas D-N053 — l'ancre est fausse ; le dernier événement
+nommant D-N053 est le journal 930, ~21:00, seuil ~09:00, non franchi`
+(sortie 2). Les garde-fous V1, V2, V4 et V5 sont vérifiés aussi par la suite
+(fautifs F-V2, F-V3, F-V4 → rejets V2, V1, V4 ; fautif affirmé vrai → rejet V5).
+
+**Correction portée en avant (liste miroir, A-F1-8-3) :** la liste
+`JOURNAL_EVENT_TYPES` du module Mémoriser suit celle du routeur (même ordre,
+mêmes contenus — une dérive entre les deux serait une seconde vérité, test
+F1-7) : elle passe à 11 types (`vision_held`) avec ce pas. Les listes du
+Juge (8 types, F1-5) et d'Exécuter (9 types, F1-6) restent figées à leur pas,
+comme F1-7 les a laissées — ce sont des instantanés de leur pas, pas des
+miroirs du routeur.
+
+**Correction portée en avant (compte L00, D-F1-8-9) :** le Discover F1-8 §9
+dit « 20 runs L00 absents » ; son §2.3 en compte 21 (#657–#666, #673,
+#675–#684). Le compte qui fait foi est 21. Le Discover n'est pas réécrit ;
+la correction est portée ici, en avant, et la vision porte 21 absences.
+
+**Hold-outs F1-8 :** H-M1 mesuré (registre 939 lignes, journal-router 37 lignes
+seq 1–37, master base `7feb8b0` re-mesuré à l'ouverture de la PR) ; H-M2 diff
+vide sur l'amont (code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4
+télémétrie (audit joint, 0 dépendance, 0 appel sortant, 0 recherche
+sémantique) ; H-M5 levé au niveau du module (fonctions Recevoir + Router +
+Découvrir + Juger + Exécuter + Mémoriser + Vision nommées dans le manifeste —
+le manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6 frontière (seul
+le code A'Space de la fonction Vision ; voir Divergence) ; H-M7 cette fiche.
+H-F1-7 = le reçu du merge qui clôt F1-8 (mission `LE1-FAB-D-N055-017`
+PROPOSÉE, entry_id `G-20261112-038` PROPOSÉ) — **après le merge, par un
+exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR (mission
+`LE1-FAB-D-N055-016` PROPOSÉE, entry_id `G-20261112-037` PROPOSÉ) est
+consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
+
 ## Divergence (H-M6)
 
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
@@ -706,3 +800,39 @@ reçu de livraison de la PR (mission `LE1-FAB-D-N055-013` PROPOSÉE, entry_id
   (E6). C'est le même partage que les pas F1-2 à F1-5 (preuves injectées
   par l'opérateur, vérifiées à l'API) — la frontière est documentée, pas
   contournée.
+- **`vision_held` légalisé 11e type + premier `correction` (F1-8,
+  A-F1-8-3).** La F1-8 changeset porte la liste `EVENT_TYPES` du routeur
+  à 11 types ; l'état de vision est rendu comme événement `vision_held`
+  (preuve : lectures datées + comparaisons rejouables + divergences
+  portées avec statut) ; le premier événement `correction` corrige la
+  liste des types elle-même (les ajouts `closure_pulse`, `merge_executed`,
+  `fact_recalled` et `vision_held` portés comme corrections, avec leurs
+  événements de preuve) ; le design F1-3 n'est pas réécrit. La liste
+  miroir du module Mémoriser suit (11 types) ; les listes du Juge (8) et
+  d'Exécuter (9) restent figées à leur pas.
+- **Fenêtre L00 trouée — 21 runs absents, cause non établie (F1-8,
+  D-F1-8-9).** La vision porte les 21 absences comme une seule absence
+  consignée (statut `ouverte`, deux blocs nommés) — elle ne conclut pas
+  sur les runs absents (« absence consignée », pas « rien ne s'est
+  passé »). Le Discover §9 dit « 20 » par erreur ; le compte qui fait
+  foi est 21 (§2.3).
+- **Ni la Sheet ni le miroir ne fait foi seul (F1-8, D-F1-8-10).** La
+  vision compare les deux domiciles et porte la divergence (Bill présent
+  au miroir, absent de la Sheet ; Coordinateur ×2 présent à la Sheet,
+  absent du miroir) ; le domicile de référence est le registre (les
+  événements), pas une des deux vues. La vision ne les réconcilie pas
+  (V6) — la fusion est un pas ultérieur, ou un arbitrage vision.
+- **Normalisation des fuseaux (F1-8, D-F1-8-11).** Tout horodatage
+  comparé est converti en ISO 8601 avec offset avant comparaison ; un
+  horodatage non normalisable est porté `périmé` (étiquette), pas rejeté
+  comme instant. N2 « 03:13 EDT » en heure d'hiver = 02:13 EST, étiquette
+  périmée — une comparaison qui mélangerait EST et EDT non normalisé se
+  tromperait d'une heure.
+- **Fiche/manifeste — dérive d'un pas (F1-8, D-F1-8-8).** La fiche et le
+  manifeste disaient F1-7 « PR ouverte, non mergée » / « jugement à
+  venir » alors que F1-7 est CLOSE (PR #50 mergée `055745b`, jugement
+  VALIDÉE, journal 938). La changeset F1-8 corrige l'instance F1-7
+  (statut `résolue`) ; la dérive structurelle — aucun chemin
+  d'atterrissage ne met à jour la fiche — reste `ouverte`, hors de ce
+  pas. La fonction Vision, elle, porte seulement : elle ne réécrit
+  aucune source (V6).
