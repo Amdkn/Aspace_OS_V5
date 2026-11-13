@@ -2,7 +2,7 @@
 name = "fondation-13-1"
 version = "0.2.0"
 edition = "2021"
-description = "Fonctions Recevoir (F1-2), Router (F1-3), Découvrir (F1-4), Juger (F1-5) et Exécuter (F1-6) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch, validateur de Discover, jugement de PR et exécution de merge — code A'Space neuf, zéro dépendance, zéro télémétrie"
+description = "Fonctions Recevoir (F1-2), Router (F1-3), Découvrir (F1-4), Juger (F1-5), Exécuter (F1-6) et Mémoriser (F1-7) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch, validateur de Discover, jugement de PR, exécution de merge et citation de fait — code A'Space neuf, zéro dépendance, zéro télémétrie"
 license = "Apache-2.0"
 
 [lib]
@@ -28,6 +28,10 @@ path = "src/bin/judge-pr.rs"
 [[bin]]
 name = "execute-merge"
 path = "src/bin/execute-merge.rs"
+
+[[bin]]
+name = "recall-fact"
+path = "src/bin/recall-fact.rs"
 
 [profile.release]
 debug = false

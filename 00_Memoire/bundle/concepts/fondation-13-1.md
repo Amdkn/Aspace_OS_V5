@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -81,8 +81,11 @@ propre juge sans perdre la vérification — d'où trois filets, pas un seul.
 - **6 mémoires absentes :** 13e, 11e, Clara, Nardole, Rory, River — aucun fichier
   `MEMORY.md` dans leurs chats à l'instantané. Consignées comme absences ; si
   elles apparaissent, F1-7 les re-typifie.
-- **ID 11e incomplet :** le design ne donne que `6f410ddd` (8 car.) — l'ID complet
-  n'est pas établi, jamais inventé.
+- **ID 11e établi (correction portée en avant, D-F1-7-12a) :** l'ID complet est
+  `6f410ddd-4ef8-4834-805a-0b38ede9ba76` — source `~/memory/2026-10-09.md:146`,
+  vérifiée au `grep` ce tour, miroir `~/memory/bank/reflections.md`. La mention
+  « ID complet non établi » est réfutée ; la fiche §4 et le plan §0 (qui ne
+  donnent que `6f410ddd`) sont corrigés par cet amendement porté en avant.
 - **Résiduels :** 38 têtes de journal « événement » + 226 puces « fait (défaut) »
   — comptés à part, textes et preuves conservés.
 - **Registre vivant :** l'inventaire est un instantané (776 lignes, 00:15:56 EST) ;
@@ -110,7 +113,7 @@ propre juge sans perdre la vérification — d'où trois filets, pas un seul.
   elle-même (correction du Capitaine, 2026-11-10 ~13:11 EST) ; la bascule plus rapide
   qu'une fonction à la fois (arbitrage vision, via Rick → A0).
 
-## 6. F1-2 — Recevoir (PR ouverte, non mergée)
+## 6. F1-2 — Recevoir (PR #26 mergée `1f89b56`)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-2-PROJET.md` (fonction de
 design interne, journal 790, 2026-11-11 ~01:01 EST). Décisions D-F1-2-1..6,
@@ -410,7 +413,7 @@ ce pas**. Le reçu de livraison de la PR (mission `LE1-FAB-D-N055-009`,
 entry_id `G-20261112-028`) est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-5.json`.
 
-## 10. F1-6 — Exécuter (PR ouverte, non mergée)
+## 10. F1-6 — Exécuter (PR #49 mergée `e2e9c14`, journal 936)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-6-PROJET.md` (fonction de
 design interne, journal 934, 2026-11-12 ~22:49 EST). Décisions D-F1-6-1..12,
@@ -510,6 +513,104 @@ par un exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR
 est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-6.json`.
 
+## 11. F1-7 — Mémoriser (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-7-PROJET.md` (fonction de
+design interne, journal 937, 2026-11-13 ~01:08 EST). Décisions D-F1-7-1..12,
+amendements A-F1-7-1 / A-F1-7-2 / A-F1-7-3 / A-F1-7-4 / A-F1-7-5 / A-F1-7-6,
+précisions P-F1-7-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `memory`,
+binaire `recall-fact`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser nommées,
+`validated_by` corrigé : F1-6 VALIDÉE AVEC RÉSERVES, PR #49 mergée `e2e9c14`,
+jugement journal 936) ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Mémoriser ajouté : 0 appel
+sortant ; CLI lectrice, lectures au fichier local nommées, comptées et tracées,
+0 appel réseau, 0 recherche sémantique).
+
+**Ce qui est livré :** la fonction Mémoriser (M1–M8, ordre M1 → M7 → M2 → M3 →
+M4 → M5 → M6 → M8 ; rejet motivé, jamais de correction silencieuse) + la CLI
+`recall-fact` (`check` : citation d'un fait — les contrôles M1/M7/M2/M3/M4
+sont structurels et locaux au dossier de citation ; M5/M6 appellent la
+re-lecture au fichier et le rejet du fautif — la fonction est un mécanisme,
+pas une session). Le module `memory` est pur (0 appel sortant, données
+injectées) ; la CLI est la lectrice (re-compilation de l'index + re-lecture
+des sources au fichier, lectures nommées, comptées, tracées ; 0 appel réseau,
+0 recherche sémantique — A-F1-7-5). La fonction EST la citation (D-F1-7-7) :
+pas de contrôle de recevabilité séparé avant un acte tiers.
+
+**Suite H-M3 — VERTE :** `cargo test` — 100 tests, 0 échec (7 unitaires lib +
+7 d'intégration discover + 13 d'intégration execute + 11 d'intégration judge +
+24 d'intégration memory + 17 d'intégration R10 + 21 d'intégration router) :
+cas passants = les 3 faits d'essai cités (T1 FreeLLMAPI, T2 aspaceos.tech,
+T3 ID 11e — 4 champs exacts, vérifiés au fichier au moment de la citation) +
+le fait de merge (base de F-X2) ; cas rejetés = les 4 fautifs du Discover §5.3,
+dérivés chacun par UNE SEULE différence (raisons nommées : M3 date fausse,
+M2 SHA altéré, M2 source absente, M4 statut faux) — dont le fait fautif planté
+F-X1 ; cas limites = §5.4 (a) contradiction des trois heures portée (statut
+`contredit`), (b) absence des 6 mémoires consignée (statut `absent`),
+(c) source bougée signalée (statut `périmé` + re-résolution), (d) fait dupliqué
+dédupliqué, (e) fait à date future (statut `à venir`), (f) fait sans date
+(date « inconnue », jamais inférée) ; type `fact_recalled` légal comme 10e
+type (A-F1-7-3). Log : `v4-factory/evidence/D-N055/suite-f1-7.txt` (copie
+workspace `v5-f1-7-scratch/suite-f1-7.txt`). Les 76 tests F1-2/F1-3/F1-4/F1-5/
+F1-6 restent verts (régression : 0 échec).
+
+**Citations rendues par la CLI (H-F1-6, preuve du pas) :**
+`v4-factory/evidence/D-N055/CITATIONS-F1-7.md` — T1 ACCEPTÉ M1–M8 (statut
+`contredit`, 3 lectures), T2 ACCEPTÉ M1–M8 (statut `vérifié`, 1 lecture), T3
+ACCEPTÉ M1–M8 (statut `consigné`, date du fichier, 1 lecture), F-X1 REJET M3
+(sortie 2, date 2027-10-08 au lieu de 2027-10-09). Sorties CLI :
+`cli-t1.txt`, `cli-t2.txt`, `cli-t3.txt`, `cli-fautif-1.txt`.
+
+**Fait fautif planté (D-F1-7-6, amendement A-F1-7-1) :** fautif n° 1 (date
+fausse — expiration 2027-10-08 au lieu de 2027-10-09) — planté à
+`v4-factory/evidence/D-N055/CITATION-FAUTIF-1-F1-7.md` (une seule différence,
+le champ Date) et dérivé en suite. Rejet vérifié par la CLI : `REJET M3 —
+champ 'date', valeur reçue '2027-10-08' : la date citée n'est pas celle que
+porte la source (la source porte 2026-11-06, 2027-10-09, 2027-05-21,
+2027-02-02) — une mémoire qui cite une date qu'elle n'a pas vérifiée n'est
+pas une mémoire, c'est une rumeur datée` (sortie 2). Les garde-fous M2, M4
+et M6 sont vérifiés aussi par la suite (fautifs F-X2, F-X3, F-X4 → rejets M2,
+M2, M4 ; citation égale au fautif → rejet M6).
+
+**Correction portée en avant (re-compilation, D-F1-7-11a) :** `~/memory/people/`
+compte **23 pages**, pas 22 comme l'annonçait le design — re-mesuré ce tour
+(42 notes quotidiennes, 4 fichiers `bank/`, 160 lignes `~/MEMORY.md`, 45 lignes
+`~/AGENTS.md` conformes).
+
+**Correction portée en avant (M3, détail du rejet) :** la première version de
+la CLI nommait la première date de la ligne comme « la date de la source »
+(2026-11-06, date d'enregistrement) — choisir la première serait inférer.
+La CLI nomme désormais toutes les dates que porte la ligne quand la date
+citée n'y est pas, sans en choisir une.
+
+**Correction portée en avant (UTF-8) :** la première version de la CLI
+découpait les lignes par octets et paniquait sur « — » (T3) — corrigée par
+fenêtres de 10 caractères.
+
+**Correction portée en avant (§6, §10, Statut) :** les en-têtes « F1-2 PR
+ouverte, non mergée » et « F1-6 PR ouverte, non mergée » étaient périmés
+(PR #26 mergée `1f89b56`, PR #49 mergée `e2e9c14`, reçu 032, journal 936)
+— correction portée en avant (fiche §6, §10 et Statut ci-dessus).
+
+**Hold-outs F1-7 :** H-M1 mesuré (registre 937 lignes, journal-router 27 lignes
+seq 1–27, master base `1f1f6e0` re-mesuré à l'ouverture de la PR) ; H-M2 diff
+vide sur l'amont (code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4
+télémétrie (audit joint, 0 dépendance, 0 appel sortant, 0 recherche
+sémantique) ; H-M5 levé au niveau du module (fonctions Recevoir + Router +
+Découvrir + Juger + Exécuter + Mémoriser nommées dans le manifeste — le
+manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6 frontière (seul le
+code A'Space de la fonction Mémoriser ; voir Divergence) ; H-M7 cette fiche.
+H-F1-6 = le reçu du merge qui clôt F1-7 (mission `LE1-FAB-D-N055-014`
+PROPOSÉE, entry_id `G-20261112-035` PROPOSÉ) — **après le merge, par un exécutant dédié, pas dans ce pas**. Le
+reçu de livraison de la PR (mission `LE1-FAB-D-N055-013` PROPOSÉE, entry_id
+`G-20261112-034` PROPOSÉ) est consigné à l'ouverture de la PR — voir
+`v4-factory/evidence/D-N055/RESULTS-F1-7.json`.
+
 ## Divergence (H-M6)
 
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
@@ -588,6 +689,14 @@ est consigné à l'ouverture de la PR — voir
   porte la liste `EVENT_TYPES` du routeur à 9 types (`closure_pulse` +
   `merge_executed`) ; le design F1-3 n'est pas réécrit. La réserve R2 du
   jugement F1-5 (routeur à 7 types) est réparée par ce pas.
+- **`fact_recalled` légalisé 10e type (F1-7, A-F1-7-3).** La F1-7 changeset
+  porte la liste `EVENT_TYPES` du routeur à 10 types ; la citation est
+  rendue comme événement `fact_recalled` (preuve : les 4 champs + la
+  re-lecture au fichier) ; le design F1-3 n'est pas réécrit.
+- **M7 insensible à la casse (F1-7, leçon F1-5 portée).** La recherche des
+  marqueurs de jugement se fait sur le texte en minuscules : un « Verdict »
+  avec capitale est un verdict, comme un « Fautif planté » avec capitale
+  devait être attrapé par J6.
 - **L'appel de merge est effectué par l'opérateur, pas par la CLI (F1-6,
   A-F1-6-3).** La CLI `execute-merge`, std seul sans dépendance, ne fait
   pas d'HTTPS : elle contrôle le dossier d'exécution (E1–E8, `--pre-merge`

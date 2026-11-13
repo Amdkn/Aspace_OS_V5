@@ -41,11 +41,12 @@
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
 //! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router,
-//! Découvrir, Juger et Exécuter).
+//! Découvrir, Juger, Exécuter et Mémoriser).
 
 pub mod discover;
 pub mod execute;
 pub mod judge;
+pub mod memory;
 pub mod router;
 
 use std::collections::HashSet;
