@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -245,7 +245,12 @@ de la PR (mission `LE1-FAB-D-N055-005`) est préparé dans
 `v4-factory/evidence/D-N055/RESULTS-F1-3.json` — **non consigné au ledger
 par ce pas** (le coordinateur consigne).
 
-## 8. F1-4 — Découvrir (PR ouverte, non mergée)
+## 8. F1-4 — Découvrir (PR #44 mergée `573cad4`)
+
+**Correction portée en avant :** l'en-tête de cette section disait « PR
+ouverte, non mergée » — la PR #44 a été mergée `573cad4` (2 parents,
+DVG-01, reçu H-F1-1 G-20261112-021, journal 926). La fiche n'est pas
+réécrite : la correction est portée ici.
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-4-PROJET.md` (fonction de
 design interne, journal 923, 2026-11-12 ~14:10 EST). Décisions D-F1-4-1..6,
@@ -319,6 +324,92 @@ ce pas**. Le reçu de livraison de la PR (mission `LE1-FAB-D-N055-007`,
 entry_id `G-20261112-020`) est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-4.json`.
 
+## 9. F1-5 — Juger (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-5-PROJET.md` (fonction de
+design interne, journal 931, 2026-11-12 ~21:24 EST). Décisions D-F1-5-1..9,
+amendements A-F1-5-1 / A-F1-5-2 / A-F1-5-3 / A-F1-5-4, précisions P-F1-5-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `judge`,
+binaire `judge-pr`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger nommées) ; audit télémétrie
+`00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Juger ajouté).
+
+**Ce qui est livré :** la fonction Juger (J1–J8, ordre J1 → J7 → J2 → J5 →
+J3 → J4 → J6 → J8 ; rejet motivé, jamais de correction silencieuse) + la
+CLI `judge-pr` (`check` : jugement d'une PR — les contrôles J1/J7/J2/J5
+sont structurels et locaux au dossier ; J3/J4/J6 appellent les lectures à
+l'API et le rejeu par l'opérateur — SHA, CI et suite injectés, même
+frontière que le validateur R10). La fonction EST le jugement (D-F1-5-5) :
+pas de contrôle de recevabilité séparé avant le merge.
+
+**Suite H-M3 — VERTE :** `cargo test` — 62 tests, 0 échec (7 unitaires lib +
+11 d'intégration judge + 7 d'intégration discover + 17 d'intégration R10 +
+20 d'intégration router) : cas passant = un jugement valide de la PR #44
+(`jugement-valide.md`, faits vérifiés à l'API par le jugement F1-4) ;
+cas rejetés = les 5 fautifs du Discover §6, dérivés chacun par UNE SEULE
+différence (raisons nommées : J2 tête non autorisée, J3 CI non verte, J4
+suite rouge sans exclusion, J5 vert repris du récit, J7 jugement qui
+exécute) — dont la PR fautive plantée n° 1 ; cas limites = dossier sans
+rejet du fautif (J6), document vide (J1), dossier sans limites nommées
+(J8), rouge exclu par le coordinateur (J4, P-F1-5-4), type `closure_pulse`
+légal (A-F1-5-3). Log : `v4-factory/evidence/D-N055/harness-F1-5.log`.
+Les 51 tests F1-2/F1-3/F1-4 restent verts (régression : 0 échec).
+
+**PR fautive plantée (D-F1-5-4, amendement A-F1-5-1) :** fautif n° 1
+(tête non autorisée — le verdict autorise l'ancienne tête, la base
+`96d64ce`, alors que la tête vérifiée est `2d38798`) — planté à
+`v4-factory/evidence/D-N055/JUGEMENT-FAUTIF-1.md` (une seule différence,
+ligne 13, `diff` vérifié) et dérivé en suite. Rejet vérifié par la CLI :
+`REJET J2 — champ 'tête autorisée' : la tête autorisée n'est pas la tête
+vérifiée à l'API — un jugement qui autorise une tête qu'il n'a pas
+vérifiée est une signature en blanc` (sortie 2). Les garde-fous J3, J4,
+J5 et J7 sont vérifiés aussi par la CLI (fautifs n° 2, 3, 4, 5 → rejets
+J3, J4, J5, J7, sortie 2).
+
+**Jugement de la PR du pas par la fonction (étape 4) :** à l'ouverture de
+la PR — la CLI `judge-pr check` est courue sur le dossier de jugement de
+la PR F1-5 (tête, CI et suite re-vérifiées à l'API), verdict attendu : le
+même que l'acceptation du design §9. Le résultat est consigné dans le
+reçu de livraison, pas anticipé ici : J3 exige une CI re-vérifiée à
+l'API sur la tête, qui n'existe qu'une fois la PR ouverte (correction
+portée en avant de l'ordre du design §4 — l'étape 4 suit l'ouverture,
+elle ne la précède pas).
+
+**Mesure H-M1 re-mesurée à l'exécution** (base du Discover : registre 930
+lignes, 4 jugements mesurés 6 393 o / 16 597 o / 14 548 o / 18 291 o,
+aucun mécanisme codé, journal-router 14 lignes seq 1–14) : registre 931
+lignes (design F1-5 signé, journal 931) ; master `9b7f324` (tête vérifiée
+à l'API, base de la branche `a0/f1-5-judge`) ; F1-4 clos (PR #44,
+`573cad4`, reçu 021) ; D-N053 fermé (PR #46, `b6c61b2`, compteur état 0 :
+1 → 0).
+
+**Correction portée en avant (J7) :** la première version du contrôle J7
+niait un marqueur d'exécution dès qu'un « ne » apparaissait dans les 48
+caractères qui le précèdent — le « ne » de l'en-tête « Ce que ce jugement
+ne prouve pas » niait à tort le marqueur de la ligne suivante, et le
+fautif n° 5 passait la suite. La négation est désormais limitée à la
+ligne du marqueur. La correction est portée ici et dans le reçu de
+livraison ; le design signé n'est pas réécrit.
+
+**Correction portée en avant (§8) :** l'en-tête « F1-4 PR ouverte, non
+mergée » était périmé (PR #44 mergée `573cad4`, reçu 021, journal 926)
+— correction portée en avant (fiche §8 et Statut ci-dessus).
+
+**Hold-outs F1-5 :** H-M1 mesuré (ci-dessus) ; H-M2 diff vide sur l'amont
+(code A'Space neuf) ; H-M3 suite verte (ci-dessus) ; H-M4 télémétrie zéro
+(audit joint, 0 dépendance, 0 appel sortant) ; H-M5 levé au niveau du
+module (fonctions Recevoir + Router + Découvrir + Juger nommées dans le
+manifeste — le manifeste du daemon RigInfinity reste dû, voir §4) ; H-M6
+frontière (seul le code A'Space de la fonction Juger ; voir Divergence) ;
+H-M7 cette fiche. H-F1-2 = le reçu du merge qui clôt F1-5 (mission
+`LE1-FAB-D-N055-010`) — **après le merge, par un exécutant dédié, pas dans
+ce pas**. Le reçu de livraison de la PR (mission `LE1-FAB-D-N055-009`,
+entry_id `G-20261112-028`) est consigné à l'ouverture de la PR — voir
+`v4-factory/evidence/D-N055/RESULTS-F1-5.json`.
+
 ## Divergence (H-M6)
 
 - **`recorded_at` posé en UTC (`+00:00`), pas en `-05:00`.** La règle
@@ -363,3 +454,28 @@ entry_id `G-20261112-020`) est consigné à l'ouverture de la PR — voir
 - **D7 exige l'attestation positive (F1-4).** Une ligne « non lu en
   entier » au §10 n'atteste rien — le contrôle l'exclut (correction
   portée en avant, voir fiche §8).
+- **J7 : la négation est limitée à la ligne du marqueur (F1-5).** Une
+  mention niée (« Aucun reçu consigné par ce jugement ») n'est pas une
+  exécution — mais la négation ne se lit que sur la ligne qui porte le
+  marqueur : le « ne » de l'en-tête « Ce que ce jugement ne prouve pas »
+  ne nie pas le marqueur de la ligne suivante (correction portée en
+  avant, voir fiche §9).
+- **J2 et J4 sont portés par les sections, pas par le mot (F1-5).** J2 ne
+  retient que la ligne « tête autorisée » portant un SHA complet (une
+  mention sans SHA n'autorise rien) ; J4 ne lit le compte « N/M » que
+  dans la section Rejeu, après `cargo test` — un compte cité ailleurs
+  (tableau des hold-outs, récit) ne prouve pas le rejeu.
+- **`closure_pulse` accepté par la fonction Juger, pas par le routeur
+  (F1-5, A-F1-5-3).** La fonction Juger accepte `closure_pulse` comme 8e
+  type légal du journal (`JOURNAL_EVENT_TYPES`, 8 types) ; le routeur
+  (F1-3) garde sa liste `EVENT_TYPES` à 7 types — le routeur est
+  consommé, pas re-développé par ce pas, et sa mise à jour est un suivi
+  hors pas, pas une réécriture du design F1-3.
+- **Requalification de l'en-tête du jugement F1-3 (D-F1-5-2, portée en
+  avant).** Le jugement F1-3 se présentait comme rendu par « la fonction
+  de jugement interne (le 1) » — sans mécanisme codé, c'était un jugement
+  en prose rendu par un sous-agent borné du 1, pas un jugement de la
+  fonction. Son verdict (PR #30 VALIDÉE) tient, le merge est fait, rien
+  n'est rouvert ; le design F1-3 n'est pas réécrit. À partir de F1-5,
+  « fonction de jugement » ne désigne que le mécanisme codé (module
+  `judge` + CLI + suite).

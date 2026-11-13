@@ -108,3 +108,41 @@ CLI `validate-discover`).
 Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
 fixtures (le `G-20261112-018` du fautif n° 5 est un identifiant de test,
 jamais consigné — le vrai reçu de livraison est `G-20261112-020`).
+---
+
+# Audit télémétrie — fonction Juger (D-N055 F1-5)
+
+**Module :** `fiber:a0:fondation-13-1` — jugement de PR
+(`01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/src/judge.rs`,
+CLI `judge-pr`).
+**Date :** 2026-11-12 (pas F1-5). **Verdict : 0 appel sortant.**
+
+## Ce qui est vérifié
+
+- **Dépendances :** 0. `Cargo.toml` ne déclare aucune dépendance — le crate
+  est std seul. Aucun accès au registre crates.io à la compilation
+  (vérifié : `cargo test` et `cargo build --release` sans téléchargement
+  de dépendance).
+- **Appels réseau du code :** 0. La bibliothèque ne fait aucun appel sortant
+  (ni HTTP, ni DNS, ni socket). La résolution des SHA complets (J2/J5),
+  la lecture CI (J3) et les résultats de suite (J4) sont injectés par
+  l'appelant — la fonction ne contacte ni le git local ni l'API elle-même.
+- **CLI `judge-pr` :** ne lit que des fichiers locaux (`--judgment`,
+  `--shas`, `--ci`, `--suite`) et n'écrit que sur stdout/stderr. Aucun
+  appel sortant.
+- **Horloge :** aucune lecture d'horloge — le jugement J1–J8 ne dépend
+  pas de l'instant (la date du jugement est un fait du dossier, pas
+  l'état courant).
+
+## Les seuls appels sortants du pas (hors code — opérateur, nommés et comptés)
+
+1. Vérifications API GitHub R10-OK du reçu de livraison (lecture du HEAD
+   master, de la PR, du commit tête, des check-runs) — effectuées par
+   l'exécutant, pas par le code.
+2. `git clone` / `git push` / `gh pr create` — transport du changeset,
+   pas de la télémétrie.
+
+Aucune télémétrie, aucun identifiant, aucun secret dans le code ni dans les
+fixtures (le `G-20261112-901` du fautif n° 5 est un identifiant de test,
+jamais consigné — le vrai reçu de livraison est `G-20261112-028` à
+l'ouverture de la PR, mission `LE1-FAB-D-N055-009`).

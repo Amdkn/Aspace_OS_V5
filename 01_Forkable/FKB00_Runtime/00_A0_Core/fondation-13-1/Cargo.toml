@@ -2,7 +2,7 @@
 name = "fondation-13-1"
 version = "0.2.0"
 edition = "2021"
-description = "Fonctions Recevoir (F1-2), Router (F1-3) et Découvrir (F1-4) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch, validateur de Discover — code A'Space neuf, zéro dépendance, zéro télémétrie"
+description = "Fonctions Recevoir (F1-2), Router (F1-3), Découvrir (F1-4) et Juger (F1-5) de la Fondation 13 → 1 (D-N055) : validateur R10 v1 + consignateur, routeur de dispatch, validateur de Discover, jugement de PR — code A'Space neuf, zéro dépendance, zéro télémétrie"
 license = "Apache-2.0"
 
 [lib]
@@ -20,6 +20,10 @@ path = "src/bin/route-dispatch.rs"
 [[bin]]
 name = "validate-discover"
 path = "src/bin/validate-discover.rs"
+
+[[bin]]
+name = "judge-pr"
+path = "src/bin/judge-pr.rs"
 
 [profile.release]
 debug = false
