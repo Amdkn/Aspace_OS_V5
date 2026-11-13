@@ -58,10 +58,10 @@ pub const DISPATCH_KEYS: [&str; 9] = [
     "type",
 ];
 
-/// Les 10 types d'événements du journal (Discover F1-3 §3, + `closure_pulse`
+/// Les 11 types d'événements du journal (Discover F1-3 §3, + `closure_pulse`
 /// légalisé A-F1-5-3, + `merge_executed` légalisé A-F1-6-4, + `fact_recalled`
-/// légalisé A-F1-7-3).
-pub const EVENT_TYPES: [&str; 10] = [
+/// légalisé A-F1-7-3, + `vision_held` légalisé A-F1-8-3).
+pub const EVENT_TYPES: [&str; 11] = [
     "closure_pulse",
     "correction",
     "dispatch_ack",
@@ -72,6 +72,7 @@ pub const EVENT_TYPES: [&str; 10] = [
     "judgment_requested",
     "merge_executed",
     "pulse",
+    "vision_held",
 ];
 
 /// Les 13 fonctions, sans doublon, dans l'ordre du mapping D2.
@@ -457,7 +458,7 @@ pub fn validate_dispatch(
             "R8",
             "type",
             &typ,
-            "type inconnu — l'un des 9 types du journal (Discover F1-3 §3, + `closure_pulse` A-F1-5-3, + `merge_executed` A-F1-6-4)",
+            "type inconnu — l'un des 11 types du journal (Discover F1-3 §3, + `closure_pulse` A-F1-5-3, + `merge_executed` A-F1-6-4, + `fact_recalled` A-F1-7-3, + `vision_held` A-F1-8-3)",
         ));
     }
     match typ.as_str() {
