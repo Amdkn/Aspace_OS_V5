@@ -11,6 +11,10 @@
 //! (jugement J1–J8 d'une PR — la fonction EST le jugement, sans le 13e
 //! comme session séparée).
 //!
+//! Exécuter — fonction Exécuter (D-N055 F1-6) : voir le module `execute`
+//! (exécution E1–E8 d'un merge — la fonction EST l'exécution, sans Ryan
+//! comme session séparée).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -37,9 +41,10 @@
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
 //! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router,
-//! Découvrir et Juger).
+//! Découvrir, Juger et Exécuter).
 
 pub mod discover;
+pub mod execute;
 pub mod judge;
 pub mod router;
 
