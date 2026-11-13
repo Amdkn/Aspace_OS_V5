@@ -10,7 +10,7 @@ tags: [fondation, 13-1, unification, daemon, riginfinity, journal, juge-interne,
 pour correction et alignement par orientation. Pas de question de clarification avant
 la première action concrète agentique.
 **Dispatch :** D-N055, typé par Nardole (journal 774, ligne de table 119).
-**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 PR ouverte, non mergée (ce pas).
+**Statut :** F1-0 livré (inventaire, PR V5 #23) ; F1-1 clos (BYB accepté, journal 787) ; F1-2 clos (PR #26 mergée `1f89b56`, reçu H-F1-5 G-20261111-006) ; F1-3 clos (PR #30 mergée `4668305`, reçu H-F1-4 G-20261111-016, journal 814) ; F1-4 clos (PR #44 mergée `573cad4`, reçu H-F1-1 G-20261112-021, journal 926) ; F1-5 clos (PR #47 mergée `4a68288`, reçu H-F1-2 G-20261112-029, journal 933) ; F1-6 clos (PR #49 mergée `e2e9c14`, reçu H-F1-3 G-20261112-032, journal 936) ; F1-7 clos (PR #50 mergée `055745b`, reçu H-F1-6 G-20261112-035, journal 938) ; F1-8 clos (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940, reçus G-20261112-037/038) ; F1-9 PR ouverte, non mergée (ce pas).
 
 ## 1. Mesure zéro (H-M1)
 
@@ -611,7 +611,7 @@ reçu de livraison de la PR (mission `LE1-FAB-D-N055-013` PROPOSÉE, entry_id
 `G-20261112-034` PROPOSÉ) est consigné à l'ouverture de la PR — voir
 `v4-factory/evidence/D-N055/RESULTS-F1-7.json`.
 
-## 12. F1-8 — Vision (PR ouverte, non mergée)
+## 12. F1-8 — Vision (PR #51 mergée `94fcda8`, jugement VALIDÉE AVEC RÉSERVES, journal 940)
 
 **Design signé :** `plans/DESIGN-FONDATION-13-1-F1-8-PROJET.md` (fonction de
 design interne, journal 939, 2026-11-13 ~02:35 EST). Décisions D-F1-8-1..12,
@@ -703,6 +703,132 @@ H-F1-7 = le reçu du merge qui clôt F1-8 (mission `LE1-FAB-D-N055-017`
 PROPOSÉE, entry_id `G-20261112-038` PROPOSÉ) — **après le merge, par un
 exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR (mission
 `LE1-FAB-D-N055-016` PROPOSÉE, entry_id `G-20261112-037` PROPOSÉ) est
+consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
+
+**Correction portée en avant (clôture F1-8, à F1-9) :** F1-8 est CLOSE —
+PR #51 mergée `94fcda8` (2 parents `187dc7c` + `3328071`, DVG-01,
+2026-11-13T08:25:55Z), jugement VALIDÉE AVEC RÉSERVES, merge OUI, tête
+autorisée `3328071`, journal 940, reçus G-20261112-037 (livraison, commit
+`9b7821a`) et G-20261112-038 (merge, commit `9568e8b`). Le statut « PR
+ouverte, non mergée » de ce §12 et de l'en-tête était celui du pas au
+moment de sa livraison ; la clôture est portée ici, en avant, sans
+réécrire le récit du pas.
+
+## 13. F1-9 — Action (PR ouverte, non mergée)
+
+**Design signé :** `plans/DESIGN-FONDATION-13-1-F1-9-PROJET.md` (fonction de
+design interne, journal 941, 2026-11-13 ~03:40 EST). Décisions D-F1-9-1..12,
+amendements A-F1-9-1 / A-F1-9-2 / A-F1-9-3 / A-F1-9-4 / A-F1-9-5 / A-F1-9-6,
+précisions P-F1-9-1..5.
+
+**Domicile du code :** `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
+(crate `fondation-13-1` v0.2.0, lib `r10_validator`, module `action`,
+binaire `take-action`) ; manifeste
+`00_A0_Core/fondation-13-1.manifest.json` (adresse `fiber:a0:fondation-13-1`,
+fonctions Recevoir + Router + Découvrir + Juger + Exécuter + Mémoriser +
+Vision + Action nommées, `validated_by` corrigé : F1-8 VALIDÉE AVEC
+RÉSERVES, PR #51 mergée `94fcda8`, jugement journal 940) ; audit
+télémétrie `00_A0_Core/fondation-13-1-TELEMETRY-AUDIT.md` (§ Action ajouté :
+0 appel sortant ; CLI lectrice, lectures au fichier local nommées, comptées
+et tracées, 0 appel réseau, 0 recherche sémantique, 0 appel en écriture
+d'état — O3 conservée).
+
+**Ce qui est livré :** la fonction Action (A1–A8, ordre A1 → A4 → A2 → A3 →
+A6 → A7 → A5 → A8 ; rejet motivé, jamais de correction silencieuse) + la CLI
+`take-action` (`check` : rendu d'un acte — les contrôles A1/A4/A2/A3/A6/A7
+sont structurels et locaux au dossier d'action ; A5 appelle le rejet du
+fautif, comme le fait l'action en prose — la fonction est un mécanisme, pas
+une session). Le module `action` est pur (0 appel sortant, données
+injectées) ; la CLI est la lectrice (lectures au fichier local nommées,
+comptées et tracées ; 0 appel réseau, 0 recherche sémantique, 0 appel en
+écriture d'état — A-F1-9-5). La fonction EST l'acte (D-F1-9-2) : pas de
+contrôle de recevabilité séparé avant un acte tiers. Une action est
+autorisée quand son autorisation est nommée avec 4 champs (acte + auteur +
+date + source exacte, D-F1-9-1) ; O3 est CONSERVÉE (l'opérateur reste
+l'acteur du seul appel en écriture, la CLI ne gagne pas le HTTPS,
+D-F1-9-3, A-F1-9-4) ; la carte du harness est EXCLUE explicitement
+(D-F1-9-5) ; la saisine pulse 10 min est gardée comme escalade, l'action
+est la réponse (D-F1-9-6).
+
+**Suite H-M3 — VERTE :** `cargo test` — 162 tests, 0 échec (11 unitaires lib +
+7 d'intégration discover + 13 d'intégration execute + 11 d'intégration judge +
+24 d'intégration memory + 17 d'intégration R10 + 21 d'intégration router +
+20 d'intégration vision + 38 d'intégration action) : cas passants = les 4
+cas d'essai rendus (T1 merge, T2 consignation du reçu, T3 routage, T4
+ouverture de la PR — T1/T2 rendus NON POSÉS à la livraison, absence
+consignée A7 : jugement en attente / merge en attente ; T3/T4 ACCEPTÉS
+A1–A8 à la livraison) ; cas rejetés = les 4 fautifs du Discover §5.3,
+dérivés chacun par UNE SEULE différence (raisons nommées : A2 sans jugement
+/ question avec autorisation complète, A3 rapport sans preuve, A6 acte hors
+autorisation) — dont le fait fautif planté F-A1 ; cas limites = §5.4 (a)
+autorisation ambiguë (renvoi au juge), (b) autorisation révoquée / tête
+périmée, (c) action déjà faite (constat « déjà fait »), (d) action
+partiellement faite (reprise au point du journal), (e) carte du harness
+(rapportée « échouée — carte en attente »), (f) mauvais acteur (rejet A4) ;
+type `action_taken` légal comme 12e type (A-F1-9-3). Log :
+`v4-factory/evidence/D-N055/suite-f1-9.txt`. Les 124 tests
+F1-2/F1-3/F1-4/F1-5/F1-6/F1-7/F1-8 restent verts (régression : 0 échec).
+
+**Actes rendus par la CLI (H-F1-8, preuve du pas) :**
+`v4-factory/evidence/D-N055/ACTION-F1-9.md` — T1 NON POSÉE A1–A8
+(jugement en attente, sortie 0), T2 NON POSÉE A1–A8 (merge en attente,
+sortie 0), T3 ACCEPTÉ A1–A8 (routage seq 49/50/51, sortie 0), T4 ACCEPTÉ
+A1–A8 (PR ouverte, mergeable true, clean, CI 8/8, sortie 0), F-A1 REJET A2
+par la CLI (sortie 2, « sans jugement rendu, le merge de la PR F1-9 n'est
+pas autorisé ; le design F1-8 n'autorise pas le pas F1-9 »). Sorties CLI
+consignées dans le dossier (section `## Rendus CLI`). Les garde-fous A1,
+A4, A5, A7 et A8 sont vérifiés aussi par la suite (fautifs F-A2/F-A3/F-A4
+→ rejets A2/A3/A6 ; fautif planté rejeté par la mauvaise règle → A5 ;
+fautif non rejeté → A5).
+
+**Fait fautif planté (D-F1-9-6, amendement A-F1-9-1) :** fautif F-A1 (merge
+sans jugement, autorisation citée = design F1-8) — planté à
+`v4-factory/evidence/D-N055/ACTION-FAUTIF-1.md` (fichier distinct, une
+seule différence : le pas cité) et dérivé en suite + fixture
+`tests/fixtures/action-fautif-1.md`. Rejet vérifié par la CLI : `REJET A2
+— champ 'jugement_rendu', valeur reçue 'non' : une autorisation nomme
+l'action qu'elle autorise — sans jugement rendu, le merge de la PR F1-9
+n'est pas autorisé ; le design F1-8 n'autorise pas le pas F1-9` (sortie 2).
+F-A2/F-A3 vérifiés par la CLI contre un journal-scénario (fixture
+`tests/fixtures/journal-f1-9-scenario.jsonl` : les 48 lignes du journal
+réel + un événement `judgment_rendered` SCÉNARIO, seq 49 — le jugement
+F1-9 n'est pas rendu au journal réel au moment du pas) : F-A2 REJET A2
+(« l'autorisation est complète — la question est interdite »), F-A3 REJET
+A3 (« une action sans preuve n'est pas rapportée, elle est affirmée ») ;
+F-A4 REJET A6 contre le journal réel. Leçon portée : la CLI cherche le
+jugement sous le dispatch du juge (`D-N055-<pas>-JUDGE`, patron seq 47
+F1-8), pas sous le dispatch de l'acte — chercher sous le dispatch de
+l'acte ne trouverait jamais le jugement (corrigé avant la livraison, voir
+Divergence).
+
+**Correction portée en avant (liste miroir, A-F1-9-3) :** la liste
+`JOURNAL_EVENT_TYPES` du module Mémoriser suit celle du routeur (même
+ordre, mêmes contenus — une dérive entre les deux serait une seconde
+vérité, test F1-7) : elle passe à 12 types (`action_taken`) avec ce pas.
+Les listes du Juge (8 types, F1-5) et d'Exécuter (9 types, F1-6) restent
+figées à leur pas, comme F1-8 les a laissées — ce sont des instantanés de
+leur pas, pas des miroirs du routeur.
+
+**Vérification portée en avant (§1 ID 11e, Discover F1-8 C3) :** l'ID complet
+du 11e (`6f410ddd-4ef8-4834-805a-0b38ede9ba76`, source `~/memory/2026-10-09.md:146`)
+est déjà porté au §1 depuis la changeset F1-7 (commit `913b8ed`) et confirmé
+par F1-8 (commit `3328071`) — aucune mention « non établi » ne subsiste au
+§1 ; la correction du Discover F1-8 §0.3 C3 est donc déjà appliquée, vérifiée
+ce pas au fichier et au `git log`, non rééditée ici.
+
+**Hold-outs F1-9 :** H-M1 mesuré (registre 941 lignes, journal-router 48
+lignes seq 1–48, master base `8d8542a` re-mesuré à l'ouverture de la PR) ;
+H-M2 diff vide sur l'amont (code A'Space neuf) ; H-M3 suite verte
+(ci-dessus) ; H-M4 télémétrie (audit joint, 0 dépendance, 0 appel sortant,
+0 recherche sémantique, 0 appel en écriture d'état) ; H-M5 levé au niveau
+du module (fonctions Recevoir + Router + Découvrir + Juger + Exécuter +
+Mémoriser + Vision + Action nommées dans le manifeste — le manifeste du
+daemon RigInfinity reste dû, voir §4) ; H-M6 frontière (seul le code
+A'Space de la fonction Action ; voir Divergence) ; H-M7 cette fiche.
+H-F1-8 = le reçu du merge qui clôt F1-9 (mission `LE1-FAB-D-N055-020`
+PROPOSÉE, entry_id `G-20261112-041` PROPOSÉ) — **après le merge, par un
+exécutant dédié, pas dans ce pas**. Le reçu de livraison de la PR (mission
+`LE1-FAB-D-N055-019` PROPOSÉE, entry_id `G-20261112-040` PROPOSÉ) est
 consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
 
 ## Divergence (H-M6)
@@ -836,3 +962,28 @@ consigné à l'ouverture de la PR par un exécutant dédié — pas dans ce pas.
   d'atterrissage ne met à jour la fiche — reste `ouverte`, hors de ce
   pas. La fonction Vision, elle, porte seulement : elle ne réécrit
   aucune source (V6).
+- **`action_taken` légalisé 12e type (F1-9, A-F1-9-3).** La F1-9 changeset
+  porte la liste `EVENT_TYPES` du routeur à 12 types ; l'acte est rendu
+  comme événement `action_taken` (preuve : autorisation nommée + acte
+  posé + rapport fait/échoué) ; le merge du pas est rendu deux fois sans
+  double vérité (`merge_executed` E1–E8, preuve DVG-01, et `action_taken`
+  A1–A8, preuve : 0 question entre le jugement et l'appel) — les deux
+  citent le même merge commit. Le design F1-3 n'est pas réécrit. La liste
+  miroir du module Mémoriser suit (12 types) ; les listes du Juge (8) et
+  d'Exécuter (9) restent figées à leur pas.
+- **O3 conservée, portée comme limite nommée (F1-9, D-F1-9-3, A-F1-9-4).**
+  L'opérateur reste l'acteur du seul appel en écriture d'état ; la CLI
+  `take-action` ne gagne pas le HTTPS dans ce pas — la fonction décide et
+  instruit, l'opérateur pose l'appel. Lever O3 (la fonction appellerait
+  elle-même) est un pas à part, pas F1-9 : il rouvrirait le contrat
+  `execute-merge` (F1-6). La Divergence O3 n'est pas résolue par F1-9 :
+  elle est portée comme limite nommée (A8).
+- **Le jugement se cherche sous le dispatch du juge (F1-9, leçon de la
+  CLI).** Au journal, un jugement est rendu sous `D-N055-<pas>-JUDGE`
+  (patron seq 47 F1-8), pas sous le dispatch de l'acte
+  (`D-N055-<pas>-MERGE`) : la première version de la CLI `take-action`
+  cherchait le `judgment_rendered` sous le dispatch de l'acte et ne
+  l'aurait jamais trouvé, même après le jugement — corrigé avant la
+  livraison (le jugement est cherché sous `D-N055-<pas>-JUDGE`, le merge
+  et le routage sous le dispatch de l'acte). La suite, elle, injecte les
+  faits du journal — elle ne dépend pas de cette règle de nommage.
