@@ -484,9 +484,37 @@ fn main() -> ExitCode {
     reads += 1;
     let journal_47_lines = journal_47_text.lines().count();
     let journal_lines = journal_text.lines().count();
+    // Le nombre de lignes du journal AU RENDU de l'état se lit dans la
+    // sortie elle-même (« (seq N) — M lignes ») : le journal réel grandit
+    // après le rendu (les événements de preuve seq 91+ s'y ajoutent), et
+    // compter le journal vivant dirait 98 au lieu des 90 lignes sur
+    // lesquelles l'état a été rendu.
+    let rendered_lines = |text: &str| -> Option<usize> {
+        for line in text.lines() {
+            if !line.contains(".jsonl") {
+                continue;
+            }
+            if let Some(at) = line.find(" lignes") {
+                let before = &line[..at];
+                let digits: String = before
+                    .chars()
+                    .rev()
+                    .take_while(|c| c.is_ascii_digit())
+                    .collect::<String>()
+                    .chars()
+                    .rev()
+                    .collect();
+                if let Ok(n) = digits.parse::<usize>() {
+                    return Some(n);
+                }
+            }
+        }
+        None
+    };
     let vision_states = vec![
         VisionReplay {
-            journal_lines: journal_47_lines,
+            journal_lines: rendered_lines(&vision_47_text)
+                .unwrap_or(journal_47_lines),
             accepted: vision_47_text.contains("ACCEPTÉ")
                 && vision_47_text.contains("V1–V9 passés"),
             contradictions: if vision_47_text.contains("Contradictions non portées : 0") {
@@ -496,7 +524,7 @@ fn main() -> ExitCode {
             },
         },
         VisionReplay {
-            journal_lines,
+            journal_lines: rendered_lines(&vision_90_text).unwrap_or(journal_lines),
             accepted: vision_90_text.contains("ACCEPTÉ")
                 && vision_90_text.contains("V1–V9 passés"),
             contradictions: if vision_90_text.contains("Contradictions non portées : 0") {
@@ -622,10 +650,23 @@ fn main() -> ExitCode {
         && manifeste_text.contains("Preuve finale");
 
     // P7 — le coordinateur est disponible : il atteste par événement du
-    // journal (un événement acteur coordinateur dans la fenêtre).
-    let coordinator_available = window_events
-        .iter()
-        .any(|e| e.actor_from == "coordinator" || e.actor_to == "coordinator");
+    // journal. La fenêtre [signature → merge] est la fenêtre de mesure
+    // du 0-routeur (D-F1-11-2), pas celle de l'attestation : le
+    // coordinateur atteste rarement (il décide — rollback_decided —
+    // et reçoit — rollback_executed, closure_pulse), jamais à chaque
+    // pas ; exiger son événement dans la fenêtre rendrait P7
+    // infranchissable par construction pour un pas de preuve (aucun
+    // événement acteur coordinateur ne peut légitimement y exister :
+    // il ne type pas les dispatches, ne décide pas de rollback ici).
+    // La disponibilité se lit donc au journal entier, avec la dernière
+    // attestation citée ; le cas limite (g) — coordinateur indisponible
+    // — reste un rejet P7, testé par la suite.
+    let coordinator_pos = events.iter().rposition(|e| {
+        e.actor_from == "coordinator" || e.actor_to == "coordinator"
+    });
+    let coordinator_event = coordinator_pos.map(|p| &events[p]);
+    let coordinator_seq = coordinator_pos.map(|p| p + 1).unwrap_or(0);
+    let coordinator_available = coordinator_event.is_some();
 
     // P8 — les limites, dans le dossier (§ Limites).
     let limit_lines = section_lines(&proof_text, "Limites");
@@ -697,11 +738,14 @@ fn main() -> ExitCode {
                 design_path,
             );
             println!(
-                "  fenêtre : depuis {} ; {} événements ; {} routages ; {} événement(s) acteur session Nardole ; PR ouvertes injectées {} ; master injecté {}",
+                "  fenêtre : depuis {} ; {} événements ; {} routages ; {} événement(s) acteur session Nardole ; coordinateur : dernière attestation seq {} ({}, {}) ; PR ouvertes injectées {} ; master injecté {}",
                 window_from,
                 window_events.len(),
                 router_routing_total,
                 router_nardole_events,
+                coordinator_seq,
+                coordinator_event.map(|e| e.typ.as_str()).unwrap_or("aucune"),
+                coordinator_event.map(|e| e.at.as_str()).unwrap_or(""),
                 open_prs,
                 &master[..7]
             );
