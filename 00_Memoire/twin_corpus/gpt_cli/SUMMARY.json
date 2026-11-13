@@ -1,0 +1,86 @@
+{
+  "slice": "gpt_cli",
+  "owner": "extract-gpt",
+  "chatgpt_files": 39,
+  "chatgpt_user_turns": 304,
+  "antigravity_direct_user_turns": 526,
+  "antigravity_auto_wakes": 70,
+  "claude_interactive_direct_turns": 89,
+  "claude_excluded_daemon_files": 95,
+  "breakdown": {
+    "chatgpt_drive": {
+      "drive_total_md_files": 39,
+      "drive_meta_index_files": 3,
+      "drive_conversation_files": 36,
+      "drive_non_transcribed_files": 3,
+      "drive_user_turns": 171,
+      "drive_direct_human_turns": 166,
+      "drive_scheduled_button_turns": 5,
+      "by_vague": {
+        "Vague 1 — Solarpunk Kernel": {
+          "files": 24,
+          "user_turns": 134
+        },
+        "Vague 2 — Sessions": {
+          "files": 2,
+          "user_turns": 9
+        },
+        "Vague 3 — Balayage": {
+          "files": 5,
+          "user_turns": 21
+        },
+        "Vague 4 — Transcriptions": {
+          "files": 5,
+          "user_turns": 7
+        }
+      }
+    },
+    "chatgpt_local_pdf": {
+      "metadata": {
+        "file_path": "C:\\Users\\amado\\Documents\\GPT Export Manuel\\Analyse convergence V4.pdf",
+        "file_size_bytes": 8673199,
+        "page_count": 375,
+        "title": "Analyse convergence V4",
+        "format": "PDF 1.6",
+        "creator": "Adobe HTML2PDF creator 2.0.08162018",
+        "creation_date": "D:20261016215721Z",
+        "mod_date": "D:20261016215735Z"
+      },
+      "pdf_user_turns": 137,
+      "pdf_overlapping_with_drive_24": 4,
+      "pdf_unique_turns": 133
+    },
+    "chatgpt_total_records_in_jsonl": 308,
+    "chatgpt_deduplicated_user_turns": 304,
+    "antigravity_v2": {
+      "antigravity_files": 54,
+      "antigravity_raw_user_entries": 619,
+      "antigravity_empty_user_turns": 23,
+      "antigravity_direct_user_turns": 526,
+      "antigravity_auto_wakes": 70
+    },
+    "claude_code": {
+      "claude_total_jsonl_files": 169,
+      "claude_excluded_daemon_files": 95,
+      "claude_scanned_files": 74,
+      "claude_tool_result_only_excluded": 1623,
+      "claude_harness_noise_excluded": 62,
+      "claude_interactive_direct_turns": 89,
+      "claude_automated_dispatch_turns": 53,
+      "claude_ceo_direct_manager_turns": 3,
+      "claude_subagent_dispatch_turns": 29,
+      "claude_sdk_smoke_turns": 3
+    },
+    "redactions_applied_total": 9,
+    "redactions_by_pattern": {
+      "pat_14": 1,
+      "pat_12": 8
+    }
+  },
+  "outputs": {
+    "chatgpt_drive_source_a_jsonl": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gpt_cli\\chatgpt_drive_source_a.jsonl",
+    "chatgpt_drive_source_a_md": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gpt_cli\\chatgpt_drive_source_a.md",
+    "antigravity_claude_source_a_jsonl": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gpt_cli\\antigravity_claude_source_a.jsonl",
+    "antigravity_claude_source_a_md": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gpt_cli\\antigravity_claude_source_a.md"
+  }
+}

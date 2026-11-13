@@ -1,0 +1,123 @@
+{
+  "source_zip": "C:\\Users\\amado\\Downloads\\EYI Package_11-11-2026_1794364336.zip",
+  "conversation_file": "Conversation with Muse AI_11-11-2026_1794364336.txt",
+  "generated_utc": "2026-11-13T04:07:28Z",
+  "total_you_turns": 655,
+  "direct_human_turns": 635,
+  "relay_turns": 20,
+  "proactive_messages_excluded": 150,
+  "mp3_count": 329,
+  "md_count": 20,
+  "mp4_count": 6,
+  "breakdowns": {
+    "total_conversation_turns": 5709,
+    "muse_ai_turns": 5054,
+    "direct_human_by_month": {
+      "2026-10": 514,
+      "2026-11": 121
+    },
+    "manifest_stats": {
+      "exported_at": "2026-11-11T02:32:16.640080024+00:00",
+      "turns": 5709,
+      "user_turns": 655,
+      "user_channels": {
+        "main": 480,
+        "whatsapp": 175
+      },
+      "user_sources": {
+        "runtime": 652,
+        "runtime.voice_audio": 3
+      },
+      "workspace_files_listed": 777,
+      "voice_audio_entries": 0
+    },
+    "md_total_including_proactive": 170,
+    "md_non_proactive_by_category": {
+      "goal": 7,
+      "user": 2,
+      "your_files": 11
+    },
+    "proactive_excluded_by_subfolder": {
+      "research": 146,
+      "selection": 4
+    },
+    "txt_workspace_count": 9,
+    "txt_total_in_zip": 10,
+    "ogg_count": 2,
+    "total_zip_files": 780
+  },
+  "secret_redactions": {
+    "total_redactions": 5,
+    "by_pattern": {
+      "github_pat_classic": 1,
+      "jwt_token": 3,
+      "make_mcp_uuid": 1
+    },
+    "details": [
+      {
+        "pattern": "github_pat_classic",
+        "source": "you_turn_183",
+        "length": 40,
+        "replaced_with": "[REDACTED_SECRET]"
+      },
+      {
+        "pattern": "jwt_token",
+        "source": "you_turn_382",
+        "length": 267,
+        "replaced_with": "[REDACTED_SECRET]"
+      },
+      {
+        "pattern": "jwt_token",
+        "source": "you_turn_393",
+        "length": 219,
+        "replaced_with": "[REDACTED_SECRET]"
+      },
+      {
+        "pattern": "jwt_token",
+        "source": "you_turn_395",
+        "length": 219,
+        "replaced_with": "[REDACTED_SECRET]"
+      },
+      {
+        "pattern": "make_mcp_uuid",
+        "source": "you_turn_458",
+        "length": 36,
+        "replaced_with": "[REDACTED_SECRET]"
+      }
+    ]
+  },
+  "outputs": {
+    "jsonl": {
+      "file": "muse_source_a_turns.jsonl",
+      "size_bytes": 792417,
+      "lines": 655
+    },
+    "inventory_json": {
+      "file": "muse_media_and_docs_inventory.json",
+      "size_bytes": 150841
+    },
+    "digest_markdown_files": [
+      {
+        "file": "muse_source_a_digest.md",
+        "size_bytes": 300077,
+        "direct_turns": 282,
+        "first_timestamp": "2026-10-01 02:41:48",
+        "last_timestamp": "2026-10-19 22:38:32"
+      },
+      {
+        "file": "muse_source_a_digest_2026-10_part2.md",
+        "size_bytes": 152060,
+        "direct_turns": 232,
+        "first_timestamp": "2026-10-19 22:56:17",
+        "last_timestamp": "2026-10-31 09:09:34"
+      },
+      {
+        "file": "muse_source_a_digest_2026-11.md",
+        "size_bytes": 180450,
+        "direct_turns": 121,
+        "first_timestamp": "2026-11-01 23:49:32",
+        "last_timestamp": "2026-11-11 02:04:49"
+      }
+    ]
+  }
+}

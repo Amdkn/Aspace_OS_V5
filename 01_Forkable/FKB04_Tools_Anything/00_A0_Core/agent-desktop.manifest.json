@@ -1,0 +1,22 @@
+{
+  "id": "fiber:a0:agent-desktop",
+  "version": "1.2.0",
+  "upstream": {
+    "repository": "vercel-labs/agent-desktop",
+    "fork": "Amdkn/agent-desktop",
+    "frozen_commit": "54855b62",
+    "branch": "main",
+    "license": "Apache-2.0"
+  },
+  "telemetry_audit": "01_Forkable/FKB04_Tools_Anything/00_A0_Core/agent-desktop-TELEMETRY-AUDIT.md",
+  "adaptation_sheet": "01_Forkable/FKB04_Tools_Anything/00_A0_Core/agent-desktop-ADAPTATION.md",
+  "levels": {
+    "current": 1,
+    "states": [
+      "0 Basique (fork Amdkn non adapté)",
+      "1 Adapté (fiche + audit + manifeste)",
+      "2 Vérifié (CLI installé + tests verts)",
+      "3 Publié (intégré CCW Plus + registre à jour)"
+    ]
+  }
+}

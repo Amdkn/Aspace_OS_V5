@@ -1,0 +1,255 @@
+{
+  "corpus": "gemini_and_youtube_source_a",
+  "generated_at_utc": "2026-11-13T04:12:21Z",
+  "source_hygiene": {
+    "source_a_only": true,
+    "source_b_c_responses_excluded": true,
+    "privacy_filter_applied": true,
+    "secrets_redacted_with": "[REDACTED_SECRET]",
+    "reference_chronology_doc_id": "1jlkUVXyzgqBE_8bU6Sp6fZxR7Hbl2y1XXNwrKTR_wcg"
+  },
+  "gemini_totals": {
+    "takeout_total_exchanges": 3694,
+    "source_a_extracted": 2205,
+    "direct_human": 2188,
+    "live_connected": 17,
+    "civil_pii_filtered": 693,
+    "scheduled_automation_excluded": 522,
+    "system_ui_canvas_excluded": 274,
+    "pii_sessions_blacklisted": 68,
+    "secrets_redacted": 0
+  },
+  "gemini_per_month": {
+    "2025-04": {
+      "takeout_total_exchanges": 3,
+      "source_a_extracted": 0,
+      "direct_human": 0,
+      "live_connected": 0,
+      "civil_pii_filtered": 0,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 3
+    },
+    "2025-05": {
+      "takeout_total_exchanges": 77,
+      "source_a_extracted": 40,
+      "direct_human": 40,
+      "live_connected": 0,
+      "civil_pii_filtered": 30,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 7
+    },
+    "2025-06": {
+      "takeout_total_exchanges": 53,
+      "source_a_extracted": 22,
+      "direct_human": 22,
+      "live_connected": 0,
+      "civil_pii_filtered": 25,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 6
+    },
+    "2025-07": {
+      "takeout_total_exchanges": 106,
+      "source_a_extracted": 34,
+      "direct_human": 34,
+      "live_connected": 0,
+      "civil_pii_filtered": 48,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 24
+    },
+    "2025-08": {
+      "takeout_total_exchanges": 85,
+      "source_a_extracted": 29,
+      "direct_human": 29,
+      "live_connected": 0,
+      "civil_pii_filtered": 20,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 36
+    },
+    "2025-09": {
+      "takeout_total_exchanges": 70,
+      "source_a_extracted": 43,
+      "direct_human": 43,
+      "live_connected": 0,
+      "civil_pii_filtered": 9,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 18
+    },
+    "2025-10": {
+      "takeout_total_exchanges": 99,
+      "source_a_extracted": 74,
+      "direct_human": 74,
+      "live_connected": 0,
+      "civil_pii_filtered": 7,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 18
+    },
+    "2025-11": {
+      "takeout_total_exchanges": 102,
+      "source_a_extracted": 92,
+      "direct_human": 92,
+      "live_connected": 0,
+      "civil_pii_filtered": 8,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 2
+    },
+    "2025-12": {
+      "takeout_total_exchanges": 67,
+      "source_a_extracted": 39,
+      "direct_human": 39,
+      "live_connected": 0,
+      "civil_pii_filtered": 8,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 20
+    },
+    "2026-01": {
+      "takeout_total_exchanges": 157,
+      "source_a_extracted": 108,
+      "direct_human": 108,
+      "live_connected": 0,
+      "civil_pii_filtered": 28,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 21
+    },
+    "2026-02": {
+      "takeout_total_exchanges": 285,
+      "source_a_extracted": 263,
+      "direct_human": 263,
+      "live_connected": 0,
+      "civil_pii_filtered": 5,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 17
+    },
+    "2026-03": {
+      "takeout_total_exchanges": 214,
+      "source_a_extracted": 174,
+      "direct_human": 174,
+      "live_connected": 0,
+      "civil_pii_filtered": 38,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 2
+    },
+    "2026-04": {
+      "takeout_total_exchanges": 409,
+      "source_a_extracted": 241,
+      "direct_human": 241,
+      "live_connected": 0,
+      "civil_pii_filtered": 22,
+      "scheduled_automation_excluded": 120,
+      "system_ui_canvas_excluded": 26
+    },
+    "2026-05": {
+      "takeout_total_exchanges": 209,
+      "source_a_extracted": 60,
+      "direct_human": 60,
+      "live_connected": 0,
+      "civil_pii_filtered": 60,
+      "scheduled_automation_excluded": 78,
+      "system_ui_canvas_excluded": 11
+    },
+    "2026-06": {
+      "takeout_total_exchanges": 145,
+      "source_a_extracted": 107,
+      "direct_human": 107,
+      "live_connected": 0,
+      "civil_pii_filtered": 25,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 13
+    },
+    "2026-07": {
+      "takeout_total_exchanges": 235,
+      "source_a_extracted": 209,
+      "direct_human": 192,
+      "live_connected": 17,
+      "civil_pii_filtered": 18,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 8
+    },
+    "2026-08": {
+      "takeout_total_exchanges": 297,
+      "source_a_extracted": 94,
+      "direct_human": 94,
+      "live_connected": 0,
+      "civil_pii_filtered": 98,
+      "scheduled_automation_excluded": 100,
+      "system_ui_canvas_excluded": 5
+    },
+    "2026-09": {
+      "takeout_total_exchanges": 968,
+      "source_a_extracted": 471,
+      "direct_human": 471,
+      "live_connected": 0,
+      "civil_pii_filtered": 236,
+      "scheduled_automation_excluded": 224,
+      "system_ui_canvas_excluded": 37
+    },
+    "2026-10": {
+      "takeout_total_exchanges": 113,
+      "source_a_extracted": 105,
+      "direct_human": 105,
+      "live_connected": 0,
+      "civil_pii_filtered": 8,
+      "scheduled_automation_excluded": 0,
+      "system_ui_canvas_excluded": 0
+    }
+  },
+  "youtube_summary": {
+    "total_watch_entries": 45700,
+    "active_named_channel_entries": 31096,
+    "unique_named_videos": 28888,
+    "unique_named_channels": 9773,
+    "ad_or_unattributed_entries": 14251,
+    "unavailable_or_deleted_entries": 353,
+    "date_span": {
+      "min_iso": "2025-06-06 19:33:46",
+      "max_iso": "2026-10-12 13:32:24",
+      "months_count": 17
+    }
+  },
+  "output_files": [
+    {
+      "name": "gemini_source_a_prompts.jsonl",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\gemini_source_a_prompts.jsonl",
+      "bytes": 3253732
+    },
+    {
+      "name": "gemini_source_a_chronology_2025_p1.md",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\gemini_source_a_chronology_2025_p1.md",
+      "bytes": 248980
+    },
+    {
+      "name": "gemini_source_a_chronology_2026_p1.md",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\gemini_source_a_chronology_2026_p1.md",
+      "bytes": 334616
+    },
+    {
+      "name": "gemini_source_a_chronology_2026_p2.md",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\gemini_source_a_chronology_2026_p2.md",
+      "bytes": 335553
+    },
+    {
+      "name": "gemini_source_a_chronology_2026_p3.md",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\gemini_source_a_chronology_2026_p3.md",
+      "bytes": 199343
+    },
+    {
+      "name": "gemini_source_a_chronology.md",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\gemini_source_a_chronology.md",
+      "bytes": 29789
+    },
+    {
+      "name": "youtube_ld04_interests.json",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\youtube_ld04_interests.json",
+      "bytes": 26607
+    },
+    {
+      "name": "youtube_ld04_interests.md",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\youtube_ld04_interests.md",
+      "bytes": 5149
+    },
+    {
+      "name": "SUMMARY.json",
+      "path": "C:\\Users\\amado\\Aspace OS V5\\00_Memoire\\twin_corpus\\gemini\\SUMMARY.json",
+      "bytes": 8050
+    }
+  ]
+}

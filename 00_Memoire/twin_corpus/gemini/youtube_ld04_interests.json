@@ -1,0 +1,1041 @@
+{
+  "domain": "LD04 Cognition",
+  "source_file": "youtube_watch_history.csv",
+  "date_span": {
+    "min_iso": "2025-06-06 19:33:46",
+    "max_iso": "2026-10-12 13:32:24",
+    "months_count": 17
+  },
+  "totals": {
+    "total_watch_entries": 45700,
+    "active_named_channel_entries": 31096,
+    "unique_named_videos": 28888,
+    "unique_named_channels": 9773,
+    "ad_or_unattributed_entries": 14251,
+    "unavailable_or_deleted_entries": 353
+  },
+  "monthly_watch_counts": {
+    "2025-06": {
+      "total": 2035,
+      "named_channel": 1187
+    },
+    "2025-07": {
+      "total": 2631,
+      "named_channel": 1465
+    },
+    "2025-08": {
+      "total": 2441,
+      "named_channel": 1509
+    },
+    "2025-09": {
+      "total": 2719,
+      "named_channel": 1520
+    },
+    "2025-10": {
+      "total": 2254,
+      "named_channel": 1360
+    },
+    "2025-11": {
+      "total": 2180,
+      "named_channel": 1251
+    },
+    "2025-12": {
+      "total": 2483,
+      "named_channel": 1355
+    },
+    "2026-01": {
+      "total": 2837,
+      "named_channel": 1626
+    },
+    "2026-02": {
+      "total": 2409,
+      "named_channel": 1374
+    },
+    "2026-03": {
+      "total": 3197,
+      "named_channel": 1952
+    },
+    "2026-04": {
+      "total": 2293,
+      "named_channel": 1345
+    },
+    "2026-05": {
+      "total": 2959,
+      "named_channel": 2106
+    },
+    "2026-06": {
+      "total": 2890,
+      "named_channel": 2602
+    },
+    "2026-07": {
+      "total": 1891,
+      "named_channel": 1789
+    },
+    "2026-08": {
+      "total": 3807,
+      "named_channel": 3215
+    },
+    "2026-09": {
+      "total": 4838,
+      "named_channel": 3735
+    },
+    "2026-10": {
+      "total": 1836,
+      "named_channel": 1705
+    }
+  },
+  "topics": {
+    "ai_agents_llms_coding": {
+      "label": "AI Agents, LLMs & Agentic Engineering",
+      "ld_domain": "LD04 Cognition / Tech OS",
+      "matched_watch_entries": 5695,
+      "share_of_named_pct": 18.31,
+      "top_channels": [
+        {
+          "channel": "Vision IA",
+          "hits": 255
+        },
+        {
+          "channel": "WorldofAI",
+          "hits": 143
+        },
+        {
+          "channel": "AI Engineer",
+          "hits": 127
+        },
+        {
+          "channel": "OpenAI",
+          "hits": 104
+        },
+        {
+          "channel": "Melvynx",
+          "hits": 103
+        },
+        {
+          "channel": "Julian Goldie SEO",
+          "hits": 99
+        },
+        {
+          "channel": "Discover AI",
+          "hits": 96
+        },
+        {
+          "channel": "Cole Medin",
+          "hits": 94
+        },
+        {
+          "channel": "Nate Herk | AI Automation",
+          "hits": 92
+        },
+        {
+          "channel": "Nerdy Kings",
+          "hits": 89
+        },
+        {
+          "channel": "Mark Kashef",
+          "hits": 87
+        },
+        {
+          "channel": "IA et Stratégie",
+          "hits": 83
+        }
+      ]
+    },
+    "software_infra_selfhost": {
+      "label": "Software Engineering, Infra, Cloud & Self-Hosting",
+      "ld_domain": "LD04 Cognition / L0 BedRock",
+      "matched_watch_entries": 1171,
+      "share_of_named_pct": 3.77,
+      "top_channels": [
+        {
+          "channel": "Nono",
+          "hits": 263
+        },
+        {
+          "channel": "Cloud Codes",
+          "hits": 142
+        },
+        {
+          "channel": "ManuAGI - AutoGPT Tutorials",
+          "hits": 49
+        },
+        {
+          "channel": "Google Cloud Tech",
+          "hits": 45
+        },
+        {
+          "channel": "PAGESSE REACT",
+          "hits": 37
+        },
+        {
+          "channel": "CLI Stack",
+          "hits": 35
+        },
+        {
+          "channel": "AICodeKing",
+          "hits": 20
+        },
+        {
+          "channel": "ByteMonk",
+          "hits": 14
+        },
+        {
+          "channel": "Nysos 2.0",
+          "hits": 12
+        },
+        {
+          "channel": "Alex Hitt",
+          "hits": 11
+        },
+        {
+          "channel": "Github Awesome",
+          "hits": 10
+        },
+        {
+          "channel": "Melvynx",
+          "hits": 10
+        }
+      ]
+    },
+    "business_saas_automation": {
+      "label": "Business Systems, SaaS, Agency Ops & Marketing",
+      "ld_domain": "LD01 Operations / LD02 Finance / Business OS",
+      "matched_watch_entries": 1237,
+      "share_of_named_pct": 3.98,
+      "top_channels": [
+        {
+          "channel": "Julian Goldie SEO",
+          "hits": 125
+        },
+        {
+          "channel": "Nate Herk | AI Automation",
+          "hits": 92
+        },
+        {
+          "channel": "Panda Making Money",
+          "hits": 56
+        },
+        {
+          "channel": "Thinknomy®",
+          "hits": 53
+        },
+        {
+          "channel": "BFM Business",
+          "hits": 27
+        },
+        {
+          "channel": "Boring Business",
+          "hits": 16
+        },
+        {
+          "channel": "Brad Bonanno | AI Automation",
+          "hits": 15
+        },
+        {
+          "channel": "LITTLE BIT BETTER",
+          "hits": 15
+        },
+        {
+          "channel": "Money Saving Man",
+          "hits": 12
+        },
+        {
+          "channel": "Ben AI",
+          "hits": 12
+        },
+        {
+          "channel": "Layla at ProcessDriven",
+          "hits": 11
+        },
+        {
+          "channel": "Codie Sanchez",
+          "hits": 11
+        }
+      ]
+    },
+    "pkm_cognition_philosophy": {
+      "label": "PKM, Second Brain, Productivity & Strategic Philosophy",
+      "ld_domain": "LD04 Cognition / Life OS",
+      "matched_watch_entries": 351,
+      "share_of_named_pct": 1.13,
+      "top_channels": [
+        {
+          "channel": "Discover AI",
+          "hits": 13
+        },
+        {
+          "channel": "Ben AI",
+          "hits": 11
+        },
+        {
+          "channel": "Cole Medin",
+          "hits": 8
+        },
+        {
+          "channel": "Wanderloots",
+          "hits": 7
+        },
+        {
+          "channel": "AI Impact",
+          "hits": 7
+        },
+        {
+          "channel": "AI Engineer",
+          "hits": 7
+        },
+        {
+          "channel": "Eric Michaud",
+          "hits": 6
+        },
+        {
+          "channel": "Jay E | RoboNuggets",
+          "hits": 5
+        },
+        {
+          "channel": "Panda Making Money",
+          "hits": 4
+        },
+        {
+          "channel": "Sean‘s AI Stories",
+          "hits": 4
+        },
+        {
+          "channel": "Chill Music Lab",
+          "hits": 4
+        },
+        {
+          "channel": "Breaking Book",
+          "hits": 4
+        }
+      ]
+    },
+    "geopolitics_francophone_news": {
+      "label": "Geopolitics, Economics & Francophone Current Affairs",
+      "ld_domain": "LD06 Society / World Context",
+      "matched_watch_entries": 2186,
+      "share_of_named_pct": 7.03,
+      "top_channels": [
+        {
+          "channel": "BLAST, Le souffle de l'info",
+          "hits": 273
+        },
+        {
+          "channel": "FRANCE 24",
+          "hits": 169
+        },
+        {
+          "channel": "C à vous - France Télévisions",
+          "hits": 140
+        },
+        {
+          "channel": "Le Journal de l'Espace",
+          "hits": 113
+        },
+        {
+          "channel": "AJ+ français",
+          "hits": 97
+        },
+        {
+          "channel": "Netflix France",
+          "hits": 52
+        },
+        {
+          "channel": "Thinknomy®",
+          "hits": 40
+        },
+        {
+          "channel": "M6 Info",
+          "hits": 32
+        },
+        {
+          "channel": "LeHuffPost",
+          "hits": 32
+        },
+        {
+          "channel": "VU FranceTV",
+          "hits": 32
+        },
+        {
+          "channel": "TF1 INFO",
+          "hits": 28
+        },
+        {
+          "channel": "netseer",
+          "hits": 28
+        }
+      ]
+    },
+    "music_culture_entertainment": {
+      "label": "Music, Culture & Entertainment",
+      "ld_domain": "LD07 Joy & Creativity",
+      "matched_watch_entries": 1889,
+      "share_of_named_pct": 6.07,
+      "top_channels": [
+        {
+          "channel": "House of Marvel",
+          "hits": 114
+        },
+        {
+          "channel": "Charly",
+          "hits": 63
+        },
+        {
+          "channel": "LefaAuthentiqueVEVO",
+          "hits": 62
+        },
+        {
+          "channel": "Marvel Entertainment",
+          "hits": 52
+        },
+        {
+          "channel": "orelsan",
+          "hits": 41
+        },
+        {
+          "channel": "Protocole Zola",
+          "hits": 35
+        },
+        {
+          "channel": "B20baOfficiel",
+          "hits": 34
+        },
+        {
+          "channel": "GIMS",
+          "hits": 33
+        },
+        {
+          "channel": "Josman",
+          "hits": 30
+        },
+        {
+          "channel": "FICKO TV",
+          "hits": 30
+        },
+        {
+          "channel": "Spider-Koda 🕷️",
+          "hits": 27
+        },
+        {
+          "channel": "Médine",
+          "hits": 26
+        }
+      ]
+    }
+  },
+  "top_keywords_in_titles": [
+    {
+      "keyword": "ai",
+      "count": 2189
+    },
+    {
+      "keyword": "claude",
+      "count": 1062
+    },
+    {
+      "keyword": "ia",
+      "count": 1001
+    },
+    {
+      "keyword": "agent",
+      "count": 729
+    },
+    {
+      "keyword": "agents",
+      "count": 423
+    },
+    {
+      "keyword": "react",
+      "count": 348
+    },
+    {
+      "keyword": "gemini",
+      "count": 255
+    },
+    {
+      "keyword": "gpt",
+      "count": 216
+    },
+    {
+      "keyword": "n8n",
+      "count": 181
+    },
+    {
+      "keyword": "openai",
+      "count": 159
+    },
+    {
+      "keyword": "open source",
+      "count": 141
+    },
+    {
+      "keyword": "codex",
+      "count": 130
+    },
+    {
+      "keyword": "mcp",
+      "count": 125
+    },
+    {
+      "keyword": "github",
+      "count": 121
+    },
+    {
+      "keyword": "anthropic",
+      "count": 120
+    },
+    {
+      "keyword": "deepseek",
+      "count": 105
+    },
+    {
+      "keyword": "local",
+      "count": 104
+    },
+    {
+      "keyword": "llm",
+      "count": 86
+    },
+    {
+      "keyword": "saas",
+      "count": 74
+    },
+    {
+      "keyword": "workflow",
+      "count": 65
+    },
+    {
+      "keyword": "cursor",
+      "count": 62
+    },
+    {
+      "keyword": "linux",
+      "count": 57
+    },
+    {
+      "keyword": "rag",
+      "count": 52
+    },
+    {
+      "keyword": "opencode",
+      "count": 45
+    },
+    {
+      "keyword": "opensource",
+      "count": 45
+    },
+    {
+      "keyword": "obsidian",
+      "count": 45
+    },
+    {
+      "keyword": "python",
+      "count": 29
+    },
+    {
+      "keyword": "docker",
+      "count": 24
+    },
+    {
+      "keyword": "notion",
+      "count": 24
+    },
+    {
+      "keyword": "automation",
+      "count": 22
+    }
+  ],
+  "top_50_channels_overall": [
+    {
+      "channel": "AJ+ français",
+      "watch_count": 356,
+      "url": "https://www.youtube.com/channel/UCd1jQ_ppmKfphnh4p39HMFg"
+    },
+    {
+      "channel": "Nono",
+      "watch_count": 329,
+      "url": "https://www.youtube.com/channel/UCcC5nCsn859d-nqbH2MCjUA"
+    },
+    {
+      "channel": "Osirus Jack - Topic",
+      "watch_count": 281,
+      "url": "https://www.youtube.com/channel/UCCaORShQKrvuulAoLp2hgQA"
+    },
+    {
+      "channel": "BLAST, Le souffle de l'info",
+      "watch_count": 273,
+      "url": "https://www.youtube.com/channel/UC__xRB5L4toU9yYawt_lIKg"
+    },
+    {
+      "channel": "VU FranceTV",
+      "watch_count": 270,
+      "url": "https://www.youtube.com/channel/UCqt99sKYNTxqlHtzV9weUYA"
+    },
+    {
+      "channel": "Vision IA",
+      "watch_count": 255,
+      "url": "https://www.youtube.com/channel/UCyc03X3uRuxM9n7fyRH_gIw"
+    },
+    {
+      "channel": "FICKO TV",
+      "watch_count": 253,
+      "url": "https://www.youtube.com/channel/UCuH818pUjI_x0_h7X5Y7P1w"
+    },
+    {
+      "channel": "Ottekoi",
+      "watch_count": 243,
+      "url": "https://www.youtube.com/channel/UCXX048tuf0BROH6UMePGKPg"
+    },
+    {
+      "channel": "Le Parisien",
+      "watch_count": 170,
+      "url": "https://www.youtube.com/channel/UCfHn_8-ehdem86fEvlFg-Gw"
+    },
+    {
+      "channel": "FRANCE 24",
+      "watch_count": 169,
+      "url": "https://www.youtube.com/channel/UCCCPCZNChQdGa9EkATeye4g"
+    },
+    {
+      "channel": "Melvynx",
+      "watch_count": 163,
+      "url": "https://www.youtube.com/channel/UC5HDIVwuqoIuKKw-WbQ4CvA"
+    },
+    {
+      "channel": "WorldofAI",
+      "watch_count": 149,
+      "url": "https://www.youtube.com/channel/UC2WmuBuFq6gL08QYG-JjXKw"
+    },
+    {
+      "channel": "Crossthememory",
+      "watch_count": 145,
+      "url": "https://www.youtube.com/channel/UCzsdGXNzB9m0wXZwU05Fiyg"
+    },
+    {
+      "channel": "Cloud Codes",
+      "watch_count": 142,
+      "url": "https://www.youtube.com/channel/UC0DZj1PNa_Fp0MU6uPSKv5w"
+    },
+    {
+      "channel": "C à vous - France Télévisions",
+      "watch_count": 140,
+      "url": "https://www.youtube.com/channel/UCejTWYquMXD_MFHRZiqo_Aw"
+    },
+    {
+      "channel": "Josman - Topic",
+      "watch_count": 134,
+      "url": "https://www.youtube.com/channel/UC0hsMMOPUmc9HbYIX04MNeQ"
+    },
+    {
+      "channel": "Estherium",
+      "watch_count": 133,
+      "url": "https://www.youtube.com/channel/UC1PNMYKAaG-3kEcQKxe1H3A"
+    },
+    {
+      "channel": "AI Engineer",
+      "watch_count": 127,
+      "url": "https://www.youtube.com/channel/UCLKPca3kwwd-B59HNr-_lvA"
+    },
+    {
+      "channel": "Laury Aucalme",
+      "watch_count": 126,
+      "url": "https://www.youtube.com/channel/UCzjLpi5Vrv_dGc-CfzZH9aw"
+    },
+    {
+      "channel": "Alka",
+      "watch_count": 126,
+      "url": "https://www.youtube.com/channel/UCD3e3hB94QFboLXc8p8ht2w"
+    },
+    {
+      "channel": "Julian Goldie SEO",
+      "watch_count": 125,
+      "url": "https://www.youtube.com/channel/UCGpsgNbzdF7BECCVbB1COHw"
+    },
+    {
+      "channel": "Islem Sehili",
+      "watch_count": 122,
+      "url": "https://www.youtube.com/channel/UCsKs7qJ8cv7tCDh-F8CfI5A"
+    },
+    {
+      "channel": "Koda",
+      "watch_count": 121,
+      "url": "https://www.youtube.com/channel/UC8Sgg29FRGBWuwrAeMkOAYA"
+    },
+    {
+      "channel": "Boung80",
+      "watch_count": 119,
+      "url": "https://www.youtube.com/channel/UCnh7MoFoCqeW0m7IeKbm0kg"
+    },
+    {
+      "channel": "SUSHI NIHILISTE",
+      "watch_count": 118,
+      "url": "https://www.youtube.com/channel/UCqH0qUc5t05h20yl-hPw2Pw"
+    },
+    {
+      "channel": "Nerdy Kings",
+      "watch_count": 115,
+      "url": "https://www.youtube.com/channel/UCp7vimq7dYKiVAJLPyI0GcA"
+    },
+    {
+      "channel": "Mark Kashef",
+      "watch_count": 115,
+      "url": "https://www.youtube.com/channel/UCHkzp52CldSPZqU5T49mOnA"
+    },
+    {
+      "channel": "House of Marvel",
+      "watch_count": 114,
+      "url": "https://www.youtube.com/channel/UCNJXZEq-3qPB4vAhuPAoEQw"
+    },
+    {
+      "channel": "Le Journal de l'Espace",
+      "watch_count": 113,
+      "url": "https://www.youtube.com/channel/UCypzG0nv9B65DwOLJ578rZQ"
+    },
+    {
+      "channel": "Cole Medin",
+      "watch_count": 105,
+      "url": "https://www.youtube.com/channel/UCMwVTLZIRRUyyVrkjDpn4pA"
+    },
+    {
+      "channel": "OpenAI",
+      "watch_count": 104,
+      "url": "https://www.youtube.com/channel/UCXZCJLdBC09xxGZ6gcdrc6A"
+    },
+    {
+      "channel": "AICodeKing",
+      "watch_count": 103,
+      "url": "https://www.youtube.com/channel/UC0m81bQuthaQZmFbXEY9QSw"
+    },
+    {
+      "channel": "Alpha Wann - Topic",
+      "watch_count": 102,
+      "url": "https://www.youtube.com/channel/UC7S5NYPe5IQqJW2_kQ9xO7w"
+    },
+    {
+      "channel": "Yomi Denzel",
+      "watch_count": 100,
+      "url": "https://www.youtube.com/channel/UChgE6R4QauGAJAlYiJOcCGw"
+    },
+    {
+      "channel": "Mangemort Squad",
+      "watch_count": 97,
+      "url": "https://www.youtube.com/channel/UCaW8nWryLD0TunnyUYqp5dQ"
+    },
+    {
+      "channel": "Discover AI",
+      "watch_count": 96,
+      "url": "https://www.youtube.com/channel/UCfOvNb3xj28SNqPQ_JIbumg"
+    },
+    {
+      "channel": "LeHuffPost",
+      "watch_count": 96,
+      "url": "https://www.youtube.com/channel/UC9GGzAhhvhJO1hL10-BcgNA"
+    },
+    {
+      "channel": "Nate Herk | AI Automation",
+      "watch_count": 92,
+      "url": "https://www.youtube.com/channel/UC2ojq-nuP8ceeHqiroeKhBA"
+    },
+    {
+      "channel": "Zequoiza",
+      "watch_count": 91,
+      "url": "https://www.youtube.com/channel/UCC3aLrSSAdmg6K_a2qyhOZQ"
+    },
+    {
+      "channel": "Le roi du rire",
+      "watch_count": 89,
+      "url": "https://www.youtube.com/channel/UCm8vDg2kVORjbM7ji7MIuSg"
+    },
+    {
+      "channel": "Jack Roberts",
+      "watch_count": 88,
+      "url": "https://www.youtube.com/channel/UCxVxcTULO9cFU6SB9qVaisQ"
+    },
+    {
+      "channel": "MoneyRadar",
+      "watch_count": 87,
+      "url": "https://www.youtube.com/channel/UCXy8Z8pIqRRGD4ZUCzZPiug"
+    },
+    {
+      "channel": "Glupatate",
+      "watch_count": 87,
+      "url": "https://www.youtube.com/channel/UCE38FJeWDQ-ViY6buSKWoJg"
+    },
+    {
+      "channel": "Julien Bobroff",
+      "watch_count": 87,
+      "url": "https://www.youtube.com/channel/UCHvDHzTCTeEQ424xMCnOmiw"
+    },
+    {
+      "channel": "Laylow - Topic",
+      "watch_count": 85,
+      "url": "https://www.youtube.com/channel/UCv_0Uj-8YlvyqBpARg4r1qw"
+    },
+    {
+      "channel": "IA et Stratégie",
+      "watch_count": 83,
+      "url": "https://www.youtube.com/channel/UC2UmrCDeb8CEB7t6v6Kqt7A"
+    },
+    {
+      "channel": "Jay E | RoboNuggets",
+      "watch_count": 83,
+      "url": "https://www.youtube.com/channel/UCgscS8mBsQZ5sFRkJIFWD7Q"
+    },
+    {
+      "channel": "Akim Omiri",
+      "watch_count": 79,
+      "url": "https://www.youtube.com/channel/UCbOdpYBG53zmFuDK0qaTSmw"
+    },
+    {
+      "channel": "Julien Sanson | Automatisation & AI",
+      "watch_count": 78,
+      "url": "https://www.youtube.com/channel/UCK85rF_WKv1N6ojTzVbj3yw"
+    },
+    {
+      "channel": "netseer",
+      "watch_count": 78,
+      "url": "https://www.youtube.com/channel/UCR-K7IFmWe5BD5oBNh5eLsA"
+    }
+  ],
+  "top_40_tech_and_cognition_channels": [
+    {
+      "channel": "Nono",
+      "tech_cognition_videos": 263,
+      "total_watch_count": 329,
+      "url": "https://www.youtube.com/channel/UCcC5nCsn859d-nqbH2MCjUA"
+    },
+    {
+      "channel": "Vision IA",
+      "tech_cognition_videos": 255,
+      "total_watch_count": 255,
+      "url": "https://www.youtube.com/channel/UCyc03X3uRuxM9n7fyRH_gIw"
+    },
+    {
+      "channel": "WorldofAI",
+      "tech_cognition_videos": 143,
+      "total_watch_count": 149,
+      "url": "https://www.youtube.com/channel/UC2WmuBuFq6gL08QYG-JjXKw"
+    },
+    {
+      "channel": "Cloud Codes",
+      "tech_cognition_videos": 142,
+      "total_watch_count": 142,
+      "url": "https://www.youtube.com/channel/UC0DZj1PNa_Fp0MU6uPSKv5w"
+    },
+    {
+      "channel": "AI Engineer",
+      "tech_cognition_videos": 127,
+      "total_watch_count": 127,
+      "url": "https://www.youtube.com/channel/UCLKPca3kwwd-B59HNr-_lvA"
+    },
+    {
+      "channel": "Julian Goldie SEO",
+      "tech_cognition_videos": 125,
+      "total_watch_count": 125,
+      "url": "https://www.youtube.com/channel/UCGpsgNbzdF7BECCVbB1COHw"
+    },
+    {
+      "channel": "Melvynx",
+      "tech_cognition_videos": 115,
+      "total_watch_count": 163,
+      "url": "https://www.youtube.com/channel/UC5HDIVwuqoIuKKw-WbQ4CvA"
+    },
+    {
+      "channel": "OpenAI",
+      "tech_cognition_videos": 104,
+      "total_watch_count": 104,
+      "url": "https://www.youtube.com/channel/UCXZCJLdBC09xxGZ6gcdrc6A"
+    },
+    {
+      "channel": "Discover AI",
+      "tech_cognition_videos": 96,
+      "total_watch_count": 96,
+      "url": "https://www.youtube.com/channel/UCfOvNb3xj28SNqPQ_JIbumg"
+    },
+    {
+      "channel": "Cole Medin",
+      "tech_cognition_videos": 94,
+      "total_watch_count": 105,
+      "url": "https://www.youtube.com/channel/UCMwVTLZIRRUyyVrkjDpn4pA"
+    },
+    {
+      "channel": "Nate Herk | AI Automation",
+      "tech_cognition_videos": 92,
+      "total_watch_count": 92,
+      "url": "https://www.youtube.com/channel/UC2ojq-nuP8ceeHqiroeKhBA"
+    },
+    {
+      "channel": "Nerdy Kings",
+      "tech_cognition_videos": 90,
+      "total_watch_count": 115,
+      "url": "https://www.youtube.com/channel/UCp7vimq7dYKiVAJLPyI0GcA"
+    },
+    {
+      "channel": "Mark Kashef",
+      "tech_cognition_videos": 88,
+      "total_watch_count": 115,
+      "url": "https://www.youtube.com/channel/UCHkzp52CldSPZqU5T49mOnA"
+    },
+    {
+      "channel": "IA et Stratégie",
+      "tech_cognition_videos": 83,
+      "total_watch_count": 83,
+      "url": "https://www.youtube.com/channel/UC2UmrCDeb8CEB7t6v6Kqt7A"
+    },
+    {
+      "channel": "AICodeKing",
+      "tech_cognition_videos": 83,
+      "total_watch_count": 103,
+      "url": "https://www.youtube.com/channel/UC0m81bQuthaQZmFbXEY9QSw"
+    },
+    {
+      "channel": "Julien Sanson | Automatisation & AI",
+      "tech_cognition_videos": 78,
+      "total_watch_count": 78,
+      "url": "https://www.youtube.com/channel/UCK85rF_WKv1N6ojTzVbj3yw"
+    },
+    {
+      "channel": "ManuAGI - AutoGPT Tutorials",
+      "tech_cognition_videos": 71,
+      "total_watch_count": 76,
+      "url": "https://www.youtube.com/channel/UC1weYqfDgX0ALlNOSzcyblQ"
+    },
+    {
+      "channel": "Jay E | RoboNuggets",
+      "tech_cognition_videos": 69,
+      "total_watch_count": 83,
+      "url": "https://www.youtube.com/channel/UCgscS8mBsQZ5sFRkJIFWD7Q"
+    },
+    {
+      "channel": "Shubham SHARMA",
+      "tech_cognition_videos": 62,
+      "total_watch_count": 68,
+      "url": "https://www.youtube.com/channel/UCLKx4-_XO5sR0AO0j8ye7zQ"
+    },
+    {
+      "channel": "Jack Roberts",
+      "tech_cognition_videos": 58,
+      "total_watch_count": 88,
+      "url": "https://www.youtube.com/channel/UCxVxcTULO9cFU6SB9qVaisQ"
+    },
+    {
+      "channel": "Thinknomy®",
+      "tech_cognition_videos": 57,
+      "total_watch_count": 73,
+      "url": "https://www.youtube.com/channel/UCRffTCRQ54BCPF-04DItPhw"
+    },
+    {
+      "channel": "Panda Making Money",
+      "tech_cognition_videos": 56,
+      "total_watch_count": 56,
+      "url": "https://www.youtube.com/channel/UCk0dczcTj3i0CmWRepHWpyA"
+    },
+    {
+      "channel": "Yassine Sdiri",
+      "tech_cognition_videos": 51,
+      "total_watch_count": 51,
+      "url": "https://www.youtube.com/channel/UC94UeaPuTt_L51RkDxj9d_w"
+    },
+    {
+      "channel": "AI LABS",
+      "tech_cognition_videos": 49,
+      "total_watch_count": 49,
+      "url": "https://www.youtube.com/channel/UCelfWQr9sXVMTvBzviPGlFw"
+    },
+    {
+      "channel": "Google Cloud Tech",
+      "tech_cognition_videos": 45,
+      "total_watch_count": 45,
+      "url": "https://www.youtube.com/channel/UCJS9pqu9BzkAMNTmzNMNhvg"
+    },
+    {
+      "channel": "ByteMonk",
+      "tech_cognition_videos": 45,
+      "total_watch_count": 71,
+      "url": "https://www.youtube.com/channel/UCzCsyvyrq38R6TnztEzOmgg"
+    },
+    {
+      "channel": "Claudius Papirus",
+      "tech_cognition_videos": 37,
+      "total_watch_count": 46,
+      "url": "https://www.youtube.com/channel/UCYhgVUxsl1PQUOMufZ8I5uQ"
+    },
+    {
+      "channel": "PAGESSE REACT",
+      "tech_cognition_videos": 37,
+      "total_watch_count": 37,
+      "url": "https://www.youtube.com/channel/UCQZQE4vjOXaMg0J-wEx5axA"
+    },
+    {
+      "channel": "CLI Stack",
+      "tech_cognition_videos": 35,
+      "total_watch_count": 35,
+      "url": "https://www.youtube.com/channel/UC8oGJUnTu5_-byJPdntiQsQ"
+    },
+    {
+      "channel": "Claude",
+      "tech_cognition_videos": 34,
+      "total_watch_count": 34,
+      "url": "https://www.youtube.com/channel/UCV03SRZXJEz-hchIAogeJOg"
+    },
+    {
+      "channel": "LangChain",
+      "tech_cognition_videos": 28,
+      "total_watch_count": 28,
+      "url": "https://www.youtube.com/channel/UCC-lyoTfSrcJzA1ab3APAgw"
+    },
+    {
+      "channel": "Ludo Salenne",
+      "tech_cognition_videos": 28,
+      "total_watch_count": 31,
+      "url": "https://www.youtube.com/channel/UCnnYqSNKKygemgmxC9PyLTw"
+    },
+    {
+      "channel": "BFM Business",
+      "tech_cognition_videos": 27,
+      "total_watch_count": 27,
+      "url": "https://www.youtube.com/channel/UCUsBMOIUl_ad6JUOC16DpmQ"
+    },
+    {
+      "channel": "Yomi Denzel",
+      "tech_cognition_videos": 26,
+      "total_watch_count": 100,
+      "url": "https://www.youtube.com/channel/UChgE6R4QauGAJAlYiJOcCGw"
+    },
+    {
+      "channel": "Satisfying Mind",
+      "tech_cognition_videos": 26,
+      "total_watch_count": 26,
+      "url": "https://www.youtube.com/channel/UCoeaRqFgZyq5AhPl97Oa6DA"
+    },
+    {
+      "channel": "Defend Intelligence",
+      "tech_cognition_videos": 25,
+      "total_watch_count": 39,
+      "url": "https://www.youtube.com/channel/UCnEHCrot2HkySxMTmDPhZyg"
+    },
+    {
+      "channel": "Greg Isenberg",
+      "tech_cognition_videos": 24,
+      "total_watch_count": 28,
+      "url": "https://www.youtube.com/channel/UCPjNBjflYl0-HQtUvOx0Ibw"
+    },
+    {
+      "channel": "Anthropic",
+      "tech_cognition_videos": 24,
+      "total_watch_count": 24,
+      "url": "https://www.youtube.com/channel/UCrDwWp7EBBv4NwvScIpBDOA"
+    },
+    {
+      "channel": "Estherium",
+      "tech_cognition_videos": 24,
+      "total_watch_count": 133,
+      "url": "https://www.youtube.com/channel/UC1PNMYKAaG-3kEcQKxe1H3A"
+    },
+    {
+      "channel": "Leon van Zyl",
+      "tech_cognition_videos": 23,
+      "total_watch_count": 29,
+      "url": "https://www.youtube.com/channel/UCtevzRsHEKhs-RK8pAqwSyQ"
+    }
+  ]
+}

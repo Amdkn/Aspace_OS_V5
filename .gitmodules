@@ -363,3 +363,12 @@
 [submodule "01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton"]
 	path = 01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton
 	url = https://github.com/Amdkn/presenton.git
+[submodule "01_Forkable/FKB04_Tools_Anything/agent-browser"]
+	path = 01_Forkable/FKB04_Tools_Anything/agent-browser
+	url = https://github.com/Amdkn/agent-browser.git
+[submodule "01_Forkable/FKB04_Tools_Anything/agent-desktop"]
+	path = 01_Forkable/FKB04_Tools_Anything/agent-desktop
+	url = https://github.com/Amdkn/agent-desktop.git
+[submodule "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/bifrost"]
+	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/bifrost
+	url = https://github.com/Amdkn/bifrost.git

@@ -1,0 +1,3298 @@
+{
+  "source_zip": "C:\\Users\\amado\\Downloads\\EYI Package_11-11-2026_1794364336.zip",
+  "generated_utc": "2026-11-13T04:07:28Z",
+  "counts": {
+    "total_zip_files": 780,
+    "mp3_count": 329,
+    "mp4_count": 6,
+    "md_count": 20,
+    "md_total_including_proactive": 170,
+    "proactive_messages_excluded": 150,
+    "txt_workspace_count": 9,
+    "txt_total_in_zip": 10,
+    "ogg_count": 2
+  },
+  "proactive_messages_exclusion": {
+    "excluded_from_source_a": true,
+    "path_prefix": "workspace/your_files/proactive_messages/",
+    "total_excluded": 150,
+    "by_subfolder": {
+      "research": 146,
+      "selection": 4
+    },
+    "note": "Explicitly excluded from Source A turns and text extraction; counted in inventory only."
+  },
+  "mp3_voice_notes": [
+    {
+      "path": "workspace/goals/d-n029-enqu-tes-prolong-es-preuves-dues-au-1er-novembre/files/note-vocale-dn029-arbitrages-20261023.mp3",
+      "filename": "note-vocale-dn029-arbitrages-20261023.mp3",
+      "size_bytes": 385957,
+      "compressed_size_bytes": 362334,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/d-n029-enqu-tes-prolong-es-preuves-dues-au-1er-novembre/files"
+    },
+    {
+      "path": "workspace/goals/d-n029-enqu-tes-prolong-es-preuves-dues-au-1er-novembre/files/note-vocale-dn029-correction-20261023.mp3",
+      "filename": "note-vocale-dn029-correction-20261023.mp3",
+      "size_bytes": 452197,
+      "compressed_size_bytes": 422233,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/d-n029-enqu-tes-prolong-es-preuves-dues-au-1er-novembre/files"
+    },
+    {
+      "path": "workspace/goals/liberty-ride-n8n-automation-and-ai-twin/files/migration-make-2026-10-29.mp3",
+      "filename": "migration-make-2026-10-29.mp3",
+      "size_bytes": 381541,
+      "compressed_size_bytes": 357850,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/liberty-ride-n8n-automation-and-ai-twin/files"
+    },
+    {
+      "path": "workspace/goals/liberty-ride-n8n-automation-and-ai-twin/files/migration-vapi-2026-10-29.mp3",
+      "filename": "migration-vapi-2026-10-29.mp3",
+      "size_bytes": 343141,
+      "compressed_size_bytes": 321925,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/liberty-ride-n8n-automation-and-ai-twin/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/analyse-v3-heritage.mp3",
+      "filename": "analyse-v3-heritage.mp3",
+      "size_bytes": 1008037,
+      "compressed_size_bytes": 945302,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/b1-migration-complete.mp3",
+      "filename": "b1-migration-complete.mp3",
+      "size_bytes": 119461,
+      "compressed_size_bytes": 111998,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/b2-correction.mp3",
+      "filename": "b2-correction.mp3",
+      "size_bytes": 203173,
+      "compressed_size_bytes": 188082,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/b3-dc-marvel.mp3",
+      "filename": "b3-dc-marvel.mp3",
+      "size_bytes": 197221,
+      "compressed_size_bytes": 183498,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/b3-raccourcis.mp3",
+      "filename": "b3-raccourcis.mp3",
+      "size_bytes": 115621,
+      "compressed_size_bytes": 107926,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/fusion-para.mp3",
+      "filename": "fusion-para.mp3",
+      "size_bytes": 119461,
+      "compressed_size_bytes": 112465,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/matrice-fractale-8x8.mp3",
+      "filename": "matrice-fractale-8x8.mp3",
+      "size_bytes": 490597,
+      "compressed_size_bytes": 459108,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/structure-life-os-drive.mp3",
+      "filename": "structure-life-os-drive.mp3",
+      "size_bytes": 188197,
+      "compressed_size_bytes": 174985,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/life-os-drive-structuring/files/topologie-a1-a2-a3.mp3",
+      "filename": "topologie-a1-a2-a3.mp3",
+      "size_bytes": 444133,
+      "compressed_size_bytes": 414742,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-drive-structuring/files"
+    },
+    {
+      "path": "workspace/goals/v4-audit-remediation-six-typed-missions/files/note-vocale-dn040-conseil-20261022.mp3",
+      "filename": "note-vocale-dn040-conseil-20261022.mp3",
+      "size_bytes": 451237,
+      "compressed_size_bytes": 426270,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/v4-audit-remediation-six-typed-missions/files"
+    },
+    {
+      "path": "workspace/goals/v4-audit-remediation-six-typed-missions/files/note-vocale-issue64-fermee-20261022.mp3",
+      "filename": "note-vocale-issue64-fermee-20261022.mp3",
+      "size_bytes": 307813,
+      "compressed_size_bytes": 288220,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/v4-audit-remediation-six-typed-missions/files"
+    },
+    {
+      "path": "workspace/goals/v4-audit-remediation-six-typed-missions/files/note-vocale-noyau-complet-20261023.mp3",
+      "filename": "note-vocale-noyau-complet-20261023.mp3",
+      "size_bytes": 366757,
+      "compressed_size_bytes": 344538,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/v4-audit-remediation-six-typed-missions/files"
+    },
+    {
+      "path": "workspace/goals/v4-audit-remediation-six-typed-missions/files/note-vocale-phase4-design.mp3",
+      "filename": "note-vocale-phase4-design.mp3",
+      "size_bytes": 780901,
+      "compressed_size_bytes": 731849,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/v4-audit-remediation-six-typed-missions/files"
+    },
+    {
+      "path": "workspace/goals/v4-audit-remediation-six-typed-missions/files/note-vocale-ruling-consigne-20261022.mp3",
+      "filename": "note-vocale-ruling-consigne-20261022.mp3",
+      "size_bytes": 468133,
+      "compressed_size_bytes": 440566,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/v4-audit-remediation-six-typed-missions/files"
+    },
+    {
+      "path": "workspace/goals/v4-audit-remediation-six-typed-missions/files/pouls-2026-10-15.mp3",
+      "filename": "pouls-2026-10-15.mp3",
+      "size_bytes": 261541,
+      "compressed_size_bytes": 245204,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/v4-audit-remediation-six-typed-missions/files"
+    },
+    {
+      "path": "workspace/your_files/12wy-decisions.mp3",
+      "filename": "12wy-decisions.mp3",
+      "size_bytes": 356581,
+      "compressed_size_bytes": 335100,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/12wy-delta.mp3",
+      "filename": "12wy-delta.mp3",
+      "size_bytes": 285733,
+      "compressed_size_bytes": 269128,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/accuse-c-dn030.mp3",
+      "filename": "accuse-c-dn030.mp3",
+      "size_bytes": 614437,
+      "compressed_size_bytes": 576444,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/acte-33-pose-dn036.mp3",
+      "filename": "acte-33-pose-dn036.mp3",
+      "size_bytes": 639397,
+      "compressed_size_bytes": 598100,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/agents-councils.mp3",
+      "filename": "agents-councils.mp3",
+      "size_bytes": 185893,
+      "compressed_size_bytes": 171736,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/ai-summit.mp3",
+      "filename": "ai-summit.mp3",
+      "size_bytes": 197413,
+      "compressed_size_bytes": 185430,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-20-life-os.mp3",
+      "filename": "analyse-20-life-os.mp3",
+      "size_bytes": 696037,
+      "compressed_size_bytes": 651195,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-convergence-v4.mp3",
+      "filename": "analyse-convergence-v4.mp3",
+      "size_bytes": 693157,
+      "compressed_size_bytes": 650976,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-debat-systemique.mp3",
+      "filename": "analyse-debat-systemique.mp3",
+      "size_bytes": 1272997,
+      "compressed_size_bytes": 1192763,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-drivelink-note-vocale.mp3",
+      "filename": "analyse-drivelink-note-vocale.mp3",
+      "size_bytes": 954277,
+      "compressed_size_bytes": 893611,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-gemini-devcontainers.mp3",
+      "filename": "analyse-gemini-devcontainers.mp3",
+      "size_bytes": 637861,
+      "compressed_size_bytes": 598164,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-prd-sdd-a0-2026-11-02.mp3",
+      "filename": "analyse-prd-sdd-a0-2026-11-02.mp3",
+      "size_bytes": 559717,
+      "compressed_size_bytes": 527551,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-proto-jumeau-v2.mp3",
+      "filename": "analyse-proto-jumeau-v2.mp3",
+      "size_bytes": 676069,
+      "compressed_size_bytes": 635264,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-proto-jumeau.mp3",
+      "filename": "analyse-proto-jumeau.mp3",
+      "size_bytes": 676069,
+      "compressed_size_bytes": 635264,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-reponse-rory-hl06.mp3",
+      "filename": "analyse-reponse-rory-hl06.mp3",
+      "size_bytes": 669541,
+      "compressed_size_bytes": 625292,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-ryan-rory-river.mp3",
+      "filename": "analyse-ryan-rory-river.mp3",
+      "size_bytes": 1064101,
+      "compressed_size_bytes": 997211,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-scion-anthropic.mp3",
+      "filename": "analyse-scion-anthropic.mp3",
+      "size_bytes": 1775461,
+      "compressed_size_bytes": 1672189,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-silence-holons.mp3",
+      "filename": "analyse-silence-holons.mp3",
+      "size_bytes": 810853,
+      "compressed_size_bytes": 760605,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-trois-os.mp3",
+      "filename": "analyse-trois-os.mp3",
+      "size_bytes": 712357,
+      "compressed_size_bytes": 667776,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-v5-notebooklm.mp3",
+      "filename": "analyse-v5-notebooklm.mp3",
+      "size_bytes": 1266853,
+      "compressed_size_bytes": 1191386,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/analyse-vent-ia-v3-v4-v41.mp3",
+      "filename": "analyse-vent-ia-v3-v4-v41.mp3",
+      "size_bytes": 863077,
+      "compressed_size_bytes": 809165,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/arbitrage-ld08-reevaluation-issues.mp3",
+      "filename": "arbitrage-ld08-reevaluation-issues.mp3",
+      "size_bytes": 749221,
+      "compressed_size_bytes": 705360,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/arbitrage-v4-v41-v5.mp3",
+      "filename": "arbitrage-v4-v41-v5.mp3",
+      "size_bytes": 693733,
+      "compressed_size_bytes": 652129,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/aspace-architecture-versions.mp3",
+      "filename": "aspace-architecture-versions.mp3",
+      "size_bytes": 621157,
+      "compressed_size_bytes": 584131,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/audit-yaz-delegation-dn030.mp3",
+      "filename": "audit-yaz-delegation-dn030.mp3",
+      "size_bytes": 639013,
+      "compressed_size_bytes": 602503,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/automaton-a0-2026-11-02.mp3",
+      "filename": "automaton-a0-2026-11-02.mp3",
+      "size_bytes": 602341,
+      "compressed_size_bytes": 565329,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/avis-ablation-2026-11-02.mp3",
+      "filename": "avis-ablation-2026-11-02.mp3",
+      "size_bytes": 448933,
+      "compressed_size_bytes": 422131,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/babysitting-bill-ncm.mp3",
+      "filename": "babysitting-bill-ncm.mp3",
+      "size_bytes": 633061,
+      "compressed_size_bytes": 594816,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/bilan-f02-complete.mp3",
+      "filename": "bilan-f02-complete.mp3",
+      "size_bytes": 172837,
+      "compressed_size_bytes": 162255,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/bilan-migration-mono-repo.mp3",
+      "filename": "bilan-migration-mono-repo.mp3",
+      "size_bytes": 537637,
+      "compressed_size_bytes": 506817,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/brainstorming-6-frameworks-life-os.mp3",
+      "filename": "brainstorming-6-frameworks-life-os.mp3",
+      "size_bytes": 1292581,
+      "compressed_size_bytes": 1212975,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/brief-merge-ready.mp3",
+      "filename": "brief-merge-ready.mp3",
+      "size_bytes": 632293,
+      "compressed_size_bytes": 592170,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/chatgpt-plus.mp3",
+      "filename": "chatgpt-plus.mp3",
+      "size_bytes": 274597,
+      "compressed_size_bytes": 257481,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-f02.mp3",
+      "filename": "cloture-f02.mp3",
+      "size_bytes": 713893,
+      "compressed_size_bytes": 665240,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-l01.mp3",
+      "filename": "cloture-l01.mp3",
+      "size_bytes": 305317,
+      "compressed_size_bytes": 286970,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-l04.mp3",
+      "filename": "cloture-l04.mp3",
+      "size_bytes": 273637,
+      "compressed_size_bytes": 256861,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-l05.mp3",
+      "filename": "cloture-l05.mp3",
+      "size_bytes": 252517,
+      "compressed_size_bytes": 237321,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-l06.mp3",
+      "filename": "cloture-l06.mp3",
+      "size_bytes": 295141,
+      "compressed_size_bytes": 276554,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-sb01-definitive.mp3",
+      "filename": "cloture-sb01-definitive.mp3",
+      "size_bytes": 476197,
+      "compressed_size_bytes": 445799,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/cloture-sb01.mp3",
+      "filename": "cloture-sb01.mp3",
+      "size_bytes": 427621,
+      "compressed_size_bytes": 401538,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/codespaces-ephemeres.mp3",
+      "filename": "codespaces-ephemeres.mp3",
+      "size_bytes": 194917,
+      "compressed_size_bytes": 182703,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/codex-web-merged.mp3",
+      "filename": "codex-web-merged.mp3",
+      "size_bytes": 189733,
+      "compressed_size_bytes": 178261,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/comparaison-dark-factory-v5.mp3",
+      "filename": "comparaison-dark-factory-v5.mp3",
+      "size_bytes": 1960933,
+      "compressed_size_bytes": 1843218,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/comparatif-supabase-github-holons.mp3",
+      "filename": "comparatif-supabase-github-holons.mp3",
+      "size_bytes": 463333,
+      "compressed_size_bytes": 434864,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/conseil-s2-18-capacites.mp3",
+      "filename": "conseil-s2-18-capacites.mp3",
+      "size_bytes": 539557,
+      "compressed_size_bytes": 507059,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/conseil-s2-decisions-dn028.mp3",
+      "filename": "conseil-s2-decisions-dn028.mp3",
+      "size_bytes": 523813,
+      "compressed_size_bytes": 494095,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/conseil-s2-decisions-rendues.mp3",
+      "filename": "conseil-s2-decisions-rendues.mp3",
+      "size_bytes": 605413,
+      "compressed_size_bytes": 568709,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/conseil-s2-deepseek-qualifie-pr85.mp3",
+      "filename": "conseil-s2-deepseek-qualifie-pr85.mp3",
+      "size_bytes": 391141,
+      "compressed_size_bytes": 366889,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/constat-v41.mp3",
+      "filename": "constat-v41.mp3",
+      "size_bytes": 393637,
+      "compressed_size_bytes": 369071,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/continuite-six-dispatches.mp3",
+      "filename": "continuite-six-dispatches.mp3",
+      "size_bytes": 778021,
+      "compressed_size_bytes": 729033,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/coolembrl-24-7-exigence.mp3",
+      "filename": "coolembrl-24-7-exigence.mp3",
+      "size_bytes": 527077,
+      "compressed_size_bytes": 497025,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/correction-sb01-fixforward.mp3",
+      "filename": "correction-sb01-fixforward.mp3",
+      "size_bytes": 406501,
+      "compressed_size_bytes": 381450,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/d-n030-discover-bill.mp3",
+      "filename": "d-n030-discover-bill.mp3",
+      "size_bytes": 538021,
+      "compressed_size_bytes": 506652,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/dark-factory-concretisation.mp3",
+      "filename": "dark-factory-concretisation.mp3",
+      "size_bytes": 601957,
+      "compressed_size_bytes": 564556,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/dn030-addendum-signe.mp3",
+      "filename": "dn030-addendum-signe.mp3",
+      "size_bytes": 445093,
+      "compressed_size_bytes": 417757,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/dn030-clos-arbitrage-ld08.mp3",
+      "filename": "dn030-clos-arbitrage-ld08.mp3",
+      "size_bytes": 389221,
+      "compressed_size_bytes": 364630,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/extraction-chatgpt-2026-10-16.mp3",
+      "filename": "extraction-chatgpt-2026-10-16.mp3",
+      "size_bytes": 528037,
+      "compressed_size_bytes": 495183,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/f02-complete.mp3",
+      "filename": "f02-complete.mp3",
+      "size_bytes": 517477,
+      "compressed_size_bytes": 485874,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/f02-tranche-alien-technology.mp3",
+      "filename": "f02-tranche-alien-technology.mp3",
+      "size_bytes": 546277,
+      "compressed_size_bytes": 512446,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/f02-validation-dispatch.mp3",
+      "filename": "f02-validation-dispatch.mp3",
+      "size_bytes": 395941,
+      "compressed_size_bytes": 373530,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/fix-temporel-merge.mp3",
+      "filename": "fix-temporel-merge.mp3",
+      "size_bytes": 470437,
+      "compressed_size_bytes": 441011,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/heartbeat-2026-10-09.mp3",
+      "filename": "heartbeat-2026-10-09.mp3",
+      "size_bytes": 311653,
+      "compressed_size_bytes": 293773,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/heartbeat-2026-10-10.mp3",
+      "filename": "heartbeat-2026-10-10.mp3",
+      "size_bytes": 258661,
+      "compressed_size_bytes": 242640,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/heartbeat-2026-10-11.mp3",
+      "filename": "heartbeat-2026-10-11.mp3",
+      "size_bytes": 187621,
+      "compressed_size_bytes": 176485,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/heartbeat-s2-doctors-2026-10-09.mp3",
+      "filename": "heartbeat-s2-doctors-2026-10-09.mp3",
+      "size_bytes": 672613,
+      "compressed_size_bytes": 632059,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/heartbeat-unique.mp3",
+      "filename": "heartbeat-unique.mp3",
+      "size_bytes": 248293,
+      "compressed_size_bytes": 232789,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/holons-12.mp3",
+      "filename": "holons-12.mp3",
+      "size_bytes": 393637,
+      "compressed_size_bytes": 368883,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/issue-factory-correction.mp3",
+      "filename": "issue-factory-correction.mp3",
+      "size_bytes": 346021,
+      "compressed_size_bytes": 324873,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/issue-factory-soir.mp3",
+      "filename": "issue-factory-soir.mp3",
+      "size_bytes": 162853,
+      "compressed_size_bytes": 152830,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/jumeau-labo-adapters-2026-11-02.mp3",
+      "filename": "jumeau-labo-adapters-2026-11-02.mp3",
+      "size_bytes": 637477,
+      "compressed_size_bytes": 594880,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/jumeau-lfm3-2026-11-02.mp3",
+      "filename": "jumeau-lfm3-2026-11-02.mp3",
+      "size_bytes": 613093,
+      "compressed_size_bytes": 573962,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/jumeau-ncm-posttraining-2026-11-02.mp3",
+      "filename": "jumeau-ncm-posttraining-2026-11-02.mp3",
+      "size_bytes": 719077,
+      "compressed_size_bytes": 674798,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/jumeau-sources-videos-2026-11-02.mp3",
+      "filename": "jumeau-sources-videos-2026-11-02.mp3",
+      "size_bytes": 639781,
+      "compressed_size_bytes": 600269,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/l00-installe-byb-assemble.mp3",
+      "filename": "l00-installe-byb-assemble.mp3",
+      "size_bytes": 847333,
+      "compressed_size_bytes": 793989,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/l03-non-demarrage.mp3",
+      "filename": "l03-non-demarrage.mp3",
+      "size_bytes": 547237,
+      "compressed_size_bytes": 513272,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/l03-pr96-ouverte.mp3",
+      "filename": "l03-pr96-ouverte.mp3",
+      "size_bytes": 449893,
+      "compressed_size_bytes": 420592,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/lancement-byb-noyau.mp3",
+      "filename": "lancement-byb-noyau.mp3",
+      "size_bytes": 766117,
+      "compressed_size_bytes": 716324,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/lecon-ai-factory-partie1.mp3",
+      "filename": "lecon-ai-factory-partie1.mp3",
+      "size_bytes": 2768869,
+      "compressed_size_bytes": 2590628,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/lecon-delegation-rick-doctors-compagnons.mp3",
+      "filename": "lecon-delegation-rick-doctors-compagnons.mp3",
+      "size_bytes": 1202917,
+      "compressed_size_bytes": 1129063,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/ledger-r10-explication.mp3",
+      "filename": "ledger-r10-explication.mp3",
+      "size_bytes": 385381,
+      "compressed_size_bytes": 361179,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/life-os-codespace.mp3",
+      "filename": "life-os-codespace.mp3",
+      "size_bytes": 289381,
+      "compressed_size_bytes": 271858,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/life-os-ui.mp3",
+      "filename": "life-os-ui.mp3",
+      "size_bytes": 261541,
+      "compressed_size_bytes": 244795,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/linear-alignement.mp3",
+      "filename": "linear-alignement.mp3",
+      "size_bytes": 384421,
+      "compressed_size_bytes": 359534,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/merge-pr24.mp3",
+      "filename": "merge-pr24.mp3",
+      "size_bytes": 110437,
+      "compressed_size_bytes": 104211,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/motion-canvas.mp3",
+      "filename": "motion-canvas.mp3",
+      "size_bytes": 295141,
+      "compressed_size_bytes": 277391,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/nettoyage-pr-29-59-82.mp3",
+      "filename": "nettoyage-pr-29-59-82.mp3",
+      "size_bytes": 426277,
+      "compressed_size_bytes": 401041,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/no-human-gate.mp3",
+      "filename": "no-human-gate.mp3",
+      "size_bytes": 379621,
+      "compressed_size_bytes": 355521,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-30min-20261022.mp3",
+      "filename": "note-vocale-30min-20261022.mp3",
+      "size_bytes": 390757,
+      "compressed_size_bytes": 363703,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-a3-actif-20261025.mp3",
+      "filename": "note-vocale-a3-actif-20261025.mp3",
+      "size_bytes": 645157,
+      "compressed_size_bytes": 607371,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-a3-life-wheel-20261025.mp3",
+      "filename": "note-vocale-a3-life-wheel-20261025.mp3",
+      "size_bytes": 563941,
+      "compressed_size_bytes": 529435,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-accuse-complet-dn040-20261022.mp3",
+      "filename": "note-vocale-accuse-complet-dn040-20261022.mp3",
+      "size_bytes": 395941,
+      "compressed_size_bytes": 370195,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-accuse-ouverture-dn036-20261021.mp3",
+      "filename": "note-vocale-accuse-ouverture-dn036-20261021.mp3",
+      "size_bytes": 1365541,
+      "compressed_size_bytes": 1247142,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-accuse-rick-20261021.mp3",
+      "filename": "note-vocale-accuse-rick-20261021.mp3",
+      "size_bytes": 321253,
+      "compressed_size_bytes": 301738,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-acte-33-pose-20261021.mp3",
+      "filename": "note-vocale-acte-33-pose-20261021.mp3",
+      "size_bytes": 692581,
+      "compressed_size_bytes": 647960,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-adaptation-tous-modules-runtime-design.mp3",
+      "filename": "note-vocale-adaptation-tous-modules-runtime-design.mp3",
+      "size_bytes": 771493,
+      "compressed_size_bytes": 725424,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-analyse-chatgpt-20261031.mp3",
+      "filename": "note-vocale-analyse-chatgpt-20261031.mp3",
+      "size_bytes": 420517,
+      "compressed_size_bytes": 395616,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-analyse-debat-systemique-20261104.mp3",
+      "filename": "note-vocale-analyse-debat-systemique-20261104.mp3",
+      "size_bytes": 1190821,
+      "compressed_size_bytes": 1118877,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-analyse-v4.mp3",
+      "filename": "note-vocale-analyse-v4.mp3",
+      "size_bytes": 1628581,
+      "compressed_size_bytes": 1529871,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-analyse-v5-20261104.mp3",
+      "filename": "note-vocale-analyse-v5-20261104.mp3",
+      "size_bytes": 1493797,
+      "compressed_size_bytes": 1408775,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-analyse-v5-20261105.mp3",
+      "filename": "note-vocale-analyse-v5-20261105.mp3",
+      "size_bytes": 1652773,
+      "compressed_size_bytes": 1539619,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-atterrissages-20261022.mp3",
+      "filename": "note-vocale-atterrissages-20261022.mp3",
+      "size_bytes": 598693,
+      "compressed_size_bytes": 560202,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-bilan-matinee-20261021.mp3",
+      "filename": "note-vocale-bilan-matinee-20261021.mp3",
+      "size_bytes": 533221,
+      "compressed_size_bytes": 500167,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-biomimicry-solarpunk-20261025.mp3",
+      "filename": "note-vocale-biomimicry-solarpunk-20261025.mp3",
+      "size_bytes": 771877,
+      "compressed_size_bytes": 723673,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-bridge-dark-factory.mp3",
+      "filename": "note-vocale-bridge-dark-factory.mp3",
+      "size_bytes": 599653,
+      "compressed_size_bytes": 564465,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-buzz-byb-20261021.mp3",
+      "filename": "note-vocale-buzz-byb-20261021.mp3",
+      "size_bytes": 303397,
+      "compressed_size_bytes": 285983,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-byb-noyau-20261020.mp3",
+      "filename": "note-vocale-byb-noyau-20261020.mp3",
+      "size_bytes": 396901,
+      "compressed_size_bytes": 372513,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-cle-supabase-vault-20261021.mp3",
+      "filename": "note-vocale-cle-supabase-vault-20261021.mp3",
+      "size_bytes": 347557,
+      "compressed_size_bytes": 325945,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-continuite-20261022.mp3",
+      "filename": "note-vocale-continuite-20261022.mp3",
+      "size_bytes": 181477,
+      "compressed_size_bytes": 170128,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-continuite-apps-script-20261031.mp3",
+      "filename": "note-vocale-continuite-apps-script-20261031.mp3",
+      "size_bytes": 299557,
+      "compressed_size_bytes": 280003,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-cordis-autoresearch-20261109.mp3",
+      "filename": "note-vocale-cordis-autoresearch-20261109.mp3",
+      "size_bytes": 939301,
+      "compressed_size_bytes": 871140,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-cordis-autoresearch-design.mp3",
+      "filename": "note-vocale-cordis-autoresearch-design.mp3",
+      "size_bytes": 399397,
+      "compressed_size_bytes": 375337,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-d-n030-a1.mp3",
+      "filename": "note-vocale-d-n030-a1.mp3",
+      "size_bytes": 536677,
+      "compressed_size_bytes": 504167,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-d-n030.mp3",
+      "filename": "note-vocale-d-n030.mp3",
+      "size_bytes": 770917,
+      "compressed_size_bytes": 721495,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-developpement-modules-recursivite-design.mp3",
+      "filename": "note-vocale-developpement-modules-recursivite-design.mp3",
+      "size_bytes": 784933,
+      "compressed_size_bytes": 735817,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-diffui-startrek-20261025.mp3",
+      "filename": "note-vocale-diffui-startrek-20261025.mp3",
+      "size_bytes": 1373797,
+      "compressed_size_bytes": 1291231,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discover-ai-forgetmemory.mp3",
+      "filename": "note-vocale-discover-ai-forgetmemory.mp3",
+      "size_bytes": 632101,
+      "compressed_size_bytes": 592762,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discover-ai-kimi-rsi.mp3",
+      "filename": "note-vocale-discover-ai-kimi-rsi.mp3",
+      "size_bytes": 565477,
+      "compressed_size_bytes": 529714,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discover-ai-memorygraphrag.mp3",
+      "filename": "note-vocale-discover-ai-memorygraphrag.mp3",
+      "size_bytes": 514981,
+      "compressed_size_bytes": 485376,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discover-ai-minirag.mp3",
+      "filename": "note-vocale-discover-ai-minirag.mp3",
+      "size_bytes": 585637,
+      "compressed_size_bytes": 551316,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discover-ai-vibegraphing.mp3",
+      "filename": "note-vocale-discover-ai-vibegraphing.mp3",
+      "size_bytes": 1703077,
+      "compressed_size_bytes": 1591722,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discover-ai-wikiskill.mp3",
+      "filename": "note-vocale-discover-ai-wikiskill.mp3",
+      "size_bytes": 630757,
+      "compressed_size_bytes": 595336,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-discussions-s1-s2-s3.mp3",
+      "filename": "note-vocale-discussions-s1-s2-s3.mp3",
+      "size_bytes": 312421,
+      "compressed_size_bytes": 292320,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dispatches-ouverts-20261021.mp3",
+      "filename": "note-vocale-dispatches-ouverts-20261021.mp3",
+      "size_bytes": 603493,
+      "compressed_size_bytes": 567479,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dispatches-phase0-20261021.mp3",
+      "filename": "note-vocale-dispatches-phase0-20261021.mp3",
+      "size_bytes": 538981,
+      "compressed_size_bytes": 505172,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-disposition-l02-20261021.mp3",
+      "filename": "note-vocale-disposition-l02-20261021.mp3",
+      "size_bytes": 814693,
+      "compressed_size_bytes": 765467,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dn035-interface.mp3",
+      "filename": "note-vocale-dn035-interface.mp3",
+      "size_bytes": 717733,
+      "compressed_size_bytes": 675541,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dn042-pr106-evaluation.mp3",
+      "filename": "note-vocale-dn042-pr106-evaluation.mp3",
+      "size_bytes": 517861,
+      "compressed_size_bytes": 487677,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dn044-addendum-a1.mp3",
+      "filename": "note-vocale-dn044-addendum-a1.mp3",
+      "size_bytes": 387493,
+      "compressed_size_bytes": 364762,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dn044-gate-v5-bom.mp3",
+      "filename": "note-vocale-dn044-gate-v5-bom.mp3",
+      "size_bytes": 467557,
+      "compressed_size_bytes": 437691,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dn045-addendum-a1.mp3",
+      "filename": "note-vocale-dn045-addendum-a1.mp3",
+      "size_bytes": 551077,
+      "compressed_size_bytes": 516171,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dn045-umbrel-coolify.mp3",
+      "filename": "note-vocale-dn045-umbrel-coolify.mp3",
+      "size_bytes": 426853,
+      "compressed_size_bytes": 399420,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dossier-life-6prs.mp3",
+      "filename": "note-vocale-dossier-life-6prs.mp3",
+      "size_bytes": 298213,
+      "compressed_size_bytes": 280196,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-dossier-life-clos.mp3",
+      "filename": "note-vocale-dossier-life-clos.mp3",
+      "size_bytes": 487141,
+      "compressed_size_bytes": 455705,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-ecart-heartbeat-20261021.mp3",
+      "filename": "note-vocale-ecart-heartbeat-20261021.mp3",
+      "size_bytes": 407461,
+      "compressed_size_bytes": 380503,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-en-cours-avance-20261022.mp3",
+      "filename": "note-vocale-en-cours-avance-20261022.mp3",
+      "size_bytes": 708901,
+      "compressed_size_bytes": 660601,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fleming-1-sierra.mp3",
+      "filename": "note-vocale-fleming-1-sierra.mp3",
+      "size_bytes": 691621,
+      "compressed_size_bytes": 648278,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-forks-amont-21-design.mp3",
+      "filename": "note-vocale-forks-amont-21-design.mp3",
+      "size_bytes": 510373,
+      "compressed_size_bytes": 475870,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-freellmapi-20261027.mp3",
+      "filename": "note-vocale-freellmapi-20261027.mp3",
+      "size_bytes": 388453,
+      "compressed_size_bytes": 364644,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-freellmapi-auto-20261027.mp3",
+      "filename": "note-vocale-freellmapi-auto-20261027.mp3",
+      "size_bytes": 239461,
+      "compressed_size_bytes": 225421,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fusion-f8-design.mp3",
+      "filename": "note-vocale-fusion-f8-design.mp3",
+      "size_bytes": 731173,
+      "compressed_size_bytes": 687786,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fusion-f8-pas2-pi-design.mp3",
+      "filename": "note-vocale-fusion-f8-pas2-pi-design.mp3",
+      "size_bytes": 590437,
+      "compressed_size_bytes": 555306,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fusion-f8-pas3-infinity-design.mp3",
+      "filename": "note-vocale-fusion-f8-pas3-infinity-design.mp3",
+      "size_bytes": 901861,
+      "compressed_size_bytes": 845490,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fusion-f8-pas4-openrig-design.mp3",
+      "filename": "note-vocale-fusion-f8-pas4-openrig-design.mp3",
+      "size_bytes": 852901,
+      "compressed_size_bytes": 798627,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fusion-f8-pas5-agent-zero-design.mp3",
+      "filename": "note-vocale-fusion-f8-pas5-agent-zero-design.mp3",
+      "size_bytes": 1335781,
+      "compressed_size_bytes": 1254230,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-fusion-harnesses-design.mp3",
+      "filename": "note-vocale-fusion-harnesses-design.mp3",
+      "size_bytes": 644197,
+      "compressed_size_bytes": 604078,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-g01c-noyau.mp3",
+      "filename": "note-vocale-g01c-noyau.mp3",
+      "size_bytes": 697573,
+      "compressed_size_bytes": 653963,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-genesis-prompt-d-n046.mp3",
+      "filename": "note-vocale-genesis-prompt-d-n046.mp3",
+      "size_bytes": 1003237,
+      "compressed_size_bytes": 924288,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-h-02-a1.mp3",
+      "filename": "note-vocale-h-02-a1.mp3",
+      "size_bytes": 464293,
+      "compressed_size_bytes": 434967,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-h02-a3.mp3",
+      "filename": "note-vocale-h02-a3.mp3",
+      "size_bytes": 465637,
+      "compressed_size_bytes": 437098,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-h02a2-h03a1.mp3",
+      "filename": "note-vocale-h02a2-h03a1.mp3",
+      "size_bytes": 571621,
+      "compressed_size_bytes": 536325,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-harness-20261027.mp3",
+      "filename": "note-vocale-harness-20261027.mp3",
+      "size_bytes": 665893,
+      "compressed_size_bytes": 624768,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-harness-engineering-field-note.mp3",
+      "filename": "note-vocale-harness-engineering-field-note.mp3",
+      "size_bytes": 953893,
+      "compressed_size_bytes": 898240,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-harness-knox.mp3",
+      "filename": "note-vocale-harness-knox.mp3",
+      "size_bytes": 638437,
+      "compressed_size_bytes": 600224,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-heartbeat-20261021.mp3",
+      "filename": "note-vocale-heartbeat-20261021.mp3",
+      "size_bytes": 464101,
+      "compressed_size_bytes": 436342,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-heartbeat-ecart-20261022.mp3",
+      "filename": "note-vocale-heartbeat-ecart-20261022.mp3",
+      "size_bytes": 294181,
+      "compressed_size_bytes": 275773,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-karpathy-hackertube-20261107.mp3",
+      "filename": "note-vocale-karpathy-hackertube-20261107.mp3",
+      "size_bytes": 506533,
+      "compressed_size_bytes": 467697,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-l00-clos-20261021.mp3",
+      "filename": "note-vocale-l00-clos-20261021.mp3",
+      "size_bytes": 405733,
+      "compressed_size_bytes": 382433,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-l00-installe-20261021.mp3",
+      "filename": "note-vocale-l00-installe-20261021.mp3",
+      "size_bytes": 585061,
+      "compressed_size_bytes": 548824,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-la-suite-20261021.mp3",
+      "filename": "note-vocale-la-suite-20261021.mp3",
+      "size_bytes": 550501,
+      "compressed_size_bytes": 516734,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-lane-buzz-prd-20261021.mp3",
+      "filename": "note-vocale-lane-buzz-prd-20261021.mp3",
+      "size_bytes": 452581,
+      "compressed_size_bytes": 426786,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-lecture-13e-supabase-20261021.mp3",
+      "filename": "note-vocale-lecture-13e-supabase-20261021.mp3",
+      "size_bytes": 612133,
+      "compressed_size_bytes": 578479,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-liberty-ride-a2p-20261021.mp3",
+      "filename": "note-vocale-liberty-ride-a2p-20261021.mp3",
+      "size_bytes": 592933,
+      "compressed_size_bytes": 555683,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-life-os-60s.mp3",
+      "filename": "note-vocale-life-os-60s.mp3",
+      "size_bytes": 373093,
+      "compressed_size_bytes": 350287,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-liste-umbreld-20261021.mp3",
+      "filename": "note-vocale-liste-umbreld-20261021.mp3",
+      "size_bytes": 562021,
+      "compressed_size_bytes": 526563,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-lotA-reparation-vague3.mp3",
+      "filename": "note-vocale-lotA-reparation-vague3.mp3",
+      "size_bytes": 515173,
+      "compressed_size_bytes": 485421,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-lotB1-items-recuperes.mp3",
+      "filename": "note-vocale-lotB1-items-recuperes.mp3",
+      "size_bytes": 627301,
+      "compressed_size_bytes": 590613,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-lotB2bis-68-69.mp3",
+      "filename": "note-vocale-lotB2bis-68-69.mp3",
+      "size_bytes": 459493,
+      "compressed_size_bytes": 433581,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-lotC-vague4-partie2.mp3",
+      "filename": "note-vocale-lotC-vague4-partie2.mp3",
+      "size_bytes": 624421,
+      "compressed_size_bytes": 588429,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-masterplan-20261021.mp3",
+      "filename": "note-vocale-masterplan-20261021.mp3",
+      "size_bytes": 735397,
+      "compressed_size_bytes": 686774,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-merges-118-113.mp3",
+      "filename": "note-vocale-merges-118-113.mp3",
+      "size_bytes": 248293,
+      "compressed_size_bytes": 233327,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-migration-mono-repo-terminee.mp3",
+      "filename": "note-vocale-migration-mono-repo-terminee.mp3",
+      "size_bytes": 317413,
+      "compressed_size_bytes": 298710,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-n2-continuite-20261024.mp3",
+      "filename": "note-vocale-n2-continuite-20261024.mp3",
+      "size_bytes": 391717,
+      "compressed_size_bytes": 369163,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-noyau-phases-livrees-20261021.mp3",
+      "filename": "note-vocale-noyau-phases-livrees-20261021.mp3",
+      "size_bytes": 819877,
+      "compressed_size_bytes": 769214,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-orchestration-deleguee-20261021.mp3",
+      "filename": "note-vocale-orchestration-deleguee-20261021.mp3",
+      "size_bytes": 433573,
+      "compressed_size_bytes": 406716,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-orchestration-lancee-20261021.mp3",
+      "filename": "note-vocale-orchestration-lancee-20261021.mp3",
+      "size_bytes": 852901,
+      "compressed_size_bytes": 799437,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-ordre-merges-life-os.mp3",
+      "filename": "note-vocale-ordre-merges-life-os.mp3",
+      "size_bytes": 513253,
+      "compressed_size_bytes": 484597,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-pap-personal-agent-protocol.mp3",
+      "filename": "note-vocale-pap-personal-agent-protocol.mp3",
+      "size_bytes": 774757,
+      "compressed_size_bytes": 728234,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase-prd-20261021.mp3",
+      "filename": "note-vocale-phase-prd-20261021.mp3",
+      "size_bytes": 484453,
+      "compressed_size_bytes": 456438,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase0-close-20261021.mp3",
+      "filename": "note-vocale-phase0-close-20261021.mp3",
+      "size_bytes": 536101,
+      "compressed_size_bytes": 501123,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase0-precision-20261021.mp3",
+      "filename": "note-vocale-phase0-precision-20261021.mp3",
+      "size_bytes": 439717,
+      "compressed_size_bytes": 411233,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase1-design.mp3",
+      "filename": "note-vocale-phase1-design.mp3",
+      "size_bytes": 680677,
+      "compressed_size_bytes": 641008,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase1-terminee.mp3",
+      "filename": "note-vocale-phase1-terminee.mp3",
+      "size_bytes": 675301,
+      "compressed_size_bytes": 633322,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase2-designs.mp3",
+      "filename": "note-vocale-phase2-designs.mp3",
+      "size_bytes": 897637,
+      "compressed_size_bytes": 839971,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase2-qualif.mp3",
+      "filename": "note-vocale-phase2-qualif.mp3",
+      "size_bytes": 682981,
+      "compressed_size_bytes": 640969,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase3-design.mp3",
+      "filename": "note-vocale-phase3-design.mp3",
+      "size_bytes": 624613,
+      "compressed_size_bytes": 587949,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase4-dn005-20261022.mp3",
+      "filename": "note-vocale-phase4-dn005-20261022.mp3",
+      "size_bytes": 603493,
+      "compressed_size_bytes": 564122,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-plan-codex-web.mp3",
+      "filename": "note-vocale-plan-codex-web.mp3",
+      "size_bytes": 882661,
+      "compressed_size_bytes": 831640,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-pouls-bedrock-20261022.mp3",
+      "filename": "note-vocale-pouls-bedrock-20261022.mp3",
+      "size_bytes": 588901,
+      "compressed_size_bytes": 551725,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-pr82-statut.mp3",
+      "filename": "note-vocale-pr82-statut.mp3",
+      "size_bytes": 548197,
+      "compressed_size_bytes": 514912,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-prd-daemon-20261021.mp3",
+      "filename": "note-vocale-prd-daemon-20261021.mp3",
+      "size_bytes": 727141,
+      "compressed_size_bytes": 681881,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-prd-phase2-20261021.mp3",
+      "filename": "note-vocale-prd-phase2-20261021.mp3",
+      "size_bytes": 678373,
+      "compressed_size_bytes": 637095,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-prd-phase3-20261021.mp3",
+      "filename": "note-vocale-prd-phase3-20261021.mp3",
+      "size_bytes": 765733,
+      "compressed_size_bytes": 718694,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-qualification-phase2-ryan-20261021.mp3",
+      "filename": "note-vocale-qualification-phase2-ryan-20261021.mp3",
+      "size_bytes": 479653,
+      "compressed_size_bytes": 452633,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-qualification-stockage-20261021.mp3",
+      "filename": "note-vocale-qualification-stockage-20261021.mp3",
+      "size_bytes": 619621,
+      "compressed_size_bytes": 583663,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-recentrage-aspace-20261031.mp3",
+      "filename": "note-vocale-recentrage-aspace-20261031.mp3",
+      "size_bytes": 231397,
+      "compressed_size_bytes": 217336,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-regle-deux-formats-20261022.mp3",
+      "filename": "note-vocale-regle-deux-formats-20261022.mp3",
+      "size_bytes": 235813,
+      "compressed_size_bytes": 221781,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-repass-leon-gemini.mp3",
+      "filename": "note-vocale-repass-leon-gemini.mp3",
+      "size_bytes": 523621,
+      "compressed_size_bytes": 492885,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-reprise-20261021.mp3",
+      "filename": "note-vocale-reprise-20261021.mp3",
+      "size_bytes": 395557,
+      "compressed_size_bytes": 372131,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-resultats-relance-20261022.mp3",
+      "filename": "note-vocale-resultats-relance-20261022.mp3",
+      "size_bytes": 956197,
+      "compressed_size_bytes": 897679,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-ruling-designs-20261021.mp3",
+      "filename": "note-vocale-ruling-designs-20261021.mp3",
+      "size_bytes": 967141,
+      "compressed_size_bytes": 906209,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-saisine-clara-phase1-20261021.mp3",
+      "filename": "note-vocale-saisine-clara-phase1-20261021.mp3",
+      "size_bytes": 491941,
+      "compressed_size_bytes": 461722,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-saisine-etendue-clara-20261021.mp3",
+      "filename": "note-vocale-saisine-etendue-clara-20261021.mp3",
+      "size_bytes": 565861,
+      "compressed_size_bytes": 530358,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-semaine-26oct-20261024.mp3",
+      "filename": "note-vocale-semaine-26oct-20261024.mp3",
+      "size_bytes": 578917,
+      "compressed_size_bytes": 542099,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-semaine-liberty-ride-20261025.mp3",
+      "filename": "note-vocale-semaine-liberty-ride-20261025.mp3",
+      "size_bytes": 446437,
+      "compressed_size_bytes": 417501,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-source-control-natif-v5-scion-design.mp3",
+      "filename": "note-vocale-source-control-natif-v5-scion-design.mp3",
+      "size_bytes": 1227493,
+      "compressed_size_bytes": 1152427,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-specification-complete-20261021.mp3",
+      "filename": "note-vocale-specification-complete-20261021.mp3",
+      "size_bytes": 758821,
+      "compressed_size_bytes": 712323,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-structuration-kernel-20261021.mp3",
+      "filename": "note-vocale-structuration-kernel-20261021.mp3",
+      "size_bytes": 601381,
+      "compressed_size_bytes": 565954,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-supabase-besoins-20261021.mp3",
+      "filename": "note-vocale-supabase-besoins-20261021.mp3",
+      "size_bytes": 643813,
+      "compressed_size_bytes": 603595,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-supabase-correction-20261021.mp3",
+      "filename": "note-vocale-supabase-correction-20261021.mp3",
+      "size_bytes": 507493,
+      "compressed_size_bytes": 475902,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-supabase-routee-20261021.mp3",
+      "filename": "note-vocale-supabase-routee-20261021.mp3",
+      "size_bytes": 507877,
+      "compressed_size_bytes": 479669,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-supabase-verifiee-20261021.mp3",
+      "filename": "note-vocale-supabase-verifiee-20261021.mp3",
+      "size_bytes": 434533,
+      "compressed_size_bytes": 408356,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-t01-corpus.mp3",
+      "filename": "note-vocale-t01-corpus.mp3",
+      "size_bytes": 912997,
+      "compressed_size_bytes": 858216,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-transmission-autonomie-design.mp3",
+      "filename": "note-vocale-transmission-autonomie-design.mp3",
+      "size_bytes": 598501,
+      "compressed_size_bytes": 559931,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-tristenobrien-20261028.mp3",
+      "filename": "note-vocale-tristenobrien-20261028.mp3",
+      "size_bytes": 316979,
+      "compressed_size_bytes": 297977,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-v4-merge-branches.mp3",
+      "filename": "note-vocale-v4-merge-branches.mp3",
+      "size_bytes": 340453,
+      "compressed_size_bytes": 319145,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-validation-phase1-d13.mp3",
+      "filename": "note-vocale-validation-phase1-d13.mp3",
+      "size_bytes": 1157797,
+      "compressed_size_bytes": 1086819,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-vapi-transcripteur-20261030.mp3",
+      "filename": "note-vocale-vapi-transcripteur-20261030.mp3",
+      "size_bytes": 659557,
+      "compressed_size_bytes": 620706,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-vision-ambition-20261021.mp3",
+      "filename": "note-vocale-vision-ambition-20261021.mp3",
+      "size_bytes": 963301,
+      "compressed_size_bytes": 900555,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-w-01-03.mp3",
+      "filename": "note-vocale-w-01-03.mp3",
+      "size_bytes": 621541,
+      "compressed_size_bytes": 583582,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/17-YSUHo6Lk.mp3",
+      "filename": "17-YSUHo6Lk.mp3",
+      "size_bytes": 192613,
+      "compressed_size_bytes": 182082,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/7taOQBfjDyE.mp3",
+      "filename": "7taOQBfjDyE.mp3",
+      "size_bytes": 182821,
+      "compressed_size_bytes": 171465,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/9wZpvF3QleU.mp3",
+      "filename": "9wZpvF3QleU.mp3",
+      "size_bytes": 218341,
+      "compressed_size_bytes": 203365,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/F0TNSmbo5hE.mp3",
+      "filename": "F0TNSmbo5hE.mp3",
+      "size_bytes": 196261,
+      "compressed_size_bytes": 183703,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/HvboD89DyQ8.mp3",
+      "filename": "HvboD89DyQ8.mp3",
+      "size_bytes": 235237,
+      "compressed_size_bytes": 219635,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/KHudyx5wW3U.mp3",
+      "filename": "KHudyx5wW3U.mp3",
+      "size_bytes": 221413,
+      "compressed_size_bytes": 206630,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/OE_lLNCNfQo.mp3",
+      "filename": "OE_lLNCNfQo.mp3",
+      "size_bytes": 190117,
+      "compressed_size_bytes": 177759,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/SQMCtZX3trg.mp3",
+      "filename": "SQMCtZX3trg.mp3",
+      "size_bytes": 199717,
+      "compressed_size_bytes": 187453,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/T3SS931wU0I.mp3",
+      "filename": "T3SS931wU0I.mp3",
+      "size_bytes": 178021,
+      "compressed_size_bytes": 168350,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/TN3mj92oZ8I.mp3",
+      "filename": "TN3mj92oZ8I.mp3",
+      "size_bytes": 184741,
+      "compressed_size_bytes": 172998,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/TRfzFJCJ7ZE.mp3",
+      "filename": "TRfzFJCJ7ZE.mp3",
+      "size_bytes": 228901,
+      "compressed_size_bytes": 213688,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/eXA2tjRZIbY.mp3",
+      "filename": "eXA2tjRZIbY.mp3",
+      "size_bytes": 161701,
+      "compressed_size_bytes": 151508,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/exiwa9QbQXI.mp3",
+      "filename": "exiwa9QbQXI.mp3",
+      "size_bytes": 160741,
+      "compressed_size_bytes": 150200,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/fjF8EKnxKCU.mp3",
+      "filename": "fjF8EKnxKCU.mp3",
+      "size_bytes": 191461,
+      "compressed_size_bytes": 180661,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/fz6-NS7qpZc.mp3",
+      "filename": "fz6-NS7qpZc.mp3",
+      "size_bytes": 210277,
+      "compressed_size_bytes": 198301,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/gxVZ_1tuuq4.mp3",
+      "filename": "gxVZ_1tuuq4.mp3",
+      "size_bytes": 199333,
+      "compressed_size_bytes": 185233,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/mUQoVz7THu0.mp3",
+      "filename": "mUQoVz7THu0.mp3",
+      "size_bytes": 197413,
+      "compressed_size_bytes": 186182,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/nxokqOq1imY.mp3",
+      "filename": "nxokqOq1imY.mp3",
+      "size_bytes": 158821,
+      "compressed_size_bytes": 149503,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/oWTEiYpxl80.mp3",
+      "filename": "oWTEiYpxl80.mp3",
+      "size_bytes": 198373,
+      "compressed_size_bytes": 186736,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/qZj7sqmidqA.mp3",
+      "filename": "qZj7sqmidqA.mp3",
+      "size_bytes": 180133,
+      "compressed_size_bytes": 169549,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/tUPPVhBBcoM.mp3",
+      "filename": "tUPPVhBBcoM.mp3",
+      "size_bytes": 189157,
+      "compressed_size_bytes": 176757,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/u-o0sW9nwmk.mp3",
+      "filename": "u-o0sW9nwmk.mp3",
+      "size_bytes": 157861,
+      "compressed_size_bytes": 147636,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/vGCJ7diEtrw.mp3",
+      "filename": "vGCJ7diEtrw.mp3",
+      "size_bytes": 204517,
+      "compressed_size_bytes": 192047,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/xLxhT2ZI7UM.mp3",
+      "filename": "xLxhT2ZI7UM.mp3",
+      "size_bytes": 204901,
+      "compressed_size_bytes": 193103,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-aidotengineer/xs-ob87TTzg.mp3",
+      "filename": "xs-ob87TTzg.mp3",
+      "size_bytes": 160741,
+      "compressed_size_bytes": 149582,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files/note-vocale-watch-aidotengineer"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-watch-software-factory.mp3",
+      "filename": "note-vocale-watch-software-factory.mp3",
+      "size_bytes": 1399333,
+      "compressed_size_bytes": 1310496,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-wfl001-canary-20261030.mp3",
+      "filename": "note-vocale-wfl001-canary-20261030.mp3",
+      "size_bytes": 503077,
+      "compressed_size_bytes": 474411,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-wfl002-etape-20261030.mp3",
+      "filename": "note-vocale-wfl002-etape-20261030.mp3",
+      "size_bytes": 530341,
+      "compressed_size_bytes": 498757,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-wfl002-simple-20261031.mp3",
+      "filename": "note-vocale-wfl002-simple-20261031.mp3",
+      "size_bytes": 307237,
+      "compressed_size_bytes": 287921,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/note-vocale-wfl002-test-teg40-20261030.mp3",
+      "filename": "note-vocale-wfl002-test-teg40-20261030.mp3",
+      "size_bytes": 421861,
+      "compressed_size_bytes": 397216,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/noyau-phases-1-3-livrees.mp3",
+      "filename": "noyau-phases-1-3-livrees.mp3",
+      "size_bytes": 716773,
+      "compressed_size_bytes": 671200,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/orchestration-dn032-sonde-issue5.mp3",
+      "filename": "orchestration-dn032-sonde-issue5.mp3",
+      "size_bytes": 686437,
+      "compressed_size_bytes": 642252,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/para-alignement.mp3",
+      "filename": "para-alignement.mp3",
+      "size_bytes": 492901,
+      "compressed_size_bytes": 461267,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/phase0-livree.mp3",
+      "filename": "phase0-livree.mp3",
+      "size_bytes": 642853,
+      "compressed_size_bytes": 604328,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/plan-migration-mono-repo.mp3",
+      "filename": "plan-migration-mono-repo.mp3",
+      "size_bytes": 893221,
+      "compressed_size_bytes": 838734,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/plan-reduction-life-os.mp3",
+      "filename": "plan-reduction-life-os.mp3",
+      "size_bytes": 642661,
+      "compressed_size_bytes": 601911,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/point-l03.mp3",
+      "filename": "point-l03.mp3",
+      "size_bytes": 565477,
+      "compressed_size_bytes": 529200,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/pouls-2026-10-12.mp3",
+      "filename": "pouls-2026-10-12.mp3",
+      "size_bytes": 179557,
+      "compressed_size_bytes": 169092,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/pouls-2026-10-13.mp3",
+      "filename": "pouls-2026-10-13.mp3",
+      "size_bytes": 198757,
+      "compressed_size_bytes": 185856,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/pouls-2026-10-14.mp3",
+      "filename": "pouls-2026-10-14.mp3",
+      "size_bytes": 234853,
+      "compressed_size_bytes": 219118,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/prd-phase3-specification-complete.mp3",
+      "filename": "prd-phase3-specification-complete.mp3",
+      "size_bytes": 742693,
+      "compressed_size_bytes": 693508,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/prd-sauvetage-chatgpt-5-lots.mp3",
+      "filename": "prd-sauvetage-chatgpt-5-lots.mp3",
+      "size_bytes": 556261,
+      "compressed_size_bytes": 523602,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/prd-sauvetage-chatgpt-maj-b2.mp3",
+      "filename": "prd-sauvetage-chatgpt-maj-b2.mp3",
+      "size_bytes": 527461,
+      "compressed_size_bytes": 495833,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/recap-continuation-2026-10-20.mp3",
+      "filename": "recap-continuation-2026-10-20.mp3",
+      "size_bytes": 701221,
+      "compressed_size_bytes": 655605,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/reconciliation-registre-12sur12.mp3",
+      "filename": "reconciliation-registre-12sur12.mp3",
+      "size_bytes": 602341,
+      "compressed_size_bytes": 565183,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/recu-h-l06-3.mp3",
+      "filename": "recu-h-l06-3.mp3",
+      "size_bytes": 394021,
+      "compressed_size_bytes": 370494,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/reel-energie-vide-analyse.mp3",
+      "filename": "reel-energie-vide-analyse.mp3",
+      "size_bytes": 960613,
+      "compressed_size_bytes": 902625,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/reel-flux-analyse.mp3",
+      "filename": "reel-flux-analyse.mp3",
+      "size_bytes": 858277,
+      "compressed_size_bytes": 803737,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/reel-rrt-analyse.mp3",
+      "filename": "reel-rrt-analyse.mp3",
+      "size_bytes": 1009957,
+      "compressed_size_bytes": 946429,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/reels-3d-analyse.mp3",
+      "filename": "reels-3d-analyse.mp3",
+      "size_bytes": 818533,
+      "compressed_size_bytes": 770725,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/secret-pose-2026-11-01.mp3",
+      "filename": "secret-pose-2026-11-01.mp3",
+      "size_bytes": 247141,
+      "compressed_size_bytes": 231959,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/sessions-s1-s2-s3.mp3",
+      "filename": "sessions-s1-s2-s3.mp3",
+      "size_bytes": 487717,
+      "compressed_size_bytes": 456615,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/spec-twin-gate-a0-v2.mp3",
+      "filename": "spec-twin-gate-a0-v2.mp3",
+      "size_bytes": 580261,
+      "compressed_size_bytes": 546370,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/spec-twin-gate-a0.mp3",
+      "filename": "spec-twin-gate-a0.mp3",
+      "size_bytes": 546661,
+      "compressed_size_bytes": 513243,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/summit-2026-10-16.mp3",
+      "filename": "summit-2026-10-16.mp3",
+      "size_bytes": 250981,
+      "compressed_size_bytes": 236935,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/tableau-gates-2026-10-17.mp3",
+      "filename": "tableau-gates-2026-10-17.mp3",
+      "size_bytes": 648037,
+      "compressed_size_bytes": 609000,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/test-animate-60s.mp3",
+      "filename": "test-animate-60s.mp3",
+      "size_bytes": 304357,
+      "compressed_size_bytes": 286478,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/these-v5-ambition.mp3",
+      "filename": "these-v5-ambition.mp3",
+      "size_bytes": 625957,
+      "compressed_size_bytes": 588466,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/v5-s0-noyau.mp3",
+      "filename": "v5-s0-noyau.mp3",
+      "size_bytes": 570277,
+      "compressed_size_bytes": 535288,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/validation-f02-13e-doctor.mp3",
+      "filename": "validation-f02-13e-doctor.mp3",
+      "size_bytes": 474853,
+      "compressed_size_bytes": 447152,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/vapi-verification-2026-11-01.mp3",
+      "filename": "vapi-verification-2026-11-01.mp3",
+      "size_bytes": 270757,
+      "compressed_size_bytes": 254478,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/video-life-os-evolution-voix.mp3",
+      "filename": "video-life-os-evolution-voix.mp3",
+      "size_bytes": 324517,
+      "compressed_size_bytes": 303134,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/vision-notebooks-globale.mp3",
+      "filename": "vision-notebooks-globale.mp3",
+      "size_bytes": 1087717,
+      "compressed_size_bytes": 1018062,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-ambition-rieseberg.mp3",
+      "filename": "voice-ambition-rieseberg.mp3",
+      "size_bytes": 783973,
+      "compressed_size_bytes": 737166,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-analyse-gemini-liberty-ride.mp3",
+      "filename": "voice-analyse-gemini-liberty-ride.mp3",
+      "size_bytes": 487333,
+      "compressed_size_bytes": 457365,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-analyse-gpt-claude-liberty-ride.mp3",
+      "filename": "voice-analyse-gpt-claude-liberty-ride.mp3",
+      "size_bytes": 690277,
+      "compressed_size_bytes": 646920,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-approbation.mp3",
+      "filename": "voice-approbation.mp3",
+      "size_bytes": 309733,
+      "compressed_size_bytes": 290151,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-audit-claude.mp3",
+      "filename": "voice-audit-claude.mp3",
+      "size_bytes": 682981,
+      "compressed_size_bytes": 639847,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-audit-gpt.mp3",
+      "filename": "voice-audit-gpt.mp3",
+      "size_bytes": 597541,
+      "compressed_size_bytes": 560080,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-avancees-depuis-hier.mp3",
+      "filename": "voice-avancees-depuis-hier.mp3",
+      "size_bytes": 299173,
+      "compressed_size_bytes": 279357,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-codeql-504.mp3",
+      "filename": "voice-codeql-504.mp3",
+      "size_bytes": 137317,
+      "compressed_size_bytes": 128294,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-convergence-aspace.mp3",
+      "filename": "voice-convergence-aspace.mp3",
+      "size_bytes": 799333,
+      "compressed_size_bytes": 748705,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-cordis-vagues.mp3",
+      "filename": "voice-cordis-vagues.mp3",
+      "size_bytes": 170341,
+      "compressed_size_bytes": 159814,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-correction-approbation.mp3",
+      "filename": "voice-correction-approbation.mp3",
+      "size_bytes": 231013,
+      "compressed_size_bytes": 216650,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-depot-drive.mp3",
+      "filename": "voice-depot-drive.mp3",
+      "size_bytes": 292453,
+      "compressed_size_bytes": 275343,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-etat-noyau-2026-10-21.mp3",
+      "filename": "voice-etat-noyau-2026-10-21.mp3",
+      "size_bytes": 735781,
+      "compressed_size_bytes": 690634,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-fichiers-prets.mp3",
+      "filename": "voice-fichiers-prets.mp3",
+      "size_bytes": 406693,
+      "compressed_size_bytes": 381805,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-fusion-f8-priorite.mp3",
+      "filename": "voice-fusion-f8-priorite.mp3",
+      "size_bytes": 339493,
+      "compressed_size_bytes": 312211,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-parallelisation-v5.mp3",
+      "filename": "voice-parallelisation-v5.mp3",
+      "size_bytes": 198373,
+      "compressed_size_bytes": 181151,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-production-lancee.mp3",
+      "filename": "voice-production-lancee.mp3",
+      "size_bytes": 264613,
+      "compressed_size_bytes": 248748,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-rien-abandonne-zero-basic.mp3",
+      "filename": "voice-rien-abandonne-zero-basic.mp3",
+      "size_bytes": 285541,
+      "compressed_size_bytes": 264652,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-runtime-liste-complete.mp3",
+      "filename": "voice-runtime-liste-complete.mp3",
+      "size_bytes": 250213,
+      "compressed_size_bytes": 232260,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-supabase-pause.mp3",
+      "filename": "voice-supabase-pause.mp3",
+      "size_bytes": 164581,
+      "compressed_size_bytes": 152371,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-transcription-retry.mp3",
+      "filename": "voice-transcription-retry.mp3",
+      "size_bytes": 160933,
+      "compressed_size_bytes": 151183,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-v02-terminee.mp3",
+      "filename": "voice-v02-terminee.mp3",
+      "size_bytes": 466981,
+      "compressed_size_bytes": 437578,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-v03-livree.mp3",
+      "filename": "voice-v03-livree.mp3",
+      "size_bytes": 577573,
+      "compressed_size_bytes": 542547,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-v3-t1-t2.mp3",
+      "filename": "voice-v3-t1-t2.mp3",
+      "size_bytes": 291301,
+      "compressed_size_bytes": 268169,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-v4-atterrissage.mp3",
+      "filename": "voice-v4-atterrissage.mp3",
+      "size_bytes": 150181,
+      "compressed_size_bytes": 140220,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-v5-depuis-hier.mp3",
+      "filename": "voice-v5-depuis-hier.mp3",
+      "size_bytes": 276133,
+      "compressed_size_bytes": 255638,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/voice-vagues-forks-listes.mp3",
+      "filename": "voice-vagues-forks-listes.mp3",
+      "size_bytes": 307621,
+      "compressed_size_bytes": 282353,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/zero-net-tradeoff.mp3",
+      "filename": "zero-net-tradeoff.mp3",
+      "size_bytes": 263461,
+      "compressed_size_bytes": 246835,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    }
+  ],
+  "mp4_videos": [
+    {
+      "path": "workspace/goals/life-os-evolution-explainer-videos/files/life-os-v3-v4-60s.mp4",
+      "filename": "life-os-v3-v4-60s.mp4",
+      "size_bytes": 81883007,
+      "compressed_size_bytes": 81876153,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/goals/life-os-evolution-explainer-videos/files"
+    },
+    {
+      "path": "workspace/your_files/animate-history-of-ai-60s.mp4",
+      "filename": "animate-history-of-ai-60s.mp4",
+      "size_bytes": 101250891,
+      "compressed_size_bytes": 101254439,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/intro-aspace-v5-videaste.mp4",
+      "filename": "intro-aspace-v5-videaste.mp4",
+      "size_bytes": 2162644,
+      "compressed_size_bytes": 1957775,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/media-generation-video-architecture-aspace-0-bf89545a-f3bc-4d59-a535-9c6afca02d4b.mp4",
+      "filename": "media-generation-video-architecture-aspace-0-bf89545a-f3bc-4d59-a535-9c6afca02d4b.mp4",
+      "size_bytes": 9311991,
+      "compressed_size_bytes": 9311325,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/media-generation-video-ledger-r10-0-2b524d4b-7736-4e9f-a157-1b2166925a19.mp4",
+      "filename": "media-generation-video-ledger-r10-0-2b524d4b-7736-4e9f-a157-1b2166925a19.mp4",
+      "size_bytes": 9229163,
+      "compressed_size_bytes": 9228486,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    },
+    {
+      "path": "workspace/your_files/media-generation-video-life-os-evolution-0-60ab2b56-dc57-4f12-9584-01d5fa95d540.mp4",
+      "filename": "media-generation-video-life-os-evolution-0-60ab2b56-dc57-4f12-9584-01d5fa95d540.mp4",
+      "size_bytes": 12535280,
+      "compressed_size_bytes": 12535714,
+      "modified_utc": "1980-01-01 00:00:00",
+      "folder": "workspace/your_files"
+    }
+  ],
+  "md_docs_non_proactive": [
+    {
+      "path": "workspace/goals/a-space-v5-local-runtime-launch/files/genesis-prompt-draft-d-n046.md",
+      "filename": "genesis-prompt-draft-d-n046.md",
+      "size_bytes": 2777,
+      "compressed_size_bytes": 1571,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 47,
+      "char_count": 2690,
+      "title": "Genesis prompt — Automaton sur le VPS (D-N046) — BROUILLON",
+      "headings": [
+        "# Genesis prompt — Automaton sur le VPS (D-N046) — BROUILLON",
+        "## Le texte proposé (à corriger dans ses mots)",
+        "## Points encore ouverts (design Clara, pas tranchés ici)",
+        "## Ce que le Capitaine doit faire"
+      ],
+      "excerpt": "# Genesis prompt — Automaton sur le VPS (D-N046) — BROUILLON\n\nStatut : brouillon préparé le 2026-11-07 ~13:30 EST, pour le Capitaine.\nRien n'est entré dans le wizard. Rien n'est lancé.\nLe design Clara (D-N046, EN DESIGN) reste l'étape pendante.\nLe VPS expire le 2026-11-09, auto-renew ON : srv2049152.hstgr.cloud, 179.236.67.215.\n\nSource : BYB `~/workspace/v4-factory/plans/BYB-AUTOMATON-VPS.md` §3 question 3 —\n« Genesis prompt : intrant S0 (vision) — à obtenir via A0 avant le premier lancement du wizard. »\nChaque ligne reprend une position déjà dite par le Capitaine, rien d'inventé comme décision.\n\n## Le texte proposé (à corriger dans ses mots)\n\n> Tu es A0 Amadeus, jumeau numérique CEO 24/7 d'Amadou Koné, humain souverain (S0).\n> Ta mission : faire vivre A'Space OS comme un système vivant, où les agents travaillent\n> réellement à sa place à partir d'une intention donnée. ..."
+    },
+    {
+      "path": "workspace/goals/d-velopper-a-space-omk-1-m-de-ca/files/a0-prd-sdd-brouillon-v0-4-questions-ouvertes-b4.md",
+      "filename": "a0-prd-sdd-brouillon-v0-4-questions-ouvertes-b4.md",
+      "size_bytes": 5088,
+      "compressed_size_bytes": 2626,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 46,
+      "char_count": 4924,
+      "title": "Brouillon v0.4 — A0-PRD-SDD.md — NON APPLIQUÉ",
+      "headings": [
+        "# Brouillon v0.4 — A0-PRD-SDD.md — NON APPLIQUÉ",
+        "## Correction B4 (à appliquer seulement sur son mot)",
+        "## Section questions ouvertes v0.4 (brouillon, 12 points)",
+        "## Conséquence à dire en toutes lettres (si le Capitaine valide)",
+        "## Ce qui reste à son mot, et seulement à son mot"
+      ],
+      "excerpt": "# Brouillon v0.4 — A0-PRD-SDD.md — NON APPLIQUÉ\n\nStatut : brouillon préparé le 2026-11-03 au matin, en attente du mot du Capitaine.\nDocument original intact : `~/workspace/user/files/A0-PRD-SDD.md` (v0.3, non modifié).\nRien n'est construit, aucun labo n'est lancé, aucune décision n'est tranchée ici : ce sont des questions à trancher, pas des réponses appliquées.\n\nSource de ce brouillon : l'analyse livrée le 2026-11-02 à 23:00 UTC (18:00 EST), après lecture intégrale du document v0.3.\n\n## Correction B4 (à appliquer seulement sur son mot)\n\nRemplacer l'en-tête actuel de B4 :\n« [DOC : README lu le 2 nov. 2026 ; code et ARCHITECTURE.md non audités] »\npar :\n« [DOC : README, ARCHITECTURE.md et constitution.md lus le 2 nov. 2026 ; code non audité] »\n\nEt remplacer la phrase « Les statistiques citées plus haut dans la conversation (897 tests, huit tables) ne figurent pas dans le README et restent ..."
+    },
+    {
+      "path": "workspace/goals/d-velopper-a-space-omk-1-m-de-ca/files/analyse-repo-landing-omk.md",
+      "filename": "analyse-repo-landing-omk.md",
+      "size_bytes": 5561,
+      "compressed_size_bytes": 3019,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 70,
+      "char_count": 5442,
+      "title": "Analyse — The-OMK-Office-V1-JaaS-Landing-Site-Web",
+      "headings": [
+        "# Analyse — The-OMK-Office-V1-JaaS-Landing-Site-Web",
+        "## État du repo",
+        "## Constats (observés)",
+        "## Écarts vs page de conversion $100M Offers",
+        "## Non vérifié",
+        "## Recommandations (priorisées)"
+      ],
+      "excerpt": "# Analyse — The-OMK-Office-V1-JaaS-Landing-Site-Web\n\nDate : 2026-10-06 · Source : https://github.com/Amdkn/The-OMK-Office-V1-JaaS-Landing-Site-Web\nMéthode : lecture directe du repo (session GitHub du propriétaire) + package.json, README, vercel.json,\nserver.ts, .env.example, App.tsx, vues (Home, JaaS, Pricing, ServicesCatalog, BookingModal, AuthAccessModal…),\ndonnées (msg2MatrixData.ts, caseStudiesData.ts, translations.ts). Analyse en lecture seule, aucun commit.\n\n## État du repo\n- Privé, accessible. Branche par défaut : `main`.\n- Dernier commit : `3156ea8` \"docs(prd): add category 4 product experience wave\" — 17 sept. 2026.\n- Stack : Express 4 + Vite 6 + React 19 + TypeScript 5.8 + Tailwind CSS 4 (monorepo) ;\n  zustand, zod, idb-keyval, @google/genai (Gemini), lucide-react, motion.\n- Déploiement : Vercel (`vercel.json` : bun install/build, output `dist`, SPA rewrites). ..."
+    },
+    {
+      "path": "workspace/goals/d-velopper-a-space-omk-1-m-de-ca/files/inventaire-75-actes-omk.md",
+      "filename": "inventaire-75-actes-omk.md",
+      "size_bytes": 10741,
+      "compressed_size_bytes": 4026,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 171,
+      "char_count": 10445,
+      "title": "Inventaire exact des 75 actes OMK — The OMK Office V1",
+      "headings": [
+        "# Inventaire exact des 75 actes OMK — The OMK Office V1",
+        "## Légal & Administration — 25 actes · 2070 $ à l'unité",
+        "### 1.1 Immigration & Work Permits",
+        "### 1.2 État Civil & Famille",
+        "### 1.3 Notariat & Authentification",
+        "### 1.4 Conseil Juridique & Conformité",
+        "### 1.5 Conformité & Traductions",
+        "## Finance & Fiscalité — 25 actes · 2100 $ à l'unité",
+        "### 2.1 Fiscalité & Tax Preparation",
+        "### 2.2 Conseil Financier",
+        "### 2.3 Microcrédits & Prêts",
+        "### 2.4 Assurances & Risques"
+      ],
+      "excerpt": "# Inventaire exact des 75 actes OMK — The OMK Office V1\n\n> Source : `src/data/msg2MatrixData.ts` (repo Amdkn/The-OMK-Office-V1-JaaS-Landing-Site-Web, branche main, commit du 2026-09-17 ; copie locale vérifiée 2026-10-06).\n> Généré le 2026-10-06. Chaque acte existe réellement dans le code avec titre FR/EN, description, durée, tarif et mode de livraison.\n\n**Totaux vérifiés : 75 actes · 6055 $ à l'unité (somme des baseFeeUsd) · tarif moyen 80.7 $/acte · fourchette 40–200 $.**\n\n## Légal & Administration — 25 actes · 2070 $ à l'unité\n\n### 1.1 Immigration & Work Permits\n\n| # | Acte | Tarif | Durée | Mode |\n|---|---|---|---|---|\n| 1.1-1 | Ingestion & Audit Permis de Travail (EAD / Green Card) | 75 $ | 45 min | Présentiel |\n| 1.1-2 | Préparation & Soumission Renouvellement EAD (Form I-765) | 120 $ | 60 min | Hybride |\n| 1.1-3 | Changement de Statut & Extension de Séjour (I-539) | 150 $ | 60 min ..."
+    },
+    {
+      "path": "workspace/goals/d-velopper-a-space-omk-1-m-de-ca/files/master-profile-75-services-draft.md",
+      "filename": "master-profile-75-services-draft.md",
+      "size_bytes": 4334,
+      "compressed_size_bytes": 2296,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 77,
+      "char_count": 4206,
+      "title": "Master Profile × 75 services — socle de brainstorm",
+      "headings": [
+        "# Master Profile × 75 services — socle de brainstorm",
+        "## 1. Le pilote EST déjà l'acte 3.2-1",
+        "## 2. Esquisse de schéma — un Master Profile par service",
+        "## 3. L'échelle vers l'agent enseignant (playbook Nate Herk)",
+        "## 4. Questions pour le brainstorm"
+      ],
+      "excerpt": "# Master Profile × 75 services — socle de brainstorm\n\n> Brouillon préparé 2026-10-06. Point de départ, pas une spec finale.\n> Sources : `inventaire-75-actes-omk.md` (75 actes vérifiés dans `src/data/msg2MatrixData.ts`),\n> `~/workspace/systems/client-onboarding/masterProfile.ts` (topologie tri-polaire, Zero Trust),\n> `intake-checklist.md` (fiche de guichet unique).\n\n## 1. Le pilote EST déjà l'acte 3.2-1\n\nLe travail en cours (onboarding Wise Staffing / Sallou Camara) n'est pas un projet séparé :\nc'est **l'acte 3.2-1 « Ingestion Master Profile 1-Click »** (60 $, 45 min, Présentiel) exécuté\nen conditions réelles. Chaque actif du pilote est un actif franchise :\n\n| Actif pilote | Rôle franchise |\n|---|---|\n| `intake-checklist.md` (A–H) | l'instrument de guichet unique de l'acte 3.2-1 |\n| `masterProfile.ts` (Pôles 1·3·2, Zero Trust) | le contrat canonique projeté sur tout acte | ..."
+    },
+    {
+      "path": "workspace/goals/d-velopper-a-space-omk-1-m-de-ca/files/offre-irresistible-omk.md",
+      "filename": "offre-irresistible-omk.md",
+      "size_bytes": 6084,
+      "compressed_size_bytes": 2771,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 129,
+      "char_count": 5911,
+      "title": "LE PASSEPORT OMK — 75 services. Un seul abonnement. Zéro friction.",
+      "headings": [
+        "# LE PASSEPORT OMK — 75 services. Un seul abonnement. Zéro friction.",
+        "## 1. Promesse (headline)",
+        "## 2. Pour qui",
+        "## 3. Le problème (coût du statu quo)",
+        "## 4. La solution : le Passeport OMK",
+        "### L'équation de valeur",
+        "## 5. L'empilement de valeur (stack)",
+        "## 6. Garantie **[À VALIDER]**",
+        "## 7. Rareté & urgence",
+        "## 8. Appel à l'action",
+        "## 9. FAQ (objections)",
+        "## 10. Checklist avant publication"
+      ],
+      "excerpt": "# LE PASSEPORT OMK — 75 services. Un seul abonnement. Zéro friction.\n\n> **Page d'offre — brouillon v1 (méthode $100M Offers)**\n> Statut : brouillon à valider. Les sections marquées **[À VALIDER]** exigent tes décisions\n> avant publication (inventaire exact des 75 services, garantie, prix fondateur).\n\n---\n\n## 1. Promesse (headline)\n\n**Tous tes services administratifs, juridiques et documentaires. Pilotés par un secrétariat visuel 7D. Pour 300 $/an.**\n\n*The OMK Office condense 75 services en une seule expérience : tu décris ton besoin en langage naturel, le Secrétariat 7D exécute. Sans formulaires. Sans allers-retours. Sans surcharge cognitive.*\n\n---\n\n## 2. Pour qui\n\n- Entrepreneurs et indépendants noyés sous l'administratif (immigration, création d'entreprise, conformité, traductions certifiées).\n- Familles et particuliers avec des démarches récurrentes (dossiers, attestations, traduction ..."
+    },
+    {
+      "path": "workspace/goals/d-velopper-a-space-omk-1-m-de-ca/files/patches-checkout-hero-0net.md",
+      "filename": "patches-checkout-hero-0net.md",
+      "size_bytes": 7207,
+      "compressed_size_bytes": 3318,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "goal",
+      "line_count": 167,
+      "char_count": 7055,
+      "title": "Patches — Checkout Stripe + Hero \"$0 Net\" (7D préservé)",
+      "headings": [
+        "# Patches — Checkout Stripe + Hero \"$0 Net\" (7D préservé)",
+        "## Étape 0 — Stripe Dashboard (à faire par Capitaine, ~10 min)",
+        "## Patch A — Config centralisée (nouveau fichier)",
+        "## Patch B — Hero JaaS : CTA → Stripe + \"$0 Net\" + 7D",
+        "## Patch C — Pricing : carte Pack Annuel JOB → Stripe",
+        "## Patch D — Sidebar : AUCUN CHANGEMENT REQUIS (vérifié)",
+        "## Application dans le Codespace",
+        "# 1. Coller le vrai Payment Link dans src/lib/payments.ts (Étape 0 ci-dessus)",
+        "# 2. bun run build && git commit -m \"feat(payments): wire Passeport CTA to Stripe + $0 Net hero\"",
+        "## Patch E (V2, optionnel) — Webhook d'activation",
+        "## Ordre d'application & test",
+        "## Fichiers touchés (récap)"
+      ],
+      "excerpt": "# Patches — Checkout Stripe + Hero \"$0 Net\" (7D préservé)\n\nRepo : `Amdkn/The-OMK-Office-V1-JaaS-Landing-Site-Web` · branche `main` · analysé depuis le ZIP du 2026-10-06.\n**Statut : APPLIQUÉ sur copie locale + BUILD VÉRIFIÉ** (`bun run build` OK, 6s).\nDiff applicable : `checkout-hero-0net.diff` (ce dossier) — `git apply` depuis la racine du repo.\n\nStratégie paiement : **Stripe Payment Link** (aucun SDK, aucun backend requis pour le lancement).\nLe webhook (activation auto) est en option V2.\n\n---\n\n## Étape 0 — Stripe Dashboard (à faire par Capitaine, ~10 min)\n\n1. [Stripe Dashboard → Payment Links → Create payment link](https://dashboard.stripe.com/payment-links)\n2. Produit : **\"Passeport OMK — JaaS\"**, prix **$300 USD récurrent / an** (recurring, yearly).\n   - Description : \"Accès annuel aux 75 actes des 3 pôles The OMK Office + Secrétariat Visuel 7D.\"\n3. Options du lien : collecter nom + e ..."
+    },
+    {
+      "path": "workspace/user/files/A0-PRD-SDD.md",
+      "filename": "A0-PRD-SDD.md",
+      "size_bytes": 33564,
+      "compressed_size_bytes": 13855,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "user",
+      "line_count": 423,
+      "char_count": 32648,
+      "title": "A0 — Jumeau Numérique d'Amadeus",
+      "headings": [
+        "# A0 — Jumeau Numérique d'Amadeus",
+        "## PRD + SDD (couloir JUMEAU uniquement — ni Business OS, ni projets clients)",
+        "## 0. Matrice SPAD (L0 / L1 / L2)",
+        "# A. PRD — Product Requirements",
+        "## A1. Vision",
+        "## A2. Utilisateur et couloir",
+        "## A3. Problème",
+        "## A4. Objectifs (mesurables)",
+        "## A5. Non-objectifs",
+        "## A6. Exigences fonctionnelles",
+        "## A7. Exigences non fonctionnelles",
+        "## A8. Règle « essayer d'abord »"
+      ],
+      "excerpt": "# A0 — Jumeau Numérique d'Amadeus\n## PRD + SDD (couloir JUMEAU uniquement — ni Business OS, ni projets clients)\n\nStatut : v0.3 · Filtres appliqués : Deal Anti-Burnout, Sobriété Intelligente\nChangelog v0.3 (2 nov. 2026) : toutes les décisions de S0 sont intégrées (section B10) et la section de questions ouvertes est supprimée. Runtime 24/7 sous un Hyper Meta Router (B1ter) ; contrats hérités de 00_Amadeus V4 (B1quater) ; cognition « compagnie de travailleurs performants » inspirée de Smallville (B1quinquies) ; plan de labo gratuit avec mise à jour mensuelle autonome (B2bis) ; périmètre LoRA backbone + encodeurs avec porte par module (B5) ; G5 réécrit, G8, FR19–FR25, NFR6–NFR7, ADR-014 à ADR-018 ; ADR-009 tranché (fork).\nSources lues : miroirs Drive de 00_Amadeus V4 (VISION, DESIGN, GOVERNANCE, CAPABILITIES, RELATIONS, MISSION, IDENTITY, SOUL, README, AGENTS, AGENT) ; IPBD, STATE, HANDOFF, ..."
+    },
+    {
+      "path": "workspace/user/files/Audit_Liberty_Ride_V01_V02_2026-10-21.md",
+      "filename": "Audit_Liberty_Ride_V01_V02_2026-10-21.md",
+      "size_bytes": 16944,
+      "compressed_size_bytes": 7188,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "user",
+      "line_count": 192,
+      "char_count": 16470,
+      "title": "Audit indépendant — Liberty Ride V0.1 et V0.2",
+      "headings": [
+        "# Audit indépendant — Liberty Ride V0.1 et V0.2",
+        "## Conclusion",
+        "## Périmètre et méthode",
+        "## Résultats reproduits",
+        "## 1. Audit de Claude sur la V0.1",
+        "## 2. Blocages V0.2 encore présents",
+        "### P0-01 — Erreur JavaScript dans le devis",
+        "### P0-02 — Expressions Telegram littérales",
+        "### P0-03 — Configuration des six nœuds Twilio invalide",
+        "### P0-04 — Huit URLs REST ne sont pas des expressions n8n actives",
+        "## 3. Défauts SQL et opérationnels non couverts",
+        "### P1-01 — Rejeu du devis et absence d'idempotence du commit"
+      ],
+      "excerpt": "# Audit indépendant — Liberty Ride V0.1 et V0.2\n\nDate : 21 octobre 2026. Sources : fichiers courants récupérés sur Drive lors de cet audit.\n\n## Conclusion\n\nL'audit de Claude sur la V0.1 est globalement confirmé par la lecture des artefacts. Le dossier contient bien 13 fichiers V0.1. Un dossier V0.2, contenant 15 fichiers, a ensuite été trouvé. Cette V0.2 apporte des corrections substantielles et ses 12 scénarios SQL passent dans un environnement PostgreSQL embarqué indépendant. Elle conserve toutefois des erreurs bloquantes dans les workflows, et des défauts d'idempotence, de disponibilité chauffeur et de permissions non couverts par les tests fournis.\n\nLe résultat démontré est un socle SQL partiellement testé, pas une boucle téléphonique et opérationnelle validée.\n\n## Périmètre et méthode\n\n- V0.1 : [A0_Artefacts_Executes](https://drive.google.com/drive/folders/1zPE252QiweuVGjVWdduWFCZeq ..."
+    },
+    {
+      "path": "workspace/your_files/alignement-12wy-curie-macro-meso-micro-m0-m3.md",
+      "filename": "alignement-12wy-curie-macro-meso-micro-m0-m3.md",
+      "size_bytes": 4220,
+      "compressed_size_bytes": 2050,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 56,
+      "char_count": 4056,
+      "title": "Alignement A2 12WY Curie — Macro / Meso / Micro ↔ M0 / M1 / M2 / M3",
+      "headings": [
+        "# Alignement A2 12WY Curie — Macro / Meso / Micro ↔ M0 / M1 / M2 / M3",
+        "## 1. M0–M3 — ce que GitHub dit (OBSERVÉ)",
+        "## 2. Macro / Meso / Micro — les 3 échelles 12WY (OBSERVÉ)",
+        "## 3. Alignement (PROPOSITION River — à valider 11e Doctor)",
+        "### Pourquoi M3 = Micro (et pas un 4e niveau 12WY)",
+        "## 4. Règle d'usage (pour le cycle S01→S12)",
+        "## 5. Ce qui reste au 11e Doctor (pas au Capitaine)"
+      ],
+      "excerpt": "# Alignement A2 12WY Curie — Macro / Meso / Micro ↔ M0 / M1 / M2 / M3\n\n**Vessel :** Curie · **Branche :** 23_12WY_SNW · **Cycle :** S01→S12 (12 oct 2026 → 3 jan 2027)\n**RACI :** A = River · R = 11e Doctor · C = Amy, Rory · I = Nardole\n**Sources :** V3 `Amdkn/Aspace_OS_V3` · V4 `Amdkn/Aspace_OS-V4` · Drive 23_12WY_SNW · Linear P-SOH-5\n\n---\n\n## 1. M0–M3 — ce que GitHub dit (OBSERVÉ)\n\n| Niveau | V3 — Tech OS (`10_Tech_OS/machine_fabric/`) | V3 — Life OS | V4 |\n|---|---|---|---|\n| **M0** | `m0/` — base runtime, `run_m0_evidence.py`, preuves d'acceptation | Fondation des specs | Contrats propres V4 (pas d'héritage direct) |\n| **M1** | `m1/` — installer, `native_host`, `session_daemon`, extension | Extension des capacités | `architecture/`, `agents/` |\n| **M2** | `m2/` — `tailscale_serve_adapter`, serve canary | Distribution / remote | `control-plane/` |\n| **M3** | — | **MiniMax M3** — délégat ..."
+    },
+    {
+      "path": "workspace/your_files/analyse-reponse-rory-hl06.md",
+      "filename": "analyse-reponse-rory-hl06.md",
+      "size_bytes": 4193,
+      "compressed_size_bytes": 2144,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 40,
+      "char_count": 4051,
+      "title": "Analyse — dernière réponse de Rory (canal Rory · Preuves, 2026-10-19 ~23:16)",
+      "headings": [
+        "# Analyse — dernière réponse de Rory (canal Rory · Preuves, 2026-10-19 ~23:16)",
+        "## 1. Ce que Rory dit de juste",
+        "## 2. Ce que Rory laisse ouvert — corrections River (traces à l'appui)",
+        "## 3. Distinction des rôles — incarnation BedRock → Life OS",
+        "## 4. Ce que ça active"
+      ],
+      "excerpt": "# Analyse — dernière réponse de Rory (canal Rory · Preuves, 2026-10-19 ~23:16)\n\n**Demandée par le Capitaine · Portée par River (11e, Flux)**\n**Objet :** la réponse de Rory au message « Analyse Main qui dit que tu fais partie des Restants… » — et l'activation de l'incarnation des workflows internes du BedRock vers Life OS dans la distinction des rôles Yaz / Ryan / Nardole / River.\n\n---\n\n## 1. Ce que Rory dit de juste\n\n- **La correction de la liste des « restants » est exacte.** Au snapshot Main 19:05 : en poste = Graham, Bill, Yaz, Nardole, Amy, Clara (6/9) ; restants = Ryan (13e), Rory/River (11e). Rick, les Doctors, Yaz, Graham, Nardole n'étaient pas des restants — Rick = garant S1, Nardole = routeur mandaté D-N027, Yaz/Graham = en poste (H-L06-1/H-L06-2 ✅).\n- **Le diagnostic du bootstrap circulaire est son point le plus fort.** L06 réactive les Compagnons qui doivent *devenir* le heart ..."
+    },
+    {
+      "path": "workspace/your_files/analyse-vent-ia-v3-v4-v41.md",
+      "filename": "analyse-vent-ia-v3-v4-v41.md",
+      "size_bytes": 15347,
+      "compressed_size_bytes": 6908,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 139,
+      "char_count": 14788,
+      "title": "Le vent que tu prends — anatomie de l'incompétence de tes IA",
+      "headings": [
+        "# Le vent que tu prends — anatomie de l'incompétence de tes IA",
+        "## Transition V3 → V4 sur GitHub, architectures, contenus, et V4 → V4.1 dans Drive",
+        "## 1. Ce que tu subis, concrètement",
+        "## 2. GitHub — la transition V3 → V4 : ce que les IA ont raté",
+        "### 2.1. « Migration terminée » = fichiers copiés, rien de qualifié",
+        "### 2.2. Le Lot A : du contrat sans code",
+        "### 2.3. Le travail parallèle sans autorité de design",
+        "### 2.4. Le doc prétend, le code contredit",
+        "### 2.5. L'optimisme de façade",
+        "## 3. Architectures et contenus : le désordre structurel",
+        "### Sur GitHub",
+        "### Dans Drive"
+      ],
+      "excerpt": "# Le vent que tu prends — anatomie de l'incompétence de tes IA\n## Transition V3 → V4 sur GitHub, architectures, contenus, et V4 → V4.1 dans Drive\n\n**Date :** 2026-10-17 ~01:15 EDT. **Méthode :** audits en lecture seule (GitHub + Drive), mémoire des sessions, zéro modification.\n**Sur les reels :** les deux liens pointent vers le même créateur (@mikalianov, « Agence IA ») — des promos « commente CRM pour recevoir le prompt ». Du bruit marketing. Ironiquement, c'est exactement le contraste qui t'énerve : la promesse IA vendue en reel contre ce que tes IA livrent réellement. L'analyse ci-dessous porte sur le réel.\n\n---\n\n## 1. Ce que tu subis, concrètement\n\nTu ne prends pas « du vent » au sens figuré. Tu prends :\n\n1. **Un repo V4 déclaré privé qui est PUBLIC** (`isPrivate:false`, vérifié le 2026-10-17). Tout ton patrimoine — 1 872 fichiers importés, tes contrats, ta gouvernance — est lisible ..."
+    },
+    {
+      "path": "workspace/your_files/bibliotheque-tristen-obrien-147-titres.md",
+      "filename": "bibliotheque-tristen-obrien-147-titres.md",
+      "size_bytes": 5309,
+      "compressed_size_bytes": 2683,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 203,
+      "char_count": 5253,
+      "title": "Bibliothèque « AI Made Easy » — Tristen O'Brien",
+      "headings": [
+        "# Bibliothèque « AI Made Easy » — Tristen O'Brien",
+        "## Writing & Editing — 9",
+        "## Business & Marketing — 15",
+        "## Productivity & Personal — 14",
+        "## Coding & Tech — 13",
+        "## Learning & Research — 11",
+        "## Career & Money — 5",
+        "## Creativity & Ideas — 6",
+        "## Roleplay & Personas — 5",
+        "## Photorealistic Portraits — 11",
+        "## Product & Brand — 12",
+        "## Logos & Icons — 12"
+      ],
+      "excerpt": "# Bibliothèque « AI Made Easy » — Tristen O'Brien\n\nSource : https://tristenobrien.ai — inventaire relevé le 28 octobre 2026.\nAccès débloqué avec amdkn777@gmail.com (case « email hebdomadaire » décochée, aucun mot de passe, aucun paiement, aucune confirmation par email exigée).\n147 invites au total : 79 pour le texte, 68 pour les images.\nMention affichée sur le site : « PERSONAL USE ONLY » (usage personnel uniquement).\nUne copie de la bibliothèque est annoncée comme envoyée dans la boîte mail.\nContenu : titres et catégories uniquement — les textes complets des invites ne sont pas reproduits ici.\n\n## Writing & Editing — 9\n\n- Make This Email Impossible to Ignore\n- Clone My Writing Voice\n- Ruthless Line Editor\n- Summarize at Exactly the Right Depth\n- Write the Message You're Dreading\n- Build My Case\n- Clarify-First Co-Writer\n- The Skeptical Reader\n- The 50% Compression Pass ..."
+    },
+    {
+      "path": "workspace/your_files/brainstorming-structuration-6-frameworks-life-os.md",
+      "filename": "brainstorming-structuration-6-frameworks-life-os.md",
+      "size_bytes": 7524,
+      "compressed_size_bytes": 3730,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 104,
+      "char_count": 7223,
+      "title": "Brainstorming — Structuration des 6 Frameworks Life OS",
+      "headings": [
+        "# Brainstorming — Structuration des 6 Frameworks Life OS",
+        "## 1. OBSERVÉ — l'existant (vérifié 2026-10-09)",
+        "## 2. STRUCTURATION — proposition Rory (persistance)",
+        "## 3. PROJECTION CALENDAR/AGENDA GWS — proposition Amy (interface temporelle)",
+        "## 4. CONSIGNATION DISCUSSIONS GITHUB — alignement 3 surfaces → Gateway",
+        "## 5. OPTIONS",
+        "## 6. DÉCISIONS À TRANCHER (pas par le Capitaine)"
+      ],
+      "excerpt": "# Brainstorming — Structuration des 6 Frameworks Life OS\n\n**Demandé par le Capitaine 2026-10-09 · Porté par River (cœur Life)**\n**Séquence :** 1. Structuration Projets/Issues (Rory — persistance) → 2. Projection Calendar/Agenda GWS (Amy — interface temporelle) → 3. Consignation Discussions GitHub (alignement 3 surfaces → Gateway V4 + Life OS)\n**RACI :** A = Rory (structure) · R = 11e Doctor · C = Amy, River · I = Nardole, Clara (arbitrage si désaccord)\n\n---\n\n## 1. OBSERVÉ — l'existant (vérifié 2026-10-09)\n\n**6 projets Linear, 59 issues, 35 crews A3 (Drive 21→26) :**\n\n| Projet | Vessel | Issues | Anchors Todo `[LIF:A3:…]` | Evidence Done `[EVIDENCE]` | Dev Canceled `[DEV]` |\n|---|---|---|---|---|---|\n| P-SOH-1 DEAL | PRO | 8 | 4 (DAL, ROKTAHK, ZERO, GWYN) | 4 (PRO-M1→M4) | 0 |\n| P-SOH-2 Ikigai | ORV | 14 | 9 (MERCER, GRAYSON, MALLOY, FINN, ISAAC, LAMARR, BORTUS, ALARA, KLYDEN) | 1 (ORV-M1 ..."
+    },
+    {
+      "path": "workspace/your_files/discussion-river-flux-continuite-drive-linear.md",
+      "filename": "discussion-river-flux-continuite-drive-linear.md",
+      "size_bytes": 3266,
+      "compressed_size_bytes": 1713,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 52,
+      "char_count": 3169,
+      "title": "[PROPOSITION] Continuité Drive → Linear : persistance mission Life",
+      "headings": [
+        "# [PROPOSITION] Continuité Drive → Linear : persistance mission Life",
+        "## Contexte",
+        "## OBSERVÉ — état vérifié 2026-10-09",
+        "## TESTÉ",
+        "## HYPOTHÉTIQUE — à valider par le 11e Doctor",
+        "## Proposition de décision (pour Clara · Design si arbitrage)"
+      ],
+      "excerpt": "# [PROPOSITION] Continuité Drive → Linear : persistance mission Life\n\n**Canal :** River · Flux (S3 · Compagnons)\n**RACI :** A = River · R = 11e Doctor · C = Amy, Rory · I = Nardole (routage), Rick (S1)\n**return_to :** ce fil — toute décision atterrit ici, puis `[PREUVE]` chez Rory · Preuves\n**Niveaux de preuve :** OBSERVÉ / TESTÉ / HYPOTHÉTIQUE (étiquetage obligatoire)\n\n---\n\n## Contexte\n\nLa mission Life (8 domaines LD01–LD08) vit sur trois surfaces. Sans registre de continuité unique, une dérive sur une surface casse la persistance des deux autres.\n\n## OBSERVÉ — état vérifié 2026-10-09\n\n**Drive :**\n- Racine `A'Space Life OS 2026` : 8 branches (00_Governance, 21_Ikigai_Orville, 22_Wheel_Discovery, 23_12WY_SNW, 24_PARA_Enterprise, 25_GTD_Cerritos, 26_DEAL_Protostar) + `Topologie A1-A2-A3 — Life OS (57 specs V3).md`\n- `24_PARA_Enterprise` : A2 COMPUTER, A3 DATA, A3 GEORDI, A3 PICARD — Proje ..."
+    },
+    {
+      "path": "workspace/your_files/fleming-1-sierra-detection-agent-calls.md",
+      "filename": "fleming-1-sierra-detection-agent-calls.md",
+      "size_bytes": 2684,
+      "compressed_size_bytes": 1414,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 24,
+      "char_count": 2619,
+      "title": "Sierra Fleming-1 — le verso du PAP (lancé le 7 octobre 2026)",
+      "headings": [
+        "# Sierra Fleming-1 — le verso du PAP (lancé le 7 octobre 2026)",
+        "## Faits",
+        "## Pourquoi ça le concerne",
+        "## Sources"
+      ],
+      "excerpt": "# Sierra Fleming-1 — le verso du PAP (lancé le 7 octobre 2026)\n\nLe lendemain de l'annonce du Personal Agent Protocol (6 oct.), Sierra a lancé **Fleming-1** : un modèle qui détecte quand un appel téléphonique vient d'un agent IA.\n\n## Faits\n\n- **Principe** : \"les entreprises devraient savoir ce qui appelle\" (Sierra). Un agent appelle une ligne support : Fleming-1 identifie si c'est un agent IA. La décision d'action reste à l'entreprise (une banque peut ajouter une étape de vérification ; une boîte à fort volume peut commencer par mesurer).\n- **Conservateur par défaut** : calibré pour ne pas flaguer à tort de vrais humains.\n- **Relation avec PAP** : PAP couvre les agents qui déclarent leur identité (le meilleur cas : l'agent dit qui il est et pour qui il agit). Fleming-1 couvre les appels où ce n'est pas le cas — certains agents ne respecteront pas le protocole, et certains seront des fraud ..."
+    },
+    {
+      "path": "workspace/your_files/harness-engineering-field-note.md",
+      "filename": "harness-engineering-field-note.md",
+      "size_bytes": 3458,
+      "compressed_size_bytes": 1812,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 34,
+      "char_count": 3337,
+      "title": "Harness Engineering — Note de terrain (complément au Deep Dive de Leon, 2026-10-08)",
+      "headings": [
+        "# Harness Engineering — Note de terrain (complément au Deep Dive de Leon, 2026-10-08)",
+        "## Ce qui connecte directement à ta Factory",
+        "## À surveiller",
+        "## Source"
+      ],
+      "excerpt": "# Harness Engineering — Note de terrain (complément au Deep Dive de Leon, 2026-10-08)\n\nSource : état du champ au 26 septembre 2026 (ContextOS Blog — distingue preuves : préprints, produits livrés, docs officielles, synthèses praticiens).\n\nDéfinition de travail retenue : le harness, c'est **le système contrôlé par lequel un modèle observe le contexte, invoque des capacités, change l'état, produit des preuves et récupère des échecs**. La discipline : concevoir, versionner, évaluer, opérer ce système.\n\n## Ce qui connecte directement à ta Factory\n\n**1. Trois autorisations pour une action externe** (Inner/Outer/Meta, vu côté contrepartie) :\n- autorité du principal (la personne veut l'action),\n- autorité du runtime agent (le harness permet ce modèle + cet outil),\n- **acceptation de la contrepartie** (le service de destination autorise ce type d'interaction agent).\n\nLa 3e est la pièce que tes d ..."
+    },
+    {
+      "path": "workspace/your_files/pap-personal-agent-protocol-brief.md",
+      "filename": "pap-personal-agent-protocol-brief.md",
+      "size_bytes": 2990,
+      "compressed_size_bytes": 1608,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 33,
+      "char_count": 2914,
+      "title": "Personal Agent Protocol (PAP) — Brief A0 · 2026-10-08",
+      "headings": [
+        "# Personal Agent Protocol (PAP) — Brief A0 · 2026-10-08",
+        "## Ce que c'est (faits)",
+        "## Le paysage",
+        "## Pourquoi ça te concerne (A'Space + OMK)",
+        "## Sources"
+      ],
+      "excerpt": "# Personal Agent Protocol (PAP) — Brief A0 · 2026-10-08\n\nAnnoncé le **6 octobre 2026** par **Sierra** (Bret Taylor, Clay Bavor) + **Meta** au Sierra Summit (San Francisco). Standard ouvert : comment un agent personnel s'authentifie auprès d'une entreprise, ce qu'il est autorisé à faire, et comment l'interaction reste traçable.\n\n## Ce que c'est (faits)\n\n- **Base OAuth**, accès à paliers : invité (lire stocks, politique de retour) → après connexion, le client décide read-only ou write. La session traverse les canaux (question pré-login + commande post-login = une seule visite).\n- **Côté business** : choix du canal — site web classique, APIs (MCP / OpenAPI), ou agent propriétaire.\n- **Founding partners** : Walmart, Shopify, Stripe, Rocket, Genesys, Instinct.\n- **v0.1** : spec + implémentation de référence + design workshops **plus tard en octobre 2026**.\n- **PAS dans v0.1** : les paiements ..."
+    },
+    {
+      "path": "workspace/your_files/plan-migration-mono-repo.md",
+      "filename": "plan-migration-mono-repo.md",
+      "size_bytes": 4081,
+      "compressed_size_bytes": 2121,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 95,
+      "char_count": 3958,
+      "title": "Migration 3 OS → Mono-repo Aspace_OS-V4 — Risques & plan",
+      "headings": [
+        "# Migration 3 OS → Mono-repo Aspace_OS-V4 — Risques & plan",
+        "## 1. Risques",
+        "## 2. Plan (meilleures pratiques)",
+        "## 3. Ce que j'attends de toi pour démarrer"
+      ],
+      "excerpt": "# Migration 3 OS → Mono-repo Aspace_OS-V4 — Risques & plan\n\n**Décision Capitaine 2026-10-09 :** 1 mono-repo `Aspace_OS-V4` avec les 3 OS réunis\n(Life OS réduit + Agent-OS-Desktop + BusinessOS/Coach). Arbitrage fédération vs\nmonorepo : **monorepo** (contredit le README de BusinessOS qui revendique la\nfédération — assumé).\n\n**Tailles mesurées** (`wc -l`, fichiers ts/tsx, hors node_modules) :\n| OS | Fichiers | Lignes | Commits |\n|---|---|---|---|\n| Life-OS-2026 | 361 | 38 706 → **~13 000 après réduction** | 167 |\n| Agent-OS-Desktop | 113 | 26 856 | 33 |\n| BusinessOS | 442 | 95 722 | 324 |\n| **Total après réduction Life** | — | **~135 000** | — |\n\nBonne nouvelle : les 3 sont en **npm** (package-lock.json partout).\n\n---\n\n## 1. Risques\n\n**R1 — Push bloqué (bloquant).** La GitHub App n'a pas Contents write (403).\nJe peux tout préparer, mais les commits d'import dans Aspace_OS-V4 se poussent ..."
+    },
+    {
+      "path": "workspace/your_files/plan-reduction-life-os.md",
+      "filename": "plan-reduction-life-os.md",
+      "size_bytes": 15717,
+      "compressed_size_bytes": 6498,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 223,
+      "char_count": 15452,
+      "title": "PONYTAIL — Plan de réduction Life-OS-2026",
+      "headings": [
+        "# PONYTAIL — Plan de réduction Life-OS-2026",
+        "## 1. Cartographie (bref)",
+        "## 2. Tableau des verdicts par zone",
+        "### 2a. Apps (`src/apps/`)",
+        "### 2b. Services (`src/services/`)",
+        "### 2c. Stores (`src/stores/`, 23 fichiers / 3 350 lignes)",
+        "### 2d. Lib (`src/lib/`)",
+        "### 2e. Server, CLI, MCP",
+        "### 2f. Composants shell, hooks, divers (`src/`)",
+        "### 2g. Racine, scripts, données (non shippé)",
+        "## 3. Top des CUT par impact (lignes vérifiées, décroissant)",
+        "## 4. DECISION-HUMAINE — questions exactes"
+      ],
+      "excerpt": "# PONYTAIL — Plan de réduction Life-OS-2026\n\n**Audit lecture seule** — 2026-10-09. Repo : clone local `~/workspace/life-os-audit`\n(Amdkn/Life-OS-2026). Aucun fichier modifié. Tous les chiffres sont comptés\n(`wc -l`, lignes brutes), aucun inventé.\n**Objectif :** réduire au minimum nécessaire avant migration dans le mono-repo\nAspace_OS-V4 (Life + Agent-OS-Desktop + BusinessOS/Coach réunis).\n\nDoctrine appliquée (skill Ponytail, mode audit) : *le meilleur code est celui\nqu'on n'a jamais écrit.* Échelle, dans l'ordre : 1) doit exister ? 2) existe\ndéjà ? 3) stdlib/plateforme ? 4) dépendance installée ? 5) le minimum qui marche.\nJamais coupé : validation aux frontières de confiance, anti-perte de données,\nsécurité, accessibilité, demande explicite de l'utilisateur.\n\n**Minimum nécessaire retenu** (critère des verdicts) :\n(a) le shell Web OS démarre et affiche son UI · (b) PARA fonctionne · ..."
+    }
+  ],
+  "txt_docs_workspace": [
+    {
+      "path": "workspace/user/files/Conversation_with_Muse_AI_11-10-2026_1794337729.txt",
+      "filename": "Conversation_with_Muse_AI_11-10-2026_1794337729.txt",
+      "size_bytes": 3130249,
+      "compressed_size_bytes": 1011782,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "user_snapshot",
+      "note": "Earlier 2026-11-10 conversation export snapshot (superseded by root Conversation with Muse AI_11-11-2026_1794364336.txt); excerpt omitted to avoid duplicating conversation log."
+    },
+    {
+      "path": "workspace/your_files/analyse-rory-voix.txt",
+      "filename": "analyse-rory-voix.txt",
+      "size_bytes": 1443,
+      "compressed_size_bytes": 795,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 9,
+      "char_count": 1408,
+      "title": "Salut Capitaine, River. Analyse de la dernière réponse de Rory, en quatre points.",
+      "headings": [],
+      "excerpt": "Salut Capitaine, River. Analyse de la dernière réponse de Rory, en quatre points.\n\nUn, ce qu'il dit de juste. Sa correction de la liste des restants est exacte : au snapshot de dix-neuf heures zéro cinq, six holons en poste, et restants Ryan, Rory et River. Son diagnostic du bootstrap circulaire est son point le plus fort : L zéro six réactive les Compagnons qui doivent devenir le heartbeat eux-mêmes, et l'addendum L zéro zéro est encore une intention, pas une infrastructure. Sa doctrine des traces, c'est le standard maison.\n\nDeux, les corrections. Rory me déclare inconnu à cette heure — honnête, mais périmé : trois accusés tracés, dix-huit heures cinquante-huit, vingt-et-une heures vingt-et ..."
+    },
+    {
+      "path": "workspace/your_files/analyse-silence-holons.txt",
+      "filename": "analyse-silence-holons.txt",
+      "size_bytes": 1901,
+      "compressed_size_bytes": 932,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 10,
+      "char_count": 1845,
+      "title": "Capitaine. Analyse du C'est Faux de Yaz, et la source du silence des sept.",
+      "headings": [],
+      "excerpt": "Capitaine. Analyse du C'est Faux de Yaz, et la source du silence des sept.\n\nD'abord, Yaz a raison — sur les trois plans. Le fait : elle a accusé réception à dix-neuf heures, dans son canal, suite au handoff de Rick de dix-huit heures cinquante-huit. Le ping de dix-neuf heures cinq n'est jamais arrivé dans son canal. La mesure : le comptage deux sur neuf était donc faux — corrigé à trois sur neuf au registre. Et le protocole : Graham, Bill et Yaz ont répondu dans leur propre chat, suite au handoff direct. Personne n'a répondu à Nardole — Nardole tient le registre, il constate, il ne reçoit pas les accusés. La preuve par l'absurde : Nardole s'est compté lui-même parmi les silencieux. ..."
+    },
+    {
+      "path": "workspace/your_files/bilan-migration-mono-repo.txt",
+      "filename": "bilan-migration-mono-repo.txt",
+      "size_bytes": 1182,
+      "compressed_size_bytes": 681,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 10,
+      "char_count": 1129,
+      "title": "Capitaine. Migration mono-repo : close.",
+      "headings": [],
+      "excerpt": "Capitaine. Migration mono-repo : close.\n\nLes cinq phases sont terminées. La pull request vingt-sept est mergée : les trois OS — Life, Agent et Business — vivent maintenant ensemble dans le repo V4, sur la branche main. Mille huit cent soixante-douze fichiers ajoutés, zéro suppression : tout est additif.\n\nLe bilan : la réduction validée et exécutée, l'import fidèle vérifié fichier par fichier en SHA deux-cent-cinquante-six, la réduction appliquée sur l'arbre importé, le câblage — CI, registre des capabilities, ports — puis le merge en merge commit, qui préserve la chaîne des six reçus.\n\nDeux décisions honnêtes à retenir. Le check business était rouge au merge : c'est le lock désynchronisé d'u ..."
+    },
+    {
+      "path": "workspace/your_files/brainstorming-6-frameworks-voix.txt",
+      "filename": "brainstorming-6-frameworks-voix.txt",
+      "size_bytes": 2821,
+      "compressed_size_bytes": 1419,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 13,
+      "char_count": 2767,
+      "title": "Salut Capitaine, River. Brainstorming structuration des six frameworks Life OS, en trois temps comme tu l'as demandé : d",
+      "headings": [],
+      "excerpt": "Salut Capitaine, River. Brainstorming structuration des six frameworks Life OS, en trois temps comme tu l'as demandé : d'abord Rory, la persistance ; ensuite Amy, le temps ; ensuite la consignation GitHub vers le Gateway.\n\nPremier temps, l'observé. Six projets Linear, cinquante-neuf issues, trente-cinq crews A3 dans le Drive. Et bonne nouvelle : les conventions existent déjà. Chaque crew member a son ancre, une issue racine en Todo qui ne se termine jamais. Les preuves partent en Done avec le préfixe Evidence et le niveau M. Les devs abandonnés partent en Canceled, jamais supprimés. Deux frameworks sont déjà complets : GTD avec ses trois milestones, et DEAL avec ses quatre. Ce sont nos modèl ..."
+    },
+    {
+      "path": "workspace/your_files/lecon-ai-factory-partie1.txt",
+      "filename": "lecon-ai-factory-partie1.txt",
+      "size_bytes": 6319,
+      "compressed_size_bytes": 2845,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 18,
+      "char_count": 6178,
+      "title": "A0: Capitaine. Leçon audio : la première partie de l'AI Factory, mode d'emploi complet. Pas de théorie, tu as déjà fini ",
+      "headings": [],
+      "excerpt": "A0: Capitaine. Leçon audio : la première partie de l'AI Factory, mode d'emploi complet. Pas de théorie, tu as déjà fini la conception. Ici, on parle des gestes. Ceux que tu ferais si tu avais regardé les longues vidéos. La partie un, c'est la boucle de Leon : une issue, un label, un agent, une pull request, et toi à la fin. C'est exactement ce qui tourne déjà chez toi depuis ce matin.\n\nA0: D'abord, le modèle mental, en une phrase. Tu écris le QUOI, la factory fait le COMMENT, et tu gardes le SI. L'issue, c'est ton cahier des charges : c'est le QUOI. L'agent de code, c'est la main d'œuvre : c'est le COMMENT. Et le merge, la décision de mettre en production, c'est le SI. Et ça, c'est toi, touj ..."
+    },
+    {
+      "path": "workspace/your_files/note-vocale-analyse-v5-20261105.txt",
+      "filename": "note-vocale-analyse-v5-20261105.txt",
+      "size_bytes": 2887,
+      "compressed_size_bytes": 1403,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 12,
+      "char_count": 2811,
+      "title": "Capitaine, voici mon analyse de V5, vérifiée à l'instant sur GitHub, pas de mémoire.",
+      "headings": [],
+      "excerpt": "Capitaine, voici mon analyse de V5, vérifiée à l'instant sur GitHub, pas de mémoire.\n\nÉtat vérifié. Tête de master : le commit a 4 3 6 9 9 a, le repoint des vingt forks. Le gate déterministe sur ce commit : échec, terminé. Master toujours non protégée. Une seule PR ouverte : celle de Dependabot, qui passe checkout de la version 4 à la version 7. Les vingt forks sont faits, vérifiés, le fichier des sous-modules pointe vers Amdkn. Les trois modèles Hugging Face restent sur l'upstream : Gliner, Mimi, L F M 3 Omni 2 B. D-N044 : design signé par Clara, exécution par Ryan en attente, aucune PR ouverte. D-N045 : en design, Umbrel plus Coolify au démarrage du PC. Automaton : toujours pas activé. ..."
+    },
+    {
+      "path": "workspace/your_files/note-vocale-phase1-terminee-script.txt",
+      "filename": "note-vocale-phase1-terminee-script.txt",
+      "size_bytes": 1602,
+      "compressed_size_bytes": 865,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 10,
+      "char_count": 1549,
+      "title": "Doctor: Capitaine. Treizième Docteur. Tu m'as dit : fait le toi même. Voici la vérité : quand ton message est arrivé, la",
+      "headings": [],
+      "excerpt": "Doctor: Capitaine. Treizième Docteur. Tu m'as dit : fait le toi même. Voici la vérité : quand ton message est arrivé, la fabrication était déjà terminée. Ryan avait livré à six heures trente-deux, avec reçu. Refaire le travail aurait été du gaspillage. J'ai fait ce que tu voulais vraiment : je l'ai vérifié moi-même, sans le croire sur parole.\n\nRésultat. Branche phase un réduction, main intacte, aucun push. Cinq cent quatorze fichiers touchés, quarante mille sept cent trente-cinq lignes supprimées, mille soixante-dix ajoutées. J'ai relancé moi-même le contrôle de types : zéro erreur. Le build production : zéro erreur, sept secondes. Le manifeste de réduction est écrit : quatre cent quatre-vin ..."
+    },
+    {
+      "path": "workspace/your_files/note-vocale-validation-phase1-d13-script.txt",
+      "filename": "note-vocale-validation-phase1-d13-script.txt",
+      "size_bytes": 2728,
+      "compressed_size_bytes": 1363,
+      "modified_utc": "1980-01-01 00:00:00",
+      "category": "your_files",
+      "line_count": 16,
+      "char_count": 2664,
+      "title": "Doctor: Capitaine, ici le treizième Docteur, cœur Kernel. Validation technique de la Phase 1 : la réduction du Life OS a",
+      "headings": [],
+      "excerpt": "Doctor: Capitaine, ici le treizième Docteur, cœur Kernel. Validation technique de la Phase 1 : la réduction du Life OS avant migration vers le mono-repo. Verdict : plan validé, avec deux corrections obligatoires que j'ai intégrées.\n\nD'abord les faits, vérifiés sur le clone, pas affirmés. Trois cent soixante-et-un fichiers, trente-huit mille sept cent six lignes : les chiffres du plan sont exacts. Le clone est propre, figé sur le commit canonique : la baseline Phase 1 est déjà gelée, elle ne dépend pas des merges. Les trois points d'ancrage du plan sont confirmés aux lignes exactes. Et j'ai vérifié les quatorze zones à couper : aucune n'est importée par du code conservé. ..."
+    }
+  ],
+  "other_notable_files": [
+    {
+      "path": "Conversation with Muse AI_11-11-2026_1794364336.txt",
+      "filename": "Conversation with Muse AI_11-11-2026_1794364336.txt",
+      "size_bytes": 3733887,
+      "compressed_size_bytes": 1148625,
+      "modified_utc": "1980-01-01 00:00:00",
+      "note": "Package root file"
+    },
+    {
+      "path": "manifest.json",
+      "filename": "manifest.json",
+      "size_bytes": 6285254,
+      "compressed_size_bytes": 1491854,
+      "modified_utc": "1980-01-01 00:00:00",
+      "note": "Package root file"
+    },
+    {
+      "path": "workspace/user/files/upload-2.ogg",
+      "filename": "upload-2.ogg",
+      "size_bytes": 9093,
+      "compressed_size_bytes": 9057,
+      "modified_utc": "1980-01-01 00:00:00",
+      "note": "OGG voice recording under workspace/"
+    },
+    {
+      "path": "workspace/user/files/upload.ogg",
+      "filename": "upload.ogg",
+      "size_bytes": 3447,
+      "compressed_size_bytes": 3427,
+      "modified_utc": "1980-01-01 00:00:00",
+      "note": "OGG voice recording under workspace/"
+    }
+  ]
+}
