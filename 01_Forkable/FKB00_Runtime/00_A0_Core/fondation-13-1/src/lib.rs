@@ -7,6 +7,10 @@
 //! `discover` (validation D1–D8 d'un Discover, contrôle de recevabilité
 //! du dossier, sans Bill comme session séparée).
 //!
+//! Juger — fonction Juger (D-N055 F1-5) : voir le module `judge`
+//! (jugement J1–J8 d'une PR — la fonction EST le jugement, sans le 13e
+//! comme session séparée).
+//!
 //! La fonction Recevoir consigne un reçu R10 comme donnée du changeset, sans
 //! Graham comme session séparée. Ce module est le contrôle déterministe :
 //! il valide un dépôt JSON avant consignation, et pose `recorded_at` à la
@@ -32,10 +36,11 @@
 //! l'horloge système, pour `recorded_at`.
 //!
 //! Domicile : `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/`
-//! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router et
-//! Découvrir).
+//! Adresse : `fiber:a0:fondation-13-1` (fonctions Recevoir, Router,
+//! Découvrir et Juger).
 
 pub mod discover;
+pub mod judge;
 pub mod router;
 
 use std::collections::HashSet;
