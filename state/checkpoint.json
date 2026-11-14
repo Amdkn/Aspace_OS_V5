@@ -1,12 +1,12 @@
 {
-  "night": "2026-11-13",
+  "night": "2026-11-14",
   "snapshot_sha256": "305c5a28ec0b1076bcd636efe6d158119d404cae093dcb6c5f663ac06cba3595",
   "snapshot_size_o": 61440,
-  "reference_time": "2026-11-13T00:09:51.220821-05:00",
+  "reference_time": "2026-11-14T00:08:57.795740-05:00",
   "promoted": "v-regress",
   "r_best": 1.0,
   "dream_selected": "incumbent",
   "rrsi_winner": "v-regress",
-  "report_path": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/cycle-2026-11-13/cycle-report.json",
+  "report_path": "/home/runner/work/Aspace_OS_V5/Aspace_OS_V5/state/cycle-2026-11-14/cycle-report.json",
   "status": "DONE"
 }
