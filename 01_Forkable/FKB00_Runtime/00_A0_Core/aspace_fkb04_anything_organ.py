@@ -16,6 +16,7 @@ Zéro dépendance externe, zéro télémétrie, zéro contournement CAPTCHA.
 
 from __future__ import annotations
 
+import ast
 import base64
 import ctypes
 import datetime as dt
@@ -29,6 +30,7 @@ import struct
 import subprocess
 import sys
 import threading
+from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 from urllib.parse import urlparse
@@ -39,11 +41,7 @@ if str(_CORE_DIR) not in sys.path:
 
 from aspace_foundation_kernel import (  # noqa: E402
     ContractViolation,
-    EventJournal,
-    R10Ledger,
-    R10_SCHEMA,
-    record_shared_l0_event,
-    record_shared_l0_receipt,
+    consign_measured_l0_evidence,
 )
 
 # ---------------------------------------------------------------------------
@@ -79,6 +77,507 @@ STOPWORDS_FILLER = frozenset(
 # ===========================================================================
 # 1. M056 CLI-Anything (CORPS / Organe K2)
 # ===========================================================================
+
+_CLI_ANYTHING_SKILL_TEMPLATE = """---
+name: >-
+  {{ skill_name }}
+description: >-
+  {{ skill_description }}
+---
+
+# {{ skill_name }}
+
+{{ skill_intro }}
+
+## Installation
+
+This CLI is installed as part of the cli-anything-{{ software_name }} package:
+
+```bash
+pip install cli-anything-{{ software_name }}
+```
+
+**Prerequisites:**
+- Python 3.10+
+- {{ software_name }} must be installed on your system
+{% if system_package %}
+- Install {{ software_name }}: `{{ system_package }}`
+{% endif %}
+
+## Usage
+
+### Basic Commands
+
+```bash
+# Show help
+cli-anything-{{ software_name }} --help
+
+# Start interactive REPL mode
+cli-anything-{{ software_name }}
+
+# Create a new project
+cli-anything-{{ software_name }} project new -o project.json
+
+# Run with JSON output (for agent consumption)
+cli-anything-{{ software_name }} --json project info -p project.json
+```
+
+### REPL Mode
+
+When invoked without a subcommand, the CLI enters an interactive REPL session:
+
+```bash
+cli-anything-{{ software_name }}
+# Enter commands interactively with tab-completion and history
+```
+
+{% if command_groups %}
+## Command Groups
+
+{% for group in command_groups %}
+### {{ group.name }}
+
+{{ group.description }}
+
+| Command | Description |
+|---------|-------------|
+{% for cmd in group.commands %}
+| `{{ cmd.name }}` | {{ cmd.description }} |
+{% endfor %}
+
+{% endfor %}
+{% endif %}
+## Examples
+
+{% for example in examples %}
+### {{ example.title }}
+
+{{ example.description }}
+
+```bash
+{{ example.code }}
+```
+
+{% endfor %}
+## State Management
+
+The CLI maintains session state with:
+
+- **Undo/Redo**: Up to 50 levels of history
+- **Project persistence**: Save/load project state as JSON
+- **Session tracking**: Track modifications and changes
+
+## Output Formats
+
+All commands support dual output modes:
+
+- **Human-readable** (default): Tables, colors, formatted text
+- **Machine-readable** (`--json` flag): Structured JSON for agent consumption
+
+```bash
+# Human output
+cli-anything-{{ software_name }} project info -p project.json
+
+# JSON output for agents
+cli-anything-{{ software_name }} --json project info -p project.json
+```
+
+## For AI Agents
+
+When using this CLI programmatically:
+
+1. **Always use `--json` flag** for parseable output
+2. **Check return codes** - 0 for success, non-zero for errors
+3. **Parse stderr** for error messages on failure
+4. **Use absolute paths** for all file operations
+5. **Verify outputs exist** after export operations
+
+## More Information
+
+- Full documentation: See README.md in the package
+- Test coverage: See TEST.md in the package
+- Methodology: See HARNESS.md in the cli-anything-plugin
+
+## Version
+
+{{ version }}"""
+
+
+@dataclass
+class CliCommandInfo:
+    name: str
+    description: str
+
+
+@dataclass
+class CliCommandGroup:
+    name: str
+    description: str
+    commands: List[CliCommandInfo] = field(default_factory=list)
+
+
+@dataclass
+class CliExample:
+    title: str
+    description: str
+    code: str
+
+
+@dataclass
+class CliSkillMetadata:
+    skill_name: str
+    skill_description: str
+    software_name: str
+    skill_intro: str
+    version: str
+    system_package: Optional[str] = None
+    command_groups: List[CliCommandGroup] = field(default_factory=list)
+    examples: List[CliExample] = field(default_factory=list)
+
+
+def _cli_format_display_name(name: str) -> str:
+    return name.replace("_", " ").replace("-", " ").title()
+
+
+def _cli_canonical_skill_name(harness_path: Path, software_name: str) -> str:
+    software_dir = software_name
+    if harness_path.name == "agent-harness" and harness_path.parent.name:
+        software_dir = harness_path.parent.name
+    return f"cli-anything-{software_dir.replace('_', '-')}"
+
+
+def _cli_click_decorator_info(
+    function: ast.FunctionDef | ast.AsyncFunctionDef,
+    kind: str,
+) -> Optional[Tuple[str, str]]:
+    for decorator in function.decorator_list:
+        target = decorator.func if isinstance(decorator, ast.Call) else decorator
+        if not (
+            isinstance(target, ast.Attribute)
+            and target.attr == kind
+            and isinstance(target.value, ast.Name)
+        ):
+            continue
+        declared_name = None
+        if isinstance(decorator, ast.Call):
+            if decorator.args:
+                first_arg = decorator.args[0]
+                if isinstance(first_arg, ast.Constant) and isinstance(first_arg.value, str):
+                    declared_name = first_arg.value
+            if declared_name is None:
+                for keyword in decorator.keywords:
+                    if (
+                        keyword.arg == "name"
+                        and isinstance(keyword.value, ast.Constant)
+                        and isinstance(keyword.value.value, str)
+                    ):
+                        declared_name = keyword.value.value
+                        break
+        return target.value.id, declared_name or function.name.replace("_", "-")
+    return None
+
+
+def _extract_cli_intro_from_readme(content: str) -> str:
+    lines = content.split("\n")
+    intro_lines = []
+    in_intro = False
+    for line in lines:
+        line = line.strip()
+        if not line:
+            if in_intro and intro_lines:
+                break
+            continue
+        if line.startswith("# "):
+            in_intro = True
+            continue
+        if line.startswith("##"):
+            break
+        if in_intro:
+            intro_lines.append(line)
+    return " ".join(intro_lines) or "CLI interface for the software."
+
+
+def _extract_cli_system_package(content: str) -> Optional[str]:
+    patterns = (
+        (r"`apt install ([\w\-]+)`", "apt install"),
+        (r"`brew install ([\w\-]+)`", "brew install"),
+        (r"`apt-get install ([\w\-]+)`", "apt-get install"),
+    )
+    for pattern, prefix in patterns:
+        match = re.search(pattern, content)
+        if match:
+            return f"{prefix} {match.group(1)}"
+    return None
+
+
+def extract_commands_from_cli(cli_path: Path) -> List[CliCommandGroup]:
+    """Extrait les groupes et commandes Click d'un fichier `<software>_cli.py` par AST."""
+    content = cli_path.read_text(encoding="utf-8")
+    tree = ast.parse(content, filename=str(cli_path))
+    functions = sorted(
+        (node for node in ast.walk(tree) if isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef))),
+        key=lambda node: (node.lineno, node.col_offset),
+    )
+    groups: List[CliCommandGroup] = []
+    group_lookup: Dict[str, CliCommandGroup] = {}
+    group_display_paths: Dict[str, List[str]] = {}
+    group_functions = [
+        (fn, info) for fn in functions if (info := _cli_click_decorator_info(fn, "group"))
+    ]
+    root_group_funcs = {
+        fn.name.lower() for fn, (parent, _) in group_functions if parent.lower() == "click"
+    }
+
+    for fn, (group_parent, declared_name) in group_functions:
+        group_doc = (ast.get_docstring(fn, clean=False) or "").strip()
+        local_name = _cli_format_display_name(declared_name)
+        parent_key = group_parent.lower()
+        if parent_key == "click" or parent_key in root_group_funcs:
+            group_path = [local_name]
+        else:
+            parent_path = group_display_paths.get(parent_key)
+            group_path = [*parent_path, local_name] if parent_path else [_cli_format_display_name(group_parent), local_name]
+        group_name = " ".join(group_path)
+        group = CliCommandGroup(
+            name=group_name,
+            description=group_doc or f"Commands for {group_name.lower()} operations.",
+            commands=[],
+        )
+        groups.append(group)
+        group_lookup[fn.name.lower()] = group
+        group_display_paths[fn.name.lower()] = group_path
+
+    command_functions = [
+        (fn, info) for fn in functions if (info := _cli_click_decorator_info(fn, "command"))
+    ]
+    for fn, (group_name, declared_name) in command_functions:
+        cmd_doc = (ast.get_docstring(fn, clean=False) or "").strip()
+        grp = group_lookup.get(group_name.lower())
+        if grp:
+            grp.commands.append(
+                CliCommandInfo(name=declared_name, description=cmd_doc or f"Execute {fn.name} operation.")
+            )
+    if not groups:
+        default_group = CliCommandGroup(name="General", description="General commands for the CLI.", commands=[])
+        for fn, (_, declared_name) in command_functions:
+            cmd_doc = (ast.get_docstring(fn, clean=False) or "").strip()
+            default_group.commands.append(
+                CliCommandInfo(name=declared_name, description=cmd_doc or f"Execute {fn.name} operation.")
+            )
+        if default_group.commands:
+            groups.append(default_group)
+    return groups
+
+
+def extract_cli_anything_metadata(harness_path: Path | str) -> CliSkillMetadata:
+    """Extrait les métadonnées d'un répertoire `agent-harness` CLI-Anything réel."""
+    hp = Path(harness_path)
+    cli_anything_dir = hp / "cli_anything"
+    if not cli_anything_dir.exists():
+        raise ValueError(
+            f"cli_anything directory not found in {hp}. Ensure the harness structure includes cli_anything/<software>/"
+        )
+    software_dirs = [d for d in cli_anything_dir.iterdir() if d.is_dir() and (d / "__init__.py").exists()]
+    if not software_dirs:
+        raise ValueError(f"No CLI package found in {hp}")
+    software_dir = software_dirs[0]
+    software_name = software_dir.name
+
+    skill_intro = ""
+    system_package = None
+    readme_path = software_dir / "README.md"
+    if readme_path.exists():
+        readme_content = readme_path.read_text(encoding="utf-8")
+        skill_intro = _extract_cli_intro_from_readme(readme_content)
+        system_package = _extract_cli_system_package(readme_content)
+
+    version = "1.0.0"
+    setup_path = hp / "setup.py"
+    if setup_path.exists():
+        match = re.search(r'version\s*=\s*["\']([^"\']+)["\']', setup_path.read_text(encoding="utf-8"))
+        if match:
+            version = match.group(1)
+
+    cli_file = software_dir / f"{software_name}_cli.py"
+    command_groups = extract_commands_from_cli(cli_file) if cli_file.exists() else []
+
+    examples = [
+        CliExample(
+            title="Create a New Project",
+            description=f"Create a new {software_name} project file.",
+            code=f"cli-anything-{software_name} project new -o myproject.json\n# Or with JSON output for programmatic use\ncli-anything-{software_name} --json project new -o myproject.json",
+        ),
+        CliExample(
+            title="Interactive REPL Session",
+            description="Start an interactive session with undo/redo support.",
+            code=f"cli-anything-{software_name}\n# Enter commands interactively\n# Use 'help' to see available commands\n# Use 'undo' and 'redo' for history navigation",
+        ),
+    ]
+    for group in command_groups:
+        if "export" in group.name.lower():
+            examples.append(
+                CliExample(
+                    title="Export Project",
+                    description="Export the project to a final output format.",
+                    code=f"cli-anything-{software_name} --project myproject.json export render output.pdf --overwrite",
+                )
+            )
+            break
+
+    skill_name = _cli_canonical_skill_name(hp, software_name)
+    if skill_intro:
+        intro_snippet = skill_intro[:100]
+        suffix = "..." if len(skill_intro) > 100 else ""
+        skill_description = f"Command-line interface for {_cli_format_display_name(software_name)} - {intro_snippet}{suffix}"
+    else:
+        skill_description = f"Command-line interface for {_cli_format_display_name(software_name)}"
+
+    return CliSkillMetadata(
+        skill_name=skill_name,
+        skill_description=skill_description,
+        software_name=software_name,
+        skill_intro=skill_intro,
+        version=version,
+        system_package=system_package,
+        command_groups=command_groups,
+        examples=examples,
+    )
+
+
+def generate_cli_anything_skill_md_simple(metadata: CliSkillMetadata) -> str:
+    """Génère SKILL.md sans Jinja2 (conforme à generate_skill_md_simple amont)."""
+    lines = [
+        "---",
+        f'name: "{metadata.skill_name}"',
+        f'description: "{metadata.skill_description}"',
+        "---",
+        "",
+        f"# {metadata.skill_name}",
+        "",
+        metadata.skill_intro,
+        "",
+        "## Installation",
+        "",
+        f"This CLI is installed as part of the cli-anything-{metadata.software_name} package:",
+        "",
+        "```bash",
+        f"pip install cli-anything-{metadata.software_name}",
+        "```",
+        "",
+        "**Prerequisites:**",
+        "- Python 3.10+",
+        f"- {_cli_format_display_name(metadata.software_name)} must be installed on your system",
+    ]
+    if metadata.system_package:
+        lines.append(f"- Install {metadata.software_name}: `{metadata.system_package}`")
+    lines.extend(
+        [
+            "",
+            "## Usage",
+            "",
+            "### Basic Commands",
+            "",
+            "```bash",
+            "# Show help",
+            f"cli-anything-{metadata.software_name} --help",
+            "",
+            "# Start interactive REPL mode",
+            f"cli-anything-{metadata.software_name}",
+            "",
+            "# Create a new project",
+            f"cli-anything-{metadata.software_name} project new -o project.json",
+            "",
+            "# Run with JSON output (for agent consumption)",
+            f"cli-anything-{metadata.software_name} --json project info -p project.json",
+            "```",
+            "",
+        ]
+    )
+    if metadata.command_groups:
+        lines.extend(["## Command Groups", ""])
+        for group in metadata.command_groups:
+            lines.extend([f"### {group.name}", "", group.description, ""])
+            if group.commands:
+                lines.extend(["| Command | Description |", "|---------|-------------|"])
+                for cmd in group.commands:
+                    lines.append(f"| `{cmd.name}` | {cmd.description} |")
+                lines.append("")
+    if metadata.examples:
+        lines.extend(["## Examples", ""])
+        for example in metadata.examples:
+            lines.extend([f"### {example.title}", "", example.description, "", "```bash", example.code, "```", ""])
+    lines.extend(
+        [
+            "## For AI Agents",
+            "",
+            "When using this CLI programmatically:",
+            "",
+            "1. **Always use `--json` flag** for parseable output",
+            "2. **Check return codes** - 0 for success, non-zero for errors",
+            "3. **Parse stderr** for error messages on failure",
+            "4. **Use absolute paths** for all file operations",
+            "5. **Verify outputs exist** after export operations",
+            "",
+            "## Version",
+            "",
+            metadata.version,
+        ]
+    )
+    return "\n".join(lines)
+
+
+def generate_cli_anything_skill_md(metadata: CliSkillMetadata, template_text: Optional[str] = None) -> str:
+    """Génère le contenu SKILL.md CLI-Anything avec parité template Jinja2."""
+    try:
+        from jinja2 import Environment
+    except ImportError:
+        return generate_cli_anything_skill_md_simple(metadata)
+    env = Environment()
+    template = env.from_string(template_text if template_text is not None else _CLI_ANYTHING_SKILL_TEMPLATE)
+    return template.render(
+        skill_name=metadata.skill_name,
+        skill_description=metadata.skill_description,
+        software_name=metadata.software_name,
+        skill_intro=metadata.skill_intro,
+        version=metadata.version,
+        system_package=metadata.system_package,
+        command_groups=[
+            {
+                "name": g.name,
+                "description": g.description,
+                "commands": [{"name": c.name, "description": c.description} for c in g.commands],
+            }
+            for g in metadata.command_groups
+        ],
+        examples=[
+            {"title": e.title, "description": e.description, "code": e.code}
+            for e in metadata.examples
+        ],
+    )
+
+
+def build_cli_anything_preview_cache_key(
+    software: str,
+    recipe: str,
+    bundle_kind: str,
+    source_fingerprint: str,
+    options: Optional[Dict[str, Any]] = None,
+    harness_version: Optional[str] = None,
+    protocol_version: str = "preview-bundle/v1",
+) -> str:
+    """Calcule la clé de cache SHA-256 canonique (preview_bundle.py amont)."""
+    payload = {
+        "protocol_version": protocol_version,
+        "software": software,
+        "recipe": recipe,
+        "bundle_kind": bundle_kind,
+        "source_fingerprint": source_fingerprint,
+        "options": options or {},
+        "harness_version": harness_version or "",
+    }
+    raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
+    return f"sha256:{hashlib.sha256(raw.encode('utf-8')).hexdigest()}"
+
 
 def compile_cli_anything_spec(binary_name: str, help_text: str) -> Dict[str, Any]:
     """Transforme une sortie `--help` arbitraire en schéma de sous-commandes CLI-Anything JSON."""
@@ -426,19 +925,8 @@ class NativeDesktopUIADriver:
                 return True
 
             user32.EnumWindows(enum_proc_t(_callback), 0)
-            if results:
-                return results
-        return [
-            {
-                "ref": "@d1",
-                "hwnd": 0,
-                "pid": os.getpid(),
-                "control_type": "DesktopRoot",
-                "name": "HeadlessDesktopSession",
-                "enabled": True,
-                "source": "headless-fallback",
-            }
-        ]
+            return results
+        return []
 
     @classmethod
     def execute_desktop_a11y_action(
@@ -452,11 +940,12 @@ class NativeDesktopUIADriver:
         tree = list(uia_tree) if uia_tree is not None else cls.capture_live_uia_tree()
         plan = plan_desktop_a11y_action(tree, target_ref, action, text_input=text_input, no_focus_steal=no_focus_steal)
         elem = next(item for item in tree if item.get("ref") == target_ref)
-        live_verified = False
-        if sys.platform == "win32" and elem.get("hwnd"):
-            live_verified = bool(ctypes.windll.user32.IsWindow(ctypes.c_void_p(int(elem["hwnd"]))))
-        else:
-            live_verified = elem.get("source") == "headless-fallback"
+        hwnd = int(elem.get("hwnd") or 0)
+        live_verified = bool(
+            sys.platform == "win32"
+            and hwnd != 0
+            and ctypes.windll.user32.IsWindow(ctypes.c_void_p(hwnd))
+        )
         return {
             **plan,
             "live_window_verified": live_verified,
@@ -908,36 +1397,52 @@ def run_fkb04_self_test(
     ctx_mgr = tempfile.TemporaryDirectory(ignore_cleanup_errors=True) if work_dir is None else None
     base = Path(ctx_mgr.name) if ctx_mgr is not None else work_dir
     root = repo_root or Path(__file__).resolve().parents[3]
+    checks: Dict[str, bool] = {}
     try:
-        # 1. CLI-Anything (M056)
-        cli_spec = compile_cli_anything_spec(
-            "demo-tool",
-            "Commands:\n  inspect  Inspect target artifact\nOptions:\n  --format <fmt>  Output format\n  --json  Emit JSON\n",
+        # 1. CLI-Anything (M056) — parser AST Click + template SKILL.md + cache key
+        sample_harness = base / "demo_tool" / "agent-harness"
+        pkg_dir = sample_harness / "cli_anything" / "demo_tool"
+        pkg_dir.mkdir(parents=True, exist_ok=True)
+        (pkg_dir / "__init__.py").write_text("", encoding="utf-8")
+        (pkg_dir / "README.md").write_text("# Demo Tool\n\nInspect artifacts deterministically.\n", encoding="utf-8")
+        (sample_harness / "setup.py").write_text('version="1.2.3"\n', encoding="utf-8")
+        (pkg_dir / "demo_tool_cli.py").write_text(
+            "import click\n@click.group()\ndef cli():\n    '''Root CLI.'''\n@cli.command()\ndef inspect():\n    '''Inspect input.'''\n",
+            encoding="utf-8",
         )
-        assert any(c["name"] == "inspect" for c in cli_spec["subcommands"])
-        cli_res = execute_cli_structured(
-            cli_spec,
-            "inspect",
-            {"format": "json", "json": True},
-            runner=lambda argv: subprocess.CompletedProcess(argv, 0, '{"ok":true}', ""),
+        cli_meta = extract_cli_anything_metadata(sample_harness)
+        rendered_skill = generate_cli_anything_skill_md(cli_meta)
+        cache_key = build_cli_anything_preview_cache_key("demo_tool", "inspect", "preview", "sha256:abc", harness_version=cli_meta.version)
+        checks["cli_anything_skill_render"] = (
+            cli_meta.skill_name == "cli-anything-demo-tool"
+            and "## Version\n\n1.2.3" in rendered_skill
+            and cache_key.startswith("sha256:")
         )
-        assert cli_res["ok"] and "--format" in cli_res["argv"]
+        assert checks["cli_anything_skill_render"]
 
-        # 2. agent-browser (M057) — client CDP WebSocket RFC 6455 réel + blocage CAPTCHA live
+        # 2. agent-browser (M057) — client CDP WebSocket RFC 6455 loopback + blocage CAPTCHA
         cdp_probe = _run_loopback_cdp_probe()
         snap_ok = cdp_probe["live_ready"]
         snap_blocked = cdp_probe["live_blocked"]
-        assert snap_ok["status"] == "READY" and snap_ok["cdp_transport"] == "rfc6455-websocket"
-        assert "@e1" in snap_ok["refs"] and "@e2" in snap_ok["refs"]
-        assert snap_blocked["status"] == "BLOQUÉ"
-
-        # 3. agent-desktop (M058) — capture UIA/Win32 OS live + garde no_focus_steal
-        live_tree = NativeDesktopUIADriver.capture_live_uia_tree(limit=15)
-        assert len(live_tree) >= 1
-        live_act = NativeDesktopUIADriver.execute_desktop_a11y_action(
-            live_tree[0]["ref"], "read_value", uia_tree=live_tree, no_focus_steal=True
+        checks["cdp_loopback_probe"] = (
+            snap_ok["status"] == "READY"
+            and snap_ok["cdp_transport"] == "rfc6455-websocket"
+            and "@e1" in snap_ok["refs"]
+            and snap_blocked["status"] == "BLOQUÉ"
         )
-        assert live_act["no_focus_steal"] is True and live_act["live_window_verified"] is True
+        assert checks["cdp_loopback_probe"]
+
+        # 3. agent-desktop (M058) — aucun repli factice headless-fallback autorisé
+        live_tree = NativeDesktopUIADriver.capture_live_uia_tree(limit=15)
+        assert not any(w.get("source") == "headless-fallback" for w in live_tree)
+        desktop_live_verified = False
+        if live_tree:
+            live_act = NativeDesktopUIADriver.execute_desktop_a11y_action(
+                live_tree[0]["ref"], "read_value", uia_tree=live_tree, no_focus_steal=True
+            )
+            desktop_live_verified = bool(live_act["live_window_verified"])
+            assert live_act["no_focus_steal"] is True
+        checks["desktop_no_fake_fallback"] = not any(w.get("source") == "headless-fallback" for w in live_tree)
 
         # 4. api-anything (M059)
         har_spec = learn_api_from_har(
@@ -954,22 +1459,29 @@ def run_fkb04_self_test(
             ]
         )
         op = har_spec["operations"][0]
-        assert op["path_template"] == "/v1/items/{id_1}/analyze"
-        assert "SECRET_TOKEN_SHOULD_STRIP" not in json.dumps(har_spec)
+        checks["api_anything_har_redact"] = (
+            op["path_template"] == "/v1/items/{id_1}/analyze"
+            and "SECRET_TOKEN_SHOULD_STRIP" not in json.dumps(har_spec)
+        )
+        assert checks["api_anything_har_redact"]
 
         # 5. caveman (M060)
         cav = compress_telegraphic(
             "Please likely note that your `aspace_foundation_kernel.py` file for sha 41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d would require review."
         )
-        assert cav["reduction_pct"] > 15.0
-        assert "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d" in cav["compressed_text"]
+        checks["caveman_sha_preserved"] = (
+            cav["reduction_pct"] > 15.0
+            and "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d" in cav["compressed_text"]
+        )
+        assert checks["caveman_sha_preserved"]
 
         # 6. claude-mem (M061)
         mem_rec = SessionMemoryRecorder(base / "claude_mem_obs.jsonl")
         mem_rec.capture_observation("sess-1", "decision", "Verified fixture anchor-001", "fondation-13-1/tests/fixtures/anchor-001.json")
         mem_rec.capture_observation("sess-1", "decision", "Compiled FKB04 native organ", "aspace_fkb04_anything_organ.py")
         reinj = mem_rec.reinject_bounded_context(token_budget=40)
-        assert reinj["tokens_used"] <= 40 and reinj["selected_count"] >= 1
+        checks["claude_mem_bounded"] = reinj["tokens_used"] <= 40 and reinj["selected_count"] >= 1
+        assert checks["claude_mem_bounded"]
 
         # 7. hermes-agent (M062)
         bm25_hits = HermesLearningLoop.bm25_search(
@@ -979,89 +1491,88 @@ def run_fkb04_self_test(
             ],
             "cargo test fondation",
         )
-        assert bm25_hits and bm25_hits[0]["id"] == "d1"
         skill_ok = HermesLearningLoop.compile_skill_from_trajectory(
             "rust-lf-verify", "Verify Rust LF fixtures", ["Check .gitattributes", "Run cargo test"], holdout_delta=0.042
         )
-        assert skill_ok["promoted"] is True
+        holdout_rejected = False
         try:
             HermesLearningLoop.compile_skill_from_trajectory("bad", "Too noisy", ["step"], holdout_delta=0.005)
-            raise AssertionError("Rejet ADR-06 attendu sous le seuil hold-out 0.017")
         except ContractViolation as exc:
-            assert exc.rule == "ADR-06"
+            holdout_rejected = exc.rule == "ADR-06"
+        checks["hermes_holdout_gate"] = bool(bm25_hits and bm25_hits[0]["id"] == "d1" and skill_ok["promoted"] and holdout_rejected)
+        assert checks["hermes_holdout_gate"]
 
         # 8. rea (M063)
         rea_spec = clean_room_inspect_artifact(
             b"export async function dispatchTask() { fetch('/v1/chat/completions'); }",
             label="mock_bundle.js",
         )
-        assert "dispatchTask" in rea_spec["exported_symbols"] and "/v1/chat/completions" in rea_spec["endpoints_detected"]
+        checks["rea_clean_room"] = "dispatchTask" in rea_spec["exported_symbols"] and "/v1/chat/completions" in rea_spec["endpoints_detected"]
+        assert checks["rea_clean_room"]
 
-        # Journal L0 + R10 persistant (fallback mémoire si FS non accessible)
-        jpath = root / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
-        lpath = root / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl"
-        try:
-            evt = record_shared_l0_event(
-                actor_from="fabricator",
-                actor_to="judge",
-                dispatch_id="D-FKB04-FUSION",
-                payload="Prouver fusion 8 modules FKB04 (M056..M063)",
-                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
-                event_type="dispatch_typed",
-                journal_path=jpath,
-            )
-            rec = record_shared_l0_receipt(
-                issuer="Organ FKB04",
-                mission_prefix="FKB04-NATIVE-FUSION",
-                sha=head_sha40,
-                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
-                summary=f"FKB04 8/8 capabilities verified at {head_sha40[:7]}",
-                ledger_path=lpath,
-            )
-        except OSError:
-            now_dt = dt.datetime.now(dt.timezone.utc)
-            day_tag = now_dt.strftime("%Y%m%d")
-            j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-            l = R10Ledger(valid_shas={head_sha40})
-            evt = j.inscribe(
-                {
-                    "actor_from": "fabricator",
-                    "actor_to": "judge",
-                    "at": now_dt.isoformat(),
-                    "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                    "dispatch_id": "D-FKB04-FUSION",
-                    "event_id": f"EVT-{day_tag}-904",
-                    "payload": "Prouver fusion 8 modules FKB04",
-                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
-                    "type": "dispatch_typed",
-                },
-                now_utc=now_dt,
-            )
-            rec = l.validate_and_consign(
-                {
-                    "entry_id": f"G-{day_tag}-904",
-                    "issuer": "Organ FKB04",
-                    "mission_id": "FKB04-NATIVE-FUSION-CHECK",
-                    "observed_at": now_dt.isoformat(),
-                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
-                    "recorded_at": None,
-                    "schema": R10_SCHEMA,
-                    "sha": head_sha40,
-                    "summary": f"FKB04 8/8 capabilities verified at {head_sha40[:7]}",
-                },
-                now_utc=now_dt,
-            )
+        passed = sum(1 for v in checks.values() if v)
+        total = len(checks)
+        evt, rec = consign_measured_l0_evidence(
+            actor_from="fabricator",
+            actor_to="judge",
+            dispatch_id="D-FKB04-SMOKE",
+            payload=f"FKB04 smoke checks: {passed}/{total} internal, 0 source-oracle parities",
+            issuer="Organ FKB04",
+            mission_prefix="FKB04-SMOKE",
+            sha=head_sha40,
+            proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
+            summary=f"FKB04 smoke={passed}/{total}; desktop_win={len(live_tree)}; source_oracle_parity=0 at {head_sha40[:7]}",
+            repo_root=root,
+        )
         return {
             "organ": "aspace_fkb04_anything_organ",
-            "modules_verified": 8,
+            "checks": checks,
+            "checks_passed": passed,
+            "checks_total": total,
+            "source_parity_verified": [],
             "cdp_live_refs": len(snap_ok["refs"]),
             "desktop_live_windows": len(live_tree),
+            "desktop_live_verified": desktop_live_verified,
             "l0_seq": evt["seq"],
             "r10_entry_id": rec["entry_id"],
         }
     finally:
         if ctx_mgr is not None:
             ctx_mgr.cleanup()
+
+
+def consign_fkb04_parity_receipt(
+    module_results: Dict[str, Dict[str, Any]],
+    head_sha40: str,
+    repo_root: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Consigne uniquement la parité source-vs-organe réellement mesurée sur les entrées identiques."""
+    verified = sorted(
+        mid
+        for mid, res in module_results.items()
+        if res.get("compared_against_source") and res.get("cases_compared", 0) > 0 and res.get("cases_matched") == res.get("cases_compared")
+    )
+    total_cases = sum(int(res.get("cases_compared", 0)) for res in module_results.values())
+    total_matched = sum(int(res.get("cases_matched", 0)) for res in module_results.values())
+    evt, rec = consign_measured_l0_evidence(
+        actor_from="fabricator",
+        actor_to="judge",
+        dispatch_id="D-FKB04-PARITY",
+        payload=f"FKB04 differential parity: {verified} ({total_matched}/{total_cases} cases)",
+        issuer="Organ FKB04",
+        mission_prefix="FKB04-PARITY",
+        sha=head_sha40,
+        proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
+        summary=f"FKB04 measured parity {total_matched}/{total_cases} across {verified} at {head_sha40[:7]}",
+        repo_root=repo_root,
+    )
+    return {
+        "verified_modules": verified,
+        "cases_matched": total_matched,
+        "cases_compared": total_cases,
+        "l0_seq": evt["seq"],
+        "r10_entry_id": rec["entry_id"],
+    }
 
 
 if __name__ == "__main__":

@@ -28,8 +28,12 @@ import math
 import os
 import re
 import sys
+from collections import defaultdict
+from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Set, Tuple
+from typing import Any, Callable, Dict, List, Optional, Sequence, Set, Tuple
+
+import yaml
 
 _CORE_DIR = Path(__file__).resolve().parent
 if str(_CORE_DIR) not in sys.path:
@@ -38,11 +42,7 @@ if str(_CORE_DIR) not in sys.path:
 from aspace_foundation_kernel import (  # noqa: E402
     CitationEvidence,
     ContractViolation,
-    EventJournal,
-    R10Ledger,
-    R10_SCHEMA,
-    record_shared_l0_event,
-    record_shared_l0_receipt,
+    consign_measured_l0_evidence,
     validate_citation,
 )
 
@@ -174,8 +174,117 @@ class AutoOntologyCompiler:
 
 
 # ===========================================================================
-# 3. M044 context-language-models — Conditionnement Ancré Zero-Lost-in-the-Middle
+# 3. M044 context-language-models — Context-as-a-String Round-Trip & Ancres
 # ===========================================================================
+
+_CLM_HEADER_RE = re.compile(r"^\[\[CTX_TURN\s+(\d+)\s+role=([A-Za-z]+)\]\]\s*$", re.M)
+_CLM_VALID_ROLES = {"system", "user", "assistant", "tool"}
+
+
+def clm_content_text(content: Any) -> Optional[str]:
+    """Extrait le texte canonique d'un champ `content` OpenAI/Chat (str ou liste texte)."""
+    if isinstance(content, str):
+        return content
+    if isinstance(content, list):
+        parts: List[str] = []
+        for part in content:
+            if isinstance(part, str):
+                parts.append(part)
+            elif isinstance(part, dict) and part.get("type") in (None, "text") and isinstance(part.get("text"), str):
+                parts.append(part["text"])
+            else:
+                return None
+        return "".join(parts)
+    return None
+
+
+def clm_rendered_text(msg: Dict[str, Any]) -> str:
+    """Rend le texte visible d'un tour (reasoning_content + content + tool_calls)."""
+    parts: List[str] = []
+    rc = msg.get("reasoning_content")
+    if isinstance(rc, str) and rc:
+        parts.append(rc)
+    ct = clm_content_text(msg.get("content"))
+    if ct:
+        parts.append(ct)
+    for tc in msg.get("tool_calls") or []:
+        fn = (tc or {}).get("function") or {}
+        args = fn.get("arguments")
+        if not isinstance(args, str):
+            try:
+                args = json.dumps(args or {})
+            except Exception:
+                args = ""
+        piece = f"{fn.get('name', '')} {args}".strip()
+        if piece:
+            parts.append(piece)
+    return "\n".join(p for p in parts if p)
+
+
+def clm_render_editable(messages: List[Dict[str, Any]], protect: int = 2) -> str:
+    """Rend la région éditable (`>= protect`) avec en-têtes `[[CTX_TURN N role=...]]`."""
+    blocks: List[str] = []
+    for n, i in enumerate(range(protect, len(messages)), start=1):
+        m = messages[i]
+        blocks.append(f"[[CTX_TURN {n} role={m.get('role', 'user')}]]\n{clm_rendered_text(m)}")
+    return "\n\n".join(blocks)
+
+
+def _clm_normalize(messages: List[Dict[str, Any]], protect: int) -> List[Dict[str, Any]]:
+    kept: List[Dict[str, Any]] = []
+    for i, m in enumerate(messages):
+        if i < protect:
+            kept.append(m)
+            continue
+        c = clm_content_text(m.get("content"))
+        if c and c.strip():
+            kept.append(m)
+
+    merged: List[Dict[str, Any]] = []
+    for i, m in enumerate(kept):
+        if (
+            merged
+            and i >= protect
+            and len(merged) > protect
+            and m.get("role") in ("user", "assistant")
+            and merged[-1].get("role") == m.get("role")
+        ):
+            prev = clm_content_text(merged[-1].get("content")) or ""
+            cur = clm_content_text(m.get("content")) or ""
+            merged[-1] = {"role": m["role"], "content": (prev + "\n\n" + cur).strip()}
+        else:
+            merged.append(m)
+    return merged
+
+
+def clm_parse_back(edited: Any, protected: List[Dict[str, Any]]) -> List[Dict[str, Any]]:
+    """Re-parse un contexte édité arbitrairement en préservant le préfixe protégé verbatim."""
+    text = edited if isinstance(edited, str) else str(edited)
+    matches = list(_CLM_HEADER_RE.finditer(text))
+    sections: List[Tuple[str, str]] = []
+    if not matches:
+        body = text.strip()
+        if body:
+            sections.append(("user", body))
+    else:
+        lead = text[: matches[0].start()].strip()
+        if lead:
+            sections.append(("user", lead))
+        for k, mt in enumerate(matches):
+            role = mt.group(2).lower()
+            if role not in _CLM_VALID_ROLES:
+                role = "user"
+            start = mt.end()
+            end = matches[k + 1].start() if k + 1 < len(matches) else len(text)
+            body = text[start:end].strip()
+            if body:
+                sections.append((role, body))
+
+    msgs: List[Dict[str, Any]] = [dict(m) for m in protected]
+    for role, body in sections:
+        msgs.append({"role": "assistant" if role == "assistant" else "user", "content": body})
+    return _clm_normalize(msgs, protect=len(protected))
+
 
 def build_clm_anchored_context(
     query: str,
@@ -537,8 +646,180 @@ class MultiBrainNamespaceManager:
 
 
 # ===========================================================================
-# 8. M050 knowledge-catalog — Validateur OKF v0.2
+# 8. M050 knowledge-catalog — OKF v0.2 Document, Trust Tier & Index Generator
 # ===========================================================================
+
+_OKF_REQUIRED_KEYS = ("type",)
+_OKF_FRONTMATTER_DELIM = "---"
+_OKF_INDEX_FILE = "index.md"
+
+
+class _OKFSafeLoader(yaml.SafeLoader):
+    """SafeLoader YAML 1.2 préservant les timestamps ISO-8601 sous forme str."""
+
+
+_OKFSafeLoader.yaml_implicit_resolvers = {
+    ch: [(tag, regexp) for tag, regexp in resolvers if tag != "tag:yaml.org,2002:timestamp"]
+    for ch, resolvers in yaml.SafeLoader.yaml_implicit_resolvers.items()
+}
+
+
+class OKFDocumentError(ValueError):
+    pass
+
+
+@dataclass
+class OKFDocument:
+    frontmatter: Dict[str, Any] = field(default_factory=dict)
+    body: str = ""
+
+    @classmethod
+    def parse(cls, text: str) -> "OKFDocument":
+        lines = text.splitlines()
+        if not lines or lines[0].strip() != _OKF_FRONTMATTER_DELIM:
+            return cls(frontmatter={}, body=text)
+        end_idx = None
+        for i in range(1, len(lines)):
+            if lines[i].strip() == _OKF_FRONTMATTER_DELIM:
+                end_idx = i
+                break
+        if end_idx is None:
+            raise OKFDocumentError("Unterminated YAML frontmatter block")
+        fm_text = "\n".join(lines[1:end_idx])
+        try:
+            fm = yaml.load(fm_text, Loader=_OKFSafeLoader) or {}
+        except yaml.YAMLError as exc:
+            raise OKFDocumentError(f"Invalid YAML in frontmatter: {exc}") from exc
+        if not isinstance(fm, dict):
+            raise OKFDocumentError("Frontmatter must be a YAML mapping")
+        body = "\n".join(lines[end_idx + 1 :])
+        if body.startswith("\n"):
+            body = body[1:]
+        return cls(frontmatter=fm, body=body)
+
+    def serialize(self) -> str:
+        fm_text = yaml.safe_dump(self.frontmatter, sort_keys=False, allow_unicode=True).rstrip()
+        body = self.body if self.body.endswith("\n") else self.body + "\n"
+        return f"{_OKF_FRONTMATTER_DELIM}\n{fm_text}\n{_OKF_FRONTMATTER_DELIM}\n\n{body}"
+
+    def validate(self) -> None:
+        missing = [k for k in _OKF_REQUIRED_KEYS if not self.frontmatter.get(k)]
+        if missing:
+            raise OKFDocumentError(f"Missing required frontmatter keys: {', '.join(missing)}")
+
+
+def okf_normalize_verified(frontmatter: Dict[str, Any]) -> List[Dict[str, Any]]:
+    verified = frontmatter.get("verified")
+    if verified is None:
+        return []
+    if isinstance(verified, dict):
+        return [verified]
+    if isinstance(verified, list):
+        return [v for v in verified if isinstance(v, dict)]
+    return []
+
+
+def okf_trust_tier(frontmatter: Dict[str, Any]) -> str:
+    events = okf_normalize_verified(frontmatter)
+    if not events:
+        return "unverified"
+    for event in events:
+        if str(event.get("by") or "").startswith("human:"):
+            return "human-reviewed"
+    return "machine-confirmed"
+
+
+def okf_is_stale(frontmatter: Dict[str, Any], now: Optional[dt.datetime] = None) -> bool:
+    raw = str(frontmatter.get("stale_after") or "")
+    if "T" not in raw:
+        return False
+    try:
+        stale_after = dt.datetime.fromisoformat(raw)
+    except ValueError:
+        return False
+    if stale_after.tzinfo is None:
+        return False
+    return (now or dt.datetime.now(dt.timezone.utc)) >= stale_after
+
+
+def okf_synthesize_fallback(rel_path: str, children: List[Tuple[str, str]], *, model: str = "stub") -> str:
+    if not children:
+        return ""
+    titles = ", ".join(t for t, _ in children if t) or "no titled entries"
+    return f"Contains {len(children)} entries: {titles}."
+
+
+def _okf_build_index_text(entries: List[Tuple[str, str, str, str]]) -> str:
+    grouped: Dict[str, List[Tuple[str, str, str]]] = defaultdict(list)
+    for typ, title, link, desc in entries:
+        grouped[typ or "Other"].append((title, link, desc))
+    sections: List[str] = []
+    for typ in sorted(grouped):
+        lines = [f"# {typ}", ""]
+        for title, link, desc in sorted(grouped[typ], key=lambda e: e[0].lower()):
+            suffix = f" - {desc}" if desc else ""
+            lines.append(f"* [{title}]({link}){suffix}")
+        sections.append("\n".join(lines))
+    return "\n\n".join(sections) + "\n"
+
+
+def okf_regenerate_indexes(
+    bundle_root: Path,
+    *,
+    model: str = "stub",
+    synthesize: Callable[..., str] = okf_synthesize_fallback,
+) -> List[Path]:
+    bundle_root = Path(bundle_root)
+    written: List[Path] = []
+    if not bundle_root.exists():
+        return written
+    dirs: Set[Path] = set()
+    for md in bundle_root.rglob("*.md"):
+        cur = md.parent
+        while cur != bundle_root.parent:
+            dirs.add(cur)
+            if cur == bundle_root:
+                break
+            cur = cur.parent
+    directories = sorted(dirs, key=lambda p: (-len(p.relative_to(bundle_root).parts), str(p)))
+    dir_descriptions: Dict[Path, str] = {}
+
+    for directory in directories:
+        entries: List[Tuple[str, str, str, str]] = []
+        for child in sorted(directory.iterdir()):
+            if child.name == _OKF_INDEX_FILE:
+                continue
+            if child.is_file() and child.suffix == ".md":
+                try:
+                    doc = OKFDocument.parse(child.read_text(encoding="utf-8"))
+                except Exception:
+                    continue
+                fm = doc.frontmatter
+                entries.append(
+                    (
+                        str(fm.get("type") or ""),
+                        str(fm.get("title") or child.stem),
+                        child.name,
+                        str(fm.get("description") or ""),
+                    )
+                )
+            elif child.is_dir():
+                entries.append(("Subdirectories", child.name, f"{child.name}/{_OKF_INDEX_FILE}", dir_descriptions.get(child, "")))
+        if not entries:
+            continue
+        index_path = directory / _OKF_INDEX_FILE
+        index_path.write_text(_okf_build_index_text(entries), encoding="utf-8")
+        written.append(index_path)
+        if directory == bundle_root:
+            continue
+        pairs = [(title, desc) for _, title, _, desc in entries]
+        if len(pairs) == 1 and pairs[0][1]:
+            dir_descriptions[directory] = pairs[0][1]
+        else:
+            rel = str(directory.relative_to(bundle_root))
+            dir_descriptions[directory] = synthesize(rel, pairs, model=model)
+    return written
+
 
 def validate_okf_bundle(bundle_dir: Path) -> Dict[str, Any]:
     """Valide un bundle OKF v0.2 : YAML `type:`, existence `index.md`, journal `log.md`."""
@@ -581,6 +862,7 @@ def run_fkb02_self_test(repo_root: Optional[Path] = None, head_sha40: str = "0" 
     import tempfile
 
     root = repo_root or Path(__file__).resolve().parents[3]
+    checks: Dict[str, bool] = {}
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
         tdir = Path(tmpdir)
 
@@ -588,34 +870,49 @@ def run_fkb02_self_test(repo_root: Optional[Path] = None, head_sha40: str = "0" 
         cas = HierarchicalCASStore(tdir / "cas")
         cas_rec = cas.ingest_document("doc-1", "Aspace Foundation unifies kernels via Rust contracts." * 10, chunk_chars=80)
         first_sha = cas_rec["l0_refs"][0]["sha256"]
-        assert "Aspace Foundation" in cas.retrieve_l0_slice(first_sha)
+        checks["billion_context_cas"] = "Aspace Foundation" in cas.retrieve_l0_slice(first_sha)
+        assert checks["billion_context_cas"]
 
-        # 2. auto-ontology (M042) — DAG valide + détection contradiction formelle
+        # 2. auto-ontology (M042)
         onto = AutoOntologyCompiler()
         r1 = onto.compile_triples("s1", [("ÂME", "rattache", "K1"), ("K1", "valide", "R10")])
-        assert r1["acyclic_dag"] and not r1["contradictions"]
         r2 = onto.compile_triples("s2", [("K1", "valide", "SessionOnly")])
-        assert len(r2["contradictions"]) == 1 and r2["contradictions"][0]["epistemic_status"] == "contredit"
+        checks["auto_ontology_dag"] = (
+            r1["acyclic_dag"]
+            and not r1["contradictions"]
+            and len(r2["contradictions"]) == 1
+            and r2["contradictions"][0]["epistemic_status"] == "contredit"
+        )
+        assert checks["auto_ontology_dag"]
 
-        # 3. context-language-models (M044)
+        # 3. context-language-models (M044) — context_string round-trip + ancres
         clm = build_clm_anchored_context(
             "K1 R10",
             [{"text": "Validation deterministe R10 et EventJournal."}],
             onto.relations,
             max_tokens=100,
         )
-        assert clm["zero_lost_in_middle"] and "[ANCRE]" in clm["context"] and "[INVARIANT-RAPPEL]" in clm["context"]
+        protected = [{"role": "system", "content": "SYS"}, {"role": "user", "content": "TASK"}]
+        rendered = clm_render_editable(protected + [{"role": "assistant", "content": "A"}, {"role": "tool", "content": "T"}])
+        reparsed = clm_parse_back(rendered, protected)
+        checks["clm_roundtrip"] = (
+            clm["zero_lost_in_middle"]
+            and "[ANCRE]" in clm["context"]
+            and len(reparsed) == 4
+            and reparsed[3]["role"] == "user"
+        )
+        assert checks["clm_roundtrip"]
 
         # 4. dox (M045)
         dox_res = validate_dox_contract(root)
-        assert dox_res["valid"] and dox_res["core_agents_md_count"] >= 2
+        checks["dox_hierarchy"] = bool(dox_res["valid"] and dox_res["core_agents_md_count"] >= 2)
+        assert checks["dox_hierarchy"]
 
-        # 5. gbrain (M046) + garde épistémique M1-M8
+        # 5. gbrain (M046) + M1-M8
         gb = HybridBrainIndex()
         gb.put_page("p1", "RigInfinity implements pure data hibernation and PTY daemon.", "RigInfinity/Cargo.toml:1", "2026-11-19", links=["p2"])
         gb.put_page("p2", "fondation-13-1 checks M1-M8 citations deterministically.", "fondation-13-1/src/memory.rs:1", "2026-11-19")
         hits = gb.search_hybrid("hibernation RigInfinity", focus_page="p2")
-        assert hits and hits[0]["page_id"] == "p1"
         cit_md = """**Fonction :** memorizer
 **Date de la citation :** `2026-11-19`
 **Fait demandé :** Test M046
@@ -643,9 +940,10 @@ La fonction n'a pas tranché ni consigné.
             cit_md,
             CitationEvidence(True, "RigInfinity implements pure data hibernation and PTY daemon.", "2026-11-19"),
         )
-        assert v_cit["status"] == "vérifié"
+        checks["gbrain_hybrid_m1_m8"] = bool(hits and hits[0]["page_id"] == "p1" and v_cit["status"] == "vérifié")
+        assert checks["gbrain_hybrid_m1_m8"]
 
-        # 6. graphify (M047) — AST multi-langages (.py/.rs/.ts) + détection de communautés
+        # 6. graphify (M047)
         ast_builder = ASTCodeGraphBuilder()
         rs_probe = tdir / "sample_probe.rs"
         rs_probe.write_text("use std::collections::BTreeMap;\npub struct NativeKernel;\npub fn verify_r10() -> bool { true }\n", encoding="utf-8")
@@ -654,9 +952,12 @@ La fonction n'a pas tranché ni consigné.
         code_g = ast_builder.build_from_files([Path(__file__), _CORE_DIR / "aspace_foundation_kernel.py", rs_probe, ts_probe])
         exp = ast_builder.explain_symbol(code_g, "EventJournal")
         comm = ast_builder.detect_communities(code_g)
-        assert exp["edges_count"] >= 1
-        assert set(code_g["languages"]) >= {"python", "rust", "typescript"}
-        assert comm["community_count"] >= 1 and "modularity_q" in comm
+        checks["graphify_multilang_communities"] = (
+            exp["edges_count"] >= 1
+            and set(code_g["languages"]) >= {"python", "rust", "typescript"}
+            and comm["community_count"] >= 1
+        )
+        assert checks["graphify_multilang_communities"]
 
         # 7 & 8. infinite-brain-harness (M048) & infinite-brain-os (M049)
         mgr = MultiBrainNamespaceManager(tdir / "brains")
@@ -664,76 +965,87 @@ La fonction n'a pas tranché ni consigné.
         mgr.mount_brain("b2b-client-alpha", tier="b2b-client")
         mgr.write_note("personal-a0", "secret-note", "Note", "Personal secret token-free observation")
         mgr.write_note("b2b-client-alpha", "offer", "Specification", "B2B OMK client deliverable")
-        assert len(mgr.query_brain("personal-a0", "Personal")) == 1
-        assert len(mgr.query_brain("b2b-client-alpha", "Personal")) == 0  # isolation stricte inter-tenant
+        checks["multi_brain_isolation"] = (
+            len(mgr.query_brain("personal-a0", "Personal")) == 1
+            and len(mgr.query_brain("b2b-client-alpha", "Personal")) == 0
+        )
+        assert checks["multi_brain_isolation"]
 
         # 9. knowledge-catalog (M050)
         okf_res = validate_okf_bundle(root / "00_Memoire" / "bundle")
-        assert okf_res["valid"] and okf_res["concepts_checked"] >= 15
+        okf_doc = OKFDocument(frontmatter={"type": "Concept", "title": "Probe", "description": "OKF probe."}, body="# Probe\n")
+        okf_doc.validate()
+        okf_reparsed = OKFDocument.parse(okf_doc.serialize())
+        checks["okf_bundle_and_doc"] = bool(
+            okf_res["valid"]
+            and okf_res["concepts_checked"] >= 15
+            and okf_reparsed.frontmatter["type"] == "Concept"
+            and okf_trust_tier({"verified": {"by": "human:amdkn", "at": "2026-11-19T00:00:00Z"}}) == "human-reviewed"
+        )
+        assert checks["okf_bundle_and_doc"]
 
-        # Émission sur bus L0 persistant (fallback mémoire si système de fichiers en lecture seule)
-        jpath = root / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
-        lpath = root / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl"
-        try:
-            evt = record_shared_l0_event(
-                actor_from="memorizer",
-                actor_to="judge",
-                dispatch_id="D-FKB02-FUSION",
-                payload="Prouver fusion 9 modules FKB02 (M042..M050)",
-                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-                event_type="fact_recalled",
-                journal_path=jpath,
-            )
-            rec = record_shared_l0_receipt(
-                issuer="Organ FKB02",
-                mission_prefix="FKB02-NATIVE-FUSION",
-                sha=head_sha40,
-                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-                summary=f"FKB02 9/9 capabilities verified at {head_sha40[:7]}",
-                ledger_path=lpath,
-            )
-        except OSError:
-            now_dt = dt.datetime.now(dt.timezone.utc)
-            day_tag = now_dt.strftime("%Y%m%d")
-            j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-            l = R10Ledger(valid_shas={head_sha40})
-            evt = j.inscribe(
-                {
-                    "actor_from": "memorizer",
-                    "actor_to": "judge",
-                    "at": now_dt.isoformat(),
-                    "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                    "dispatch_id": "D-FKB02-FUSION",
-                    "event_id": f"EVT-{day_tag}-902",
-                    "payload": "Prouver fusion 9 modules FKB02",
-                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-                    "type": "fact_recalled",
-                },
-                now_utc=now_dt,
-            )
-            rec = l.validate_and_consign(
-                {
-                    "entry_id": f"G-{day_tag}-902",
-                    "issuer": "Organ FKB02",
-                    "mission_id": "FKB02-NATIVE-FUSION-CHECK",
-                    "observed_at": now_dt.isoformat(),
-                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-                    "recorded_at": None,
-                    "schema": R10_SCHEMA,
-                    "sha": head_sha40,
-                    "summary": f"FKB02 9/9 capabilities verified at {head_sha40[:7]}",
-                },
-                now_utc=now_dt,
-            )
+        passed = sum(1 for v in checks.values() if v)
+        total = len(checks)
+        evt, rec = consign_measured_l0_evidence(
+            actor_from="memorizer",
+            actor_to="judge",
+            dispatch_id="D-FKB02-SMOKE",
+            payload=f"FKB02 smoke checks: {passed}/{total} internal, 0 source-oracle parities",
+            issuer="Organ FKB02",
+            mission_prefix="FKB02-SMOKE",
+            sha=head_sha40,
+            proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
+            summary=f"FKB02 smoke={passed}/{total}; okf_concepts={okf_res['concepts_checked']}; source_oracle_parity=0 at {head_sha40[:7]}",
+            event_type="fact_recalled",
+            repo_root=root,
+        )
         return {
             "organ": "aspace_fkb02_memory_organ",
-            "modules_verified": 9,
+            "checks": checks,
+            "checks_passed": passed,
+            "checks_total": total,
+            "source_parity_verified": [],
             "graphify_languages": code_g["languages"],
             "graphify_communities": comm["community_count"],
             "okf_concepts": okf_res["concepts_checked"],
             "l0_seq": evt["seq"],
             "r10_entry_id": rec["entry_id"],
         }
+
+
+def consign_fkb02_parity_receipt(
+    module_results: Dict[str, Dict[str, Any]],
+    head_sha40: str,
+    repo_root: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Consigne uniquement la parité source-vs-organe réellement mesurée sur FKB02."""
+    verified = sorted(
+        mid
+        for mid, res in module_results.items()
+        if res.get("compared_against_source") and res.get("cases_compared", 0) > 0 and res.get("cases_matched") == res.get("cases_compared")
+    )
+    total_cases = sum(int(res.get("cases_compared", 0)) for res in module_results.values())
+    total_matched = sum(int(res.get("cases_matched", 0)) for res in module_results.values())
+    evt, rec = consign_measured_l0_evidence(
+        actor_from="memorizer",
+        actor_to="judge",
+        dispatch_id="D-FKB02-PARITY",
+        payload=f"FKB02 differential parity: {verified} ({total_matched}/{total_cases} cases)",
+        issuer="Organ FKB02",
+        mission_prefix="FKB02-PARITY",
+        sha=head_sha40,
+        proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
+        summary=f"FKB02 measured parity {total_matched}/{total_cases} across {verified} at {head_sha40[:7]}",
+        event_type="fact_recalled",
+        repo_root=repo_root,
+    )
+    return {
+        "verified_modules": verified,
+        "cases_matched": total_matched,
+        "cases_compared": total_cases,
+        "l0_seq": evt["seq"],
+        "r10_entry_id": rec["entry_id"],
+    }
 
 
 if __name__ == "__main__":

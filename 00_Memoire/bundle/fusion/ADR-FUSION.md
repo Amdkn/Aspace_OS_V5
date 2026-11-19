@@ -137,3 +137,15 @@ Chaque ADR ci-dessous résout un **conflit réel détecté lors de l'extraction 
      - **Phase 3 (`Rust`, destination)** : workspace Rust souverain unique (`RigInfinity × fondation-13-1`) portant les Trois Noyaux sans dépendance d'exécution Python L0/L1.
 - **Invariant** : Les fixtures Rust canoniques font foi à chaque phase ; tout module dans `REGISTRE-DE-FUSION.md` indique son noyau parmi `{ÂME, SYSTÈME NERVEUX, CORPS}`.
 - **Modules résolus** : L'intégralité des 120 modules (`M001..M120`). (Détail complet dans [`adr/ADR-13.md`](adr/ADR-13.md)).
+
+## ADR-14 — Amendement ADR-13 : Règle du Tiers Maximal (≤ 40 modules) & Quatre Noyaux (`ÂME / SYSTÈME NERVEUX / CORPS / MÉTABOLISME`)
+- **Statut** : `ACCEPTÉE` (Amende `ADR-13` — décision architecturale Cycle 5)
+- **Conflit** : Sous `ADR-13`, `CORPS` concentrait `69 / 120` modules (`57,5 %`), formant un fourre-tout mélangeant action d'exécution (`K2`), cortex prédictif ML/Wargame et valeur créative/B2B (`K5`).
+- **Décision** :
+  1. **Règle du tiers maximal** : aucun noyau ne peut dépasser `120 / 3 = 40` modules (`33,3 %`).
+  2. **Scission de `CORPS` en Quatre Noyaux Équilibrés** :
+     - **`ÂME` (`Automaton`)** : `K1` (`11`) + `K4` (`18`) = **`29` modules (`24,2 %`)**.
+     - **`SYSTÈME NERVEUX` (`Infinity`)** : Bus L0 (`7`) + `K3` (`15`) + **`K3-ML` Cortex Prédictif & Wargame** (`7` : `M006..M012`) = **`29` modules (`24,2 %`)**.
+     - **`CORPS` (`OpenRig`)** : `K2` Exécution Multi-Harness, Bots, Source-Control, Anything & 3D = **`26` modules (`21,7 %`)**.
+     - **`MÉTABOLISME` (`BusinessOS`)** : `K5` Production Vidéo/CAO, Finance Read-Only veto S0 & Valeur B2B = **`36` modules (`30,0 %`)**.
+- **Invariant** : Aucun noyau > `40` modules ; preuve `FUSIONNÉ` réservée aux modules validés par comparaison différentielle directe contre la source d'origine avant/après suppression physique. (Détail complet dans [`adr/ADR-14.md`](adr/ADR-14.md)).

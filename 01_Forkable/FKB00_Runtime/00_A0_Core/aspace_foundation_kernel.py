@@ -34,6 +34,8 @@ EVENT_ID_RE = re.compile(r"^EVT-(\d{4})(\d{2})(\d{2})-(\d{3})$")
 DELIVERABLE_RE = re.compile(r"(?:#\d+|[0-9a-fA-F]{7,40})")
 
 KERNEL_IDS = ("K1", "K2", "K3", "K4", "K5")
+ROOT_KERNELS = ("ÂME", "SYSTÈME NERVEUX", "CORPS", "MÉTABOLISME")
+MAX_MODULES_PER_KERNEL_RATIO = 1.0 / 3.0
 
 # === Alignement exact sur fondation-13-1/src/lib.rs ===
 R10_KEYS = (
@@ -726,6 +728,79 @@ def record_shared_l0_receipt(
         with open(lpath, "a", encoding="utf-8") as f:
             f.write(json.dumps(stored, ensure_ascii=False) + "\n")
         return stored
+
+
+def consign_measured_l0_evidence(
+    *,
+    actor_from: str,
+    actor_to: str,
+    dispatch_id: str,
+    payload: str,
+    issuer: str,
+    mission_prefix: str,
+    sha: str,
+    proof: List[str],
+    summary: str,
+    event_type: str = "dispatch_typed",
+    repo_root: Optional[Path] = None,
+) -> Tuple[Dict[str, Any], Dict[str, Any]]:
+    """Inscrit une preuve L0 mesurée sur le bus persistant avec repli mémoire si FS lecture seule."""
+    base = repo_root or _default_repo_root()
+    jpath = base / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
+    lpath = base / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl"
+    try:
+        evt = record_shared_l0_event(
+            actor_from=actor_from,
+            actor_to=actor_to,
+            dispatch_id=dispatch_id,
+            payload=payload,
+            proof=proof,
+            event_type=event_type,
+            journal_path=jpath,
+        )
+        rec = record_shared_l0_receipt(
+            issuer=issuer,
+            mission_prefix=mission_prefix,
+            sha=sha,
+            proof=proof,
+            summary=summary,
+            ledger_path=lpath,
+        )
+        return evt, rec
+    except OSError:
+        now_dt = dt.datetime.now(dt.timezone.utc)
+        day_tag = now_dt.strftime("%Y%m%d")
+        journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
+        ledger = R10Ledger(valid_shas={sha})
+        evt = journal.inscribe(
+            {
+                "actor_from": actor_from,
+                "actor_to": actor_to,
+                "at": now_dt.isoformat(),
+                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+                "dispatch_id": dispatch_id,
+                "event_id": f"EVT-{day_tag}-900",
+                "payload": payload,
+                "proof": proof,
+                "type": event_type,
+            },
+            now_utc=now_dt,
+        )
+        rec = ledger.validate_and_consign(
+            {
+                "entry_id": f"G-{day_tag}-900",
+                "issuer": issuer,
+                "mission_id": f"{mission_prefix}-FALLBACK",
+                "observed_at": now_dt.isoformat(),
+                "proof": proof,
+                "recorded_at": None,
+                "schema": R10_SCHEMA,
+                "sha": sha,
+                "summary": summary,
+            },
+            now_utc=now_dt,
+        )
+        return evt, rec
 
 
 # =============================================================================

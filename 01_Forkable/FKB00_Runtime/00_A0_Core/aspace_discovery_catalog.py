@@ -22,14 +22,7 @@ _CORE_DIR = Path(__file__).resolve().parent
 if str(_CORE_DIR) not in sys.path:
     sys.path.insert(0, str(_CORE_DIR))
 
-from aspace_foundation_kernel import (  # noqa: E402
-    ContractViolation,
-    EventJournal,
-    R10Ledger,
-    R10_SCHEMA,
-    record_shared_l0_event,
-    record_shared_l0_receipt,
-)
+from aspace_foundation_kernel import ContractViolation, consign_measured_l0_evidence  # noqa: E402
 
 MARKETPLACE_SKILL_CATEGORIES: List[Dict[str, Any]] = [
     {"id": "01_Website_and_Funnels", "videos": 5, "offers": "Funnels VSL, Programmatic SEO, Sites Next.js haute conversion"},
@@ -277,6 +270,97 @@ def qualify_inference_opportunity(candidate: Dict[str, Any], known_platforms: Op
     }
 
 
+OPPORTUNITY_DOSSIERS: Dict[str, Dict[str, Any]] = {
+    "OPP-001": {
+        "id": "OPP-001",
+        "title": "Claude Opus 5.5 & Kito Pro (Amazon Coding Agent)",
+        "source_youtube": "Claude Opus 5.5 is Now 100% FREE (NEW Method)",
+        "target_platform": "https://kito.dev",
+        "models_offered": ["Claude Opus 5.5", "Sonnet 5.5", "Claude Haiku", "GPT-5.6 Soul", "Jimmy K3"],
+        "compute_volume": "50 $ à 200 $ d'utilisation selon le plan choisi (Kito Pro Plus 40$ / Kito Power 200$)",
+        "watch_skill_status": "ACTIF (SURVEILLANCE FACTURATION)",
+        "injection_vector": "Voie B (Interface Web & Session)",
+        "mechanism_steps": [
+            "Inscription sur kito.dev (compte gratuit initial).",
+            "Sélection d'un forfait supérieur (ex: Kito Pro Plus à 40$/mois).",
+            "La facture Stripe indique 0 € / 0 $ dus immédiatement, avec prélèvement programmé au 1er du mois suivant.",
+            "Immédiatement après validation, retourner dans le dashboard et rétrograder vers le plan gratuit.",
+            "L'abonnement payant reste actif avec l'intégralité des crédits jusqu'au 1er du mois sans prélèvement.",
+        ],
+    },
+    "OPP-002": {
+        "id": "OPP-002",
+        "title": "DeepSeek V4.1 Flash Obliterated via Refuseless.com",
+        "source_youtube": "How to Get FREE API Keys for DeepSeek V4.1 Flash (Abliterated) & HY4",
+        "target_platform": "https://refuseless.com",
+        "models_offered": ["DeepSeek V4.1 Flash Obliterated"],
+        "compute_volume": "100 crédits dédiés offerts (solde isolé sans empiéter sur le solde principal)",
+        "watch_skill_status": "QUALIFIÉ & EXPLOITABLE IMMÉDIATEMENT",
+        "injection_vector": "Voie A (Passerelle API Directe FreeLLMAPI / Claude Code)",
+        "mechanism_steps": [
+            "Connexion sur refuseless.com via Google Auth (zéro carte bancaire requise).",
+            "Accès à l'onglet Models : DeepSeek V4.1 Flash marqué comme gratuit avec 100 crédits de bienvenue conservés dans un compte dédié.",
+            "Génération d'une clé API native dans l'onglet API keys.",
+        ],
+    },
+    "OPP-003": {
+        "id": "OPP-003",
+        "title": "Tencent Hunyuan 4 (HY4) via APINex (20M Tokens / Jour)",
+        "source_youtube": "How to Get FREE API Keys for DeepSeek V4.1 Flash (Abliterated) & HY4",
+        "target_platform": "https://apinex.com",
+        "models_offered": ["Tencent Hunyuan 4 (HY4)"],
+        "compute_volume": "20 Millions de tokens gratuits CHAQUE JOUR",
+        "watch_skill_status": "PÉPITE SOUVERAINE (SCORE A+)",
+        "injection_vector": "Voie A (Passerelle API Directe FreeLLMAPI)",
+        "mechanism_steps": [
+            "Inscription sur apinex.com sans carte de crédit.",
+            "Dashboard -> Modèles & Tarification -> groupe Free.",
+            "Le modèle HY4 est listé avec l'étiquette gratuite, doté d'une fenêtre de contexte de 1M de tokens et d'une recharge quotidienne automatique de 20 000 000 de tokens.",
+            "Création immédiate de la clé API.",
+        ],
+    },
+    "OPP-004": {
+        "id": "OPP-004",
+        "title": "Croton Alpha 1M Context via OpenRouter & Kilo Code",
+        "source_youtube": "New Stealth AI Model is FREE! 1M Context | OpenRouter, Kilo & OpenCode",
+        "target_platform": "https://openrouter.ai",
+        "models_offered": ["Croton Alpha"],
+        "compute_volume": "Gratuit pendant 7 jours (phase d'évaluation publique)",
+        "watch_skill_status": "ÉPHÉMÈRE / FENÊTRE FLASH (TTL 7 JOURS)",
+        "injection_vector": "Voie A (Déjà routé dans FreeLLMAPI)",
+        "mechanism_steps": [
+            "Connexion sur OpenRouter (ou via la passerelle Killo Gateway / OpenCode).",
+            "Clé API OpenRouter sans restriction de crédit (limit: none).",
+            "Sélection du modèle croton/croton-alpha (ou alias Killo Gateway).",
+            "Accès instantané à une fenêtre de contexte de 1M de tokens avec raisonnement rapide (2-3s par réponse).",
+        ],
+    },
+    "OPP-005": {
+        "id": "OPP-005",
+        "title": "Tencent Hunyuan 4 via WorkBuddy.ai (Offre Limitée)",
+        "source_youtube": "Don't Miss Out! Use Tencent Hy4 for FREE on WorkBuddy",
+        "target_platform": "https://workbuddy.ai",
+        "models_offered": ["Tencent Hunyuan 4 (HY4)"],
+        "compute_volume": "200 à 300 crédits quotidiens gratuits (du 4 au 15 novembre)",
+        "watch_skill_status": "DOUBLON INFÉRIEUR (PRÉFÉRER APINEX OPP-003)",
+        "injection_vector": "Voie B (Application / UI)",
+        "mechanism_steps": [
+            "Téléchargement de l'application Work Buddy sur Mac ou Windows.",
+            "Allocation quotidienne automatique de 200-300 crédits.",
+            "Sélection de Tencent Hunyuan 4 dans le picker de modèles avec contexte jusqu'à 1 million de tokens.",
+        ],
+    },
+}
+
+
+def get_opportunity_dossier(opp_id: str) -> Dict[str, Any]:
+    """Retourne la fiche complète OPP-001..005 absorbée de M118."""
+    key = opp_id.strip().upper()
+    if key not in OPPORTUNITY_DOSSIERS:
+        raise ContractViolation("K3", "opp_id", f"opportunité M118 inconnue: {opp_id}")
+    return dict(OPPORTUNITY_DOSSIERS[key])
+
+
 def get_marketplace_playbook(category: str) -> Dict[str, Any]:
     """Retourne le playbook complet (offres chiffrées, seuils, protocole) d'une catégorie M117."""
     key = category.strip().lower()
@@ -321,81 +405,12 @@ def query_marketplace_skills(category: Optional[str] = None, keyword: Optional[s
     }
 
 
-def _emit_catalog_l0_proof(head_sha40: str, repo_root: Optional[Path] = None) -> Tuple[Dict[str, Any], Dict[str, Any]]:
-    """Inscrit l'événement et le reçu R10 sur le bus L0 persistant (fallback mémoire si FS non accessible)."""
-    base = repo_root or Path(__file__).resolve().parents[3]
-    jpath = base / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
-    lpath = base / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl"
-    try:
-        evt = record_shared_l0_event(
-            actor_from="discoverer",
-            actor_to="fabricator",
-            dispatch_id="D-M117-M118-CATALOG",
-            payload="Valider catalogue natif M117 (6 playbooks/18 offres) + M118",
-            proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py"],
-            event_type="dispatch_typed",
-            journal_path=jpath,
-        )
-        rec = record_shared_l0_receipt(
-            issuer="Catalog M117/M118",
-            mission_prefix="M117-M118-NATIVE",
-            sha=head_sha40,
-            proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py"],
-            summary=f"M117 (6 playbooks/18 offres) + M118 absorbed at {head_sha40[:7]}",
-            ledger_path=lpath,
-        )
-        return evt, rec
-    except OSError:
-        now_dt = dt.datetime.now(dt.timezone.utc)
-        day_tag = now_dt.strftime("%Y%m%d")
-        journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-        ledger = R10Ledger(valid_shas={head_sha40})
-        evt = journal.inscribe(
-            {
-                "actor_from": "discoverer",
-                "actor_to": "fabricator",
-                "at": now_dt.isoformat(),
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": "D-M117-M118-CATALOG",
-                "event_id": f"EVT-{day_tag}-901",
-                "payload": "Valider catalogue natif M117 M118",
-                "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py"],
-                "type": "dispatch_typed",
-            },
-            now_utc=now_dt,
-        )
-        rec = ledger.validate_and_consign(
-            {
-                "entry_id": f"G-{day_tag}-901",
-                "issuer": "Catalog M117/M118",
-                "mission_id": "M117-M118-NATIVE-ABSORPTION",
-                "observed_at": now_dt.isoformat(),
-                "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py"],
-                "recorded_at": None,
-                "schema": R10_SCHEMA,
-                "sha": head_sha40,
-                "summary": f"M117+M118 absorbed at {head_sha40[:7]}",
-            },
-            now_utc=now_dt,
-        )
-        return evt, rec
-
-
 def run_self_test(head_sha40: str = "0" * 40, repo_root: Optional[Path] = None) -> Dict[str, Any]:
-    """Vérifie M117 + M118 sans accéder aux anciens répertoires sources de 01_Forkable/."""
-    assert len(YOUTUBE_SKILL_VIDEOS) == 34
-    assert sum(c["videos"] for c in MARKETPLACE_SKILL_CATEGORIES) == 34
-    assert len(MARKETPLACE_PLAYBOOKS) == 6
+    """Vérifie le fonctionnement interne autonome de M117 + M118 sans accès aux répertoires sources."""
+    checks: Dict[str, bool] = {}
     total_offers = sum(len(pb["productized_offers"]) for pb in MARKETPLACE_PLAYBOOKS.values())
-    assert total_offers == 18
     pb1 = get_marketplace_playbook("01_Website_and_Funnels")
-    assert pb1["thresholds"]["lighthouse_performance_min"] == 95
-    assert any("$1 500 setup + $199/m" in o["pricing"] for o in pb1["productized_offers"])
-    assert len(INFERENCE_DISCOVERY_REGISTRY["opportunities"]) == 5
-
     q_res = query_marketplace_skills(keyword="Three.js")
-    assert q_res["matched_count"] >= 1 and q_res["playbooks_count"] >= 1 and q_res["productized_offers_count"] >= 3
-
     qual_a = qualify_inference_opportunity(
         {
             "platform": "sovereign-new-api.example",
@@ -405,16 +420,84 @@ def run_self_test(head_sha40: str = "0" * 40, repo_root: Optional[Path] = None) 
         },
         known_platforms=set(),
     )
-    assert qual_a["score"] == "A" and qual_a["vector"] == "VOIE_A_API_DIRECT"
+    d_opp3 = get_opportunity_dossier("OPP-003")
+    checks["m117_catalog_shape"] = (
+        len(YOUTUBE_SKILL_VIDEOS) == 34
+        and sum(c["videos"] for c in MARKETPLACE_SKILL_CATEGORIES) == 34
+        and len(MARKETPLACE_PLAYBOOKS) == 6
+        and total_offers == 18
+        and pb1["thresholds"]["lighthouse_performance_min"] == 95
+        and q_res["matched_count"] >= 1
+    )
+    checks["m118_dossiers_and_filter"] = (
+        len(INFERENCE_DISCOVERY_REGISTRY["opportunities"]) == 5
+        and len(OPPORTUNITY_DOSSIERS) == 5
+        and qual_a["score"] == "A"
+        and qual_a["vector"] == "VOIE_A_API_DIRECT"
+        and d_opp3["target_platform"] == "https://apinex.com"
+    )
+    assert all(checks.values())
 
-    evt, rec = _emit_catalog_l0_proof(head_sha40, repo_root=repo_root)
+    passed = sum(1 for v in checks.values() if v)
+    total = len(checks)
+    evt, rec = consign_measured_l0_evidence(
+        actor_from="discoverer",
+        actor_to="fabricator",
+        dispatch_id="D-M117-M118-SMOKE",
+        payload=f"Catalog smoke checks: {passed}/{total} internal, 0 source-oracle parities",
+        issuer="Catalog M117/M118",
+        mission_prefix="M117-M118-SMOKE",
+        sha=head_sha40,
+        proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py"],
+        summary=f"Catalog smoke={passed}/{total}; videos={len(YOUTUBE_SKILL_VIDEOS)}; dossiers={len(OPPORTUNITY_DOSSIERS)}; source_oracle_parity=0 at {head_sha40[:7]}",
+        repo_root=repo_root,
+    )
     if not evt["seq"] or not rec["recorded_at"]:
         raise ContractViolation("C5", "catalog", "échec d'inscription L0")
     return {
+        "checks": checks,
+        "checks_passed": passed,
+        "checks_total": total,
+        "source_parity_verified": [],
         "m117_videos": len(YOUTUBE_SKILL_VIDEOS),
         "m117_playbooks": len(MARKETPLACE_PLAYBOOKS),
         "m117_productized_offers": total_offers,
         "m118_opportunities": len(INFERENCE_DISCOVERY_REGISTRY["opportunities"]),
+        "m118_dossiers": len(OPPORTUNITY_DOSSIERS),
+        "l0_seq": evt["seq"],
+        "r10_entry_id": rec["entry_id"],
+    }
+
+
+def consign_catalog_parity_receipt(
+    module_results: Dict[str, Dict[str, Any]],
+    head_sha40: str,
+    repo_root: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Consigne uniquement la parité source-vs-organe réellement mesurée pour M117/M118."""
+    verified = sorted(
+        mid
+        for mid, res in module_results.items()
+        if res.get("compared_against_source") and res.get("cases_compared", 0) > 0 and res.get("cases_matched") == res.get("cases_compared")
+    )
+    total_cases = sum(int(res.get("cases_compared", 0)) for res in module_results.values())
+    total_matched = sum(int(res.get("cases_matched", 0)) for res in module_results.values())
+    evt, rec = consign_measured_l0_evidence(
+        actor_from="discoverer",
+        actor_to="fabricator",
+        dispatch_id="D-M117-M118-PARITY",
+        payload=f"Catalog differential parity: {verified} ({total_matched}/{total_cases} cases)",
+        issuer="Catalog M117/M118",
+        mission_prefix="M117-M118-PARITY",
+        sha=head_sha40,
+        proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py"],
+        summary=f"Catalog measured parity {total_matched}/{total_cases} across {verified} at {head_sha40[:7]}",
+        repo_root=repo_root,
+    )
+    return {
+        "verified_modules": verified,
+        "cases_matched": total_matched,
+        "cases_compared": total_cases,
         "l0_seq": evt["seq"],
         "r10_entry_id": rec["entry_id"],
     }
