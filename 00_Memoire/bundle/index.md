@@ -55,9 +55,10 @@ okf_version: "0.2"
 - [fondation-13-1.md](concepts/fondation-13-1.md) — Fondation 13 → 1 (D-N055) : unifier les 13 sessions en 1 agent — un lead avec un juge interne ; inventaire F1-0 (2 252 entrées, registre 776 lignes, ledger 212 reçus), mapping des 13 fonctions, réponse à « qui juge le juge », rollback prouvé.
 - [FUSION-ENONCE.md](fusion/FUSION-ENONCE.md) — ÉNONCÉ immuable gelé (sha256 `41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d`) de la Fusion des Forkable en Fondation.
 - [CARTE-DES-PRINCIPES.md](fusion/CARTE-DES-PRINCIPES.md) — Mesure zéro réconciliée et vecteurs de principe des 120 modules (`M001..M120`) + 8 doublons `.gitmodules` (`D01..D08`).
-- [ADR-FUSION.md](fusion/ADR-FUSION.md) — 12 arbitrages d'architecture (`adr/ADR-01.md` à `ADR-12.md`) incluant réfutation de l'hypothèse « 3 noyaux FKB00 + FKB01..08 sans fusion » → 5 Noyaux `K1..K5`.
+- [ADR-FUSION.md](fusion/ADR-FUSION.md) — 13 arbitrages d'architecture (`adr/ADR-01.md` à `ADR-13.md`), dont ADR-13 unifiant la racine sous **3 Noyaux (`ÂME / SYSTÈME NERVEUX / CORPS`)** et la trajectoire `Python → Hybride → Rust`.
 - [DDD-CONTRATS-COMMUNS.md](fusion/DDD-CONTRATS-COMMUNS.md) — Contrats L0 communs (`EventJournal` C1, `R10Receipt` C2, `EpistemicFact` C3, `FiberContract` C4, `DeletionProof` C5).
-- [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 en 5 Noyaux (`K1..K5`).
-- [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2 et interfaces natives (`fondation-13-1`, `RigInfinity`, `aspace-fiber-host`, `aspace_foundation_kernel.py`).
-- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut vérifié de chaque module (`FUSIONNÉ` / `PARTIEL` / `RETENU` / `ÉCARTÉ`) et contrôle §5.5 (< 1/3).
+- [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 sous les 3 Noyaux (`ÂME`, `SYSTÈME NERVEUX`, `CORPS`).
+- [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2, pont Phase 2 Hybride Python↔Rust (`fondation-13-1`, `RigInfinity`) et organes natifs `FKB04`/`FKB02`.
+- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut vérifié de chaque module (`FUSIONNÉ` / `PARTIEL` / `RETENU` / `ÉCARTÉ`), noyau `ADR-13` sans exception et contrôle §5.5 (< 1/3).
 - [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
+- [JUGEMENT-EXTERNE-CYCLE-4.md](fusion/JUGEMENT-EXTERNE-CYCLE-4.md) — Verdict indépendant du Juge Externe Cycle 4 en lecture seule sur clone neuf de `fusion/cycle-4`.

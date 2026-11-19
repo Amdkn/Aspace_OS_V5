@@ -294,8 +294,36 @@ class GoldfishInferenceRouter:
 # ============================================================================
 # 3. SERVEUR HTTP MULTI-THREADÉ (:31415) & DISPATCHER DE MISSIONS JULES / ADE
 # ============================================================================
-LEDGER = ElephantStateLedger(DB_PATH)
-ROUTER = GoldfishInferenceRouter(LEDGER)
+_LEDGER: ElephantStateLedger | None = None
+_ROUTER: GoldfishInferenceRouter | None = None
+_STATE_LOCK = threading.Lock()
+
+
+def get_ledger(db_path: Path = DB_PATH) -> ElephantStateLedger:
+    """Initialisation paresseuse du registre SQLite EGM pour éviter tout effet de bord à l'import."""
+    global _LEDGER
+    with _STATE_LOCK:
+        if _LEDGER is None or _LEDGER.db_path != db_path:
+            _LEDGER = ElephantStateLedger(db_path)
+        return _LEDGER
+
+
+def get_router(ledger: ElephantStateLedger | None = None) -> GoldfishInferenceRouter:
+    """Initialisation paresseuse du routeur EGM."""
+    global _ROUTER
+    target_ledger = ledger or get_ledger()
+    with _STATE_LOCK:
+        if _ROUTER is None or _ROUTER.ledger is not target_ledger:
+            _ROUTER = GoldfishInferenceRouter(target_ledger)
+        return _ROUTER
+
+
+def __getattr__(name: str) -> Any:
+    if name == "LEDGER":
+        return get_ledger()
+    if name == "ROUTER":
+        return get_router()
+    raise AttributeError(f"module {__name__!r} has no attribute {name!r}")
 
 
 class AspaceGatewayHandler(BaseHTTPRequestHandler):
@@ -311,8 +339,9 @@ class AspaceGatewayHandler(BaseHTTPRequestHandler):
         self.wfile.write(body)
 
     def do_GET(self) -> None:
+        ledger = get_ledger()
         if self.path in ("/health", "/v1/models"):
-            with LEDGER._connect() as conn:
+            with ledger._connect() as conn:
                 providers = [dict(r) for r in conn.execute("SELECT * FROM provider_health").fetchall()]
                 queued = conn.execute("SELECT COUNT(*) AS c FROM goldfish_missions WHERE status='QUEUED'").fetchone()["c"]
             self._send_json(
@@ -327,7 +356,7 @@ class AspaceGatewayHandler(BaseHTTPRequestHandler):
             return
 
         if self.path == "/v1/egm/next-mission":
-            with LEDGER._connect() as conn:
+            with ledger._connect() as conn:
                 row = conn.execute(
                     "SELECT * FROM goldfish_missions WHERE status='QUEUED' ORDER BY created_at ASC LIMIT 1"
                 ).fetchone()
@@ -346,12 +375,12 @@ class AspaceGatewayHandler(BaseHTTPRequestHandler):
         payload = json.loads(raw_body) if raw_body else {}
 
         if self.path == "/v1/chat/completions":
-            result = ROUTER.dispatch_chat_completion(payload)
+            result = get_router().dispatch_chat_completion(payload)
             self._send_json(200, result)
             return
 
         if self.path == "/v1/egm/seed-missions":
-            added = LEDGER.enqueue_submodule_evolution_missions()
+            added = get_ledger().enqueue_submodule_evolution_missions()
             self._send_json(200, {"seeded_missions": added})
             return
 
@@ -359,7 +388,7 @@ class AspaceGatewayHandler(BaseHTTPRequestHandler):
 
 
 def run_gateway_server() -> None:
-    seeded = LEDGER.enqueue_submodule_evolution_missions()
+    seeded = get_ledger().enqueue_submodule_evolution_missions()
     print(f"[A0-EGM-GATEWAY] {seeded} missions Goldfish indexées depuis .gitmodules dans {DB_PATH}")
     print(f"[A0-EGM-GATEWAY] Écoute active sur http://127.0.0.1:{PORT}/v1/chat/completions")
     server = ThreadingHTTPServer(("127.0.0.1", PORT), AspaceGatewayHandler)

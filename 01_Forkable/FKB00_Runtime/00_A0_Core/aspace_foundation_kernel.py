@@ -17,12 +17,16 @@ Zéro dépendance externe, zéro télémétrie.
 from __future__ import annotations
 
 import calendar
+import contextlib
 import datetime as dt
 import hashlib
+import os
 import re
+import subprocess
+import time
 from dataclasses import dataclass, field
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Sequence, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Sequence, Tuple
 
 SHA40_RE = re.compile(r"^[0-9a-f]{40}$")
 ENTRY_ID_RE = re.compile(r"^G-(\d{4})(\d{2})(\d{2})-(\d{3})$")
@@ -269,7 +273,6 @@ class EventJournal:
         if typ == "judgment_rendered" and dispatch_id not in self.requested:
             raise ContractViolation("R8", "dispatch_id", "judgment_rendered sans judgment_requested préalable")
         if typ == "correction":
-            ref_events = EVENT_ID_RE.findall(payload)
             cited_ids = re.findall(r"EVT-\d{8}-\d{3}", payload)
             if not cited_ids or not any(cid in self.event_ids for cid in cited_ids):
                 raise ContractViolation(
@@ -577,6 +580,50 @@ def _default_repo_root() -> Path:
     return Path(__file__).resolve().parents[3]
 
 
+@contextlib.contextmanager
+def _atomic_file_lock(target_path: Path, timeout_s: float = 10.0) -> Iterator[None]:
+    """Verrou inter-processus atomique O_EXCL sur fichiers JSONL L0."""
+    lock_path = Path(f"{target_path}.lock")
+    lock_path.parent.mkdir(parents=True, exist_ok=True)
+    deadline = time.monotonic() + timeout_s
+    fd: Optional[int] = None
+    while True:
+        try:
+            fd = os.open(str(lock_path), os.O_CREAT | os.O_EXCL | os.O_RDWR)
+            os.write(fd, f"{os.getpid()}:{time.time()}".encode("ascii"))
+            break
+        except FileExistsError:
+            # Récupération d'un verrou orphelin (> 30s)
+            try:
+                if time.time() - lock_path.stat().st_mtime > 30.0:
+                    lock_path.unlink(missing_ok=True)
+                    continue
+            except OSError:
+                pass
+            if time.monotonic() >= deadline:
+                raise TimeoutError(f"Verrou JSONL L0 expiré sur {lock_path}")
+            time.sleep(0.02)
+    try:
+        yield
+    finally:
+        if fd is not None:
+            try:
+                os.close(fd)
+            except OSError:
+                pass
+        lock_path.unlink(missing_ok=True)
+
+
+def _next_daily_slot(prefix: str, day_tag: str, existing_ids: set[str], preferred_start: int, rule: str, field_name: str) -> Tuple[int, str]:
+    """Alloue un identifiant AAAAMMJJ-NNN libre sans débordement modulo infini."""
+    start = preferred_start if 1 <= preferred_start <= 999 else 1
+    for candidate in list(range(start, 1000)) + list(range(1, start)):
+        ident = f"{prefix}-{day_tag}-{candidate:03d}"
+        if ident not in existing_ids:
+            return candidate, ident
+    raise ContractViolation(rule, field_name, f"capacité journalière (999) saturée pour {prefix}-{day_tag}")
+
+
 def record_shared_l0_event(
     actor_from: str,
     actor_to: str,
@@ -587,41 +634,44 @@ def record_shared_l0_event(
     design_ref: str = "00_Memoire/bundle/fusion/SDD-FONDATION.md",
     journal_path: Optional[Path] = None,
 ) -> Dict[str, Any]:
-    """Inscrit un événement dans le journal JSONL partagé L0 (seq = numéro de ligne)."""
+    """Inscrit un événement dans le journal JSONL partagé L0 sous verrou atomique O_EXCL."""
     import json
 
     jpath = journal_path or (_default_repo_root() / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl")
     jpath.parent.mkdir(parents=True, exist_ok=True)
-    existing = jpath.read_text(encoding="utf-8") if jpath.exists() else ""
-    journal = EventJournal.from_jsonl(existing, signed_designs={design_ref})
+    with _atomic_file_lock(jpath):
+        existing = jpath.read_text(encoding="utf-8") if jpath.exists() else ""
+        journal = EventJournal.from_jsonl(existing, signed_designs={design_ref})
 
-    now_dt = dt.datetime.now(dt.timezone.utc)
-    day_tag = now_dt.strftime("%Y%m%d")
-    seq_num = len(journal.records) + 1
-    evt_id = f"EVT-{day_tag}-{seq_num % 1000:03d}"
-    while evt_id in journal.event_ids:
-        seq_num += 1
-        evt_id = f"EVT-{day_tag}-{seq_num % 1000:03d}"
+        now_dt = dt.datetime.now(dt.timezone.utc)
+        day_tag = now_dt.strftime("%Y%m%d")
+        seq_num, evt_id = _next_daily_slot(
+            "EVT", day_tag, journal.event_ids, len(journal.records) + 1, "R3", "event_id"
+        )
 
-    # Pour éviter tout conflit R3 sur dispatch_id déjà typé en re-run répété
-    safe_did = dispatch_id if (event_type != "dispatch_typed" or dispatch_id not in journal.typed) else f"{dispatch_id}-{seq_num}"
-    record = journal.inscribe(
-        {
-            "actor_from": actor_from,
-            "actor_to": actor_to,
-            "at": now_dt.isoformat(),
-            "design_ref": design_ref,
-            "dispatch_id": safe_did,
-            "event_id": evt_id,
-            "payload": payload,
-            "proof": proof,
-            "type": event_type,
-        },
-        now_utc=now_dt,
-    )
-    with open(jpath, "a", encoding="utf-8") as f:
-        f.write(json.dumps(record, ensure_ascii=False) + "\n")
-    return record
+        # Pour éviter tout conflit R3 sur dispatch_id déjà typé en re-run répété
+        safe_did = (
+            dispatch_id
+            if (event_type != "dispatch_typed" or dispatch_id not in journal.typed)
+            else f"{dispatch_id}-{len(journal.records) + 1}-{seq_num}"
+        )
+        record = journal.inscribe(
+            {
+                "actor_from": actor_from,
+                "actor_to": actor_to,
+                "at": now_dt.isoformat(),
+                "design_ref": design_ref,
+                "dispatch_id": safe_did,
+                "event_id": evt_id,
+                "payload": payload,
+                "proof": proof,
+                "type": event_type,
+            },
+            now_utc=now_dt,
+        )
+        with open(jpath, "a", encoding="utf-8") as f:
+            f.write(json.dumps(record, ensure_ascii=False) + "\n")
+        return record
 
 
 def record_shared_l0_receipt(
@@ -632,47 +682,171 @@ def record_shared_l0_receipt(
     summary: str,
     ledger_path: Optional[Path] = None,
 ) -> Dict[str, Any]:
-    """Consigne un reçu R10 dans le ledger JSONL partagé L0 (aspace.r10-receipt.v1)."""
+    """Consigne un reçu R10 dans le ledger JSONL partagé L0 sous verrou atomique O_EXCL."""
     import json
 
     lpath = ledger_path or (_default_repo_root() / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl")
     lpath.parent.mkdir(parents=True, exist_ok=True)
-    ledger = R10Ledger(valid_shas={sha})
-    if lpath.exists():
-        for ln in lpath.read_text(encoding="utf-8").splitlines():
-            if not ln.strip():
-                continue
-            obj = json.loads(ln)
-            ledger.entry_ids.add(obj["entry_id"])
-            ledger.mission_ids.add(obj["mission_id"])
+    with _atomic_file_lock(lpath):
+        ledger = R10Ledger(valid_shas={sha})
+        if lpath.exists():
+            for ln in lpath.read_text(encoding="utf-8").splitlines():
+                if not ln.strip():
+                    continue
+                obj = json.loads(ln)
+                ledger.entry_ids.add(obj["entry_id"])
+                ledger.mission_ids.add(obj["mission_id"])
 
-    now_dt = dt.datetime.now(dt.timezone.utc)
-    day_tag = now_dt.strftime("%Y%m%d")
-    idx = len(ledger.entry_ids) + 1
-    entry_id = f"G-{day_tag}-{idx % 1000:03d}"
-    while entry_id in ledger.entry_ids:
-        idx += 1
-        entry_id = f"G-{day_tag}-{idx % 1000:03d}"
+        now_dt = dt.datetime.now(dt.timezone.utc)
+        day_tag = now_dt.strftime("%Y%m%d")
+        idx, entry_id = _next_daily_slot(
+            "G", day_tag, ledger.entry_ids, len(ledger.entry_ids) + 1, "V7", "entry_id"
+        )
 
-    mission_id = f"{mission_prefix}-{idx}"
-    while mission_id in ledger.mission_ids:
-        idx += 1
-        mission_id = f"{mission_prefix}-{idx}"
+        m_seq = len(ledger.mission_ids) + 1
+        mission_id = f"{mission_prefix}-{m_seq}"
+        while mission_id in ledger.mission_ids:
+            m_seq += 1
+            mission_id = f"{mission_prefix}-{m_seq}"
 
-    stored = ledger.validate_and_consign(
-        {
-            "entry_id": entry_id,
-            "issuer": issuer,
-            "mission_id": mission_id,
-            "observed_at": now_dt.isoformat(),
-            "proof": proof,
-            "recorded_at": None,
-            "schema": R10_SCHEMA,
-            "sha": sha,
-            "summary": summary,
-        },
-        now_utc=now_dt,
-    )
-    with open(lpath, "a", encoding="utf-8") as f:
-        f.write(json.dumps(stored, ensure_ascii=False) + "\n")
-    return stored
+        stored = ledger.validate_and_consign(
+            {
+                "entry_id": entry_id,
+                "issuer": issuer,
+                "mission_id": mission_id,
+                "observed_at": now_dt.isoformat(),
+                "proof": proof,
+                "recorded_at": None,
+                "schema": R10_SCHEMA,
+                "sha": sha,
+                "summary": summary,
+            },
+            now_utc=now_dt,
+        )
+        with open(lpath, "a", encoding="utf-8") as f:
+            f.write(json.dumps(stored, ensure_ascii=False) + "\n")
+        return stored
+
+
+# =============================================================================
+# C5 — PONT HYBRIDE PHASE 2 (PYTHON <-> BINAIRES RUST FONDATION-13-1)
+# =============================================================================
+
+def find_rust_bin_dir(repo_root: Optional[Path] = None) -> Optional[Path]:
+    """Localise les binaires compilés fondation-13-1 (target/release ou target/debug)."""
+    root = repo_root or _default_repo_root()
+    base = root / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core" / "fondation-13-1" / "target"
+    for profile in ("release", "debug"):
+        cand = base / profile
+        ext = ".exe" if os.name == "nt" else ""
+        if (cand / f"r10-receive{ext}").exists():
+            return cand
+    return None
+
+
+def invoke_rust_l0_binary(
+    bin_name: str,
+    args: Sequence[str],
+    repo_root: Optional[Path] = None,
+) -> Tuple[int, str, str]:
+    """Exécute un binaire Rust compilé de fondation-13-1 et retourne (code, stdout, stderr)."""
+    bin_dir = find_rust_bin_dir(repo_root)
+    if bin_dir is None:
+        raise FileNotFoundError("Binaires Rust fondation-13-1 non compilés (cargo build --bins requis)")
+    ext = ".exe" if os.name == "nt" else ""
+    exe = bin_dir / f"{bin_name}{ext}"
+    if not exe.exists():
+        raise FileNotFoundError(f"Binaire Rust introuvable: {exe}")
+    proc = subprocess.run([str(exe), *args], capture_output=True, text=True, encoding="utf-8")
+    return proc.returncode, proc.stdout.strip(), proc.stderr.strip()
+
+
+def verify_rust_hybrid_parity(
+    fixtures_dir: Optional[Path] = None,
+    repo_root: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Vérifie en Phase 2 Hybride la parité 1:1 entre Python et r10-receive/route-dispatch compilés."""
+    import json
+    import tempfile
+
+    root = repo_root or _default_repo_root()
+    fdir = fixtures_dir or (root / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core" / "fondation-13-1" / "tests" / "fixtures")
+    anchors = ("anchor-001.json", "anchor-002.json", "anchor-026.json")
+    anchor_objs = [json.loads((fdir / name).read_text(encoding="utf-8")) for name in anchors]
+    shas = {obj["sha"] for obj in anchor_objs}
+    py_ledger = R10Ledger(valid_shas=shas)
+    ref_now = dt.datetime.now(dt.timezone.utc)
+
+    results: List[Dict[str, Any]] = []
+    with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmp:
+        tmp_path = Path(tmp)
+        empty_ledger = tmp_path / "empty_ledger.json"
+        empty_ledger.write_text('{"entry_ids":[],"mission_ids":[]}', encoding="utf-8")
+        shas_file = tmp_path / "shas.txt"
+        shas_file.write_text("\n".join(sorted(shas)) + "\n", encoding="utf-8")
+
+        for fname, obj in zip(anchors, anchor_objs):
+            py_ok = True
+            try:
+                py_ledger.validate_and_consign(obj, now_utc=ref_now)
+            except ContractViolation:
+                py_ok = False
+            rc, out, err = invoke_rust_l0_binary(
+                "r10-receive",
+                [
+                    "validate",
+                    "--deposit",
+                    str(fdir / fname),
+                    "--ledger",
+                    str(empty_ledger),
+                    "--shas",
+                    str(shas_file),
+                ],
+                repo_root=root,
+            )
+            rust_ok = rc == 0
+            if py_ok != rust_ok:
+                raise ContractViolation("C5", fname, f"Divergence Phase 2 Python={py_ok} vs Rust={rust_ok}: {err}")
+            results.append({"fixture": fname, "python": py_ok, "rust": rust_ok, "rust_out": out})
+
+        # Vérifier aussi le rejet fautif V3 via depot-fautif-1.json
+        bad_rc, _, bad_err = invoke_rust_l0_binary(
+            "r10-receive",
+            [
+                "validate",
+                "--deposit",
+                str(fdir / "depot-fautif-1.json"),
+                "--ledger",
+                str(empty_ledger),
+                "--shas",
+                str(shas_file),
+            ],
+            repo_root=root,
+        )
+        if bad_rc == 0:
+            raise ContractViolation("C5", "depot-fautif-1.json", "r10-receive aurait dû rejeter depot-fautif-1.json")
+
+        # Vérifier parité route-dispatch sur dispatch-valid.json
+        r_rc, r_out, r_err = invoke_rust_l0_binary(
+            "route-dispatch",
+            [
+                "validate",
+                "--dispatch",
+                str(fdir / "dispatch-valid.json"),
+                "--journal",
+                str(tmp_path / "empty_journal.jsonl"),
+                "--designs",
+                str(fdir / "designs.txt"),
+            ],
+            repo_root=root,
+        )
+        if r_rc != 0:
+            raise ContractViolation("C5", "dispatch-valid.json", f"route-dispatch a rejeté dispatch-valid: {r_err}")
+
+    return {
+        "phase": "PHASE_2_HYBRID_PYTHON_RUST",
+        "anchors_verified": results,
+        "faulty_deposit_rejected_rc": bad_rc,
+        "faulty_deposit_reason": bad_err,
+        "route_dispatch_valid_out": r_out,
+    }

@@ -8,7 +8,7 @@ enonce_sha256: "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d
 
 # DDD-CONTRATS-COMMUNS — Couche Fondamentale L0
 
-Conformément à l'ÉNONCÉ §1 (4), la Fondation A'Space interconnecte ses **5 Noyaux (`K1..K5`)** au niveau le plus fondamental par des contrats uniques strictement alignés **octet pour octet** sur les validateurs Rust zéro-dépendance de `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/` (`src/lib.rs`, `src/router.rs`, `src/memory.rs`) et portés pour les moteurs Python K1..K5 par `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_foundation_kernel.py`.
+Conformément à l'ÉNONCÉ §1 (4) et à l'**`ADR-13`**, la Fondation A'Space interconnecte ses **3 Noyaux Fondamentaux (`ÂME` / `SYSTÈME NERVEUX` / `CORPS`)** — rattachant les organes `K1..K5` et le Bus L0 — au niveau le plus fondamental par des contrats uniques strictement alignés **octet pour octet** sur les validateurs Rust zéro-dépendance de `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/` (`src/lib.rs`, `src/router.rs`, `src/memory.rs`) et invoqués/doublés en **Phase 2 Hybride (`Python → Hybride → Rust`)** par `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_foundation_kernel.py`.
 
 ---
 
@@ -90,6 +90,6 @@ Conformément à l'ÉNONCÉ §1 (4), la Fondation A'Space interconnecte ses **5 
 
 - **Autorité source** : ÉNONCÉ §1 (3) — *« la source d'un module FUSIONNÉ peut quitter l'arbre actif sans perte de capacité (test de suppression, jugé par un juge externe) »*.
 - **Conditions vérifiées** :
-  1. Absence réelle du module dans `.gitmodules`, dans `git ls-files --stage` (`160000`) **et** absence de répertoire résiduel non suivi sur le disque.
-  2. Exécution des capacités cibles dans la Fondation sans le répertoire source retiré (`test_foundation_deletion_suite.py`, rejoué avec preuves d'exécution des noyaux `K1..K5`).
-  3. Validation par le Juge-comparateur externe en lecture seule.
+  1. Absence réelle ou suppression physique vérifiée du répertoire source du module dans un clone de test **et** preuve d'exécution de sa capacité portée dans la Fondation (`test_foundation_deletion_suite.py`, `cargo test` sur `fondation-13-1` & `RigInfinity`, organes natifs `FKB04`/`FKB02`/`M117`/`M118`).
+  2. Retrait des gitlinks `.gitmodules` effectué par famille **après** verdict favorable du Juge externe (règle Cycle 4).
+  3. Validation par le Juge-comparateur externe en lecture seule sur clone neuf.

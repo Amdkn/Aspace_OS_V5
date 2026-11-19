@@ -1,3 +1,4 @@
-00_Memoire/bundle/fusion/FUSION-ENONCE.md -text
 00_Memoire/bundle/fusion/*.md text eol=lf
 00_Memoire/bundle/fusion/adr/*.md text eol=lf
+01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/tests/fixtures/* text eol=lf
+00_Memoire/bundle/fusion/FUSION-ENONCE.md -text

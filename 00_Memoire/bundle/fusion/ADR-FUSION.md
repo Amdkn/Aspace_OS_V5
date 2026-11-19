@@ -1,7 +1,7 @@
 ---
 okf_version: "0.2"
 type: Decision
-title: "ADR-FUSION — Arbitrages d'Architecture de la Fondation A'Space (ADR-01 à ADR-12)"
+title: "ADR-FUSION — Arbitrages d'Architecture de la Fondation A'Space (ADR-01 à ADR-13)"
 enonce_ref: "00_Memoire/bundle/fusion/FUSION-ENONCE.md"
 enonce_sha256: "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d"
 ---
@@ -122,3 +122,18 @@ Chaque ADR ci-dessous résout un **conflit réel détecté lors de l'extraction 
   - **K4 — Mémoire Neuro-Symbolique & Compétences** (18 modules)
   - **K5 — Prédictif, Wargame & Moteurs de Valeur B2B** (43 modules)
 - **Invariant** : Chaque noyau `K1..K5` lit et émet via les 3 contrats L0 obligatoires (`EventJournal`, `R10Receipt`, `EpistemicFact`).
+
+## ADR-13 — Amendement ADR-12 : Trois Noyaux (`ÂME / SYSTÈME NERVEUX / CORPS`) & Trajectoire du Cœur (`Python → Hybride → Rust`)
+- **Statut** : `ACCEPTÉE` (Amende `ADR-12` — décision architecturale Cycle 4)
+- **Conflit** : L'`ADR-12` réfutait la variante « trois noyaux dans FKB00 avec FKB01..08 sans fusion », mais a pris la voie de facilité en érigeant 5 racines (`K1..K5`) au lieu de tout unifier sous les Trois Noyaux doctrinaux, et sans expliciter la trajectoire évolutive d'un seul cœur vers Rust.
+- **Décision** :
+  1. **Trois Noyaux Fondamentaux** (tous les 120 modules sans exception y sont rattachés) :
+     - **`ÂME` (`Automaton`)** : doctrine, gouvernance 13→1, mémoire épistémique & compétences — rattache les organes **`K1`** (Gouvernance & RSI) et **`K4`** (Mémoire Neuro-Symbolique & Compétences) (29 modules).
+     - **`SYSTÈME NERVEUX` (`Infinity`)** : journal d'événements L0, reçus R10, hibernation pure-data, fibres réactives & inférence calibrée — rattache le **Bus Nerveux L0 / Fibers** et l'organe **`K3`** (Inférence System-1 & FreeCloud) (22 modules).
+     - **`CORPS` (`OpenRig`)** : exécution multi-harness, source-control WAL, outils Anything, surfaces 3D & moteurs prédictifs/B2B — rattache les organes **`K2`** (Atelier Multi-Harness, Anything & Surfaces 3D) et **`K5`** (Prédictif, Wargame, Studio Vidéo & Moteurs B2B) (69 modules).
+  2. **Trajectoire d'Un Seul Cœur Qui Évolue (`Python → Hybride → Rust`)** :
+     - **Phase 1 (`Python`)** : `aspace_foundation_kernel.py` + organes Python `K1..K5` alignés octet pour octet sur les fixtures Rust (`anchor-001.json`, `anchor-002.json`, `anchor-026.json`). *Critère de passage Phase 1 → Phase 2* : `cargo test` vert sur `fondation-13-1` et `RigInfinity`, 100 % des fixtures validées en Python et pont CLI Rust fonctionnel.
+     - **Phase 2 (`Hybride`, atteinte au Cycle 4)** : Python orchestre les organes absorbés (`FKB04`, `FKB02`, etc.) et délègue/contre-valide la mécanique L0 via les binaires Rust compilés (`r10-receive`, `route-dispatch`, `recall-fact`) et `RigInfinity`. *Critère de passage Phase 2 → Phase 3* : tous les modules `FUSIONNÉ` ont passé le test de suppression du Juge externe et la logique des organes `K1..K5` est portée dans les crates Rust unifiées.
+     - **Phase 3 (`Rust`, destination)** : workspace Rust souverain unique (`RigInfinity × fondation-13-1`) portant les Trois Noyaux sans dépendance d'exécution Python L0/L1.
+- **Invariant** : Les fixtures Rust canoniques font foi à chaque phase ; tout module dans `REGISTRE-DE-FUSION.md` indique son noyau parmi `{ÂME, SYSTÈME NERVEUX, CORPS}`.
+- **Modules résolus** : L'intégralité des 120 modules (`M001..M120`). (Détail complet dans [`adr/ADR-13.md`](adr/ADR-13.md)).

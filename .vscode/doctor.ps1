@@ -1,12 +1,21 @@
-# .vscode/doctor.ps1 — Auto-vérification et Auto-réparation (Antifragile) de l'environnement Aspace OS V5 (VS Code + Orca + Herdr)
+﻿# .vscode/doctor.ps1 — Auto-vérification et Auto-réparation (Antifragile) de l'environnement Aspace OS V5 (VS Code + Orca + Herdr)
 $ErrorActionPreference = 'SilentlyContinue'
 $root = Split-Path $PSScriptRoot -Parent
 
 # 1. Injecter tous les chemins d'outils dans la session courante
+if (($env:CARGO_HOME -and -not (Test-Path (Split-Path $env:CARGO_HOME -Qualifier))) -or -not $env:CARGO_HOME) {
+  $env:CARGO_HOME = "$HOME\.cargo"
+}
+if (($env:RUSTUP_HOME -and -not (Test-Path (Split-Path $env:RUSTUP_HOME -Qualifier))) -or -not $env:RUSTUP_HOME) {
+  $env:RUSTUP_HOME = "$HOME\.rustup"
+}
+$winLibsMingw = "$HOME\AppData\Local\Microsoft\WinGet\Packages\BrechtSanders.WinLibs.POSIX.UCRT_Microsoft.Winget.Source_8wekyb3d8bbwe\mingw64\bin"
 $paths = @(
   "$root\00_Memoire\.venv\Scripts",
   "$HOME\bin",
   "$HOME\.local\bin",
+  "$HOME\.cargo\bin",
+  $winLibsMingw,
   "$HOME\AppData\Roaming\npm",
   "$HOME\AppData\Local\Microsoft\WinGet\Links",
   "$HOME\AppData\Local\Programs\supabase",
