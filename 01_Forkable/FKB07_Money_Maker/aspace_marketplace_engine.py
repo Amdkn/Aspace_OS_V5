@@ -23,6 +23,11 @@ _KERNEL_DIR = Path(__file__).resolve().parents[1] / "FKB00_Runtime" / "00_A0_Cor
 if str(_KERNEL_DIR) not in sys.path:
     sys.path.insert(0, str(_KERNEL_DIR))
 from aspace_foundation_kernel import record_shared_l0_event, record_shared_l0_receipt  # noqa: E402
+from aspace_discovery_catalog import (  # noqa: E402
+    MARKETPLACE_PLAYBOOKS,
+    get_marketplace_playbook,
+    query_marketplace_skills,
+)
 
 TierCode = Literal[
     "C0_ARCHITECT_INFRA",
@@ -222,6 +227,8 @@ class AspaceMarketplaceEngine:
 
 if __name__ == "__main__":
     engine = AspaceMarketplaceEngine()
+    pb_web = get_marketplace_playbook("01_Website_and_Funnels")
+    m117_query = query_marketplace_skills()
     sample_exec = engine.dispatch_order_to_rig_infinity(
         "MPLACE-C1-FDE-SPRINT", "Acme_Logistics_Corp"
     )
@@ -230,6 +237,9 @@ if __name__ == "__main__":
             {
                 "catalog_count": len(engine.catalog),
                 "tiers": list({o.tier for o in engine.catalog.values()}),
+                "m117_playbooks_count": len(MARKETPLACE_PLAYBOOKS),
+                "m117_productized_offers_count": m117_query["productized_offers_count"],
+                "m117_web_lighthouse_min": pb_web["thresholds"]["lighthouse_performance_min"],
                 "sample_order_execution": asdict(sample_exec),
             },
             indent=2,

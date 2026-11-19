@@ -25,6 +25,7 @@ _KERNEL_DIR = WORKSPACE_ROOT / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core"
 if str(_KERNEL_DIR) not in sys.path:
     sys.path.insert(0, str(_KERNEL_DIR))
 from aspace_foundation_kernel import record_shared_l0_event  # noqa: E402
+from aspace_discovery_catalog import INFERENCE_DISCOVERY_REGISTRY, qualify_inference_opportunity  # noqa: E402
 DB_PATH = WORKSPACE_ROOT / "00_Memoire" / "egm_missions.db"
 PORT = int(os.environ.get("ASPACE_GATEWAY_PORT", "31415"))
 
@@ -412,12 +413,22 @@ if __name__ == "__main__":
             sample_resp = temp_router.dispatch_chat_completion(
                 {"model": "aspace-a0-auto", "messages": [{"role": "user", "content": "Ping A0 EGM Gateway"}]}
             )
+            m118_qual = qualify_inference_opportunity(
+                {
+                    "platform": "apinex.com",
+                    "requires_credit_card": False,
+                    "direct_openai_or_anthropic_api": True,
+                    "estimated_ttl_days": 30,
+                }
+            )
             print(
                 json.dumps(
                     {
                         "seeded_missions": added,
                         "total_missions_in_db": total_missions,
                         "db_path": str(temp_ledger.db_path),
+                        "m118_opportunities": len(INFERENCE_DISCOVERY_REGISTRY["opportunities"]),
+                        "m118_qualified_decision": m118_qual["decision"],
                         "sample_response": sample_resp,
                     },
                     indent=2,

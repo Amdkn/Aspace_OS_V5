@@ -244,6 +244,7 @@ def test_real_deletion_29_modules_and_lazy_import() -> None:
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
         iso_root = Path(tmpdir) / "amputated_tree"
         for sub_copy in (
+            ".gitmodules",
             "AGENTS.md",
             "CLAUDE.md",
             "00_Memoire/AGENTS.md",
@@ -252,7 +253,12 @@ def test_real_deletion_29_modules_and_lazy_import() -> None:
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py",
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py",
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py",
+            "01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py",
+            "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_freecompute_router.py",
+            "01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py",
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py",
+            "01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py",
+            "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
         ):
             src_p = ROOT / sub_copy
             dst_p = iso_root / sub_copy
@@ -262,7 +268,7 @@ def test_real_deletion_29_modules_and_lazy_import() -> None:
             else:
                 shutil.copy2(src_p, dst_p)
 
-        # S'assurer qu'aucun des 20 répertoires sources FKB04/FKB02/M117/M118 ni aucun F8 n'existe dans iso_root
+        # S'assurer qu'aucun des 20 répertoires sources FKB04/FKB02/M117/M118 n'existe ni aucun F8 dans iso_root
         for rel in SOURCE_DIRS_TO_DELETE_FOR_TEST + absent_paths:
             target = iso_root / rel
             if target.exists():
@@ -277,10 +283,12 @@ def test_real_deletion_29_modules_and_lazy_import() -> None:
             "import aspace_fkb02_memory_organ as f02\n"
             "import aspace_discovery_catalog as cat\n"
             f"sha = {head_sha!r}\n"
-            "r04 = f04.run_fkb04_self_test(head_sha40=sha)\n"
+            "r04 = f04.run_fkb04_self_test(head_sha40=sha, repo_root=iso)\n"
             "r02 = f02.run_fkb02_self_test(repo_root=iso, head_sha40=sha)\n"
-            "rcat = cat.run_self_test(head_sha40=sha)\n"
-            "assert r04['modules_verified'] == 8 and r02['modules_verified'] == 9 and rcat['m117_videos'] == 34\n"
+            "rcat = cat.run_self_test(head_sha40=sha, repo_root=iso)\n"
+            "assert r04['modules_verified'] == 8 and r04['cdp_live_refs'] >= 2 and r04['desktop_live_windows'] >= 1\n"
+            "assert r02['modules_verified'] == 9 and r02['graphify_communities'] >= 1 and set(r02['graphify_languages']) >= {'python', 'rust', 'typescript'}\n"
+            "assert rcat['m117_videos'] == 34 and rcat['m117_playbooks'] == 6 and rcat['m117_productized_offers'] == 18\n"
             "print(json.dumps({'fkb04': r04, 'fkb02': r02, 'catalog': rcat}))\n"
         )
         iso_out = subprocess.check_output([sys.executable, "-c", runner_code], cwd=str(iso_root), text=True)
@@ -288,6 +296,15 @@ def test_real_deletion_29_modules_and_lazy_import() -> None:
         assert parsed["fkb04"]["modules_verified"] == 8
         assert parsed["fkb02"]["modules_verified"] == 9
         assert parsed["catalog"]["m118_opportunities"] == 5
+
+        # Vérifier aussi que les orchestrateurs K1..K5 câblés tournent directement dans iso_root amputé
+        for rel_script, extra_args in [
+            ("01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py", []),
+            ("01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py", ["--self-test"]),
+            ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
+            ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
+        ]:
+            subprocess.check_call([sys.executable, str(iso_root / rel_script), *extra_args], cwd=str(iso_root), stdout=subprocess.DEVNULL)
 
     # 4. Vérifier que les sous-processus historiques K1..K5 tournent aussi vers le bus L0
     journal_path = ROOT / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
@@ -487,7 +504,6 @@ def test_carte_and_registre_adr13_and_counts() -> None:
     for row in reg_rows:
         assert any(nk in row for nk in ("ÂME ·", "SYSTÈME NERVEUX ·", "CORPS ·")), f"Noyau manquant (ADR-13): {row}"
 
-    fusionne_count = sum(1 for r in reg_rows if "| **FUSIONNÉ** | ADR" in r or r.count("| **FUSIONNÉ** |") == 2)
     # Compte exact sur colonne 7 (`Statut Vérifié`)
     actual_fusionne = 0
     actual_partiel = 0

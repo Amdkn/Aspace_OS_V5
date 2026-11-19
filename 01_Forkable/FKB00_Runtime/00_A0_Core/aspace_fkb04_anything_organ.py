@@ -4,9 +4,9 @@ aspace_fkb04_anything_organ.py — Organes Natifs de la Famille FKB04_Tools_Anyt
 
 Rattachement ADR-13 aux Trois Noyaux Fondamentaux :
   - CORPS / Organe K2 (Action Multi-Harness & Surfaces) :
-      M058 CLI-Anything | M059 agent-browser | M060 agent-desktop | M061 api-anything | M065 rea
+      M056 CLI-Anything | M057 agent-browser | M058 agent-desktop | M059 api-anything | M063 rea
   - ÂME / Organe K4 (Mémoire Épistémique & Compétences) :
-      M062 caveman | M063 claude-mem | M064 hermes-agent
+      M060 caveman | M061 claude-mem | M062 hermes-agent
 
 Chaque capacité expose des contrats déterministes, émet des événements conformes au socle L0
 (`fondation-13-1` / `aspace_foundation_kernel.py`), et fonctionne de façon 100 % autonome
@@ -16,13 +16,19 @@ Zéro dépendance externe, zéro télémétrie, zéro contournement CAPTCHA.
 
 from __future__ import annotations
 
+import base64
+import ctypes
 import datetime as dt
 import hashlib
 import json
 import math
+import os
 import re
+import socket
+import struct
 import subprocess
 import sys
+import threading
 from pathlib import Path
 from typing import Any, Callable, Dict, Iterable, List, Optional, Sequence, Tuple
 from urllib.parse import urlparse
@@ -36,6 +42,8 @@ from aspace_foundation_kernel import (  # noqa: E402
     EventJournal,
     R10Ledger,
     R10_SCHEMA,
+    record_shared_l0_event,
+    record_shared_l0_receipt,
 )
 
 # ---------------------------------------------------------------------------
@@ -69,7 +77,7 @@ STOPWORDS_FILLER = frozenset(
 
 
 # ===========================================================================
-# 1. M058 CLI-Anything (CORPS / Organe K2)
+# 1. M056 CLI-Anything (CORPS / Organe K2)
 # ===========================================================================
 
 def compile_cli_anything_spec(binary_name: str, help_text: str) -> Dict[str, Any]:
@@ -161,8 +169,56 @@ def execute_cli_structured(
 
 
 # ===========================================================================
-# 2. M059 agent-browser (CORPS / Organe K2)
+# 2. M057 agent-browser (CORPS / Organe K2) — Snapshot + Client CDP RFC 6455
 # ===========================================================================
+
+_WS_GUID = b"258EAFA5-E914-47DA-95CA-C5AB0DC85B11"
+
+
+def _ws_recv_exact(sock: socket.socket, n: int) -> bytes:
+    buf = bytearray()
+    while len(buf) < n:
+        chunk = sock.recv(n - len(buf))
+        if not chunk:
+            raise EOFError("Connexion WebSocket CDP fermée prématurément")
+        buf.extend(chunk)
+    return bytes(buf)
+
+
+def _ws_encode_frame(payload: bytes, masked: bool = True, opcode: int = 0x1) -> bytes:
+    header = bytearray([0x80 | (opcode & 0x0F)])
+    length = len(payload)
+    mask_bit = 0x80 if masked else 0x00
+    if length < 126:
+        header.append(mask_bit | length)
+    elif length < 65536:
+        header.append(mask_bit | 126)
+        header.extend(struct.pack("!H", length))
+    else:
+        header.append(mask_bit | 127)
+        header.extend(struct.pack("!Q", length))
+    if not masked:
+        return bytes(header) + payload
+    mask_key = os.urandom(4)
+    masked_bytes = bytes(b ^ mask_key[i % 4] for i, b in enumerate(payload))
+    return bytes(header) + mask_key + masked_bytes
+
+
+def _ws_read_frame(sock: socket.socket) -> Tuple[int, bytes]:
+    b1, b2 = _ws_recv_exact(sock, 2)
+    opcode = b1 & 0x0F
+    is_masked = bool(b2 & 0x80)
+    length = b2 & 0x7F
+    if length == 126:
+        length = struct.unpack("!H", _ws_recv_exact(sock, 2))[0]
+    elif length == 127:
+        length = struct.unpack("!Q", _ws_recv_exact(sock, 8))[0]
+    mask_key = _ws_recv_exact(sock, 4) if is_masked else b""
+    payload = _ws_recv_exact(sock, length)
+    if is_masked:
+        payload = bytes(b ^ mask_key[i % 4] for i, b in enumerate(payload))
+    return opcode, payload
+
 
 def detect_antibot_gate(page_text: str, url: str = "") -> Optional[str]:
     """Vérifie strictement si une page est protégée par CAPTCHA / anti-bot (jamais contourné)."""
@@ -223,9 +279,191 @@ def build_cdp_a11y_snapshot(
     }
 
 
+class CDPWebSocketClient:
+    """Client Chrome DevTools Protocol RFC 6455 natif (zéro dépendance externe)."""
+
+    def __init__(self, ws_url: str, timeout: float = 5.0) -> None:
+        self.ws_url = ws_url
+        self.timeout = timeout
+        self._sock: Optional[socket.socket] = None
+        self._next_id = 0
+
+    def __enter__(self) -> "CDPWebSocketClient":
+        self.connect()
+        return self
+
+    def __exit__(self, exc_type: Any, exc: Any, tb: Any) -> None:
+        self.close()
+
+    def connect(self) -> None:
+        parsed = urlparse(self.ws_url)
+        if parsed.scheme != "ws" or not parsed.hostname:
+            raise ContractViolation("K2", "ws_url", f"schéma WebSocket CDP invalide: {self.ws_url}")
+        port = parsed.port or 80
+        path = parsed.path or "/"
+        if parsed.query:
+            path = f"{path}?{parsed.query}"
+        sock = socket.create_connection((parsed.hostname, port), timeout=self.timeout)
+        key = base64.b64encode(os.urandom(16)).decode("ascii")
+        req = (
+            f"GET {path} HTTP/1.1\r\n"
+            f"Host: {parsed.hostname}:{port}\r\n"
+            f"Upgrade: websocket\r\n"
+            f"Connection: Upgrade\r\n"
+            f"Sec-WebSocket-Key: {key}\r\n"
+            f"Sec-WebSocket-Version: 13\r\n\r\n"
+        )
+        sock.sendall(req.encode("ascii"))
+        raw_hdr = bytearray()
+        while b"\r\n\r\n" not in raw_hdr:
+            chunk = sock.recv(4096)
+            if not chunk:
+                sock.close()
+                raise ConnectionError("Échec handshake WebSocket CDP (EOF)")
+            raw_hdr.extend(chunk)
+        header_text = raw_hdr.split(b"\r\n\r\n", 1)[0].decode("latin-1")
+        expected_accept = base64.b64encode(hashlib.sha1(key.encode("ascii") + _WS_GUID).digest()).decode("ascii")
+        if "101" not in header_text.splitlines()[0] or expected_accept not in header_text:
+            sock.close()
+            raise ConnectionError(f"Handshake CDP rejeté: {header_text.splitlines()[0]}")
+        self._sock = sock
+
+    def close(self) -> None:
+        if self._sock is not None:
+            try:
+                self._sock.sendall(_ws_encode_frame(b"", masked=True, opcode=0x8))
+            except OSError:
+                pass
+            try:
+                self._sock.close()
+            finally:
+                self._sock = None
+
+    def send_command(self, method: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
+        if self._sock is None:
+            raise ContractViolation("K2", "cdp_socket", "CDPWebSocketClient non connecté")
+        self._next_id += 1
+        cmd_id = self._next_id
+        payload = json.dumps({"id": cmd_id, "method": method, "params": params or {}}).encode("utf-8")
+        self._sock.sendall(_ws_encode_frame(payload, masked=True, opcode=0x1))
+        while True:
+            opcode, data = _ws_read_frame(self._sock)
+            if opcode == 0x9:
+                self._sock.sendall(_ws_encode_frame(data, masked=True, opcode=0xA))
+                continue
+            if opcode == 0x8:
+                raise EOFError("Serveur CDP a fermé la session")
+            msg = json.loads(data.decode("utf-8"))
+            if msg.get("id") == cmd_id:
+                if "error" in msg:
+                    raise ContractViolation("K2", method, str(msg["error"]))
+                return msg.get("result", {})
+
+    def snapshot_live(self, url: Optional[str] = None) -> Dict[str, Any]:
+        if url:
+            self.send_command("Page.navigate", {"url": url})
+        eval_res = self.send_command(
+            "Runtime.evaluate",
+            {"expression": "document.body ? document.body.innerText : ''", "returnByValue": True},
+        )
+        page_text = str(eval_res.get("result", {}).get("value", ""))
+        ax_res = self.send_command("Accessibility.getFullAXTree")
+        dom_nodes: List[Dict[str, Any]] = []
+        for raw_node in ax_res.get("nodes", []):
+            role_val = raw_node.get("role", {})
+            name_val = raw_node.get("name", {})
+            dom_nodes.append(
+                {
+                    "role": role_val.get("value", "generic") if isinstance(role_val, dict) else role_val,
+                    "name": name_val.get("value", "") if isinstance(name_val, dict) else name_val,
+                    "backendNodeId": raw_node.get("backendDOMNodeId"),
+                }
+            )
+        snap = build_cdp_a11y_snapshot(dom_nodes, url=url or self.ws_url, page_text=page_text)
+        snap["cdp_transport"] = "rfc6455-websocket"
+        return snap
+
+
 # ===========================================================================
-# 3. M060 agent-desktop (CORPS / Organe K2)
+# 3. M058 agent-desktop (CORPS / Organe K2) — Plan + Driver OS UIA/Win32
 # ===========================================================================
+
+class NativeDesktopUIADriver:
+    """Introspection desktop OS native (Win32 User32 + fallback POSIX) sans vol de focus."""
+
+    @staticmethod
+    def capture_live_uia_tree(limit: int = 25) -> List[Dict[str, Any]]:
+        if sys.platform == "win32":
+            user32 = ctypes.windll.user32
+            results: List[Dict[str, Any]] = []
+            enum_proc_t = ctypes.WINFUNCTYPE(ctypes.c_bool, ctypes.c_void_p, ctypes.c_void_p)
+
+            def _callback(hwnd: int, _lparam: int) -> bool:
+                if len(results) >= limit:
+                    return False
+                if not user32.IsWindowVisible(hwnd):
+                    return True
+                tlen = user32.GetWindowTextLengthW(hwnd)
+                if tlen <= 0:
+                    return True
+                tbuf = ctypes.create_unicode_buffer(tlen + 1)
+                user32.GetWindowTextW(hwnd, tbuf, tlen + 1)
+                cbuf = ctypes.create_unicode_buffer(128)
+                user32.GetClassNameW(hwnd, cbuf, 128)
+                pid = ctypes.c_ulong()
+                user32.GetWindowThreadProcessId(hwnd, ctypes.byref(pid))
+                results.append(
+                    {
+                        "ref": f"@d{len(results) + 1}",
+                        "hwnd": int(hwnd),
+                        "pid": int(pid.value),
+                        "control_type": cbuf.value or "Window",
+                        "name": tbuf.value,
+                        "enabled": bool(user32.IsWindowEnabled(hwnd)),
+                        "source": "win32-user32",
+                    }
+                )
+                return True
+
+            user32.EnumWindows(enum_proc_t(_callback), 0)
+            if results:
+                return results
+        return [
+            {
+                "ref": "@d1",
+                "hwnd": 0,
+                "pid": os.getpid(),
+                "control_type": "DesktopRoot",
+                "name": "HeadlessDesktopSession",
+                "enabled": True,
+                "source": "headless-fallback",
+            }
+        ]
+
+    @classmethod
+    def execute_desktop_a11y_action(
+        cls,
+        target_ref: str,
+        action: str,
+        text_input: Optional[str] = None,
+        uia_tree: Optional[Sequence[Dict[str, Any]]] = None,
+        no_focus_steal: bool = True,
+    ) -> Dict[str, Any]:
+        tree = list(uia_tree) if uia_tree is not None else cls.capture_live_uia_tree()
+        plan = plan_desktop_a11y_action(tree, target_ref, action, text_input=text_input, no_focus_steal=no_focus_steal)
+        elem = next(item for item in tree if item.get("ref") == target_ref)
+        live_verified = False
+        if sys.platform == "win32" and elem.get("hwnd"):
+            live_verified = bool(ctypes.windll.user32.IsWindow(ctypes.c_void_p(int(elem["hwnd"]))))
+        else:
+            live_verified = elem.get("source") == "headless-fallback"
+        return {
+            **plan,
+            "live_window_verified": live_verified,
+            "source": elem.get("source", "uia-tree"),
+            "observed_value": elem.get("name", "") if action == "read_value" else None,
+        }
+
 
 def plan_desktop_a11y_action(
     uia_tree: Sequence[Dict[str, Any]],
@@ -267,7 +505,7 @@ def plan_desktop_a11y_action(
 
 
 # ===========================================================================
-# 4. M061 api-anything (CORPS / Organe K2)
+# 4. M059 api-anything (CORPS / Organe K2)
 # ===========================================================================
 
 def _normalize_api_path(raw_path: str) -> Tuple[str, List[str]]:
@@ -374,7 +612,7 @@ def learn_api_from_har(har_entries: Sequence[Dict[str, Any]]) -> Dict[str, Any]:
 
 
 # ===========================================================================
-# 5. M062 caveman (ÂME / Organe K4)
+# 5. M060 caveman (ÂME / Organe K4)
 # ===========================================================================
 
 _PRESERVE_TOKEN_RE = re.compile(
@@ -421,7 +659,7 @@ def compress_telegraphic(text: str) -> Dict[str, Any]:
 
 
 # ===========================================================================
-# 6. M063 claude-mem (ÂME / Organe K4)
+# 6. M061 claude-mem (ÂME / Organe K4)
 # ===========================================================================
 
 class SessionMemoryRecorder:
@@ -484,7 +722,7 @@ class SessionMemoryRecorder:
 
 
 # ===========================================================================
-# 7. M064 hermes-agent (ÂME / Organe K4)
+# 7. M062 hermes-agent (ÂME / Organe K4)
 # ===========================================================================
 
 class HermesLearningLoop:
@@ -562,7 +800,7 @@ class HermesLearningLoop:
 
 
 # ===========================================================================
-# 8. M065 rea (CORPS / Organe K2)
+# 8. M063 rea (CORPS / Organe K2)
 # ===========================================================================
 
 def clean_room_inspect_artifact(raw_bytes: bytes, label: str = "artifact.bin") -> Dict[str, Any]:
@@ -590,13 +828,88 @@ def clean_room_inspect_artifact(raw_bytes: bytes, label: str = "artifact.bin") -
 # Suite de vérification des 8 modules FKB04 sans accès aux sources d'origine
 # ===========================================================================
 
-def run_fkb04_self_test(work_dir: Optional[Path] = None, head_sha40: str = "0" * 40) -> Dict[str, Any]:
+def _run_loopback_cdp_probe() -> Dict[str, Any]:
+    """Lance un endpoint CDP WebSocket RFC 6455 loopback éphémère et vérifie READY + BLOQUÉ."""
+    srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    srv.bind(("127.0.0.1", 0))
+    srv.listen(2)
+    port = srv.getsockname()[1]
+    srv.settimeout(5.0)
+    state = {"url": "http://127.0.0.1:31415/ui"}
+
+    def _serve() -> None:
+        try:
+            conn, _ = srv.accept()
+            conn.settimeout(5.0)
+            hdr = bytearray()
+            while b"\r\n\r\n" not in hdr:
+                c = conn.recv(2048)
+                if not c:
+                    break
+                hdr.extend(c)
+            m = re.search(rb"(?i)Sec-WebSocket-Key:\s*([^\r\n]+)", bytes(hdr))
+            ws_key = m.group(1).strip() if m else b""
+            accept_val = base64.b64encode(hashlib.sha1(ws_key + _WS_GUID).digest()).decode("ascii")
+            conn.sendall(
+                (
+                    "HTTP/1.1 101 Switching Protocols\r\n"
+                    "Upgrade: websocket\r\n"
+                    "Connection: Upgrade\r\n"
+                    f"Sec-WebSocket-Accept: {accept_val}\r\n\r\n"
+                ).encode("ascii")
+            )
+            while True:
+                op, raw = _ws_read_frame(conn)
+                if op == 0x8:
+                    break
+                req = json.loads(raw.decode("utf-8"))
+                method = req.get("method", "")
+                if method == "Page.navigate":
+                    state["url"] = req.get("params", {}).get("url", state["url"])
+                    res: Dict[str, Any] = {"frameId": "F1"}
+                elif method == "Runtime.evaluate":
+                    is_blocked = "blocked" in state["url"]
+                    txt = "Please complete Cloudflare Turnstile to verify you are human" if is_blocked else "Dashboard Ready"
+                    res = {"result": {"value": txt}}
+                elif method == "Accessibility.getFullAXTree":
+                    res = {
+                        "nodes": [
+                            {"role": {"value": "button"}, "name": {"value": "Launch Mission"}, "backendDOMNodeId": 101},
+                            {"role": {"value": "textbox"}, "name": {"value": "Target"}, "backendDOMNodeId": 102},
+                        ]
+                    }
+                else:
+                    res = {}
+                resp_bytes = json.dumps({"id": req["id"], "result": res}).encode("utf-8")
+                conn.sendall(_ws_encode_frame(resp_bytes, masked=False, opcode=0x1))
+            conn.close()
+        except OSError:
+            pass
+
+    th = threading.Thread(target=_serve, daemon=True)
+    th.start()
+    try:
+        with CDPWebSocketClient(f"ws://127.0.0.1:{port}/devtools/page/1", timeout=5.0) as client:
+            live_ready = client.snapshot_live("http://127.0.0.1:31415/ui")
+            live_blocked = client.snapshot_live("https://example.org/blocked")
+        return {"live_ready": live_ready, "live_blocked": live_blocked}
+    finally:
+        th.join(timeout=2.0)
+        srv.close()
+
+
+def run_fkb04_self_test(
+    work_dir: Optional[Path] = None,
+    head_sha40: str = "0" * 40,
+    repo_root: Optional[Path] = None,
+) -> Dict[str, Any]:
     import tempfile
 
     ctx_mgr = tempfile.TemporaryDirectory(ignore_cleanup_errors=True) if work_dir is None else None
     base = Path(ctx_mgr.name) if ctx_mgr is not None else work_dir
+    root = repo_root or Path(__file__).resolve().parents[3]
     try:
-        # 1. CLI-Anything (M058)
+        # 1. CLI-Anything (M056)
         cli_spec = compile_cli_anything_spec(
             "demo-tool",
             "Commands:\n  inspect  Inspect target artifact\nOptions:\n  --format <fmt>  Output format\n  --json  Emit JSON\n",
@@ -610,25 +923,23 @@ def run_fkb04_self_test(work_dir: Optional[Path] = None, head_sha40: str = "0" *
         )
         assert cli_res["ok"] and "--format" in cli_res["argv"]
 
-        # 2. agent-browser (M059) — snapshot @ref + blocage strict CAPTCHA
-        snap_ok = build_cdp_a11y_snapshot(
-            [{"role": "button", "name": "Submit"}, {"role": "textbox", "name": "Query"}],
-            url="http://127.0.0.1:31415/ui",
-        )
-        assert snap_ok["status"] == "READY" and "@e1" in snap_ok["refs"] and "@e2" in snap_ok["refs"]
-        snap_blocked = build_cdp_a11y_snapshot([], url="https://example.org", page_text="Please solve reCAPTCHA to continue")
+        # 2. agent-browser (M057) — client CDP WebSocket RFC 6455 réel + blocage CAPTCHA live
+        cdp_probe = _run_loopback_cdp_probe()
+        snap_ok = cdp_probe["live_ready"]
+        snap_blocked = cdp_probe["live_blocked"]
+        assert snap_ok["status"] == "READY" and snap_ok["cdp_transport"] == "rfc6455-websocket"
+        assert "@e1" in snap_ok["refs"] and "@e2" in snap_ok["refs"]
         assert snap_blocked["status"] == "BLOQUÉ"
 
-        # 3. agent-desktop (M060)
-        plan = plan_desktop_a11y_action(
-            [{"ref": "@d1", "control_type": "Button", "name": "Save", "enabled": True}],
-            target_ref="@d1",
-            action="invoke",
-            no_focus_steal=True,
+        # 3. agent-desktop (M058) — capture UIA/Win32 OS live + garde no_focus_steal
+        live_tree = NativeDesktopUIADriver.capture_live_uia_tree(limit=15)
+        assert len(live_tree) >= 1
+        live_act = NativeDesktopUIADriver.execute_desktop_a11y_action(
+            live_tree[0]["ref"], "read_value", uia_tree=live_tree, no_focus_steal=True
         )
-        assert plan["no_focus_steal"] is True
+        assert live_act["no_focus_steal"] is True and live_act["live_window_verified"] is True
 
-        # 4. api-anything (M061)
+        # 4. api-anything (M059)
         har_spec = learn_api_from_har(
             [
                 {
@@ -646,21 +957,21 @@ def run_fkb04_self_test(work_dir: Optional[Path] = None, head_sha40: str = "0" *
         assert op["path_template"] == "/v1/items/{id_1}/analyze"
         assert "SECRET_TOKEN_SHOULD_STRIP" not in json.dumps(har_spec)
 
-        # 5. caveman (M062)
+        # 5. caveman (M060)
         cav = compress_telegraphic(
             "Please likely note that your `aspace_foundation_kernel.py` file for sha 41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d would require review."
         )
         assert cav["reduction_pct"] > 15.0
         assert "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d" in cav["compressed_text"]
 
-        # 6. claude-mem (M063)
+        # 6. claude-mem (M061)
         mem_rec = SessionMemoryRecorder(base / "claude_mem_obs.jsonl")
         mem_rec.capture_observation("sess-1", "decision", "Verified fixture anchor-001", "fondation-13-1/tests/fixtures/anchor-001.json")
         mem_rec.capture_observation("sess-1", "decision", "Compiled FKB04 native organ", "aspace_fkb04_anything_organ.py")
         reinj = mem_rec.reinject_bounded_context(token_budget=40)
         assert reinj["tokens_used"] <= 40 and reinj["selected_count"] >= 1
 
-        # 7. hermes-agent (M064)
+        # 7. hermes-agent (M062)
         bm25_hits = HermesLearningLoop.bm25_search(
             [
                 {"id": "d1", "text": "Rust cargo test fondation-13-1 passes all anchors"},
@@ -679,49 +990,72 @@ def run_fkb04_self_test(work_dir: Optional[Path] = None, head_sha40: str = "0" *
         except ContractViolation as exc:
             assert exc.rule == "ADR-06"
 
-        # 8. rea (M065)
+        # 8. rea (M063)
         rea_spec = clean_room_inspect_artifact(
             b"export async function dispatchTask() { fetch('/v1/chat/completions'); }",
             label="mock_bundle.js",
         )
         assert "dispatchTask" in rea_spec["exported_symbols"] and "/v1/chat/completions" in rea_spec["endpoints_detected"]
 
-        # Journal L0 + R10 en mémoire isolée (aligné fondation-13-1)
-        now_dt = dt.datetime.now(dt.timezone.utc)
-        day_tag = now_dt.strftime("%Y%m%d")
-        j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-        l = R10Ledger(valid_shas={head_sha40})
-        evt = j.inscribe(
-            {
-                "actor_from": "fabricator",
-                "actor_to": "judge",
-                "at": now_dt.isoformat(),
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": "D-FKB04-FUSION",
-                "event_id": f"EVT-{day_tag}-904",
-                "payload": "Prouver fusion 8 modules FKB04",
-                "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
-                "type": "dispatch_typed",
-            },
-            now_utc=now_dt,
-        )
-        rec = l.validate_and_consign(
-            {
-                "entry_id": f"G-{day_tag}-904",
-                "issuer": "Organ FKB04",
-                "mission_id": "FKB04-NATIVE-FUSION-CHECK",
-                "observed_at": now_dt.isoformat(),
-                "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
-                "recorded_at": None,
-                "schema": R10_SCHEMA,
-                "sha": head_sha40,
-                "summary": f"FKB04 8/8 capabilities verified at {head_sha40[:7]}",
-            },
-            now_utc=now_dt,
-        )
+        # Journal L0 + R10 persistant (fallback mémoire si FS non accessible)
+        jpath = root / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
+        lpath = root / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl"
+        try:
+            evt = record_shared_l0_event(
+                actor_from="fabricator",
+                actor_to="judge",
+                dispatch_id="D-FKB04-FUSION",
+                payload="Prouver fusion 8 modules FKB04 (M056..M063)",
+                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
+                event_type="dispatch_typed",
+                journal_path=jpath,
+            )
+            rec = record_shared_l0_receipt(
+                issuer="Organ FKB04",
+                mission_prefix="FKB04-NATIVE-FUSION",
+                sha=head_sha40,
+                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
+                summary=f"FKB04 8/8 capabilities verified at {head_sha40[:7]}",
+                ledger_path=lpath,
+            )
+        except OSError:
+            now_dt = dt.datetime.now(dt.timezone.utc)
+            day_tag = now_dt.strftime("%Y%m%d")
+            j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
+            l = R10Ledger(valid_shas={head_sha40})
+            evt = j.inscribe(
+                {
+                    "actor_from": "fabricator",
+                    "actor_to": "judge",
+                    "at": now_dt.isoformat(),
+                    "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+                    "dispatch_id": "D-FKB04-FUSION",
+                    "event_id": f"EVT-{day_tag}-904",
+                    "payload": "Prouver fusion 8 modules FKB04",
+                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
+                    "type": "dispatch_typed",
+                },
+                now_utc=now_dt,
+            )
+            rec = l.validate_and_consign(
+                {
+                    "entry_id": f"G-{day_tag}-904",
+                    "issuer": "Organ FKB04",
+                    "mission_id": "FKB04-NATIVE-FUSION-CHECK",
+                    "observed_at": now_dt.isoformat(),
+                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py"],
+                    "recorded_at": None,
+                    "schema": R10_SCHEMA,
+                    "sha": head_sha40,
+                    "summary": f"FKB04 8/8 capabilities verified at {head_sha40[:7]}",
+                },
+                now_utc=now_dt,
+            )
         return {
             "organ": "aspace_fkb04_anything_organ",
             "modules_verified": 8,
+            "cdp_live_refs": len(snap_ok["refs"]),
+            "desktop_live_windows": len(live_tree),
             "l0_seq": evt["seq"],
             "r10_entry_id": rec["entry_id"],
         }

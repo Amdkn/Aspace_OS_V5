@@ -32,6 +32,7 @@ from typing import Any, Callable, Dict, List, Optional, Tuple
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
 from aspace_foundation_kernel import record_shared_l0_event  # noqa: E402
+from aspace_fkb04_anything_organ import HermesLearningLoop, compress_telegraphic  # noqa: E402
 
 
 # =============================================================================
@@ -374,7 +375,17 @@ def run_a0_recursive_cycle_demo() -> Dict[str, Any]:
         best_dream, target_fork="Amdkn/RigInfinity"
     )
 
-    # 5. Emission L0 persistante conforme fondation-13-1 (EventJournal)
+    # 5. Câblage K4 (caveman + hermes-agent de aspace_fkb04_anything_organ) & émission L0 persistante
+    cav_summary = compress_telegraphic(
+        f"Verify that A0 cycle compiled {sample_trace.task_id} for harness holdout delta 0.035."
+    )
+    hermes_skill = HermesLearningLoop.compile_skill_from_trajectory(
+        "k1-k4-recursive-cycle",
+        "Verify K1 recursive harness with FKB04 Hermes gate",
+        ["Activate Cordis fiber", "Run strict manager holdout gate", "Emit L0 receipt"],
+        holdout_delta=0.035,
+    )
+
     l0_evt = record_shared_l0_event(
         actor_from="structurer",
         actor_to="verifier",
@@ -390,6 +401,8 @@ def run_a0_recursive_cycle_demo() -> Dict[str, Any]:
         "horizon1_refine_status": refine_msg,
         "horizon2_wikiskill_gate": {"accepted": accepted, **gate_stats},
         "horizon3_rrsi_worktree": rrsi_spec,
+        "k4_caveman_reduction_pct": cav_summary["reduction_pct"],
+        "k4_hermes_skill_promoted": hermes_skill["promoted"],
         "snapshots_count": len(harness.snapshots),
         "l0_dispatch_seq": l0_evt["seq"],
     }

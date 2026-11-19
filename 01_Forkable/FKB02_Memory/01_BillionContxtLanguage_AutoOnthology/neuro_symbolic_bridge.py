@@ -26,6 +26,7 @@ _KERNEL_DIR = WORKSPACE_ROOT / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core"
 if str(_KERNEL_DIR) not in sys.path:
     sys.path.insert(0, str(_KERNEL_DIR))
 from aspace_foundation_kernel import CitationEvidence, record_shared_l0_event, validate_citation  # noqa: E402
+from aspace_fkb02_memory_organ import ASTCodeGraphBuilder, AutoOntologyCompiler, HybridBrainIndex  # noqa: E402
 
 MEMORY_FILE_PATH = os.environ.get(
     "MEMORY_FILE_PATH",
@@ -217,6 +218,16 @@ def main() -> None:
     entities, relations = bridge.compile_ontology(chunk)
     print(f"[STRATE 1-2] CAS={chunk['cas_hash'][:16]} | {len(entities)} entités | {len(relations)} relations DAG")
     conditioning = bridge.generate_conditioning_context("trace_fable5_bridge")
+    onto_k4 = AutoOntologyCompiler()
+    onto_res = onto_k4.compile_triples("bridge_trace", [("ÂME", "orchestre", "K4"), ("K4", "valide", "M1-M8")])
+    brain_idx = HybridBrainIndex()
+    brain_idx.put_page("bridge_trace", sample_corpus, "neuro_symbolic_bridge.py:1", "2026-11-19")
+    code_graph = ASTCodeGraphBuilder().build_from_files([Path(__file__)])
+    communities = ASTCodeGraphBuilder.detect_communities(code_graph)
+    print(
+        f"[K4 ORGANES] onto_dag={onto_res['acyclic_dag']} | hits={len(brain_idx.search_hybrid('auto-ontology'))} "
+        f"| graphify_nodes={len(code_graph['nodes'])} | communities={communities['community_count']}"
+    )
     print(f"[STRATE 3] L0 seq={conditioning['l0_dispatch_seq']} | status={conditioning['conditioning_status']}")
 
 

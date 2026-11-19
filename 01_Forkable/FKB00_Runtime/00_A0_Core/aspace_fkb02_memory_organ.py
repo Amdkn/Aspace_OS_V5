@@ -3,16 +3,16 @@
 aspace_fkb02_memory_organ.py — Organe Natif de la Famille FKB02_Memory (ÂME / Organe K4).
 
 Unifie en code natif exécutable les principes, invariants et interfaces des 9 modules FKB02
-destinés à `FUSIONNÉ` (en plus de `M120 llm-wiki` déjà fusionné ; `servers` reste `RETENU` MCP Stdio) :
-  - M030 auto-ontology            (extraction dynamique DAG + détection de contradictions)
-  - M031 billion-context          (HierarchicalCASStore L0/L1/L2 SHA-256 + offload disque)
-  - M032 context-language-models  (build_clm_anchored_context Zero-Lost-in-the-Middle)
-  - M033 dox                      (validate_dox_contract hiérarchie AGENTS.md/CLAUDE.md)
-  - M034 gbrain                   (HybridBrainIndex BM25 + vecteurs + graphe avec citations M1-M8)
-  - M035 graphify                 (ASTCodeGraphBuilder + query/explain sur code Python réel)
-  - M036 infinite-brain-harness   (isolation stricte multi-cerveaux inter-tenants)
-  - M037 infinite-brain-os        (cerveau Markdown/YAML versionné Git + promotion canonique)
-  - M038 knowledge-catalog        (validate_okf_bundle OKF v0.2 : frontmatter YAML, index, log append-only)
+destinés à `FUSIONNÉ` (en plus de `M120 llm-wiki` déjà fusionné ; `servers` `M051` reste `RETENU` MCP Stdio) :
+  - M042 auto-ontology            (extraction dynamique DAG + détection de contradictions)
+  - M043 billion-context          (HierarchicalCASStore L0/L1/L2 SHA-256 + offload disque)
+  - M044 context-language-models  (build_clm_anchored_context Zero-Lost-in-the-Middle)
+  - M045 dox                      (validate_dox_contract hiérarchie AGENTS.md/CLAUDE.md)
+  - M046 gbrain                   (HybridBrainIndex BM25 + vecteurs + graphe avec citations M1-M8)
+  - M047 graphify                 (ASTCodeGraphBuilder multi-langages .py/.ts/.rs + communautés Leiden/modularity + explain)
+  - M048 infinite-brain-harness   (isolation stricte multi-cerveaux inter-tenants)
+  - M049 infinite-brain-os        (cerveau Markdown/YAML versionné Git + promotion canonique)
+  - M050 knowledge-catalog        (validate_okf_bundle OKF v0.2 : frontmatter YAML, index, log append-only)
 
 Rattachement ADR-13 : Noyau `ÂME` -> Organe `K4`.
 Zéro dépendance externe, zéro télémétrie.
@@ -41,6 +41,8 @@ from aspace_foundation_kernel import (  # noqa: E402
     EventJournal,
     R10Ledger,
     R10_SCHEMA,
+    record_shared_l0_event,
+    record_shared_l0_receipt,
     validate_citation,
 )
 
@@ -49,7 +51,7 @@ STOPWORDS = frozenset({"The", "This", "That", "Pour", "Avec", "Dans", "Sur", "Le
 
 
 # ===========================================================================
-# 1. M031 billion-context — Store CAS Hiérarchique SHA-256 (L0/L1/L2)
+# 1. M043 billion-context — Store CAS Hiérarchique SHA-256 (L0/L1/L2)
 # ===========================================================================
 
 class HierarchicalCASStore:
@@ -93,7 +95,7 @@ class HierarchicalCASStore:
 
 
 # ===========================================================================
-# 2. M030 auto-ontology — Extracteur DAG + Détecteur de Contradictions
+# 2. M042 auto-ontology — Extracteur DAG + Détecteur de Contradictions
 # ===========================================================================
 
 class AutoOntologyCompiler:
@@ -172,7 +174,7 @@ class AutoOntologyCompiler:
 
 
 # ===========================================================================
-# 3. M032 context-language-models — Conditionnement Ancré Zero-Lost-in-the-Middle
+# 3. M044 context-language-models — Conditionnement Ancré Zero-Lost-in-the-Middle
 # ===========================================================================
 
 def build_clm_anchored_context(
@@ -222,7 +224,7 @@ def build_clm_anchored_context(
 
 
 # ===========================================================================
-# 4. M033 dox — Validateur de Hiérarchie Contractuelle AGENTS.md / CLAUDE.md
+# 4. M045 dox — Validateur de Hiérarchie Contractuelle AGENTS.md / CLAUDE.md
 # ===========================================================================
 
 def validate_dox_contract(repo_root: Path) -> Dict[str, Any]:
@@ -255,7 +257,7 @@ def validate_dox_contract(repo_root: Path) -> Dict[str, Any]:
 
 
 # ===========================================================================
-# 5. M034 gbrain — Index Hybride (BM25 + Vecteur N-Gram + Graphe) + M1-M8
+# 5. M046 gbrain — Index Hybride (BM25 + Vecteur N-Gram + Graphe) + M1-M8
 # ===========================================================================
 
 class HybridBrainIndex:
@@ -321,39 +323,159 @@ class HybridBrainIndex:
 
 
 # ===========================================================================
-# 6. M035 graphify — Graphe AST Codebase Python (Query / Explain déterministe)
+# 6. M047 graphify — Graphe AST Multi-Langages (.py/.ts/.rs) & Communautés
 # ===========================================================================
 
 class ASTCodeGraphBuilder:
-    """Analyse des fichiers Python réels par `ast` pour construire graphe de dépendances et communautés."""
+    """Analyse des fichiers Python/TS/JS/Rust pour bâtir graphe de dépendances et communautés."""
+
+    _TS_EXPORT_RE = re.compile(
+        r"(?:^|\n)\s*(?:export\s+)?(?:async\s+)?(class|function|interface|type)\s+([A-Za-z_][A-Za-z0-9_]*)"
+        r"|(?:^|\n)\s*export\s+(?:const|let)\s+([A-Za-z_][A-Za-z0-9_]*)"
+    )
+    _TS_IMPORT_RE = re.compile(r"""import\s+[^;]*?\s+from\s+['"]([^'"]+)['"]""")
+    _RS_DEF_RE = re.compile(
+        r"(?:^|\n)\s*(?:pub(?:\([^)]*\))?\s+)?(?:async\s+)?(fn|struct|enum|trait|mod)\s+([A-Za-z_][A-Za-z0-9_]*)"
+    )
+    _RS_USE_RE = re.compile(r"(?:^|\n)\s*(?:pub\s+)?use\s+([A-Za-z0-9_:]+)")
+
+    @staticmethod
+    def _parse_python(p: Path, src: str, mod_name: str, nodes: Dict[str, Dict[str, Any]], edges: List[Dict[str, str]]) -> None:
+        tree = ast.parse(src, filename=str(p))
+        nodes[mod_name] = {"kind": "module", "lang": "python", "file": str(p), "lineno": 1}
+        for node in ast.walk(tree):
+            if isinstance(node, ast.ClassDef):
+                qname = f"{mod_name}.{node.name}"
+                nodes[qname] = {"kind": "class", "lang": "python", "file": str(p), "lineno": node.lineno}
+                edges.append({"from": mod_name, "to": qname, "kind": "defines"})
+            elif isinstance(node, (ast.FunctionDef, ast.AsyncFunctionDef)):
+                qname = f"{mod_name}.{node.name}"
+                nodes[qname] = {"kind": "function", "lang": "python", "file": str(p), "lineno": node.lineno}
+                edges.append({"from": mod_name, "to": qname, "kind": "defines"})
+            elif isinstance(node, ast.ImportFrom) and node.module:
+                edges.append({"from": mod_name, "to": node.module, "kind": "imports"})
+            elif isinstance(node, ast.Import):
+                for alias in node.names:
+                    edges.append({"from": mod_name, "to": alias.name, "kind": "imports"})
+
+    @classmethod
+    def _parse_ts_js(cls, p: Path, src: str, mod_name: str, nodes: Dict[str, Dict[str, Any]], edges: List[Dict[str, str]]) -> None:
+        lang = "typescript" if p.suffix in {".ts", ".tsx"} else "javascript"
+        nodes[mod_name] = {"kind": "module", "lang": lang, "file": str(p), "lineno": 1}
+        for m in cls._TS_EXPORT_RE.finditer(src):
+            kind = m.group(1) or "const"
+            name = m.group(2) or m.group(3)
+            if not name:
+                continue
+            lineno = src.count("\n", 0, m.start()) + 1
+            qname = f"{mod_name}.{name}"
+            nodes[qname] = {"kind": kind, "lang": lang, "file": str(p), "lineno": lineno}
+            edges.append({"from": mod_name, "to": qname, "kind": "defines"})
+        for m in cls._TS_IMPORT_RE.finditer(src):
+            edges.append({"from": mod_name, "to": m.group(1), "kind": "imports"})
+
+    @classmethod
+    def _parse_rust(cls, p: Path, src: str, mod_name: str, nodes: Dict[str, Dict[str, Any]], edges: List[Dict[str, str]]) -> None:
+        nodes[mod_name] = {"kind": "module", "lang": "rust", "file": str(p), "lineno": 1}
+        for m in cls._RS_DEF_RE.finditer(src):
+            kind, name = m.group(1), m.group(2)
+            lineno = src.count("\n", 0, m.start()) + 1
+            qname = f"{mod_name}::{name}"
+            nodes[qname] = {"kind": kind, "lang": "rust", "file": str(p), "lineno": lineno}
+            edges.append({"from": mod_name, "to": qname, "kind": "defines"})
+        for m in cls._RS_USE_RE.finditer(src):
+            edges.append({"from": mod_name, "to": m.group(1), "kind": "imports"})
 
     def build_from_files(self, paths: Sequence[Path]) -> Dict[str, Any]:
         nodes: Dict[str, Dict[str, Any]] = {}
         edges: List[Dict[str, str]] = []
+        langs: Set[str] = set()
         for p in paths:
-            if not p.exists() or p.suffix != ".py":
+            if not p.exists() or not p.is_file():
                 continue
+            suf = p.suffix.lower()
             src = p.read_text(encoding="utf-8", errors="ignore")
-            tree = ast.parse(src, filename=str(p))
             mod_name = p.stem
-            nodes[mod_name] = {"kind": "module", "file": str(p), "lineno": 1}
-            for node in ast.walk(tree):
-                if isinstance(node, ast.ClassDef):
-                    qname = f"{mod_name}.{node.name}"
-                    nodes[qname] = {"kind": "class", "file": str(p), "lineno": node.lineno}
-                    edges.append({"from": mod_name, "to": qname, "kind": "defines"})
-                elif isinstance(node, ast.FunctionDef):
-                    qname = f"{mod_name}.{node.name}"
-                    nodes[qname] = {"kind": "function", "file": str(p), "lineno": node.lineno}
-                    edges.append({"from": mod_name, "to": qname, "kind": "defines"})
-                elif isinstance(node, ast.ImportFrom) and node.module:
-                    edges.append({"from": mod_name, "to": node.module, "kind": "imports"})
+            if suf == ".py":
+                self._parse_python(p, src, mod_name, nodes, edges)
+                langs.add("python")
+            elif suf in {".ts", ".tsx", ".js", ".mjs", ".cjs"}:
+                self._parse_ts_js(p, src, mod_name, nodes, edges)
+                langs.add("typescript" if suf in {".ts", ".tsx"} else "javascript")
+            elif suf == ".rs":
+                self._parse_rust(p, src, mod_name, nodes, edges)
+                langs.add("rust")
         return {
             "schema": "aspace.graphify.ast.v1",
             "kernel": "ÂME",
             "organ": "K4",
+            "languages": sorted(langs),
             "nodes": nodes,
             "edges": edges,
+        }
+
+    @staticmethod
+    def detect_communities(graph: Dict[str, Any], max_iter: int = 12) -> Dict[str, Any]:
+        """Détection déterministe de communautés (label propagation + modularité Newman-Girvan Q)."""
+        adj: Dict[str, Dict[str, float]] = {nid: {} for nid in graph.get("nodes", {})}
+        total_weight = 0.0
+        for edge in graph.get("edges", []):
+            u, v = edge["from"], edge["to"]
+            if u == v:
+                continue
+            adj.setdefault(u, {})
+            adj.setdefault(v, {})
+            adj[u][v] = adj[u].get(v, 0.0) + 1.0
+            adj[v][u] = adj[v].get(u, 0.0) + 1.0
+            total_weight += 1.0
+
+        ordered = sorted(adj.keys())
+        labels: Dict[str, str] = {nid: nid for nid in ordered}
+        for _ in range(max_iter):
+            changed = False
+            for nid in ordered:
+                nbrs = adj[nid]
+                if not nbrs:
+                    continue
+                scores: Dict[str, float] = {}
+                for nb, w in nbrs.items():
+                    lbl = labels[nb]
+                    scores[lbl] = scores.get(lbl, 0.0) + w
+                best_score = max(scores.values())
+                best_lbl = min(lbl for lbl, sc in scores.items() if sc == best_score)
+                if best_lbl != labels[nid]:
+                    labels[nid] = best_lbl
+                    changed = True
+            if not changed:
+                break
+
+        two_m = 2.0 * total_weight
+        modularity = 0.0
+        if two_m > 0.0:
+            deg = {nid: sum(adj[nid].values()) for nid in ordered}
+            by_cluster_nodes: Dict[str, List[str]] = {}
+            for nid in ordered:
+                by_cluster_nodes.setdefault(labels[nid], []).append(nid)
+            for members in by_cluster_nodes.values():
+                mset = set(members)
+                internal_twice = sum(
+                    w for u in members for v, w in adj[u].items() if v in mset
+                )
+                sum_deg = sum(deg[u] for u in members)
+                modularity += (internal_twice / two_m) - (sum_deg / two_m) ** 2
+
+        clusters_map: Dict[str, List[str]] = {}
+        for nid in ordered:
+            clusters_map.setdefault(labels[nid], []).append(nid)
+        clusters = [
+            {"cluster_id": idx, "size": len(mems), "members": mems}
+            for idx, mems in enumerate(sorted(clusters_map.values(), key=lambda m: (-len(m), m[0])), 1)
+        ]
+        return {
+            "schema": "aspace.graphify.communities.v1",
+            "community_count": len(clusters),
+            "modularity_q": round(modularity, 4),
+            "communities": clusters,
         }
 
     @staticmethod
@@ -369,7 +491,7 @@ class ASTCodeGraphBuilder:
 
 
 # ===========================================================================
-# 7. M036 infinite-brain-harness & M037 infinite-brain-os — Multi-Cerveaux Isolés
+# 7. M048 infinite-brain-harness & M049 infinite-brain-os — Multi-Cerveaux Isolés
 # ===========================================================================
 
 class MultiBrainNamespaceManager:
@@ -415,7 +537,7 @@ class MultiBrainNamespaceManager:
 
 
 # ===========================================================================
-# 8. M038 knowledge-catalog — Validateur OKF v0.2
+# 8. M050 knowledge-catalog — Validateur OKF v0.2
 # ===========================================================================
 
 def validate_okf_bundle(bundle_dir: Path) -> Dict[str, Any]:
@@ -462,20 +584,20 @@ def run_fkb02_self_test(repo_root: Optional[Path] = None, head_sha40: str = "0" 
     with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
         tdir = Path(tmpdir)
 
-        # 1. billion-context (M031)
+        # 1. billion-context (M043)
         cas = HierarchicalCASStore(tdir / "cas")
         cas_rec = cas.ingest_document("doc-1", "Aspace Foundation unifies kernels via Rust contracts." * 10, chunk_chars=80)
         first_sha = cas_rec["l0_refs"][0]["sha256"]
         assert "Aspace Foundation" in cas.retrieve_l0_slice(first_sha)
 
-        # 2. auto-ontology (M030) — DAG valide + détection contradiction formelle
+        # 2. auto-ontology (M042) — DAG valide + détection contradiction formelle
         onto = AutoOntologyCompiler()
         r1 = onto.compile_triples("s1", [("ÂME", "rattache", "K1"), ("K1", "valide", "R10")])
         assert r1["acyclic_dag"] and not r1["contradictions"]
         r2 = onto.compile_triples("s2", [("K1", "valide", "SessionOnly")])
         assert len(r2["contradictions"]) == 1 and r2["contradictions"][0]["epistemic_status"] == "contredit"
 
-        # 3. context-language-models (M032)
+        # 3. context-language-models (M044)
         clm = build_clm_anchored_context(
             "K1 R10",
             [{"text": "Validation deterministe R10 et EventJournal."}],
@@ -484,11 +606,11 @@ def run_fkb02_self_test(repo_root: Optional[Path] = None, head_sha40: str = "0" 
         )
         assert clm["zero_lost_in_middle"] and "[ANCRE]" in clm["context"] and "[INVARIANT-RAPPEL]" in clm["context"]
 
-        # 4. dox (M033)
+        # 4. dox (M045)
         dox_res = validate_dox_contract(root)
         assert dox_res["valid"] and dox_res["core_agents_md_count"] >= 2
 
-        # 5. gbrain (M034) + garde épistémique M1-M8
+        # 5. gbrain (M046) + garde épistémique M1-M8
         gb = HybridBrainIndex()
         gb.put_page("p1", "RigInfinity implements pure data hibernation and PTY daemon.", "RigInfinity/Cargo.toml:1", "2026-11-19", links=["p2"])
         gb.put_page("p2", "fondation-13-1 checks M1-M8 citations deterministically.", "fondation-13-1/src/memory.rs:1", "2026-11-19")
@@ -496,7 +618,7 @@ def run_fkb02_self_test(repo_root: Optional[Path] = None, head_sha40: str = "0" 
         assert hits and hits[0]["page_id"] == "p1"
         cit_md = """**Fonction :** memorizer
 **Date de la citation :** `2026-11-19`
-**Fait demandé :** Test M034
+**Fait demandé :** Test M046
 **Mécanisme :** recall-fact M1-M8
 
 ## Citation
@@ -523,13 +645,20 @@ La fonction n'a pas tranché ni consigné.
         )
         assert v_cit["status"] == "vérifié"
 
-        # 6. graphify (M035)
+        # 6. graphify (M047) — AST multi-langages (.py/.rs/.ts) + détection de communautés
         ast_builder = ASTCodeGraphBuilder()
-        code_g = ast_builder.build_from_files([Path(__file__), _CORE_DIR / "aspace_foundation_kernel.py"])
+        rs_probe = tdir / "sample_probe.rs"
+        rs_probe.write_text("use std::collections::BTreeMap;\npub struct NativeKernel;\npub fn verify_r10() -> bool { true }\n", encoding="utf-8")
+        ts_probe = tdir / "sample_probe.ts"
+        ts_probe.write_text("import { EventJournal } from './kernel';\nexport interface FiberSpec { id: string }\nexport function dispatchFiber() { return true; }\n", encoding="utf-8")
+        code_g = ast_builder.build_from_files([Path(__file__), _CORE_DIR / "aspace_foundation_kernel.py", rs_probe, ts_probe])
         exp = ast_builder.explain_symbol(code_g, "EventJournal")
+        comm = ast_builder.detect_communities(code_g)
         assert exp["edges_count"] >= 1
+        assert set(code_g["languages"]) >= {"python", "rust", "typescript"}
+        assert comm["community_count"] >= 1 and "modularity_q" in comm
 
-        # 7 & 8. infinite-brain-harness (M036) & infinite-brain-os (M037)
+        # 7 & 8. infinite-brain-harness (M048) & infinite-brain-os (M049)
         mgr = MultiBrainNamespaceManager(tdir / "brains")
         mgr.mount_brain("personal-a0", tier="individual")
         mgr.mount_brain("b2b-client-alpha", tier="b2b-client")
@@ -538,46 +667,69 @@ La fonction n'a pas tranché ni consigné.
         assert len(mgr.query_brain("personal-a0", "Personal")) == 1
         assert len(mgr.query_brain("b2b-client-alpha", "Personal")) == 0  # isolation stricte inter-tenant
 
-        # 9. knowledge-catalog (M038)
+        # 9. knowledge-catalog (M050)
         okf_res = validate_okf_bundle(root / "00_Memoire" / "bundle")
         assert okf_res["valid"] and okf_res["concepts_checked"] >= 15
 
-        # Émission L0
-        now_dt = dt.datetime.now(dt.timezone.utc)
-        day_tag = now_dt.strftime("%Y%m%d")
-        j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-        l = R10Ledger(valid_shas={head_sha40})
-        evt = j.inscribe(
-            {
-                "actor_from": "memorizer",
-                "actor_to": "judge",
-                "at": now_dt.isoformat(),
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": "D-FKB02-FUSION",
-                "event_id": f"EVT-{day_tag}-902",
-                "payload": "Prouver fusion 9 modules FKB02",
-                "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-                "type": "fact_recalled",
-            },
-            now_utc=now_dt,
-        )
-        rec = l.validate_and_consign(
-            {
-                "entry_id": f"G-{day_tag}-902",
-                "issuer": "Organ FKB02",
-                "mission_id": "FKB02-NATIVE-FUSION-CHECK",
-                "observed_at": now_dt.isoformat(),
-                "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-                "recorded_at": None,
-                "schema": R10_SCHEMA,
-                "sha": head_sha40,
-                "summary": f"FKB02 9/9 capabilities verified at {head_sha40[:7]}",
-            },
-            now_utc=now_dt,
-        )
+        # Émission sur bus L0 persistant (fallback mémoire si système de fichiers en lecture seule)
+        jpath = root / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
+        lpath = root / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl"
+        try:
+            evt = record_shared_l0_event(
+                actor_from="memorizer",
+                actor_to="judge",
+                dispatch_id="D-FKB02-FUSION",
+                payload="Prouver fusion 9 modules FKB02 (M042..M050)",
+                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
+                event_type="fact_recalled",
+                journal_path=jpath,
+            )
+            rec = record_shared_l0_receipt(
+                issuer="Organ FKB02",
+                mission_prefix="FKB02-NATIVE-FUSION",
+                sha=head_sha40,
+                proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
+                summary=f"FKB02 9/9 capabilities verified at {head_sha40[:7]}",
+                ledger_path=lpath,
+            )
+        except OSError:
+            now_dt = dt.datetime.now(dt.timezone.utc)
+            day_tag = now_dt.strftime("%Y%m%d")
+            j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
+            l = R10Ledger(valid_shas={head_sha40})
+            evt = j.inscribe(
+                {
+                    "actor_from": "memorizer",
+                    "actor_to": "judge",
+                    "at": now_dt.isoformat(),
+                    "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+                    "dispatch_id": "D-FKB02-FUSION",
+                    "event_id": f"EVT-{day_tag}-902",
+                    "payload": "Prouver fusion 9 modules FKB02",
+                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
+                    "type": "fact_recalled",
+                },
+                now_utc=now_dt,
+            )
+            rec = l.validate_and_consign(
+                {
+                    "entry_id": f"G-{day_tag}-902",
+                    "issuer": "Organ FKB02",
+                    "mission_id": "FKB02-NATIVE-FUSION-CHECK",
+                    "observed_at": now_dt.isoformat(),
+                    "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
+                    "recorded_at": None,
+                    "schema": R10_SCHEMA,
+                    "sha": head_sha40,
+                    "summary": f"FKB02 9/9 capabilities verified at {head_sha40[:7]}",
+                },
+                now_utc=now_dt,
+            )
         return {
             "organ": "aspace_fkb02_memory_organ",
             "modules_verified": 9,
+            "graphify_languages": code_g["languages"],
+            "graphify_communities": comm["community_count"],
             "okf_concepts": okf_res["concepts_checked"],
             "l0_seq": evt["seq"],
             "r10_entry_id": rec["entry_id"],
