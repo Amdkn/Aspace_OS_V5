@@ -10,6 +10,7 @@ import json
 import os
 import sqlite3
 import subprocess
+import sys
 import threading
 import time
 import urllib.request
@@ -20,6 +21,10 @@ from pathlib import Path
 from typing import Any
 
 WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
+_KERNEL_DIR = WORKSPACE_ROOT / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core"
+if str(_KERNEL_DIR) not in sys.path:
+    sys.path.insert(0, str(_KERNEL_DIR))
+from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
 DB_PATH = WORKSPACE_ROOT / "00_Memoire" / "egm_missions.db"
 PORT = int(os.environ.get("ASPACE_GATEWAY_PORT", "31415"))
 
@@ -252,6 +257,23 @@ class GoldfishInferenceRouter:
                 self.ledger.record_outcome(pid, False, latency)
 
         last_user = next((m.get("content", "") for m in reversed(messages) if m.get("role") == "user"), "")
+        now_dt = __import__("datetime").datetime.now(__import__("datetime").timezone.utc)
+        day_tag = now_dt.strftime("%Y%m%d")
+        l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
+        l0_evt = l0_journal.inscribe(
+            {
+                "actor_from": "router",
+                "actor_to": "executor",
+                "at": now_dt.isoformat(),
+                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+                "dispatch_id": f"D-K3-{int(time.time())}",
+                "event_id": f"EVT-{day_tag}-301",
+                "payload": f"Router inference modele {model_requested}",
+                "proof": ["01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py"],
+                "type": "dispatch_typed",
+            },
+            now_utc=now_dt,
+        )
         return {
             "id": f"chatcmpl-egm-{int(time.time())}",
             "object": "chat.completion",
@@ -260,6 +282,7 @@ class GoldfishInferenceRouter:
             "aspace_routing": {
                 "provider": "a0_egm_autonomous_fallback",
                 "status": "READY_FOR_SUBMODULE_DAEMONS",
+                "l0_dispatch_seq": l0_evt["seq"],
             },
             "choices": [
                 {

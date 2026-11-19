@@ -53,3 +53,10 @@ okf_version: "0.2"
 - [adaptation-cordis-aspace-roadmap-forks.md](concepts/adaptation-cordis-aspace-roadmap-forks.md) — Adaptation de Cordis à A'Space + roadmap de l'ordre d'adaptation des forks (Cordis d'abord).
 - [ricks-verse.md](concepts/ricks-verse.md) — Le Rick's Verse : Rick (S1) intègre ses 3 Doctors (13e Kernel, 11e Life, 12e Buzz), chacun avec ses Compagnons dans son Tardis ; Fondation 13 → 1, chaîne d'artefacts Mission → PRD/ADR → TDD → R10, registres LD08 Georgiou.
 - [fondation-13-1.md](concepts/fondation-13-1.md) — Fondation 13 → 1 (D-N055) : unifier les 13 sessions en 1 agent — un lead avec un juge interne ; inventaire F1-0 (2 252 entrées, registre 776 lignes, ledger 212 reçus), mapping des 13 fonctions, réponse à « qui juge le juge », rollback prouvé.
+- [FUSION-ENONCE.md](fusion/FUSION-ENONCE.md) — ÉNONCÉ immuable gelé (sha256 `41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d`) de la Fusion des Forkable en Fondation.
+- [CARTE-DES-PRINCIPES.md](fusion/CARTE-DES-PRINCIPES.md) — Mesure zéro réconciliée et vecteurs de principe des 120 modules (`M001..M120`) + 8 doublons `.gitmodules` (`D01..D08`).
+- [ADR-FUSION.md](fusion/ADR-FUSION.md) — 12 arbitrages d'architecture (`adr/ADR-01.md` à `ADR-12.md`) incluant réfutation de l'hypothèse « 3 noyaux FKB00 + FKB01..08 sans fusion » → 5 Noyaux `K1..K5`.
+- [DDD-CONTRATS-COMMUNS.md](fusion/DDD-CONTRATS-COMMUNS.md) — Contrats L0 communs (`EventJournal` C1, `R10Receipt` C2, `EpistemicFact` C3, `FiberContract` C4, `DeletionProof` C5).
+- [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 en 5 Noyaux (`K1..K5`).
+- [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2 et interfaces natives (`fondation-13-1`, `RigInfinity`, `aspace-fiber-host`, `aspace_foundation_kernel.py`).
+- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut vérifié de chaque module (`FUSIONNÉ` / `PARTIEL` / `RETENU` / `ÉCARTÉ`) et contrôle §5.5 (< 1/3).

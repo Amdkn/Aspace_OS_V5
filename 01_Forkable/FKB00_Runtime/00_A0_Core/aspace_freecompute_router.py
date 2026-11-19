@@ -29,6 +29,9 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
 
 
 @dataclass
@@ -139,16 +142,7 @@ PROVIDERS: list[ComputeProvider] = [
         priority=5,
         endpoint_or_target="cloudshell:antigravity-a0",
     ),
-    ComputeProvider(
-        id="github-actions-freevps",
-        category="ephemeral_vm",
-        free_quota_desc="Runners publics gratuits + 2 000 min/mois privé (Amdkn/FreeVPS)",
-        monthly_free_units="2,000 minutes/month",
-        max_duration_sec=900,
-        auto_stop_cmd="cancel-workflow-after-15m",
-        priority=5,
-        endpoint_or_target="01_Forkable/FKB01_Inference/03_Inference_FreeCloud/FreeVPS",
-    ),
+    # FreeVPS écarté par ADR-08 (risque CGU GitHub Actions / non durable)
     ComputeProvider(
         id="github-codespaces-guarded",
         category="ephemeral_vm",
@@ -253,14 +247,32 @@ def select_compute(task_type: str, estimated_seconds: int = 30) -> dict:
 
     candidates.sort(key=lambda x: x.priority)
     chosen = candidates[0] if candidates else PROVIDERS[0]
+    now_dt = datetime.now(timezone.utc)
+    day_tag = now_dt.strftime("%Y%m%d")
+    l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
+    l0_evt = l0_journal.inscribe(
+        {
+            "actor_from": "router",
+            "actor_to": "executor",
+            "at": now_dt.isoformat(),
+            "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+            "dispatch_id": f"D-K2-{chosen.id}",
+            "event_id": f"EVT-{day_tag}-201",
+            "payload": f"Router execution vers {chosen.id}",
+            "proof": [chosen.endpoint_or_target],
+            "type": "dispatch_typed",
+        },
+        now_utc=now_dt,
+    )
 
     return {
-        "timestamp_utc": datetime.now(timezone.utc).isoformat(),
+        "timestamp_utc": now_dt.isoformat(),
         "task_type": task_type,
         "estimated_seconds": estimated_seconds,
         "selected_provider": asdict(chosen),
         "total_cost_usd": 0.00,
         "atomic_teardown_contract": chosen.auto_stop_cmd,
+        "l0_dispatch_seq": l0_evt["seq"],
     }
 
 

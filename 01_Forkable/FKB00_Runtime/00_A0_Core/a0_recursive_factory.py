@@ -23,10 +23,15 @@ from __future__ import annotations
 import hashlib
 import json
 import math
+import sys
 import time
 from dataclasses import dataclass, field, asdict
 from pathlib import Path
 from typing import Any, Callable, Dict, List, Optional, Tuple
+
+if str(Path(__file__).resolve().parent) not in sys.path:
+    sys.path.insert(0, str(Path(__file__).resolve().parent))
+from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
 
 
 # =============================================================================
@@ -369,6 +374,26 @@ def run_a0_recursive_cycle_demo() -> Dict[str, Any]:
         best_dream, target_fork="Amdkn/RigInfinity"
     )
 
+    # 5. Emission L0 conforme fondation-13-1 (EventJournal + R10Receipt)
+    from datetime import datetime, timezone
+    now_dt = datetime.now(timezone.utc)
+    day_tag = now_dt.strftime("%Y%m%d")
+    l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
+    l0_evt = l0_journal.inscribe(
+        {
+            "actor_from": "structurer",
+            "actor_to": "verifier",
+            "at": now_dt.isoformat(),
+            "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+            "dispatch_id": "D-K1-CYCLE-001",
+            "event_id": f"EVT-{day_tag}-101",
+            "payload": "Executer cycle K1 gouvernance recursive",
+            "proof": ["01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py"],
+            "type": "dispatch_typed",
+        },
+        now_utc=now_dt,
+    )
+
     return {
         "cordis_fiber_state": fiber.state,
         "horizon1_rlm_child": child,
@@ -376,6 +401,7 @@ def run_a0_recursive_cycle_demo() -> Dict[str, Any]:
         "horizon2_wikiskill_gate": {"accepted": accepted, **gate_stats},
         "horizon3_rrsi_worktree": rrsi_spec,
         "snapshots_count": len(harness.snapshots),
+        "l0_dispatch_seq": l0_evt["seq"],
     }
 
 

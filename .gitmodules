@@ -37,31 +37,6 @@
 	path = 01_Forkable/FKB01_Inference/03_Inference_FreeCloud/freebuff
 	url = https://github.com/Amdkn/freebuff.git
 
-[submodule "01_Forkable/FKB02_Video_SaaS/argo"]
-	path = 01_Forkable/FKB06_Video_SaaS/argo
-	url = https://github.com/Amdkn/argo.git
-[submodule "01_Forkable/FKB02_Video_SaaS/earshot"]
-	path = 01_Forkable/FKB06_Video_SaaS/earshot
-	url = https://github.com/Amdkn/earshot.git
-[submodule "01_Forkable/FKB02_Video_SaaS/explainroo"]
-	path = 01_Forkable/FKB06_Video_SaaS/explainroo
-	url = https://github.com/Amdkn/explainroo.git
-[submodule "01_Forkable/FKB02_Video_SaaS/huashu-motion"]
-	path = 01_Forkable/FKB06_Video_SaaS/huashu-motion
-	url = https://github.com/Amdkn/huashu-motion.git
-[submodule "01_Forkable/FKB02_Video_SaaS/reanimate"]
-	path = 01_Forkable/FKB06_Video_SaaS/reanimate
-	url = https://github.com/Amdkn/reanimate.git
-[submodule "01_Forkable/FKB02_Video_SaaS/rossark-motion-skill"]
-	path = 01_Forkable/FKB06_Video_SaaS/rossark-motion-skill
-	url = https://github.com/Amdkn/rossark-motion-skill.git
-[submodule "01_Forkable/FKB02_Video_SaaS/take-one"]
-	path = 01_Forkable/FKB06_Video_SaaS/take-one
-	url = https://github.com/Amdkn/take-one.git
-[submodule "01_Forkable/FKB02_Video_SaaS/video-director"]
-	path = 01_Forkable/FKB06_Video_SaaS/video-director
-	url = https://github.com/Amdkn/video-director.git
-
 [submodule "01_Forkable/FKB03_3DWorlds/cubefarm"]
 	path = 01_Forkable/FKB03_3DWorlds/cubefarm
 	url = https://github.com/Amdkn/cubefarm.git
@@ -241,7 +216,6 @@
 [submodule "01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex"]
 	path = 01_Forkable/FKB00_Runtime/04_ADE_OpenRig/codex
 	url = https://github.com/Amdkn/codex.git
-
 
 [submodule "01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill"]
 	path = 01_Forkable/FKB00_Runtime/05_Recursive_RSI/wikiskill
