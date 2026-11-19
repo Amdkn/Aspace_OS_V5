@@ -38,7 +38,7 @@ amends: "ADR-14"
 
 | Noyau Fondamental (`ADR-15`) | Incarnation | Organes Rattachés | Modules | Statut Fusionné |
 |---|---|---|---|---|
-| **`ÂME`** | `Automaton` | `K1` (11) + `K4` (18) | **29** | `1` (`M120 llm-wiki`) + `2` différentiels durcis (`M044`, `M050`) |
-| **`SYSTÈME NERVEUX`** | `Infinity` | Bus L0 (7) + `K3` (15) + `K3-ML` (7) | **29** | `3` F8 (`infinity`, `herdr-core` -> CORPS, etc. · total `9` F8 Rust) + `M118` |
-| **`CORPS`** | `OpenRig` | `K2` (26) + `K5 · Métabolisme` (36) | **62** | `6` F8 + `M056` + `M095` (`video-director`) + `M117` |
-| **Total** | — | **Tous les organes** | **120** | **16 `FUSIONNÉ`** (tous couverts par preuve Rust ou parité/sabotage stricts) |
+| **`ÂME`** | `Automaton` | `K1` (11) + `K4` (18) | **29** | `2` différentiels durcis (`M044`, `M050`) ; `M120 llm-wiki` rétrogradé `PARTIEL` (audit fix Cycle 6) |
+| **`SYSTÈME NERVEUX`** | `Infinity` | Bus L0 (7) + `K3` (15) + `K3-ML` (7) | **29** | `3` F8 (`infinity`, etc. · total `9` F8 Rust sur `RigInfinity`) + `M118` |
+| **`CORPS`** | `OpenRig` | `K2` (26) + `K5 · Métabolisme` (36) | **62** | `6` F8 + `M056` + `M084` (`video-director`) + `M117` |
+| **Total** | — | **Tous les organes** | **120** | **15 `FUSIONNÉ`** (`9` F8 Rust + `6` parité/sabotage stricts, zéro auto-certification) |

@@ -1514,8 +1514,33 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         assert rel not in gitlinks, f"Gitlink non retiré: {rel}"
         assert not (ROOT / rel).exists(), f"Répertoire résiduel encore présent: {rel}"
 
+    # Preuve reproductible de provenance/rapatriement historique D-N048 V0 (M120 llm-wiki)
+    # sans auto-certification FUSIONNÉ : vérifie l'intégrité SHA-256 du corps rapatrié
+    # et l'ancrage D-N048 V0, tout en maintenant M120 en PARTIEL faute de preuve K4/sabotage.
+    M120_GIST_BODY_SHA256 = "dc3efe98ae62f23dd08acad13aba2e95287beb20b6bec2f4af0423557fe37401"
+    M120_D_N048_COMMIT = "26ca7cb7c623fb42c56bffe77d49e9a74473bcf2"
     llm_wiki_doc = ROOT / "00_Memoire" / "bundle" / "concepts" / "llm-wiki.md"
-    assert llm_wiki_doc.exists() and llm_wiki_doc.stat().st_size > 200
+    assert llm_wiki_doc.exists(), "00_Memoire/bundle/concepts/llm-wiki.md manquant"
+    raw_lw_lf = llm_wiki_doc.read_bytes().replace(b"\r\n", b"\n")
+    lw_parts = raw_lw_lf.split(b"---\n", 2)
+    assert len(lw_parts) == 3, "Frontmatter YAML OKF absent dans llm-wiki.md"
+    assert b"source: gist 34a4b4bf6d54b1828ba8c256615619e8" in lw_parts[1]
+    assert b"source_size_octets: 11985" in lw_parts[1]
+    lw_body_lf = lw_parts[2].lstrip(b"\n")
+    assert len(lw_body_lf) == 11985, f"Taille corps llm-wiki inattendue: {len(lw_body_lf)}"
+    assert hashlib.sha256(lw_body_lf).hexdigest() == M120_GIST_BODY_SHA256, "SHA-256 corps llm-wiki divergent vs D-N048 V0"
+    freeze_md = (ROOT / "01_Forkable" / "FORKS-AMONT-21-FREEZE.md").read_text(encoding="utf-8")
+    assert M120_GIST_BODY_SHA256 in freeze_md, "Ancre SHA-256 D-N048 V0 absente de FORKS-AMONT-21-FREEZE.md"
+    is_shallow = subprocess.check_output(
+        ["git", "rev-parse", "--is-shallow-repository"], cwd=str(ROOT), text=True
+    ).strip()
+    if is_shallow != "true":
+        subprocess.check_call(
+            ["git", "cat-file", "-e", f"{M120_D_N048_COMMIT}^{{commit}}"],
+            cwd=str(ROOT),
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+        )
 
     # Import paresseux : ne touche pas egm_missions.db et exclut github-actions-freevps
     egm_db = ROOT / "00_Memoire" / "egm_missions.db"
@@ -1607,7 +1632,9 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             text=True,
         )
         parsed = json.loads(iso_out)
-        assert parsed["sabotages_detected"] >= 40
+        assert parsed["sabotages_detected"] >= 44, (
+            f"Couverture sabotage insuffisante : attendu >= 44, obtenu {parsed['sabotages_detected']}"
+        )
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])
 
@@ -1636,7 +1663,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
     after_lines = len(journal_path.read_text(encoding="utf-8").splitlines())
     assert after_lines >= before_lines + 6
 
-    diff_proven.add("llm-wiki")
+    assert "llm-wiki" not in diff_proven, "M120 llm-wiki ne doit jamais être auto-ajouté à diff_proven"
     print(
         f"[PASS 4/7] Différentiel strict (==) + {parsed['sabotages_detected']} sabotages détectés PASS "
         f"({len(diff_proven)} prouvés : {sorted(diff_proven)}) + M058 desktop_live={desktop_live} + L0 ({before_lines}->{after_lines})"
@@ -1863,6 +1890,10 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
     for mod in ("RigInfinity", "automaton", "cordis", "pi", "aspace-fiber-host", "fondation-13-1", "source-control-natif"):
         assert by_name[mod][0] == "**PARTIEL**", f"{mod} doit rester PARTIEL: {by_name[mod]}"
 
+    assert by_name["llm-wiki"][0] == "**PARTIEL**", (
+        f"M120 llm-wiki doit rester PARTIEL sans preuve exécutable K4 + sabotage + reçu R10: {by_name['llm-wiki']}"
+    )
+
     print(
         f"[PASS 6/7] ADR-15 3 Noyaux respectés ({kernel_counts}) | "
         f"{len(registry_fusionne)} FUSIONNÉ vérifiés dynamiquement, {actual_retenu} RETENU, {actual_ecarte} ÉCARTÉ"
@@ -1878,6 +1909,7 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "PRD-FONDATION.md",
         "SDD-FONDATION.md",
         "REGISTRE-DE-FUSION.md",
+        "RAPPORT-CORRECTION-M120.md",
     ]
     for fn in required:
         p = FUSION_DIR / fn
