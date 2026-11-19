@@ -55,10 +55,10 @@ okf_version: "0.2"
 - [fondation-13-1.md](concepts/fondation-13-1.md) — Fondation 13 → 1 (D-N055) : unifier les 13 sessions en 1 agent — un lead avec un juge interne ; inventaire F1-0 (2 252 entrées, registre 776 lignes, ledger 212 reçus), mapping des 13 fonctions, réponse à « qui juge le juge », rollback prouvé.
 - [FUSION-ENONCE.md](fusion/FUSION-ENONCE.md) — ÉNONCÉ immuable gelé (sha256 `41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d`) de la Fusion des Forkable en Fondation.
 - [CARTE-DES-PRINCIPES.md](fusion/CARTE-DES-PRINCIPES.md) — Mesure zéro réconciliée et vecteurs de principe des 120 modules (`M001..M120`) + 8 doublons `.gitmodules` (`D01..D08`).
-- [ADR-FUSION.md](fusion/ADR-FUSION.md) — 14 arbitrages d'architecture (`adr/ADR-01.md` à `ADR-14.md`), dont ADR-14 (amendant ADR-13) équilibrant la racine sous **4 Noyaux ≤ 1/3 (`ÂME / SYSTÈME NERVEUX / CORPS / MÉTABOLISME`)** et la trajectoire `Python → Hybride → Rust`.
+- [ADR-FUSION.md](fusion/ADR-FUSION.md) — 15 arbitrages d'architecture (`adr/ADR-01.md` à `ADR-15.md`), dont ADR-15 rétablissant les **3 Noyaux (`ÂME / SYSTÈME NERVEUX / CORPS`)**, réintégrant `MÉTABOLISME` en organe `K5` de `CORPS`, et imposant la preuve différentielle anti-sabotage.
 - [DDD-CONTRATS-COMMUNS.md](fusion/DDD-CONTRATS-COMMUNS.md) — Contrats L0 communs (`EventJournal` C1, `R10Receipt` C2, `EpistemicFact` C3, `FiberContract` C4, `DeletionProof` C5).
-- [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 sous les 4 Noyaux (`ÂME`, `SYSTÈME NERVEUX`, `CORPS`, `MÉTABOLISME`, chacun ≤ 40 modules).
-- [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2, pont Phase 2 Hybride Python↔Rust (`fondation-13-1`, `RigInfinity`) et preuves différentielles source-vs-organe Cycle 5.
-- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`15 FUSIONNÉ`, `86 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-14` sans exception (max 36 ≤ 40) et contrôle §5.5 (< 1/3).
+- [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 sous les 3 Noyaux (`ÂME`, `SYSTÈME NERVEUX`, `CORPS`).
+- [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2, pont Phase 2 Hybride Python↔Rust (`fondation-13-1`, `RigInfinity`) et preuves différentielles + sabotage Cycle 6.
+- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`16 FUSIONNÉ`, `85 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-15` sans exception et contrôle §5.5 (< 1/3).
 - [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
 - [JUGEMENT-EXTERNE-CYCLE-4.md](fusion/JUGEMENT-EXTERNE-CYCLE-4.md) — Verdict indépendant du Juge Externe Cycle 4 en lecture seule sur clone neuf de `fusion/cycle-4`.

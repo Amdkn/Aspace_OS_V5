@@ -34,8 +34,7 @@ EVENT_ID_RE = re.compile(r"^EVT-(\d{4})(\d{2})(\d{2})-(\d{3})$")
 DELIVERABLE_RE = re.compile(r"(?:#\d+|[0-9a-fA-F]{7,40})")
 
 KERNEL_IDS = ("K1", "K2", "K3", "K4", "K5")
-ROOT_KERNELS = ("ÂME", "SYSTÈME NERVEUX", "CORPS", "MÉTABOLISME")
-MAX_MODULES_PER_KERNEL_RATIO = 1.0 / 3.0
+ROOT_KERNELS = ("ÂME", "SYSTÈME NERVEUX", "CORPS")
 
 # === Alignement exact sur fondation-13-1/src/lib.rs ===
 R10_KEYS = (

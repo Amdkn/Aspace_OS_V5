@@ -2,7 +2,7 @@
 """
 aspace_fkb04_anything_organ.py — Organes Natifs de la Famille FKB04_Tools_Anything.
 
-Rattachement ADR-13 aux Trois Noyaux Fondamentaux :
+Rattachement ADR-15 aux Trois Noyaux Fondamentaux :
   - CORPS / Organe K2 (Action Multi-Harness & Surfaces) :
       M056 CLI-Anything | M057 agent-browser | M058 agent-desktop | M059 api-anything | M063 rea
   - ÂME / Organe K4 (Mémoire Épistémique & Compétences) :
@@ -577,94 +577,6 @@ def build_cli_anything_preview_cache_key(
     }
     raw = json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"), default=str)
     return f"sha256:{hashlib.sha256(raw.encode('utf-8')).hexdigest()}"
-
-
-def compile_cli_anything_spec(binary_name: str, help_text: str) -> Dict[str, Any]:
-    """Transforme une sortie `--help` arbitraire en schéma de sous-commandes CLI-Anything JSON."""
-    subcommands: List[Dict[str, Any]] = []
-    flags: List[Dict[str, Any]] = []
-    mode = "scan"
-    for raw_ln in help_text.splitlines():
-        ln = raw_ln.strip()
-        if not ln:
-            continue
-        low = ln.lower()
-        if low.startswith(("commands:", "subcommands:", "available commands:")):
-            mode = "commands"
-            continue
-        if low.startswith(("options:", "flags:")):
-            mode = "options"
-            continue
-
-        m_flag = re.match(r"^(?:-[a-zA-Z],\s*)?(--[a-zA-Z0-9][a-zA-Z0-9_-]*)(?:\s+<([^>]+)>)?\s+(.*)$", ln)
-        if m_flag:
-            flags.append(
-                {
-                    "flag": m_flag.group(1),
-                    "arg_type": "string" if m_flag.group(2) else "boolean",
-                    "value_placeholder": m_flag.group(2) or "",
-                    "description": m_flag.group(3).strip(),
-                }
-            )
-            continue
-
-        if mode == "commands":
-            m_cmd = re.match(r"^([a-zA-Z][a-zA-Z0-9_-]*)\s{2,}(.+)$", ln)
-            if m_cmd:
-                subcommands.append({"name": m_cmd.group(1), "description": m_cmd.group(2).strip()})
-                continue
-
-        # Support format "--help" à plat sans entête explicite
-        m_flat = re.match(r"^([a-z][a-z0-9_-]{1,24})\s{2,}(.+)$", ln)
-        if m_flat and not ln.startswith("-"):
-            subcommands.append({"name": m_flat.group(1), "description": m_flat.group(2).strip()})
-
-    return {
-        "schema": "aspace.cli-anything.v1",
-        "kernel": "CORPS",
-        "organ": "K2",
-        "binary": binary_name,
-        "output_mode": "json",
-        "subcommands": subcommands,
-        "flags": flags,
-    }
-
-
-def execute_cli_structured(
-    spec: Dict[str, Any],
-    subcommand: Optional[str],
-    kv_args: Optional[Dict[str, Any]] = None,
-    runner: Optional[Callable[[List[str]], subprocess.CompletedProcess[str]]] = None,
-) -> Dict[str, Any]:
-    """Construit et exécute une commande CLI typée (avec enveloppe JSON structurée garantie)."""
-    allowed_cmds = {c["name"] for c in spec.get("subcommands", [])}
-    if subcommand and allowed_cmds and subcommand not in allowed_cmds:
-        raise ContractViolation("K2", "subcommand", f"sous-commande inconnue pour {spec['binary']}: {subcommand}")
-
-    argv = [spec["binary"]]
-    if subcommand:
-        argv.append(subcommand)
-    allowed_flags = {f["flag"]: f["arg_type"] for f in spec.get("flags", [])}
-    for k, v in sorted((kv_args or {}).items()):
-        flag = k if k.startswith("--") else f"--{k}"
-        if allowed_flags and flag not in allowed_flags:
-            raise ContractViolation("K2", flag, f"option non déclarée dans la spec de {spec['binary']}")
-        if allowed_flags.get(flag) == "boolean":
-            if v:
-                argv.append(flag)
-        else:
-            argv.extend([flag, str(v)])
-
-    exec_fn = runner or (lambda cmd: subprocess.run(cmd, capture_output=True, text=True, check=False))
-    proc = exec_fn(argv)
-    return {
-        "binary": spec["binary"],
-        "argv": argv,
-        "returncode": proc.returncode,
-        "stdout": proc.stdout,
-        "stderr": proc.stderr,
-        "ok": proc.returncode == 0,
-    }
 
 
 # ===========================================================================
@@ -1411,11 +1323,15 @@ def run_fkb04_self_test(
             encoding="utf-8",
         )
         cli_meta = extract_cli_anything_metadata(sample_harness)
+        extracted_cmds = extract_commands_from_cli(pkg_dir / "demo_tool_cli.py")
         rendered_skill = generate_cli_anything_skill_md(cli_meta)
+        rendered_simple = generate_cli_anything_skill_md_simple(cli_meta)
         cache_key = build_cli_anything_preview_cache_key("demo_tool", "inspect", "preview", "sha256:abc", harness_version=cli_meta.version)
         checks["cli_anything_skill_render"] = (
             cli_meta.skill_name == "cli-anything-demo-tool"
+            and len(extracted_cmds) >= 1
             and "## Version\n\n1.2.3" in rendered_skill
+            and "# cli-anything-demo-tool" in rendered_simple
             and cache_key.startswith("sha256:")
         )
         assert checks["cli_anything_skill_render"]

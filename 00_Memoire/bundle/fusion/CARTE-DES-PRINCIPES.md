@@ -363,7 +363,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M042 — `auto-ontology` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology` | repo `https://github.com/Amdkn/auto-ontology.git` | SHA/pin `b90c17cb4bcb` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology/README.md`, `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/auto-ontology/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Compilateur ontologique transformant les textes bruts en graphe acyclique (DAG) d'entités typées et relations dédoublonnées avec détection de contradictions.
 - **Invariants** : Acyclicité stricte du graphe ; réconciliation d'entités sans doublons ; détection de contradictions formelles.
 - **Interfaces** : compile_ontology(chunk) -> (entities[], relations[]) vers `memory.jsonl`.
@@ -371,7 +371,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M043 — `billion-context` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context` | repo `https://github.com/Amdkn/billion-context.git` | SHA/pin `0a49433cbe0b` | licence `MIT` | sources : `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context/README.md`, `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/billion-context/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Compression et partitionnement hiérarchique de contextes massifs avec adressage par contenu immuable (CAS SHA-256) et déchargement disque NVMe.
 - **Invariants** : Zéro saturation RAM ; chaque tranche de contexte est adressée de façon immuable par SHA-256.
 - **Interfaces** : ingest_chunk(content, source_id) -> {cas_hash, tokens_est}.
@@ -379,7 +379,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M044 — `context-language-models` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models` | repo `https://github.com/Amdkn/context-language-models.git` | SHA/pin `42db219d7302` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/README.md`, `01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Utilitaires d'édition contextuelle (`clm_content_text`, `clm_rendered_text`, `clm_render_editable`, `clm_parse_back`) portés 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py` ; test différentiel contre `clm_harness.context_utils.context_string` avant/après suppression physique PASS (`organ_outputs == oracle_outputs`, gitlink conservé en attente du verdict Juge Cycle 5).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Modules `context_string`, `edit_gate`, `finish_policy`, `lm_compat` portés 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py` ; test différentiel couvrant 100 % des fonctions et cas limites + sabotage de chaque fonction avant/après suppression physique PASS (gitlink conservé en attente du verdict Juge Cycle 6).)
 - **Principe** : Conditionnement explicite des modèles de langage sur des représentations latentes ancrées dans l'ontologie (Zero Lost-in-the-Middle).
 - **Invariants** : Aucune génération hors des invariants du schéma contextuel injecté.
 - **Interfaces** : ContextLM_Decoder / cross-attention sur sous-graphe validé.
@@ -387,7 +387,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M045 — `dox` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/dox` | repo `https://github.com/Amdkn/dox.git` | SHA/pin `7ed016b153d6` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/dox/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Contrat hiérarchique de gouvernance documentaire imposant la propagation des règles système et des conventions d'architecture à travers chaque dossier.
 - **Invariants** : Transmission descendante des invariants ; porte de vérification automatique (`checks.ps1` étape 4).
 - **Interfaces** : AGENTS.md / CLAUDE.md / règles DOX dans `02_Factory/checks.ps1`.
@@ -395,7 +395,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M046 — `gbrain` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/gbrain` | repo `https://github.com/Amdkn/gbrain.git` | SHA/pin `de4968f5f5cb` | licence `MIT` | sources : `01_Forkable/FKB02_Memory/gbrain/README.md`, `01_Forkable/FKB02_Memory/gbrain/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Cerveau de connaissances personnel natif base de données combinant recherche lexicale, graphe de liens et recherche vectorielle hybride.
 - **Invariants** : Tout fait remonté par recherche hybride doit porter sa source et passer le contrôle M1-M8 avant citation.
 - **Interfaces** : Index hybride requête -> citations sourcées.
@@ -403,7 +403,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M047 — `graphify` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/graphify` | repo `https://github.com/Amdkn/graphify.git` | SHA/pin `4b35e015207d` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/graphify/README.md`, `01_Forkable/FKB02_Memory/graphify/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Extraction AST de graphes de codebases, détection de communautés structurelles et requêtage topologique explicable.
 - **Invariants** : Traçabilité exacte vers fichiers/lignes du code source ; mise à jour incrémentale (`graphify update .`).
 - **Interfaces** : graphify.exe query|explain|update -> graphify-out/graph.json.
@@ -411,7 +411,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M048 — `infinite-brain-harness` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/infinite-brain-harness` | repo `https://github.com/Amdkn/infinite-brain-harness.git` | SHA/pin `ee81abb42939` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/infinite-brain-harness/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Harnais d'isolation multi-cerveaux permettant à un même agent d'opérer à travers plusieurs bases de connaissances cloisonnées sans fuite croisée.
 - **Invariants** : Étanchéité des espaces de connaissances par domaine/client ; sélection explicite de la portée.
 - **Interfaces** : Configuration multi-workspace / sélecteur de brain actif.
@@ -419,7 +419,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M049 — `infinite-brain-os` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/infinite-brain-os` | repo `https://github.com/Amdkn/infinite-brain-os.git` | SHA/pin `cca8f707144e` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/infinite-brain-os/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante (rétrogradé au Cycle 5) : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Organe `aspace_fkb02_memory_organ.py` présent ; part manquante : aucune comparaison différentielle automatisée exécutant la source d'origine et l'organe sur des entrées identiques avant/après suppression physique.)
 - **Principe** : Système d'exploitation de connaissances versionné sous Git en pur Markdown/YAML, lisible et auditable par tout agent de fichiers.
 - **Invariants** : Format texte brut versionné Git (aucune boîte noire binaire propriétaire).
 - **Interfaces** : Arborescence Markdown/YAML + Git commits.
@@ -427,7 +427,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M050 — `knowledge-catalog` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB02_Memory/knowledge-catalog` | repo `https://github.com/Amdkn/knowledge-catalog.git` | SHA/pin `0069938857de` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB02_Memory/knowledge-catalog/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Parser/validateur OKF v0.2 (`OKFDocument`, `okf_normalize_verified`, `okf_trust_tier`, `okf_is_stale`, `okf_regenerate_indexes`) porté 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py` ; test différentiel contre `reference_agent.bundle` avant/après suppression physique PASS (`organ_outputs == oracle_outputs`, gitlink conservé en attente du verdict Juge Cycle 5).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **ÂME · Organe K4 (Mémoire & Skills)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Modules `document`, `index`, `synthesizer`, `paths` OKF v0.2 portés 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py` ; test différentiel couvrant 100 % des fonctions (dont `okf_is_stale` expirée/frontière) + sabotage de chaque fonction avant/après suppression physique PASS (gitlink conservé en attente du verdict Juge Cycle 6).)
 - **Principe** : Format ouvert OKF v0.2 de documents atomiques avec frontmatter YAML typé, index central et journal chronologique append-only.
 - **Invariants** : Frontmatter YAML `type:` obligatoire sur chaque concept ; indexation stricte dans `index.md` ; `log.md` strictement append-only.
 - **Interfaces** : Validateur OKF v0.2 dans `02_Factory/checks.ps1`.
@@ -475,7 +475,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M056 — `CLI-Anything` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB04_Tools_Anything/CLI-Anything` | repo `https://github.com/Amdkn/CLI-Anything.git` | SHA/pin `34f519533bc1` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB04_Tools_Anything/CLI-Anything/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K2 (Exécution, Anything & 3D)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Extracteur Click/Docstring, générateur `SKILL.md` Jinja2 et clé de cache preview portés 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py` ; test différentiel contre `cli-anything-plugin` sur `zotero` et `audacity` avant/après suppression physique PASS (`organ_outputs == oracle_outputs`, gitlink conservé en attente du verdict Juge Cycle 5).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K2 (Exécution, Anything & 3D)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Extracteur Click/Docstring, générateur `SKILL.md` Jinja2 et clé de cache preview portés 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py` ; test différentiel contre `cli-anything-plugin` (`zotero`, `audacity` & harnesses synthétiques) + sabotage de chaque fonction avant/après suppression physique PASS (gitlink conservé en attente du verdict Juge Cycle 6).)
 - **Principe** : Génération automatisée de wrappers CLI structurés (JSON stdout, sous-commandes typées) pour piloter n'importe quel logiciel GUI/desktop par des agents.
 - **Invariants** : Sorties structurées machine-readable ; aucune dépendance à la manipulation souris si une interface CLI peut être générée.
 - **Interfaces** : Générateur CLI-Anything -> wrappers JSON.
@@ -491,7 +491,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M058 — `agent-desktop` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB04_Tools_Anything/agent-desktop` | repo `https://github.com/Amdkn/agent-desktop.git` | SHA/pin `54855b6225ae` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB04_Tools_Anything/00_A0_Core/agent-desktop.manifest.json`, `01_Forkable/FKB04_Tools_Anything/00_A0_Core/agent-desktop-ADAPTATION.md`, `01_Forkable/FKB04_Tools_Anything/agent-desktop/README.md`, `01_Forkable/FKB04_Tools_Anything/agent-desktop/Cargo.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K2 (Exécution, Anything & 3D)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Pilote UIA Win32 dans `aspace_fkb04_anything_organ.py` (`headless-fallback` supprimé au Cycle 5) ; part manquante : session Windows interactive réelle (`live_window_verified = False`, `0` fenêtres UIA en contexte headless) et absence de comparaison différentielle contre la source `agent-desktop`.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K2 (Exécution, Anything & 3D)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Pilote UIA Win32 dans `aspace_fkb04_anything_organ.py` (`headless-fallback` supprimé) ; part manquante : aucune interaction vérifiée sur une vraie fenêtre Windows (`live_window_verified = False`, `0` fenêtres UIA en session headless) et absence de comparaison différentielle contre la source `agent-desktop`.)
 - **Principe** : Automatisation native des applications desktop (Windows/macOS/Linux) via l'arbre d'accessibilité OS sans vol de focus.
 - **Invariants** : Zéro vol de focus humain ; priorité aux voies CLI/API avant GUI.
 - **Interfaces** : Serveur MCP `agent-desktop mcp` / primitives d'accessibilité OS.
@@ -539,7 +539,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M064 — `LLM-Trading-Lab` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab` | repo `https://github.com/Amdkn/LLM-Trading-Lab.git` | SHA/pin `028148eb8031` | licence `voir-source-brute` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/LLM-Trading-Lab/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`ÉCARTÉ`** · Statut Vérifié (§5.8) : **`ÉCARTÉ`** (ÉCARTÉ (Raison vérifiée : simple expérience empirique/benchmark historique micro-caps sans infrastructure réutilisable non couverte par TradingAgents/Vibe-Trading/AVERTISSEMENTS.md).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`ÉCARTÉ`** · Statut Vérifié (§5.8) : **`ÉCARTÉ`** (ÉCARTÉ (Raison vérifiée : simple expérience empirique/benchmark historique micro-caps sans infrastructure réutilisable non couverte par TradingAgents/Vibe-Trading/AVERTISSEMENTS.md).)
 - **Principe** : Journal empirique expérimental d'un portefeuille micro-caps géré par ChatGPT.
 - **Invariants** : Hors périmètre exécution autonome (données expérimentales uniquement).
 - **Interfaces** : Scripts d'analyse de journaux CSV.
@@ -547,7 +547,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M065 — `TradingAgents` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents` | repo `https://github.com/Amdkn/TradingAgents.git` | SHA/pin `6ee58345d680` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/TradingAgents/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Intégré en architecture copilote ; reste extraction du protocole de débat Bull/Bear et gestion de risque dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Intégré en architecture copilote ; reste extraction du protocole de débat Bull/Bear et gestion de risque dans K5 et retrait gitlink.)
 - **Principe** : Débat contradictoire multi-agents (analystes fondamentaux/techniques, débat Bull/Bear, gestionnaire de risque) avant toute recommandation financière.
 - **Invariants** : Mode READ-ONLY strict (AVERTISSEMENTS.md) ; aucun passage d'ordre automatique sans signature S0 ; déduction des frais.
 - **Interfaces** : Graphe décisionnel multi-agents -> rapport de recommandation typé.
@@ -555,7 +555,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M066 — `TradingView-Unified-MCP` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP` | repo `https://github.com/Amdkn/TradingView-Unified-MCP.git` | SHA/pin `378c9c963dd2` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/TradingView-Unified-MCP/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste fusion avec le pont MCP K5/agent-browser et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste fusion avec le pont MCP K5/agent-browser et retrait gitlink.)
 - **Principe** : Contrôle headless local de TradingView via MCP pour inspecter graphiques, watchlists et alertes vérifiées.
 - **Invariants** : Opération purement locale sur session utilisateur ; lecture seule sur comptes.
 - **Interfaces** : Outils MCP TradingView Unified.
@@ -563,7 +563,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M067 — `Vibe-Trading` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading` | repo `https://github.com/Amdkn/Vibe-Trading.git` | SHA/pin `7f95b483c2bf` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/Vibe-Trading/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste extraction du moteur de backtest réaliste/paper-trading dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste extraction du moteur de backtest réaliste/paper-trading dans K5 et retrait gitlink.)
 - **Principe** : Synthèse de stratégies quantitatives depuis le langage naturel avec backtest réaliste intégrant slippage/frais et mémoire d'erreurs.
 - **Invariants** : Backtest obligatoirement net de frais ; exécution limitée au paper-trading sans veto S0.
 - **Interfaces** : Pipeline NL -> stratégie -> backtest réaliste.
@@ -571,7 +571,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M068 — `ai-hedge-fund` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund` | repo `https://github.com/Amdkn/ai-hedge-fund.git` | SHA/pin `b1d1df04b958` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/ai-hedge-fund/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste absorption des profils d'évaluation multi-personas dans le comité K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste absorption des profils d'évaluation multi-personas dans le comité K5 et retrait gitlink.)
 - **Principe** : Comité d'investissement multi-personas simulant des philosophies d'investissement complémentaires (Value, Croissance, Contrarian).
 - **Invariants** : Mode simulation/analyse uniquement (zéro ordre réel autonome).
 - **Interfaces** : Agents analystes par philosophie -> synthèse comité.
@@ -579,7 +579,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M069 — `claude-trading-skills` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills` | repo `https://github.com/Amdkn/claude-trading-skills.git` | SHA/pin `652a0aecd5ad` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills/README.ja.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/claude-trading-skills/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste extraction de la formule déterministe de position sizing (Stop-Loss <= 1%) dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste extraction de la formule déterministe de position sizing (Stop-Loss <= 1%) dans K5 et retrait gitlink.)
 - **Principe** : Calcul déterministe du dimensionnement de position (risk sizing ≤ 1 % par trade) et listes de contrôle pré-trade.
 - **Invariants** : Le dimensionnement vient toujours d'une formule mathématique déterministe, jamais d'une estimation LLM.
 - **Interfaces** : Calculateur de risque déterministe & skills day-trading.
@@ -587,7 +587,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M070 — `daily_stock_analysis` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis` | repo `https://github.com/Amdkn/daily_stock_analysis.git` | SHA/pin `06d58611af49` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/daily_stock_analysis/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste portage du pipeline de scoring quotidien /100 et alertes pré-marché dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste portage du pipeline de scoring quotidien /100 et alertes pré-marché dans K5 et retrait gitlink.)
 - **Principe** : Analyse multi-marchés automatisée produisant un score /100 reproductible et des synthèses de risque pré-marché.
 - **Invariants** : Lecture seule ; alerte asynchrone uniquement ; aucun ordre envoyé.
 - **Interfaces** : Pipeline scoring quotidien -> rapport structuré.
@@ -595,7 +595,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M071 — `financial-services` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/financial-services` | repo `https://github.com/Amdkn/financial-services.git` | SHA/pin `4b7d7e5dbc9d` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/financial-services/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste intégration des grilles de valorisation et d'analyse financière dans K5/K4 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste intégration des grilles de valorisation et d'analyse financière dans K5/K4 et retrait gitlink.)
 - **Principe** : Protocoles institutionnels de recherche actions, modélisation de valorisation, revue de résultats et due diligence.
 - **Invariants** : Sourcing chiffré obligatoire des ratios financiers ; zéro chiffre inventé.
 - **Interfaces** : Skills & connecteurs d'analyse financière institutionnelle.
@@ -603,7 +603,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M072 — `freqtrade` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade` | repo `https://github.com/Amdkn/freqtrade.git` | SHA/pin `43760fe804f6` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/freqtrade/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : moteur complet d'exécution/backtest/hyperopt crypto Python avec connecteurs CCXT CEX/DEX et dry-run — infrastructure métier spécialisée bridée en dry-run sous veto S0).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : moteur complet d'exécution/backtest/hyperopt crypto Python avec connecteurs CCXT CEX/DEX et dry-run — infrastructure métier spécialisée bridée en dry-run sous veto S0).)
 - **Principe** : Moteur algorithmique crypto complet (backtesting vectorisé, optimisation ML FreqAI, dry-run, passerelles exchanges).
 - **Invariants** : Bridé en `dry_run: true` tant que le veto humain S0 (`human:amdkn`) n'a pas ratifié explicitement ; clés API via env isolé.
 - **Interfaces** : CLI `freqtrade backtesting|hyperopt|trade` (dry-run).
@@ -611,7 +611,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M073 — `nansen-cli` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli` | repo `https://github.com/Amdkn/nansen-cli.git` | SHA/pin `fac5f35e2ec1` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/00_A0_Core/nansen-cli.manifest.json`, `01_Forkable/FKB07_Money_Maker/00_A0_Core/nansen-cli-ADAPTATION.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/nansen-cli/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapté état 2 (`0b39ae5` / `fac5f35`, MIT) ; reste portage des connecteurs on-chain Smart Money read-only dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapté état 2 (`0b39ae5` / `fac5f35`, MIT) ; reste portage des connecteurs on-chain Smart Money read-only dans K5 et retrait gitlink.)
 - **Principe** : Interface CLI agent-first d'analyse on-chain et de suivi des flux Smart Money.
 - **Invariants** : Exposition strictement limitée aux endpoints analytiques en lecture seule (aucun swap/transfert autonome : règle `a2p` Scion).
 - **Interfaces** : CLI `nansen` read-only -> flux Smart Money JSON.
@@ -619,7 +619,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M074 — `tradingview-indicator-search-mcp-server` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server` | repo `https://github.com/Amdkn/tradingview-indicator-search-mcp-server.git` | SHA/pin `cde68c7265ca` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste fusion avec l'adaptateur Pine Script K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste fusion avec l'adaptateur Pine Script K5 et retrait gitlink.)
 - **Principe** : Recherche et extraction directe du code source Pine Script d'indicateurs publics via MCP sans hallucination de syntaxe.
 - **Invariants** : Lecture seule ; citation exacte de l'indicateur source.
 - **Interfaces** : Serveur MCP search/fetch Pine Script.
@@ -627,7 +627,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M075 — `OpenMontage` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage` | repo `https://github.com/Amdkn/OpenMontage.git` | SHA/pin `fef367879943` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/OpenMontage/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Rattaché à `aspace_video_studio_foundation.py` (F4) ; reste portage complet de la chaîne de montage e-commerce et retrait du gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Rattaché à `aspace_video_studio_foundation.py` (F4) ; reste portage complet de la chaîne de montage e-commerce et retrait du gitlink.)
 - **Principe** : Pipeline de montage vidéo agentique productisé orienté publicités courtes e-commerce à haut volume.
 - **Invariants** : Rendu déterministe local/ffmpeg ; journalisation R10 des rendus livrés.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `montage_ecommerce`.
@@ -635,7 +635,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M076 — `argo` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/argo` | repo `https://github.com/Amdkn/argo.git` | SHA/pin `dc0e80803772` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/argo/README.md`, `01_Forkable/FKB07_Money_Maker/02_Video/argo/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste extraction du pipeline Playwright->vidéo et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste extraction du pipeline Playwright->vidéo et retrait gitlink FKB07.)
 - **Principe** : Conversion de scripts de parcours Playwright en vidéos démo produit montées avec voix off synchronisée.
 - **Invariants** : Exécution headless reproductible depuis scénario Playwright typé.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `demo_playwright`.
@@ -643,7 +643,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M077 — `earshot` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/earshot` | repo `https://github.com/Amdkn/earshot.git` | SHA/pin `8812d4fc32f9` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/earshot/README.md`, `01_Forkable/FKB07_Money_Maker/02_Video/earshot/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage du mixeur audio SFX et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage du mixeur audio SFX et retrait gitlink FKB07.)
 - **Principe** : Conception et synchronisation sonore (voix, musique, SFX) pilotée par agents pour accompagner les séquences visuelles.
 - **Invariants** : Calage temporel exact sur timecodes ; mixage normalisé.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `audio_sfx`.
@@ -651,7 +651,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M078 — `explainroo` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/explainroo` | repo `https://github.com/Amdkn/explainroo.git` | SHA/pin `be4c19c43a76` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/explainroo/README.md`, `01_Forkable/FKB07_Money_Maker/02_Video/explainroo/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste extraction du moteur JS/voix locale et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste extraction du moteur JS/voix locale et retrait gitlink FKB07.)
 - **Principe** : Génération de vidéos explicatives narrées en pur JavaScript avec synthèse vocale locale sans clé API tierce.
 - **Invariants** : Zéro dépendance à une clé API cloud payante pour la voix de base.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `explainer_local`.
@@ -659,7 +659,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M079 — `flute` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/flute` | repo `https://github.com/Amdkn/flute.git` | SHA/pin `2ed7b5337502` | licence `voir-source-brute` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/flute/` + `01_Forkable/FKB*/index.md` + `FUSIONS-REGISTRY.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Rattaché à `aspace_video_studio_foundation.py` (F4) ; reste checkout/extraction du canvas SaaS interactif et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Rattaché à `aspace_video_studio_foundation.py` (F4) ; reste checkout/extraction du canvas SaaS interactif et retrait gitlink.)
 - **Principe** : Studio SaaS vidéo avec canevas de montage interactif UI/UX pour édition client en self-service.
 - **Invariants** : Exposition souveraine sans verrou cloud externe.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `canvas_saas`.
@@ -667,7 +667,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M080 — `huashu-motion` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion` | repo `https://github.com/Amdkn/huashu-motion.git` | SHA/pin `71f4a85ed6c0` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion/README.en.md`, `01_Forkable/FKB07_Money_Maker/02_Video/huashu-motion/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage du moteur motion-design et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage du moteur motion-design et retrait gitlink FKB07.)
 - **Principe** : Création de motion graphics locaux avec son et édition ciblée par désignation de frame.
 - **Invariants** : Rendu local reproductible ; itération frame-par-frame adressable.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `motion_graphics`.
@@ -675,7 +675,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M081 — `reanimate` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/reanimate` | repo `https://github.com/Amdkn/reanimate.git` | SHA/pin `859ea61fea57` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/reanimate/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage de l'extracteur vectoriel et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage de l'extracteur vectoriel et retrait gitlink FKB07.)
 - **Principe** : Rétro-ingénierie d'animations web/CSS/SVG existantes pour reconstruire des composants animés réutilisables.
 - **Invariants** : Respect strict des droits sur les assets finaux (réutilisation du pattern technique, pas de copie brute d'image de marque).
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `vector_reanimation`.
@@ -683,7 +683,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M082 — `rossark-motion-skill` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/rossark-motion-skill` | repo `https://github.com/Amdkn/rossark-motion-skill.git` | SHA/pin `e4cfb15f4b7b` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/rossark-motion-skill/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste intégration des primitives de personnages/scènes et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste intégration des primitives de personnages/scènes et retrait gitlink FKB07.)
 - **Principe** : Animation programmatique de personnages/mascottes et séquences visuelles composées par code.
 - **Invariants** : Rendu déterministe piloté par keyframes déclaratives.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `character_motion`.
@@ -691,7 +691,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M083 — `take-one` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/take-one` | repo `https://github.com/Amdkn/take-one.git` | SHA/pin `42d23679bf3f` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/take-one/README.md`, `01_Forkable/FKB07_Money_Maker/02_Video/take-one/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage du pipeline Chrome headless + ffmpeg et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste portage du pipeline Chrome headless + ffmpeg et retrait gitlink FKB07.)
 - **Principe** : Production de courts-métrages de lancement depuis une phrase unique via équipe de rôles virtuels et rendu par code (headless Chrome + ffmpeg).
 - **Invariants** : Zéro rendu propriétaire fermé ; tout est reproductible via navigateur headless + ffmpeg.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `launch_film`.
@@ -699,7 +699,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M084 — `video-director` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/02_Video/video-director` | repo `https://github.com/Amdkn/video-director.git` | SHA/pin `6e67b886bb2f` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/02_Video/video-director/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Doublon FKB06 purgé de `.gitmodules` (F4) ; rattaché à `aspace_video_studio_foundation.py` ; reste extraction du graphe de réalisation et retrait gitlink FKB07.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Scripts `check_timeline.py` & fonctions d'analyse `qa_video.py` portés 1:1 dans `01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py` (`vd_validate_timeline`, `vd_check_timeline_cli`, `vd_analyse_picture`, `vd_compare_cuts`, `vd_measure_text`, `vd_load_timeline`, `vd_beat_times`, `vd_runs`) ; test différentiel + sabotage sur chaque fonction avant/après suppression physique PASS (gitlink conservé en attente du verdict Juge Cycle 6).)
 - **Principe** : Orchestration de découpage technique, cadrage, rythmes et transitions entre plans par agent réalisateur.
 - **Invariants** : Sortie storyboard/timeline structurée consommable par les moteurs de rendu.
 - **Interfaces** : aspace_video_studio_foundation.py -> rôle `director_storyboard`.
@@ -707,7 +707,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M085 — `changedetection.io` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/changedetection.io` | repo `https://github.com/Amdkn/changedetection.io.git` | SHA/pin `f0d955ff19c7` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/changedetection.io/README-pip.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : serveur Python/Flask complet de surveillance de pages web et appels d'offres avec diffing historique — moteur d'infrastructure produit B2B).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : serveur Python/Flask complet de surveillance de pages web et appels d'offres avec diffing historique — moteur d'infrastructure produit B2B).)
 - **Principe** : Détection continue de changements sur pages web et portails d'appels d'offres publics avec alertes différentielles.
 - **Invariants** : Respect des limites de débit et robots ; zéro contournement anti-bot CAPTCHA.
 - **Interfaces** : Service Web/API changedetection.io -> webhooks événements vers K2/K5.
@@ -715,7 +715,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M086 — `impeccable` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable` | repo `https://github.com/Amdkn/impeccable.git` | SHA/pin `4bafcb3cc8f4` | licence `Apache-2.0` | sources : `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable/README.md`, `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable/package.json`, `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/impeccable/Cargo.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/03 (Apache-2.0) ; reste intégration de ses règles d'audit anti-Look-IA dans les skills frontend K4/K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/03 (Apache-2.0) ; reste intégration de ses règles d'audit anti-Look-IA dans les skills frontend K4/K5 et retrait gitlink.)
 - **Principe** : Vocabulaire de design frontend et détecteur d'anti-patterns IA (`polish`, `critique`, `audit`) pour éliminer le rendu générique « AI slop ».
 - **Invariants** : Audit visuel/UX systématique avant livraison de toute vitrine B2B.
 - **Interfaces** : Commandes/skills design `polish`, `bolder`, `critique`, `audit`.
@@ -723,7 +723,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M087 — `uptime-kuma` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma` | repo `https://github.com/Amdkn/uptime-kuma.git` | SHA/pin `0e05943e1b6d` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma/README.md`, `01_Forkable/FKB07_Money_Maker/03_Website_and_Infra/uptime-kuma/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : outil complet de monitoring SSL/HTTP/TCP Node.js auto-hébergé avec base SQLite et dashboard client — offre B2B clé en main 99$/mois).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : outil complet de monitoring SSL/HTTP/TCP Node.js auto-hébergé avec base SQLite et dashboard client — offre B2B clé en main 99$/mois).)
 - **Principe** : Surveillance permanente de disponibilité, certificats SSL et latence de services web avec pages de statut.
 - **Invariants** : Auto-hébergement souverain sans dépendance SaaS ; alertes raccordées aux webhooks K2.
 - **Interfaces** : Dashboard/API Uptime Kuma + sondes HTTP/TCP/SSL.
@@ -731,7 +731,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M088 — `DeepTutor` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor` | repo `https://github.com/Amdkn/DeepTutor.git` | SHA/pin `547dbb4dd591` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor/README.md`, `01_Forkable/FKB07_Money_Maker/04_Learning/DeepTutor/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/04 ; reste intégration de son moteur pédagogique RAG/tuteur dans K5/K4 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/04 ; reste intégration de son moteur pédagogique RAG/tuteur dans K5/K4 et retrait gitlink.)
 - **Principe** : Tuteur IA interactif personnalisé exploitant les supports de cours pour générer parcours d'apprentissage, exercices et remédiations.
 - **Invariants** : Ancrage strict sur les documents sources du client (zéro hallucination pédagogique) ; passage par gateway K3.
 - **Interfaces** : Pipeline DeepTutor ingestion cours -> session tutorat interactive.
@@ -739,7 +739,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M089 — `open-notebook` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook` | repo `https://github.com/Amdkn/open-notebook.git` | SHA/pin `982f74ecd20c` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook/README.dev.md`, `01_Forkable/FKB07_Money_Maker/04_Learning/open-notebook/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/04 ; reste unification de sa synthèse audio multi-locuteurs sur documents avec K5/K3 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/04 ; reste unification de sa synthèse audio multi-locuteurs sur documents avec K5/K3 et retrait gitlink.)
 - **Principe** : Synthèse de carnets de recherche multi-sources et génération de podcasts d'entreprise hebdomadaires auto-hébergés.
 - **Invariants** : Souveraineté des documents clients ; exécution sur LLM/TTS routés via K3.
 - **Interfaces** : Service notebook/podcast -> audio MP3 + notes sourcées.
@@ -747,7 +747,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M090 — `OpenMausBot` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot` | repo `https://github.com/Amdkn/OpenMausBot.git` | SHA/pin `059275a68c86` | licence `Apache-2.0` | sources : `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot/README.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/OpenMausBot/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/05 (Apache-2.0) ; reste alignement de l'interface de chat multi-bots locaux sur la plateforme bots RigInfinity/K2 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/05 (Apache-2.0) ; reste alignement de l'interface de chat multi-bots locaux sur la plateforme bots RigInfinity/K2 et retrait gitlink.)
 - **Principe** : Application de chat local-first permettant à une équipe de direction de piloter une escouade d'agents spécialisés en local.
 - **Invariants** : Données locales prioritaires ; zéro fuite externe ; gouvernance K1.
 - **Interfaces** : App chat locale multi-bots -> routage gateway `:31415`.
@@ -755,7 +755,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M091 — `Scrapling` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling` | repo `https://github.com/Amdkn/Scrapling.git` | SHA/pin `bc602488b44e` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/00_A0_Core/scrapling.manifest.json`, `01_Forkable/FKB07_Money_Maker/00_A0_Core/scrapling-ADAPTATION.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling/README.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/Scrapling/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapté état 2 (`c5121c7` / `bc60248`, BSD-3-Clause) ; reste intégration comme extracteur DOM adaptatif dans K2/K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapté état 2 (`c5121c7` / `bc60248`, BSD-3-Clause) ; reste intégration comme extracteur DOM adaptatif dans K2/K5 et retrait gitlink.)
 - **Principe** : Extraction web adaptative conservant la résilience face aux changements de structure DOM via apprentissage de signatures d'éléments.
 - **Invariants** : Zéro contournement CAPTCHA/anti-bot ; respect de l'hygiène réseau et télémétrie zéro.
 - **Interfaces** : Adaptateur Python `Scrapling` / serveur MCP `D4Vinci/Scrapling`.
@@ -763,7 +763,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M092 — `dify` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify` | repo `https://github.com/Amdkn/dify.git` | SHA/pin `208a2489f05f` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/00_A0_Core/dify.manifest.json`, `01_Forkable/FKB07_Money_Maker/00_A0_Core/dify-ADAPTATION.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify/README.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/dify/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : plateforme complète LLMOps/workflow builder visuel auto-hébergée Apache-2.0 modifiée — environnement d'assemblage visuel B2B adapté état 2 `b29552a`).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : plateforme complète LLMOps/workflow builder visuel auto-hébergée Apache-2.0 modifiée — environnement d'assemblage visuel B2B adapté état 2 `b29552a`).)
 - **Principe** : Plateforme visuelle d'orchestration de workflows LLM, gestion de jeux de prompts et déploiement d'apps client B2B.
 - **Invariants** : Licence Apache-2.0 modifiée respectée (mentions conservées) ; télémétrie coupée ; routage via FreeLLMAPI.
 - **Interfaces** : API Workflows Dify + UI Studio auto-hébergée.
@@ -771,7 +771,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M093 — `powerbi-to-ai-visuals` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/powerbi-to-ai-visuals` | repo `https://github.com/Amdkn/powerbi-to-ai-visuals.git` | SHA/pin `86583180c347` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/powerbi-to-ai-visuals/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/05 ; reste portage de l'extracteur sémantique `.pbix` -> modèle requêtable + visuels interactifs dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/05 ; reste portage de l'extracteur sémantique `.pbix` -> modèle requêtable + visuels interactifs dans K5 et retrait gitlink.)
 - **Principe** : Conversion de rapports Power BI fermés en modèle de données ouvert requêtable et visualisations web dynamiques pilotes par IA.
 - **Invariants** : Exactitude des agrégations numériques vérifiées contre le modèle source.
 - **Interfaces** : Pipeline `.pbix` -> schéma requêtable + composants de visualisation.
@@ -779,7 +779,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M094 — `presenton` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton` | repo `https://github.com/Amdkn/presenton.git` | SHA/pin `9af2b47dda31` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/00_A0_Core/presenton.manifest.json`, `01_Forkable/FKB07_Money_Maker/00_A0_Core/presenton-ADAPTATION.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton/README.md`, `01_Forkable/FKB07_Money_Maker/05_Executive_and_BI/presenton/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapté état 2 (`9af2b47`, Apache-2.0) ; reste intégration du moteur de génération de présentations PPTX/PDF dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapté état 2 (`9af2b47`, Apache-2.0) ; reste intégration du moteur de génération de présentations PPTX/PDF dans K5 et retrait gitlink.)
 - **Principe** : Générateur de présentations structurées (PPTX/PDF) piloté par contenu métier avec gabarits contrôlés.
 - **Invariants** : Zéro télémétrie ; modèles routés via K3 ; conformité données.
 - **Interfaces** : API/CLI Presenton -> livrable `.pptx` / `.pdf`.
@@ -787,7 +787,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M095 — `BlenderWorld` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld` | repo `https://github.com/Amdkn/BlenderWorld.git` | SHA/pin `9a37086deca2` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld/README.md`, `01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld/pyproject.toml`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/06 ; reste intégration de la boucle `Render-Critique-Refine` (`bpy` -> `.glb`) dans K5/K2 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/06 ; reste intégration de la boucle `Render-Critique-Refine` (`bpy` -> `.glb`) dans K5/K2 et retrait gitlink.)
 - **Principe** : Génération procédurale de scènes et d'actifs 3D via Python Blender (`bpy`) par boucle itérative Render-Critique-Refine exportant en `.glb`.
 - **Invariants** : Vérification visuelle des rendus intermédiaires ; export standardisé `.glb`.
 - **Interfaces** : Pipeline `bpy` -> rendu critique -> `.glb` pour City Office / CubeFarm.
@@ -795,7 +795,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M096 — `text-to-cad` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad` | repo `https://github.com/Amdkn/text-to-cad.git` | SHA/pin `333d8af79341` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad/README.md`, `01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/text-to-cad/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/06 ; reste intégration du synthétiseur paramétrique CAO dans K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/06 ; reste intégration du synthétiseur paramétrique CAO dans K5 et retrait gitlink.)
 - **Principe** : Synthèse de pièces mécaniques 3D paramétriques (STEP/STL/GLB) à partir de descriptions techniques ou contraintes géométriques.
 - **Invariants** : Validation géométrique manifold avant export pour impression/usinage.
 - **Interfaces** : Service/API `text-to-cad` -> modèles CAO STEP/STL.
@@ -803,7 +803,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M097 — `BusinessOS` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/BusinessOS` | repo `https://github.com/Amdkn/BusinessOS.git` | SHA/pin `e9f1366d357c` | licence `voir-source-brute` | sources : `01_Forkable/FKB07_Money_Maker/BusinessOS/README.md`, `01_Forkable/FKB07_Money_Maker/BusinessOS/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07 (`e9f1366`) ; bridge `_runtime/bridge/adapters.mjs` déjà référencé dans Scion/FKB00 ; reste fusion finale de ses 13 apps/contrats dans K5/Areas OS et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07 (`e9f1366`) ; bridge `_runtime/bridge/adapters.mjs` déjà référencé dans Scion/FKB00 ; reste fusion finale de ses 13 apps/contrats dans K5/Areas OS et retrait gitlink.)
 - **Principe** : OS d'entreprise à 13 modules (Dashboard, Clients, Marketplace, Opérations, Finance) + protocole de négociation de surfaces `adapters.mjs`.
 - **Invariants** : Aucune surface orpheline non lue (règle Scion sparse) ; `a2p` (paiement) jamais exécutable autonomement par un agent.
 - **Interfaces** : _runtime/bridge/adapters.mjs (24 adaptateurs, 39/39 autotests) + aspace_marketplace_engine.py.
@@ -963,7 +963,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M117 — `00_Marketplace_YoutubeSkills` (EXTRA_FKB)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `voir-source-brute` | sources : `01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Absorbé nativement dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py` (`query_marketplace_skills`, `get_marketplace_playbook`) ; test différentiel source-vs-organe sur 6 `SKILL.md` + `README.md` avant/après suppression physique PASS (`organ_outputs == oracle_outputs`).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Absorbé nativement dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py` (`MARKETPLACE_SKILL_CATEGORIES`, `YOUTUBE_SKILL_VIDEOS`, `MARKETPLACE_PLAYBOOKS`, `get_marketplace_playbook`, `query_marketplace_skills`) ; test différentiel strict (`==`, zéro clé en trop) + sabotage avant/après suppression physique PASS.)
 - **Principe** : Cartographie et compilation de 34 ressources vidéo en offres et skills actionnables pour ASpace MarketPlace.
 - **Invariants** : Traçabilité source -> skill -> offre ; évaluation MSCI.
 - **Interfaces** : 00_Marketplace_YoutubeSkills/ + MSCI_ARCH_MARKETPLACE_YOUTUBE_SKILLS.md.
@@ -971,7 +971,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M118 — `04_Inference_Youtube_Discovery_Registry` (EXTRA_FKB)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `voir-source-brute` | sources : `01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry/` + `01_Forkable/FKB*/index.md` + `FUSIONS-REGISTRY.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **SYSTÈME NERVEUX · Organe K3 (Inférence & FreeCloud)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Absorbé nativement dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py` (`qualify_inference_opportunity`, `get_opportunity_dossier`, 5 filtres Watch Skill) ; test différentiel source-vs-organe sur `registry.json` + `OPP-001..005.md` + `SKILL_WATCH.md` avant/après suppression physique PASS (`organ_outputs == oracle_outputs`).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **SYSTÈME NERVEUX · Organe K3 (Inférence & FreeCloud)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Absorbé nativement dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py` (`INFERENCE_DISCOVERY_REGISTRY`, `OPPORTUNITY_DOSSIERS`, `get_opportunity_dossier`, `qualify_inference_opportunity`) ; test différentiel strict (`==`, zéro clé en trop, zéro normalisation lossy) + sabotage sur chaque fonction et champ avant/après suppression physique PASS.)
 - **Principe** : Qualification anti-clickbait à 5 filtres des opportunités d'inférence gratuites (API pure vs app desktop, risque CB, TTL).
 - **Invariants** : Zéro carte bancaire exposée ; priorité absolue aux API pures sur les apps propriétaires ; traçabilité JSON.
 - **Interfaces** : registry.json + SKILL_WATCH.md -> injection Voie A (FreeLLMAPI) ou Voie B (Codex Web).
@@ -979,7 +979,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M119 — `LibertyRide2` (EXTRA_FKB)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/LibertyRide2` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `voir-source-brute` | sources : `01_Forkable/FKB07_Money_Maker/LibertyRide2/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **MÉTABOLISME · Organe K5 (Vidéo, Finance S0 & Marché B2B)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : application produit client Next.js/TypeScript/Three.js réelle de l'aire B1 SOB/Liberty Ride — livrable applicatif autonome opéré par Areas OS LD01).)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`RETENU`** · Statut Vérifié (§5.8) : **`RETENU`** (RETENU (Justification de fondation : application produit client Next.js/TypeScript/Three.js réelle de l'aire B1 SOB/Liberty Ride — livrable applicatif autonome opéré par Areas OS LD01).)
 - **Principe** : Portail business opérationnel réel (Liberty Ride 2.0 Contractor Launchpad) incarnant un cas client concret de B1/LD01.
 - **Invariants** : Isolation complète des règles et hooks hors racine (correctif `.claude/settings.json` appliqué) ; déploiement applicatif autonome.
 - **Interfaces** : Next.js App Router + Tailwind + Three.js.

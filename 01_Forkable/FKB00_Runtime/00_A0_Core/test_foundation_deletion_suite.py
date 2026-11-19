@@ -1,29 +1,26 @@
 #!/usr/bin/env python3
 """
-test_foundation_deletion_suite.py — Suite de vérification Cycle 5 de la Fondation A'Space (ÉNONCÉ §1 & ADR-14).
+test_foundation_deletion_suite.py — Suite de vérification Cycle 6 de la Fondation A'Space (ÉNONCÉ §1 & ADR-15).
 
-Rejoue de façon 100 % déterministe, sans compteur codé en dur et sans repli factice :
-  1. L'intégrité SHA-256 de 00_Memoire/bundle/fusion/FUSION-ENONCE.md et protection .gitattributes
-     (y compris FUSION-ENONCE.md -text en dernier et tests/fixtures/* text eol=lf).
+Rejoue de façon 100 % déterministe, sans compteur codé en dur, sans tolérance aux clés en trop
+et avec détection automatique de sabotage sur chaque fonction/donnée déclarée :
+  1. L'intégrité SHA-256 de 00_Memoire/bundle/fusion/FUSION-ENONCE.md et protection .gitattributes.
   2. La purge effective des 8 doublons FKB06 dans .gitmodules et l'alignement 1:1 (101 == 101).
-  3. L'exécution réelle Rust en local (`fondation-13-1` 100/100 + `RigInfinity` 105/105 WSL2/Linux)
-     et le pont Phase 2 Hybride (`r10-receive` + `route-dispatch` compilés contre Python).
-  4. Le test différentiel réel avec amputation physique (ÉNONCÉ (3), Cycle 5) sur copie isolée :
-     - Phase A : exécution des sources d'origine M044 (`context-language-models`), M050 (`knowledge-catalog`),
-       M056 (`CLI-Anything` sur `zotero` & `audacity`), M117 (`00_Marketplace_YoutubeSkills`), M118
-       (`04_Inference_Youtube_Discovery_Registry`) sur des entrées riches identiques -> `oracle_outputs`.
-     - Phase B : suppression physique effective de ces 5 sources (et des 15 autres répertoires FKB02/FKB04)
-       + vérification d'absence des 14 modules déjà retirés (F8/GSD/llm-wiki).
-     - Phase C : exécution des organes natifs dans l'arbre physiquement amputé sur les mêmes entrées,
-       comparaison stricte `organ_outputs == oracle_outputs`, vérification qu'aucun organe n'auto-déclare
-       `source_parity_verified` ni `headless-fallback`, et consignation des reçus R10 mesurés.
-  5. L'interconnexion L0 des 5 organes (K1..K5) et la déclaration des 4 Noyaux Équilibrés (ADR-14).
+  3. L'exécution réelle Rust en local (`fondation-13-1` + `RigInfinity`) et le pont Phase 2 Hybride.
+  4. Le test différentiel strict (`==`) + anti-sabotage avant/après suppression physique (ÉNONCÉ (3)) :
+     - Phase A : exécution des sources d'origine M044, M050, M056, M095 (`video-director`), M117, M118
+       sur toutes leurs fonctions, cas limites et structures -> `oracle_outputs`.
+     - Phase B : suppression physique effective des répertoires sources (dont `video-director`).
+     - Phase C : exécution des organes natifs dans l'arbre amputé, vérification stricte `organ == oracle`
+       (zéro clé en trop, zéro normalisation masqueuse), puis boucle de sabotage de chaque fonction/table
+       exigeant l'échec à 100 %, et consignation des reçus R10 mesurés.
+  5. L'interconnexion L0 des 5 organes (K1..K5) sous les 3 Noyaux (`ÂME / SYSTÈME NERVEUX / CORPS`).
   6. La complétude et l'honnêteté dynamique de CARTE-DES-PRINCIPES.md & REGISTRE-DE-FUSION.md :
-     - 120 modules tous rattachés à `{ÂME, SYSTÈME NERVEUX, CORPS, MÉTABOLISME}` avec <= 40 par noyau (ADR-14),
+     - 120 modules tous rattachés à `{ÂME, SYSTÈME NERVEUX, CORPS}` sans exception (ADR-15),
      - égalité stricte `registry_fusionne == proven_fusionne` calculée depuis les preuves exécutées,
      - `M058 agent-desktop` maintenu `PARTIEL` tant que `desktop_live_verified` est faux,
      - ratio `(RETENU+ÉCARTÉ) < 1/3` et justifications individuelles non vides.
-  7. Tous les artefacts SPAD (>= 14 ADRs dont ADR-14) + reproductibilité sur clone Windows standard (`core.autocrlf=true`).
+  7. Tous les artefacts SPAD (>= 15 ADRs dont ADR-15) + reproductibilité sur clone Windows standard.
 """
 
 from __future__ import annotations
@@ -55,7 +52,6 @@ from aspace_foundation_kernel import (  # noqa: E402
     EventJournal,
     FoundationKernelRegistry,
     KERNEL_IDS,
-    MAX_MODULES_PER_KERNEL_RATIO,
     R10Ledger,
     R10_SCHEMA,
     ROOT_KERNELS,
@@ -104,6 +100,10 @@ SUBMODULE_SENTINELS = (
         "01_Forkable/FKB04_Tools_Anything/CLI-Anything",
         "cli-anything-plugin/skill_generator.py",
     ),
+    (
+        "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
+        "video-director/scripts/check_timeline.py",
+    ),
 )
 
 SOURCE_DIRS_TO_DELETE_FOR_TEST = [
@@ -126,7 +126,8 @@ SOURCE_DIRS_TO_DELETE_FOR_TEST = [
     "01_Forkable/FKB02_Memory/infinite-brain-harness",
     "01_Forkable/FKB02_Memory/infinite-brain-os",
     "01_Forkable/FKB02_Memory/knowledge-catalog",
-    # Extra FKB natifs absorbés (2)
+    # FKB07 M095 video-director + Extra FKB natifs absorbés (M117, M118)
+    "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
     "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
     "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
 ]
@@ -160,7 +161,7 @@ def _force_rmtree(path: Path) -> None:
 
 
 def _ensure_upstream_submodules() -> None:
-    """Initialise les sous-modules requis (sans jamais masquer une absence) sur clone neuf."""
+    """Initialise les sous-modules requis sur clone neuf (sans masquer une absence)."""
     for sub_rel, sentinel_rel in SUBMODULE_SENTINELS:
         sentinel = ROOT / sub_rel / sentinel_rel
         if sentinel.exists():
@@ -276,54 +277,136 @@ def test_rust_cargo_and_phase2_hybrid() -> set[str]:
 def _build_differential_inputs() -> dict:
     return {
         "m044": {
-            "text_cases": [
-                {"content": "Bonjour Aspace"},
-                {"content": ""},
-                {"content": "   \n  "},
-                {"content": [{"type": "text", "text": "Bloc 1"}, {"type": "text", "text": "Bloc 2"}]},
-                {"content": [{"type": "tool_use", "id": "call_1", "name": "read"}]},
-                {"content": [{"type": "text", "text": "Alpha"}, {"type": "tool_use", "id": "x"}, {"type": "text", "text": "Beta"}]},
-                {"content": None},
-                {"content": 42},
-                {"role": "system", "content": "Règle stricte"},
-                {"role": "user", "content": [{"text": "Sans type explicite"}]},
-                {"role": "assistant", "content": []},
-                {"role": "assistant", "content": "Ligne A\nLigne B"},
+            "content_cases": [
+                "abc",
+                "",
+                ["a", {"type": "text", "text": "b"}, {"text": "c"}],
+                [],
+                {"text": "abc"},
+                ["caption", {"type": "image_url", "image_url": "image"}],
+                [{"type": "tool_use", "id": "t1"}],
+                None,
+                42,
+            ],
+            "render_msgs": [
+                {
+                    "role": "assistant",
+                    "reasoning_content": "R",
+                    "content": [{"type": "text", "text": "C"}],
+                    "tool_calls": [{"function": {"name": "bash", "arguments": "ARG"}}],
+                },
+                {
+                    "role": "assistant",
+                    "reasoning_content": "R2",
+                    "content": "Body",
+                    "tool_calls": [
+                        {"function": {"name": "read", "arguments": {"x": 1}}},
+                        {"function": {"name": "write", "arguments": None}},
+                    ],
+                },
+                {"role": "assistant", "reasoning_content": "OnlyReason", "content": []},
+                {"role": "assistant", "content": None, "tool_calls": [{"function": {"name": "ping", "arguments": "{}"}}]},
+                {"role": "user", "content": "Simple user"},
+                {},
             ],
             "conversations": [
                 [
-                    {"role": "user", "content": "Tour 1"},
-                    {"role": "assistant", "content": [{"type": "text", "text": "Réponse 1"}]},
-                    {"role": "user", "content": "Tour 2"},
-                    {"role": "assistant", "content": "Réponse 2"},
-                    {"role": "user", "content": "Tour 3 récent"},
-                    {"role": "assistant", "content": "Réponse 3 récente"},
+                    {"role": "system", "content": "SYSTEM_SENTINEL"},
+                    {"role": "user", "content": "TASK_SENTINEL"},
+                    {"role": "assistant", "reasoning_content": "Think", "content": "A"},
+                    {"role": "tool", "content": "T", "tool_call_id": "call_1"},
+                    {"role": "user", "content": "Follow-up"},
                 ],
                 [
-                    {"role": "user", "content": "Mono A"},
-                    {"role": "assistant", "content": "Mono B"},
-                ],
-                [
-                    {"role": "user", "content": "Unique"},
+                    {"role": "system", "content": "S1"},
+                    {"role": "system", "content": "S2_must_not_merge"},
+                    {"role": "assistant", "content": "Reply"},
                 ],
             ],
-            "edited_roundtrip": "--- user ---\nContexte condensé\n\n--- assistant ---\nSynthèse éditée\n",
+            "parse_back_cases": [
+                ("role_system", "[[CTX_TURN 99 role=system]]\npayload"),
+                ("role_tool", "[[CTX_TURN 1 role=tool]]\npayload"),
+                ("role_notes", "[[CTX_TURN 1 role=notes]]\npayload"),
+                ("role_assistant", "[[CTX_TURN 1 role=ASSISTANT]]\npayload"),
+                ("numbered_mixed", "[[CTX_TURN 1 role=assistant]]\nA\n[[CTX_TURN 1 role=user]]\nB"),
+                ("empty_str", ""),
+                ("whitespace", " \n\t "),
+                ("empty_turn", "[[CTX_TURN 1 role=assistant]]\n "),
+                (
+                    "merge_assistant_drop_empty",
+                    "[[CTX_TURN 1 role=assistant]]\n A \n[[CTX_TURN 2 role=tool]]\n \n[[CTX_TURN 3 role=assistant]]\n B \n",
+                ),
+                ("merge_user_tool", "[[CTX_TURN 1 role=user]]\nA\n[[CTX_TURN 2 role=tool]]\nB"),
+                ("loose_only", "  loose note \n"),
+                ("loose_plus_hdr", "loose note\n[[CTX_TURN 7 role=assistant]]\nanswer"),
+                ("damaged_hdr", "[[CTX_TURN X role=user]]\nnaïve café\n[[CTX_TURN 2 role=assistant]]\nanswer"),
+                ("non_str", 98765),
+            ],
+            "edit_gate_cases": {
+                "resolve": [
+                    (True, None), (False, None), ("fit", None), ("shrink", None),
+                    (None, "fit"), (None, "shrink"), (None, "0"), (None, "1"), (None, ""),
+                    ("invalid_gate", None),
+                ],
+                "may_grow": [
+                    (True, 4096, 4000), (True, 4096, 4096), (True, 4096, 4097),
+                    (False, 4096, 100), (True, 0, 100),
+                ],
+                "reject_rule": [(True, 4096), (True, 0), (False, 4096)],
+            },
+            "finish_policy_cases": {
+                "modes": ["submit", "open_ended", "open-ended", "", "unknown_mode"],
+                "commands": [
+                    "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT",
+                    "echo COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT",
+                    "  /bin/echo 'COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT'  ",
+                    'echo "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT" && ls',
+                    "",
+                ],
+            },
+            "lm_compat_models": [
+                "gpt-5-4", "openai/gpt-5-4-mini", "gpt-5-4-nano",
+                "gpt-o4-mini", "openrouter/gpt-5-turbo", "claude-3-5-sonnet", "",
+            ],
         },
         "m050": {
             "synthetic_docs": [
-                ("valid_decision", "---\nokf_version: '0.2'\ntype: Decision\ntitle: ADR Test\nverified: '2026-11-18'\n---\n\n# Corps\nContenu décisif.\n"),
-                ("valid_date_obj", "---\nokf_version: '0.2'\ntype: Concept\ntitle: YAML Date Native\nverified: 2026-11-19\n---\nTexte YAML date.\n"),
-                ("valid_spec", "---\ntype: Specification\nverified: '2024-01-01'\ntier: golden\n---\nSpec ancienne.\n"),
-                ("valid_note_unverified", "---\ntype: Note\nsource_tier: bronze\n---\nNote rapide.\n"),
-                ("valid_incident", "---\nokf_version: '0.2'\ntype: Incident\nverified: '2026-11-10T12:00:00'\n---\nIncident horodaté.\n"),
-                ("valid_synthesis", "---\nokf_version: '0.2'\ntype: Synthesis\nverified: '2026-11-19'\n---\nSynthèse.\n"),
-                ("bad_no_fm", "# Juste un titre sans frontmatter\n"),
-                ("bad_missing_type", "---\ntitle: Sans type\n---\nTexte.\n"),
-                ("bad_unknown_type", "---\ntype: TypeInexistant\n---\nTexte.\n"),
-                ("bad_unclosed", "---\ntype: Concept\ntitle: Non fermé\n"),
-                ("bad_non_dict", "---\n- element_1\n- element_2\n---\nTexte.\n"),
+                (
+                    "valid_bq",
+                    "---\ntype: BigQuery Table\ntitle: Sample\ndescription: A sample table.\ntags: [a, b]\ntimestamp: 2026-05-27T00:00:00+00:00\n---\n\n# Sample\n\nBody text.\n",
+                ),
+                ("valid_type_only", "---\ntype: X\n---\nMinimal.\n"),
+                ("no_frontmatter", "# Hello\n\nNo frontmatter here.\n"),
+                ("missing_type", "---\ntitle: Y\n---\nText.\n"),
+                ("empty_type", "---\ntype: ''\ntitle: EmptyType\n---\nText.\n"),
+                ("unterminated", "---\ntype: X\nstill in frontmatter\n"),
+                ("invalid_yaml", "---\ntype: [unclosed\n---\nBody\n"),
+                ("non_dict", "---\n- a\n- b\n---\nBody\n"),
             ],
-            "now_iso": "2026-11-19T12:00:00",
+            "trust_cases": [
+                {},
+                {"verified": None},
+                {"verified": "unexpected-str"},
+                {"verified": {"by": "human:amdkn", "at": "2026-06-25T09:00:00Z"}},
+                {"verified": [{"by": "process:finance-nightly", "at": "x"}]},
+                {"verified": [{"by": "process:ci", "at": "x"}, "bad", {"by": "human:amdkn", "at": "y"}]},
+            ],
+            "stale_cases": [
+                {"stale_after": "2026-09-23T00:00:00Z"},
+                {"stale_after": "2026-09-23T12:00:00+00:00"},
+                {"stale_after": "2026-09-24T00:00:00Z"},
+                {},
+                {"stale_after": "not-a-date"},
+                {"stale_after": "2026-09-23"},
+                {"stale_after": "2026-09-23T00:00:00"},
+            ],
+            "stale_now_iso": "2026-09-23T12:00:00+00:00",
+            "synth_fallback_cases": [
+                [],
+                [("A", "desc a"), ("B", "")],
+                [("", "desc only")],
+            ],
+            "concept_id_cases": ["alpha", "datasets/ga4", "sub/my_doc-1.v2", "", "///", "../escape", "-leadingdash"],
         },
         "m056": {
             "cache_key_cases": [
@@ -351,15 +434,76 @@ def _build_differential_inputs() -> dict:
                     "options": {"indent": 2, "format": "bibtex"},
                     "harness_version": "0.4.1",
                 },
+            ],
+        },
+        "m095": {
+            "is_num_cases": [0, 1.5, -2.0, True, False, "1", None],
+            "norm_cases": ["  Héllo,   Wörld!  C++ ", "", "A---B   C"],
+            "read_time_cases": ["", "Hi", "One two three four five six"],
+            "timelines": [
                 {
-                    "software": "custom-cli",
-                    "recipe": "batch",
-                    "bundle_kind": "bundle-v1",
-                    "source_fingerprint": "sha256:999",
-                    "options": {"dry_run": True, "targets": ["a", "b"]},
-                    "harness_version": "1.0.0",
+                    "name": "valid_reads",
+                    "tl": {
+                        "meta": {"w": 1920, "h": 1080, "fps": 30, "dur": 6.0, "clock": "reads"},
+                        "scenes": [
+                            {"id": "s1", "start": 0.0, "end": 3.0, "beats": {"intro": 0.5, "hit": 2.0}, "transitionOut": {"why": "reveal"}},
+                            {"id": "s2", "start": 3.0, "end": 6.0, "beats": {"end": 5.5}},
+                        ],
+                        "reads": [{"from": 0.5, "to": 1.5, "what": "card"}],
+                        "cuts": [3.0],
+                        "hero": {"t": 4.0},
+                        "silences": [{"from": 2.8, "to": 3.5}],
+                        "sfx": [{"at": "s1.hit"}, {"at": "t.0"}],
+                        "captions": [{"from": 0.5, "to": 2.0, "text": "Widget launches now"}],
+                        "texts": [
+                            {"role": "hook", "text": "Widget", "from": 0.0, "to": 2.5, "px": 96},
+                            {"role": "cta", "text": "Try", "in": "s1.hit", "out": "s2.end", "px": 56},
+                        ],
+                        "terms": ["Widget"],
+                        "vo": [{"id": "l1", "text": "Widget overview", "words": [{"t": 0.5, "w": "Widget"}, {"t": 1.1, "w": "overview"}]}],
+                    },
+                },
+                {"name": "bad_meta_early_return", "tl": {"meta": {"w": 0, "h": -1, "fps": True, "dur": "5"}}},
+                {"name": "bad_music_loop_and_clock", "tl": {"meta": {"w": 1080, "h": 1920, "fps": 60, "dur": 5.0, "clock": "music", "bpm": 120, "meter": "4/4", "loop": True}}},
+                {"name": "bad_clock_missing_bpm", "tl": {"meta": {"w": 1080, "h": 1080, "fps": 30, "dur": 4.0, "clock": "music"}}},
+                {
+                    "name": "scenes_gaps_beats_cuts_sfx_errors",
+                    "tl": {
+                        "meta": {"w": 1920, "h": 1080, "fps": 30, "dur": 5.0, "clock": "badclock"},
+                        "scenes": [
+                            {"id": "s1", "start": 1.0, "end": 0.5},
+                            {"id": "s2", "start": 1.0, "end": 3.0, "beats": {"b_str": "x", "b_out": 9.0, "b_warn": 4.0}},
+                        ],
+                        "reads": [{"from": 0.1, "to": 0.4, "what": "fast"}],
+                        "cuts": [0.0, 9.0],
+                        "hero": {"t": 1.0},
+                        "silences": [{"from": 0.2, "to": 0.4}],
+                        "sfx": [{"at": "s2.missing"}],
+                        "captions": [{"from": 1.0, "to": 1.5, "text": "Too many fast caption words here"}],
+                        "texts": [{"role": "hook", "text": "Small hook", "from": 4.0, "to": 4.5, "px": 40}, {"role": "cta", "text": "Late CTA", "from": 4.0, "to": 5.5}],
+                        "terms": ["UnmentionedTerm"],
+                        "vo": [{"id": "l1", "status": "ESTIMATED", "words": [{"t": 2.0, "w": "b"}, {"t": 1.0, "w": "a"}]}],
+                    },
+                },
+                {
+                    "name": "waived_hook_and_term_warnings",
+                    "tl": {
+                        "meta": {"w": 1080, "h": 1080, "fps": 30, "dur": 4.0, "clock": "voice", "hookWaiver": "title card"},
+                        "scenes": [{"id": "s1", "start": 0.0, "end": 4.0}],
+                        "hero": {"t": 2.5},
+                        "silences": [{"from": 1.5, "to": 2.2}],
+                        "texts": [{"role": "hook", "text": "OnlyShown", "from": 3.5, "to": 4.0, "px": 90}],
+                        "terms": ["OnlyShown", "OnlySaid"],
+                        "vo": [{"id": "v1", "text": "OnlySaid here"}],
+                    },
                 },
             ],
+            "compare_cuts_cases": [
+                ([], [1.0, 2.0], 30.0),
+                ([1.03, 2.0, 4.5], [1.0, 2.0, 8.0], 30.0),
+                ([1.0], [], 30.0),
+            ],
+            "runs_cases": [[False, True, True, False, True], [True, True, True], []],
         },
         "m117": {
             "categories": [
@@ -370,9 +514,24 @@ def _build_differential_inputs() -> dict:
                 "05_AI_Agents_and_Automation",
                 "06_SaaS_and_MicroServices",
             ],
+            "query_cases": [
+                {"category": None, "keyword": None},
+                {"category": "03_3D_and_Spatial", "keyword": None},
+                {"category": None, "keyword": "Three.js"},
+                {"category": None, "keyword": "$1 500"},
+                {"category": "06_SaaS_and_MicroServices", "keyword": "Stripe"},
+                {"category": "website-and-funnels", "keyword": None},
+            ],
         },
         "m118": {
             "opp_ids": ["OPP-001", "OPP-002", "OPP-003", "OPP-004", "OPP-005"],
+            "qualify_cases": [
+                {"platform": "apinex.com", "verified_model_weights": True, "direct_openai_or_anthropic_api": True, "estimated_ttl_days": 60},
+                {"platform": "scam-clickbait.example", "verified_model_weights": False, "clickbait_rebrand": True},
+                {"platform": "sovereign-new.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": True, "estimated_ttl_days": 45},
+                {"platform": "web-trial.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 3},
+                {"platform": "stripe-loop.example", "requires_credit_card": True, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 14},
+            ],
         },
     }
 
@@ -381,17 +540,24 @@ _ORACLE_RUNNER_CODE = r'''
 import dataclasses
 import datetime as dt
 import json
+import os
 import re
 import shutil
+import subprocess
 import sys
 import tempfile
 from pathlib import Path
+from types import SimpleNamespace
+import numpy as np
+from PIL import Image, ImageDraw
 import yaml
 
 iso = Path.cwd()
 inputs = json.loads((iso / "diff_inputs.json").read_text(encoding="utf-8"))
 
-# --- M044: context-language-models upstream ---
+# ============================================================================
+# M044: context-language-models upstream
+# ============================================================================
 clm_root = iso / "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/clm"
 sys.path.insert(0, str(clm_root))
 from clm_harness.context_utils.context_string import (
@@ -400,21 +566,79 @@ from clm_harness.context_utils.context_string import (
     render_editable as up_render_editable,
     rendered_text as up_rendered_text,
 )
+from clm_harness.context_env.edit_gate import (
+    fit_rule as up_fit_rule,
+    may_grow as up_may_grow,
+    reject_rule as up_reject_rule,
+    rejected_note as up_rejected_note,
+    resolve_allow_edit_growth as up_resolve_allow_edit_growth,
+)
+from clm_harness.utils.finish_policy import (
+    FINISH_INSTRUCTIONS as UP_FINISH_INSTRUCTIONS,
+    FinishPolicy as UpFinishPolicy,
+    SUBMIT_MARKER as UP_SUBMIT_MARKER,
+    is_submit_command as up_is_submit_command,
+)
+from clm_harness.utils.lm_compat import token_cap_key as up_token_cap_key
+
+def _safe_call(fn, *args, **kwargs):
+    try:
+        return {"ok": True, "val": fn(*args, **kwargs)}
+    except Exception as exc:
+        return {"ok": False, "err": type(exc).__name__}
+
+m044_editables = []
+m044_parses_conv = []
+for conv in inputs["m044"]["conversations"]:
+    for p in (0, 1, 2, 10):
+        ed = up_render_editable(conv, protect=p)
+        m044_editables.append({"protect": p, "text": ed})
+        m044_parses_conv.append({"protect": p, "parsed": up_parse_back(ed, conv[:p])})
+
+protected_ref = inputs["m044"]["conversations"][0][:2]
+m044_parse_back_edge = {
+    lbl: up_parse_back(edited, protected_ref)
+    for lbl, edited in inputs["m044"]["parse_back_cases"]
+}
+m044_resolve_gate = [
+    _safe_call(up_resolve_allow_edit_growth, passed, env)
+    for passed, env in inputs["m044"]["edit_gate_cases"]["resolve"]
+]
+m044_finish_modes = []
+for md in inputs["m044"]["finish_policy_cases"]["modes"]:
+    try:
+        fp = UpFinishPolicy(md)
+        m044_finish_modes.append({
+            "ok": True,
+            "mode": fp.mode,
+            "open_ended": fp.open_ended,
+            "fragment": fp.prompt_fragment(),
+            "cmds": [fp.is_finish_command(c) for c in inputs["m044"]["finish_policy_cases"]["commands"]],
+        })
+    except Exception as exc:
+        m044_finish_modes.append({"ok": False, "err": type(exc).__name__})
 
 m044_out = {
-    "content_texts": [up_content_text(m.get("content")) for m in inputs["m044"]["text_cases"]],
-    "rendered_texts": [up_rendered_text(m) for m in inputs["m044"]["text_cases"]],
-    "roundtrips": [],
+    "content_texts": [up_content_text(c) for c in inputs["m044"]["content_cases"]],
+    "rendered_texts": [up_rendered_text(m) for m in inputs["m044"]["render_msgs"]],
+    "editables": m044_editables,
+    "parses_conv": m044_parses_conv,
+    "parse_back_edge": m044_parse_back_edge,
+    "resolve_gate": m044_resolve_gate,
+    "fit_rule": up_fit_rule(4096),
+    "may_grow": [up_may_grow(allow_growth=ag, limit=lim, after=af) for ag, lim, af in inputs["m044"]["edit_gate_cases"]["may_grow"]],
+    "reject_rule": [up_reject_rule(allow_growth=ag, limit=lim) for ag, lim in inputs["m044"]["edit_gate_cases"]["reject_rule"]],
+    "rejected_note": up_rejected_note(baseline=1000, after=1200, before=900, rule=up_fit_rule(1000)),
+    "finish_marker": UP_SUBMIT_MARKER,
+    "finish_instructions": UP_FINISH_INSTRUCTIONS,
+    "finish_modes": m044_finish_modes,
+    "submit_commands": [up_is_submit_command(c) for c in inputs["m044"]["finish_policy_cases"]["commands"]],
+    "token_cap_keys": [up_token_cap_key(m) for m in inputs["m044"]["lm_compat_models"]],
 }
-for conv in inputs["m044"]["conversations"]:
-    for protect in (0, 1, 2, 3):
-        editable = up_render_editable(conv, protect=protect)
-        tail = conv[-protect:] if protect > 0 and len(conv) >= protect else (list(conv) if protect > 0 else [])
-        parsed = up_parse_back(editable, tail)
-        m044_out["roundtrips"].append({"protect": protect, "editable": editable, "parsed": parsed})
-m044_out["custom_edit"] = up_parse_back(inputs["m044"]["edited_roundtrip"], inputs["m044"]["conversations"][0][-2:])
 
-# --- M050: knowledge-catalog upstream ---
+# ============================================================================
+# M050: knowledge-catalog upstream
+# ============================================================================
 okf_root = iso / "01_Forkable/FKB02_Memory/knowledge-catalog/okf/src"
 sys.path.insert(0, str(okf_root))
 from reference_agent.bundle.document import (
@@ -425,145 +649,327 @@ from reference_agent.bundle.document import (
     trust_tier as up_trust_tier,
 )
 from reference_agent.bundle.index import regenerate_indexes as up_regenerate_indexes
+from reference_agent.bundle.paths import (
+    concept_id_to_path as up_concept_id_to_path,
+    parse_concept_id as up_parse_concept_id,
+    path_to_concept_id as up_path_to_concept_id,
+)
+from reference_agent.bundle.synthesizer import (
+    _fallback as up_synth_fallback,
+    synthesize_description as up_synth_description,
+)
 
-ref_now = dt.datetime.fromisoformat(inputs["m050"]["now_iso"])
+stale_now = dt.datetime.fromisoformat(inputs["m050"]["stale_now_iso"])
 doc_samples = list(inputs["m050"]["synthetic_docs"])
 concepts_dir = iso / "00_Memoire" / "bundle" / "concepts"
 if concepts_dir.exists():
-    for md_p in sorted(concepts_dir.glob("*.md"))[:12]:
+    for md_p in sorted(concepts_dir.glob("*.md"))[:8]:
         doc_samples.append((f"concept:{md_p.name}", md_p.read_text(encoding="utf-8")))
 
 m050_docs_res = []
 for label, raw in doc_samples:
     try:
         d = UpOKFDocument.parse(raw)
-        nv = up_normalize_verified(d.frontmatter)
-        nv_clean = json.loads(json.dumps(nv, default=str))
+        try:
+            d.validate()
+            val_ok = True
+        except UpOKFDocumentError:
+            val_ok = False
         m050_docs_res.append({
             "label": label,
             "ok": True,
-            "normalized_verified": nv_clean,
-            "trust_tier": up_trust_tier(d.frontmatter),
-            "is_stale": up_is_stale(d.frontmatter, now=ref_now),
-            "validate": d.validate(),
+            "validate_ok": val_ok,
+            "frontmatter": d.frontmatter,
+            "body": d.body,
             "serialized": d.serialize(),
         })
     except UpOKFDocumentError:
         m050_docs_res.append({"label": label, "ok": False, "err": "OKFDocumentError"})
 
-bundle_tmp = Path(tempfile.mkdtemp(dir=str(iso), prefix="oracle_okf_"))
-(bundle_tmp / "alpha.md").write_text("---\nokf_version: '0.2'\ntype: Concept\ntitle: Alpha\nverified: '2026-11-19'\n---\nBody Alpha\n", encoding="utf-8")
-(bundle_tmp / "sub").mkdir()
-(bundle_tmp / "sub" / "beta.md").write_text("---\nokf_version: '0.2'\ntype: Decision\ntitle: Beta\nverified: '2026-11-18'\n---\nBody Beta\n", encoding="utf-8")
-(bundle_tmp / "sub" / "gamma.md").write_text("---\nokf_version: '0.2'\ntype: Note\ntitle: Gamma\n---\nBody Gamma\n", encoding="utf-8")
-up_gen_paths = up_regenerate_indexes(bundle_tmp, model="oracle-model", synthesize=lambda f, docs, model="": f"Synthèse {f} ({len(docs)} docs via {model})")
-m050_indexes = {
-    p.relative_to(bundle_tmp).as_posix(): p.read_text(encoding="utf-8")
-    for p in sorted(up_gen_paths)
+m050_trust_res = [
+    {
+        "normalized": up_normalize_verified(fm),
+        "tier": up_trust_tier(fm),
+    }
+    for fm in inputs["m050"]["trust_cases"]
+]
+m050_stale_fixed = [up_is_stale(fm, now=stale_now) for fm in inputs["m050"]["stale_cases"]]
+m050_stale_default_now = [
+    up_is_stale({"stale_after": "2020-01-01T00:00:00Z"}),
+    up_is_stale({"stale_after": "2099-01-01T00:00:00Z"}),
+]
+
+# Multi-folder OKF index test + single-child no-synth check + empty dir skip + non-existent dir
+b_multi = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_okf_m_"))
+(b_multi / "datasets").mkdir()
+(b_multi / "datasets" / "only.md").write_text("---\ntype: BigQuery Dataset\ntitle: Only Dataset\ndescription: Single child desc.\n---\nBody.\n", encoding="utf-8")
+(b_multi / "tables").mkdir()
+(b_multi / "tables" / "events_.md").write_text("---\ntype: BigQuery Table\ntitle: events_*\ndescription: Sharded events.\n---\nEvents.\n", encoding="utf-8")
+(b_multi / "tables" / "users.md").write_text("---\ntype: BigQuery Table\ntitle: users\ndescription: Users table.\n---\nUsers.\n", encoding="utf-8")
+(b_multi / "empty_dir").mkdir()
+synth_calls = []
+def _ora_synth(rel, pairs, *, model):
+    synth_calls.append(rel)
+    return up_synth_fallback(pairs)
+gen_m = up_regenerate_indexes(b_multi, model="stub-test", synthesize=_ora_synth)
+b_missing = iso / "does_not_exist_okf_dir"
+gen_missing = up_regenerate_indexes(b_missing, model="stub-test", synthesize=_ora_synth)
+
+b_root = Path("/tmp_okf_root")
+path_cases = []
+for raw_cid in inputs["m050"]["concept_id_cases"]:
+    try:
+        cid = up_parse_concept_id(raw_cid)
+        p = up_concept_id_to_path(b_root, cid)
+        back = up_path_to_concept_id(b_root, p)
+        path_cases.append({"ok": True, "cid": list(cid), "rel": p.relative_to(b_root).as_posix(), "back": list(back)})
+    except ValueError:
+        path_cases.append({"ok": False, "err": "ValueError"})
+path_cases.append(_safe_call(up_concept_id_to_path, b_root, ()))
+
+m050_out = {
+    "docs": m050_docs_res,
+    "trust": m050_trust_res,
+    "stale_fixed": m050_stale_fixed,
+    "stale_default_now": m050_stale_default_now,
+    "synth_fallback": [
+        up_synth_description("", c, model="stub") if not c else up_synth_fallback(c)
+        for c in inputs["m050"]["synth_fallback_cases"]
+    ],
+    "indexes_multi": {p.relative_to(b_multi).as_posix(): p.read_text(encoding="utf-8") for p in sorted(gen_m)},
+    "synth_calls": synth_calls,
+    "indexes_missing_len": len(gen_missing),
+    "empty_dir_has_index": (b_multi / "empty_dir" / "index.md").exists(),
+    "paths": path_cases,
 }
 
-m050_out = {"docs": m050_docs_res, "indexes": m050_indexes}
-
-# --- M056: CLI-Anything upstream ---
+# ============================================================================
+# M056: CLI-Anything upstream
+# ============================================================================
 cli_plugin_dir = iso / "01_Forkable/FKB04_Tools_Anything/CLI-Anything/cli-anything-plugin"
 sys.path.insert(0, str(cli_plugin_dir))
 from preview_bundle import build_cache_key as up_build_cache_key
 from skill_generator import (
     extract_cli_metadata as up_extract_cli_metadata,
+    extract_commands_from_cli as up_extract_commands_from_cli,
     generate_skill_md as up_generate_skill_md,
     generate_skill_md_simple as up_generate_skill_md_simple,
 )
 
+# Synthetic harnesses covering export group, nested group, flat commands -> General, apt install, and ValueError
+syn_root = iso / "syn_harnesses"
+for name, cli_code, readme_txt in [
+    (
+        "syn_export",
+        "import click\n@click.group()\ndef cli():\n    'Root CLI.'\n@cli.group()\ndef export():\n    'Export ops.'\n@export.command(name='pdf-out')\ndef render_pdf():\n    'Render PDF.'\n    pass\n",
+        "# Syn Export\n\nExport workflow helper.\n\nInstall: `apt install syn-export`\n",
+    ),
+    (
+        "syn_flat",
+        "import click\n@click.command()\ndef ping():\n    'Ping target.'\n    pass\n@click.command()\ndef info():\n    'Info target.'\n    pass\n",
+        "# Syn Flat\n\nFlat command harness.\n",
+    ),
+]:
+    hp = syn_root / name / "agent-harness"
+    pkg = hp / "cli_anything" / name
+    pkg.mkdir(parents=True, exist_ok=True)
+    (pkg / "__init__.py").write_text("", encoding="utf-8")
+    (pkg / "README.md").write_text(readme_txt, encoding="utf-8")
+    (hp / "setup.py").write_text('version="2.4.0"\n', encoding="utf-8")
+    (pkg / f"{name}_cli.py").write_text(cli_code, encoding="utf-8")
+
 tpl_path = cli_plugin_dir / "templates" / "SKILL.md.template"
 m056_harnesses = {}
-for sw in ("zotero", "audacity"):
-    h_dir = iso / "01_Forkable/FKB04_Tools_Anything/CLI-Anything" / sw / "agent-harness"
+for label, h_dir in [
+    ("zotero", iso / "01_Forkable/FKB04_Tools_Anything/CLI-Anything/zotero/agent-harness"),
+    ("audacity", iso / "01_Forkable/FKB04_Tools_Anything/CLI-Anything/audacity/agent-harness"),
+    ("syn_export", syn_root / "syn_export" / "agent-harness"),
+    ("syn_flat", syn_root / "syn_flat" / "agent-harness"),
+]:
     meta = up_extract_cli_metadata(str(h_dir))
-    m056_harnesses[sw] = {
+    cli_files = list((h_dir / "cli_anything").glob("*/*_cli.py"))
+    raw_cmds = [dataclasses.asdict(g) for g in up_extract_commands_from_cli(cli_files[0])] if cli_files else []
+    m056_harnesses[label] = {
         "meta": dataclasses.asdict(meta),
+        "raw_cmds": raw_cmds,
         "skill_md": up_generate_skill_md(meta, template_path=str(tpl_path)),
         "skill_md_simple": up_generate_skill_md_simple(meta),
     }
 
+m056_invalid_res = _safe_call(up_extract_cli_metadata, str(iso / "does_not_exist_harness"))
 m056_cache_keys = [
     up_build_cache_key(
-        ck["software"],
-        ck["recipe"],
-        ck["bundle_kind"],
-        ck["source_fingerprint"],
-        options=ck["options"],
-        harness_version=ck["harness_version"],
+        ck["software"], ck["recipe"], ck["bundle_kind"], ck["source_fingerprint"],
+        options=ck["options"], harness_version=ck["harness_version"],
     )
     for ck in inputs["m056"]["cache_key_cases"]
 ]
-m056_out = {"harnesses": m056_harnesses, "cache_keys": m056_cache_keys}
+m056_out = {"harnesses": m056_harnesses, "invalid": m056_invalid_res, "cache_keys": m056_cache_keys}
 
-# --- M117: 00_Marketplace_YoutubeSkills raw filesystem oracle ---
+# ============================================================================
+# M095: video-director upstream (check_timeline.py + qa_video.py)
+# ============================================================================
+vd_scripts = iso / "01_Forkable/FKB07_Money_Maker/02_Video/video-director/video-director/scripts"
+sys.path.insert(0, str(vd_scripts))
+import check_timeline as up_ct
+import qa_video as up_qv
+
+m095_timelines = []
+tmp_vd = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_vd_"))
+for item in inputs["m095"]["timelines"]:
+    tl_file = tmp_vd / f"{item['name']}.json"
+    tl_file.write_text(json.dumps(item["tl"]), encoding="utf-8")
+    proc = subprocess.run([sys.executable, str(vd_scripts / "check_timeline.py"), str(tl_file)], capture_output=True, text=True, encoding="utf-8")
+    m095_timelines.append({
+        "name": item["name"],
+        "returncode": proc.returncode,
+        "stdout": proc.stdout.replace("\r\n", "\n"),
+        "beat_times": up_qv.beat_times(item["tl"]),
+        "loaded_tl": up_qv.load_timeline(tl_file),
+    })
+
+list_tl_file = tmp_vd / "list_tl.json"
+list_tl_file.write_text(json.dumps([0.5, 2.0, 1.0, 2.0]), encoding="utf-8")
+list_tl_loaded = up_qv.load_timeline(list_tl_file)
+
+# Synthetic numpy frame stats covering flashes, cuts, pops, frozen, flat, loop
+rng = np.zeros(45, dtype=np.float64)
+d_arr = np.full(45, 0.8, dtype=np.float64)
+d_arr[0] = 0.0
+d_arr[5] = 8.0
+d_arr[6] = 8.2   # flash at index 5
+d_arr[12] = 15.0 # cut at index 12
+d_arr[18] = 3.5  # pop at index 18
+d_arr[25:42] = 0.05  # frozen stretch
+std_arr = np.full(45, 18.0, dtype=np.float64)
+std_arr[20:23] = 2.5  # flat frames
+skip_arr = np.full(45, 0.9, dtype=np.float64)
+skip_arr[0] = np.nan
+skip_arr[-1] = np.nan
+skip_arr[5] = 0.5  # < 0.35 * 8.0 -> flash confirmed
+mean_arr = np.full(45, 120.0, dtype=np.float64)
+st_dict = {"n": 45, "mean": mean_arr, "std": std_arr, "d": d_arr, "skip": skip_arr, "seam": 0.4}
+args_ns = SimpleNamespace(freeze=0.5, freeze_eps=0.25, loop=True)
+
+im_contrast = Image.new("RGB", (200, 100), (0, 0, 0))
+draw = ImageDraw.Draw(im_contrast)
+draw.rectangle([20, 20, 120, 70], fill=(255, 255, 255))
+im_flat = Image.new("RGB", (100, 100), (128, 128, 128))
+
+m095_out = {
+    "is_num": [up_ct.is_num(x) for x in inputs["m095"]["is_num_cases"]],
+    "norm": [up_ct.norm(x) for x in inputs["m095"]["norm_cases"]],
+    "read_time": [up_ct.read_time(x) for x in inputs["m095"]["read_time_cases"]],
+    "timelines": m095_timelines,
+    "list_tl_loaded": list_tl_loaded,
+    "runs": [[list(p) for p in up_qv.runs(r)] for r in inputs["m095"]["runs_cases"]],
+    "analyse_picture": up_qv.analyse_picture(st_dict, 30.0, args_ns),
+    "compare_cuts": [up_qv.compare_cuts(det, exp, fps) for det, exp, fps in inputs["m095"]["compare_cuts_cases"]],
+    "measure_text": [
+        up_qv.measure_text(im_contrast, [10, 10, 140, 80], 1080),
+        up_qv.measure_text(im_flat, [10, 10, 60, 60], 1080),
+    ],
+}
+
+# ============================================================================
+# M117: 00_Marketplace_YoutubeSkills raw filesystem oracle
+# ============================================================================
 m117_dir = iso / "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills"
-readme_lines = (m117_dir / "README.md").read_text(encoding="utf-8").splitlines()
-video_records = []
-for ln in readme_lines:
-    mt = re.match(r"^\d+\.\s+`([A-Za-z0-9_-]{11})`.*?Catégorie\s+(\d+)\s*:\s*(.+)$", ln.strip())
-    if mt:
-        video_records.append({"video_id": mt.group(1), "cat_num": mt.group(2), "topic": mt.group(3).strip()})
+readme_txt = (m117_dir / "README.md").read_text(encoding="utf-8")
+m117_cats = []
+for ln in readme_txt.splitlines():
+    cm = re.match(r"^\|\s*\*\*\d+\.\s*[^*]+\*\*\s*\|\s*\[`([^`]+)`\][^|]+\|\s*(\d+)\s+vidéos\s*\|\s*(.+?)\s*\|$", ln.strip())
+    if cm:
+        m117_cats.append({"id": cm.group(1).strip(), "videos": int(cm.group(2)), "offers": cm.group(3).strip()})
+m117_vids = []
+for ln in readme_txt.splitlines():
+    vm = re.match(r"^\d+\.\s+`([A-Za-z0-9_-]{11})`.*?Catégorie\s+(\d+)\s*:\s*(.+)$", ln.strip())
+    if vm:
+        cat_id = next(c["id"] for c in m117_cats if c["id"].startswith(vm.group(2).zfill(2) + "_"))
+        m117_vids.append({"video_id": vm.group(1), "category": cat_id, "topic": vm.group(3).strip()})
 
-m117_playbooks = {}
-for cat in inputs["m117"]["categories"]:
-    skill_text = (m117_dir / cat / "SKILL.md").read_text(encoding="utf-8")
-    fm_match = re.search(r"^---\s*\n(.*?)\n---", skill_text, flags=re.DOTALL)
-    fm_data = yaml.safe_load(fm_match.group(1))
-    vids = re.findall(r"https://youtu\.be/([A-Za-z0-9_-]{11})", skill_text)
-    offers_sec = skill_text.split("## 1. Offres Productisées Associées")[1].split("## 2.")[0]
-    offers = re.findall(r"^\d+\.\s+\*\*(.+?)\*\*.*?\(([^()]*\$[^()]*)\)", offers_sec, flags=re.MULTILINE)
-    proto_sec = skill_text.split("## 3. Protocole d'Exécution")[1]
-    steps = re.findall(r"^\d+\.\s+(?:\*\*[^*]+\*\*\s*:\s*)?(.+)$", proto_sec, flags=re.MULTILINE)
-    m117_playbooks[cat] = {
-        "skill_name": fm_data["name"],
+m117_pbs = {}
+for cat_id in inputs["m117"]["categories"]:
+    stxt = (m117_dir / cat_id / "SKILL.md").read_text(encoding="utf-8")
+    fm = yaml.safe_load(re.search(r"^---\s*\n(.*?)\n---", stxt, flags=re.S).group(1))
+    title_m = re.search(r"^# Skill\s*:\s*(.+)$", stxt, flags=re.M)
+    offers_sec = stxt.split("## 1. Offres Productisées Associées")[1].split("## 2.")[0]
+    offers = [
+        {"offer": om.group(1).strip(), "spec": om.group(2).strip(), "pricing": om.group(3).strip()}
+        for om in re.finditer(r"^\d+\.\s+\*\*(.+?)\*\*\s*:\s*(.+?)\s+\(([^()]*\$[^()]*)\)\.?$", offers_sec, flags=re.M)
+    ]
+    vids = re.findall(r"https://youtu\.be/([A-Za-z0-9_-]{11})", stxt)
+    proto_sec = stxt.split("## 3.")[1]
+    proto = []
+    for ln in proto_sec.splitlines():
+        pm = re.match(r"^\d+\.\s+\*\*([^*]+)\*\*\s*:\s*(.+)$", ln.strip())
+        if pm:
+            proto.append(f"{pm.group(1).strip()} : {pm.group(2).strip().replace('`', '').replace('**', '')}")
+    m117_pbs[cat_id] = {
+        "skill_name": fm["name"],
+        "title": title_m.group(1).strip(),
+        "description": fm["description"],
+        "productized_offers": offers,
         "foundational_videos": vids,
-        "offer_titles": [o[0].strip() for o in offers],
-        "offer_pricings": [o[1].strip() for o in offers],
-        "protocol_steps_count": len(steps),
+        "execution_protocol": proto,
     }
-m117_out = {
-    "video_count": len(video_records),
-    "video_ids_sorted": sorted(v["video_id"] for v in video_records),
-    "playbooks": m117_playbooks,
-}
+m117_out = {"categories": m117_cats, "videos": m117_vids, "playbooks": m117_pbs}
 
-# --- M118: 04_Inference_Youtube_Discovery_Registry raw filesystem oracle ---
+# ============================================================================
+# M118: 04_Inference_Youtube_Discovery_Registry raw filesystem oracle
+# ============================================================================
 m118_dir = iso / "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry"
-reg_data = json.loads((m118_dir / "registry.json").read_text(encoding="utf-8"))
-opp_dossiers = {}
-for opp_file in sorted((m118_dir / "opportunities").glob("OPP-*.md")):
-    txt = opp_file.read_text(encoding="utf-8")
-    oid = opp_file.name.split("_", 1)[0]
-    url_m = re.search(r"\*\*Plateforme Cible\*\*\s*\|\s*`([^`]+)`", txt)
-    steps_sec = txt.split("## 1.")[1].split("## 2.")[0]
-    steps = re.findall(r"^\d+\.\s+(.+)$", steps_sec, flags=re.MULTILINE)
-    opp_dossiers[oid] = {
-        "target_platform_base": url_m.group(1).strip() if url_m else "",
-        "steps_count": len(steps),
+raw_reg = json.loads((m118_dir / "registry.json").read_text(encoding="utf-8"))
+watch_txt = (m118_dir / "SKILL_WATCH.md").read_text(encoding="utf-8")
+assert "FILTRE 1" in watch_txt and "FILTRE 5" in watch_txt and "Score A" in watch_txt and "Voie B" in watch_txt
+
+m118_dossiers = {}
+for fp in sorted((m118_dir / "opportunities").glob("OPP-*.md")):
+    otxt = fp.read_text(encoding="utf-8")
+    oid = fp.name.split("_", 1)[0]
+    hm = re.search(r"^#\s+OPP-\d+\s*:\s*(.+)$", otxt, flags=re.M)
+    tbl = {rm.group(1).strip(): rm.group(2).strip() for rm in re.finditer(r"^\|\s*\*\*([^*]+)\*\*\s*\|\s*(.+?)\s*\|$", otxt, flags=re.M)}
+    steps_sec = otxt.split("## 1.")[1].split("## 2.")[0]
+    steps = [
+        sm.group(1).strip().replace("`", "").replace("**", "").replace("*", "").replace(r"$\rightarrow$", "->")
+        for sm in re.finditer(r"^\d+\.\s+(.+)$", steps_sec, flags=re.M)
+    ]
+    _cl = lambda v: v.replace("`", "").replace("**", "").strip()
+    m118_dossiers[oid] = {
+        "id": oid,
+        "title": hm.group(1).strip(),
+        "source_youtube": tbl["Source YouTube"].strip().strip("*").strip('"').strip(),
+        "target_platform": _cl(tbl["Plateforme Cible"]),
+        "model_offered": _cl(tbl.get("Modèles Offerts") or tbl["Modèle Offert"]),
+        "compute_volume": _cl(tbl["Volume de Calcul"]),
+        "watch_skill_status": _cl(tbl["Statut Watch Skill"]),
+        "injection_vector": _cl(tbl["Vecteur d'Injection"]),
+        "mechanism_steps": steps,
     }
-m118_out = {
-    "opportunity_ids": [o["id"] for o in reg_data["opportunities"]],
-    "platforms_status": {o["id"]: {"platform": o["platform"], "vector": o["vector"], "status": o["status"]} for o in reg_data["opportunities"]},
-    "dossiers": opp_dossiers,
-}
+m118_out = {"registry": raw_reg, "dossiers": m118_dossiers}
 
 (iso / "oracle_outputs.json").write_text(
-    json.dumps({"m044": m044_out, "m050": m050_out, "m056": m056_out, "m117": m117_out, "m118": m118_out}, ensure_ascii=False, indent=2),
+    json.dumps(
+        {"m044": m044_out, "m050": m050_out, "m056": m056_out, "m095": m095_out, "m117": m117_out, "m118": m118_out},
+        ensure_ascii=False,
+        indent=2,
+    ),
     encoding="utf-8",
 )
 '''
 
 
 _ORGAN_RUNNER_CODE = r'''
+import copy
 import dataclasses
 import datetime as dt
 import json
 import sys
 import tempfile
 from pathlib import Path
+from types import SimpleNamespace
+import numpy as np
+from PIL import Image, ImageDraw
 
 iso = Path.cwd()
 inputs = json.loads((iso / "diff_inputs.json").read_text(encoding="utf-8"))
@@ -571,130 +977,464 @@ oracle = json.loads((iso / "oracle_outputs.json").read_text(encoding="utf-8"))
 sha = sys.argv[1]
 
 sys.path.insert(0, str(iso / "01_Forkable/FKB00_Runtime/00_A0_Core"))
+sys.path.insert(0, str(iso / "01_Forkable/FKB07_Money_Maker/02_Video"))
+import aspace_foundation_kernel as fk
 import aspace_fkb02_memory_organ as f02
 import aspace_fkb04_anything_organ as f04
 import aspace_discovery_catalog as cat
+import aspace_video_studio_foundation as vsf
 
-# Vérifier qu'aucune source supprimée n'existe plus sous iso_root
-assert not (iso / "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models").exists()
-assert not (iso / "01_Forkable/FKB02_Memory/knowledge-catalog").exists()
-assert not (iso / "01_Forkable/FKB04_Tools_Anything/CLI-Anything").exists()
-assert not (iso / "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills").exists()
-assert not (iso / "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry").exists()
+# Aucune source supprimée ne doit subsister sous iso_root
+for _gone in (
+    "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models",
+    "01_Forkable/FKB02_Memory/knowledge-catalog",
+    "01_Forkable/FKB04_Tools_Anything/CLI-Anything",
+    "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
+    "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
+    "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
+):
+    assert not (iso / _gone).exists(), f"Source toujours présente avant Phase C: {_gone}"
 
-# --- M044 organe ---
-m044_org = {
-    "content_texts": [f02.clm_content_text(m.get("content")) for m in inputs["m044"]["text_cases"]],
-    "rendered_texts": [f02.clm_rendered_text(m) for m in inputs["m044"]["text_cases"]],
-    "roundtrips": [],
-}
-for conv in inputs["m044"]["conversations"]:
-    for protect in (0, 1, 2, 3):
-        editable = f02.clm_render_editable(conv, protect=protect)
-        tail = conv[-protect:] if protect > 0 and len(conv) >= protect else (list(conv) if protect > 0 else [])
-        parsed = f02.clm_parse_back(editable, tail)
-        m044_org["roundtrips"].append({"protect": protect, "editable": editable, "parsed": parsed})
-m044_org["custom_edit"] = f02.clm_parse_back(inputs["m044"]["edited_roundtrip"], inputs["m044"]["conversations"][0][-2:])
-assert m044_org == oracle["m044"], "M044 differential mismatch against upstream context-language-models!"
 
-# --- M050 organe ---
-ref_now = dt.datetime.fromisoformat(inputs["m050"]["now_iso"])
-doc_samples = list(inputs["m050"]["synthetic_docs"])
-concepts_dir = iso / "00_Memoire" / "bundle" / "concepts"
-if concepts_dir.exists():
-    for md_p in sorted(concepts_dir.glob("*.md"))[:12]:
-        doc_samples.append((f"concept:{md_p.name}", md_p.read_text(encoding="utf-8")))
-
-m050_docs_res = []
-for label, raw in doc_samples:
+def _safe_call(fn, *args, **kwargs):
     try:
-        d = f02.OKFDocument.parse(raw)
-        nv = f02.okf_normalize_verified(d.frontmatter)
-        nv_clean = json.loads(json.dumps(nv, default=str))
-        m050_docs_res.append({
-            "label": label,
-            "ok": True,
-            "normalized_verified": nv_clean,
-            "trust_tier": f02.okf_trust_tier(d.frontmatter),
-            "is_stale": f02.okf_is_stale(d.frontmatter, now=ref_now),
-            "validate": d.validate(),
-            "serialized": d.serialize(),
-        })
-    except f02.OKFDocumentError:
-        m050_docs_res.append({"label": label, "ok": False, "err": "OKFDocumentError"})
+        return {"ok": True, "val": fn(*args, **kwargs)}
+    except Exception as exc:
+        return {"ok": False, "err": type(exc).__name__}
 
-bundle_tmp = Path(tempfile.mkdtemp(dir=str(iso), prefix="organ_okf_"))
-(bundle_tmp / "alpha.md").write_text("---\nokf_version: '0.2'\ntype: Concept\ntitle: Alpha\nverified: '2026-11-19'\n---\nBody Alpha\n", encoding="utf-8")
-(bundle_tmp / "sub").mkdir()
-(bundle_tmp / "sub" / "beta.md").write_text("---\nokf_version: '0.2'\ntype: Decision\ntitle: Beta\nverified: '2026-11-18'\n---\nBody Beta\n", encoding="utf-8")
-(bundle_tmp / "sub" / "gamma.md").write_text("---\nokf_version: '0.2'\ntype: Note\ntitle: Gamma\n---\nBody Gamma\n", encoding="utf-8")
-org_gen_paths = f02.okf_regenerate_indexes(bundle_tmp, model="oracle-model", synthesize=lambda f, docs, model="": f"Synthèse {f} ({len(docs)} docs via {model})")
-m050_indexes = {
-    p.relative_to(bundle_tmp).as_posix(): p.read_text(encoding="utf-8")
-    for p in sorted(org_gen_paths)
-}
-m050_org = {"docs": m050_docs_res, "indexes": m050_indexes}
-assert m050_org == oracle["m050"], "M050 differential mismatch against upstream knowledge-catalog!"
 
-# --- M056 organe (sur entrées de harnais copiées hors CLI-Anything supprimé) ---
-m056_harnesses_org = {}
-for sw in ("zotero", "audacity"):
-    h_dir = iso / "test_input_harnesses" / sw / "agent-harness"
-    org_meta = f04.extract_cli_anything_metadata(h_dir)
-    m056_harnesses_org[sw] = {
-        "meta": dataclasses.asdict(org_meta),
-        "skill_md": f04.generate_cli_anything_skill_md(org_meta),
-        "skill_md_simple": f04.generate_cli_anything_skill_md_simple(org_meta),
+def verify_m044() -> int:
+    c_texts = [f02.clm_content_text(c) for c in inputs["m044"]["content_cases"]]
+    assert c_texts == oracle["m044"]["content_texts"], "M044 clm_content_text mismatch"
+
+    r_texts = [f02.clm_rendered_text(m) for m in inputs["m044"]["render_msgs"]]
+    assert r_texts == oracle["m044"]["rendered_texts"], "M044 clm_rendered_text mismatch"
+
+    ed_out, parse_out = [], []
+    for conv in inputs["m044"]["conversations"]:
+        for p in (0, 1, 2, 10):
+            ed = f02.clm_render_editable(conv, protect=p)
+            ed_out.append({"protect": p, "text": ed})
+            parse_out.append({"protect": p, "parsed": f02.clm_parse_back(ed, conv[:p])})
+    assert ed_out == oracle["m044"]["editables"], "M044 clm_render_editable mismatch"
+    assert parse_out == oracle["m044"]["parses_conv"], "M044 clm_parse_back conv mismatch"
+
+    protected_ref = inputs["m044"]["conversations"][0][:2]
+    edge_out = {
+        lbl: f02.clm_parse_back(edited, protected_ref)
+        for lbl, edited in inputs["m044"]["parse_back_cases"]
     }
+    assert edge_out == oracle["m044"]["parse_back_edge"], "M044 clm_parse_back/_clm_normalize edge mismatch"
 
-m056_cache_keys_org = [
-    f04.build_cli_anything_preview_cache_key(
-        ck["software"],
-        ck["recipe"],
-        ck["bundle_kind"],
-        ck["source_fingerprint"],
-        options=ck["options"],
-        harness_version=ck["harness_version"],
+    res_gate = [
+        _safe_call(f02.clm_resolve_allow_edit_growth, passed, env)
+        for passed, env in inputs["m044"]["edit_gate_cases"]["resolve"]
+    ]
+    assert res_gate == oracle["m044"]["resolve_gate"], "M044 clm_resolve_allow_edit_growth mismatch"
+    assert f02.clm_fit_rule(4096) == oracle["m044"]["fit_rule"], "M044 clm_fit_rule mismatch"
+
+    mg = [f02.clm_may_grow(allow_growth=ag, limit=lim, after=af) for ag, lim, af in inputs["m044"]["edit_gate_cases"]["may_grow"]]
+    assert mg == oracle["m044"]["may_grow"], "M044 clm_may_grow mismatch"
+
+    rr = [f02.clm_reject_rule(allow_growth=ag, limit=lim) for ag, lim in inputs["m044"]["edit_gate_cases"]["reject_rule"]]
+    assert rr == oracle["m044"]["reject_rule"], "M044 clm_reject_rule mismatch"
+
+    rn = f02.clm_rejected_note(baseline=1000, after=1200, before=900, rule=f02.clm_fit_rule(1000))
+    assert rn == oracle["m044"]["rejected_note"], "M044 clm_rejected_note mismatch"
+
+    assert f02.CLM_SUBMIT_MARKER == oracle["m044"]["finish_marker"]
+    assert f02.CLM_FINISH_INSTRUCTIONS == oracle["m044"]["finish_instructions"]
+
+    f_modes = []
+    for md in inputs["m044"]["finish_policy_cases"]["modes"]:
+        try:
+            fp = f02.CLMFinishPolicy(md)
+            f_modes.append({
+                "ok": True,
+                "mode": fp.mode,
+                "open_ended": fp.open_ended,
+                "fragment": fp.prompt_fragment(),
+                "cmds": [fp.is_finish_command(c) for c in inputs["m044"]["finish_policy_cases"]["commands"]],
+            })
+        except Exception as exc:
+            f_modes.append({"ok": False, "err": type(exc).__name__})
+    assert f_modes == oracle["m044"]["finish_modes"], "M044 CLMFinishPolicy mismatch"
+
+    s_cmds = [f02.clm_is_submit_command(c) for c in inputs["m044"]["finish_policy_cases"]["commands"]]
+    assert s_cmds == oracle["m044"]["submit_commands"], "M044 clm_is_submit_command mismatch"
+
+    t_keys = [f02.clm_token_cap_key(m) for m in inputs["m044"]["lm_compat_models"]]
+    assert t_keys == oracle["m044"]["token_cap_keys"], "M044 clm_token_cap_key mismatch"
+
+    return (
+        len(c_texts) + len(r_texts) + len(ed_out) + len(parse_out) + len(edge_out)
+        + len(res_gate) + 1 + len(mg) + len(rr) + 1 + len(f_modes) + len(s_cmds) + len(t_keys)
     )
-    for ck in inputs["m056"]["cache_key_cases"]
-]
-m056_org = {"harnesses": m056_harnesses_org, "cache_keys": m056_cache_keys_org}
-assert m056_org == oracle["m056"], "M056 differential mismatch against upstream CLI-Anything!"
 
-# --- M117 organe ---
-m117_playbooks_org = {}
-for cat_id in inputs["m117"]["categories"]:
-    pb = cat.get_marketplace_playbook(cat_id)
-    m117_playbooks_org[cat_id] = {
-        "skill_name": pb["skill_name"],
-        "foundational_videos": list(pb["foundational_videos"]),
-        "offer_titles": [o["offer"] for o in pb["productized_offers"]],
-        "offer_pricings": [o["pricing"] for o in pb["productized_offers"]],
-        "protocol_steps_count": len(pb["execution_protocol"]),
+
+def verify_m050() -> int:
+    stale_now = dt.datetime.fromisoformat(inputs["m050"]["stale_now_iso"])
+    doc_samples = list(inputs["m050"]["synthetic_docs"])
+    concepts_dir = iso / "00_Memoire" / "bundle" / "concepts"
+    if concepts_dir.exists():
+        for md_p in sorted(concepts_dir.glob("*.md"))[:8]:
+            doc_samples.append((f"concept:{md_p.name}", md_p.read_text(encoding="utf-8")))
+
+    docs_res = []
+    for label, raw in doc_samples:
+        try:
+            d = f02.OKFDocument.parse(raw)
+            try:
+                d.validate()
+                val_ok = True
+            except f02.OKFDocumentError:
+                val_ok = False
+            docs_res.append({
+                "label": label,
+                "ok": True,
+                "validate_ok": val_ok,
+                "frontmatter": d.frontmatter,
+                "body": d.body,
+                "serialized": d.serialize(),
+            })
+        except f02.OKFDocumentError:
+            docs_res.append({"label": label, "ok": False, "err": "OKFDocumentError"})
+    assert docs_res == oracle["m050"]["docs"], "M050 OKFDocument mismatch"
+
+    trust_res = [
+        {"normalized": f02.okf_normalize_verified(fm), "tier": f02.okf_trust_tier(fm)}
+        for fm in inputs["m050"]["trust_cases"]
+    ]
+    assert trust_res == oracle["m050"]["trust"], "M050 okf_normalize_verified / okf_trust_tier mismatch"
+
+    stale_fixed = [f02.okf_is_stale(fm, now=stale_now) for fm in inputs["m050"]["stale_cases"]]
+    assert stale_fixed == oracle["m050"]["stale_fixed"], "M050 okf_is_stale fixed-now mismatch"
+
+    stale_def = [
+        f02.okf_is_stale({"stale_after": "2020-01-01T00:00:00Z"}),
+        f02.okf_is_stale({"stale_after": "2099-01-01T00:00:00Z"}),
+    ]
+    assert stale_def == oracle["m050"]["stale_default_now"], "M050 okf_is_stale default-now mismatch"
+
+    sf_res = [f02.okf_synthesize_fallback("", c, model="stub") for c in inputs["m050"]["synth_fallback_cases"]]
+    assert sf_res == oracle["m050"]["synth_fallback"], "M050 okf_synthesize_fallback mismatch"
+
+    b_multi = Path(tempfile.mkdtemp(dir=str(iso), prefix="org_okf_m_"))
+    (b_multi / "datasets").mkdir()
+    (b_multi / "datasets" / "only.md").write_text("---\ntype: BigQuery Dataset\ntitle: Only Dataset\ndescription: Single child desc.\n---\nBody.\n", encoding="utf-8")
+    (b_multi / "tables").mkdir()
+    (b_multi / "tables" / "events_.md").write_text("---\ntype: BigQuery Table\ntitle: events_*\ndescription: Sharded events.\n---\nEvents.\n", encoding="utf-8")
+    (b_multi / "tables" / "users.md").write_text("---\ntype: BigQuery Table\ntitle: users\ndescription: Users table.\n---\nUsers.\n", encoding="utf-8")
+    (b_multi / "empty_dir").mkdir()
+    synth_calls = []
+    def _org_synth(rel, pairs, *, model):
+        synth_calls.append(rel)
+        return f02.okf_synthesize_fallback(rel, pairs, model=model)
+    gen_m = f02.okf_regenerate_indexes(b_multi, model="stub-test", synthesize=_org_synth)
+    gen_missing = f02.okf_regenerate_indexes(iso / "does_not_exist_okf_dir", model="stub-test", synthesize=_org_synth)
+
+    org_indexes = {p.relative_to(b_multi).as_posix(): p.read_text(encoding="utf-8") for p in sorted(gen_m)}
+    assert org_indexes == oracle["m050"]["indexes_multi"], "M050 okf_regenerate_indexes mismatch"
+    assert synth_calls == oracle["m050"]["synth_calls"], "M050 single-child synth bypass mismatch"
+    assert len(gen_missing) == oracle["m050"]["indexes_missing_len"]
+    assert (b_multi / "empty_dir" / "index.md").exists() == oracle["m050"]["empty_dir_has_index"]
+
+    b_root = Path("/tmp_okf_root")
+    path_cases = []
+    for raw_cid in inputs["m050"]["concept_id_cases"]:
+        try:
+            cid = f02.okf_parse_concept_id(raw_cid)
+            p = f02.okf_concept_id_to_path(b_root, cid)
+            back = f02.okf_path_to_concept_id(b_root, p)
+            path_cases.append({"ok": True, "cid": list(cid), "rel": p.relative_to(b_root).as_posix(), "back": list(back)})
+        except ValueError:
+            path_cases.append({"ok": False, "err": "ValueError"})
+    path_cases.append(_safe_call(f02.okf_concept_id_to_path, b_root, ()))
+    assert path_cases == oracle["m050"]["paths"], "M050 OKF paths mismatch"
+
+    return (
+        len(docs_res) + len(trust_res) + len(stale_fixed) + len(stale_def)
+        + len(sf_res) + len(org_indexes) + 3 + len(path_cases)
+    )
+
+
+def verify_m056() -> int:
+    syn_root = iso / "syn_harnesses"
+    harnesses_org = {}
+    for label, h_dir in [
+        ("zotero", iso / "test_input_harnesses/zotero/agent-harness"),
+        ("audacity", iso / "test_input_harnesses/audacity/agent-harness"),
+        ("syn_export", syn_root / "syn_export" / "agent-harness"),
+        ("syn_flat", syn_root / "syn_flat" / "agent-harness"),
+    ]:
+        meta = f04.extract_cli_anything_metadata(h_dir)
+        cli_files = list((h_dir / "cli_anything").glob("*/*_cli.py"))
+        raw_cmds = [dataclasses.asdict(g) for g in f04.extract_commands_from_cli(cli_files[0])] if cli_files else []
+        harnesses_org[label] = {
+            "meta": dataclasses.asdict(meta),
+            "raw_cmds": raw_cmds,
+            "skill_md": f04.generate_cli_anything_skill_md(meta),
+            "skill_md_simple": f04.generate_cli_anything_skill_md_simple(meta),
+        }
+    assert harnesses_org == oracle["m056"]["harnesses"], "M056 harnesses mismatch"
+
+    inv_res = _safe_call(f04.extract_cli_anything_metadata, iso / "does_not_exist_harness")
+    assert inv_res == oracle["m056"]["invalid"], "M056 error handling mismatch"
+
+    ck_org = [
+        f04.build_cli_anything_preview_cache_key(
+            ck["software"], ck["recipe"], ck["bundle_kind"], ck["source_fingerprint"],
+            options=ck["options"], harness_version=ck["harness_version"],
+        )
+        for ck in inputs["m056"]["cache_key_cases"]
+    ]
+    assert ck_org == oracle["m056"]["cache_keys"], "M056 cache keys mismatch"
+    return len(harnesses_org) * 4 + 1 + len(ck_org)
+
+
+def verify_m095() -> int:
+    assert [vsf.vd_is_num(x) for x in inputs["m095"]["is_num_cases"]] == oracle["m095"]["is_num"], "M095 vd_is_num mismatch"
+    assert [vsf.vd_norm(x) for x in inputs["m095"]["norm_cases"]] == oracle["m095"]["norm"], "M095 vd_norm mismatch"
+    assert [vsf.vd_read_time(x) for x in inputs["m095"]["read_time_cases"]] == oracle["m095"]["read_time"], "M095 vd_read_time mismatch"
+
+    tmp_vd = Path(tempfile.mkdtemp(dir=str(iso), prefix="org_vd_"))
+    tl_res = []
+    for item in inputs["m095"]["timelines"]:
+        tl_file = tmp_vd / f"{item['name']}.json"
+        tl_file.write_text(json.dumps(item["tl"]), encoding="utf-8")
+        rc, out_txt = vsf.vd_check_timeline_cli(["check_timeline.py", str(tl_file)])
+        tl_res.append({
+            "name": item["name"],
+            "returncode": rc,
+            "stdout": out_txt.replace("\r\n", "\n"),
+            "beat_times": vsf.vd_beat_times(item["tl"]),
+            "loaded_tl": vsf.vd_load_timeline(tl_file),
+        })
+    assert tl_res == oracle["m095"]["timelines"], "M095 check_timeline / beat_times / load_timeline mismatch"
+
+    list_tl_file = tmp_vd / "list_tl.json"
+    list_tl_file.write_text(json.dumps([0.5, 2.0, 1.0, 2.0]), encoding="utf-8")
+    assert vsf.vd_load_timeline(list_tl_file) == oracle["m095"]["list_tl_loaded"], "M095 list load_timeline mismatch"
+
+    raw_runs = [vsf.vd_runs(r) for r in inputs["m095"]["runs_cases"]]
+    assert [[list(p) for p in rs] for rs in raw_runs] == oracle["m095"]["runs"], "M095 vd_runs mismatch"
+
+    d_arr = np.full(45, 0.8, dtype=np.float64)
+    d_arr[0] = 0.0
+    d_arr[5] = 8.0
+    d_arr[6] = 8.2
+    d_arr[12] = 15.0
+    d_arr[18] = 3.5
+    d_arr[25:42] = 0.05
+    std_arr = np.full(45, 18.0, dtype=np.float64)
+    std_arr[20:23] = 2.5
+    skip_arr = np.full(45, 0.9, dtype=np.float64)
+    skip_arr[0] = np.nan
+    skip_arr[-1] = np.nan
+    skip_arr[5] = 0.5
+    mean_arr = np.full(45, 120.0, dtype=np.float64)
+    st_dict = {"n": 45, "mean": mean_arr, "std": std_arr, "d": d_arr, "skip": skip_arr, "seam": 0.4}
+    args_ns = SimpleNamespace(freeze=0.5, freeze_eps=0.25, loop=True)
+    pic_res = vsf.vd_analyse_picture(st_dict, 30.0, args_ns)
+    assert pic_res == oracle["m095"]["analyse_picture"], "M095 vd_analyse_picture mismatch"
+
+    cc_res = [vsf.vd_compare_cuts(det, exp, fps) for det, exp, fps in inputs["m095"]["compare_cuts_cases"]]
+    assert cc_res == oracle["m095"]["compare_cuts"], "M095 vd_compare_cuts mismatch"
+
+    im_contrast = Image.new("RGB", (200, 100), (0, 0, 0))
+    draw = ImageDraw.Draw(im_contrast)
+    draw.rectangle([20, 20, 120, 70], fill=(255, 255, 255))
+    im_flat = Image.new("RGB", (100, 100), (128, 128, 128))
+    mt_res = [
+        vsf.vd_measure_text(im_contrast, [10, 10, 140, 80], 1080),
+        vsf.vd_measure_text(im_flat, [10, 10, 60, 60], 1080),
+    ]
+    assert mt_res == oracle["m095"]["measure_text"], "M095 vd_measure_text mismatch"
+
+    return (
+        len(inputs["m095"]["is_num_cases"]) + len(inputs["m095"]["norm_cases"]) + len(inputs["m095"]["read_time_cases"])
+        + len(tl_res) + 1 + len(inputs["m095"]["runs_cases"]) + 1 + len(cc_res) + len(mt_res)
+    )
+
+
+def verify_m117() -> int:
+    assert cat.MARKETPLACE_SKILL_CATEGORIES == oracle["m117"]["categories"], "M117 categories strict == mismatch"
+    assert cat.YOUTUBE_SKILL_VIDEOS == oracle["m117"]["videos"], "M117 videos strict == mismatch"
+    assert cat.MARKETPLACE_PLAYBOOKS == oracle["m117"]["playbooks"], "M117 playbooks strict == mismatch"
+
+    for c_id in inputs["m117"]["categories"]:
+        pb = cat.get_marketplace_playbook(c_id)
+        assert set(pb.keys()) == {"category"} | set(oracle["m117"]["playbooks"][c_id].keys()), "M117 playbook keys mismatch"
+        assert {k: v for k, v in pb.items() if k != "category"} == oracle["m117"]["playbooks"][c_id]
+        assert pb["category"] == c_id
+
+    bad_cat = _safe_call(cat.get_marketplace_playbook, "non-existent-category")
+    assert bad_cat == {"ok": False, "err": "ContractViolation"}
+
+    q_checks = 0
+    for qc in inputs["m117"]["query_cases"]:
+        res = cat.query_marketplace_skills(category=qc["category"], keyword=qc["keyword"])
+        # Exact oracle calculation from parsed oracle data
+        exp_items = list(oracle["m117"]["videos"])
+        exp_pbs = dict(oracle["m117"]["playbooks"])
+        if qc["category"]:
+            clow = qc["category"].lower()
+            exp_items = [it for it in exp_items if it["category"].lower() == clow]
+            exp_pbs = {k: v for k, v in exp_pbs.items() if k.lower() == clow or v["skill_name"].lower() == clow}
+        if qc["keyword"]:
+            kw = qc["keyword"].lower()
+            exp_items = [it for it in exp_items if kw in it["topic"].lower() or kw in it["category"].lower()]
+            exp_pbs = {
+                k: v for k, v in exp_pbs.items()
+                if kw in v["description"].lower() or kw in k.lower()
+                or any(kw in o["offer"].lower() or kw in o["spec"].lower() or kw in o["pricing"].lower() for o in v["productized_offers"])
+                or any(vid["category"] == k for vid in exp_items)
+            }
+        exp_offers = [{"category": k, **off} for k, pb in exp_pbs.items() for off in pb["productized_offers"]]
+        assert res["matches"] == exp_items and res["playbooks"] == exp_pbs and res["productized_offers"] == exp_offers
+        q_checks += 1
+
+    return 3 + len(inputs["m117"]["categories"]) + 1 + q_checks
+
+
+def verify_m118() -> int:
+    assert cat.INFERENCE_DISCOVERY_REGISTRY == oracle["m118"]["registry"], "M118 registry strict == mismatch"
+    assert cat.OPPORTUNITY_DOSSIERS == oracle["m118"]["dossiers"], "M118 dossiers strict == mismatch"
+
+    for oid in inputs["m118"]["opp_ids"]:
+        assert cat.get_opportunity_dossier(oid) == oracle["m118"]["dossiers"][oid], f"M118 get_opportunity_dossier({oid}) mismatch"
+
+    bad_opp = _safe_call(cat.get_opportunity_dossier, "OPP-999")
+    assert bad_opp == {"ok": False, "err": "ContractViolation"}
+
+    known = {o["platform"].lower() for o in oracle["m118"]["registry"]["opportunities"]}
+    expected_qual = [
+        {"platform": "apinex.com", "dedup": "ALREADY_TRACKED", "authentic": True, "score": "A", "durability": "STABLE", "vector": "VOIE_A_API_DIRECT", "decision": "ADMIT_SOVEREIGN"},
+        {"platform": "scam-clickbait.example", "decision": "REJECT_CLICKBAIT", "score": "F", "dedup": "NEW_OPPORTUNITY"},
+        {"platform": "sovereign-new.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "A", "durability": "STABLE", "vector": "VOIE_A_API_DIRECT", "decision": "ADMIT_SOVEREIGN"},
+        {"platform": "web-trial.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "B", "durability": "FLASH", "vector": "VOIE_B_WEB_SHIELDED", "decision": "ADMIT_SOVEREIGN"},
+        {"platform": "stripe-loop.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "C", "durability": "MEDIUM", "vector": "VOIE_B_WEB_SHIELDED", "decision": "ADMIT_WITH_MONITORING"},
+    ]
+    for cand, exp in zip(inputs["m118"]["qualify_cases"], expected_qual):
+        assert cat.qualify_inference_opportunity(cand, known_platforms=known) == exp, f"M118 qualify mismatch for {cand}"
+
+    return 2 + len(inputs["m118"]["opp_ids"]) + 1 + len(expected_qual)
+
+
+def verify_all() -> dict[str, int]:
+    return {
+        "context-language-models": verify_m044(),
+        "knowledge-catalog": verify_m050(),
+        "CLI-Anything": verify_m056(),
+        "video-director": verify_m095(),
+        "00_Marketplace_YoutubeSkills": verify_m117(),
+        "04_Inference_Youtube_Discovery_Registry": verify_m118(),
     }
-m117_org = {
-    "video_count": len(cat.YOUTUBE_SKILL_VIDEOS),
-    "video_ids_sorted": sorted(v["video_id"] for v in cat.YOUTUBE_SKILL_VIDEOS),
-    "playbooks": m117_playbooks_org,
-}
-assert m117_org == oracle["m117"], "M117 differential mismatch against raw 00_Marketplace_YoutubeSkills!"
 
-# --- M118 organe ---
-m118_dossiers_org = {}
-for oid in inputs["m118"]["opp_ids"]:
-    dos = cat.get_opportunity_dossier(oid)
-    m118_dossiers_org[oid] = {
-        "target_platform_base": dos["target_platform"].split(" (", 1)[0].strip(),
-        "steps_count": len(dos["mechanism_steps"]),
-    }
-m118_org = {
-    "opportunity_ids": [o["id"] for o in cat.INFERENCE_DISCOVERY_REGISTRY["opportunities"]],
-    "platforms_status": {o["id"]: {"platform": o["platform"], "vector": o["vector"], "status": o["status"]} for o in cat.INFERENCE_DISCOVERY_REGISTRY["opportunities"]},
-    "dossiers": m118_dossiers_org,
-}
-assert m118_org == oracle["m118"], "M118 differential mismatch against raw 04_Inference_Youtube_Discovery_Registry!"
 
-# --- Vérification honnête M058 + compteurs non codés en dur + reçus R10 mesurés ---
+def run_sabotage_suite() -> int:
+    """Sabote chaque fonction/donnée déclarée des 6 modules et vérifie que verify_all() échoue systématiquement."""
+    def _assert_breaks(name: str, check_fn, patch_target_mod, attr: str, fake_val):
+        orig = getattr(patch_target_mod, attr)
+        setattr(patch_target_mod, attr, fake_val)
+        broke = False
+        try:
+            check_fn()
+        except Exception:
+            broke = True
+        finally:
+            setattr(patch_target_mod, attr, orig)
+        assert broke, f"SABOTAGE NON DÉTECTÉ : {name} ({attr})!"
+
+    # Sabotages de fonctions
+    sabotages = [
+        # M044 (toutes les fonctions déclarées)
+        ("M044:clm_content_text", verify_m044, f02, "clm_content_text", lambda c: "SABOTAGED"),
+        ("M044:clm_rendered_text", verify_m044, f02, "clm_rendered_text", lambda m: "SABOTAGED_RENDERED"),
+        ("M044:clm_render_editable", verify_m044, f02, "clm_render_editable", lambda ms, protect=2: "BROKEN"),
+        ("M044:clm_parse_back", verify_m044, f02, "clm_parse_back", lambda ed, prot: []),
+        ("M044:_clm_normalize", verify_m044, f02, "_clm_normalize", lambda ms, protect: ms),
+        ("M044:clm_resolve_allow_edit_growth", verify_m044, f02, "clm_resolve_allow_edit_growth", lambda p, env=None: True),
+        ("M044:clm_fit_rule", verify_m044, f02, "clm_fit_rule", lambda lim: "broken"),
+        ("M044:clm_may_grow", verify_m044, f02, "clm_may_grow", lambda **kw: False),
+        ("M044:clm_reject_rule", verify_m044, f02, "clm_reject_rule", lambda **kw: "broken"),
+        ("M044:clm_rejected_note", verify_m044, f02, "clm_rejected_note", lambda **kw: "broken"),
+        ("M044:CLMFinishPolicy", verify_m044, f02, "CLMFinishPolicy", type("BadFP", (), {"__init__": lambda self, m="submit": None, "mode": "submit", "open_ended": False, "prompt_fragment": lambda s: "", "is_finish_command": lambda s, c: False})),
+        ("M044:clm_is_submit_command", verify_m044, f02, "clm_is_submit_command", lambda c: False),
+        ("M044:clm_token_cap_key", verify_m044, f02, "clm_token_cap_key", lambda m: "max_tokens"),
+        # M050 (toutes les fonctions déclarées, dont inversion complète okf_is_stale)
+        ("M050:OKFDocument.validate", verify_m050, f02.OKFDocument, "validate", lambda self: None),
+        ("M050:okf_normalize_verified", verify_m050, f02, "okf_normalize_verified", lambda fm: []),
+        ("M050:okf_trust_tier", verify_m050, f02, "okf_trust_tier", lambda fm: "unverified"),
+        ("M050:okf_is_stale_inverted", verify_m050, f02, "okf_is_stale", lambda fm, now=None, _orig=f02.okf_is_stale: not _orig(fm, now=now)),
+        ("M050:okf_synthesize_fallback", verify_m050, f02, "okf_synthesize_fallback", lambda r, c, model="": "sabotaged"),
+        ("M050:okf_regenerate_indexes", verify_m050, f02, "okf_regenerate_indexes", lambda br, **kw: []),
+        ("M050:okf_concept_id_to_path", verify_m050, f02, "okf_concept_id_to_path", lambda br, cid: Path("/bad.md")),
+        ("M050:okf_path_to_concept_id", verify_m050, f02, "okf_path_to_concept_id", lambda br, p: ("bad",)),
+        ("M050:okf_parse_concept_id", verify_m050, f02, "okf_parse_concept_id", lambda s: ("bad",)),
+        # M056 (toutes les fonctions déclarées)
+        ("M056:extract_commands_from_cli", verify_m056, f04, "extract_commands_from_cli", lambda p: []),
+        ("M056:extract_cli_anything_metadata", verify_m056, f04, "extract_cli_anything_metadata", lambda p: None),
+        ("M056:generate_cli_anything_skill_md", verify_m056, f04, "generate_cli_anything_skill_md", lambda m, template_text=None: "BAD"),
+        ("M056:generate_cli_anything_skill_md_simple", verify_m056, f04, "generate_cli_anything_skill_md_simple", lambda m: "BAD"),
+        ("M056:build_cli_anything_preview_cache_key", verify_m056, f04, "build_cli_anything_preview_cache_key", lambda *a, **kw: "sha256:0000"),
+        # M095 (toutes les fonctions déclarées)
+        ("M095:vd_is_num", verify_m095, vsf, "vd_is_num", lambda v: False),
+        ("M095:vd_norm", verify_m095, vsf, "vd_norm", lambda s: ""),
+        ("M095:vd_read_time", verify_m095, vsf, "vd_read_time", lambda t: 0.0),
+        ("M095:vd_validate_timeline", verify_m095, vsf, "vd_validate_timeline", lambda tl: ([], [])),
+        ("M095:vd_check_timeline_cli", verify_m095, vsf, "vd_check_timeline_cli", lambda argv: (0, "")),
+        ("M095:vd_runs", verify_m095, vsf, "vd_runs", lambda mask: []),
+        ("M095:vd_analyse_picture", verify_m095, vsf, "vd_analyse_picture", lambda st, fps, args: {}),
+        ("M095:vd_compare_cuts", verify_m095, vsf, "vd_compare_cuts", lambda d, e, f: None),
+        ("M095:vd_measure_text", verify_m095, vsf, "vd_measure_text", lambda im, b, s: {"font_px": 0.0, "contrast": 1.0}),
+        ("M095:vd_beat_times", verify_m095, vsf, "vd_beat_times", lambda tl: {}),
+        ("M095:vd_load_timeline", verify_m095, vsf, "vd_load_timeline", lambda p: {}),
+        # M117
+        ("M117:get_marketplace_playbook", verify_m117, cat, "get_marketplace_playbook", lambda c: {}),
+        ("M117:query_marketplace_skills", verify_m117, cat, "query_marketplace_skills", lambda **kw: {"matches": [], "playbooks": {}, "productized_offers": []}),
+        # M118
+        ("M118:get_opportunity_dossier", verify_m118, cat, "get_opportunity_dossier", lambda o: {}),
+        ("M118:qualify_inference_opportunity", verify_m118, cat, "qualify_inference_opportunity", lambda c, known_platforms=None: {}),
+    ]
+    for label, cfn, mod, attr, fake in sabotages:
+        _assert_breaks(label, cfn, mod, attr, fake)
+
+    # Sabotage d'ajout de clé parasite dans M118 & M117 (vérifie le refus des clés en trop)
+    orig_opps = copy.deepcopy(cat.OPPORTUNITY_DOSSIERS)
+    try:
+        cat.OPPORTUNITY_DOSSIERS["OPP-001"]["extra_parasite_key"] = "must_fail"
+        broke_extra = False
+        try:
+            verify_m118()
+        except Exception:
+            broke_extra = True
+        assert broke_extra, "SABOTAGE CLÉ EN TROP M118 NON DÉTECTÉ !"
+    finally:
+        cat.OPPORTUNITY_DOSSIERS = orig_opps
+
+    orig_pbs = copy.deepcopy(cat.MARKETPLACE_PLAYBOOKS)
+    try:
+        cat.MARKETPLACE_PLAYBOOKS["01_Website_and_Funnels"]["extra_parasite_key"] = "must_fail"
+        broke_pb = False
+        try:
+            verify_m117()
+        except Exception:
+            broke_pb = True
+        assert broke_pb, "SABOTAGE CLÉ EN TROP M117 NON DÉTECTÉ !"
+    finally:
+        cat.MARKETPLACE_PLAYBOOKS = orig_pbs
+
+    return len(sabotages) + 2
+
+
+# Phase C : parité stricte -> sabotage complet -> auto-tests honnêtes -> reçus R10 mesurés
+case_counts = verify_all()
+sabotage_detected_count = run_sabotage_suite()
+
+# Re-vérifier que verify_all() repasse intégralement après restauration des sabotages
+verify_all()
+
 r04 = f04.run_fkb04_self_test(head_sha40=sha, repo_root=iso)
 r02 = f02.run_fkb02_self_test(repo_root=iso, head_sha40=sha)
 rcat = cat.run_self_test(head_sha40=sha, repo_root=iso)
@@ -705,59 +1445,46 @@ assert rcat["source_parity_verified"] == [], f"Auto-déclaration interdite: {rca
 assert "headless-fallback" not in json.dumps(r04) and "HeadlessDesktopSession" not in json.dumps(r04)
 assert r04["desktop_live_verified"] is False or r04["desktop_live_windows"] >= 1
 
-def _count_diff_pairs(pairs):
-    compared = len(pairs)
-    matched = sum(1 for a, b in pairs if a == b)
-    return {"compared_against_source": True, "cases_compared": compared, "cases_matched": matched}
-
-
-m044_pairs = (
-    list(zip(m044_org["content_texts"], oracle["m044"]["content_texts"]))
-    + list(zip(m044_org["rendered_texts"], oracle["m044"]["rendered_texts"]))
-    + [(r["editable"], o["editable"]) for r, o in zip(m044_org["roundtrips"], oracle["m044"]["roundtrips"])]
-    + [(r["parsed"], o["parsed"]) for r, o in zip(m044_org["roundtrips"], oracle["m044"]["roundtrips"])]
-    + [(m044_org["custom_edit"], oracle["m044"]["custom_edit"])]
+rec04 = f04.consign_fkb04_parity_receipt(
+    {"CLI-Anything": {"compared_against_source": True, "cases_compared": case_counts["CLI-Anything"], "cases_matched": case_counts["CLI-Anything"]}},
+    sha,
+    repo_root=iso,
 )
-m050_pairs = (
-    list(zip(m050_org["docs"], oracle["m050"]["docs"]))
-    + [(m050_org["indexes"].get(k), v) for k, v in oracle["m050"]["indexes"].items()]
+rec02 = f02.consign_fkb02_parity_receipt(
+    {
+        "context-language-models": {"compared_against_source": True, "cases_compared": case_counts["context-language-models"], "cases_matched": case_counts["context-language-models"]},
+        "knowledge-catalog": {"compared_against_source": True, "cases_compared": case_counts["knowledge-catalog"], "cases_matched": case_counts["knowledge-catalog"]},
+    },
+    sha,
+    repo_root=iso,
 )
-m056_pairs = []
-for sw, h_o in oracle["m056"]["harnesses"].items():
-    h_g = m056_org["harnesses"][sw]
-    m056_pairs.extend([(h_g["meta"], h_o["meta"]), (h_g["skill_md"], h_o["skill_md"]), (h_g["skill_md_simple"], h_o["skill_md_simple"])])
-m056_pairs.extend(zip(m056_org["cache_keys"], oracle["m056"]["cache_keys"]))
-m117_pairs = (
-    [(m117_org["video_count"], oracle["m117"]["video_count"]), (m117_org["video_ids_sorted"], oracle["m117"]["video_ids_sorted"])]
-    + [(m117_org["playbooks"].get(c), v) for c, v in oracle["m117"]["playbooks"].items()]
+reccat = cat.consign_catalog_parity_receipt(
+    {
+        "00_Marketplace_YoutubeSkills": {"compared_against_source": True, "cases_compared": case_counts["00_Marketplace_YoutubeSkills"], "cases_matched": case_counts["00_Marketplace_YoutubeSkills"]},
+        "04_Inference_Youtube_Discovery_Registry": {"compared_against_source": True, "cases_compared": case_counts["04_Inference_Youtube_Discovery_Registry"], "cases_matched": case_counts["04_Inference_Youtube_Discovery_Registry"]},
+    },
+    sha,
+    repo_root=iso,
 )
-m118_pairs = (
-    [(m118_org["opportunity_ids"], oracle["m118"]["opportunity_ids"]), (m118_org["platforms_status"], oracle["m118"]["platforms_status"])]
-    + [(m118_org["dossiers"].get(k), v) for k, v in oracle["m118"]["dossiers"].items()]
+recvd = vsf.consign_video_director_parity_receipt(
+    {"video-director": {"compared_against_source": True, "cases_compared": case_counts["video-director"], "cases_matched": case_counts["video-director"]}},
+    sha,
+    repo_root=iso,
 )
 
-res_m044 = _count_diff_pairs(m044_pairs)
-res_m050 = _count_diff_pairs(m050_pairs)
-res_m056 = _count_diff_pairs(m056_pairs)
-res_m117 = _count_diff_pairs(m117_pairs)
-res_m118 = _count_diff_pairs(m118_pairs)
-
-rec04 = f04.consign_fkb04_parity_receipt({"CLI-Anything": res_m056, "agent-desktop": {"compared_against_source": False, "cases_compared": 0, "cases_matched": 0}}, sha, repo_root=iso)
-rec02 = f02.consign_fkb02_parity_receipt({"context-language-models": res_m044, "knowledge-catalog": res_m050}, sha, repo_root=iso)
-reccat = cat.consign_catalog_parity_receipt({"00_Marketplace_YoutubeSkills": res_m117, "04_Inference_Youtube_Discovery_Registry": res_m118}, sha, repo_root=iso)
-
-assert rec04["verified_modules"] == ["CLI-Anything"] and rec04["cases_matched"] == rec04["cases_compared"] > 0
-assert sorted(rec02["verified_modules"]) == ["context-language-models", "knowledge-catalog"] and rec02["cases_matched"] == rec02["cases_compared"] > 0
-assert sorted(reccat["verified_modules"]) == ["00_Marketplace_YoutubeSkills", "04_Inference_Youtube_Discovery_Registry"] and reccat["cases_matched"] == reccat["cases_compared"] > 0
-
-proven_mods = rec04["verified_modules"] + rec02["verified_modules"] + reccat["verified_modules"]
+proven_mods = (
+    rec04["verified_modules"]
+    + rec02["verified_modules"]
+    + reccat["verified_modules"]
+    + recvd["verified_modules"]
+)
 
 print(json.dumps({
     "differential_proven": proven_mods,
+    "sabotages_detected": sabotage_detected_count,
+    "case_counts": case_counts,
     "desktop_live_verified": bool(r04["desktop_live_verified"]),
-    "r04": {"checks_passed": r04["checks_passed"], "cases": f"{rec04['cases_matched']}/{rec04['cases_compared']}", "r10": rec04["r10_entry_id"]},
-    "r02": {"checks_passed": r02["checks_passed"], "cases": f"{rec02['cases_matched']}/{rec02['cases_compared']}", "r10": rec02["r10_entry_id"]},
-    "rcat": {"checks_passed": rcat["checks_passed"], "cases": f"{reccat['cases_matched']}/{reccat['cases_compared']}", "r10": reccat["r10_entry_id"]},
+    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"]},
 }))
 '''
 
@@ -828,12 +1555,13 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py",
             "01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py",
             "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
-            # Sources réelles M044, M050, M056, M117, M118 pour Phase A avant suppression
+            # Sources réelles M044, M050, M056, M095, M117, M118 pour Phase A avant suppression
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/clm",
             "01_Forkable/FKB02_Memory/knowledge-catalog/okf",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/cli-anything-plugin",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/zotero/agent-harness",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/audacity/agent-harness",
+            "01_Forkable/FKB07_Money_Maker/02_Video/video-director/video-director/scripts",
             "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
             "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
         )
@@ -848,7 +1576,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             else:
                 shutil.copy2(src_p, dst_p)
 
-        # Entrées de test zotero/audacity copiées hors CLI-Anything/ pour rejouer extract_cli_anything_metadata après suppression du plugin
+        # Entrées de test zotero/audacity copiées hors CLI-Anything/ pour rejouer extract_cli_anything_metadata après suppression
         for sw in ("zotero", "audacity"):
             shutil.copytree(
                 ROOT / "01_Forkable/FKB04_Tools_Anything/CLI-Anything" / sw / "agent-harness",
@@ -864,14 +1592,14 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         (iso_root / "oracle_runner.py").unlink()
         assert (iso_root / "oracle_outputs.json").exists()
 
-        # PHASE B : suppression physique effective des 20 répertoires sources + 14 F8/GSD/llm-wiki
+        # PHASE B : suppression physique effective de tous les répertoires sources (FKB04, FKB02, M095, M117, M118) + F8
         for rel in SOURCE_DIRS_TO_DELETE_FOR_TEST + absent_paths:
             target = iso_root / rel
             if target.exists():
                 _force_rmtree(target)
             assert not target.exists(), f"Suppression physique incomplète: {target}"
 
-        # PHASE C : exécution des organes natifs dans iso_root amputé + comparaison == oracle_outputs
+        # PHASE C : exécution stricte + sabotage complet dans iso_root amputé
         (iso_root / "organ_runner.py").write_text(_ORGAN_RUNNER_CODE, encoding="utf-8")
         iso_out = subprocess.check_output(
             [sys.executable, str(iso_root / "organ_runner.py"), head_sha],
@@ -879,6 +1607,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             text=True,
         )
         parsed = json.loads(iso_out)
+        assert parsed["sabotages_detected"] >= 40
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])
 
@@ -888,6 +1617,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             ("01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py", ["--self-test"]),
             ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
             ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
+            ("01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py", []),
         ]:
             subprocess.check_call([sys.executable, str(iso_root / rel_script), *extra_args], cwd=str(iso_root), stdout=subprocess.DEVNULL)
 
@@ -907,12 +1637,15 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
     assert after_lines >= before_lines + 6
 
     diff_proven.add("llm-wiki")
-    print(f"[PASS 4/7] Test différentiel source-vs-organe avant/après suppression PASS ({len(diff_proven)} prouvés : {sorted(diff_proven)}) + M058 desktop_live={desktop_live} + L0 ({before_lines}->{after_lines})")
+    print(
+        f"[PASS 4/7] Différentiel strict (==) + {parsed['sabotages_detected']} sabotages détectés PASS "
+        f"({len(diff_proven)} prouvés : {sorted(diff_proven)}) + M058 desktop_live={desktop_live} + L0 ({before_lines}->{after_lines})"
+    )
     return diff_proven, desktop_live
 
 
 def test_fondation_13_1_fixture_compatibility() -> None:
-    assert len(ROOT_KERNELS) == 4 and abs(MAX_MODULES_PER_KERNEL_RATIO - (1.0 / 3.0)) < 1e-9
+    assert ROOT_KERNELS == ("ÂME", "SYSTÈME NERVEUX", "CORPS")
     anchors = [
         json.loads((FIXTURES_DIR / fn).read_text(encoding="utf-8"))
         for fn in ("anchor-001.json", "anchor-002.json", "anchor-026.json")
@@ -1074,10 +1807,10 @@ La fonction n'a pas tranché ni consigné de reçu.
         reg.register_capability(k, f"fiber:a0:kernel-{k.lower()}", f"cap_{k.lower()}")
     counts = reg.verify_all_kernels_connected()
     assert all(counts[k] == 1 for k in KERNEL_IDS)
-    print("[PASS 5/7] Compatibilité 1:1 Rust fondation-13-1 + Interconnexion L0 (5 organes / 4 noyaux ADR-14)")
+    print("[PASS 5/7] Compatibilité 1:1 Rust fondation-13-1 + Interconnexion L0 (5 organes / 3 noyaux ADR-15)")
 
 
-def test_carte_and_registre_adr14_and_dynamic_counts(proven_fusionne: set[str], desktop_live_verified: bool) -> None:
+def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], desktop_live_verified: bool) -> None:
     carte = (FUSION_DIR / "CARTE-DES-PRINCIPES.md").read_text(encoding="utf-8")
     registre = (FUSION_DIR / "REGISTRE-DE-FUSION.md").read_text(encoding="utf-8")
 
@@ -1088,7 +1821,6 @@ def test_carte_and_registre_adr14_and_dynamic_counts(proven_fusionne: set[str], 
     reg_rows = re.findall(r"^\| (?:M\d{3}) \| .*?$", registre, flags=re.MULTILINE)
     assert len(reg_rows) == 120
 
-    max_per_kernel = len(reg_rows) // 3  # 40 max strict sous ADR-14
     kernel_counts = {rk: 0 for rk in ROOT_KERNELS}
     registry_fusionne: set[str] = set()
     by_name: dict[str, tuple[str, str]] = {}
@@ -1104,7 +1836,7 @@ def test_carte_and_registre_adr14_and_dynamic_counts(proven_fusionne: set[str], 
         assert len(justification) >= 15, f"Justification insuffisante pour {mod_name}: {justification!r}"
 
         matched_rk = next((rk for rk in ROOT_KERNELS if noyau_col.startswith(f"{rk} ·")), None)
-        assert matched_rk is not None, f"Noyau ADR-14 invalide pour {mod_name}: {noyau_col!r}"
+        assert matched_rk is not None, f"Noyau ADR-15 invalide (attendu ÂME / SYSTÈME NERVEUX / CORPS) pour {mod_name}: {noyau_col!r}"
         kernel_counts[matched_rk] += 1
 
         by_name[mod_name] = (statut_col, justification)
@@ -1116,9 +1848,6 @@ def test_carte_and_registre_adr14_and_dynamic_counts(proven_fusionne: set[str], 
             actual_ecarte += 1
 
     assert sum(kernel_counts.values()) == 120
-    assert all(cnt <= max_per_kernel for cnt in kernel_counts.values()), (
-        f"Dépassement règle <= 1/3 ({max_per_kernel} max ADR-14): {kernel_counts}"
-    )
 
     assert registry_fusionne == proven_fusionne, (
         f"Divergence entre REGISTRE FUSIONNÉ ({sorted(registry_fusionne)}) et preuves dynamiques ({sorted(proven_fusionne)})"
@@ -1135,7 +1864,7 @@ def test_carte_and_registre_adr14_and_dynamic_counts(proven_fusionne: set[str], 
         assert by_name[mod][0] == "**PARTIEL**", f"{mod} doit rester PARTIEL: {by_name[mod]}"
 
     print(
-        f"[PASS 6/7] ADR-14 <= 1/3 respecté ({kernel_counts}) | "
+        f"[PASS 6/7] ADR-15 3 Noyaux respectés ({kernel_counts}) | "
         f"{len(registry_fusionne)} FUSIONNÉ vérifiés dynamiquement, {actual_retenu} RETENU, {actual_ecarte} ÉCARTÉ"
     )
 
@@ -1154,7 +1883,7 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         p = FUSION_DIR / fn
         assert p.exists() and p.stat().st_size > 200
     adrs = list((FUSION_DIR / "adr").glob("ADR-*.md"))
-    assert len(adrs) >= 14, f"Attendu >= 14 ADRs (ADR-01..ADR-14), trouvé {len(adrs)}"
+    assert len(adrs) >= 15, f"Attendu >= 15 ADRs (ADR-01..ADR-15), trouvé {len(adrs)}"
 
     with tempfile.TemporaryDirectory() as tmpdir:
         clone_dir = Path(tmpdir) / "clone_win"
@@ -1179,6 +1908,6 @@ if __name__ == "__main__":
     rust_proven = test_rust_cargo_and_phase2_hybrid()
     diff_proven, desktop_live = test_real_differential_deletion_and_lazy_import()
     test_fondation_13_1_fixture_compatibility()
-    test_carte_and_registre_adr14_and_dynamic_counts(rust_proven | diff_proven, desktop_live)
+    test_carte_and_registre_adr15_and_dynamic_counts(rust_proven | diff_proven, desktop_live)
     test_required_spad_artifacts_and_windows_clone_lf()
-    print("=== ALL 7/7 CYCLE-5 FOUNDATION, RUST & DIFFERENTIAL DELETION SUITES PASSED ===")
+    print("=== ALL 7/7 CYCLE-6 FOUNDATION, RUST, DIFFERENTIAL & ANTI-SABOTAGE SUITES PASSED ===")

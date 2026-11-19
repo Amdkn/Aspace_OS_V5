@@ -8,7 +8,7 @@ enonce_sha256: "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d
 
 # DDD-CONTRATS-COMMUNS — Couche Fondamentale L0
 
-Conformément à l'ÉNONCÉ §1 (4) et à l'**`ADR-14`** (amendant l'`ADR-13`), la Fondation A'Space interconnecte ses **4 Noyaux Fondamentaux équilibrés (`ÂME` / `SYSTÈME NERVEUX` / `CORPS` / `MÉTABOLISME`, chacun ≤ 1/3 du corpus)** — rattachant les organes `K1..K5`, `K3-ML` et le Bus L0 — au niveau le plus fondamental par des contrats uniques strictement alignés **octet pour octet** sur les validateurs Rust zéro-dépendance de `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/` (`src/lib.rs`, `src/router.rs`, `src/memory.rs`) et invoqués/doublés en **Phase 2 Hybride (`Python → Hybride → Rust`)** par `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_foundation_kernel.py`.
+Conformément à l'ÉNONCÉ §1 (4) et à l'**`ADR-15`** (amendant l'`ADR-14`), la Fondation A'Space interconnecte ses **3 Noyaux Fondamentaux (`ÂME` / `SYSTÈME NERVEUX` / `CORPS`)** — rattachant les organes `K1..K5` (dont `K5 Métabolisme` sous `CORPS`), `K3-ML` et le Bus L0 — au niveau le plus fondamental par des contrats uniques strictement alignés **octet pour octet** sur les validateurs Rust zéro-dépendance de `01_Forkable/FKB00_Runtime/00_A0_Core/fondation-13-1/` (`src/lib.rs`, `src/router.rs`, `src/memory.rs`) et invoqués/doublés en **Phase 2 Hybride (`Python → Hybride → Rust`)** par `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_foundation_kernel.py`.
 
 ---
 
@@ -90,6 +90,6 @@ Conformément à l'ÉNONCÉ §1 (4) et à l'**`ADR-14`** (amendant l'`ADR-13`), 
 
 - **Autorité source** : ÉNONCÉ §1 (3) — *« la source d'un module FUSIONNÉ peut quitter l'arbre actif sans perte de capacité (test de suppression, jugé par un juge externe) »*.
 - **Conditions vérifiées** :
-  1. Absence réelle, preuves Rust (`fondation-13-1` / `RigInfinity`), ou **comparaison différentielle automatisée exécutant la source d'origine et l'organe natif sur des entrées identiques avant puis après suppression physique de la source** (`test_foundation_deletion_suite.py` Cycle 5, zéro compteur codé en dur et zéro repli `headless-fallback`).
-  2. Retrait des gitlinks `.gitmodules` effectué par famille **après** verdict favorable du Juge externe (règle Cycles 4–5).
+  1. Absence réelle, preuves Rust (`fondation-13-1` / `RigInfinity`), ou **comparaison différentielle stricte (`==`, zéro clé en trop, zéro normalisation destructive) + détection de sabotage sur chaque fonction/donnée déclarée avant puis après suppression physique de la source** (`test_foundation_deletion_suite.py` Cycle 6, zéro compteur codé en dur et zéro repli `headless-fallback`).
+  2. Retrait des gitlinks `.gitmodules` effectué par famille **après** verdict favorable du Juge externe (règle Cycles 4–6).
   3. Validation par le Juge-comparateur externe en lecture seule sur clone neuf.

@@ -149,3 +149,10 @@ Chaque ADR ci-dessous résout un **conflit réel détecté lors de l'extraction 
      - **`CORPS` (`OpenRig`)** : `K2` Exécution Multi-Harness, Bots, Source-Control, Anything & 3D = **`26` modules (`21,7 %`)**.
      - **`MÉTABOLISME` (`BusinessOS`)** : `K5` Production Vidéo/CAO, Finance Read-Only veto S0 & Valeur B2B = **`36` modules (`30,0 %`)**.
 - **Invariant** : Aucun noyau > `40` modules ; preuve `FUSIONNÉ` réservée aux modules validés par comparaison différentielle directe contre la source d'origine avant/après suppression physique. (Détail complet dans [`adr/ADR-14.md`](adr/ADR-14.md)).
+
+## ADR-15 — Amendement ADR-14 : Retour aux Trois Noyaux (`ÂME / SYSTÈME NERVEUX / CORPS`), Retrait de `MÉTABOLISME` & Preuve Différentielle Anti-Sabotage
+- **Statut** : `ACCEPTÉE` (Amende `ADR-14` — décision architecturale Cycle 6)
+- **Conflit** : Le plafond mécanique `≤ 1/3` a créé un 4e noyau `MÉTABOLISME` par renommage de `K5`, et l'audit par sabotage du Juge externe Cycle 5 a révélé des fonctions non déclenchées sur `M044` (`clm_rendered_text`), `M050` (`okf_is_stale`) et des comparaisons tolérantes sur `M117`/`M118`.
+- **Décision** :
+  1. **Trois Noyaux Uniquement** : retrait de `MÉTABOLISME` comme noyau racine (`MÉTABOLISME` redevient l'`Organe K5` du noyau `CORPS`), suppression du plafond mécanique de taille par noyau : **`ÂME` (`29`)**, **`SYSTÈME NERVEUX` (`29`)**, **`CORPS` (`62`, réduit par fusion réelle de modules, dont `M095 video-director` en Cycle 6)**.
+  2. **Contrat Anti-Sabotage** : toute fonction et donnée déclarée de `M044`, `M050`, `M056`, `M095`, `M117` et `M118` doit passer une parité stricte (`==` sans clés en trop ni normalisation destructive) **et** faire échouer la suite en cas de sabotage/mutation volontaire ; `M058 agent-desktop` reste `PARTIEL` sans vraie fenêtre Windows. (Détail complet dans [`adr/ADR-15.md`](adr/ADR-15.md)).

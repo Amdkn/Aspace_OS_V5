@@ -6,15 +6,15 @@ Unifie en code natif exécutable les principes, invariants et interfaces des 9 m
 destinés à `FUSIONNÉ` (en plus de `M120 llm-wiki` déjà fusionné ; `servers` `M051` reste `RETENU` MCP Stdio) :
   - M042 auto-ontology            (extraction dynamique DAG + détection de contradictions)
   - M043 billion-context          (HierarchicalCASStore L0/L1/L2 SHA-256 + offload disque)
-  - M044 context-language-models  (build_clm_anchored_context Zero-Lost-in-the-Middle)
+  - M044 context-language-models  (context_string, edit_gate, finish_policy, lm_compat)
   - M045 dox                      (validate_dox_contract hiérarchie AGENTS.md/CLAUDE.md)
   - M046 gbrain                   (HybridBrainIndex BM25 + vecteurs + graphe avec citations M1-M8)
   - M047 graphify                 (ASTCodeGraphBuilder multi-langages .py/.ts/.rs + communautés Leiden/modularity + explain)
   - M048 infinite-brain-harness   (isolation stricte multi-cerveaux inter-tenants)
   - M049 infinite-brain-os        (cerveau Markdown/YAML versionné Git + promotion canonique)
-  - M050 knowledge-catalog        (validate_okf_bundle OKF v0.2 : frontmatter YAML, index, log append-only)
+  - M050 knowledge-catalog        (OKF v0.2 : document, index, synthesizer, paths)
 
-Rattachement ADR-13 : Noyau `ÂME` -> Organe `K4`.
+Rattachement ADR-15 : Noyau `ÂME` -> Organe `K4`.
 Zéro dépendance externe, zéro télémétrie.
 """
 
@@ -286,50 +286,109 @@ def clm_parse_back(edited: Any, protected: List[Dict[str, Any]]) -> List[Dict[st
     return _clm_normalize(msgs, protect=len(protected))
 
 
-def build_clm_anchored_context(
-    query: str,
-    chunks: Sequence[Dict[str, Any]],
-    ontology_triples: Sequence[Dict[str, Any]],
-    max_tokens: int = 180,
-) -> Dict[str, Any]:
-    """Assemble un contexte structuré en plaçant les ancres ontologiques en tête ET en rappel terminal."""
-    q_terms = set(re.findall(r"[a-zA-Z0-9_-]{3,}", query.lower()))
-    anchor_lines = [
-        f"[ANCRE] {t['from']} --{t['relationType']}--> {t['to']}"
-        for t in ontology_triples
-        if not q_terms or any(qt in (t["from"] + t["to"] + t["relationType"]).lower() for qt in q_terms)
-    ]
-    if not anchor_lines:
-        anchor_lines = [f"[ANCRE] {t['from']} --{t['relationType']}--> {t['to']}" for t in ontology_triples[:3]]
+CLM_SHRINK_RULE = "A compaction must SHRINK context"
+_CLM_GATES = {
+    "fit": True, "shrink": False, "1": True, "true": True, "yes": True, "on": True,
+    "0": False, "false": False, "no": False, "off": False,
+}
 
-    header = "\n".join(anchor_lines[:4])
-    footer = f"[INVARIANT-RAPPEL] {' ; '.join(anchor_lines[:2])}" if anchor_lines else "[INVARIANT-RAPPEL] Aucun triplet"
-    budget_remaining = max(max_tokens - len(header.split()) - len(footer.split()), 0)
 
-    body_parts: List[str] = []
-    used = 0
-    for ch in chunks:
-        txt = str(ch.get("text", "")).strip()
-        words = txt.split()
-        if used + len(words) > budget_remaining:
-            avail = max(budget_remaining - used, 0)
-            if avail > 0:
-                body_parts.append(" ".join(words[:avail]))
-                used += avail
-            break
-        body_parts.append(txt)
-        used += len(words)
+def _clm_parse_gate(value: Any, source: str) -> bool:
+    if isinstance(value, bool):
+        return value
+    key = str(value).strip().lower()
+    if key not in _CLM_GATES:
+        raise ValueError(f"{source} must be fit or shrink (or a boolean), got {value!r}")
+    return _CLM_GATES[key]
 
-    context = "\n\n".join(p for p in (header, "\n".join(body_parts), footer) if p)
-    return {
-        "schema": "aspace.clm.context.v1",
-        "kernel": "ÂME",
-        "organ": "K4",
-        "zero_lost_in_middle": True,
-        "tokens_used": len(context.split()),
-        "max_tokens": max_tokens,
-        "context": context,
-    }
+
+def clm_resolve_allow_edit_growth(passed: Any, env: Optional[str] = None) -> bool:
+    if passed is not None:
+        return _clm_parse_gate(passed, "allow_edit_growth")
+    raw = env if env is not None else os.environ.get("CLM_EDIT_GATE", "fit")
+    return _clm_parse_gate(raw or "fit", "CLM_EDIT_GATE")
+
+
+def clm_fit_rule(limit: int) -> str:
+    return f"An edit must FIT the {limit}-token limit"
+
+
+def clm_may_grow(*, allow_growth: bool, limit: int, after: int) -> bool:
+    return bool(allow_growth and limit and after <= limit)
+
+
+def clm_reject_rule(*, allow_growth: bool, limit: int) -> str:
+    if allow_growth and limit:
+        return clm_fit_rule(limit)
+    return CLM_SHRINK_RULE
+
+
+def clm_rejected_note(*, baseline: int, after: int, before: int, rule: str) -> str:
+    return (
+        f"\n[LIVE_CTX_MAIN.txt: edit REJECTED — it GREW context "
+        f"~{baseline}->{after} tokens, so it was NOT applied (still ~{before}). "
+        f"{rule}: you likely duplicated/appended "
+        f"content — replace stale text with a SHORTER summary instead.]"
+    )
+
+
+CLM_SUBMIT_MARKER = "COMPLETE_TASK_AND_SUBMIT_FINAL_OUTPUT"
+CLM_FINISH_INSTRUCTIONS = (
+    "When you are finished, submit by running the standalone command\n"
+    f"`echo {CLM_SUBMIT_MARKER}` (with nothing else in that command).\n"
+    "After it runs you cannot continue."
+)
+CLM_FINISH_MODES = ("submit", "open_ended")
+_CLM_SUBMIT_COMMAND_RE = re.compile(
+    rf"""^\s*(?:/bin/)?echo\s+(?:['"])?{re.escape(CLM_SUBMIT_MARKER)}(?:['"])?\s*$"""
+)
+
+
+def clm_is_submit_command(cmd: str) -> bool:
+    return _CLM_SUBMIT_COMMAND_RE.match(cmd or "") is not None
+
+
+class CLMFinishPolicy:
+    """Politique de complétion M044 (`submit` vs `open_ended`)."""
+
+    __slots__ = ("mode",)
+
+    def __init__(self, mode: str = "submit") -> None:
+        m = (str(mode or "submit")).strip().lower()
+        if m in ("", "1", "true", "submit"):
+            m = "submit"
+        elif m in ("open_ended", "open-ended", "openended"):
+            m = "open_ended"
+        else:
+            raise ValueError(f"finish_policy must be one of {CLM_FINISH_MODES}, got {mode!r}")
+        self.mode = m
+
+    @property
+    def open_ended(self) -> bool:
+        return self.mode == "open_ended"
+
+    def is_finish_command(self, cmd: str) -> bool:
+        if self.open_ended:
+            return False
+        return clm_is_submit_command(cmd)
+
+    def prompt_fragment(self) -> str:
+        if self.open_ended:
+            return ""
+        return CLM_FINISH_INSTRUCTIONS
+
+    def __repr__(self) -> str:
+        return f"CLMFinishPolicy({self.mode!r})"
+
+
+_CLM_USES_COMPLETION_TOKENS = {"gpt-5-4", "gpt-5-4-mini", "gpt-5-4-nano", "gpt-o4-mini"}
+
+
+def clm_token_cap_key(model: str) -> str:
+    name = (model or "").split("/")[-1]
+    if name in _CLM_USES_COMPLETION_TOKENS or name.startswith(("gpt-5", "gpt-o")):
+        return "max_completion_tokens"
+    return "max_tokens"
 
 
 # ===========================================================================
@@ -821,37 +880,35 @@ def okf_regenerate_indexes(
     return written
 
 
-def validate_okf_bundle(bundle_dir: Path) -> Dict[str, Any]:
-    """Valide un bundle OKF v0.2 : YAML `type:`, existence `index.md`, journal `log.md`."""
-    index_path = bundle_dir / "index.md"
-    log_path = bundle_dir / "log.md"
-    concepts_dir = bundle_dir / "concepts"
-    errors: List[str] = []
+_OKF_SEGMENT_RE = re.compile(r"[A-Za-z0-9_][A-Za-z0-9_.\-]*")
 
-    if not index_path.exists():
-        errors.append("index.md manquant")
-    if not log_path.exists():
-        errors.append("log.md manquant")
-    if not concepts_dir.is_dir():
-        errors.append("concepts/ manquant")
 
-    concept_files = sorted(concepts_dir.glob("*.md")) if concepts_dir.is_dir() else []
-    for cf in concept_files:
-        head = cf.read_text(encoding="utf-8", errors="ignore")[:800]
-        if not head.startswith("---"):
-            errors.append(f"{cf.name}: frontmatter --- manquant")
-            continue
-        if not re.search(r"^type:\s*\S+", head, flags=re.MULTILINE):
-            errors.append(f"{cf.name}: clé type: manquante")
+def _okf_validate_segment(seg: str) -> None:
+    if not _OKF_SEGMENT_RE.fullmatch(seg):
+        raise ValueError(f"Invalid concept id segment: {seg!r}")
 
-    return {
-        "schema": "aspace.knowledge-catalog.okf02.v1",
-        "kernel": "ÂME",
-        "organ": "K4",
-        "valid": len(errors) == 0,
-        "concepts_checked": len(concept_files),
-        "errors": errors,
-    }
+
+def okf_concept_id_to_path(bundle_root: Path, concept_id: Tuple[str, ...]) -> Path:
+    if not concept_id:
+        raise ValueError("concept_id must have at least one segment")
+    for seg in concept_id:
+        _okf_validate_segment(seg)
+    *dirs, name = concept_id
+    return Path(bundle_root).joinpath(*dirs, f"{name}.md")
+
+
+def okf_path_to_concept_id(bundle_root: Path, path: Path) -> Tuple[str, ...]:
+    rel = Path(path).relative_to(Path(bundle_root)).with_suffix("")
+    return tuple(rel.parts)
+
+
+def okf_parse_concept_id(s: str) -> Tuple[str, ...]:
+    parts = tuple(p for p in s.split("/") if p)
+    if not parts:
+        raise ValueError(f"Empty concept id: {s!r}")
+    for p in parts:
+        _okf_validate_segment(p)
+    return parts
 
 
 # ===========================================================================
@@ -885,21 +942,20 @@ def run_fkb02_self_test(repo_root: Optional[Path] = None, head_sha40: str = "0" 
         )
         assert checks["auto_ontology_dag"]
 
-        # 3. context-language-models (M044) — context_string round-trip + ancres
-        clm = build_clm_anchored_context(
-            "K1 R10",
-            [{"text": "Validation deterministe R10 et EventJournal."}],
-            onto.relations,
-            max_tokens=100,
-        )
+        # 3. context-language-models (M044) — context_string, edit_gate, finish_policy, lm_compat
         protected = [{"role": "system", "content": "SYS"}, {"role": "user", "content": "TASK"}]
         rendered = clm_render_editable(protected + [{"role": "assistant", "content": "A"}, {"role": "tool", "content": "T"}])
         reparsed = clm_parse_back(rendered, protected)
+        fp = CLMFinishPolicy("submit")
         checks["clm_roundtrip"] = (
-            clm["zero_lost_in_middle"]
-            and "[ANCRE]" in clm["context"]
+            clm_content_text([{"type": "text", "text": "ok"}]) == "ok"
+            and clm_rendered_text({"reasoning_content": "R", "content": "C"}) == "R\nC"
             and len(reparsed) == 4
             and reparsed[3]["role"] == "user"
+            and clm_resolve_allow_edit_growth("fit") is True
+            and clm_may_grow(allow_growth=True, limit=100, after=80) is True
+            and fp.is_finish_command(f"echo {CLM_SUBMIT_MARKER}") is True
+            and clm_token_cap_key("gpt-5-4") == "max_completion_tokens"
         )
         assert checks["clm_roundtrip"]
 
@@ -972,15 +1028,23 @@ La fonction n'a pas tranché ni consigné.
         assert checks["multi_brain_isolation"]
 
         # 9. knowledge-catalog (M050)
-        okf_res = validate_okf_bundle(root / "00_Memoire" / "bundle")
+        okf_concepts_count = len(list((root / "00_Memoire" / "bundle" / "concepts").glob("*.md"))) if (root / "00_Memoire" / "bundle" / "concepts").is_dir() else 0
         okf_doc = OKFDocument(frontmatter={"type": "Concept", "title": "Probe", "description": "OKF probe."}, body="# Probe\n")
         okf_doc.validate()
         okf_reparsed = OKFDocument.parse(okf_doc.serialize())
+        parsed_cid = okf_parse_concept_id("concepts/probe")
+        cid_path = okf_concept_id_to_path(tdir, parsed_cid)
+        okf_bundle_tmp = tdir / "okf_idx_test"
+        (okf_bundle_tmp / "sub").mkdir(parents=True)
+        (okf_bundle_tmp / "sub" / "item.md").write_text(okf_doc.serialize(), encoding="utf-8")
+        gen_idx = okf_regenerate_indexes(okf_bundle_tmp)
         checks["okf_bundle_and_doc"] = bool(
-            okf_res["valid"]
-            and okf_res["concepts_checked"] >= 15
+            okf_concepts_count >= 15
             and okf_reparsed.frontmatter["type"] == "Concept"
             and okf_trust_tier({"verified": {"by": "human:amdkn", "at": "2026-11-19T00:00:00Z"}}) == "human-reviewed"
+            and okf_is_stale({"stale_after": "2020-01-01T00:00:00Z"}) is True
+            and okf_path_to_concept_id(tdir, cid_path) == parsed_cid
+            and len(gen_idx) >= 1
         )
         assert checks["okf_bundle_and_doc"]
 
@@ -995,7 +1059,7 @@ La fonction n'a pas tranché ni consigné.
             mission_prefix="FKB02-SMOKE",
             sha=head_sha40,
             proof=["01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py"],
-            summary=f"FKB02 smoke={passed}/{total}; okf_concepts={okf_res['concepts_checked']}; source_oracle_parity=0 at {head_sha40[:7]}",
+            summary=f"FKB02 smoke={passed}/{total}; okf_concepts={okf_concepts_count}; source_oracle_parity=0 at {head_sha40[:7]}",
             event_type="fact_recalled",
             repo_root=root,
         )
@@ -1007,7 +1071,7 @@ La fonction n'a pas tranché ni consigné.
             "source_parity_verified": [],
             "graphify_languages": code_g["languages"],
             "graphify_communities": comm["community_count"],
-            "okf_concepts": okf_res["concepts_checked"],
+            "okf_concepts": okf_concepts_count,
             "l0_seq": evt["seq"],
             "r10_entry_id": rec["entry_id"],
         }

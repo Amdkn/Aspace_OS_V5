@@ -239,7 +239,7 @@ if __name__ == "__main__":
                 "tiers": list({o.tier for o in engine.catalog.values()}),
                 "m117_playbooks_count": len(MARKETPLACE_PLAYBOOKS),
                 "m117_productized_offers_count": m117_query["productized_offers_count"],
-                "m117_web_lighthouse_min": pb_web["thresholds"]["lighthouse_performance_min"],
+                "m117_web_protocol_step": next((s for s in pb_web["execution_protocol"] if "Lighthouse" in s), ""),
                 "sample_order_execution": asdict(sample_exec),
             },
             indent=2,
