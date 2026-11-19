@@ -1,0 +1,3 @@
+00_Memoire/bundle/fusion/FUSION-ENONCE.md -text
+00_Memoire/bundle/fusion/*.md text eol=lf
+00_Memoire/bundle/fusion/adr/*.md text eol=lf

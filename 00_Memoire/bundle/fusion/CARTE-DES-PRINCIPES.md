@@ -843,7 +843,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M102 — `OpenDots` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `MIT` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/OpenDots.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/OpenDots-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots/README.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Skin/trait « coworkers always-on multi-canaux » porté dans RigInfinity F8 pas 7 ; gitlink retiré.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Skin/trait « coworkers always-on » porté dans RigInfinity F8 pas 7 et gitlink retiré ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour vérifier `bots_proof`).)
 - **Principe** : Coéquipiers permanents traversant canaux synchrones et asynchrones (texte, appels, Slack) avec règle Review-Before-Saving.
 - **Invariants** : Revue obligatoire avant sauvegarde persistante ; aucun processus autonome hors contrôle RigInfinity.
 - **Interfaces** : Trait OpenDots dans RigInfinity / canaux Threads & Channels.
@@ -851,7 +851,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M103 — `OpenDuet` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `MIT` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/OpenDuet.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/OpenDuet-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet/README.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Skin/trait « agent proactif humain-dans-la-boucle » porté dans RigInfinity F8 pas 7 ; gitlink retiré.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Skin/trait « agent proactif » porté dans RigInfinity F8 pas 7 et gitlink retiré ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour vérifier `bots_proof`).)
 - **Principe** : Agent proactif bâti sur le socle OpenBot exécutant les tâches de fond tout en maintenant l'humain dans la boucle sur les points d'arbitrage.
 - **Invariants** : Copie vendue OpenDuet 0.2.0 abandonnée avec preuve ; zéro télémétrie.
 - **Interfaces** : Trait OpenDuet dans RigInfinity / bots_proof.
@@ -859,7 +859,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M104 — `agent-zero` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `F8/agent-zero` | repo `Amdkn/agent-zero` | SHA/pin `a042ddde19e5` | licence `NOASSERTION` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/agent-zero-ADAPTATION.md`, `01_Forkable/MODULES-LOCK.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Boucle agentique, client gateway-only et scheduler portés dans RigInfinity (agent.rs, provider.rs, job.rs) ; gitlink coupé F8 pas 5.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Boucle agentique, client gateway-only et scheduler portés dans RigInfinity et gitlink coupé F8 pas 5 ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour rejouer `agent_zero_proof`).)
 - **Principe** : Moteur d'exécution autonome disposant d'un espace système complet (terminal, fichiers, navigateur, sous-tâches) subordonné à la constitution A0.
 - **Invariants** : Zéro appel sortant télémétrique (abandon contrôle api.agent-zero.ai) ; modèle routé via gateway :31415 exclusivement.
 - **Interfaces** : agent.rs (430 l.) / provider.rs (http://127.0.0.1:31415/v1/chat/completions) / job.rs.
@@ -883,7 +883,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M107 — `herdr-core` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `F8/herdr-core` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `voir-source-brute` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/herdr-core.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/herdr-core-ADAPTATION.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Transport PTY/socket et contrat client `hc` portés dans RigInfinity (openrig_terminal.rs + pty_proof) ; gitlink retiré F8 pas 8.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Transport PTY/socket porté dans RigInfinity (`openrig_terminal.rs` + `pty_proof`) et gitlink retiré F8 pas 8 ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour rejouer `pty_proof`).)
 - **Principe** : Gestionnaire de terminaux persistants multiplexés avec protocole JSON-RPC client/serveur pour envoyer, attendre et relire les sorties d'agents.
 - **Invariants** : Zéro daemon `hc` concurrent au daemon maître RigInfinity ; zéro appel réseau externe (strace 0 connect hors loopback) ; notes=false, version_check=false.
 - **Interfaces** : hc ls|send|wait|read|run --bg / openrig_terminal.rs (socket UNIX/loopback).
@@ -891,7 +891,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M108 — `infinity` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity` | repo `Amdkn/infinity` | SHA/pin `007409e242f2` | licence `Apache-2.0` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/infinity.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/infinity-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity/README.md`, `01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/infinity/Cargo.toml`, `01_Forkable/MODULES-LOCK.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Pure Data Between Turns, hibernation à coût zéro et RAP portés en Rust dans RigInfinity (crates/infinity-daemon) ; gitlink retiré F8 pas 8.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Pure Data / hibernation / RAP portés en Rust dans RigInfinity et gitlink retiré F8 pas 8 ; part manquante : `RigInfinity` lui-même est `PARTIEL` (non initialisé localement, `cargo` absent sur VM pour rejouer le test de capacité sans amont).)
 - **Principe** : Pure Data Between Turns : entre deux tours, l'agent est uniquement un état sérialisé à coût CPU/RAM nul ; outils découplés via Reactive Agent Protocol (RAP).
 - **Invariants** : Aucun thread bloqué entre deux événements ; réveil uniquement sur trigger ; capacité 75k agents frugaux sans saturation.
 - **Interfaces** : SessionRapManager / rap.rs / rap_callback.rs / rap_servers.rs / session_store.rs (hibernation idle -> shut_down).
@@ -899,7 +899,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M109 — `openbot` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `MIT` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/openbot.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/openbot-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot/README.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openbot/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Plateforme bots incarnés et frontière d'approbation portés en Rust dans RigInfinity (11a82ba, bots_proof 7/7) ; gitlink retiré F8 pas 8.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Plateforme bots incarnés portée en Rust dans RigInfinity (`11a82ba`) et gitlink retiré F8 pas 8 ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour rejouer `bots_proof`).)
 - **Principe** : Coéquipiers persistants incarnés : chacun possède son workspace, son ordinateur virtuel et son navigateur avec reprise en main humaine.
 - **Invariants** : Zéro télémétrie CopilotKit/PostHog ; zéro cron ; interdiction d'approvalPolicy: never ; suppression du sprawl à 10 processus/bot.
 - **Interfaces** : agent-computer / AG-UI 16 adaptateurs / bots_proof.rs dans RigInfinity.
@@ -907,7 +907,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M110 — `openmuse` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse` | repo `interne A'Space` | SHA/pin `natif/dossie` | licence `MIT` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/openmuse.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/openmuse-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse/README.md`, `01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Skin/trait « agent personnel avec prise de relais humaine » porté dans RigInfinity F8 pas 7 ; gitlink retiré.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Skin/trait « agent personnel » porté dans RigInfinity F8 pas 7 et gitlink retiré ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour vérifier `bots_proof`).)
 - **Principe** : Agent personnel continu (navigateur + terminal + fichiers) permettant à l'humain de suivre le plan, relire les actions et reprendre la main à tout moment.
 - **Invariants** : Revue humaine explicite avant effets irréversibles ; compatibilité multi-harness.
 - **Interfaces** : Trait OpenMuse dans RigInfinity (plateforme OpenBot + skin OpenMuse) / openmuse_takeover_url.
@@ -915,7 +915,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M111 — `openrig` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig` | repo `Amdkn/openrig` | SHA/pin `649376c803f7` | licence `Apache-2.0` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/openrig.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/openrig-ADAPTATION.md`, `01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig/README.md`, `01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/openrig/package.json`, `01_Forkable/MODULES-LOCK.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Rigs déclaratifs, context packs, lignage ULID et état SQLite portés en Rust dans RigInfinity ; gitlink retiré F8 pas 8.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K2 (Exécution & Fibres)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Rigs déclaratifs, context packs et lignage ULID portés en Rust dans RigInfinity et gitlink retiré F8 pas 8 ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour rejouer `cargo test` sans amont).)
 - **Principe** : Multiplexage déclaratif d'équipes multi-harnesses (« A harness wraps a model; a rig wraps your harnesses ») avec sièges typés et lignage vérifiable.
 - **Invariants** : Un seul écrivain actif par rig/worktree ; séparation lead/worker/reviewer ; pas de serveur HTTP externe non loopback.
 - **Interfaces** : openrig_state.rs / openrig_context_packs.rs / openrig_lineage.rs (ULID) / openrig_terminal.rs / rigs.yaml.
@@ -931,7 +931,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M113 — `prime-agent` (F8_UNPINNED)
 - **Provenance & Sources Brutes Lues** : chemin `F8/prime-agent` | repo `Amdkn/prime-agent` | SHA/pin `3bac96af3451` | licence `NOASSERTION` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/prime-agent.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/prime-agent-ADAPTATION.md`, `01_Forkable/MODULES-LOCK.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K1 (Gouvernance & Âme)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Paradigme RLM (/refine, prompt-as-variable, snapshots rollback) porté et mergé dans RigInfinity (95e95f9) ; gitlink retiré F8 pas 8.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **K1 (Gouvernance & Âme)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Paradigme RLM (/refine, snapshots rollback) porté dans RigInfinity (`95e95f9`) et gitlink retiré F8 pas 8 ; part manquante : `RigInfinity` est `PARTIEL` (`cargo` absent sur VM pour rejouer `prime_agent_proof`).)
 - **Principe** : Récursivité disciplinée (RLM : appels de sous-agents comme fonctions dans REPL persistant) et Continual Harness raffiné par preuves avec rollback instantané.
 - **Invariants** : Prompt système constitutionnel immuable ; aucune mise à jour d'état conservée si le score de hold-out baisse ; zéro télémétrie api.primeintellect.ai.
 - **Interfaces** : /refine / ContinualSnapshot / refine_available() / prime_agent_proof (6/6 tests).

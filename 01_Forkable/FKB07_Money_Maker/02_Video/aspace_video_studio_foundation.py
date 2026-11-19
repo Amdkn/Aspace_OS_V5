@@ -23,7 +23,7 @@ KERNEL_CORE_DIR = WORKSPACE_ROOT / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core
 if str(KERNEL_CORE_DIR) not in sys.path:
     sys.path.insert(0, str(KERNEL_CORE_DIR))
 
-from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
+from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA, record_shared_l0_event, record_shared_l0_receipt  # noqa: E402
 
 
 CANONICAL_VIDEO_ENGINES: Dict[str, Dict[str, str]] = {
@@ -101,36 +101,23 @@ class UnifiedVideoStudioFoundation:
         day_tag = now_dt.strftime("%Y%m%d")
         seq_suffix = f"{abs(hash(job_id)) % 900 + 100:03d}"
 
-        self.journal.inscribe(
-            {
-                "actor_from": "fabricator",
-                "actor_to": "executor",
-                "at": now_iso,
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": f"D-VID-{job_id}",
-                "event_id": f"EVT-{day_tag}-{seq_suffix}",
-                "payload": f"Planifier pipeline video {job_id}",
-                "proof": ["01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py"],
-                "type": "dispatch_typed",
-            },
-            now_utc=now_dt,
+        record_shared_l0_event(
+            actor_from="fabricator",
+            actor_to="executor",
+            dispatch_id=f"D-VID-{job_id}",
+            payload=f"Planifier pipeline video {job_id}",
+            proof=["01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py"],
+            event_type="dispatch_typed",
         )
-        self.ledger.validate_and_consign(
-            {
-                "entry_id": f"G-{day_tag}-{seq_suffix}",
-                "issuer": "Kernel K5 (VideoCoordinator)",
-                "mission_id": f"F4-VIDEO-{job_id}",
-                "observed_at": now_iso,
-                "proof": [
-                    "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
-                    ".gitmodules:0_FKB06_duplicates",
-                ],
-                "recorded_at": None,
-                "schema": R10_SCHEMA,
-                "sha": head_sha40,
-                "summary": f"F4 Video Studio coordinator contract verified at {head_sha40[:7]} (status PARTIEL)",
-            },
-            now_utc=now_dt,
+        record_shared_l0_receipt(
+            issuer="Kernel K5 (VideoCoordinator)",
+            mission_prefix=f"F4-VIDEO-{job_id}",
+            sha=head_sha40,
+            proof=[
+                "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
+                ".gitmodules:0_FKB06_duplicates",
+            ],
+            summary=f"F4 Video Studio coordinator contract verified at {head_sha40[:7]} (status PARTIEL)",
         )
         return VideoPipelinePlan(job_id=job_id, offer_type=offer_type, stages=stages)
 

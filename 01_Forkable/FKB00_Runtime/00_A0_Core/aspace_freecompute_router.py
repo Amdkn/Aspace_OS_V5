@@ -13,7 +13,7 @@ Couvre l'ensemble de la constellation Compute & Automatisation gratuite :
 6. Upstash Box : 10 boxes concurrentes, 5h CPU/mois, auto-pause natif ($0/m)
 7. Cloudroom : 2 992 crédits cloud sandbox ($0/m)
 8. Google Cloud Shell (antigravity-a0) : 50h/semaine VM Linux persistante ($0/m)
-9. GitHub Actions Public & FreeVPS (Amdkn/FreeVPS) : 2 000 min/mois ($0/m)
+9. GitHub Actions Public : runners CI standards (FreeVPS écarté par ADR-08)
 10. GitHub Codespaces : 120 core-hours/mois + purge atomique ($0/m)
 11. Trio Workflow Cloud : Activepieces (1 000 tasks/m) + Make.com (1 000 ops/m) + Zapier (100 tasks/m)
 12. Tunnels Mesh : Ngrok 1GB/m + Cloudflare Zero Trust + Tailscale ($0/m)
@@ -31,7 +31,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 if str(Path(__file__).resolve().parent) not in sys.path:
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
+from aspace_foundation_kernel import record_shared_l0_event  # noqa: E402
 
 
 @dataclass
@@ -248,21 +248,13 @@ def select_compute(task_type: str, estimated_seconds: int = 30) -> dict:
     candidates.sort(key=lambda x: x.priority)
     chosen = candidates[0] if candidates else PROVIDERS[0]
     now_dt = datetime.now(timezone.utc)
-    day_tag = now_dt.strftime("%Y%m%d")
-    l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-    l0_evt = l0_journal.inscribe(
-        {
-            "actor_from": "router",
-            "actor_to": "executor",
-            "at": now_dt.isoformat(),
-            "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-            "dispatch_id": f"D-K2-{chosen.id}",
-            "event_id": f"EVT-{day_tag}-201",
-            "payload": f"Router execution vers {chosen.id}",
-            "proof": [chosen.endpoint_or_target],
-            "type": "dispatch_typed",
-        },
-        now_utc=now_dt,
+    l0_evt = record_shared_l0_event(
+        actor_from="router",
+        actor_to="executor",
+        dispatch_id=f"D-K2-{chosen.id}",
+        payload=f"Router execution vers {chosen.id}",
+        proof=[chosen.endpoint_or_target],
+        event_type="dispatch_typed",
     )
 
     return {
@@ -287,7 +279,6 @@ def compute_monthly_quota_accounting() -> dict:
             "retool_workflows": "5,000 Runs/month",
             "cloudflare_workers": "3,000,000 Requests/month",
             "workflow_ops_triad": "2,100 Ops/month (Activepieces + Make + Zapier)",
-            "github_actions_public_private": "Unlimited Public + 2,000 Private min/month",
             "google_cloud_shell": "200 Hours Linux VM/month (50h/week)",
             "github_codespaces": "120 Core-hours/month",
             "upstash_boxes": "5 CPU-hours/month (10 boxes)",

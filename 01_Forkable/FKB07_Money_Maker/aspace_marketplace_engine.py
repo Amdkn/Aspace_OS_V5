@@ -22,7 +22,7 @@ from typing import Any, Literal
 _KERNEL_DIR = Path(__file__).resolve().parents[1] / "FKB00_Runtime" / "00_A0_Core"
 if str(_KERNEL_DIR) not in sys.path:
     sys.path.insert(0, str(_KERNEL_DIR))
-from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
+from aspace_foundation_kernel import record_shared_l0_event, record_shared_l0_receipt  # noqa: E402
 
 TierCode = Literal[
     "C0_ARCHITECT_INFRA",
@@ -192,36 +192,20 @@ class AspaceMarketplaceEngine:
         digest = hashlib.sha256(
             f"{offer_id}:{client_org}:{now_iso}".encode("utf-8")
         ).hexdigest()[:10]
-        day_tag = now_dt.strftime("%Y%m%d")
-        l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-        l0_ledger = R10Ledger(valid_shas={head_sha40})
-        l0_journal.inscribe(
-            {
-                "actor_from": "fabricator",
-                "actor_to": "executor",
-                "at": now_iso,
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": f"D-K5-{digest}",
-                "event_id": f"EVT-{day_tag}-501",
-                "payload": f"Produire offre {offer.offer_id}",
-                "proof": ["01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py"],
-                "type": "dispatch_typed",
-            },
-            now_utc=now_dt,
+        record_shared_l0_event(
+            actor_from="fabricator",
+            actor_to="executor",
+            dispatch_id=f"D-K5-{digest}",
+            payload=f"Produire offre {offer.offer_id}",
+            proof=["01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py"],
+            event_type="dispatch_typed",
         )
-        l0_ledger.validate_and_consign(
-            {
-                "entry_id": f"G-{day_tag}-501",
-                "issuer": "Kernel K5 (AspaceMarketplaceEngine)",
-                "mission_id": f"K5-ORDER-{digest}",
-                "observed_at": now_iso,
-                "proof": ["01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py"],
-                "recorded_at": None,
-                "schema": R10_SCHEMA,
-                "sha": head_sha40,
-                "summary": f"Order {offer.offer_id} for {client_org} at {head_sha40[:7]}",
-            },
-            now_utc=now_dt,
+        record_shared_l0_receipt(
+            issuer="Kernel K5 (AspaceMarketplaceEngine)",
+            mission_prefix=f"K5-ORDER-{digest}",
+            sha=head_sha40,
+            proof=["01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py"],
+            summary=f"Order {offer.offer_id} for {client_org} at {head_sha40[:7]}",
         )
         return RigInfinityOrderExecution(
             order_id=f"ORD-{digest.upper()}",

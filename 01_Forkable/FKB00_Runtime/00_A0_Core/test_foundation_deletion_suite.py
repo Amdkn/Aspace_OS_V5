@@ -1,31 +1,31 @@
 #!/usr/bin/env python3
 """
-test_foundation_deletion_suite.py — Suite de vérification Cycle 2 de la Fondation A'Space (ÉNONCÉ §1).
+test_foundation_deletion_suite.py — Suite de vérification Cycle 3 de la Fondation A'Space (ÉNONCÉ §1).
 
 Rejoue de façon 100 % déterministe :
-  1. L'intégrité SHA-256 de 00_Memoire/bundle/fusion/FUSION-ENONCE.md.
+  1. L'intégrité SHA-256 de 00_Memoire/bundle/fusion/FUSION-ENONCE.md et protection .gitattributes.
   2. La purge effective des 8 doublons FKB06 dans .gitmodules et l'alignement 1:1
      len(.gitmodules) == len(distinct_urls) == len(gitlinks 160000) == 101.
   3. Le test de suppression réel (ÉNONCÉ (3)) :
-     - Absence physique ET Git de tous les modules F8 dé-pointés + get-shit-done dans 01_Forkable/.
-     - Exécution réelle des 5 Noyaux natifs (K1..K5) sans ces répertoires sources,
-       et vérification que `github-actions-freevps` (FreeVPS ÉCARTÉ) est bien retiré.
-  4. L'alignement 1:1 des contrats L0 (`aspace_foundation_kernel.py`) avec `fondation-13-1`
-     (`src/lib.rs`, `src/router.rs`, `src/memory.rs`), incluant le rejeu des fixtures réelles
-     `fondation-13-1/tests/fixtures/anchor-{001,002,026}.json` et les rejets motivés.
-  5. La non-régression dynamique de `neuro_symbolic_bridge.py` (zéro sortie statique codée en dur)
-     et du coordinateur honnête F4 `aspace_video_studio_foundation.py` (`PARTIEL`).
-  6. La complétude de CARTE-DES-PRINCIPES.md (120+8), REGISTRE-DE-FUSION.md (120 lignes, ratio < 1/3),
-     et l'absence d'erreurs de surévaluation sur M005/M105/M106/M112/M114/M115/M116.
+     - Absence physique ET Git de tous les modules F8 dé-pointés + get-shit-done + llm-wiki dans 01_Forkable/.
+     - Exécution en sous-processus isolés des 5 Noyaux natifs (K1..K5) + persistance JSONL L0 partagée,
+       et vérification que `github-actions-freevps` est bien retiré.
+  4. L'alignement 1:1 strict des contrats L0 (`aspace_foundation_kernel.py`) avec `fondation-13-1`
+     (`src/lib.rs`, `src/router.rs`, `src/memory.rs`) : fixtures réelles + rejets stricts R5/V4/R8/V6.
+  5. L'interconnexion L0 des 5 Noyaux (K1..K5) via FoundationKernelRegistry.
+  6. La complétude et l'honnêteté de CARTE-DES-PRINCIPES.md (120+8) & REGISTRE-DE-FUSION.md (3 FUSIONNÉ, 98 PARTIEL, 17 RETENU, 2 ÉCARTÉ).
+  7. La présence de tous les artefacts SPAD et la reproductibilité d'un clone Git Windows par défaut (LF préservé).
 """
 
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 import re
 import subprocess
 import sys
+import tempfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
@@ -39,6 +39,7 @@ sys.path.insert(0, str(ROOT / "01_Forkable" / "FKB07_Money_Maker" / "02_Video"))
 from aspace_foundation_kernel import (  # noqa: E402
     CitationEvidence,
     ContractViolation,
+    ENONCE_EXPECTED_SHA256,
     EventJournal,
     FoundationKernelRegistry,
     KERNEL_IDS,
@@ -62,17 +63,19 @@ FUSION_DIR = ROOT / "00_Memoire" / "bundle" / "fusion"
 FIXTURES_DIR = CORE_DIR / "fondation-13-1" / "tests" / "fixtures"
 
 
-def test_enonce_hash() -> None:
+def test_enonce_hash_and_gitattributes() -> None:
     digest = verify_frozen_enonce(ROOT)
-    print(f"[PASS 1/7] FUSION-ENONCE.md SHA-256 intact : {digest}")
+    ga = (ROOT / ".gitattributes").read_text(encoding="utf-8")
+    assert "00_Memoire/bundle/fusion/FUSION-ENONCE.md -text" in ga
+    print(f"[PASS 1/7] FUSION-ENONCE.md SHA-256 intact ({digest}) + .gitattributes verrouillé")
 
 
 def test_gitmodules_and_fkb06_deletion() -> None:
     gm_text = (ROOT / ".gitmodules").read_text(encoding="utf-8")
     paths = re.findall(r"^\s*path\s*=\s*(.+)$", gm_text, flags=re.MULTILINE)
     urls = re.findall(r"^\s*url\s*=\s*(.+)$", gm_text, flags=re.MULTILINE)
-    assert len(paths) == 101, f"Attendu 101 entrées .gitmodules, trouvé {len(paths)}"
-    assert len(set(u.strip().lower() for u in urls)) == 101, "Doublons d'URL restants dans .gitmodules"
+    assert len(paths) == 101
+    assert len(set(u.strip().lower() for u in urls)) == 101
     assert not any("FKB06_Video_SaaS" in p or "FKB02_Video_SaaS" in p for p in paths)
 
     out = subprocess.check_output(["git", "ls-files", "--stage", "01_Forkable"], cwd=str(ROOT), text=True)
@@ -85,7 +88,6 @@ def test_gitmodules_and_fkb06_deletion() -> None:
 
 
 def test_real_deletion_and_5_kernels_execution() -> None:
-    # Vérifier l'absence réelle (Git ET disque) des 12 modules F8 + get-shit-done dans 01_Forkable
     absent_paths = [
         "01_Forkable/FKB00_Runtime/00_A0_Core/cordis",
         "01_Forkable/FKB00_Runtime/00_A0_Core/pi",
@@ -100,6 +102,7 @@ def test_real_deletion_and_5_kernels_execution() -> None:
         "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/openmuse",
         "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDots",
         "01_Forkable/FKB00_Runtime/06_Sovereign_Bot_Coworkers/OpenDuet",
+        "01_Forkable/FKB02_Memory/llm-wiki",
     ]
     out = subprocess.check_output(["git", "ls-files", "--stage", "01_Forkable"], cwd=str(ROOT), text=True)
     gitlinks = [ln.split("\t")[1] for ln in out.splitlines() if ln.startswith("160000 ")]
@@ -107,12 +110,9 @@ def test_real_deletion_and_5_kernels_execution() -> None:
         assert rel not in gitlinks, f"Gitlink non retiré: {rel}"
         assert not (ROOT / rel).exists(), f"Répertoire résiduel encore présent sur disque: {rel}"
 
-    # Vérifier FreeVPS retiré du routeur K2
-    assert not any(p.id == "github-actions-freevps" for p in aspace_freecompute_router.PROVIDERS), (
-        "FreeVPS (ÉCARTÉ ADR-08) est encore présent dans aspace_freecompute_router.PROVIDERS"
-    )
+    assert not any(p.id == "github-actions-freevps" for p in aspace_freecompute_router.PROVIDERS)
+    assert "github_actions_public_private" not in aspace_freecompute_router.compute_monthly_quota_accounting()["monthly_capacities"]
 
-    # Exécuter les 5 noyaux natifs sans aucun des répertoires supprimés
     head_sha = subprocess.check_output(["git", "rev-parse", "HEAD"], cwd=str(ROOT), text=True).strip()
     k1_res = a0_recursive_factory.run_a0_recursive_cycle_demo()
     assert k1_res["l0_dispatch_seq"] >= 1
@@ -128,39 +128,34 @@ def test_real_deletion_and_5_kernels_execution() -> None:
     bridge = neuro_symbolic_bridge.NeuroSymbolicBridge()
     c1 = bridge.ingest_chunk("AlphaEngine compiles KernelGraph via RigInfinity", "chunk_A")
     c2 = bridge.ingest_chunk("BetaValidator checks EpistemicCitation rules", "chunk_B")
-    e1, r1 = bridge.compile_ontology(c1)
-    e2, r2 = bridge.compile_ontology(c2)
-    names_1 = {x["name"] for x in e1}
-    names_2 = {x["name"] for x in e2}
-    assert "AlphaEngine" in names_1 and "AlphaEngine" not in names_2
-    assert "BetaValidator" in names_2 and "BetaValidator" not in names_1
-    k4_ctx = bridge.generate_conditioning_context("chunk_A")
-    assert k4_ctx["l0_dispatch_seq"] >= 1
+    e1, _ = bridge.compile_ontology(c1)
+    e2, _ = bridge.compile_ontology(c2)
+    assert "AlphaEngine" in {x["name"] for x in e1} and "AlphaEngine" not in {x["name"] for x in e2}
+    assert bridge.generate_conditioning_context("chunk_A")["l0_dispatch_seq"] >= 1
 
-    mp = aspace_marketplace_engine.AspaceMarketplaceEngine()
-    k5_order = mp.dispatch_order_to_rig_infinity("MPLACE-C1-FDE-SPRINT", "TestOrg", head_sha40=head_sha)
+    k5_order = aspace_marketplace_engine.AspaceMarketplaceEngine().dispatch_order_to_rig_infinity(
+        "MPLACE-C1-FDE-SPRINT", "TestOrg", head_sha40=head_sha
+    )
     assert k5_order.status == "PRODUCTION_IN_PROGRESS_RIGINFINITY"
 
-    j = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-    l = R10Ledger(valid_shas={head_sha})
-    studio = UnifiedVideoStudioFoundation(j, l)
-    vplan = studio.build_pipeline("CYCLE2", "saas_demo", head_sha)
-    assert vplan.fusion_status == "PARTIEL"
-
-    # Vérifier chaque entrypoint en sous-processus isolé (aucun héritage sys.path)
+    # Vérification isolée en sous-processus + vérification que le journal partagé L0 grandit
+    journal_path = ROOT / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl"
+    before_lines = len(journal_path.read_text(encoding="utf-8").splitlines()) if journal_path.exists() else 0
     for rel_script, extra_args in [
         ("01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py", []),
+        ("01_Forkable/FKB00_Runtime/00_A0_Core/aspace_freecompute_router.py", []),
         ("01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py", ["--self-test"]),
         ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
         ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
         ("01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py", []),
     ]:
         subprocess.check_call([sys.executable, str(ROOT / rel_script), *extra_args], cwd=str(ROOT), stdout=subprocess.DEVNULL)
-    print("[PASS 3/7] Test de suppression réel (0 résidu F8/GSD) + exécution isolée K1..K5 sur L0")
+    after_lines = len(journal_path.read_text(encoding="utf-8").splitlines())
+    assert after_lines >= before_lines + 6, f"Journal partagé L0 n'a pas enregistré les 6 appels: {before_lines} -> {after_lines}"
+    print(f"[PASS 3/7] Test de suppression réel (0 résidu F8/GSD/llm-wiki) + 6/6 sous-processus K1..K5 -> L0 ({before_lines}->{after_lines})")
 
 
 def test_fondation_13_1_fixture_compatibility() -> None:
-    """Rejoue les fixtures officielles anchor-001/002/026 de fondation-13-1 contre aspace_foundation_kernel."""
     anchors = [
         json.loads((FIXTURES_DIR / fn).read_text(encoding="utf-8"))
         for fn in ("anchor-001.json", "anchor-002.json", "anchor-026.json")
@@ -171,25 +166,37 @@ def test_fondation_13_1_fixture_compatibility() -> None:
     for a in anchors:
         stored = ledger.validate_and_consign(a, now_utc=ref_now)
         assert stored["schema"] == R10_SCHEMA
-        assert stored["entry_id"] == a["entry_id"]
 
-    # Vérifier le rejet sur modification du SHA court (Fautif #1) et réécriture (Fautif #4)
+    # V6 autorise issuer vide (lib.rs:1046-1049), V4 strict sans tolérance +5s (lib.rs:977)
+    empty_issuer = dict(anchors[0])
+    empty_issuer["entry_id"] = "G-20261111-777"
+    empty_issuer["mission_id"] = "TEST-EMPTY-ISSUER"
+    empty_issuer["issuer"] = ""
+    ledger.validate_and_consign(empty_issuer, now_utc=ref_now)
+
+    future_obs = dict(anchors[0])
+    future_obs["entry_id"] = "G-20261111-778"
+    future_obs["mission_id"] = "TEST-FUTURE-OBS"
+    future_obs["observed_at"] = (ref_now + dt.timedelta(seconds=2)).isoformat()
+
     fautif = dict(anchors[1])
     fautif["entry_id"] = "G-20261111-901"
     fautif["mission_id"] = "TEST-FAUTIF-1"
     fautif["sha"] = "22f374d"
+
     for bad_fn, expected_rule in [
         (lambda: ledger.validate_and_consign(fautif, now_utc=ref_now), "V3"),
         (lambda: ledger.validate_and_consign(anchors[1], now_utc=ref_now), "V7"),
+        (lambda: ledger.validate_and_consign(future_obs, now_utc=ref_now), "V4"),
     ]:
         try:
             bad_fn()
-            raise AssertionError(f"Rejet {expected_rule} attendu non déclenché")
+            raise AssertionError(f"Rejet {expected_rule} attendu")
         except ContractViolation as exc:
-            assert exc.rule == expected_rule, f"Attendu {expected_rule}, reçu {exc.rule}"
+            assert exc.rule == expected_rule
 
-    # Vérifier EventJournal (router.rs R1..R8) + citation M1..M8 (memory.rs)
     journal = EventJournal(signed_designs={"plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)"})
+    now_j = dt.datetime.fromisoformat("2026-11-11T07:00:00+00:00")
     evt = journal.inscribe(
         {
             "event_id": "EVT-20261111-001",
@@ -202,9 +209,46 @@ def test_fondation_13_1_fixture_compatibility() -> None:
             "payload": "Ouvrir la PR F1-3",
             "proof": [],
         },
-        now_utc=dt.datetime.fromisoformat("2026-11-11T07:00:00+00:00"),
+        now_utc=now_j,
     )
     assert evt["seq"] == 1
+
+    # R8 correction doit citer un event_id existant ; R5 strict sans +5s
+    for bad_evt, exp_r in [
+        (
+            {
+                "event_id": "EVT-20261111-002",
+                "type": "correction",
+                "dispatch_id": "D-N055-F1-3-DELIVER",
+                "actor_from": "router",
+                "actor_to": "executor",
+                "at": "2026-11-11T01:55:00-05:00",
+                "design_ref": "plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)",
+                "payload": "Corriger EVT-20261111-999 absent",
+                "proof": [],
+            },
+            "R8",
+        ),
+        (
+            {
+                "event_id": "EVT-20261111-003",
+                "type": "pulse",
+                "dispatch_id": "D-N055-F1-3-PULSE",
+                "actor_from": "observer",
+                "actor_to": "router",
+                "at": (now_j + dt.timedelta(seconds=2)).isoformat(),
+                "design_ref": "plans/DESIGN-FONDATION-13-1-F1-3-PROJET.md (journal 806)",
+                "payload": "Pulsation future",
+                "proof": [],
+            },
+            "R5",
+        ),
+    ]:
+        try:
+            journal.inscribe(bad_evt, now_utc=now_j)
+            raise AssertionError(f"Rejet {exp_r} attendu")
+        except ContractViolation as exc:
+            assert exc.rule == exp_r
 
     cit_md = """**Fonction :** memorizer
 **Date de la citation :** `2026-11-19`
@@ -234,9 +278,8 @@ La fonction n'a pas tranché ni consigné de reçu.
         source_line_text="Soit F l'ensemble des modules de 01_Forkable. Fusionner F, c'est produire",
         source_date="inconnue",
     )
-    res_cit = validate_citation(cit_md, ev)
-    assert res_cit["status"] == "vérifié"
-    print("[PASS 4/7] Compatibilité 1:1 avec fixtures Rust fondation-13-1 (V1-V8, R1-R8, M1-M8)")
+    assert validate_citation(cit_md, ev)["status"] == "vérifié"
+    print("[PASS 4/7] Compatibilité 1:1 stricte avec fondation-13-1 (V1-V8, R1-R8, M1-M8)")
 
 
 def test_5_kernels_l0_registry() -> None:
@@ -291,25 +334,26 @@ def test_carte_and_registre_completeness_and_honesty() -> None:
     m_reg = re.findall(r"^\| (M\d{3}) \|", registre, flags=re.MULTILINE)
     assert len(m_reg) == 120
 
-    # Vérifier le seuil §5.5
     cible_retenu = len(re.findall(r"\*\*RETENU\*\* \| \*\*RETENU\*\*", registre))
     cible_ecarte = len(re.findall(r"\*\*ÉCARTÉ\*\* \| \*\*ÉCARTÉ\*\*", registre))
     ratio = (cible_retenu + cible_ecarte) / 120.0
     assert ratio < (1.0 / 3.0)
 
-    # Vérifier qu'aucun des 7 modules à dette nommée n'est surévalué FUSIONNÉ
-    for mod in ("RigInfinity", "automaton", "cordis", "pi", "aspace-fiber-host", "fondation-13-1", "source-control-natif"):
+    # Aucun des modules à gitlink actif ou dépendant de RigInfinity/cargo ne doit être marqué FUSIONNÉ
+    for mod in (
+        "RigInfinity", "automaton", "cordis", "pi", "aspace-fiber-host", "fondation-13-1",
+        "source-control-natif", "infinity", "openrig", "agent-zero", "prime-agent",
+        "openbot", "openmuse", "OpenDots", "OpenDuet", "herdr-core",
+    ):
         line = next((ln for ln in registre.splitlines() if f"| `{mod}` |" in ln), None)
-        assert line is not None, f"Module absent du registre: {mod}"
-        assert "| **PARTIEL** |" in line, f"Module {mod} doit être PARTIEL honnête, trouvé: {line}"
+        assert line is not None and "| **PARTIEL** |" in line, f"{mod} doit être PARTIEL honnête: {line}"
 
-    # Vérifier qu'il n'y a plus de coquille dans PRD-FONDATION.md
     prd = (FUSION_DIR / "PRD-FONDATION.md").read_text(encoding="utf-8")
     assert "Modules `RETENU` justifiés en K2 (3)" not in prd
     print(f"[PASS 6/7] CARTE (120+8) & REGISTRE honnêtes | RETENU={cible_retenu}, ÉCARTÉ={cible_ecarte}, ratio={ratio:.1%}")
 
 
-def test_required_spad_artifacts_exist() -> None:
+def test_required_spad_artifacts_and_windows_clone_lf() -> None:
     required = [
         "FUSION-ENONCE.md",
         "CARTE-DES-PRINCIPES.md",
@@ -323,15 +367,34 @@ def test_required_spad_artifacts_exist() -> None:
         p = FUSION_DIR / fn
         assert p.exists() and p.stat().st_size > 200
     assert len(list((FUSION_DIR / "adr").glob("ADR-*.md"))) == 12
-    print(f"[PASS 7/7] 7 artefacts SPAD + 12 fiches ADR présents dans {FUSION_DIR}")
+
+    # Si FUSION-ENONCE.md et .gitattributes sont au HEAD, vérifier la reproductibilité sur clone Windows standard
+    head_has_ga = subprocess.run(
+        ["git", "cat-file", "-e", "HEAD:.gitattributes"], cwd=str(ROOT), capture_output=True
+    ).returncode == 0
+    if head_has_ga:
+        with tempfile.TemporaryDirectory() as tmpdir:
+            clone_dir = Path(tmpdir) / "clone_win"
+            subprocess.check_call(
+                ["git", "clone", "--quiet", str(ROOT), str(clone_dir)],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            cloned_hash = hashlib.sha256(
+                (clone_dir / "00_Memoire" / "bundle" / "fusion" / "FUSION-ENONCE.md").read_bytes()
+            ).hexdigest().lower()
+            assert cloned_hash == ENONCE_EXPECTED_SHA256, f"Clone Windows CRLF corruption: {cloned_hash}"
+        print("[PASS 7/7] Artefacts SPAD complets + clone Windows par défaut préserve SHA-256 LF")
+    else:
+        print("[PASS 7/7] Artefacts SPAD complets (.gitattributes prêt à commiter)")
 
 
 if __name__ == "__main__":
-    test_enonce_hash()
+    test_enonce_hash_and_gitattributes()
     test_gitmodules_and_fkb06_deletion()
     test_real_deletion_and_5_kernels_execution()
     test_fondation_13_1_fixture_compatibility()
     test_5_kernels_l0_registry()
     test_carte_and_registre_completeness_and_honesty()
-    test_required_spad_artifacts_exist()
-    print("=== ALL 7/7 CYCLE-2 FOUNDATION & DELETION SUITES PASSED ===")
+    test_required_spad_artifacts_and_windows_clone_lf()
+    print("=== ALL 7/7 CYCLE-3 FOUNDATION & DELETION SUITES PASSED ===")

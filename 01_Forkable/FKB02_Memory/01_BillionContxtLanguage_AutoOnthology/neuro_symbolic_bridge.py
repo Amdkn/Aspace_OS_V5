@@ -25,7 +25,7 @@ WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
 _KERNEL_DIR = WORKSPACE_ROOT / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core"
 if str(_KERNEL_DIR) not in sys.path:
     sys.path.insert(0, str(_KERNEL_DIR))
-from aspace_foundation_kernel import CitationEvidence, EventJournal, validate_citation  # noqa: E402
+from aspace_foundation_kernel import CitationEvidence, record_shared_l0_event, validate_citation  # noqa: E402
 
 MEMORY_FILE_PATH = os.environ.get(
     "MEMORY_FILE_PATH",
@@ -184,22 +184,13 @@ class NeuroSymbolicBridge:
             for r in self.existing_relations
             if r[0] == focus_entity
         ]
-        now_dt = dt.datetime.now(dt.timezone.utc)
-        day_tag = now_dt.strftime("%Y%m%d")
-        l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-        l0_evt = l0_journal.inscribe(
-            {
-                "actor_from": "memorizer",
-                "actor_to": "discoverer",
-                "at": now_dt.isoformat(),
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": f"D-K4-{focus_entity[:24]}",
-                "event_id": f"EVT-{day_tag}-401",
-                "payload": f"Conditionner contexte {focus_entity}",
-                "proof": ["01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py"],
-                "type": "fact_recalled",
-            },
-            now_utc=now_dt,
+        l0_evt = record_shared_l0_event(
+            actor_from="memorizer",
+            actor_to="discoverer",
+            dispatch_id=f"D-K4-{focus_entity[:24]}",
+            payload=f"Conditionner contexte {focus_entity}",
+            proof=["01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py"],
+            event_type="fact_recalled",
         )
         return {
             "focus": focus_entity,

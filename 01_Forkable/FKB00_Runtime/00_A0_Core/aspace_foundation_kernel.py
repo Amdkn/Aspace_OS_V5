@@ -243,10 +243,10 @@ class EventJournal:
         if actor_from not in FUNCTIONS_13:
             raise ContractViolation("R4", "actor_from", f"doit appartenir à FUNCTIONS_13, reçu: {actor_from}")
 
-        # R5 — at ISO-8601 avec offset, pas dans le futur
+        # R5 — at ISO-8601 avec offset, strictement non dans le futur (router.rs:423)
         at_dt = parse_iso8601_utc(at, rule="R5", field_name="at")
         ref_now = (now_utc or dt.datetime.now(dt.timezone.utc)).astimezone(dt.timezone.utc)
-        if at_dt > ref_now + dt.timedelta(seconds=5):
+        if at_dt > ref_now:
             raise ContractViolation("R5", "at", "at est dans le futur")
 
         # R6 — payload nomme l'acte (au moins 2 mots)
@@ -259,7 +259,7 @@ class EventJournal:
         ):
             raise ContractViolation("R7", "proof", f"proof[] non vide requis pour {typ}")
 
-        # R8 — type connu et transition légale
+        # R8 — type connu et transition légale (router.rs:455-513)
         if typ not in EVENT_TYPES:
             raise ContractViolation("R8", "type", f"type inconnu: {typ}")
         if typ == "dispatch_relayed" and dispatch_id not in self.typed and dispatch_id not in self.requested:
@@ -268,6 +268,15 @@ class EventJournal:
             raise ContractViolation("R8", "dispatch_id", "dispatch_ack sans dispatch_typed préalable")
         if typ == "judgment_rendered" and dispatch_id not in self.requested:
             raise ContractViolation("R8", "dispatch_id", "judgment_rendered sans judgment_requested préalable")
+        if typ == "correction":
+            ref_events = EVENT_ID_RE.findall(payload)
+            cited_ids = re.findall(r"EVT-\d{8}-\d{3}", payload)
+            if not cited_ids or not any(cid in self.event_ids for cid in cited_ids):
+                raise ContractViolation(
+                    "R8",
+                    "payload",
+                    "correction doit référencer un event_id déjà inscrit dans le journal",
+                )
 
         return dict(raw_submission)
 
@@ -339,10 +348,10 @@ class R10Ledger:
         if self.valid_shas is not None and sha not in self.valid_shas:
             raise ContractViolation("V3", "sha", f"SHA non résolu: {sha}")
 
-        # V4 — observed_at ISO-8601 avec offset, pas dans le futur
+        # V4 — observed_at ISO-8601 avec offset, strictement non dans le futur (lib.rs:977)
         obs_dt = parse_iso8601_utc(deposit["observed_at"], rule="V4", field_name="observed_at")
         rec_dt = (now_utc or dt.datetime.now(dt.timezone.utc)).astimezone(dt.timezone.utc)
-        if obs_dt > rec_dt + dt.timedelta(seconds=5):
+        if obs_dt > rec_dt:
             raise ContractViolation("V4", "observed_at", "observed_at est dans le futur")
 
         # V5 — proof[] non vide de chaînes non vides
@@ -350,10 +359,10 @@ class R10Ledger:
         if not isinstance(proof, list) or not proof or not all(isinstance(p, str) and p.strip() for p in proof):
             raise ContractViolation("V5", "proof", "proof doit être une liste non vide de chaînes non vides")
 
-        # V6 — summary non vide nommant un livrable (#PR ou SHA >= 7 hex) ; issuer non vide
+        # V6 — summary non vide nommant un livrable (#PR ou SHA >= 7 hex) ; issuer chaîne (vide autorisé comme lib.rs:1046-1049)
         issuer = deposit["issuer"]
-        if not isinstance(issuer, str) or not issuer.strip():
-            raise ContractViolation("V6", "issuer", "issuer ne peut pas être vide")
+        if not isinstance(issuer, str):
+            raise ContractViolation("V6", "issuer", "issuer doit être une chaîne")
         summary = deposit["summary"]
         if not isinstance(summary, str) or not summary.strip():
             raise ContractViolation("V6", "summary", "summary ne peut pas être vide")
@@ -562,3 +571,108 @@ class FoundationKernelRegistry:
         if missing:
             raise ContractViolation("C4", "kernels", f"Noyaux sans acte L0 vérifié: {missing}")
         return counts
+
+
+def _default_repo_root() -> Path:
+    return Path(__file__).resolve().parents[3]
+
+
+def record_shared_l0_event(
+    actor_from: str,
+    actor_to: str,
+    dispatch_id: str,
+    payload: str,
+    proof: List[str],
+    event_type: str = "dispatch_typed",
+    design_ref: str = "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+    journal_path: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Inscrit un événement dans le journal JSONL partagé L0 (seq = numéro de ligne)."""
+    import json
+
+    jpath = journal_path or (_default_repo_root() / "02_Factory" / "jobs" / "l0_foundation_journal.jsonl")
+    jpath.parent.mkdir(parents=True, exist_ok=True)
+    existing = jpath.read_text(encoding="utf-8") if jpath.exists() else ""
+    journal = EventJournal.from_jsonl(existing, signed_designs={design_ref})
+
+    now_dt = dt.datetime.now(dt.timezone.utc)
+    day_tag = now_dt.strftime("%Y%m%d")
+    seq_num = len(journal.records) + 1
+    evt_id = f"EVT-{day_tag}-{seq_num % 1000:03d}"
+    while evt_id in journal.event_ids:
+        seq_num += 1
+        evt_id = f"EVT-{day_tag}-{seq_num % 1000:03d}"
+
+    # Pour éviter tout conflit R3 sur dispatch_id déjà typé en re-run répété
+    safe_did = dispatch_id if (event_type != "dispatch_typed" or dispatch_id not in journal.typed) else f"{dispatch_id}-{seq_num}"
+    record = journal.inscribe(
+        {
+            "actor_from": actor_from,
+            "actor_to": actor_to,
+            "at": now_dt.isoformat(),
+            "design_ref": design_ref,
+            "dispatch_id": safe_did,
+            "event_id": evt_id,
+            "payload": payload,
+            "proof": proof,
+            "type": event_type,
+        },
+        now_utc=now_dt,
+    )
+    with open(jpath, "a", encoding="utf-8") as f:
+        f.write(json.dumps(record, ensure_ascii=False) + "\n")
+    return record
+
+
+def record_shared_l0_receipt(
+    issuer: str,
+    mission_prefix: str,
+    sha: str,
+    proof: List[str],
+    summary: str,
+    ledger_path: Optional[Path] = None,
+) -> Dict[str, Any]:
+    """Consigne un reçu R10 dans le ledger JSONL partagé L0 (aspace.r10-receipt.v1)."""
+    import json
+
+    lpath = ledger_path or (_default_repo_root() / "02_Factory" / "jobs" / "l0_foundation_ledger.jsonl")
+    lpath.parent.mkdir(parents=True, exist_ok=True)
+    ledger = R10Ledger(valid_shas={sha})
+    if lpath.exists():
+        for ln in lpath.read_text(encoding="utf-8").splitlines():
+            if not ln.strip():
+                continue
+            obj = json.loads(ln)
+            ledger.entry_ids.add(obj["entry_id"])
+            ledger.mission_ids.add(obj["mission_id"])
+
+    now_dt = dt.datetime.now(dt.timezone.utc)
+    day_tag = now_dt.strftime("%Y%m%d")
+    idx = len(ledger.entry_ids) + 1
+    entry_id = f"G-{day_tag}-{idx % 1000:03d}"
+    while entry_id in ledger.entry_ids:
+        idx += 1
+        entry_id = f"G-{day_tag}-{idx % 1000:03d}"
+
+    mission_id = f"{mission_prefix}-{idx}"
+    while mission_id in ledger.mission_ids:
+        idx += 1
+        mission_id = f"{mission_prefix}-{idx}"
+
+    stored = ledger.validate_and_consign(
+        {
+            "entry_id": entry_id,
+            "issuer": issuer,
+            "mission_id": mission_id,
+            "observed_at": now_dt.isoformat(),
+            "proof": proof,
+            "recorded_at": None,
+            "schema": R10_SCHEMA,
+            "sha": sha,
+            "summary": summary,
+        },
+        now_utc=now_dt,
+    )
+    with open(lpath, "a", encoding="utf-8") as f:
+        f.write(json.dumps(stored, ensure_ascii=False) + "\n")
+    return stored

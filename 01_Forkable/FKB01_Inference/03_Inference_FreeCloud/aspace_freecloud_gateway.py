@@ -24,7 +24,7 @@ WORKSPACE_ROOT = Path(__file__).resolve().parents[3]
 _KERNEL_DIR = WORKSPACE_ROOT / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core"
 if str(_KERNEL_DIR) not in sys.path:
     sys.path.insert(0, str(_KERNEL_DIR))
-from aspace_foundation_kernel import EventJournal, R10Ledger, R10_SCHEMA  # noqa: E402
+from aspace_foundation_kernel import record_shared_l0_event  # noqa: E402
 DB_PATH = WORKSPACE_ROOT / "00_Memoire" / "egm_missions.db"
 PORT = int(os.environ.get("ASPACE_GATEWAY_PORT", "31415"))
 
@@ -257,22 +257,13 @@ class GoldfishInferenceRouter:
                 self.ledger.record_outcome(pid, False, latency)
 
         last_user = next((m.get("content", "") for m in reversed(messages) if m.get("role") == "user"), "")
-        now_dt = __import__("datetime").datetime.now(__import__("datetime").timezone.utc)
-        day_tag = now_dt.strftime("%Y%m%d")
-        l0_journal = EventJournal(signed_designs={"00_Memoire/bundle/fusion/SDD-FONDATION.md"})
-        l0_evt = l0_journal.inscribe(
-            {
-                "actor_from": "router",
-                "actor_to": "executor",
-                "at": now_dt.isoformat(),
-                "design_ref": "00_Memoire/bundle/fusion/SDD-FONDATION.md",
-                "dispatch_id": f"D-K3-{int(time.time())}",
-                "event_id": f"EVT-{day_tag}-301",
-                "payload": f"Router inference modele {model_requested}",
-                "proof": ["01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py"],
-                "type": "dispatch_typed",
-            },
-            now_utc=now_dt,
+        l0_evt = record_shared_l0_event(
+            actor_from="router",
+            actor_to="executor",
+            dispatch_id=f"D-K3-{int(time.time())}",
+            payload=f"Router inference modele {model_requested}",
+            proof=["01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py"],
+            event_type="dispatch_typed",
         )
         return {
             "id": f"chatcmpl-egm-{int(time.time())}",
@@ -377,24 +368,33 @@ def run_gateway_server() -> None:
 
 if __name__ == "__main__":
     import sys
+    import tempfile
     if "--self-test" in sys.argv:
-        added = LEDGER.enqueue_submodule_evolution_missions()
-        with LEDGER._connect() as conn:
-            total_missions = conn.execute("SELECT COUNT(*) AS c FROM goldfish_missions").fetchone()["c"]
-        sample_resp = ROUTER.dispatch_chat_completion(
-            {"model": "aspace-a0-auto", "messages": [{"role": "user", "content": "Ping A0 EGM Gateway"}]}
-        )
-        print(
-            json.dumps(
-                {
-                    "seeded_missions": added,
-                    "total_missions_in_db": total_missions,
-                    "db_path": str(DB_PATH),
-                    "sample_response": sample_resp,
-                },
-                indent=2,
-                ensure_ascii=False,
+        import gc
+        with tempfile.TemporaryDirectory(ignore_cleanup_errors=True) as tmpdir:
+            temp_ledger = ElephantStateLedger(Path(tmpdir) / "egm_missions_selftest.db")
+            temp_router = GoldfishInferenceRouter(temp_ledger)
+            added = temp_ledger.enqueue_submodule_evolution_missions()
+            conn = temp_ledger._connect()
+            try:
+                total_missions = conn.execute("SELECT COUNT(*) AS c FROM goldfish_missions").fetchone()["c"]
+            finally:
+                conn.close()
+            sample_resp = temp_router.dispatch_chat_completion(
+                {"model": "aspace-a0-auto", "messages": [{"role": "user", "content": "Ping A0 EGM Gateway"}]}
             )
-        )
+            print(
+                json.dumps(
+                    {
+                        "seeded_missions": added,
+                        "total_missions_in_db": total_missions,
+                        "db_path": str(temp_ledger.db_path),
+                        "sample_response": sample_resp,
+                    },
+                    indent=2,
+                    ensure_ascii=False,
+                )
+            )
+            gc.collect()
     else:
         run_gateway_server()
