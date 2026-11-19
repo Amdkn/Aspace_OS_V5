@@ -60,3 +60,4 @@ okf_version: "0.2"
 - [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 en 5 Noyaux (`K1..K5`).
 - [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2 et interfaces natives (`fondation-13-1`, `RigInfinity`, `aspace-fiber-host`, `aspace_foundation_kernel.py`).
 - [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut vérifié de chaque module (`FUSIONNÉ` / `PARTIEL` / `RETENU` / `ÉCARTÉ`) et contrôle §5.5 (< 1/3).
+- [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
