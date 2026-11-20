@@ -10,7 +10,7 @@ amends: "ADR-14"
 # ADR-15 — Trois Noyaux Fondamentaux (`ÂME / SYSTÈME NERVEUX / CORPS`), Retrait de `MÉTABOLISME` & Preuve Différentielle Anti-Sabotage
 
 - **Statut** : `ACCEPTÉE` (Décision non négociable de l'architecte et du juge au Cycle 6 ; amende `ADR-14`)
-- **Portée** : Suppression du 4e noyau `MÉTABOLISME`, suppression du plafond artificiel `≤ 1/3` par noyau, réduction de `CORPS` par fusion réelle de modules (`M095 video-director`) et exigence de détection de sabotage sur chaque fonction et champ déclaré.
+- **Portée** : Suppression du 4e noyau `MÉTABOLISME`, suppression du plafond artificiel `≤ 1/3` par noyau, réduction de `CORPS` par fusion réelle de modules (`M084 video-director`) et exigence de détection de sabotage sur chaque fonction et champ déclaré.
 
 ---
 
@@ -28,12 +28,12 @@ amends: "ADR-14"
    - **`ÂME` (`Automaton`) — `29` modules** : `Organe K1` (Gouvernance 13→1, RSI, `11` modules) + `Organe K4` (Mémoire Neuro-Symbolique & Compétences, `18` modules).
    - **`SYSTÈME NERVEUX` (`Infinity`) — `29` modules** : `Bus L0 & Fibres` (`7` modules) + `Organe K3` (Inférence System-1/2 & Routage FreeCloud, `15` modules) + `Organe K3-ML` (Cortex Prédictif & Wargame, `7` modules : `MiroFish`, `PathFM`, `autogluon`, `chronos-forecasting`, `mitra-2`, `tabfm`, `timesfm`).
    - **`CORPS` (`OpenRig`) — `62` modules** : `Organe K2` (Exécution Multi-Harness, Bots Incarnés, Anything & Surfaces 3D, `26` modules) + `Organe K5` (**Métabolisme B2B, Studio Vidéo & Finance S0**, `36` modules).
-   - **Retrait du plafond `≤ 1/3` sur les noyaux** : seul demeure le plafond constitutionnel §5.5 sur les modules non fusionnés (`(RETENU + ÉCARTÉ) < 1/3` du corpus = `19 / 120 = 15,8 %`). La taille effective du `CORPS` diminue par fusion réelle de ses modules actifs (`M095 video-director` fusionné au Cycle 6 dans `01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py`).
+   - **Retrait du plafond `≤ 1/3` sur les noyaux** : seul demeure le plafond constitutionnel §5.5 sur les modules non fusionnés (`(RETENU + ÉCARTÉ) < 1/3` du corpus = `19 / 120 = 15,8 %`). La taille effective du `CORPS` diminue par fusion réelle de ses modules actifs (`M084 video-director` fusionné au Cycle 6 dans `01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py`).
 2. **Contrat Anti-Sabotage Cycle 6** :
    - Aucun module n'est classé **`FUSIONNÉ`** si :
      1. Des clés en trop sont tolérées ou si une normalisation masque une différence entre l'oracle source amont et l'organe natif ;
      2. Le sabotage (altération, inversion logique, ajout de clé parasite ou troncature) de **n'importe quelle fonction déclarée** ou structure de données du module dans l'organe ne fait pas échouer immédiatement la suite `test_foundation_deletion_suite.py`.
-   - Les fonctions synthétiques non portées de la source amont (`build_clm_anchored_context`, `validate_okf_bundle`, `compile_cli_anything_spec`, `execute_cli_structured`) sont retirées des sections correspondantes afin que 100 % de la surface déclarée de `M044`, `M050`, `M056`, `M095`, `M117` et `M118` soit couverte par parité stricte et test de sabotage.
+   - Les fonctions synthétiques non portées de la source amont (`build_clm_anchored_context`, `validate_okf_bundle`, `compile_cli_anything_spec`, `execute_cli_structured`) sont retirées des sections correspondantes afin que 100 % de la surface déclarée de `M044`, `M050`, `M056`, `M084`, `M117` et `M118` soit couverte par parité stricte et test de sabotage.
    - `M058 agent-desktop` demeure strictement **`PARTIEL`** tant qu'il n'a pas interagi avec une vraie fenêtre Windows interactive (`desktop_live_verified = False`).
 
 | Noyau Fondamental (`ADR-15`) | Incarnation | Organes Rattachés | Modules | Statut Fusionné |

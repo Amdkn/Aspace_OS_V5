@@ -62,4 +62,4 @@ okf_version: "0.2"
 - [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`15 FUSIONNÉ`, `86 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-15` sans exception et contrôle §5.5 (< 1/3).
 - [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
 - [JUGEMENT-EXTERNE-CYCLE-4.md](fusion/JUGEMENT-EXTERNE-CYCLE-4.md) — Verdict indépendant du Juge Externe Cycle 4 en lecture seule sur clone neuf de `fusion/cycle-4`.
-- [RAPPORT-CORRECTION-M120.md](fusion/RAPPORT-CORRECTION-M120.md) — Rapport de correction M120 (`llm-wiki`) : provenance historique D-N048 V0, suppression de `diff_proven.add("llm-wiki")`, rétrogradation honnête en `PARTIEL` (`15 FUSIONNÉ` / `86 PARTIEL`) et 3 résultats de vérification.
+- [RAPPORT-CORRECTION-M120.md](fusion/RAPPORT-CORRECTION-M120.md) — Rapport d'audit Cycle 6 : provenance D-N048 V0 & rétrogradation M120 (`llm-wiki` -> `PARTIEL`, `15 / 86`), réconciliation canonique `M084` (`video-director`) / `M095` (`BlenderWorld` `PARTIEL`), et résultats des 3 vérifications.

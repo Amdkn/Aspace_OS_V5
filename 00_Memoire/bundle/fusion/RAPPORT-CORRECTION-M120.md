@@ -27,8 +27,7 @@ Reconstitution vérifiée au dépôt Git et au cache sous-module local `.git/mod
 3. **Rapatriement `D-N048 V0` (`2026-11-09`)** :
    - **Commit `26ca7cb7c623fb42c56bffe77d49e9a74473bcf2`** (*« D-N048 V0 — Ordre : gist rapatrié, renommage, baseline, table de gel, registre étendu »*, PR #6 mergée `d515872`, consignée en journal append-only `00_Memoire/bundle/log.md` au commit `86264246963bad237107ca8176c277e7a7f89c42`).
    - Action exécutée : retrait de l'entrée `.gitmodules` et du gitlink `160000` `01_Forkable/FKB02_Memory/llm-wiki`, création de `00_Memoire/bundle/concepts/llm-wiki.md` (91 lignes, frontmatter OKF + 75 lignes de corps) et inscription dans `01_Forkable/FORKS-AMONT-21-FREEZE.md` (§D3) et `01_Forkable/FUSIONS-REGISTRY.md` (ligne 140 : **`rapatrié`**, *« pas un module »*, *« Harnais H-W0 : 5/5 PASS. Zéro code, aucun fork (gate H-W0) »*).
-   - **Intégrité vérifiée par octets** : dans `00_Memoire/bundle/concepts/llm-wiki.md`, le corps après frontmatter mesure `11 986` octets LF (car `1` ligne vide `
-` sépare `---` du titre `# LLM Wiki`, fait consigné dans `log.md` au commit `8626424`) ; après `.lstrip(b"\n")`, les `11 985` octets exacts produisent exactement le SHA-256 `dc3efe98ae62f23dd08acad13aba2e95287beb20b6bec2f4af0423557fe37401` identique au gist `ac46de1` / `537de1c`.
+   - **Intégrité vérifiée par octets** : dans `00_Memoire/bundle/concepts/llm-wiki.md`, le corps après frontmatter mesure `11 986` octets LF (car `1` ligne vide `\n` sépare `---` du titre `# LLM Wiki`, fait consigné dans `log.md` au commit `8626424`) ; après `.lstrip(b"\n")`, les `11 985` octets exacts produisent exactement le SHA-256 `dc3efe98ae62f23dd08acad13aba2e95287beb20b6bec2f4af0423557fe37401` identique au gist `ac46de1` / `537de1c`.
 4. **Incident & restauration (`feb338e` → `19d2378` / `567595a`)** :
    - Suppression temporaire de `00_Memoire/bundle/concepts/llm-wiki.md` au commit `feb338e`, immédiatement restaurée au contenu identique (`91` lignes) en `19d2378` puis `567595a`.
 
@@ -116,3 +115,22 @@ Mesures exécutées sur la branche `fusion/cycle-6-audit-fix` après correctif M
    - `[5/6]` Append-Only Log Guard : **PASS**
    - `[6/6]` Secret Scanning Guard : **PASS**
    - `[7/7]` Level 5 Semantic Gate : **PASS** (`801` fichiers Core audités | `8` Holons Forkable CAS isolés)
+
+---
+
+## 7. Réconciliation Canonique `M084` / `M095` (Audit Fix #2)
+
+Suite à la deuxième revue indépendante sur `49e638a`, la correspondance des identifiants dans la carte complète des 120 modules a été réconciliée sans équivoque :
+
+- **`M084` = `video-director`** (`01_Forkable/FKB07_Money_Maker/02_Video/video-director`, `CORPS · Organe K5`, statut **`FUSIONNÉ`** par parité différentielle stricte + 11 sabotages).
+- **`M095` = `BlenderWorld`** (`01_Forkable/FKB07_Money_Maker/06_3D_and_CAD/BlenderWorld`, `CORPS · Organe K5`, statut **`PARTIEL`** — exclu des modules fusionnés).
+- **`M120` = `llm-wiki`** (`01_Forkable/FKB02_Memory/llm-wiki`, `ÂME · Organe K4`, statut **`PARTIEL`** maintenu).
+
+### Harmonisations appliquées
+1. **`01_Forkable/FKB00_Runtime/00_A0_Core/test_foundation_deletion_suite.py`** :
+   - Renommage intégral des jeux de données, clés JSON, variables et fonctions liées à `video-director` (`verify_m084`, `inputs["m084"]`, `oracle["m084"]`, `m084_timelines`, `m084_out`, 11 sabotages `M084:vd_*`).
+   - Ajout de la bijection mécanique `carte_id_to_name == reg_id_to_name` sur 120/120 modules, contrôle explicite `M084 == video-director`, `M095 == BlenderWorld`, `M120 == llm-wiki`.
+   - Assertion stricte sur les 6 identifiants différentiels : `{"M044", "M050", "M056", "M084", "M117", "M118"}`, avec assertion explicite `by_name["BlenderWorld"][0] == "**PARTIEL**"` et garde inter-documents anti-dérive.
+2. **`01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py`** : correction des 4 libellés textuels (`M084`) sans aucune modification logique ni architecturale.
+3. **Documentation SPAD (`LF`)** : mise à jour de `PRD-FONDATION.md`, `SDD-FONDATION.md`, `ADR-FUSION.md`, `adr/ADR-15.md` et `00_Memoire/bundle/index.md` ; préservation de `log.md:178` (append-only) avec nouvelle note d'audit en fin de journal.
+4. **Clôture d'audit** : l'audit reste ouvert en attente de reproduction indépendante externe des 3 suites sur clone propre ; Cycle 7 non lancé.

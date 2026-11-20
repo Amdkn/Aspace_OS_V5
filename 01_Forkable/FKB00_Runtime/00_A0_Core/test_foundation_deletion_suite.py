@@ -8,7 +8,7 @@ et avec détection automatique de sabotage sur chaque fonction/donnée déclaré
   2. La purge effective des 8 doublons FKB06 dans .gitmodules et l'alignement 1:1 (101 == 101).
   3. L'exécution réelle Rust en local (`fondation-13-1` + `RigInfinity`) et le pont Phase 2 Hybride.
   4. Le test différentiel strict (`==`) + anti-sabotage avant/après suppression physique (ÉNONCÉ (3)) :
-     - Phase A : exécution des sources d'origine M044, M050, M056, M095 (`video-director`), M117, M118
+     - Phase A : exécution des sources d'origine M044, M050, M056, M084 (`video-director`), M117, M118
        sur toutes leurs fonctions, cas limites et structures -> `oracle_outputs`.
      - Phase B : suppression physique effective des répertoires sources (dont `video-director`).
      - Phase C : exécution des organes natifs dans l'arbre amputé, vérification stricte `organ == oracle`
@@ -126,7 +126,7 @@ SOURCE_DIRS_TO_DELETE_FOR_TEST = [
     "01_Forkable/FKB02_Memory/infinite-brain-harness",
     "01_Forkable/FKB02_Memory/infinite-brain-os",
     "01_Forkable/FKB02_Memory/knowledge-catalog",
-    # FKB07 M095 video-director + Extra FKB natifs absorbés (M117, M118)
+    # FKB07 M084 video-director + Extra FKB natifs absorbés (M117, M118)
     "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
     "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
     "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
@@ -436,7 +436,7 @@ def _build_differential_inputs() -> dict:
                 },
             ],
         },
-        "m095": {
+        "m084": {
             "is_num_cases": [0, 1.5, -2.0, True, False, "1", None],
             "norm_cases": ["  Héllo,   Wörld!  C++ ", "", "A---B   C"],
             "read_time_cases": ["", "Hi", "One two three four five six"],
@@ -807,20 +807,20 @@ m056_cache_keys = [
 m056_out = {"harnesses": m056_harnesses, "invalid": m056_invalid_res, "cache_keys": m056_cache_keys}
 
 # ============================================================================
-# M095: video-director upstream (check_timeline.py + qa_video.py)
+# M084: video-director upstream (check_timeline.py + qa_video.py)
 # ============================================================================
 vd_scripts = iso / "01_Forkable/FKB07_Money_Maker/02_Video/video-director/video-director/scripts"
 sys.path.insert(0, str(vd_scripts))
 import check_timeline as up_ct
 import qa_video as up_qv
 
-m095_timelines = []
+m084_timelines = []
 tmp_vd = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_vd_"))
-for item in inputs["m095"]["timelines"]:
+for item in inputs["m084"]["timelines"]:
     tl_file = tmp_vd / f"{item['name']}.json"
     tl_file.write_text(json.dumps(item["tl"]), encoding="utf-8")
     proc = subprocess.run([sys.executable, str(vd_scripts / "check_timeline.py"), str(tl_file)], capture_output=True, text=True, encoding="utf-8")
-    m095_timelines.append({
+    m084_timelines.append({
         "name": item["name"],
         "returncode": proc.returncode,
         "stdout": proc.stdout.replace("\r\n", "\n"),
@@ -856,15 +856,15 @@ draw = ImageDraw.Draw(im_contrast)
 draw.rectangle([20, 20, 120, 70], fill=(255, 255, 255))
 im_flat = Image.new("RGB", (100, 100), (128, 128, 128))
 
-m095_out = {
-    "is_num": [up_ct.is_num(x) for x in inputs["m095"]["is_num_cases"]],
-    "norm": [up_ct.norm(x) for x in inputs["m095"]["norm_cases"]],
-    "read_time": [up_ct.read_time(x) for x in inputs["m095"]["read_time_cases"]],
-    "timelines": m095_timelines,
+m084_out = {
+    "is_num": [up_ct.is_num(x) for x in inputs["m084"]["is_num_cases"]],
+    "norm": [up_ct.norm(x) for x in inputs["m084"]["norm_cases"]],
+    "read_time": [up_ct.read_time(x) for x in inputs["m084"]["read_time_cases"]],
+    "timelines": m084_timelines,
     "list_tl_loaded": list_tl_loaded,
-    "runs": [[list(p) for p in up_qv.runs(r)] for r in inputs["m095"]["runs_cases"]],
+    "runs": [[list(p) for p in up_qv.runs(r)] for r in inputs["m084"]["runs_cases"]],
     "analyse_picture": up_qv.analyse_picture(st_dict, 30.0, args_ns),
-    "compare_cuts": [up_qv.compare_cuts(det, exp, fps) for det, exp, fps in inputs["m095"]["compare_cuts_cases"]],
+    "compare_cuts": [up_qv.compare_cuts(det, exp, fps) for det, exp, fps in inputs["m084"]["compare_cuts_cases"]],
     "measure_text": [
         up_qv.measure_text(im_contrast, [10, 10, 140, 80], 1080),
         up_qv.measure_text(im_flat, [10, 10, 60, 60], 1080),
@@ -950,7 +950,7 @@ m118_out = {"registry": raw_reg, "dossiers": m118_dossiers}
 
 (iso / "oracle_outputs.json").write_text(
     json.dumps(
-        {"m044": m044_out, "m050": m050_out, "m056": m056_out, "m095": m095_out, "m117": m117_out, "m118": m118_out},
+        {"m044": m044_out, "m050": m050_out, "m056": m056_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
         ensure_ascii=False,
         indent=2,
     ),
@@ -1192,14 +1192,14 @@ def verify_m056() -> int:
     return len(harnesses_org) * 4 + 1 + len(ck_org)
 
 
-def verify_m095() -> int:
-    assert [vsf.vd_is_num(x) for x in inputs["m095"]["is_num_cases"]] == oracle["m095"]["is_num"], "M095 vd_is_num mismatch"
-    assert [vsf.vd_norm(x) for x in inputs["m095"]["norm_cases"]] == oracle["m095"]["norm"], "M095 vd_norm mismatch"
-    assert [vsf.vd_read_time(x) for x in inputs["m095"]["read_time_cases"]] == oracle["m095"]["read_time"], "M095 vd_read_time mismatch"
+def verify_m084() -> int:
+    assert [vsf.vd_is_num(x) for x in inputs["m084"]["is_num_cases"]] == oracle["m084"]["is_num"], "M084 vd_is_num mismatch"
+    assert [vsf.vd_norm(x) for x in inputs["m084"]["norm_cases"]] == oracle["m084"]["norm"], "M084 vd_norm mismatch"
+    assert [vsf.vd_read_time(x) for x in inputs["m084"]["read_time_cases"]] == oracle["m084"]["read_time"], "M084 vd_read_time mismatch"
 
     tmp_vd = Path(tempfile.mkdtemp(dir=str(iso), prefix="org_vd_"))
     tl_res = []
-    for item in inputs["m095"]["timelines"]:
+    for item in inputs["m084"]["timelines"]:
         tl_file = tmp_vd / f"{item['name']}.json"
         tl_file.write_text(json.dumps(item["tl"]), encoding="utf-8")
         rc, out_txt = vsf.vd_check_timeline_cli(["check_timeline.py", str(tl_file)])
@@ -1210,14 +1210,14 @@ def verify_m095() -> int:
             "beat_times": vsf.vd_beat_times(item["tl"]),
             "loaded_tl": vsf.vd_load_timeline(tl_file),
         })
-    assert tl_res == oracle["m095"]["timelines"], "M095 check_timeline / beat_times / load_timeline mismatch"
+    assert tl_res == oracle["m084"]["timelines"], "M084 check_timeline / beat_times / load_timeline mismatch"
 
     list_tl_file = tmp_vd / "list_tl.json"
     list_tl_file.write_text(json.dumps([0.5, 2.0, 1.0, 2.0]), encoding="utf-8")
-    assert vsf.vd_load_timeline(list_tl_file) == oracle["m095"]["list_tl_loaded"], "M095 list load_timeline mismatch"
+    assert vsf.vd_load_timeline(list_tl_file) == oracle["m084"]["list_tl_loaded"], "M084 list load_timeline mismatch"
 
-    raw_runs = [vsf.vd_runs(r) for r in inputs["m095"]["runs_cases"]]
-    assert [[list(p) for p in rs] for rs in raw_runs] == oracle["m095"]["runs"], "M095 vd_runs mismatch"
+    raw_runs = [vsf.vd_runs(r) for r in inputs["m084"]["runs_cases"]]
+    assert [[list(p) for p in rs] for rs in raw_runs] == oracle["m084"]["runs"], "M084 vd_runs mismatch"
 
     d_arr = np.full(45, 0.8, dtype=np.float64)
     d_arr[0] = 0.0
@@ -1236,10 +1236,10 @@ def verify_m095() -> int:
     st_dict = {"n": 45, "mean": mean_arr, "std": std_arr, "d": d_arr, "skip": skip_arr, "seam": 0.4}
     args_ns = SimpleNamespace(freeze=0.5, freeze_eps=0.25, loop=True)
     pic_res = vsf.vd_analyse_picture(st_dict, 30.0, args_ns)
-    assert pic_res == oracle["m095"]["analyse_picture"], "M095 vd_analyse_picture mismatch"
+    assert pic_res == oracle["m084"]["analyse_picture"], "M084 vd_analyse_picture mismatch"
 
-    cc_res = [vsf.vd_compare_cuts(det, exp, fps) for det, exp, fps in inputs["m095"]["compare_cuts_cases"]]
-    assert cc_res == oracle["m095"]["compare_cuts"], "M095 vd_compare_cuts mismatch"
+    cc_res = [vsf.vd_compare_cuts(det, exp, fps) for det, exp, fps in inputs["m084"]["compare_cuts_cases"]]
+    assert cc_res == oracle["m084"]["compare_cuts"], "M084 vd_compare_cuts mismatch"
 
     im_contrast = Image.new("RGB", (200, 100), (0, 0, 0))
     draw = ImageDraw.Draw(im_contrast)
@@ -1249,11 +1249,11 @@ def verify_m095() -> int:
         vsf.vd_measure_text(im_contrast, [10, 10, 140, 80], 1080),
         vsf.vd_measure_text(im_flat, [10, 10, 60, 60], 1080),
     ]
-    assert mt_res == oracle["m095"]["measure_text"], "M095 vd_measure_text mismatch"
+    assert mt_res == oracle["m084"]["measure_text"], "M084 vd_measure_text mismatch"
 
     return (
-        len(inputs["m095"]["is_num_cases"]) + len(inputs["m095"]["norm_cases"]) + len(inputs["m095"]["read_time_cases"])
-        + len(tl_res) + 1 + len(inputs["m095"]["runs_cases"]) + 1 + len(cc_res) + len(mt_res)
+        len(inputs["m084"]["is_num_cases"]) + len(inputs["m084"]["norm_cases"]) + len(inputs["m084"]["read_time_cases"])
+        + len(tl_res) + 1 + len(inputs["m084"]["runs_cases"]) + 1 + len(cc_res) + len(mt_res)
     )
 
 
@@ -1326,7 +1326,7 @@ def verify_all() -> dict[str, int]:
         "context-language-models": verify_m044(),
         "knowledge-catalog": verify_m050(),
         "CLI-Anything": verify_m056(),
-        "video-director": verify_m095(),
+        "video-director": verify_m084(),
         "00_Marketplace_YoutubeSkills": verify_m117(),
         "04_Inference_Youtube_Discovery_Registry": verify_m118(),
     }
@@ -1378,18 +1378,18 @@ def run_sabotage_suite() -> int:
         ("M056:generate_cli_anything_skill_md", verify_m056, f04, "generate_cli_anything_skill_md", lambda m, template_text=None: "BAD"),
         ("M056:generate_cli_anything_skill_md_simple", verify_m056, f04, "generate_cli_anything_skill_md_simple", lambda m: "BAD"),
         ("M056:build_cli_anything_preview_cache_key", verify_m056, f04, "build_cli_anything_preview_cache_key", lambda *a, **kw: "sha256:0000"),
-        # M095 (toutes les fonctions déclarées)
-        ("M095:vd_is_num", verify_m095, vsf, "vd_is_num", lambda v: False),
-        ("M095:vd_norm", verify_m095, vsf, "vd_norm", lambda s: ""),
-        ("M095:vd_read_time", verify_m095, vsf, "vd_read_time", lambda t: 0.0),
-        ("M095:vd_validate_timeline", verify_m095, vsf, "vd_validate_timeline", lambda tl: ([], [])),
-        ("M095:vd_check_timeline_cli", verify_m095, vsf, "vd_check_timeline_cli", lambda argv: (0, "")),
-        ("M095:vd_runs", verify_m095, vsf, "vd_runs", lambda mask: []),
-        ("M095:vd_analyse_picture", verify_m095, vsf, "vd_analyse_picture", lambda st, fps, args: {}),
-        ("M095:vd_compare_cuts", verify_m095, vsf, "vd_compare_cuts", lambda d, e, f: None),
-        ("M095:vd_measure_text", verify_m095, vsf, "vd_measure_text", lambda im, b, s: {"font_px": 0.0, "contrast": 1.0}),
-        ("M095:vd_beat_times", verify_m095, vsf, "vd_beat_times", lambda tl: {}),
-        ("M095:vd_load_timeline", verify_m095, vsf, "vd_load_timeline", lambda p: {}),
+        # M084 (toutes les fonctions déclarées)
+        ("M084:vd_is_num", verify_m084, vsf, "vd_is_num", lambda v: False),
+        ("M084:vd_norm", verify_m084, vsf, "vd_norm", lambda s: ""),
+        ("M084:vd_read_time", verify_m084, vsf, "vd_read_time", lambda t: 0.0),
+        ("M084:vd_validate_timeline", verify_m084, vsf, "vd_validate_timeline", lambda tl: ([], [])),
+        ("M084:vd_check_timeline_cli", verify_m084, vsf, "vd_check_timeline_cli", lambda argv: (0, "")),
+        ("M084:vd_runs", verify_m084, vsf, "vd_runs", lambda mask: []),
+        ("M084:vd_analyse_picture", verify_m084, vsf, "vd_analyse_picture", lambda st, fps, args: {}),
+        ("M084:vd_compare_cuts", verify_m084, vsf, "vd_compare_cuts", lambda d, e, f: None),
+        ("M084:vd_measure_text", verify_m084, vsf, "vd_measure_text", lambda im, b, s: {"font_px": 0.0, "contrast": 1.0}),
+        ("M084:vd_beat_times", verify_m084, vsf, "vd_beat_times", lambda tl: {}),
+        ("M084:vd_load_timeline", verify_m084, vsf, "vd_load_timeline", lambda p: {}),
         # M117
         ("M117:get_marketplace_playbook", verify_m117, cat, "get_marketplace_playbook", lambda c: {}),
         ("M117:query_marketplace_skills", verify_m117, cat, "query_marketplace_skills", lambda **kw: {"matches": [], "playbooks": {}, "productized_offers": []}),
@@ -1580,7 +1580,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py",
             "01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py",
             "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
-            # Sources réelles M044, M050, M056, M095, M117, M118 pour Phase A avant suppression
+            # Sources réelles M044, M050, M056, M084, M117, M118 pour Phase A avant suppression
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/clm",
             "01_Forkable/FKB02_Memory/knowledge-catalog/okf",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/cli-anything-plugin",
@@ -1617,7 +1617,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         (iso_root / "oracle_runner.py").unlink()
         assert (iso_root / "oracle_outputs.json").exists()
 
-        # PHASE B : suppression physique effective de tous les répertoires sources (FKB04, FKB02, M095, M117, M118) + F8
+        # PHASE B : suppression physique effective de tous les répertoires sources (FKB04, FKB02, M084, M117, M118) + F8
         for rel in SOURCE_DIRS_TO_DELETE_FOR_TEST + absent_paths:
             target = iso_root / rel
             if target.exists():
@@ -1841,9 +1841,10 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
     carte = (FUSION_DIR / "CARTE-DES-PRINCIPES.md").read_text(encoding="utf-8")
     registre = (FUSION_DIR / "REGISTRE-DE-FUSION.md").read_text(encoding="utf-8")
 
-    m_carte = re.findall(r"^### (M\d{3}) — ", carte, flags=re.MULTILINE)
+    carte_pairs = re.findall(r"^### (M\d{3}) — `([^`]+)`", carte, flags=re.MULTILINE)
+    carte_id_to_name = dict(carte_pairs)
     d_carte = re.findall(r"^### (D\d{2}) — ", carte, flags=re.MULTILINE)
-    assert len(m_carte) == 120 and len(d_carte) == 8
+    assert len(carte_pairs) == 120 and len(carte_id_to_name) == 120 and len(d_carte) == 8
 
     reg_rows = re.findall(r"^\| (?:M\d{3}) \| .*?$", registre, flags=re.MULTILINE)
     assert len(reg_rows) == 120
@@ -1851,12 +1852,15 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
     kernel_counts = {rk: 0 for rk in ROOT_KERNELS}
     registry_fusionne: set[str] = set()
     by_name: dict[str, tuple[str, str]] = {}
+    reg_id_to_name: dict[str, str] = {}
     actual_retenu = 0
     actual_ecarte = 0
 
     for row in reg_rows:
         cols = [c.strip() for c in row.strip("|").split("|")]
+        mod_id = cols[0]
         mod_name = cols[1].strip("`")
+        reg_id_to_name[mod_id] = mod_name
         noyau_col = cols[4]
         statut_col = cols[6]
         justification = cols[8] if len(cols) > 8 else ""
@@ -1890,9 +1894,40 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
     for mod in ("RigInfinity", "automaton", "cordis", "pi", "aspace-fiber-host", "fondation-13-1", "source-control-natif"):
         assert by_name[mod][0] == "**PARTIEL**", f"{mod} doit rester PARTIEL: {by_name[mod]}"
 
+    assert len(reg_id_to_name) == 120
+    assert carte_id_to_name == reg_id_to_name, "Divergence ID<->Module entre CARTE-DES-PRINCIPES et REGISTRE-DE-FUSION"
+    assert reg_id_to_name["M084"] == "video-director"
+    assert reg_id_to_name["M095"] == "BlenderWorld"
+    assert reg_id_to_name["M120"] == "llm-wiki"
+
+    name_to_id = {v: k for k, v in reg_id_to_name.items()}
+    diff_ids = {name_to_id[m] for m in (proven_fusionne - RIG_INFINITY_PROVEN_F8)}
+    assert diff_ids == {"M044", "M050", "M056", "M084", "M117", "M118"}, (
+        f"Les 6 preuves différentielles attendues sont {{M044, M050, M056, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
+    )
+
+    assert by_name["BlenderWorld"][0] == "**PARTIEL**", (
+        f"M095 BlenderWorld doit rester PARTIEL: {by_name['BlenderWorld']}"
+    )
+    assert "BlenderWorld" not in registry_fusionne and "BlenderWorld" not in proven_fusionne
+
     assert by_name["llm-wiki"][0] == "**PARTIEL**", (
         f"M120 llm-wiki doit rester PARTIEL sans preuve exécutable K4 + sabotage + reçu R10: {by_name['llm-wiki']}"
     )
+
+    id_pat = re.compile(r"M0" + r"95[^\n]{0,40}video-director|video-director[^\n]{0,40}M0" + r"95")
+    for rel_guard in (
+        "00_Memoire/bundle/fusion/PRD-FONDATION.md",
+        "00_Memoire/bundle/fusion/SDD-FONDATION.md",
+        "00_Memoire/bundle/fusion/ADR-FUSION.md",
+        "00_Memoire/bundle/fusion/adr/ADR-15.md",
+        "00_Memoire/bundle/fusion/REGISTRE-DE-FUSION.md",
+        "00_Memoire/bundle/fusion/CARTE-DES-PRINCIPES.md",
+        "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
+    ):
+        txt = (ROOT / rel_guard).read_text(encoding="utf-8")
+        assert not id_pat.search(txt), f"Confusion M084/M095 encore présente dans {rel_guard}"
+    assert ("m0" + "95") not in Path(__file__).read_text(encoding="utf-8"), "Symbole résiduel dans test_foundation_deletion_suite.py"
 
     print(
         f"[PASS 6/7] ADR-15 3 Noyaux respectés ({kernel_counts}) | "

@@ -3,7 +3,7 @@
 aspace_video_studio_foundation.py — Coordinateur F4 & Organe Natif Vidéo (CORPS / Organe K5).
 
 STATUT :
-  - M095 `video-director` : porté 1:1 (`check_timeline.py` + fonctions d'analyse `qa_video.py`)
+  - M084 `video-director` : porté 1:1 (`check_timeline.py` + fonctions d'analyse `qa_video.py`)
     et soumis à la vérification différentielle + anti-sabotage avant/après suppression physique.
   - Les 9 autres moteurs vidéo (`OpenMontage`, `argo`, `earshot`, `explainroo`, `flute`,
     `huashu-motion`, `reanimate`, `rossark-motion-skill`, `take-one`) restent `PARTIEL`
@@ -64,7 +64,7 @@ PURGED_FKB06_DUPLICATES = (
 
 
 # ===========================================================================
-# 1. M095 video-director — Portage 1:1 de check_timeline.py & qa_video.py
+# 1. M084 video-director — Portage 1:1 de check_timeline.py & qa_video.py
 # ===========================================================================
 
 VD_HOOK_BY = 3.0
@@ -440,7 +440,7 @@ def consign_video_director_parity_receipt(
     head_sha40: str,
     repo_root: Optional[Path] = None,
 ) -> Dict[str, Any]:
-    """Consigne uniquement la parité source-vs-organe réellement mesurée sur video-director (M095)."""
+    """Consigne uniquement la parité source-vs-organe réellement mesurée sur video-director (M084)."""
     verified = sorted(
         mid
         for mid, res in module_results.items()
@@ -476,7 +476,7 @@ class VideoPipelinePlan:
     stages: List[Dict[str, Any]]
     fusion_status: str = "PARTIEL"
     missing_for_full_fusion: str = (
-        "M095 video-director porté (check_timeline + qa_video) ; 9 moteurs de rendu (Chrome/Playwright/ffmpeg/TTS) restent PARTIEL."
+        "M084 video-director porté (check_timeline + qa_video) ; 9 moteurs de rendu (Chrome/Playwright/ffmpeg/TTS) restent PARTIEL."
     )
     canonical_root: str = "01_Forkable/FKB07_Money_Maker/02_Video"
 
