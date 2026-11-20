@@ -280,7 +280,7 @@ Use these as starting points; verify current repository state, license, model ca
 
 - I-JEPA (Meta): https://github.com/facebookresearch/ijepa
 - V-JEPA 2 (Meta): https://github.com/facebookresearch/vjepa2
-- LeWorldModel: https://github.com/gaoyuezhou/LeWorldModel
+- LeWorldModel: https://github.com/lucas-maes/le-wm
 - Agentic-JEPA: https://github.com/pu-suo/Agentic-JEPA
 - A'Space V5 — Neuro-Tabular Wargame: https://github.com/Amdkn/Aspace_OS_V5/blob/master/00_Memoire/bundle/concepts/neuro-tabular-wargame.md
 - A'Space V5 — Sakana Fugu Inference: https://github.com/Amdkn/Aspace_OS_V5/blob/master/00_Memoire/bundle/concepts/sakana-fugu-inference.md
@@ -292,7 +292,8 @@ Use these as starting points; verify current repository state, license, model ca
 - [ ] Review and ratify this ADR (A0 / S1 / human authority as applicable).
 - [ ] Define JSON Schemas and typed interfaces for the five capability tasks.
 - [x] Create the initial JEPA candidate matrix with modality, task fit, action conditioning, scale, licensing cautions, evidence register and benchmark plan: [JEPA / World-Model Research Matrix V1](jepa-world-model-research-matrix-v1.md).
-- [ ] Select one bounded benchmark environment and establish persistence / symbolic / learned baselines.
+- [x] Specify the bounded deterministic Toy World benchmark, state/action contract, splits, horizons, metrics and read-only gates: [JEPA Toy World Benchmark V1](jepa-toy-world-benchmark-v1.md).
+- [ ] Implement the environment and establish persistence / symbolic / learned baselines.
 - [ ] Build a read-only evaluation harness with traceable state snapshots and prediction receipts.
 - [ ] Define promotion rules for verified observations and durable memory.
 - [ ] Submit a separate implementation ADR before any production Runtime integration.
