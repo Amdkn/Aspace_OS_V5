@@ -327,6 +327,12 @@ def _build_differential_inputs() -> dict:
                     {"role": "system", "content": "S2_must_not_merge"},
                     {"role": "assistant", "content": "Reply"},
                 ],
+                [
+                    {"role": "system", "content": "SYS_B"},
+                    {"role": "user", "content": "PROTECTED_U"},
+                    {"role": "user", "content": "EDITABLE_U1"},
+                    {"role": "user", "content": "EDITABLE_U2"},
+                ],
             ],
             "parse_back_cases": [
                 ("role_system", "[[CTX_TURN 99 role=system]]\npayload"),
@@ -399,6 +405,7 @@ def _build_differential_inputs() -> dict:
             "stale_cases": [
                 {"stale_after": "2026-09-23T00:00:00Z"},
                 {"stale_after": "2026-09-23T12:00:00+00:00"},
+                {"stale_after": "2026-09-23T12:00:01+00:00"},
                 {"stale_after": "2026-09-24T00:00:00Z"},
                 {},
                 {"stale_after": "not-a-date"},
@@ -444,7 +451,7 @@ def _build_differential_inputs() -> dict:
         "m084": {
             "is_num_cases": [0, 1.5, -2.0, True, False, "1", None],
             "norm_cases": ["  Héllo,   Wörld!  C++ ", "", "A---B   C"],
-            "read_time_cases": ["", "Hi", "One two three four five six"],
+            "read_time_cases": ["", "Hi", "One two", "One two three four five six"],
             "timelines": [
                 {
                     "name": "valid_reads",
@@ -502,10 +509,69 @@ def _build_differential_inputs() -> dict:
                         "vo": [{"id": "v1", "text": "OnlySaid here"}],
                     },
                 },
+                {
+                    "name": "exact_boundaries_fps16",
+                    "tl": {
+                        "meta": {"w": 1920, "h": 1080, "fps": 16, "dur": 10.0, "clock": "reads"},
+                        "scenes": [
+                            {"id": "s1", "start": 0.0, "end": 5.0, "beats": {"b0": 0.0, "b_after": 5.0625}, "transitionOut": {"why": "seam"}},
+                            {"id": "s2", "start": 5.0625, "end": 9.9375, "beats": {"b_before": 5.0, "b_end": 10.0}},
+                        ],
+                        "reads": [{"from": 0.0, "to": 0.6, "what": "exact06"}],
+                        "cuts": [10.0],
+                        "hero": {"t": 4.0},
+                        "silences": [{"from": 0.0, "to": 0.4}],
+                        "captions": [{"from": 0.0, "to": 0.7, "text": "Two words"}, {"from": 2.0, "to": 4.0, "text": "one two three four five six seven"}],
+                        "texts": [
+                            {"role": "hook", "text": "H", "from": 3.0, "to": 4.4375, "px": 84},
+                            {"role": "cta", "text": "C", "from": 3.0, "to": 5.0, "px": 48},
+                            {"role": "term", "text": "H", "from": 3.0, "to": 5.0, "px": 48},
+                        ],
+                        "terms": ["H"],
+                        "vo": [{"id": "v1", "text": "H Two words"}],
+                    },
+                },
+                {
+                    "name": "exact_hero_silence_window",
+                    "tl": {
+                        "meta": {"w": 1080, "h": 1920, "fps": 16, "dur": 10.0, "clock": "voice"},
+                        "scenes": [{"id": "s1", "start": 0.0, "end": 10.0}],
+                        "hero": {"t": 5.0},
+                        "silences": [{"from": 0.6, "to": 1.0}, {"from": 4.65, "to": 5.05}],
+                        "texts": [{"role": "hook", "text": "Go", "from": 0.0, "to": 2.0, "px": 84}],
+                        "terms": ["Go"],
+                        "vo": [{"id": "v1", "text": "Go"}],
+                    },
+                },
+                {
+                    "name": "music_loop_ok_boundary",
+                    "tl": {
+                        "meta": {"w": 1080, "h": 1080, "fps": 30, "dur": 4.0019, "clock": "music", "bpm": 120, "meter": "4/4", "loop": True},
+                        "scenes": [{"id": "s1", "start": 0.0, "end": 4.0}],
+                        "hero": {"t": 2.0},
+                        "silences": [{"from": 1.0, "to": 1.5}],
+                        "texts": [{"role": "hook", "text": "M", "from": 0.0, "to": 2.0, "px": 84}],
+                        "terms": ["M"],
+                        "vo": [{"id": "v1", "text": "M"}],
+                    },
+                },
+                {
+                    "name": "music_loop_fail_boundary",
+                    "tl": {
+                        "meta": {"w": 1080, "h": 1080, "fps": 30, "dur": 4.0021, "clock": "music", "bpm": 120, "meter": "4/4", "loop": True},
+                        "scenes": [{"id": "s1", "start": 0.0, "end": 4.0}],
+                        "hero": {"t": 2.0},
+                        "silences": [{"from": 1.0, "to": 1.5}],
+                        "texts": [{"role": "hook", "text": "M", "from": 0.0, "to": 2.0, "px": 84}],
+                        "terms": ["M"],
+                        "vo": [{"id": "v1", "text": "M"}],
+                    },
+                },
             ],
             "compare_cuts_cases": [
                 ([], [1.0, 2.0], 30.0),
                 ([1.03, 2.0, 4.5], [1.0, 2.0, 8.0], 30.0),
+                ([1.5, 2.501], [1.0, 2.0], 30.0),
                 ([1.0], [], 30.0),
             ],
             "runs_cases": [[False, True, True, False, True], [True, True, True], []],
@@ -536,6 +602,10 @@ def _build_differential_inputs() -> dict:
                 {"platform": "sovereign-new.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": True, "estimated_ttl_days": 45},
                 {"platform": "web-trial.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 3},
                 {"platform": "stripe-loop.example", "requires_credit_card": True, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 14},
+                {"platform": "ttl6.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": True, "estimated_ttl_days": 6},
+                {"platform": "ttl7.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": True, "estimated_ttl_days": 7},
+                {"platform": "ttl29.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 29},
+                {"platform": "ttl30.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 30},
             ],
         },
     }
@@ -708,6 +778,8 @@ m050_stale_default_now = [
 b_multi = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_okf_m_"))
 (b_multi / "datasets").mkdir()
 (b_multi / "datasets" / "only.md").write_text("---\ntype: BigQuery Dataset\ntitle: Only Dataset\ndescription: Single child desc.\n---\nBody.\n", encoding="utf-8")
+(b_multi / "single_no_desc").mkdir()
+(b_multi / "single_no_desc" / "only_empty.md").write_text("---\ntype: BigQuery Dataset\ntitle: EmptyDesc\n---\nBody.\n", encoding="utf-8")
 (b_multi / "tables").mkdir()
 (b_multi / "tables" / "events_.md").write_text("---\ntype: BigQuery Table\ntitle: events_*\ndescription: Sharded events.\n---\nEvents.\n", encoding="utf-8")
 (b_multi / "tables" / "users.md").write_text("---\ntype: BigQuery Table\ntitle: users\ndescription: Users table.\n---\nUsers.\n", encoding="utf-8")
@@ -774,6 +846,16 @@ for name, cli_code, readme_txt in [
         "import click\n@click.command()\ndef ping():\n    'Ping target.'\n    pass\n@click.command()\ndef info():\n    'Info target.'\n    pass\n",
         "# Syn Flat\n\nFlat command harness.\n",
     ),
+    (
+        "syn_intro_100",
+        "import click\n@click.command()\ndef ok():\n    'Ok.'\n    pass\n",
+        "# Syn Intro 100\n\n" + ("A" * 100) + "\n",
+    ),
+    (
+        "syn_intro_101",
+        "import click\n@click.command()\ndef ok():\n    'Ok.'\n    pass\n",
+        "# Syn Intro 101\n\n" + ("A" * 101) + "\n",
+    ),
 ]:
     hp = syn_root / name / "agent-harness"
     pkg = hp / "cli_anything" / name
@@ -790,6 +872,8 @@ for label, h_dir in [
     ("audacity", iso / "01_Forkable/FKB04_Tools_Anything/CLI-Anything/audacity/agent-harness"),
     ("syn_export", syn_root / "syn_export" / "agent-harness"),
     ("syn_flat", syn_root / "syn_flat" / "agent-harness"),
+    ("syn_intro_100", syn_root / "syn_intro_100" / "agent-harness"),
+    ("syn_intro_101", syn_root / "syn_intro_101" / "agent-harness"),
 ]:
     meta = up_extract_cli_metadata(str(h_dir))
     cli_files = list((h_dir / "cli_anything").glob("*/*_cli.py"))
@@ -856,10 +940,30 @@ mean_arr = np.full(45, 120.0, dtype=np.float64)
 st_dict = {"n": 45, "mean": mean_arr, "std": std_arr, "d": d_arr, "skip": skip_arr, "seam": 0.4}
 args_ns = SimpleNamespace(freeze=0.5, freeze_eps=0.25, loop=True)
 
+d_b = np.full(50, 0.8, dtype=np.float64)
+d_b[0] = 0.0
+d_b[3] = 6.0
+d_b[6] = 0.1
+d_b[7] = 2.0
+d_b[8] = 0.1
+d_b[10:24] = 0.2   # run (10, 24) -> (24-10+1)/30 = 0.5 == freeze -> FROZEN
+d_b[25] = 0.2
+d_b[26] = 0.25     # == freeze_eps -> NON still
+d_b[27] = 0.2
+d_b[30:43] = 0.2   # run (30, 43) -> (43-30+1)/30 = 14/30 < 0.5 -> NON FROZEN
+std_b = np.full(50, 6.0, dtype=np.float64)  # == 6.0 -> NON flat
+skip_b = np.full(50, 0.9, dtype=np.float64)
+skip_b[0] = np.nan
+skip_b[-1] = np.nan
+mean_b = np.full(50, 100.0, dtype=np.float64)
+st_boundary = {"n": 50, "mean": mean_b, "std": std_b, "d": d_b, "skip": skip_b, "seam": 0.5}
+
 im_contrast = Image.new("RGB", (200, 100), (0, 0, 0))
 draw = ImageDraw.Draw(im_contrast)
 draw.rectangle([20, 20, 120, 70], fill=(255, 255, 255))
 im_flat = Image.new("RGB", (100, 100), (128, 128, 128))
+im_half = Image.new("RGB", (100, 100), (0, 0, 0))
+ImageDraw.Draw(im_half).rectangle([0, 0, 49, 99], fill=(255, 255, 255))
 
 m084_out = {
     "is_num": [up_ct.is_num(x) for x in inputs["m084"]["is_num_cases"]],
@@ -868,11 +972,16 @@ m084_out = {
     "timelines": m084_timelines,
     "list_tl_loaded": list_tl_loaded,
     "runs": [[list(p) for p in up_qv.runs(r)] for r in inputs["m084"]["runs_cases"]],
-    "analyse_picture": up_qv.analyse_picture(st_dict, 30.0, args_ns),
+    "analyse_picture": [
+        up_qv.analyse_picture(st_dict, 30.0, args_ns),
+        up_qv.analyse_picture(st_boundary, 30.0, args_ns),
+    ],
     "compare_cuts": [up_qv.compare_cuts(det, exp, fps) for det, exp, fps in inputs["m084"]["compare_cuts_cases"]],
     "measure_text": [
         up_qv.measure_text(im_contrast, [10, 10, 140, 80], 1080),
+        up_qv.measure_text(im_contrast, [9.6, 10.4, 140.4, 79.5], 1080),
         up_qv.measure_text(im_flat, [10, 10, 60, 60], 1080),
+        up_qv.measure_text(im_half, [0, 0, 100, 100], 1080),
     ],
 }
 
@@ -1029,6 +1138,10 @@ const parsersOut = {
     parseMod.snippet('x'.repeat(500), 10),
     parseMod.snippet('hello   ', 10),
     parseMod.snippet('', 10),
+    parseMod.snippet('1234567890', 10),
+    parseMod.snippet('12345678901', 10),
+    parseMod.snippet('ab\uD83D\uDE00', 4),
+    parseMod.snippet('ab\uD83D\uDE00c', 4),
   ],
   listings: [
     parseMod.toListing(slugGen.items[0], 300),
@@ -1080,8 +1193,12 @@ const storeOut = {
   req_day1: store.countRequestsToday(day1),
   req_day2: store.countRequestsToday(day2),
   cache_hit: store.getCachedSearch('k', 5000, 1_001_000) !== null,
+  cache_eq_ttl: store.getCachedSearch('k', 5000, 1_005_000) !== null,
+  cache_gt_ttl_by_1: store.getCachedSearch('k', 5000, 1_005_001) === null,
   cache_miss: store.getCachedSearch('k', 5000, 1_009_000) === null,
   cookie_hit: store.getCookieJar('h', 5000, 2000),
+  cookie_eq_age: store.getCookieJar('h', 5000, 6000),
+  cookie_gt_age_by_1: store.getCookieJar('h', 5000, 6001),
   cookie_miss: store.getCookieJar('h', 500, 2000),
   q_fts_name: store.queryCorpus({ query: 'supertrend' }).map((r) => r.script_id_part),
   q_fts_desc: store.queryCorpus({ query: 'reversion' }).map((r) => r.script_id_part),
@@ -1089,6 +1206,11 @@ const storeOut = {
   q_type: store.queryCorpus({ scriptType: 'strategy' }).map((r) => r.script_id_part),
   q_author: store.queryCorpus({ author: 'ALICE' }).map((r) => r.script_id_part),
   q_likes: store.queryCorpus({ minLikes: 50 }).map((r) => r.script_id_part),
+  q_likes_eq_10: store.queryCorpus({ minLikes: 10 }).map((r) => r.script_id_part),
+  q_likes_gt_10: store.queryCorpus({ minLikes: 11 }).map((r) => r.script_id_part),
+  q_likes_eq_120: store.queryCorpus({ minLikes: 120 }).map((r) => r.script_id_part),
+  q_likes_gt_120: store.queryCorpus({ minLikes: 121 }).map((r) => r.script_id_part),
+  q_likes_zero: store.queryCorpus({ minLikes: 0 }).map((r) => r.script_id_part),
   q_with_source: store.queryCorpus({ withSourceOnly: true }).map((r) => r.script_id_part),
   q_sorted_likes: store.queryCorpus({}).map((r) => r.likes),
 };
@@ -1123,7 +1245,13 @@ const afterErr = await h1.thr.run(async () => 'still works');
 const h2 = makeThrottleHarness({ breakerThreshold: 3 });
 const blocks1 = [h2.thr.noteBlocked(), h2.thr.noteBlocked(), h2.thr.noteBlocked()];
 const tripErr = await safeAsync(() => h2.thr.run(async () => 'nope'));
-h2.advance(900_001);
+h2.advance(839_999);
+const tripMsg60001 = (await safeAsync(() => h2.thr.run(async () => 'nope'))).msg;
+h2.advance(1);
+const tripMsg60000 = (await safeAsync(() => h2.thr.run(async () => 'nope'))).msg;
+h2.advance(59_999);
+const tripStillOpen899999 = (await safeAsync(() => h2.thr.run(async () => 'nope'))).ok;
+h2.advance(1);
 const reopenedOk = await h2.thr.run(async () => 'reopened');
 h2.thr.noteBlocked();
 h2.thr.noteOk();
@@ -1134,6 +1262,22 @@ const budgetDenied = await safeAsync(() => h3.thr.run(async () => 'x'));
 const h4 = makeThrottleHarness({ dailyBudget: 5 }, { countToday: () => 4 });
 const budgetAllowed = await safeAsync(() => h4.thr.run(async () => 'x'));
 
+const jitterBoundaries = [];
+for (const [mn, mx, rv] of [[1000, 1001, 0.5], [1000, 1001, 0.75], [1000, 1001, 0.49], [1000, 1000, 0.9]]) {
+  const hj = makeThrottleHarness({ minDelayMs: mn, maxDelayMs: mx, breakEvery: 0 }, { random: () => rv });
+  await hj.thr.run(async () => 1);
+  await hj.thr.run(async () => 2);
+  jitterBoundaries.push(hj.slept[0]);
+}
+const hw = makeThrottleHarness({ minDelayMs: 1000, maxDelayMs: 1000, breakEvery: 0 });
+await hw.thr.run(async () => 1);
+hw.advance(1000);
+await hw.thr.run(async () => 2);
+const waitTurnAtExactGap = [...hw.slept];
+hw.advance(999);
+await hw.thr.run(async () => 3);
+const waitTurnBelowGap = [...hw.slept];
+
 const throttleOut = {
   slept: h1.slept,
   err_msg: errRun.msg,
@@ -1141,10 +1285,16 @@ const throttleOut = {
   status1: h1.thr.status(),
   blocks1,
   trip_is_open: tripErr.ok === false && tripErr.msg.includes('circuit is OPEN'),
+  trip_msg_60001: tripMsg60001,
+  trip_msg_60000: tripMsg60000,
+  trip_still_open_899999: tripStillOpen899999,
   reopened_ok: reopenedOk,
   streak_reset: streakReset,
   budget_denied: budgetDenied.ok === false && budgetDenied.msg.includes('Daily request budget of 5'),
   budget_allowed: budgetAllowed.val,
+  jitter_boundaries: jitterBoundaries,
+  wait_turn_at_exact_gap: waitTurnAtExactGap,
+  wait_turn_below_gap: waitTurnBelowGap,
 };
 
 function fakeHttp(routes) {
@@ -1229,6 +1379,28 @@ const normHarvest = (obj) => {
   return c;
 };
 
+const fix999 = structuredClone(scalpFix);
+fix999.data.ideas.data.total = 999;
+const fix1000 = structuredClone(scalpFix);
+fix1000.data.ideas.data.total = 1000;
+const ctxBound = buildCtx([
+  ['/api/v1/scripts/', authFix],
+  ['/scripts/topic-999/', fix999],
+  ['/scripts/topic-1000/', fix1000],
+]);
+await ctxBound.tv.authorScripts({ username: 'U', query: 'q0', perPage: 0 });
+await ctxBound.tv.authorScripts({ username: 'U', query: 'q1', perPage: 1 });
+await ctxBound.tv.authorScripts({ username: 'U', query: 'q24', perPage: 24 });
+await ctxBound.tv.authorScripts({ username: 'U', query: 'q25', perPage: 25 });
+const s999 = await ctxBound.tl.search_scripts({ query: 'topic 999' });
+const s1000 = await ctxBound.tl.search_scripts({ query: 'topic 1000' });
+const qLimits = [
+  ctx1.tl.query_corpus({ limit: 3, include_source: true }).limit_applied,
+  ctx1.tl.query_corpus({ limit: 4, include_source: true }).limit_applied,
+  ctx1.tl.query_corpus({ limit: 100, include_source: false }).limit_applied,
+  ctx1.tl.query_corpus({ limit: 101, include_source: false }).limit_applied,
+];
+
 const toolsOut = {
   calls_ctx1: ctx1.ht.calls,
   s1, s2, sTop, sEd, sAuth,
@@ -1249,6 +1421,9 @@ const toolsOut = {
   harvest_len_ok: typeof hRes.harvest_id === 'string' && hRes.harvest_id.length === 8,
   hRes: normHarvest(hRes),
   hAgain: normHarvest(hAgain),
+  bound_calls: ctxBound.ht.calls,
+  bound_notes: [s999.note ?? null, s1000.note ?? null],
+  bound_q_limits: qLimits,
 };
 
 fs.writeFileSync(outFile, JSON.stringify({ parsersOut, storeOut, throttleOut, toolsOut }, null, 2), 'utf8');
@@ -1436,6 +1611,8 @@ def verify_m050() -> int:
     b_multi = Path(tempfile.mkdtemp(dir=str(iso), prefix="org_okf_m_"))
     (b_multi / "datasets").mkdir()
     (b_multi / "datasets" / "only.md").write_text("---\ntype: BigQuery Dataset\ntitle: Only Dataset\ndescription: Single child desc.\n---\nBody.\n", encoding="utf-8")
+    (b_multi / "single_no_desc").mkdir()
+    (b_multi / "single_no_desc" / "only_empty.md").write_text("---\ntype: BigQuery Dataset\ntitle: EmptyDesc\n---\nBody.\n", encoding="utf-8")
     (b_multi / "tables").mkdir()
     (b_multi / "tables" / "events_.md").write_text("---\ntype: BigQuery Table\ntitle: events_*\ndescription: Sharded events.\n---\nEvents.\n", encoding="utf-8")
     (b_multi / "tables" / "users.md").write_text("---\ntype: BigQuery Table\ntitle: users\ndescription: Users table.\n---\nUsers.\n", encoding="utf-8")
@@ -1480,6 +1657,8 @@ def verify_m056() -> int:
         ("audacity", iso / "test_input_harnesses/audacity/agent-harness"),
         ("syn_export", syn_root / "syn_export" / "agent-harness"),
         ("syn_flat", syn_root / "syn_flat" / "agent-harness"),
+        ("syn_intro_100", syn_root / "syn_intro_100" / "agent-harness"),
+        ("syn_intro_101", syn_root / "syn_intro_101" / "agent-harness"),
     ]:
         meta = f04.extract_cli_anything_metadata(h_dir)
         cli_files = list((h_dir / "cli_anything").glob("*/*_cli.py"))
@@ -1549,7 +1728,29 @@ def verify_m084() -> int:
     mean_arr = np.full(45, 120.0, dtype=np.float64)
     st_dict = {"n": 45, "mean": mean_arr, "std": std_arr, "d": d_arr, "skip": skip_arr, "seam": 0.4}
     args_ns = SimpleNamespace(freeze=0.5, freeze_eps=0.25, loop=True)
-    pic_res = vsf.vd_analyse_picture(st_dict, 30.0, args_ns)
+
+    d_b = np.full(50, 0.8, dtype=np.float64)
+    d_b[0] = 0.0
+    d_b[3] = 6.0
+    d_b[6] = 0.1
+    d_b[7] = 2.0
+    d_b[8] = 0.1
+    d_b[10:24] = 0.2
+    d_b[25] = 0.2
+    d_b[26] = 0.25
+    d_b[27] = 0.2
+    d_b[30:43] = 0.2
+    std_b = np.full(50, 6.0, dtype=np.float64)
+    skip_b = np.full(50, 0.9, dtype=np.float64)
+    skip_b[0] = np.nan
+    skip_b[-1] = np.nan
+    mean_b = np.full(50, 100.0, dtype=np.float64)
+    st_boundary = {"n": 50, "mean": mean_b, "std": std_b, "d": d_b, "skip": skip_b, "seam": 0.5}
+
+    pic_res = [
+        vsf.vd_analyse_picture(st_dict, 30.0, args_ns),
+        vsf.vd_analyse_picture(st_boundary, 30.0, args_ns),
+    ]
     assert pic_res == oracle["m084"]["analyse_picture"], "M084 vd_analyse_picture mismatch"
 
     cc_res = [vsf.vd_compare_cuts(det, exp, fps) for det, exp, fps in inputs["m084"]["compare_cuts_cases"]]
@@ -1559,9 +1760,13 @@ def verify_m084() -> int:
     draw = ImageDraw.Draw(im_contrast)
     draw.rectangle([20, 20, 120, 70], fill=(255, 255, 255))
     im_flat = Image.new("RGB", (100, 100), (128, 128, 128))
+    im_half = Image.new("RGB", (100, 100), (0, 0, 0))
+    ImageDraw.Draw(im_half).rectangle([0, 0, 49, 99], fill=(255, 255, 255))
     mt_res = [
         vsf.vd_measure_text(im_contrast, [10, 10, 140, 80], 1080),
+        vsf.vd_measure_text(im_contrast, [9.6, 10.4, 140.4, 79.5], 1080),
         vsf.vd_measure_text(im_flat, [10, 10, 60, 60], 1080),
+        vsf.vd_measure_text(im_half, [0, 0, 100, 100], 1080),
     ]
     assert mt_res == oracle["m084"]["measure_text"], "M084 vd_measure_text mismatch"
 
@@ -1628,6 +1833,10 @@ def verify_m118() -> int:
         {"platform": "sovereign-new.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "A", "durability": "STABLE", "vector": "VOIE_A_API_DIRECT", "decision": "ADMIT_SOVEREIGN"},
         {"platform": "web-trial.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "B", "durability": "FLASH", "vector": "VOIE_B_WEB_SHIELDED", "decision": "ADMIT_SOVEREIGN"},
         {"platform": "stripe-loop.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "C", "durability": "MEDIUM", "vector": "VOIE_B_WEB_SHIELDED", "decision": "ADMIT_WITH_MONITORING"},
+        {"platform": "ttl6.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "A", "durability": "FLASH", "vector": "VOIE_A_API_DIRECT", "decision": "ADMIT_SOVEREIGN"},
+        {"platform": "ttl7.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "A", "durability": "MEDIUM", "vector": "VOIE_A_API_DIRECT", "decision": "ADMIT_SOVEREIGN"},
+        {"platform": "ttl29.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "B", "durability": "MEDIUM", "vector": "VOIE_B_WEB_SHIELDED", "decision": "ADMIT_SOVEREIGN"},
+        {"platform": "ttl30.example", "dedup": "NEW_OPPORTUNITY", "authentic": True, "score": "B", "durability": "STABLE", "vector": "VOIE_B_WEB_SHIELDED", "decision": "ADMIT_SOVEREIGN"},
     ]
     for cand, exp in zip(inputs["m118"]["qualify_cases"], expected_qual):
         assert cat.qualify_inference_opportunity(cand, known_platforms=known) == exp, f"M118 qualify mismatch for {cand}"
@@ -1670,7 +1879,16 @@ def verify_m074() -> int:
         "script_types": [trd.tv_normalize_script_type(x) for x in ["indicator", "indicators", "STRATEGY", "libraries", "all", "nonsense", "", None]],
         "pine_versions": [trd.tv_detect_pine_version(x) for x in ['//@version=5\nstudy("x")', "// @version = 6\n", "no pragma here", None]],
         "chart_ids": [trd.tv_extract_id_from_chart_url(x) for x in ["https://www.tradingview.com/script/K0SEi3Ct-TL-PbD/", "https://www.tradingview.com/script/abc123/", "nonsense", None]],
-        "snippets": [trd.tv_snippet("a\n\n  b   c", 100), trd.tv_snippet("x" * 500, 10), trd.tv_snippet("hello   ", 10), trd.tv_snippet("", 10)],
+        "snippets": [
+            trd.tv_snippet("a\n\n  b   c", 100),
+            trd.tv_snippet("x" * 500, 10),
+            trd.tv_snippet("hello   ", 10),
+            trd.tv_snippet("", 10),
+            trd.tv_snippet("1234567890", 10),
+            trd.tv_snippet("12345678901", 10),
+            trd.tv_snippet("ab\U0001F600", 4),
+            trd.tv_snippet("ab\U0001F600c", 4),
+        ],
         "listings": [trd.tv_to_listing(slug_gen["items"][0], 300), trd.tv_to_listing(long_item, 300)],
         "slug_general": slug_gen,
         "slug_editors": slug_ed,
@@ -1718,8 +1936,12 @@ def verify_m074() -> int:
         "req_day1": store.count_requests_today(d1),
         "req_day2": store.count_requests_today(d2),
         "cache_hit": store.get_cached_search("k", 5000, 1_001_000) is not None,
+        "cache_eq_ttl": store.get_cached_search("k", 5000, 1_005_000) is not None,
+        "cache_gt_ttl_by_1": store.get_cached_search("k", 5000, 1_005_001) is None,
         "cache_miss": store.get_cached_search("k", 5000, 1_009_000) is None,
         "cookie_hit": store.get_cookie_jar("h", 5000, 2000),
+        "cookie_eq_age": store.get_cookie_jar("h", 5000, 6000),
+        "cookie_gt_age_by_1": store.get_cookie_jar("h", 5000, 6001),
         "cookie_miss": store.get_cookie_jar("h", 500, 2000),
         "q_fts_name": [r["script_id_part"] for r in store.query_corpus(query="supertrend")],
         "q_fts_desc": [r["script_id_part"] for r in store.query_corpus(query="reversion")],
@@ -1727,6 +1949,11 @@ def verify_m074() -> int:
         "q_type": [r["script_id_part"] for r in store.query_corpus(script_type="strategy")],
         "q_author": [r["script_id_part"] for r in store.query_corpus(author="ALICE")],
         "q_likes": [r["script_id_part"] for r in store.query_corpus(min_likes=50)],
+        "q_likes_eq_10": [r["script_id_part"] for r in store.query_corpus(min_likes=10)],
+        "q_likes_gt_10": [r["script_id_part"] for r in store.query_corpus(min_likes=11)],
+        "q_likes_eq_120": [r["script_id_part"] for r in store.query_corpus(min_likes=120)],
+        "q_likes_gt_120": [r["script_id_part"] for r in store.query_corpus(min_likes=121)],
+        "q_likes_zero": [r["script_id_part"] for r in store.query_corpus(min_likes=0)],
         "q_with_source": [r["script_id_part"] for r in store.query_corpus(with_source_only=True)],
         "q_sorted_likes": [r["likes"] for r in store.query_corpus()],
     }
@@ -1760,7 +1987,13 @@ def verify_m074() -> int:
     th2, _, adv2 = _mk_th({"breakerThreshold": 3})
     b1 = [th2.note_blocked(), th2.note_blocked(), th2.note_blocked()]
     trp = _sc_msg(lambda: th2.run(lambda: "nope"))
-    adv2(900_001)
+    adv2(839_999)
+    trp_m_60001 = _sc_msg(lambda: th2.run(lambda: "nope"))["msg"]
+    adv2(1)
+    trp_m_60000 = _sc_msg(lambda: th2.run(lambda: "nope"))["msg"]
+    adv2(59_999)
+    trp_open_899999 = _sc_msg(lambda: th2.run(lambda: "nope"))["ok"]
+    adv2(1)
     reop = th2.run(lambda: "reopened")
     th2.note_blocked()
     th2.note_ok()
@@ -1771,6 +2004,29 @@ def verify_m074() -> int:
     th4, _, _ = _mk_th({"dailyBudget": 5}, count_today=lambda: 4)
     ball = _sc_msg(lambda: th4.run(lambda: "x"))
 
+    jitter_b = []
+    for mn, mx, rv in ((1000, 1001, 0.5), (1000, 1001, 0.75), (1000, 1001, 0.49), (1000, 1000, 0.9)):
+        sj = {"now": 0}
+        slj = []
+        thj = trd.TradingViewThrottle(
+            {**trd.DEFAULT_TRADINGVIEW_CONFIG, "minDelayMs": mn, "maxDelayMs": mx, "breakEvery": 0},
+            now=lambda _s=sj: _s["now"],
+            sleep=lambda ms, _sl=slj, _s=sj: (_sl.append(ms), _s.__setitem__("now", _s["now"] + ms))[0],
+            random_fn=lambda _r=rv: _r,
+        )
+        thj.run(lambda: 1)
+        thj.run(lambda: 2)
+        jitter_b.append(slj[0])
+
+    thw, slw, advw = _mk_th({"minDelayMs": 1000, "maxDelayMs": 1000, "breakEvery": 0})
+    thw.run(lambda: 1)
+    advw(1000)
+    thw.run(lambda: 2)
+    wait_exact = list(slw)
+    advw(999)
+    thw.run(lambda: 3)
+    wait_below = list(slw)
+
     py_thr = {
         "slept": sl1,
         "err_msg": er1["msg"],
@@ -1778,10 +2034,16 @@ def verify_m074() -> int:
         "status1": th1.status(),
         "blocks1": b1,
         "trip_is_open": (not trp["ok"]) and ("circuit is OPEN" in trp["msg"]),
+        "trip_msg_60001": trp_m_60001,
+        "trip_msg_60000": trp_m_60000,
+        "trip_still_open_899999": trp_open_899999,
         "reopened_ok": reop,
         "streak_reset": sr,
         "budget_denied": (not bden["ok"]) and ("Daily request budget of 5" in bden["msg"]),
         "budget_allowed": ball["val"],
+        "jitter_boundaries": jitter_b,
+        "wait_turn_at_exact_gap": wait_exact,
+        "wait_turn_below_gap": wait_below,
     }
     assert py_thr == oracle["m074"]["throttleOut"], "M074 throttle mismatch"
 
@@ -1864,6 +2126,32 @@ def verify_m074() -> int:
             c["harvest_id"] = "<HARVEST_ID>"
         return c
 
+    fix999 = copy.deepcopy(scalp_fix)
+    fix999["data"]["ideas"]["data"]["total"] = 999
+    fix1000 = copy.deepcopy(scalp_fix)
+    fix1000["data"]["ideas"]["data"]["total"] = 1000
+    st_b, calls_b, tv_b, tl_b = _build_ctx([
+        ("/api/v1/scripts/", auth_fix),
+        ("/scripts/topic-999/", fix999),
+        ("/scripts/topic-1000/", fix1000),
+    ])
+    tv_b.author_scripts(username="U", query="q0", per_page=0)
+    tv_b.author_scripts(username="U", query="q1", per_page=1)
+    tv_b.author_scripts(username="U", query="q24", per_page=24)
+    tv_b.author_scripts(username="U", query="q25", per_page=25)
+    s999 = tl_b["search_scripts"](query="topic 999")
+    s1000 = tl_b["search_scripts"](query="topic 1000")
+    st_b.close()
+
+    st_q, _, _, tl_q = _build_ctx([])
+    q_limits = [
+        tl_q["query_corpus"](limit=3, include_source=True)["limit_applied"],
+        tl_q["query_corpus"](limit=4, include_source=True)["limit_applied"],
+        tl_q["query_corpus"](limit=100, include_source=False)["limit_applied"],
+        tl_q["query_corpus"](limit=101, include_source=False)["limit_applied"],
+    ]
+    st_q.close()
+
     py_tools = {
         "calls_ctx1": calls1,
         "s1": s1, "s2": s2, "sTop": s_top, "sEd": s_ed, "sAuth": s_auth,
@@ -1884,6 +2172,9 @@ def verify_m074() -> int:
         "harvest_len_ok": isinstance(hr["harvest_id"], str) and len(hr["harvest_id"]) == 8,
         "hRes": _norm_h(hr),
         "hAgain": _norm_h(ha),
+        "bound_calls": calls_b,
+        "bound_notes": [s999.get("note"), s1000.get("note")],
+        "bound_q_limits": q_limits,
     }
     assert py_tools == oracle["m074"]["toolsOut"], "M074 tools/TradingViewClient mismatch"
     return len(py_parsers) + len(py_store) + len(py_thr) + len(py_tools)
@@ -1915,57 +2206,138 @@ def run_sabotage_suite() -> int:
             setattr(patch_target_mod, attr, orig)
         assert broke, f"SABOTAGE NON DÉTECTÉ : {name} ({attr})!"
 
-    # Sabotages de fonctions
+    _orig_clm_may_grow = f02.clm_may_grow
+    _orig_clm_normalize = f02._clm_normalize
+    _orig_okf_is_stale = f02.okf_is_stale
+    _orig_cli_meta = f04.extract_cli_anything_metadata
+    _orig_qualify_m118 = cat.qualify_inference_opportunity
+    _orig_tv_cached = trd.TradingViewIndicatorStore.get_cached_search
+    _orig_tv_cookie = trd.TradingViewIndicatorStore.get_cookie_jar
+    _orig_tv_qc = trd.TradingViewIndicatorStore.query_corpus
+    _orig_tv_note_blocked = trd.TradingViewThrottle.note_blocked
+    _orig_tv_thr_run = trd.TradingViewThrottle.run
+
+    def _bad_clm_norm_ge(msgs, protect):
+        kept = [m for i, m in enumerate(msgs) if i < protect or (f02.clm_content_text(m.get("content")) or "").strip()]
+        merged = []
+        for i, m in enumerate(kept):
+            if merged and i >= protect and len(merged) >= protect and m.get("role") in ("user", "assistant") and merged[-1].get("role") == m.get("role"):
+                prev = f02.clm_content_text(merged[-1].get("content")) or ""
+                cur = f02.clm_content_text(m.get("content")) or ""
+                merged[-1] = {"role": m["role"], "content": (prev + "\n\n" + cur).strip()}
+            else:
+                merged.append(m)
+        return merged
+
+    def _bad_cli_meta_ge100(hp):
+        m = _orig_cli_meta(hp)
+        if len(m.skill_intro) == 100 and not m.skill_description.endswith("..."):
+            m.skill_description = m.skill_description + "..."
+        return m
+
+    def _bad_compare_cuts_ge(det, exp, fps):
+        if not exp:
+            return None
+        errs, missing = [], []
+        for t in exp:
+            if not det:
+                missing.append(t)
+                continue
+            near = min(det, key=lambda c: abs(c - t))
+            if abs(near - t) >= 0.5:
+                missing.append(t)
+            else:
+                errs.append(round((near - t) * fps, 2))
+        unplanned = [c for c in det if all(abs(c - t) >= 0.5 for t in exp)]
+        return {"max_err_frames": max((abs(e) for e in errs), default=0.0), "errors_frames": errs, "missing": missing, "unplanned": unplanned}
+
+    def _bad_m118_ttl_le7(cand, known_platforms=None):
+        res = _orig_qualify_m118(cand, known_platforms=known_platforms)
+        if res.get("authentic") and int(cand.get("estimated_ttl_days", 14)) == 7:
+            res["durability"] = "FLASH"
+        return res
+
+    def _bad_m118_ttl_gt30(cand, known_platforms=None):
+        res = _orig_qualify_m118(cand, known_platforms=known_platforms)
+        if res.get("authentic") and int(cand.get("estimated_ttl_days", 14)) == 30:
+            res["durability"] = "MEDIUM"
+        return res
+
+    def _bad_note_blocked_gt(self):
+        self._consecutive_blocks += 1
+        if self._consecutive_blocks > self.config["breakerThreshold"]:
+            self._open_until = self.now() + self.config["breakerCooldownMs"]
+            self._consecutive_blocks = 0
+            return True
+        return False
+
+    def _bad_thr_run_budget_gt(self, fn):
+        if self.is_open:
+            raise trd.CircuitOpenError(self._open_until - self.now())
+        if self.count_today() > self.config["dailyBudget"]:
+            raise trd.BudgetExceededError(self.config["dailyBudget"])
+        self._wait_turn()
+        return fn()
+
+    # Sabotages de fonctions + bornes exactes et arrondis
     sabotages = [
-        # M044 (toutes les fonctions déclarées)
+        # M044 (toutes les fonctions déclarées + bornes <= vs < et > protect)
         ("M044:clm_content_text", verify_m044, f02, "clm_content_text", lambda c: "SABOTAGED"),
         ("M044:clm_rendered_text", verify_m044, f02, "clm_rendered_text", lambda m: "SABOTAGED_RENDERED"),
         ("M044:clm_render_editable", verify_m044, f02, "clm_render_editable", lambda ms, protect=2: "BROKEN"),
         ("M044:clm_parse_back", verify_m044, f02, "clm_parse_back", lambda ed, prot: []),
         ("M044:_clm_normalize", verify_m044, f02, "_clm_normalize", lambda ms, protect: ms),
+        ("M044:_clm_normalize_ge_protect", verify_m044, f02, "_clm_normalize", _bad_clm_norm_ge),
         ("M044:clm_resolve_allow_edit_growth", verify_m044, f02, "clm_resolve_allow_edit_growth", lambda p, env=None: True),
         ("M044:clm_fit_rule", verify_m044, f02, "clm_fit_rule", lambda lim: "broken"),
         ("M044:clm_may_grow", verify_m044, f02, "clm_may_grow", lambda **kw: False),
+        ("M044:clm_may_grow_lt_boundary", verify_m044, f02, "clm_may_grow", lambda *, allow_growth, limit, after: _orig_clm_may_grow(allow_growth=allow_growth, limit=max(0, limit - 1), after=after)),
         ("M044:clm_reject_rule", verify_m044, f02, "clm_reject_rule", lambda **kw: "broken"),
         ("M044:clm_rejected_note", verify_m044, f02, "clm_rejected_note", lambda **kw: "broken"),
         ("M044:CLMFinishPolicy", verify_m044, f02, "CLMFinishPolicy", type("BadFP", (), {"__init__": lambda self, m="submit": None, "mode": "submit", "open_ended": False, "prompt_fragment": lambda s: "", "is_finish_command": lambda s, c: False})),
         ("M044:clm_is_submit_command", verify_m044, f02, "clm_is_submit_command", lambda c: False),
         ("M044:clm_token_cap_key", verify_m044, f02, "clm_token_cap_key", lambda m: "max_tokens"),
-        # M050 (toutes les fonctions déclarées, dont inversion complète okf_is_stale)
+        # M050 (toutes les fonctions déclarées + inversion okf_is_stale + borne == vs >)
         ("M050:OKFDocument.validate", verify_m050, f02.OKFDocument, "validate", lambda self: None),
         ("M050:okf_normalize_verified", verify_m050, f02, "okf_normalize_verified", lambda fm: []),
         ("M050:okf_trust_tier", verify_m050, f02, "okf_trust_tier", lambda fm: "unverified"),
-        ("M050:okf_is_stale_inverted", verify_m050, f02, "okf_is_stale", lambda fm, now=None, _orig=f02.okf_is_stale: not _orig(fm, now=now)),
+        ("M050:okf_is_stale_inverted", verify_m050, f02, "okf_is_stale", lambda fm, now=None, _orig=_orig_okf_is_stale: not _orig(fm, now=now)),
+        ("M050:okf_is_stale_gt_boundary", verify_m050, f02, "okf_is_stale", lambda fm, now=None, _orig=_orig_okf_is_stale: _orig(fm, now=(now - dt.timedelta(microseconds=1)) if now else None)),
         ("M050:okf_synthesize_fallback", verify_m050, f02, "okf_synthesize_fallback", lambda r, c, model="": "sabotaged"),
         ("M050:okf_regenerate_indexes", verify_m050, f02, "okf_regenerate_indexes", lambda br, **kw: []),
         ("M050:okf_concept_id_to_path", verify_m050, f02, "okf_concept_id_to_path", lambda br, cid: Path("/bad.md")),
         ("M050:okf_path_to_concept_id", verify_m050, f02, "okf_path_to_concept_id", lambda br, p: ("bad",)),
         ("M050:okf_parse_concept_id", verify_m050, f02, "okf_parse_concept_id", lambda s: ("bad",)),
-        # M056 (toutes les fonctions déclarées)
+        # M056 (toutes les fonctions déclarées + borne 100 chars)
         ("M056:extract_commands_from_cli", verify_m056, f04, "extract_commands_from_cli", lambda p: []),
         ("M056:extract_cli_anything_metadata", verify_m056, f04, "extract_cli_anything_metadata", lambda p: None),
+        ("M056:extract_meta_intro_ge_100", verify_m056, f04, "extract_cli_anything_metadata", _bad_cli_meta_ge100),
         ("M056:generate_cli_anything_skill_md", verify_m056, f04, "generate_cli_anything_skill_md", lambda m, template_text=None: "BAD"),
         ("M056:generate_cli_anything_skill_md_simple", verify_m056, f04, "generate_cli_anything_skill_md_simple", lambda m: "BAD"),
         ("M056:build_cli_anything_preview_cache_key", verify_m056, f04, "build_cli_anything_preview_cache_key", lambda *a, **kw: "sha256:0000"),
-        # M084 (toutes les fonctions déclarées)
+        # M084 (toutes les fonctions déclarées + bornes compare_cuts & read_time)
         ("M084:vd_is_num", verify_m084, vsf, "vd_is_num", lambda v: False),
         ("M084:vd_norm", verify_m084, vsf, "vd_norm", lambda s: ""),
         ("M084:vd_read_time", verify_m084, vsf, "vd_read_time", lambda t: 0.0),
+        ("M084:vd_read_time_wrong_floor", verify_m084, vsf, "vd_read_time", lambda t: max(1.65, 1.0 + 0.3 * len(str(t).split()))),
         ("M084:vd_validate_timeline", verify_m084, vsf, "vd_validate_timeline", lambda tl: ([], [])),
         ("M084:vd_check_timeline_cli", verify_m084, vsf, "vd_check_timeline_cli", lambda argv: (0, "")),
         ("M084:vd_runs", verify_m084, vsf, "vd_runs", lambda mask: []),
         ("M084:vd_analyse_picture", verify_m084, vsf, "vd_analyse_picture", lambda st, fps, args: {}),
         ("M084:vd_compare_cuts", verify_m084, vsf, "vd_compare_cuts", lambda d, e, f: None),
+        ("M084:vd_compare_cuts_ge_half", verify_m084, vsf, "vd_compare_cuts", _bad_compare_cuts_ge),
         ("M084:vd_measure_text", verify_m084, vsf, "vd_measure_text", lambda im, b, s: {"font_px": 0.0, "contrast": 1.0}),
         ("M084:vd_beat_times", verify_m084, vsf, "vd_beat_times", lambda tl: {}),
         ("M084:vd_load_timeline", verify_m084, vsf, "vd_load_timeline", lambda p: {}),
         # M117
         ("M117:get_marketplace_playbook", verify_m117, cat, "get_marketplace_playbook", lambda c: {}),
         ("M117:query_marketplace_skills", verify_m117, cat, "query_marketplace_skills", lambda **kw: {"matches": [], "playbooks": {}, "productized_offers": []}),
-        # M118
+        # M118 + bornes TTL 7 / 30
         ("M118:get_opportunity_dossier", verify_m118, cat, "get_opportunity_dossier", lambda o: {}),
         ("M118:qualify_inference_opportunity", verify_m118, cat, "qualify_inference_opportunity", lambda c, known_platforms=None: {}),
-        # M074 (toutes fonctions + méthodes + émoji UTF-16 + clé parasite)
+        ("M118:qualify_ttl_le_7", verify_m118, cat, "qualify_inference_opportunity", _bad_m118_ttl_le7),
+        ("M118:qualify_ttl_gt_30", verify_m118, cat, "qualify_inference_opportunity", _bad_m118_ttl_gt30),
+        # M074 (toutes fonctions + bornes >/>=/<= + arrondis Math.round & banker + émoji UTF-16 + clé parasite)
         ("M074:tv_slugify", verify_m074, trd, "tv_slugify", lambda q: "broken-slug"),
         ("M074:tv_normalize_item", verify_m074, trd, "tv_normalize_item", lambda r: {"script_id_part": None}),
         ("M074:tv_parse_slug_feed", verify_m074, trd, "tv_parse_slug_feed", lambda p: {"total": 0, "has_more": False, "next_path": None, "heading": None, "items": []}),
@@ -1980,10 +2352,18 @@ def run_sabotage_suite() -> int:
         ("M074:tv_normalize_script_type", verify_m074, trd, "tv_normalize_script_type", lambda t: None),
         ("M074:tv_utc_day", verify_m074, trd, "tv_utc_day", lambda ts=None: "1999-01-01"),
         ("M074:Store.query_corpus", verify_m074, trd.TradingViewIndicatorStore, "query_corpus", lambda self, **kw: []),
+        ("M074:Store.query_corpus_min_likes_gt", verify_m074, trd.TradingViewIndicatorStore, "query_corpus", lambda self, _orig=_orig_tv_qc, **kw: _orig(self, **{**kw, "min_likes": int(kw["min_likes"]) + 1}) if int(kw.get("min_likes") or 0) > 0 else _orig(self, **kw)),
         ("M074:Store.mark_protected", verify_m074, trd.TradingViewIndicatorStore, "mark_protected", lambda self, sid, now=None: None),
         ("M074:Store.get_cached_search", verify_m074, trd.TradingViewIndicatorStore, "get_cached_search", lambda self, k, ttl, now=None: None),
+        ("M074:Store.get_cached_search_ge", verify_m074, trd.TradingViewIndicatorStore, "get_cached_search", lambda self, k, ttl, now=None, _orig=_orig_tv_cached: _orig(self, k, ttl - 1, now=now)),
+        ("M074:Store.get_cookie_jar_ge", verify_m074, trd.TradingViewIndicatorStore, "get_cookie_jar", lambda self, h, max_age, now=None, _orig=_orig_tv_cookie: _orig(self, h, max_age - 1, now=now)),
+        ("M074:Throttle._jitter_floor", verify_m074, trd.TradingViewThrottle, "_jitter", lambda self, mn, mx: mn if mx <= mn else int(trd.math.floor(mn + self.random_fn() * (mx - mn)))),
+        ("M074:Throttle._jitter_bankers_round", verify_m074, trd.TradingViewThrottle, "_jitter", lambda self, mn, mx: mn if mx <= mn else int(round(mn + self.random_fn() * (mx - mn)))),
         ("M074:Throttle.note_blocked", verify_m074, trd.TradingViewThrottle, "note_blocked", lambda self: False),
+        ("M074:Throttle.note_blocked_gt", verify_m074, trd.TradingViewThrottle, "note_blocked", _bad_note_blocked_gt),
         ("M074:Throttle.run", verify_m074, trd.TradingViewThrottle, "run", lambda self, fn: "sabotaged"),
+        ("M074:Throttle.run_budget_gt", verify_m074, trd.TradingViewThrottle, "run", _bad_thr_run_budget_gt),
+        ("M074:Throttle.is_open_le", verify_m074, trd.TradingViewThrottle, "is_open", property(lambda self: self.now() <= self._open_until)),
         ("M074:TradingViewClient.get_source", verify_m074, trd.TradingViewClient, "get_source", lambda self, **kw: {"ok": False, "protected": True, "reason": "sabotaged", "script_id_part": None}),
         ("M074:create_tradingview_tools", verify_m074, trd, "create_tradingview_tools", lambda **kw: {k: (lambda *_a, **_kw: {}) for k in ("search_scripts", "list_editors_picks", "list_author_scripts", "get_script_source", "harvest_scripts", "query_corpus", "fetch_status")}),
     ]
@@ -2239,8 +2619,8 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             text=True,
         )
         parsed = json.loads(iso_out)
-        assert parsed["sabotages_detected"] >= 64, (
-            f"Couverture sabotage insuffisante : attendu >= 64, obtenu {parsed['sabotages_detected']}"
+        assert parsed["sabotages_detected"] >= 80, (
+            f"Couverture sabotage insuffisante : attendu >= 80, obtenu {parsed['sabotages_detected']}"
         )
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])
