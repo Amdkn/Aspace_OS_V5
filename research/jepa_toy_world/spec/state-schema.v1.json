@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Amdkn/Aspace_OS_V5/blob/feat/jepa-cognitive-architecture-adr-v1/research/jepa_toy_world/spec/state-schema.v1.json",
+  "title": "JEPA Toy World Canonical Evaluator State v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode_id",
+    "layout_id",
+    "layout_hash",
+    "tick",
+    "agent",
+    "crates",
+    "gates",
+    "plates",
+    "goal",
+    "terminal"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "toy-world.state.v1"
+    },
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layout_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "layout_hash": {
+      "type": "string",
+      "pattern": "^sha256:[a-f0-9]{64}$"
+    },
+    "tick": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "agent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y",
+        "facing"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "facing": {
+          "enum": [
+            "N",
+            "S",
+            "E",
+            "W"
+          ]
+        }
+      }
+    },
+    "crates": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "x",
+          "y"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          }
+        }
+      }
+    },
+    "gates": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "mode",
+          "open"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "mode": {
+            "enum": [
+              "manual",
+              "pressure"
+            ]
+          },
+          "open": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "plates": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "controls_gate_id",
+          "active"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "controls_gate_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "active": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "goal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y",
+        "reached"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "reached": {
+          "type": "boolean"
+        }
+      }
+    },
+    "terminal": {
+      "type": "boolean"
+    }
+  }
+}
