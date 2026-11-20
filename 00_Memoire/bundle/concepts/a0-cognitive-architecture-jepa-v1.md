@@ -291,8 +291,8 @@ Use these as starting points; verify current repository state, license, model ca
 
 - [ ] Review and ratify this ADR (A0 / S1 / human authority as applicable).
 - [ ] Define JSON Schemas and typed interfaces for the five capability tasks.
-- [ ] Create a JEPA candidate matrix (I-JEPA, V-JEPA 2 and other candidates) with modality, task, license, checkpoint, hardware and action-conditioning support.
-- [ ] Select one bounded benchmark environment and establish naive/symbolic/LLM baselines.
+- [x] Create the initial JEPA candidate matrix with modality, task fit, action conditioning, scale, licensing cautions, evidence register and benchmark plan: [JEPA / World-Model Research Matrix V1](jepa-world-model-research-matrix-v1.md).
+- [ ] Select one bounded benchmark environment and establish persistence / symbolic / learned baselines.
 - [ ] Build a read-only evaluation harness with traceable state snapshots and prediction receipts.
 - [ ] Define promotion rules for verified observations and durable memory.
 - [ ] Submit a separate implementation ADR before any production Runtime integration.
