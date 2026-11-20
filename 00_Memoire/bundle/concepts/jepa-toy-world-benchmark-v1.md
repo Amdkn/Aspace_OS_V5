@@ -57,11 +57,13 @@ The evaluator's canonical state is versioned JSON:
 {
   "schema_version": "toy-world.state.v1",
   "episode_id": "seed-000042-layout-01",
+  "layout_id": "layout-01",
+  "layout_hash": "sha256:<64-hex-digest>",
   "tick": 12,
   "agent": {"x": 3, "y": 8, "facing": "N"},
   "crates": [{"id": "crate-01", "x": 4, "y": 8}],
-  "gates": [{"id": "gate-01", "open": false}],
-  "plates": [{"id": "plate-01", "active": false}],
+  "gates": [{"id": "gate-01", "mode": "pressure", "open": false}],
+  "plates": [{"id": "plate-01", "controls_gate_id": "gate-01", "active": false}],
   "goal": {"x": 9, "y": 2, "reached": false},
   "terminal": false
 }
@@ -286,9 +288,15 @@ The evaluator adds the ground-truth receipt after inference. Candidate code must
 
 Passing this benchmark authorizes only consideration of a **read-only shadow evaluation**. It does not authorize production deployment or agent actions.
 
-## 10. Proposed repository implementation layout
+## 10. Machine-readable contracts and proposed implementation layout
 
-Implementation is deliberately deferred until the benchmark specification is reviewed:
+The initial contracts and transition rules are committed alongside this specification:
+
+- [Canonical evaluator state schema](../../../research/jepa_toy_world/spec/state-schema.v1.json)
+- [Action record schema](../../../research/jepa_toy_world/spec/action-schema.v1.json)
+- [Deterministic transition rules](../../../research/jepa_toy_world/spec/transition-rules.v1.md)
+
+Implementation is deliberately deferred until the benchmark specification and these contracts are reviewed:
 
 ```text
 research/
