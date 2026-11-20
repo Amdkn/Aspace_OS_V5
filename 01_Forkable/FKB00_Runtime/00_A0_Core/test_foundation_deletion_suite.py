@@ -1539,6 +1539,7 @@ for env_dict, paths_arg, diff_arg, max_p in [
     ({"PLUGIN_NAMES": "zeta, _reserved_ok, bad-dash, alpha", "START_FROM": "0", "MAX_PLUGINS": "10"}, None, None, 10),
     ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "1", "MAX_PLUGINS": "10"}, None, None, 10),
     ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "2", "MAX_PLUGINS": "10"}, None, None, 10),
+    ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "-1", "MAX_PLUGINS": "10"}, None, None, 10),
     ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "bad", "MAX_PLUGINS": "3"}, None, None, 3),
     ({"PLUGIN_NAMES": "alpha, beta, gamma, delta", "START_FROM": "0", "MAX_PLUGINS": "3"}, None, None, 3),
 ]:
@@ -1732,7 +1733,9 @@ REL_NEW = b'{"version":1,"plugins":{"kept":{}}}'
 rel_scenarios = [
     ({"index.json": REL_OLD}, "", REL_NEW),
     ({"index.json": REL_OLD}, "rename_502", REL_NEW),
+    ({"index.json": REL_OLD}, "rename_502_twice", REL_NEW),
     ({"index.json": REL_OLD}, "upload_failure", REL_NEW),
+    ({"index.json.next": b"", "index.json.previous": REL_OLD}, "upload_failure_empty_next", REL_NEW),
     ({"index.json": REL_OLD}, "incomplete_upload", REL_NEW),
     ({"index.json": REL_OLD}, "promotion_failure", REL_NEW),
     ({"index.json": REL_OLD, "index.json.previous": REL_OLD}, "delete_502", REL_NEW),
@@ -1780,13 +1783,16 @@ def _run_rel_scenario_oracle(initial, fault, content):
                 if fault == "promotion_failure" and asset["name"] == "index.json.next":
                     faults.append(fault)
                     _err(request, 502)
+                if fault == "rename_502_twice" and len(faults) < 2:
+                    faults.append(fault)
+                    _err(request, 502)
                 asset["name"] = nm
                 if fault == "rename_502" and not faults:
                     faults.append(fault)
                     _err(request, 502)
             return io.BytesIO(json.dumps(asset).encode())
         if m == "POST" and u.hostname == "uploads.github.com":
-            if fault == "upload_failure":
+            if fault in ("upload_failure", "upload_failure_empty_next"):
                 faults.append(fault)
                 _err(request, 502)
             a = _add(urllib.parse.parse_qs(u.query)["name"][0], request.data)
@@ -1812,7 +1818,7 @@ def _run_rel_scenario_oracle(initial, fault, content):
             patch("time.sleep"),
             redirect_stdout(io.StringIO()),
         ):
-            dl1 = idx_p.read_bytes().decode("utf-8") if (initial and up_dl.main() == 0) else None
+            dl1 = idx_p.read_bytes().decode("utf-8") if (initial and fault != "upload_failure_empty_next" and up_dl.main() == 0) else None
             idx_p.write_bytes(content)
             failed = False
             try:
@@ -1827,6 +1833,58 @@ def _run_rel_scenario_oracle(initial, fault, content):
             return {"dl1": dl1, "failed": failed, "cur": contents[cur["id"]].decode("utf-8"), "dl2": dl2, "mutations": len(mutations)}
 
 rel_out = [_run_rel_scenario_oracle(ini, flt, cnt) for ini, flt, cnt in rel_scenarios]
+
+dl_retry_seqs = [[499], [500, 500, 200], [500, 500, 500], [429, 429, 200], ["net_err", "net_err", 200]]
+
+def _run_dl_retry_oracle(seq):
+    attempts = [0]
+    sleeps = []
+
+    def _dl_req(request, timeout):
+        u = urllib.parse.urlparse(request.full_url)
+        if u.hostname == "download.test":
+            attempts[0] += 1
+            ev = seq[attempts[0] - 1]
+            if ev == 200:
+                return io.BytesIO(REL_NEW)
+            if ev == "net_err":
+                raise OSError("injected connection reset")
+            raise urllib.error.HTTPError(request.full_url, ev, "Injected", {}, io.BytesIO(b"err"))
+        return io.BytesIO(json.dumps({
+            "id": 1,
+            "assets": [{
+                "id": 1,
+                "name": "index.json",
+                "state": "uploaded",
+                "size": len(REL_NEW),
+                "browser_download_url": "https://download.test/1",
+            }],
+        }).encode())
+
+    with tempfile.TemporaryDirectory() as d:
+        rt = Path(d)
+        idx_p = rt / "index.json"
+        ok = False
+        with (
+            patch.dict(os.environ, {"GITHUB_REPOSITORY": "test/repo", "GITHUB_TOKEN": "test"}, clear=True),
+            patch.object(up_dl, "INDEX_PATH", idx_p),
+            patch.object(up_dl, "REPO_ROOT", rt),
+            patch("urllib.request.urlopen", _dl_req),
+            patch("time.sleep", lambda s: sleeps.append(s)),
+            redirect_stdout(io.StringIO()),
+        ):
+            try:
+                ok = up_dl.main() == 0
+            except up_dl.DownloadIndexError:
+                ok = False
+        return {
+            "ok": ok,
+            "attempts": attempts[0],
+            "sleeps": list(sleeps),
+            "body": idx_p.read_bytes().decode("utf-8") if ok else None,
+        }
+
+dl_retry_out = [_run_dl_retry_oracle(s) for s in dl_retry_seqs]
 
 # 6) Adapter audit counts (real 235 dirs)
 adp_v = up_a0_adp.validate()
@@ -1849,6 +1907,7 @@ m001_out = {
     "orphans": {"markers": marker_cases, "list": orph_list},
     "stars": stars_out,
     "releases": rel_out,
+    "dl_retries": dl_retry_out,
     "audit": {k: adp_v[k] for k in audit_keys},
 }
 # Capture preserved entry cleanly before removal
@@ -2693,6 +2752,7 @@ def verify_m001() -> int:
         ({"PLUGIN_NAMES": "zeta, _reserved_ok, bad-dash, alpha", "START_FROM": "0", "MAX_PLUGINS": "10"}, None, None, 10),
         ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "1", "MAX_PLUGINS": "10"}, None, None, 10),
         ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "2", "MAX_PLUGINS": "10"}, None, None, 10),
+        ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "-1", "MAX_PLUGINS": "10"}, None, None, 10),
         ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "bad", "MAX_PLUGINS": "3"}, None, None, 3),
         ({"PLUGIN_NAMES": "alpha, beta, gamma, delta", "START_FROM": "0", "MAX_PLUGINS": "3"}, None, None, 3),
     ]:
@@ -2837,7 +2897,9 @@ def verify_m001() -> int:
     rel_scenarios = [
         ({"index.json": REL_OLD}, "", REL_NEW),
         ({"index.json": REL_OLD}, "rename_502", REL_NEW),
+        ({"index.json": REL_OLD}, "rename_502_twice", REL_NEW),
         ({"index.json": REL_OLD}, "upload_failure", REL_NEW),
+        ({"index.json.next": b"", "index.json.previous": REL_OLD}, "upload_failure_empty_next", REL_NEW),
         ({"index.json": REL_OLD}, "incomplete_upload", REL_NEW),
         ({"index.json": REL_OLD}, "promotion_failure", REL_NEW),
         ({"index.json": REL_OLD, "index.json.previous": REL_OLD}, "delete_502", REL_NEW),
@@ -2889,13 +2951,16 @@ def verify_m001() -> int:
                     if fault == "promotion_failure" and asset["name"] == "index.json.next":
                         faults.append(fault)
                         _err(request, 502)
+                    if fault == "rename_502_twice" and len(faults) < 2:
+                        faults.append(fault)
+                        _err(request, 502)
                     asset["name"] = nm
                     if fault == "rename_502" and not faults:
                         faults.append(fault)
                         _err(request, 502)
                 return io.BytesIO(json.dumps(asset).encode())
             if m == "POST" and u.hostname == "uploads.github.com":
-                if fault == "upload_failure":
+                if fault in ("upload_failure", "upload_failure_empty_next"):
                     faults.append(fault)
                     _err(request, 502)
                 a = _add(urllib.parse.parse_qs(u.query)["name"][0], request.data)
@@ -2912,7 +2977,7 @@ def verify_m001() -> int:
         with tempfile.TemporaryDirectory() as d:
             idx_p = Path(d) / "index.json"
             dl1 = None
-            if initial and reg.download_index_release(idx_p, owner="test", repo="repo", token="test", opener=_req, sleep_fn=lambda _s: None) == 0:
+            if initial and fault != "upload_failure_empty_next" and reg.download_index_release(idx_p, owner="test", repo="repo", token="test", opener=_req, sleep_fn=lambda _s: None) == 0:
                 dl1 = idx_p.read_bytes().decode("utf-8")
             idx_p.write_bytes(content)
             failed = False
@@ -2928,6 +2993,56 @@ def verify_m001() -> int:
             return {"dl1": dl1, "failed": failed, "cur": contents[cur["id"]].decode("utf-8"), "dl2": dl2, "mutations": len(mutations)}
 
     rel_out = [_run_rel_scenario(ini, flt, cnt) for ini, flt, cnt in rel_scenarios]
+
+    dl_retry_seqs = [[499], [500, 500, 200], [500, 500, 500], [429, 429, 200], ["net_err", "net_err", 200]]
+
+    def _run_dl_retry(seq):
+        attempts = [0]
+        sleeps = []
+
+        def _dl_req(request, timeout=30):
+            u = urllib.parse.urlparse(request.full_url)
+            if u.hostname == "download.test":
+                attempts[0] += 1
+                ev = seq[attempts[0] - 1]
+                if ev == 200:
+                    return io.BytesIO(REL_NEW)
+                if ev == "net_err":
+                    raise OSError("injected connection reset")
+                raise urllib.error.HTTPError(request.full_url, ev, "Injected", {}, io.BytesIO(b"err"))
+            return io.BytesIO(json.dumps({
+                "id": 1,
+                "assets": [{
+                    "id": 1,
+                    "name": "index.json",
+                    "state": "uploaded",
+                    "size": len(REL_NEW),
+                    "browser_download_url": "https://download.test/1",
+                }],
+            }).encode())
+
+        with tempfile.TemporaryDirectory() as d:
+            idx_p = Path(d) / "index.json"
+            ok = False
+            try:
+                ok = reg.download_index_release(
+                    idx_p,
+                    owner="test",
+                    repo="repo",
+                    token="test",
+                    opener=_dl_req,
+                    sleep_fn=lambda s: sleeps.append(s),
+                ) == 0
+            except reg.DownloadIndexError:
+                ok = False
+            return {
+                "ok": ok,
+                "attempts": attempts[0],
+                "sleeps": list(sleeps),
+                "body": idx_p.read_bytes().decode("utf-8") if ok else None,
+            }
+
+    dl_retry_out = [_run_dl_retry(s) for s in dl_retry_seqs]
 
     # 6) Adapter audit counts (real 235 dirs)
     audit_keys = (
@@ -2951,15 +3066,17 @@ def verify_m001() -> int:
         "orphans": {"markers": marker_cases, "list": orph_list},
         "stars": stars_out,
         "releases": rel_out,
+        "dl_retries": dl_retry_out,
         "audit": {k: adp_py[k] for k in audit_keys},
     }))
-    for sec in ("resolution", "validation", "compiled_index", "upsert_preserve", "upsert_preserved_check", "orphans", "stars", "releases", "audit"):
+    for sec in ("resolution", "validation", "compiled_index", "upsert_preserve", "upsert_preserved_check", "orphans", "stars", "releases", "dl_retries", "audit"):
         assert py_m001[sec] == oracle["m001"][sec], f"M001 section mismatch: {sec}"
     return (
         len(res_cases)
         + sum(len(v) for v in val_out.values())
         + len(compiled_index["plugins"])
         + len(rel_out)
+        + len(dl_retry_out)
         + len(audit_keys)
     )
 
@@ -3155,6 +3272,16 @@ def run_sabotage_suite() -> int:
     _orig_resolve_m001 = reg.resolve_plugin_names
     _orig_compile_m001 = reg.compile_catalog_index
 
+    import inspect
+    import textwrap
+
+    def _mutate_fn(mod, fn_name: str, old_expr: str, bad_expr: str):
+        src = textwrap.dedent(inspect.getsource(getattr(mod, fn_name)))
+        assert src.count(old_expr) == 1, f"Mutation non unique dans {fn_name}: {old_expr!r}"
+        ns = dict(mod.__dict__)
+        exec("from __future__ import annotations\n" + src.replace(old_expr, bad_expr, 1), ns)
+        return ns[fn_name]
+
     def _bad_resolve_m001_ge(**kw):
         res = _orig_resolve_m001(**kw)
         if len(res) >= kw.get("max_plugins", reg.DEFAULT_MAX_PLUGINS):
@@ -3202,6 +3329,14 @@ def run_sabotage_suite() -> int:
         ("M001:publish_index_release", verify_m001, reg, "publish_index_release", lambda *_a, **_kw: 0),
         ("M001:download_index_release", verify_m001, reg, "download_index_release", lambda *_a, **_kw: 0),
         ("M001:audit_plugin_catalog", verify_m001, reg, "audit_plugin_catalog", lambda _r: {k: 0 for k in ("plugin_dirs_total", "plugin_names_resolved", "indexed_plugins", "index_yaml_present", "legacy_plugin_yaml_only", "blocked_plugins", "index_yaml_invalid", "index_yaml_missing_keys", "max_screenshots", "generated_thumbnails", "orphan_thumbnails", "local_thumbnails", "plugins_without_any_thumbnail", "abandoned_present", "surfaces_present", "index_coherent")}),
+        ("M001:resolve_start_from_ne_zero", verify_m001, reg, "resolve_plugin_names", _mutate_fn(reg, "resolve_plugin_names", "if start_idx > 0:", "if start_idx != 0:")),
+        ("M001:_pub_rename_asset_max_2", verify_m001, reg, "_pub_rename_asset", _mutate_fn(reg, "_pub_rename_asset", "if attempt == 2:", "if attempt == 1:")),
+        ("M001:publish_recover_size_ge_0", verify_m001, reg, "publish_index_release", _mutate_fn(reg, "publish_index_release", 'asset.get("size", 0) > 0', 'asset.get("size", 0) >= 0')),
+        ("M001:download_retry_gt_500", verify_m001, reg, "download_index_release", _mutate_fn(reg, "download_index_release", "should_retry = e.code >= 500 or e.code == 429", "should_retry = e.code > 500 or e.code == 429")),
+        ("M001:download_retry_ge_499", verify_m001, reg, "download_index_release", _mutate_fn(reg, "download_index_release", "should_retry = e.code >= 500 or e.code == 429", "should_retry = e.code >= 499 or e.code == 429")),
+        ("M001:download_retry_no_429", verify_m001, reg, "download_index_release", _mutate_fn(reg, "download_index_release", "should_retry = e.code >= 500 or e.code == 429", "should_retry = e.code >= 500")),
+        ("M001:download_retry_attempt_lt_2", verify_m001, reg, "download_index_release", _mutate_fn(reg, "download_index_release", "if should_retry and attempt < 3:", "if should_retry and attempt < 2:")),
+        ("M001:download_retry_net_lt_2", verify_m001, reg, "download_index_release", _mutate_fn(reg, "download_index_release", "if attempt < 3:", "if attempt < 2:")),
     ])
     for label, cfn, mod, attr, fake in sabotages:
         _assert_breaks(label, cfn, mod, attr, fake)
@@ -3488,8 +3623,8 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             text=True,
         )
         parsed = json.loads(iso_out)
-        assert parsed["sabotages_detected"] >= 120, (
-            f"Couverture sabotage insuffisante : attendu >= 120, obtenu {parsed['sabotages_detected']}"
+        assert parsed["sabotages_detected"] >= 129, (
+            f"Couverture sabotage insuffisante : attendu >= 129, obtenu {parsed['sabotages_detected']}"
         )
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])

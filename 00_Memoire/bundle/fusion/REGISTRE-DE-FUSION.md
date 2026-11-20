@@ -10,7 +10,7 @@ enonce_sha256: "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d
 
 > **Règle d'honnêteté (§5.8)** : Les seuls statuts d'avancement autorisés sont **`FUSIONNÉ`** (principe/invariants/interfaces livrés + test de suppression passé), **`PARTIEL`** (avec la part manquante nommée), **`BLOQUÉ`** (avec décision requise), **`RETENU`** (justification de fondation vérifiée), **`ÉCARTÉ`** (raison vérifiée). La doctrine 0–3 d'adaptation est subordonnée à l'ÉNONCÉ.
 
-## 1. Tableau de Synthèse des Compteurs (Mesure Cycle 6 — ADR-15 Trois Noyaux Fondamentaux)
+## 1. Tableau de Synthèse des Compteurs (Mesure Cycle 7 — ADR-15 Trois Noyaux Fondamentaux)
 
 | Métrique | Valeur | Règle / Seuil ÉNONCÉ & ADR-15 |
 |---|---|---|
@@ -47,7 +47,7 @@ enonce_sha256: "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d
 
 | ID | Module | Chemin V5 | Origine | Noyau Cible | Cible ÉNONCÉ (1) | Statut Vérifié (§5.8) | ADR | Preuve / Part manquante / Justification |
 |---|---|---|---|---|---|---|---|---|
-| M001 | `a0-plugins` | `01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins` | GITLINK | CORPS · Organe K2 (Exécution, Anything & 3D) | **FUSIONNÉ** | **FUSIONNÉ** | ADR-10 | Cœur intégral (résolution `MAX_PLUGINS`, validation stricte YAML/tags/screenshots/PNG carré 20 Ko/2 Mo, compilation 235 dossiers/230 indexés, orphelins, étoiles, publication/téléchargement atomique 3 étapes & audit) porté 1:1 dans `aspace_plugin_registry_organ.py` + parité `==` vs upstream `a0-plugins` (`fa8df85`) après suppression physique en `iso_root` + 41 sabotages dédiés (incl. bornes `20480`/`20481`, `50`/`51`, `500`/`501`, `2000`/`2001`, `MAX_PLUGINS`, clé parasite) + reçu R10 ; gitlink gardé pour rejeu Phase A. |
+| M001 | `a0-plugins` | `01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins` | GITLINK | CORPS · Organe K2 (Exécution, Anything & 3D) | **FUSIONNÉ** | **FUSIONNÉ** | ADR-10 | Cœur intégral (résolution `MAX_PLUGINS`, `START_FROM`, validation stricte YAML/tags/screenshots/PNG carré 20 Ko/2 Mo, compilation 235 dossiers/230 indexés, orphelins, étoiles, publication/téléchargement atomique 3 étapes & retries `499/500/429/net_err` et audit) porté 1:1 dans `aspace_plugin_registry_organ.py` + parité `==` vs upstream `a0-plugins` (`fa8df85`) après suppression physique en `iso_root` + 49 sabotages dédiés (incl. bornes `20480`/`20481`, `50`/`51`, `500`/`501`, `2000`/`2001`, `START_FROM=-1`, `rename_502_twice`, `size>0`, retries `499/500/429`, `MAX_PLUGINS`, clé parasite) + reçu R10 ; gitlink gardé pour rejeu Phase A. |
 | M002 | `deepseek-harness` | `01_Forkable/FKB00_Runtime/00_A0_Core/deepseek-harness` | GITLINK | SYSTÈME NERVEUX · Bus L0 & Fibres | **FUSIONNÉ** | **PARTIEL** | ADR-02, ADR-10 | Adapté état 2 (`fcc0ad4`) ; reste à porter les profils dsh/superagent en pur contrat de fibre K2/K1 et retirer le gitlink. |
 | M003 | `spynel` | `01_Forkable/FKB00_Runtime/00_A0_Core/spynel` | GITLINK | SYSTÈME NERVEUX · Bus L0 & Fibres | **FUSIONNÉ** | **PARTIEL** | ADR-08 | Adapter Go `fa9fe41` livré ; reste à unifier ses sondes de sentinelle dans le bus d'observabilité RigInfinity et retirer le gitlink. |
 | M004 | `tuxee` | `01_Forkable/FKB00_Runtime/00_A0_Core/tuxee` | GITLINK | CORPS · Organe K2 (Exécution, Anything & 3D) | **FUSIONNÉ** | **PARTIEL** | ADR-02, ADR-05 | Adapter Go `5cad42a` livré ; reste à brancher son interface conteneur/Linux dans K2 sans redondance avec Agent-Zero/Orca et retirer le gitlink. |
