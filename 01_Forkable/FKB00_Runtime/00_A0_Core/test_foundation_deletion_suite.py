@@ -1945,6 +1945,7 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "SDD-FONDATION.md",
         "REGISTRE-DE-FUSION.md",
         "RAPPORT-CORRECTION-M120.md",
+        "DECISIONS.md",
     ]
     for fn in required:
         p = FUSION_DIR / fn
@@ -1966,7 +1967,26 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         cit = (clone_dir / "01_Forkable" / "FKB00_Runtime" / "00_A0_Core" / "fondation-13-1" / "tests" / "fixtures" / "citation-valide.md").read_bytes()
         if (clone_dir / ".gitattributes").exists() and "fondation-13-1/tests/fixtures/* text eol=lf" in (clone_dir / ".gitattributes").read_text(encoding="utf-8"):
             assert b"\r\n" not in cit, "Fixture Rust clonée contient encore CRLF!"
-    print(f"[PASS 7/7] {len(adrs)} ADRs + Artefacts SPAD complets + Clone Windows par défaut préserve LF")
+    checks_ps1_txt = (ROOT / "02_Factory" / "checks.ps1").read_text(encoding="utf-8")
+    for bad_sep in ("$root\\", ".claude\\", ".vscode\\", "02_Factory\\"):
+        assert bad_sep not in checks_ps1_txt, f"Séparateur Windows non portable dans checks.ps1: {bad_sep}"
+
+    wf_path = ROOT / ".github" / "workflows" / "foundation-proof.yml"
+    assert wf_path.exists(), "Workflow CI Porte B absent: .github/workflows/foundation-proof.yml"
+    wf_txt = wf_path.read_text(encoding="utf-8")
+    assert "continue-on-error" not in wf_txt, "continue-on-error interdit dans foundation-proof.yml"
+    assert "|| true" not in wf_txt and "||true" not in wf_txt, "|| true interdit dans foundation-proof.yml"
+    for req_token in (
+        "fusion/**",
+        "01_Forkable/FKB00_Runtime/00_A0_Core/test_foundation_deletion_suite.py",
+        "01_Forkable/check-modules-lock.py",
+        "pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/checks.ps1",
+        "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
+        "upload-artifact",
+    ):
+        assert req_token in wf_txt, f"Jeton requis absent de foundation-proof.yml: {req_token}"
+
+    print(f"[PASS 7/7] {len(adrs)} ADRs + Artefacts SPAD + CI Porte B + Clone Windows par défaut préserve LF")
 
 
 if __name__ == "__main__":

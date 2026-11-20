@@ -1,0 +1,136 @@
+name: "Foundation Proof (Porte B — Cycle 6/7)"
+
+on:
+  push:
+    branches:
+      - "fusion/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  foundation-proof:
+    name: "Deletion Suite + Modules Lock + Factory Checks"
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - name: Checkout repository (full history & LF)
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install system build deps for Rust crates
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y pkg-config libssl-dev
+
+      - name: Setup Rust stable toolchain (edition 2024)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Setup Python 3.12
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Python proof dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install pyyaml numpy pillow jinja2
+
+      - name: Setup Node.js 24 (SQLite & JS oracles)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Initialize required upstream submodules & verify pinned RigInfinity
+        run: |
+          git submodule sync --recursive
+          git submodule update --init --recursive -- \
+            01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity \
+            01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models \
+            01_Forkable/FKB02_Memory/knowledge-catalog \
+            01_Forkable/FKB04_Tools_Anything/CLI-Anything \
+            01_Forkable/FKB07_Money_Maker/02_Video/video-director
+          RIG_HEAD="$(git -C 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity rev-parse HEAD)"
+          echo "RigInfinity HEAD=${RIG_HEAD}"
+          test "${RIG_HEAD}" = "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4"
+
+      - name: Execute 3 mandatory foundation proofs (fail-closed, save logs & exit codes)
+        run: |
+          python - <<'PY'
+          import json
+          import os
+          import pathlib
+          import shlex
+          import subprocess
+          import sys
+
+          art_dir = pathlib.Path(os.environ["RUNNER_TEMP"]) / "ci-proof-artifacts"
+          art_dir.mkdir(parents=True, exist_ok=True)
+
+          checks = [
+              (
+                  "01_deletion_suite",
+                  "python 01_Forkable/FKB00_Runtime/00_A0_Core/test_foundation_deletion_suite.py",
+              ),
+              (
+                  "02_modules_lock",
+                  "python 01_Forkable/check-modules-lock.py",
+              ),
+              (
+                  "03_factory_checks",
+                  "pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/checks.ps1",
+              ),
+          ]
+
+          results = []
+          first_failure = 0
+          for name, cmd_str in checks:
+              cmd = shlex.split(cmd_str)
+              print(f"::group::{name}: {cmd_str}", flush=True)
+              proc = subprocess.Popen(
+                  cmd,
+                  stdout=subprocess.PIPE,
+                  stderr=subprocess.STDOUT,
+                  text=True,
+                  encoding="utf-8",
+                  errors="replace",
+              )
+              lines = []
+              assert proc.stdout is not None
+              for line in proc.stdout:
+                  sys.stdout.write(line)
+                  sys.stdout.flush()
+                  lines.append(line)
+              rc = proc.wait()
+              (art_dir / f"{name}.log").write_text("".join(lines), encoding="utf-8")
+              results.append({"name": name, "cmd": cmd_str, "returncode": rc})
+              print(f"RETURN_CODE[{name}]={rc}", flush=True)
+              print("::endgroup::", flush=True)
+              if rc != 0 and first_failure == 0:
+                  first_failure = rc
+
+          (art_dir / "return_codes.json").write_text(
+              json.dumps({"results": results, "overall_exit_code": first_failure}, indent=2) + "\n",
+              encoding="utf-8",
+          )
+          summary_lines = [
+              f"{r['name']}: rc={r['returncode']} ({'PASS' if r['returncode'] == 0 else 'FAIL'}) — {r['cmd']}"
+              for r in results
+          ]
+          summary = "\n".join(summary_lines) + "\n"
+          (art_dir / "summary.txt").write_text(summary, encoding="utf-8")
+          print("=== CI PROOF SUMMARY ===")
+          print(summary, end="", flush=True)
+          sys.exit(first_failure)
+          PY
+
+      - name: Upload foundation proof logs & return codes
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: foundation-proof-logs-${{ github.sha }}
+          path: ${{ runner.temp }}/ci-proof-artifacts/
+          if-no-files-found: error
+          retention-days: 30

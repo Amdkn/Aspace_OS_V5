@@ -8,19 +8,19 @@ Write-Host "=== ASPACE FACTORY — DETERMINISTIC GATE ===" -ForegroundColor Cyan
 
 # 1. Vérifier que l'environnement et les 26 outils sont intacts
 Write-Host "[1/6] Doctor & Tools Check..." -NoNewline
-pwsh -NoProfile -ExecutionPolicy Bypass -File "$root\.vscode\doctor.ps1" | Out-Null
+pwsh -NoProfile -ExecutionPolicy Bypass -File "$root/.vscode/doctor.ps1" | Out-Null
 if ($LASTEXITCODE -ne 0) { $failures += "doctor.ps1 failed" } else { Write-Host " PASS" -ForegroundColor Green }
 
 # 2. Vérifier l'absence de résidus OpenWiki
 Write-Host "[2/6] OpenWiki Purge Check..." -NoNewline
-if ((Test-Path "$root\.github\workflows\openwiki-update.yml") -or (Test-Path "$root\00_Memoire\openwiki")) {
+if ((Test-Path "$root/.github/workflows/openwiki-update.yml") -or (Test-Path "$root/00_Memoire/openwiki")) {
   $failures += "OpenWiki residue found"
   Write-Host " FAIL" -ForegroundColor Red
 } else { Write-Host " PASS" -ForegroundColor Green }
 
 # 3. Vérifier la validité de tous les fichiers JSON critiques
 Write-Host "[3/6] JSON Schema & Config Check..." -NoNewline
-foreach ($jf in @(".claude\settings.json", ".claude\settings.local.json", ".mcp.json", ".vscode\settings.json", ".vscode\tasks.json", ".vscode\mcp.json", "02_Factory\config.json")) {
+foreach ($jf in @(".claude/settings.json", ".claude/settings.local.json", ".mcp.json", ".vscode/settings.json", ".vscode/tasks.json", ".vscode/mcp.json", "02_Factory/config.json")) {
   $p = Join-Path $root $jf
   if (-not (Test-Path $p)) { $failures += "Missing JSON: $jf"; continue }
   try { Get-Content $p -Raw | ConvertFrom-Json | Out-Null } catch { $failures += "Invalid JSON: $jf" }
@@ -29,7 +29,7 @@ if ($failures.Count -eq 0) { Write-Host " PASS" -ForegroundColor Green } else { 
 
 # 4. Vérifier le contrat DOX + WikiLLM + OKF v0.2
 Write-Host "[4/6] DOX & OKF v0.2 Bundle Check..." -NoNewline
-foreach ($cf in Get-ChildItem "$root\00_Memoire\bundle\concepts" -Filter *.md) {
+foreach ($cf in Get-ChildItem "$root/00_Memoire/bundle/concepts" -Filter *.md) {
   $raw = Get-Content $cf.FullName -Raw
   if ($raw -notmatch '(?s)^---\r?\n.*?\btype:\s*\S+.*?\r?\n---') {
     $failures += "Invalid OKF frontmatter in $($cf.Name)"
