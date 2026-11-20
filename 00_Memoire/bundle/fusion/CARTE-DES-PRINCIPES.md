@@ -35,10 +35,10 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M001 — `a0-plugins` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins` | repo `https://github.com/Amdkn/a0-plugins.git` | SHA/pin `fa8df8527a3c` | licence `MIT` | sources : `01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins.manifest.json`, `01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins-ADAPTATION.md`, `01_Forkable/MODULES-LOCK.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K2 (Exécution, Anything & 3D)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Adapter `fa8df85` vérifié (235 dossiers, 230 indexés) ; reste à absorber le registre dynamique de plugins dans K2 et retirer le gitlink.)
-- **Principe** : Catalogue modulaire d'extensions dynamiques d'Agent Zero (outils, prompts, intégrations) découpé par capacité.
-- **Invariants** : Aucun plugin exécuté sans audit télémétrie ni déclaration de capacité ; séparation stricte extension vs noyau.
-- **Interfaces** : Index des 230 plugins a0-plugins + chargeur d'extensions A0.
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K2 (Exécution, Anything & 3D)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Portage 1:1 dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_plugin_registry_organ.py` + preuve différentielle `==` vs upstream `fa8df85` [résolution, bornes YAML/PNG 20 Ko/2 Mo, compilation 235 dossiers/230 indexés, orphelins, étoiles, publication/téléchargement release atomique 11 scénarios, audit] après suppression physique en `iso_root` + 41 sabotages + reçu R10 ; gitlink gardé uniquement pour rejeu Phase A.)
+- **Principe** : Catalogue modulaire d'extensions dynamiques d'Agent Zero (résolution scopée, validation soumission YAML/PNG/repo/URL, compilation d'index, orphelins, étoiles, publication/téléchargement atomique 3 étapes et audit d'hygiène).
+- **Invariants** : Aucun plugin réservé (`_`), bloqué (`blocked.md`) ou hors schéma (`50/500/2000`, `5 tags`, `5 screenshots`, PNG carré ≤ `20480` o, screenshot ≤ `2 MiB`, `MAX_PLUGINS`) ne passe ; préservation des métadonnées dynamiques (`stars`/`version`/`commit`/`updated`) à l'upsert et promotion atomique de release (`index.json.next` → `previous` → `index.json`).
+- **Interfaces** : `resolve_plugin_names`, `validate_fields`, `validate_thumbnail`, `validate_allowed_files`, `compile_catalog_index`, `find_orphan_names`, `apply_star_updates`, `publish_index_release`, `download_index_release`, `audit_plugin_catalog`, `consign_plugin_registry_parity_receipt` (`aspace_plugin_registry_organ.py`).
 - **Perte au Retrait & Conflits** : Perte sans fusion : bibliothèque de connecteurs et d'outils prêts à l'emploi pour A0. Conflit : formats de plugins hétérogènes -> ADR-10. (*Arbitrage : ADR-10*)
 
 ### M002 — `deepseek-harness` (GITLINK)

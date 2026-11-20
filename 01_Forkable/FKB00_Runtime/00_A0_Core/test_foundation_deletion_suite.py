@@ -89,6 +89,10 @@ RIG_INFINITY_PROVEN_F8 = frozenset({
 
 SUBMODULE_SENTINELS = (
     (
+        "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
+        "scripts/plugin_resolution.py",
+    ),
+    (
         "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models",
         "clm/clm_harness/context_utils/context_string.py",
     ),
@@ -111,6 +115,8 @@ SUBMODULE_SENTINELS = (
 )
 
 SOURCE_DIRS_TO_DELETE_FOR_TEST = [
+    # FKB00 CORPS (M001)
+    "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
     # FKB04 (8)
     "01_Forkable/FKB04_Tools_Anything/CLI-Anything",
     "01_Forkable/FKB04_Tools_Anything/agent-browser",
@@ -1434,9 +1440,425 @@ m074_out = json.loads(m74_out_path.read_text(encoding="utf-8"))
 m74_mjs_path.unlink()
 m74_out_path.unlink()
 
+# ============================================================================
+# M001: a0-plugins upstream (scripts/* + aspace-a0-plugins-adapter)
+# ============================================================================
+import base64
+import io
+import struct
+import urllib.error
+import urllib.parse
+import urllib.request
+import zlib
+from contextlib import redirect_stdout
+from unittest.mock import patch
+
+m001_root = iso / "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins"
+m001_scripts = m001_root / "scripts"
+m001_adapter_parent = m001_root / "aspace-a0-plugins-adapter"
+sys.path.insert(0, str(m001_scripts))
+sys.path.insert(0, str(m001_adapter_parent))
+
+import aspace_a0_plugins_adapter as up_a0_adp
+import download_index_release as up_dl
+import find_orphan_plugin_names as up_orph
+import plugin_resolution as up_pres
+import publish_index_release as up_pub
+import sync_plugin_state as up_sync
+import update_index_stars as up_stars
+import validate_plugin_submission as up_vps
+
+
+def _make_exact_png(w: int, h: int, exact_bytes: int) -> bytes:
+    buf = io.BytesIO()
+    Image.new("RGB", (w, h), (10, 20, 30)).save(buf, format="PNG")
+    raw = buf.getvalue()
+    if exact_bytes <= len(raw):
+        return raw
+    pad_len = exact_bytes - len(raw) - 16
+    assert pad_len >= 0
+    payload = b"pad\x00" + (b"A" * pad_len)
+    chunk = struct.pack(">I", len(payload)) + b"tEXt" + payload + struct.pack(">I", zlib.crc32(b"tEXt" + payload) & 0xFFFFFFFF)
+    out = raw[:-12] + chunk + raw[-12:]
+    assert len(out) == exact_bytes
+    return out
+
+
+class _MockHttpResp:
+    def __init__(self, body: bytes = b"", headers: dict | None = None) -> None:
+        self._bio = io.BytesIO(body)
+        self.headers = headers or {}
+
+    def read(self, n: int = -1) -> bytes:
+        return self._bio.read(n)
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        return False
+
+
+def _m001_mock_urlopen(req, timeout=30):
+    u = urllib.parse.urlparse(req.full_url)
+    method = req.get_method()
+    if u.hostname == "api.github.com":
+        if u.path == "/repos/org/alpha":
+            return _MockHttpResp(json.dumps({"full_name": "org/alpha"}).encode("utf-8"))
+        if u.path == "/repos/org/alpha/contents/plugin.yaml":
+            b64 = base64.b64encode(b"name: alpha\nversion: 1.0.0\n").decode("ascii")
+            return _MockHttpResp(json.dumps({"type": "file", "encoding": "base64", "content": b64}).encode("utf-8"))
+        if u.path == "/repos/org/wrongname":
+            return _MockHttpResp(json.dumps({"full_name": "org/wrongname"}).encode("utf-8"))
+        if u.path == "/repos/org/wrongname/contents/plugin.yaml":
+            b64 = base64.b64encode(b"name: other\nversion: 1.0.0\n").decode("ascii")
+            return _MockHttpResp(json.dumps({"type": "file", "encoding": "base64", "content": b64}).encode("utf-8"))
+        raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, io.BytesIO(b"{}"))
+    if method == "HEAD":
+        if "range405" in u.path:
+            raise urllib.error.HTTPError(req.full_url, 405, "Method Not Allowed", {}, io.BytesIO(b""))
+        if "head_over" in u.path:
+            return _MockHttpResp(b"", {"Content-Length": str(2 * 1024 * 1024 + 1)})
+        return _MockHttpResp(b"", {"Content-Length": str(2 * 1024 * 1024)})
+    if "get_over" in u.path:
+        return _MockHttpResp(b"X" * (2 * 1024 * 1024 + 1))
+    return _MockHttpResp(b"X" * (2 * 1024 * 1024))
+
+
+# 1) Resolution + boundaries
+all_cat_rel = [
+    p.relative_to(m001_root).as_posix()
+    for p in sorted((m001_root / "plugins").rglob("*"))
+    if p.is_file()
+]
+m001_res_cases = []
+for env_dict, paths_arg, diff_arg, max_p in [
+    ({}, all_cat_rel, None, 1000),
+    ({"BEFORE_SHA": "0" * 40, "AFTER_SHA": "abc"}, ["plugins/a/index.yaml", "plugins/_res/index.yaml", "plugins/bad-dash/index.yaml"], None, 1000),
+    ({"BEFORE_SHA": "111", "AFTER_SHA": "222"}, None, ["plugins/beta/index.yaml", "plugins/alpha/index.yaml", "authors/u/author.yaml"], 1000),
+    ({"PLUGIN_NAMES": "zeta, _reserved_ok, bad-dash, alpha", "START_FROM": "0", "MAX_PLUGINS": "10"}, None, None, 10),
+    ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "1", "MAX_PLUGINS": "10"}, None, None, 10),
+    ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "2", "MAX_PLUGINS": "10"}, None, None, 10),
+    ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "bad", "MAX_PLUGINS": "3"}, None, None, 3),
+    ({"PLUGIN_NAMES": "alpha, beta, gamma, delta", "START_FROM": "0", "MAX_PLUGINS": "3"}, None, None, 3),
+]:
+    with (
+        patch.dict(os.environ, env_dict, clear=True),
+        patch.object(up_pres, "_git_all_plugin_paths", lambda _c, _p=paths_arg: list(_p or [])),
+        patch.object(up_pres, "_git_diff_names", lambda _b, _a, _d=diff_arg: list(_d or [])),
+        redirect_stdout(io.StringIO()),
+    ):
+        m001_res_cases.append(_safe_call(up_pres.get_plugin_names))
+
+# 2) Validation & exact limits (50/51, 500/501, 2000/2001, 5/6 tags & screenshots, 20KB/20KB+1, 2MB/2MB+1)
+m001_val_tmp = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_m001_val_"))
+yaml_2000 = "title: Ok\ngithub: https://github.com/org/alpha\ndescription: " + ("d" * (2000 - len("title: Ok\ngithub: https://github.com/org/alpha\ndescription: ")))
+assert len(yaml_2000) == 2000
+yaml_2001 = yaml_2000 + "x"
+png_20480 = _make_exact_png(8, 8, 20 * 1024)
+png_20481 = _make_exact_png(8, 8, 20 * 1024 + 1)
+png_rect = _make_exact_png(16, 12, 200)
+
+val_pdir = m001_val_tmp / "plugins"
+val_pdir.mkdir()
+# 5 thumbnail & allowed-file dirs
+for sub_n, files_map in [
+    ("t_exact_20kb", {"index.yaml": "title: T\n", "thumbnail.png": png_20480}),
+    ("t_over_20kb", {"index.yaml": "title: T\n", "thumbnail.png": png_20481}),
+    ("t_non_square", {"index.yaml": "title: T\n", "thumbnail.png": png_rect}),
+    ("t_two_thumbs", {"index.yaml": "title: T\n", "thumbnail.png": png_20480, "thumbnail.jpg": png_20480}),
+    ("t_none", {"index.yaml": "title: T\n"}),
+    ("f_extra", {"index.yaml": "title: T\n", "thumbnail.png": png_20480, "README.md": b"bad"}),
+]:
+    dp = val_pdir / sub_n
+    dp.mkdir()
+    for fn, content in files_map.items():
+        if isinstance(content, bytes):
+            (dp / fn).write_bytes(content)
+        else:
+            (dp / fn).write_text(content, encoding="utf-8")
+
+yaml_dirs = {"y_2000": yaml_2000, "y_2001": yaml_2001, "y_bad": ":\n  - [unclosed", "y_list": "- a\n- b\n"}
+for yn, ytxt in yaml_dirs.items():
+    ydp = val_pdir / yn
+    ydp.mkdir()
+    (ydp / "index.yaml").write_text(ytxt, encoding="utf-8")
+
+def _mock_git_exists(_c, rel):
+    return (m001_val_tmp / rel).exists()
+def _mock_git_text(_c, rel):
+    return (m001_val_tmp / rel).read_text(encoding="utf-8")
+def _mock_git_bytes(_c, rel):
+    return (m001_val_tmp / rel).read_bytes()
+def _mock_git_files(_c, pname):
+    d = val_pdir / pname
+    return sorted(p.name for p in d.iterdir() if p.is_file())
+
+base_meta = {"title": "Alpha", "description": "Valid", "github": "https://github.com/org/alpha"}
+field_cases = [
+    ("valid_full", {**base_meta, "tags": ["a", "b", "c", "d", "e"], "screenshots": [f"https://example.com/s{i}.png" for i in range(5)]}),
+    ("unknown_field", {**base_meta, "extra": "nope"}),
+    ("missing_req", {"title": "Only"}),
+    ("title_50_ok", {**base_meta, "title": "T" * 50}),
+    ("title_51_fail", {**base_meta, "title": "T" * 51}),
+    ("desc_500_ok", {**base_meta, "description": "D" * 500}),
+    ("desc_501_fail", {**base_meta, "description": "D" * 501}),
+    ("tags_5_ok", {**base_meta, "tags": ["t1", "t2", "t3", "t4", "t5"]}),
+    ("tags_6_fail", {**base_meta, "tags": ["t1", "t2", "t3", "t4", "t5", "t6"]}),
+    ("shots_5_ok", {**base_meta, "screenshots": [f"https://example.com/ok{i}.png" for i in range(5)]}),
+    ("shots_6_fail", {**base_meta, "screenshots": [f"https://example.com/ok{i}.png" for i in range(6)]}),
+    ("shot_head_over", {**base_meta, "screenshots": ["https://example.com/head_over.png"]}),
+    ("shot_range_ok", {**base_meta, "screenshots": ["https://example.com/range405_ok.png"]}),
+    ("shot_range_over", {**base_meta, "screenshots": ["https://example.com/range405_get_over.png"]}),
+    ("shot_bad_ext", {**base_meta, "screenshots": ["https://example.com/a.gif"]}),
+    ("repo_404", {**base_meta, "github": "https://github.com/org/missing"}),
+    ("repo_wrong_name", {**base_meta, "github": "https://github.com/org/wrongname"}),
+]
+
+with (
+    patch.dict(os.environ, {"BASE_SHA": "a", "HEAD_SHA": "b", "GITHUB_TOKEN": "t"}, clear=True),
+    patch.object(up_vps, "REPO_ROOT", m001_val_tmp),
+    patch.object(up_vps, "PLUGINS_DIR", val_pdir),
+    patch.object(up_vps, "_git_path_exists", _mock_git_exists),
+    patch.object(up_vps, "_git_read_text", _mock_git_text),
+    patch.object(up_vps, "_git_read_bytes", _mock_git_bytes),
+    patch.object(up_vps, "_git_plugin_files", _mock_git_files),
+    patch("urllib.request.urlopen", _m001_mock_urlopen),
+):
+    m001_val_out = {
+        "urls": [
+            [up_vps._parse_repo_url(u), up_vps._normalize_repo_url(u), up_vps._repo_owner_from_url(u)]
+            for u in ["https://github.com/Org/Repo.git", "http://github.com/o/r/", "https://gitlab.com/o/r", "bad"]
+        ],
+        "yaml_strict": [_safe_call(up_vps._read_plugin_yaml, yn) for yn in ("y_2000", "y_2001", "y_bad", "y_list")],
+        "fields": [(lbl, _safe_call(up_vps._validate_fields, m, "alpha")) for lbl, m in field_cases],
+        "thumbs": [(sn, _safe_call(up_vps._validate_thumbnail, sn)) for sn in ("t_exact_20kb", "t_over_20kb", "t_non_square", "t_two_thumbs", "t_none")],
+        "allowed_files": [(sn, _safe_call(up_vps._validate_allowed_files, sn)) for sn in ("t_exact_20kb", "f_extra")],
+        "remote_names": [
+            _safe_call(up_vps._validate_remote_plugin_name, {"encoding": "base64", "content": base64.b64encode(b"name: alpha\n").decode()}, "alpha"),
+            _safe_call(up_vps._validate_remote_plugin_name, {"encoding": "base64", "content": base64.b64encode(b"name: beta\n").decode()}, "alpha"),
+            _safe_call(up_vps._validate_remote_plugin_name, {"encoding": "bad", "content": "x"}, "alpha"),
+        ],
+        "submissions": [
+            _safe_call(up_vps._submission_plugin_name, ["plugins/my_plugin/index.yaml"]),
+            _safe_call(up_vps._submission_plugin_name, ["README.md"]),
+            _safe_call(up_vps._submission_plugin_name, ["plugins/bad-name/index.yaml"]),
+            _safe_call(up_vps._submission_plugin_name, ["plugins/a/index.yaml", "plugins/b/index.yaml"]),
+        ],
+        "is_deletion": [
+            up_vps._is_deletion_pr([("D", ["plugins/a/index.yaml"])], "a"),
+            up_vps._is_deletion_pr([("M", ["plugins/a/index.yaml"])], "a"),
+        ],
+    }
+
+# Duplicate repo index check
+m001_idx_tmp = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_m001_idx_"))
+(m001_idx_tmp / "index.json").write_text(json.dumps({"plugins": {"other_p": {"github": "https://github.com/org/repo"}}}), encoding="utf-8")
+with patch.object(up_vps, "INDEX_JSON_PATH", m001_idx_tmp / "index.json"):
+    m001_val_out["dup_repo_checks"] = [
+        _safe_call(up_vps._validate_github_repo_not_in_index, "new_p", "https://github.com/ORG/REPO.git"),
+        _safe_call(up_vps._validate_github_repo_not_in_index, "other_p", "https://github.com/ORG/REPO.git"),
+        _safe_call(up_vps._validate_github_repo_not_in_index, "new_p", "https://github.com/org/fresh"),
+    ]
+
+# 3) Full 235-folder catalog compilation via sync_plugin_state
+sync_tmp = Path(tempfile.mkdtemp(dir=str(iso), prefix="ora_m001_sync_"))
+sync_idx_path = sync_tmp / "index.json"
+with (
+    patch.dict(os.environ, {"GITHUB_REPOSITORY": "Amdkn/a0-plugins", "GITHUB_TOKEN": "test", "GITHUB_REF_NAME": "main"}, clear=True),
+    patch.object(up_sync, "REPO_ROOT", m001_root),
+    patch.object(up_sync, "PLUGINS_DIR", m001_root / "plugins"),
+    patch.object(up_sync, "AUTHORS_DIR", m001_root / "authors"),
+    patch.object(up_sync, "GENERATED_THUMBNAILS_DIR", m001_root / "generated" / "thumbnails"),
+    patch.object(up_sync, "INDEX_JSON_PATH", sync_idx_path),
+    patch.object(up_sync, "DISCUSSION_TEMPLATE_PATH", m001_scripts / "plugin_discussion_template.md"),
+    patch.object(up_pres, "REPO_ROOT", m001_root),
+    patch.object(up_pres, "PLUGINS_DIR", m001_root / "plugins"),
+    patch.object(up_pres, "_git_all_plugin_paths", lambda _c: all_cat_rel),
+    patch.object(up_sync, "_get_repo_and_category", lambda *a: ("rid", "cid")),
+    patch.object(up_sync, "_sync_existing_plugin", lambda o, r, _rid, _cid, pn: ("created", f"https://github.com/{o}/{r}/discussions/{pn}")),
+    patch.object(up_sync, "_sync_deleted_plugin", lambda *a: "missing"),
+    redirect_stdout(io.StringIO()),
+):
+    assert up_sync.main() == 0
+    compiled_index = json.loads(sync_idx_path.read_text(encoding="utf-8"))
+
+# Also test upsert preservation & discussion rendering
+up_idx_state = {"version": 1, "plugins": {"alpha": {"stars": 42, "version": "1.2.3", "commit": "abc", "updated": "2026-01-01"}}}
+up_sync._upsert_index_plugin(up_idx_state, "alpha", {"title": "Alpha", "github": "https://github.com/u/r"})
+up_removed_ok = up_sync._remove_index_plugin(up_idx_state, "alpha")
+up_removed_miss = up_sync._remove_index_plugin(up_idx_state, "missing")
+with patch.object(up_sync, "DISCUSSION_TEMPLATE_PATH", m001_scripts / "plugin_discussion_template.md"):
+    up_disc_body = up_sync._render_discussion_body("alpha", base_meta, "Amdkn", "a0-plugins")
+
+# 4) Orphans + Stars
+with (
+    patch.object(up_orph, "INDEX_JSON_PATH", sync_idx_path),
+    patch.object(up_orph, "PLUGINS_DIR", m001_root / "plugins"),
+):
+    sync_copy = json.loads(sync_idx_path.read_text(encoding="utf-8"))
+    existing_real = next(iter(sync_copy["plugins"]))
+    sync_copy["plugins"]["deleted_ok"] = {"discussion": "https://github.com/Amdkn/a0-plugins/discussions/deleted_ok"}
+    sync_copy["plugins"]["_example1"] = {"discussion": ""}
+    sync_copy["plugins"]["bad-name"] = {"discussion": ""}
+    idx_names = set(sync_copy["plugins"].keys())
+    cands = sorted(idx_names | {"ghost_plugin", existing_real})
+    orph_list = [n for n in cands if up_pres.is_valid_plugin_dirname(n) and not up_orph._plugin_exists(n)]
+
+marker_cases = [
+    up_orph._discussion_marker_name("<!-- a0-plugins-discussion -->\n<!-- a0-plugins-plugin:my_mod -->\n"),
+    up_orph._discussion_marker_name("no marker here"),
+    up_orph._discussion_marker_name("<!-- a0-plugins-plugin:   -->"),
+]
+stars_idx_path = m001_idx_tmp / "stars_index.json"
+stars_upd_path = m001_idx_tmp / "stars_upd.json"
+stars_idx_path.write_text(json.dumps({"version": 1, "plugins": {"b": {"stars": 1}, "a": {"stars": 2}}}), encoding="utf-8")
+stars_upd_path.write_text(json.dumps({"a": {"stars": 0, "version": "2.0.0", "commit": "def", "updated": "2026-11-20"}, "gone": {"stars": 9}}), encoding="utf-8")
+with patch.object(up_stars, "INDEX_PATH", stars_idx_path), redirect_stdout(io.StringIO()):
+    assert up_stars._apply_updates(stars_upd_path) == 0
+    stars_after = json.loads(stars_idx_path.read_text(encoding="utf-8"))
+
+stars_out = {
+    "chunks": [up_stars._chunks([1, 2, 3], 3), up_stars._chunks([1, 2, 3, 4], 3), up_stars._chunks([], 3)],
+    "alias_errors": up_stars._extract_alias_errors({"errors": [{"path": ["r0", "sub"], "message": " Could not resolve "}]}),
+    "versions": [up_stars._extract_plugin_version("name: x\nversion: '1.2.3' # comment\n"), up_stars._extract_plugin_version("name: x\n")],
+    "commits": [up_stars._extract_commit_info({"defaultBranchRef": {"target": {"oid": "abc", "committedDate": "2026-01-01"}}}), up_stars._extract_commit_info({})],
+    "applied": stars_after,
+}
+
+# 5) 11 Release publish/download scenarios (mirrors test_index_release.py)
+REL_OLD = b'{"version":1,"plugins":{"kept":{},"removed":{}}}'
+REL_NEW = b'{"version":1,"plugins":{"kept":{}}}'
+rel_scenarios = [
+    ({"index.json": REL_OLD}, "", REL_NEW),
+    ({"index.json": REL_OLD}, "rename_502", REL_NEW),
+    ({"index.json": REL_OLD}, "upload_failure", REL_NEW),
+    ({"index.json": REL_OLD}, "incomplete_upload", REL_NEW),
+    ({"index.json": REL_OLD}, "promotion_failure", REL_NEW),
+    ({"index.json": REL_OLD, "index.json.previous": REL_OLD}, "delete_502", REL_NEW),
+    ({"index.json.next": REL_NEW, "index.json.previous": REL_OLD}, "", REL_NEW),
+    ({"index.json.previous": REL_OLD}, "", REL_NEW),
+    ({}, "", REL_NEW),
+    ({"index.json": REL_OLD}, "invalid_index", b'{"error":"Not Found"}'),
+    ({"index.json": REL_OLD}, "invalid_index", b'{"plugins":{}}'),
+]
+
+def _run_rel_scenario_oracle(initial, fault, content):
+    assets, contents, faults, mutations = {}, {}, [], []
+    serial = [0]
+    def _add(name, data):
+        serial[0] += 1
+        a = {"id": serial[0], "name": name, "state": "uploaded", "size": len(data)}
+        assets[serial[0]] = a
+        contents[serial[0]] = data
+        return a
+    for k, v in initial.items():
+        _add(k, v)
+    def _err(req, code):
+        raise urllib.error.HTTPError(req.full_url, code, "Injected", {}, io.BytesIO(b"{}"))
+    def _req(request, timeout):
+        u = urllib.parse.urlparse(request.full_url)
+        m = request.get_method()
+        if m != "GET":
+            mutations.append(m)
+        if u.hostname == "download.test":
+            return io.BytesIO(contents[int(u.path.strip("/"))] if u.query else REL_OLD)
+        if "/releases/assets/" in u.path:
+            aid = int(u.path.rsplit("/", 1)[1])
+            if aid not in assets:
+                _err(request, 404)
+            asset = assets[aid]
+            if m == "DELETE":
+                del assets[aid]
+                del contents[aid]
+                if fault == "delete_502" and not faults:
+                    faults.append(fault)
+                    _err(request, 502)
+                return io.BytesIO()
+            if m == "PATCH":
+                nm = json.loads(request.data)["name"]
+                if fault == "promotion_failure" and asset["name"] == "index.json.next":
+                    faults.append(fault)
+                    _err(request, 502)
+                asset["name"] = nm
+                if fault == "rename_502" and not faults:
+                    faults.append(fault)
+                    _err(request, 502)
+            return io.BytesIO(json.dumps(asset).encode())
+        if m == "POST" and u.hostname == "uploads.github.com":
+            if fault == "upload_failure":
+                faults.append(fault)
+                _err(request, 502)
+            a = _add(urllib.parse.parse_qs(u.query)["name"][0], request.data)
+            if fault == "incomplete_upload":
+                faults.append(fault)
+                a["state"] = "starter"
+            return io.BytesIO(json.dumps(a).encode())
+        return io.BytesIO(json.dumps({
+            "id": 1,
+            "upload_url": "https://uploads.github.com/repos/test/repo/releases/1/assets{?name,label}",
+            "assets": [dict(a, browser_download_url=f"https://download.test/{a['id']}") for a in assets.values()],
+        }).encode())
+
+    with tempfile.TemporaryDirectory() as d:
+        rt = Path(d)
+        idx_p = rt / "index.json"
+        with (
+            patch.dict(os.environ, {"GITHUB_REPOSITORY": "test/repo", "GITHUB_TOKEN": "test"}, clear=True),
+            patch.object(up_pub, "INDEX_PATH", idx_p),
+            patch.object(up_dl, "INDEX_PATH", idx_p),
+            patch.object(up_dl, "REPO_ROOT", rt),
+            patch("urllib.request.urlopen", _req),
+            patch("time.sleep"),
+            redirect_stdout(io.StringIO()),
+        ):
+            dl1 = idx_p.read_bytes().decode("utf-8") if (initial and up_dl.main() == 0) else None
+            idx_p.write_bytes(content)
+            failed = False
+            try:
+                up_pub.main()
+            except up_pub.PublishReleaseError:
+                failed = True
+            cur = next(a for a in assets.values() if a["name"] == "index.json")
+            dl2 = None
+            if not failed:
+                up_dl.main()
+                dl2 = idx_p.read_bytes().decode("utf-8")
+            return {"dl1": dl1, "failed": failed, "cur": contents[cur["id"]].decode("utf-8"), "dl2": dl2, "mutations": len(mutations)}
+
+rel_out = [_run_rel_scenario_oracle(ini, flt, cnt) for ini, flt, cnt in rel_scenarios]
+
+# 6) Adapter audit counts (real 235 dirs)
+adp_v = up_a0_adp.validate()
+audit_keys = (
+    "plugin_dirs_total", "plugin_names_resolved", "indexed_plugins", "index_yaml_present",
+    "legacy_plugin_yaml_only", "blocked_plugins", "index_yaml_invalid", "index_yaml_missing_keys",
+    "max_screenshots", "generated_thumbnails", "orphan_thumbnails", "local_thumbnails",
+    "plugins_without_any_thumbnail", "abandoned_present", "surfaces_present", "index_coherent",
+)
+m001_out = {
+    "resolution": m001_res_cases,
+    "validation": m001_val_out,
+    "compiled_index": compiled_index,
+    "upsert_preserve": {},
+    "upsert_preserved_check": {
+        "removed_ok": up_removed_ok,
+        "removed_miss": up_removed_miss,
+        "discussion_body": up_disc_body,
+    },
+    "orphans": {"markers": marker_cases, "list": orph_list},
+    "stars": stars_out,
+    "releases": rel_out,
+    "audit": {k: adp_v[k] for k in audit_keys},
+}
+# Capture preserved entry cleanly before removal
+tmp_u = {"version": 1, "plugins": {"alpha": {"stars": 42, "version": "1.2.3", "commit": "abc", "updated": "2026-01-01"}}}
+up_sync._upsert_index_plugin(tmp_u, "alpha", {"title": "Alpha", "github": "https://github.com/u/r"})
+m001_out["upsert_preserve"] = tmp_u["plugins"]["alpha"]
+
 (iso / "oracle_outputs.json").write_text(
     json.dumps(
-        {"m044": m044_out, "m050": m050_out, "m056": m056_out, "m074": m074_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
+        {"m001": m001_out, "m044": m044_out, "m050": m050_out, "m056": m056_out, "m074": m074_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
         ensure_ascii=False,
         indent=2,
     ),
@@ -1469,11 +1891,13 @@ import aspace_foundation_kernel as fk
 import aspace_fkb02_memory_organ as f02
 import aspace_fkb04_anything_organ as f04
 import aspace_discovery_catalog as cat
+import aspace_plugin_registry_organ as reg
 import aspace_video_studio_foundation as vsf
 import aspace_trading_copilot_foundation as trd
 
 # Aucune source supprimée ne doit subsister sous iso_root
 for _gone in (
+    "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
     "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models",
     "01_Forkable/FKB02_Memory/knowledge-catalog",
     "01_Forkable/FKB04_Tools_Anything/CLI-Anything",
@@ -2180,8 +2604,369 @@ def verify_m074() -> int:
     return len(py_parsers) + len(py_store) + len(py_thr) + len(py_tools)
 
 
+def verify_m001() -> int:
+    import base64
+    import io
+    import os
+    import struct
+    import urllib.error
+    import urllib.parse
+    import urllib.request
+    import zlib
+    from unittest.mock import patch
+
+    assert not (iso / "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins").exists()
+    cat_root = iso / "test_input_m001_catalog"
+
+    def _make_exact_png(w: int, h: int, exact_bytes: int) -> bytes:
+        buf = io.BytesIO()
+        Image.new("RGB", (w, h), (10, 20, 30)).save(buf, format="PNG")
+        raw = buf.getvalue()
+        if exact_bytes <= len(raw):
+            return raw
+        pad_len = exact_bytes - len(raw) - 16
+        assert pad_len >= 0
+        payload = b"pad\x00" + (b"A" * pad_len)
+        chunk = struct.pack(">I", len(payload)) + b"tEXt" + payload + struct.pack(">I", zlib.crc32(b"tEXt" + payload) & 0xFFFFFFFF)
+        out = raw[:-12] + chunk + raw[-12:]
+        assert len(out) == exact_bytes
+        return out
+
+    class _MockHttpResp:
+        def __init__(self, body: bytes = b"", headers: dict | None = None) -> None:
+            self._bio = io.BytesIO(body)
+            self.headers = headers or {}
+
+        def read(self, n: int = -1) -> bytes:
+            return self._bio.read(n)
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return False
+
+    def _m001_mock_urlopen(req, timeout=30):
+        u = urllib.parse.urlparse(req.full_url)
+        method = req.get_method()
+        if u.hostname == "api.github.com":
+            if u.path == "/repos/org/alpha":
+                return _MockHttpResp(json.dumps({"full_name": "org/alpha"}).encode("utf-8"))
+            if u.path == "/repos/org/alpha/contents/plugin.yaml":
+                b64 = base64.b64encode(b"name: alpha\nversion: 1.0.0\n").decode("ascii")
+                return _MockHttpResp(json.dumps({"type": "file", "encoding": "base64", "content": b64}).encode("utf-8"))
+            if u.path == "/repos/org/wrongname":
+                return _MockHttpResp(json.dumps({"full_name": "org/wrongname"}).encode("utf-8"))
+            if u.path == "/repos/org/wrongname/contents/plugin.yaml":
+                b64 = base64.b64encode(b"name: other\nversion: 1.0.0\n").decode("ascii")
+                return _MockHttpResp(json.dumps({"type": "file", "encoding": "base64", "content": b64}).encode("utf-8"))
+            raise urllib.error.HTTPError(req.full_url, 404, "Not Found", {}, io.BytesIO(b"{}"))
+        if method == "HEAD":
+            if "range405" in u.path:
+                raise urllib.error.HTTPError(req.full_url, 405, "Method Not Allowed", {}, io.BytesIO(b""))
+            if "head_over" in u.path:
+                return _MockHttpResp(b"", {"Content-Length": str(2 * 1024 * 1024 + 1)})
+            return _MockHttpResp(b"", {"Content-Length": str(2 * 1024 * 1024)})
+        if "get_over" in u.path:
+            return _MockHttpResp(b"X" * (2 * 1024 * 1024 + 1))
+        return _MockHttpResp(b"X" * (2 * 1024 * 1024))
+
+    def _m001_req_json(url: str) -> dict:
+        req = urllib.request.Request(url, method="GET")
+        try:
+            with _m001_mock_urlopen(req, timeout=30) as resp:
+                return json.loads(resp.read().decode("utf-8"))
+        except urllib.error.HTTPError as exc:
+            raise reg.ValidatePluginSubmissionError(f"HTTP {exc.code}") from exc
+
+    # 1) Resolution + boundaries
+    all_cat_rel = [
+        p.relative_to(cat_root).as_posix()
+        for p in sorted((cat_root / "plugins").rglob("*"))
+        if p.is_file()
+    ]
+    res_cases = []
+    for env_dict, paths_arg, diff_arg, max_p in [
+        ({}, all_cat_rel, None, 1000),
+        ({"BEFORE_SHA": "0" * 40, "AFTER_SHA": "abc"}, ["plugins/a/index.yaml", "plugins/_res/index.yaml", "plugins/bad-dash/index.yaml"], None, 1000),
+        ({"BEFORE_SHA": "111", "AFTER_SHA": "222"}, None, ["plugins/beta/index.yaml", "plugins/alpha/index.yaml", "authors/u/author.yaml"], 1000),
+        ({"PLUGIN_NAMES": "zeta, _reserved_ok, bad-dash, alpha", "START_FROM": "0", "MAX_PLUGINS": "10"}, None, None, 10),
+        ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "1", "MAX_PLUGINS": "10"}, None, None, 10),
+        ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "2", "MAX_PLUGINS": "10"}, None, None, 10),
+        ({"PLUGIN_NAMES": "alpha, beta, gamma", "START_FROM": "bad", "MAX_PLUGINS": "3"}, None, None, 3),
+        ({"PLUGIN_NAMES": "alpha, beta, gamma, delta", "START_FROM": "0", "MAX_PLUGINS": "3"}, None, None, 3),
+    ]:
+        res_cases.append(
+            _safe_call(
+                reg.resolve_plugin_names,
+                all_paths=paths_arg,
+                diff_paths=diff_arg,
+                plugin_names_env=env_dict.get("PLUGIN_NAMES", ""),
+                before_sha=env_dict.get("BEFORE_SHA", ""),
+                after_sha=env_dict.get("AFTER_SHA", ""),
+                start_from=env_dict.get("START_FROM", ""),
+                max_plugins=int(env_dict.get("MAX_PLUGINS", max_p)),
+            )
+        )
+    assert reg.normalize_plugin_names(["alpha", "_res", "bad-dash"]) == ["alpha"]
+    assert reg.normalize_plugin_names(["alpha", "_res"], allow_reserved=True) == ["_res", "alpha"]
+    assert reg.is_reserved_plugin_dirname("_res") is True and reg.is_reserved_plugin_dirname("alpha") is False
+
+    # 2) Validation & exact limits
+    with tempfile.TemporaryDirectory(dir=str(iso), prefix="org_m001_val_") as vtmp:
+        vroot = Path(vtmp)
+        vpdir = vroot / "plugins"
+        vpdir.mkdir()
+        yaml_2000 = "title: Ok\ngithub: https://github.com/org/alpha\ndescription: " + ("d" * (2000 - len("title: Ok\ngithub: https://github.com/org/alpha\ndescription: ")))
+        yaml_2001 = yaml_2000 + "x"
+        png_20480 = _make_exact_png(8, 8, 20 * 1024)
+        png_20481 = _make_exact_png(8, 8, 20 * 1024 + 1)
+        png_rect = _make_exact_png(16, 12, 200)
+        for sub_n, files_map in [
+            ("t_exact_20kb", {"index.yaml": "title: T\n", "thumbnail.png": png_20480}),
+            ("t_over_20kb", {"index.yaml": "title: T\n", "thumbnail.png": png_20481}),
+            ("t_non_square", {"index.yaml": "title: T\n", "thumbnail.png": png_rect}),
+            ("t_two_thumbs", {"index.yaml": "title: T\n", "thumbnail.png": png_20480, "thumbnail.jpg": png_20480}),
+            ("t_none", {"index.yaml": "title: T\n"}),
+            ("f_extra", {"index.yaml": "title: T\n", "thumbnail.png": png_20480, "README.md": b"bad"}),
+        ]:
+            dp = vpdir / sub_n
+            dp.mkdir()
+            for fn, content in files_map.items():
+                if isinstance(content, bytes):
+                    (dp / fn).write_bytes(content)
+                else:
+                    (dp / fn).write_text(content, encoding="utf-8")
+
+        yaml_texts = {"y_2000": yaml_2000, "y_2001": yaml_2001, "y_bad": ":\n  - [unclosed", "y_list": "- a\n- b\n"}
+        base_meta = {"title": "Alpha", "description": "Valid", "github": "https://github.com/org/alpha"}
+        field_cases = [
+            ("valid_full", {**base_meta, "tags": ["a", "b", "c", "d", "e"], "screenshots": [f"https://example.com/s{i}.png" for i in range(5)]}),
+            ("unknown_field", {**base_meta, "extra": "nope"}),
+            ("missing_req", {"title": "Only"}),
+            ("title_50_ok", {**base_meta, "title": "T" * 50}),
+            ("title_51_fail", {**base_meta, "title": "T" * 51}),
+            ("desc_500_ok", {**base_meta, "description": "D" * 500}),
+            ("desc_501_fail", {**base_meta, "description": "D" * 501}),
+            ("tags_5_ok", {**base_meta, "tags": ["t1", "t2", "t3", "t4", "t5"]}),
+            ("tags_6_fail", {**base_meta, "tags": ["t1", "t2", "t3", "t4", "t5", "t6"]}),
+            ("shots_5_ok", {**base_meta, "screenshots": [f"https://example.com/ok{i}.png" for i in range(5)]}),
+            ("shots_6_fail", {**base_meta, "screenshots": [f"https://example.com/ok{i}.png" for i in range(6)]}),
+            ("shot_head_over", {**base_meta, "screenshots": ["https://example.com/head_over.png"]}),
+            ("shot_range_ok", {**base_meta, "screenshots": ["https://example.com/range405_ok.png"]}),
+            ("shot_range_over", {**base_meta, "screenshots": ["https://example.com/range405_get_over.png"]}),
+            ("shot_bad_ext", {**base_meta, "screenshots": ["https://example.com/a.gif"]}),
+            ("repo_404", {**base_meta, "github": "https://github.com/org/missing"}),
+            ("repo_wrong_name", {**base_meta, "github": "https://github.com/org/wrongname"}),
+        ]
+        # Direct screenshot & repo sanity calls to ensure zero unexercised helpers
+        reg.validate_github_repo(base_meta["github"], "alpha", request_json_fn=_m001_req_json)
+        reg.validate_screenshot_url("https://example.com/ok0.png", opener=_m001_mock_urlopen)
+
+        dup_index = {"other_p": {"github": "https://github.com/org/repo"}}
+        val_out = {
+            "urls": [
+                [reg.parse_repo_url(u), reg.normalize_repo_url(u), reg.repo_owner_from_url(u)]
+                for u in ["https://github.com/Org/Repo.git", "http://github.com/o/r/", "https://gitlab.com/o/r", "bad"]
+            ],
+            "yaml_strict": [_safe_call(reg.read_plugin_yaml_text_strict, yaml_texts[yn]) for yn in ("y_2000", "y_2001", "y_bad", "y_list")],
+            "fields": [
+                (lbl, _safe_call(reg.validate_fields, m, "alpha", request_json_fn=_m001_req_json, opener=_m001_mock_urlopen))
+                for lbl, m in field_cases
+            ],
+            "thumbs": [(sn, _safe_call(reg.validate_thumbnail, vpdir / sn)) for sn in ("t_exact_20kb", "t_over_20kb", "t_non_square", "t_two_thumbs", "t_none")],
+            "allowed_files": [(sn, _safe_call(reg.validate_allowed_files, vpdir / sn)) for sn in ("t_exact_20kb", "f_extra")],
+            "remote_names": [
+                _safe_call(reg.validate_remote_plugin_name, {"encoding": "base64", "content": base64.b64encode(b"name: alpha\n").decode()}, "alpha"),
+                _safe_call(reg.validate_remote_plugin_name, {"encoding": "base64", "content": base64.b64encode(b"name: beta\n").decode()}, "alpha"),
+                _safe_call(reg.validate_remote_plugin_name, {"encoding": "bad", "content": "x"}, "alpha"),
+            ],
+            "submissions": [
+                _safe_call(reg.submission_plugin_name, ["plugins/my_plugin/index.yaml"]),
+                _safe_call(reg.submission_plugin_name, ["README.md"]),
+                _safe_call(reg.submission_plugin_name, ["plugins/bad-name/index.yaml"]),
+                _safe_call(reg.submission_plugin_name, ["plugins/a/index.yaml", "plugins/b/index.yaml"]),
+            ],
+            "is_deletion": [
+                reg.is_deletion_pr([("D", ["plugins/a/index.yaml"])], "a"),
+                reg.is_deletion_pr([("M", ["plugins/a/index.yaml"])], "a"),
+            ],
+            "dup_repo_checks": [
+                _safe_call(reg.validate_github_repo_not_in_index, "new_p", "https://github.com/ORG/REPO.git", dup_index),
+                _safe_call(reg.validate_github_repo_not_in_index, "other_p", "https://github.com/ORG/REPO.git", dup_index),
+                _safe_call(reg.validate_github_repo_not_in_index, "new_p", "https://github.com/org/fresh", dup_index),
+            ],
+        }
+
+    # 3) Full 235-folder catalog compilation + upsert/remove/discussion
+    compiled_index = reg.compile_catalog_index(cat_root, owner="Amdkn", repo="a0-plugins", ref="main")
+    idx_state = {"version": 1, "plugins": {"alpha": {"stars": 42, "version": "1.2.3", "commit": "abc", "updated": "2026-01-01"}}}
+    reg.upsert_index_plugin(idx_state, "alpha", {"title": "Alpha", "github": "https://github.com/u/r"})
+    upsert_preserve = copy.deepcopy(idx_state["plugins"]["alpha"])
+    removed_ok = reg.remove_index_plugin(idx_state, "alpha")
+    removed_miss = reg.remove_index_plugin(idx_state, "missing")
+    disc_tmpl = (cat_root / "plugin_discussion_template.md").read_text(encoding="utf-8")
+    disc_body = reg.render_discussion_body("alpha", base_meta, "Amdkn", "a0-plugins", disc_tmpl)
+
+    # 4) Orphans + Stars
+    sync_copy = copy.deepcopy(compiled_index)
+    existing_real = next(iter(sync_copy["plugins"]))
+    sync_copy["plugins"]["deleted_ok"] = {"discussion": "https://github.com/Amdkn/a0-plugins/discussions/deleted_ok"}
+    sync_copy["plugins"]["_example1"] = {"discussion": ""}
+    sync_copy["plugins"]["bad-name"] = {"discussion": ""}
+    orph_list = reg.find_orphan_names(sync_copy, cat_root / "plugins", discussion_marker_names=("ghost_plugin", existing_real))
+    marker_cases = [
+        reg.discussion_marker_name("<!-- a0-plugins-discussion -->\n<!-- a0-plugins-plugin:my_mod -->\n"),
+        reg.discussion_marker_name("no marker here"),
+        reg.discussion_marker_name("<!-- a0-plugins-plugin:   -->"),
+    ]
+    stars_idx = {"version": 1, "plugins": {"b": {"stars": 1}, "a": {"stars": 2}}}
+    stars_upd = {"a": {"stars": 0, "version": "2.0.0", "commit": "def", "updated": "2026-11-20"}, "gone": {"stars": 9}}
+    assert reg.apply_star_updates(stars_idx, stars_upd) == 1
+    stars_out = {
+        "chunks": [reg.chunks([1, 2, 3], 3), reg.chunks([1, 2, 3, 4], 3), reg.chunks([], 3)],
+        "alias_errors": reg.extract_alias_errors({"errors": [{"path": ["r0", "sub"], "message": " Could not resolve "}]}),
+        "versions": [reg.extract_plugin_version("name: x\nversion: '1.2.3' # comment\n"), reg.extract_plugin_version("name: x\n")],
+        "commits": [reg.extract_commit_info({"defaultBranchRef": {"target": {"oid": "abc", "committedDate": "2026-01-01"}}}), reg.extract_commit_info({})],
+        "applied": stars_idx,
+    }
+
+    # 5) 11 Release publish/download scenarios
+    REL_OLD = b'{"version":1,"plugins":{"kept":{},"removed":{}}}'
+    REL_NEW = b'{"version":1,"plugins":{"kept":{}}}'
+    rel_scenarios = [
+        ({"index.json": REL_OLD}, "", REL_NEW),
+        ({"index.json": REL_OLD}, "rename_502", REL_NEW),
+        ({"index.json": REL_OLD}, "upload_failure", REL_NEW),
+        ({"index.json": REL_OLD}, "incomplete_upload", REL_NEW),
+        ({"index.json": REL_OLD}, "promotion_failure", REL_NEW),
+        ({"index.json": REL_OLD, "index.json.previous": REL_OLD}, "delete_502", REL_NEW),
+        ({"index.json.next": REL_NEW, "index.json.previous": REL_OLD}, "", REL_NEW),
+        ({"index.json.previous": REL_OLD}, "", REL_NEW),
+        ({}, "", REL_NEW),
+        ({"index.json": REL_OLD}, "invalid_index", b'{"error":"Not Found"}'),
+        ({"index.json": REL_OLD}, "invalid_index", b'{"plugins":{}}'),
+    ]
+
+    def _run_rel_scenario(initial, fault, content):
+        assets, contents, faults, mutations = {}, {}, [], []
+        serial = [0]
+
+        def _add(name, data):
+            serial[0] += 1
+            a = {"id": serial[0], "name": name, "state": "uploaded", "size": len(data)}
+            assets[serial[0]] = a
+            contents[serial[0]] = data
+            return a
+
+        for k, v in initial.items():
+            _add(k, v)
+
+        def _err(req, code):
+            raise urllib.error.HTTPError(req.full_url, code, "Injected", {}, io.BytesIO(b"{}"))
+
+        def _req(request, timeout=30):
+            u = urllib.parse.urlparse(request.full_url)
+            m = request.get_method()
+            if m != "GET":
+                mutations.append(m)
+            if u.hostname == "download.test":
+                return io.BytesIO(contents[int(u.path.strip("/"))] if u.query else REL_OLD)
+            if "/releases/assets/" in u.path:
+                aid = int(u.path.rsplit("/", 1)[1])
+                if aid not in assets:
+                    _err(request, 404)
+                asset = assets[aid]
+                if m == "DELETE":
+                    del assets[aid]
+                    del contents[aid]
+                    if fault == "delete_502" and not faults:
+                        faults.append(fault)
+                        _err(request, 502)
+                    return io.BytesIO()
+                if m == "PATCH":
+                    nm = json.loads(request.data)["name"]
+                    if fault == "promotion_failure" and asset["name"] == "index.json.next":
+                        faults.append(fault)
+                        _err(request, 502)
+                    asset["name"] = nm
+                    if fault == "rename_502" and not faults:
+                        faults.append(fault)
+                        _err(request, 502)
+                return io.BytesIO(json.dumps(asset).encode())
+            if m == "POST" and u.hostname == "uploads.github.com":
+                if fault == "upload_failure":
+                    faults.append(fault)
+                    _err(request, 502)
+                a = _add(urllib.parse.parse_qs(u.query)["name"][0], request.data)
+                if fault == "incomplete_upload":
+                    faults.append(fault)
+                    a["state"] = "starter"
+                return io.BytesIO(json.dumps(a).encode())
+            return io.BytesIO(json.dumps({
+                "id": 1,
+                "upload_url": "https://uploads.github.com/repos/test/repo/releases/1/assets{?name,label}",
+                "assets": [dict(a, browser_download_url=f"https://download.test/{a['id']}") for a in assets.values()],
+            }).encode())
+
+        with tempfile.TemporaryDirectory() as d:
+            idx_p = Path(d) / "index.json"
+            dl1 = None
+            if initial and reg.download_index_release(idx_p, owner="test", repo="repo", token="test", opener=_req, sleep_fn=lambda _s: None) == 0:
+                dl1 = idx_p.read_bytes().decode("utf-8")
+            idx_p.write_bytes(content)
+            failed = False
+            try:
+                reg.publish_index_release(idx_p, owner="test", repo="repo", token="test", opener=_req, sleep_fn=lambda _s: None)
+            except reg.PublishReleaseError:
+                failed = True
+            cur = next(a for a in assets.values() if a["name"] == "index.json")
+            dl2 = None
+            if not failed:
+                reg.download_index_release(idx_p, owner="test", repo="repo", token="test", opener=_req, sleep_fn=lambda _s: None)
+                dl2 = idx_p.read_bytes().decode("utf-8")
+            return {"dl1": dl1, "failed": failed, "cur": contents[cur["id"]].decode("utf-8"), "dl2": dl2, "mutations": len(mutations)}
+
+    rel_out = [_run_rel_scenario(ini, flt, cnt) for ini, flt, cnt in rel_scenarios]
+
+    # 6) Adapter audit counts (real 235 dirs)
+    audit_keys = (
+        "plugin_dirs_total", "plugin_names_resolved", "indexed_plugins", "index_yaml_present",
+        "legacy_plugin_yaml_only", "blocked_plugins", "index_yaml_invalid", "index_yaml_missing_keys",
+        "max_screenshots", "generated_thumbnails", "orphan_thumbnails", "local_thumbnails",
+        "plugins_without_any_thumbnail", "abandoned_present", "surfaces_present", "index_coherent",
+    )
+    adp_py = reg.audit_plugin_catalog(cat_root)
+
+    py_m001 = json.loads(json.dumps({
+        "resolution": res_cases,
+        "validation": val_out,
+        "compiled_index": compiled_index,
+        "upsert_preserve": upsert_preserve,
+        "upsert_preserved_check": {
+            "removed_ok": removed_ok,
+            "removed_miss": removed_miss,
+            "discussion_body": disc_body,
+        },
+        "orphans": {"markers": marker_cases, "list": orph_list},
+        "stars": stars_out,
+        "releases": rel_out,
+        "audit": {k: adp_py[k] for k in audit_keys},
+    }))
+    for sec in ("resolution", "validation", "compiled_index", "upsert_preserve", "upsert_preserved_check", "orphans", "stars", "releases", "audit"):
+        assert py_m001[sec] == oracle["m001"][sec], f"M001 section mismatch: {sec}"
+    return (
+        len(res_cases)
+        + sum(len(v) for v in val_out.values())
+        + len(compiled_index["plugins"])
+        + len(rel_out)
+        + len(audit_keys)
+    )
+
+
 def verify_all() -> dict[str, int]:
     return {
+        "a0-plugins": verify_m001(),
         "context-language-models": verify_m044(),
         "knowledge-catalog": verify_m050(),
         "CLI-Anything": verify_m056(),
@@ -2193,7 +2978,7 @@ def verify_all() -> dict[str, int]:
 
 
 def run_sabotage_suite() -> int:
-    """Sabote chaque fonction/donnée déclarée des 6 modules et vérifie que verify_all() échoue systématiquement."""
+    """Sabote chaque fonction/donnée déclarée des 8 modules différentiels et vérifie que verify_all() échoue systématiquement."""
     def _assert_breaks(name: str, check_fn, patch_target_mod, attr: str, fake_val):
         orig = getattr(patch_target_mod, attr)
         setattr(patch_target_mod, attr, fake_val)
@@ -2367,6 +3152,57 @@ def run_sabotage_suite() -> int:
         ("M074:TradingViewClient.get_source", verify_m074, trd.TradingViewClient, "get_source", lambda self, **kw: {"ok": False, "protected": True, "reason": "sabotaged", "script_id_part": None}),
         ("M074:create_tradingview_tools", verify_m074, trd, "create_tradingview_tools", lambda **kw: {k: (lambda *_a, **_kw: {}) for k in ("search_scripts", "list_editors_picks", "list_author_scripts", "get_script_source", "harvest_scripts", "query_corpus", "fetch_status")}),
     ]
+    _orig_resolve_m001 = reg.resolve_plugin_names
+    _orig_compile_m001 = reg.compile_catalog_index
+
+    def _bad_resolve_m001_ge(**kw):
+        res = _orig_resolve_m001(**kw)
+        if len(res) >= kw.get("max_plugins", reg.DEFAULT_MAX_PLUGINS):
+            raise reg.PluginResolutionError("sabotaged >= max_plugins")
+        return res
+
+    sabotages.extend([
+        ("M001:is_valid_plugin_dirname", verify_m001, reg, "is_valid_plugin_dirname", lambda _n: True),
+        ("M001:is_reserved_plugin_dirname", verify_m001, reg, "is_reserved_plugin_dirname", lambda _n: False),
+        ("M001:is_zero_sha", verify_m001, reg, "is_zero_sha", lambda _s: False),
+        ("M001:normalize_plugin_names", verify_m001, reg, "normalize_plugin_names", lambda names, **_kw: list(names)),
+        ("M001:resolve_plugin_names", verify_m001, reg, "resolve_plugin_names", lambda **_kw: []),
+        ("M001:resolve_max_plugins_ge", verify_m001, reg, "resolve_plugin_names", _bad_resolve_m001_ge),
+        ("M001:submission_plugin_name", verify_m001, reg, "submission_plugin_name", lambda _p: "tampered"),
+        ("M001:is_deletion_pr", verify_m001, reg, "is_deletion_pr", lambda _e, _n: False),
+        ("M001:parse_repo_url", verify_m001, reg, "parse_repo_url", lambda _u: None),
+        ("M001:normalize_repo_url", verify_m001, reg, "normalize_repo_url", lambda _u: None),
+        ("M001:repo_owner_from_url", verify_m001, reg, "repo_owner_from_url", lambda _u: None),
+        ("M001:read_plugin_yaml_text_strict", verify_m001, reg, "read_plugin_yaml_text_strict", lambda _t, **_kw: {}),
+        ("M001:INDEX_YAML_MAX_CHARS_1999", verify_m001, reg, "INDEX_YAML_MAX_CHARS", 1999),
+        ("M001:validate_github_repo_not_in_index", verify_m001, reg, "validate_github_repo_not_in_index", lambda *_a: None),
+        ("M001:validate_remote_plugin_name", verify_m001, reg, "validate_remote_plugin_name", lambda *_a: None),
+        ("M001:validate_github_repo", verify_m001, reg, "validate_github_repo", lambda *_a, **_kw: None),
+        ("M001:validate_fields", verify_m001, reg, "validate_fields", lambda *_a, **_kw: None),
+        ("M001:TITLE_MAX_LEN_49", verify_m001, reg, "TITLE_MAX_LEN", 49),
+        ("M001:DESCRIPTION_MAX_LEN_499", verify_m001, reg, "DESCRIPTION_MAX_LEN", 499),
+        ("M001:MAX_TAGS_4", verify_m001, reg, "MAX_TAGS", 4),
+        ("M001:MAX_SCREENSHOTS_4", verify_m001, reg, "MAX_SCREENSHOTS", 4),
+        ("M001:validate_screenshot_url", verify_m001, reg, "validate_screenshot_url", lambda *_a, **_kw: None),
+        ("M001:SCREENSHOT_MAX_BYTES_minus1", verify_m001, reg, "SCREENSHOT_MAX_BYTES", 2 * 1024 * 1024 - 1),
+        ("M001:validate_thumbnail", verify_m001, reg, "validate_thumbnail", lambda *_a: None),
+        ("M001:THUMBNAIL_MAX_BYTES_20479", verify_m001, reg, "THUMBNAIL_MAX_BYTES", 20 * 1024 - 1),
+        ("M001:validate_allowed_files", verify_m001, reg, "validate_allowed_files", lambda *_a: None),
+        ("M001:compile_catalog_index", verify_m001, reg, "compile_catalog_index", lambda *_a, **_kw: {"version": 1, "plugins": {}, "authors": {}}),
+        ("M001:upsert_index_plugin", verify_m001, reg, "upsert_index_plugin", lambda idx, pn, ent: idx["plugins"].__setitem__(pn, dict(ent))),
+        ("M001:remove_index_plugin", verify_m001, reg, "remove_index_plugin", lambda _idx, _pn: False),
+        ("M001:render_discussion_body", verify_m001, reg, "render_discussion_body", lambda *_a: "sabotaged\n"),
+        ("M001:discussion_marker_name", verify_m001, reg, "discussion_marker_name", lambda _b: None),
+        ("M001:find_orphan_names", verify_m001, reg, "find_orphan_names", lambda *_a, **_kw: []),
+        ("M001:chunks", verify_m001, reg, "chunks", lambda items, _n: [list(items)] if items else []),
+        ("M001:extract_alias_errors", verify_m001, reg, "extract_alias_errors", lambda _p: {}),
+        ("M001:extract_plugin_version", verify_m001, reg, "extract_plugin_version", lambda _t: None),
+        ("M001:extract_commit_info", verify_m001, reg, "extract_commit_info", lambda _o: None),
+        ("M001:apply_star_updates", verify_m001, reg, "apply_star_updates", lambda _idx, _u: 0),
+        ("M001:publish_index_release", verify_m001, reg, "publish_index_release", lambda *_a, **_kw: 0),
+        ("M001:download_index_release", verify_m001, reg, "download_index_release", lambda *_a, **_kw: 0),
+        ("M001:audit_plugin_catalog", verify_m001, reg, "audit_plugin_catalog", lambda _r: {k: 0 for k in ("plugin_dirs_total", "plugin_names_resolved", "indexed_plugins", "index_yaml_present", "legacy_plugin_yaml_only", "blocked_plugins", "index_yaml_invalid", "index_yaml_missing_keys", "max_screenshots", "generated_thumbnails", "orphan_thumbnails", "local_thumbnails", "plugins_without_any_thumbnail", "abandoned_present", "surfaces_present", "index_coherent")}),
+    ])
     for label, cfn, mod, attr, fake in sabotages:
         _assert_breaks(label, cfn, mod, attr, fake)
 
@@ -2395,7 +3231,25 @@ def run_sabotage_suite() -> int:
     finally:
         cat.MARKETPLACE_PLAYBOOKS = orig_pbs
 
-    return len(sabotages) + 2
+    _orig_compile_cat = reg.compile_catalog_index
+
+    def _bad_compile_parasite(*a, **kw):
+        out = _orig_compile_cat(*a, **kw)
+        first_k = next(iter(out["plugins"]))
+        out["plugins"][first_k]["extra_parasite_key"] = "must_fail"
+        return out
+
+    reg.compile_catalog_index = _bad_compile_parasite
+    broke_m001_extra = False
+    try:
+        verify_m001()
+    except Exception:
+        broke_m001_extra = True
+    finally:
+        reg.compile_catalog_index = _orig_compile_cat
+    assert broke_m001_extra, "SABOTAGE CLÉ EN TROP M001 NON DÉTECTÉ !"
+
+    return len(sabotages) + 3
 
 
 # Phase C : parité stricte -> sabotage complet -> auto-tests honnêtes -> reçus R10 mesurés
@@ -2409,11 +3263,13 @@ r04 = f04.run_fkb04_self_test(head_sha40=sha, repo_root=iso)
 r02 = f02.run_fkb02_self_test(repo_root=iso, head_sha40=sha)
 rcat = cat.run_self_test(head_sha40=sha, repo_root=iso)
 rtrd = trd.run_trading_copilot_self_test(head_sha40=sha, repo_root=iso)
+rreg = reg.run_plugin_registry_self_test(head_sha40=sha, repo_root=iso)
 
 assert r04["source_parity_verified"] == [], f"Auto-déclaration interdite: {r04['source_parity_verified']}"
 assert r02["source_parity_verified"] == [], f"Auto-déclaration interdite: {r02['source_parity_verified']}"
 assert rcat["source_parity_verified"] == [], f"Auto-déclaration interdite: {rcat['source_parity_verified']}"
 assert rtrd["source_parity_verified"] == [], f"Auto-déclaration interdite: {rtrd['source_parity_verified']}"
+assert rreg["source_parity_verified"] == [], f"Auto-déclaration interdite: {rreg['source_parity_verified']}"
 assert "headless-fallback" not in json.dumps(r04) and "HeadlessDesktopSession" not in json.dumps(r04)
 assert r04["desktop_live_verified"] is False or r04["desktop_live_windows"] >= 1
 
@@ -2448,6 +3304,11 @@ rectrd = trd.consign_trading_parity_receipt(
     sha,
     repo_root=iso,
 )
+recreg = reg.consign_plugin_registry_parity_receipt(
+    {"a0-plugins": {"compared_against_source": True, "cases_compared": case_counts["a0-plugins"], "cases_matched": case_counts["a0-plugins"]}},
+    sha,
+    repo_root=iso,
+)
 
 proven_mods = (
     rec04["verified_modules"]
@@ -2455,6 +3316,7 @@ proven_mods = (
     + reccat["verified_modules"]
     + recvd["verified_modules"]
     + rectrd["verified_modules"]
+    + recreg["verified_modules"]
 )
 
 print(json.dumps({
@@ -2462,7 +3324,7 @@ print(json.dumps({
     "sabotages_detected": sabotage_detected_count,
     "case_counts": case_counts,
     "desktop_live_verified": bool(r04["desktop_live_verified"]),
-    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"], "trd": rectrd["r10_entry_id"]},
+    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"], "trd": rectrd["r10_entry_id"], "reg": recreg["r10_entry_id"]},
 }))
 '''
 
@@ -2550,6 +3412,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             "00_Memoire/bundle",
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_foundation_kernel.py",
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_discovery_catalog.py",
+            "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_plugin_registry_organ.py",
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb04_anything_organ.py",
             "01_Forkable/FKB00_Runtime/00_A0_Core/aspace_fkb02_memory_organ.py",
             "01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py",
@@ -2559,7 +3422,8 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             "01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py",
             "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
             "01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py",
-            # Sources réelles M044, M050, M056, M074, M084, M117, M118 pour Phase A avant suppression
+            # Sources réelles M001, M044, M050, M056, M074, M084, M117, M118 pour Phase A avant suppression
+            "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/clm",
             "01_Forkable/FKB02_Memory/knowledge-catalog/okf",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/cli-anything-plugin",
@@ -2595,6 +3459,11 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             iso_root / "test_input_m074_fixtures",
             ignore=ign,
         )
+        m001_in = iso_root / "test_input_m001_catalog"
+        m001_src_cat = ROOT / "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins"
+        for sub_cat in ("plugins", "authors", "generated"):
+            shutil.copytree(m001_src_cat / sub_cat, m001_in / sub_cat, ignore=ign)
+        shutil.copy2(m001_src_cat / "scripts" / "plugin_discussion_template.md", m001_in / "plugin_discussion_template.md")
 
         (iso_root / "diff_inputs.json").write_text(json.dumps(diff_inputs, ensure_ascii=False), encoding="utf-8")
 
@@ -2619,8 +3488,8 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             text=True,
         )
         parsed = json.loads(iso_out)
-        assert parsed["sabotages_detected"] >= 80, (
-            f"Couverture sabotage insuffisante : attendu >= 80, obtenu {parsed['sabotages_detected']}"
+        assert parsed["sabotages_detected"] >= 120, (
+            f"Couverture sabotage insuffisante : attendu >= 120, obtenu {parsed['sabotages_detected']}"
         )
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])
@@ -2628,6 +3497,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         # Orchestrateurs câblés dans l'arbre physiquement amputé
         for rel_script, extra_args in [
             ("01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py", []),
+            ("01_Forkable/FKB00_Runtime/00_A0_Core/aspace_plugin_registry_organ.py", []),
             ("01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py", ["--self-test"]),
             ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
             ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
@@ -2641,6 +3511,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
     before_lines = len(journal_path.read_text(encoding="utf-8").splitlines()) if journal_path.exists() else 0
     for rel_script, extra_args in [
         ("01_Forkable/FKB00_Runtime/00_A0_Core/a0_recursive_factory.py", []),
+        ("01_Forkable/FKB00_Runtime/00_A0_Core/aspace_plugin_registry_organ.py", []),
         ("01_Forkable/FKB00_Runtime/00_A0_Core/aspace_freecompute_router.py", []),
         ("01_Forkable/FKB01_Inference/03_Inference_FreeCloud/aspace_freecloud_gateway.py", ["--self-test"]),
         ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
@@ -2650,7 +3521,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
     ]:
         subprocess.check_call([sys.executable, str(ROOT / rel_script), *extra_args], cwd=str(ROOT), stdout=subprocess.DEVNULL)
     after_lines = len(journal_path.read_text(encoding="utf-8").splitlines())
-    assert after_lines >= before_lines + 7
+    assert after_lines >= before_lines + 8
 
     assert "llm-wiki" not in diff_proven, "M120 llm-wiki ne doit jamais être auto-ajouté à diff_proven"
     print(
@@ -2885,6 +3756,7 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
 
     assert len(reg_id_to_name) == 120
     assert carte_id_to_name == reg_id_to_name, "Divergence ID<->Module entre CARTE-DES-PRINCIPES et REGISTRE-DE-FUSION"
+    assert reg_id_to_name["M001"] == "a0-plugins"
     assert reg_id_to_name["M074"] == "tradingview-indicator-search-mcp-server"
     assert reg_id_to_name["M084"] == "video-director"
     assert reg_id_to_name["M095"] == "BlenderWorld"
@@ -2892,8 +3764,8 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
 
     name_to_id = {v: k for k, v in reg_id_to_name.items()}
     diff_ids = {name_to_id[m] for m in (proven_fusionne - RIG_INFINITY_PROVEN_F8)}
-    assert diff_ids == {"M044", "M050", "M056", "M074", "M084", "M117", "M118"}, (
-        f"Les 7 preuves différentielles attendues sont {{M044, M050, M056, M074, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
+    assert diff_ids == {"M001", "M044", "M050", "M056", "M074", "M084", "M117", "M118"}, (
+        f"Les 8 preuves différentielles attendues sont {{M001, M044, M050, M056, M074, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
     )
 
     assert by_name["TradingView-Unified-MCP"][0] == "**PARTIEL**", (
@@ -2978,6 +3850,8 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "01_Forkable/check-modules-lock.py",
         "pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/checks.ps1",
         "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
+        "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
+        "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
         "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
         "upload-artifact",
     ):

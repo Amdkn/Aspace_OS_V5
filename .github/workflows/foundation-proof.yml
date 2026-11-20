@@ -47,6 +47,7 @@ jobs:
         run: |
           git submodule sync --recursive
           git submodule update --init --recursive -- \
+            01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins \
             01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity \
             01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models \
             01_Forkable/FKB02_Memory/knowledge-catalog \
@@ -56,6 +57,9 @@ jobs:
           RIG_HEAD="$(git -C 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity rev-parse HEAD)"
           echo "RigInfinity HEAD=${RIG_HEAD}"
           test "${RIG_HEAD}" = "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4"
+          A0_PLUGINS_HEAD="$(git -C 01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins rev-parse HEAD)"
+          echo "a0-plugins HEAD=${A0_PLUGINS_HEAD}"
+          test "${A0_PLUGINS_HEAD}" = "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa"
 
       - name: Execute 3 mandatory foundation proofs (fail-closed, save logs & exit codes)
         run: |
