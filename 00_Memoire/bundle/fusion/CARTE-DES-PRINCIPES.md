@@ -619,7 +619,7 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M074 — `tradingview-indicator-search-mcp-server` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server` | repo `https://github.com/Amdkn/tradingview-indicator-search-mcp-server.git` | SHA/pin `cde68c7265ca` | licence `MIT` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/README.md`, `01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/package.json`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste fusion avec l'adaptateur Pine Script K5 et retrait gitlink.)
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Portage 1:1 dans `aspace_trading_copilot_foundation.py` prouvé en différentiel `==` vs Node v24 sur 6 fixtures avant/après suppression physique en `iso_root` + 20 sabotages + reçu R10 ; gitlink conservé pour Phase A oracle amont.)
 - **Principe** : Recherche et extraction directe du code source Pine Script d'indicateurs publics via MCP sans hallucination de syntaxe.
 - **Invariants** : Lecture seule ; citation exacte de l'indicateur source.
 - **Interfaces** : Serveur MCP search/fetch Pine Script.

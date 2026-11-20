@@ -40,5 +40,5 @@ amends: "ADR-14"
 |---|---|---|---|---|
 | **`ÂME`** | `Automaton` | `K1` (11) + `K4` (18) | **29** | `2` différentiels durcis (`M044`, `M050`) ; `M120 llm-wiki` rétrogradé `PARTIEL` (audit fix Cycle 6) |
 | **`SYSTÈME NERVEUX`** | `Infinity` | Bus L0 (7) + `K3` (15) + `K3-ML` (7) | **29** | `3` F8 (`infinity`, etc. · total `9` F8 Rust sur `RigInfinity`) + `M118` |
-| **`CORPS`** | `OpenRig` | `K2` (26) + `K5 · Métabolisme` (36) | **62** | `6` F8 + `M056` + `M084` (`video-director`) + `M117` |
-| **Total** | — | **Tous les organes** | **120** | **15 `FUSIONNÉ`** (`9` F8 Rust + `6` parité/sabotage stricts, zéro auto-certification) |
+| **`CORPS`** | `OpenRig` | `K2` (26) + `K5 · Métabolisme` (36) | **62** | `6` F8 + `M056` + `M074` (Cycle 7 Vague 1) + `M084` (`video-director`) + `M117` |
+| **Total** | — | **Tous les organes** | **120** | **16 `FUSIONNÉ`** (`9` F8 Rust + `7` parité/sabotage stricts, zéro auto-certification) |

@@ -51,7 +51,8 @@ jobs:
             01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models \
             01_Forkable/FKB02_Memory/knowledge-catalog \
             01_Forkable/FKB04_Tools_Anything/CLI-Anything \
-            01_Forkable/FKB07_Money_Maker/02_Video/video-director
+            01_Forkable/FKB07_Money_Maker/02_Video/video-director \
+            01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server
           RIG_HEAD="$(git -C 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity rev-parse HEAD)"
           echo "RigInfinity HEAD=${RIG_HEAD}"
           test "${RIG_HEAD}" = "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4"

@@ -104,6 +104,10 @@ SUBMODULE_SENTINELS = (
         "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
         "video-director/scripts/check_timeline.py",
     ),
+    (
+        "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
+        "src/parse.js",
+    ),
 )
 
 SOURCE_DIRS_TO_DELETE_FOR_TEST = [
@@ -126,8 +130,9 @@ SOURCE_DIRS_TO_DELETE_FOR_TEST = [
     "01_Forkable/FKB02_Memory/infinite-brain-harness",
     "01_Forkable/FKB02_Memory/infinite-brain-os",
     "01_Forkable/FKB02_Memory/knowledge-catalog",
-    # FKB07 M084 video-director + Extra FKB natifs absorbés (M117, M118)
+    # FKB07 M084 video-director + M074 tradingview-indicator-search + Extra FKB natifs absorbés (M117, M118)
     "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
+    "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
     "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
     "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
 ]
@@ -948,9 +953,315 @@ for fp in sorted((m118_dir / "opportunities").glob("OPP-*.md")):
     }
 m118_out = {"registry": raw_reg, "dossiers": m118_dossiers}
 
+
+# ============================================================================
+# M074: tradingview-indicator-search-mcp-server upstream (Node ESM + node:sqlite)
+# ============================================================================
+node_exe = shutil.which("node")
+assert node_exe is not None, "node (>=22.5) requis pour l'oracle amont M074"
+m74_dir = iso / "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server"
+m74_fix_dir = m74_dir / "test" / "fixtures"
+m74_mjs_path = iso / "m074_oracle.mjs"
+m74_out_path = iso / "m074_oracle_out.json"
+
+m74_mjs_code = r"""
+import fs from 'node:fs';
+import path from 'node:path';
+import { pathToFileURL } from 'node:url';
+
+const m74Root = path.resolve(process.argv[2]);
+const fixDir = path.resolve(process.argv[3]);
+const outFile = path.resolve(process.argv[4]);
+
+const { config: baseConfig } = await import(pathToFileURL(path.join(m74Root, 'src/config.js')).href);
+const parseMod = await import(pathToFileURL(path.join(m74Root, 'src/parse.js')).href);
+const { Store, utcDay } = await import(pathToFileURL(path.join(m74Root, 'src/db.js')).href);
+const { Throttle } = await import(pathToFileURL(path.join(m74Root, 'src/throttle.js')).href);
+const { HttpError } = await import(pathToFileURL(path.join(m74Root, 'src/http.js')).href);
+const { TradingView, normalizeScriptType } = await import(pathToFileURL(path.join(m74Root, 'src/tradingview.js')).href);
+const { createTools } = await import(pathToFileURL(path.join(m74Root, 'src/tools.js')).href);
+
+const loadFix = (f) => JSON.parse(fs.readFileSync(path.join(fixDir, f), 'utf8'));
+const safeCall = (fn) => {
+  try {
+    return { ok: true, val: fn() };
+  } catch (err) {
+    return { ok: false, name: err?.name ?? 'Error', msg: String(err?.message ?? err) };
+  }
+};
+const safeAsync = async (fn) => {
+  try {
+    return { ok: true, val: await fn() };
+  } catch (err) {
+    return { ok: false, name: err?.name ?? 'Error', msg: String(err?.message ?? err) };
+  }
+};
+
+const genFix = loadFix('slug-feed-general.json');
+const edFix = loadFix('slug-feed-editors.json');
+const scalpFix = loadFix('slug-feed-scalping.json');
+const authFix = loadFix('author-feed.json');
+const facOpen = loadFix('facade-open.json');
+const facProt = loadFix('facade-protected.json');
+
+const slugGen = parseMod.parseSlugFeed(genFix);
+const slugEd = parseMod.parseSlugFeed(edFix);
+const slugScalp = parseMod.parseSlugFeed(scalpFix);
+const authParsed = parseMod.parseAuthorFeed(authFix);
+const longItem = {
+  script_id_part: 'PUB;a',
+  name: 'Long Winded Indicator',
+  description: 'word '.repeat(2000),
+};
+
+const parsersOut = {
+  slugify: ['trend following', '  Order   Blocks  ', "Elliott's Wave", 'Elliott\u2019s Wave', 'RSI/MACD combo', '   ', '!!!', null, ''].map(parseMod.slugify),
+  script_types: ['indicator', 'indicators', 'STRATEGY', 'libraries', 'all', 'nonsense', '', null].map(normalizeScriptType),
+  pine_versions: ['//@version=5\nstudy("x")', '// @version = 6\n', 'no pragma here', null].map(parseMod.detectPineVersion),
+  chart_ids: [
+    'https://www.tradingview.com/script/K0SEi3Ct-TL-PbD/',
+    'https://www.tradingview.com/script/abc123/',
+    'nonsense',
+    null,
+  ].map(parseMod.extractIdFromChartUrl),
+  snippets: [
+    parseMod.snippet('a\n\n  b   c', 100),
+    parseMod.snippet('x'.repeat(500), 10),
+    parseMod.snippet('hello   ', 10),
+    parseMod.snippet('', 10),
+  ],
+  listings: [
+    parseMod.toListing(slugGen.items[0], 300),
+    parseMod.toListing(longItem, 300),
+  ],
+  slug_general: slugGen,
+  slug_editors: slugEd,
+  slug_scalping: slugScalp,
+  slug_invalid: safeCall(() => parseMod.parseSlugFeed({ data: {} })).ok,
+  author_feed: authParsed,
+  author_invalid: safeCall(() => parseMod.parseAuthorFeed({ count: 3 })).ok,
+  facade_cases: [
+    parseMod.parseFacade(facOpen, { scriptIdPart: 'PUB;abc' }),
+    parseMod.parseFacade(facProt, { scriptIdPart: 'PUB;xyz' }),
+    parseMod.parseFacade(null),
+    parseMod.parseFacade({}),
+    parseMod.parseFacade({ source: 123 }),
+    parseMod.parseFacade({ source: '//@version=4\nstrategy("s")', extra: { kind: 'strategy', is_price_study: false }, lastVersionMaj: '3' }, { scriptIdPart: 'PUB;s1' }),
+  ],
+  utc_days: [utcDay(1784973600000), utcDay(1785060000000), utcDay(0)],
+};
+
+const store = new Store(':memory:');
+const tBase = 1784973600000;
+const upsertCount = store.upsertScripts([
+  { script_id_part: 'PUB;a', name: 'Supertrend Pro', author: 'alice', script_type: 'strategy', likes: 100, open_source: true, script_access: 1, description: 'A trend following strategy' },
+  { script_id_part: 'PUB;b', name: 'RSI Basic', author: 'bob', script_type: 'indicator', likes: 10, open_source: true, script_access: 1, description: 'A mean reversion oscillator' },
+], tBase);
+store.upsertScript({ script_id_part: 'PUB;a', name: 'Supertrend Pro', author: 'alice', script_type: 'strategy', likes: 120, open_source: true, script_access: 1, description: 'A trend following strategy' }, tBase + 1);
+store.putSource({ script_id_part: 'PUB;a', version: '1', source: '//@version=5\nstrategy("x")\nta.supertrend(3, 10)', pine_version: 5, kind: 'strategy', script_name: 'Supertrend Pro' }, tBase + 2);
+store.markProtected('PUB;closed', tBase + 3);
+const day1 = 1784973600000;
+const day2 = 1785060000000;
+store.logRequest({ host: 'h', path: '/a', status: 200, ms: 5, outcome: 'ok' }, day1);
+store.logRequest({ host: 'h', path: '/b', status: 200, ms: 5, outcome: 'ok' }, day1);
+store.logRequest({ host: 'h', path: '/c', status: 200, ms: 5, outcome: 'ok' }, day2);
+store.putCachedSearch('k', 'search', { q: 'supertrend' }, { total: 1, items: [] }, 1_000_000);
+store.putCookieJar('h', 'a=1; b=2', 1000);
+
+const storeOut = {
+  upsert_count: upsertCount,
+  has_source_a: store.hasSource('PUB;a'),
+  has_source_b: store.hasSource('PUB;b'),
+  source_a_latest: store.getSource('PUB;a')?.source ?? null,
+  source_a_v1: store.getSource('PUB;a', '1')?.source ?? null,
+  source_missing: store.getSource('PUB;missing'),
+  closed_open_source: store.getScript('PUB;closed')?.open_source ?? null,
+  closed_access: store.getScript('PUB;closed')?.script_access ?? null,
+  req_day1: store.countRequestsToday(day1),
+  req_day2: store.countRequestsToday(day2),
+  cache_hit: store.getCachedSearch('k', 5000, 1_001_000) !== null,
+  cache_miss: store.getCachedSearch('k', 5000, 1_009_000) === null,
+  cookie_hit: store.getCookieJar('h', 5000, 2000),
+  cookie_miss: store.getCookieJar('h', 500, 2000),
+  q_fts_name: store.queryCorpus({ query: 'supertrend' }).map((r) => r.script_id_part),
+  q_fts_desc: store.queryCorpus({ query: 'reversion' }).map((r) => r.script_id_part),
+  q_source_contains: store.queryCorpus({ sourceContains: 'ta.supertrend' }).map((r) => r.script_id_part),
+  q_type: store.queryCorpus({ scriptType: 'strategy' }).map((r) => r.script_id_part),
+  q_author: store.queryCorpus({ author: 'ALICE' }).map((r) => r.script_id_part),
+  q_likes: store.queryCorpus({ minLikes: 50 }).map((r) => r.script_id_part),
+  q_with_source: store.queryCorpus({ withSourceOnly: true }).map((r) => r.script_id_part),
+  q_sorted_likes: store.queryCorpus({}).map((r) => r.likes),
+};
+store.close();
+
+function makeThrottleHarness(overrides = {}, deps = {}) {
+  let now = 0;
+  const slept = [];
+  const cfg = {
+    minDelayMs: 1000, maxDelayMs: 3000, breakEvery: 3,
+    breakMinMs: 20000, breakMaxMs: 30000, dailyBudget: 100,
+    breakerThreshold: 3, breakerCooldownMs: 900000, ...overrides,
+  };
+  const thr = new Throttle(cfg, {
+    now: () => now,
+    sleep: async (ms) => { slept.push(ms); now += ms; },
+    random: () => 0.5,
+    ...deps,
+  });
+  return { thr, slept, advance: (ms) => { now += ms; } };
+}
+
+const h1 = makeThrottleHarness();
+await h1.thr.run(async () => 'ok1');
+await h1.thr.run(async () => 'ok2');
+h1.advance(10_000);
+await h1.thr.run(async () => 'ok3');
+await h1.thr.run(async () => 'ok4');
+const errRun = await safeAsync(() => h1.thr.run(async () => { throw new Error('boom'); }));
+const afterErr = await h1.thr.run(async () => 'still works');
+
+const h2 = makeThrottleHarness({ breakerThreshold: 3 });
+const blocks1 = [h2.thr.noteBlocked(), h2.thr.noteBlocked(), h2.thr.noteBlocked()];
+const tripErr = await safeAsync(() => h2.thr.run(async () => 'nope'));
+h2.advance(900_001);
+const reopenedOk = await h2.thr.run(async () => 'reopened');
+h2.thr.noteBlocked();
+h2.thr.noteOk();
+const streakReset = h2.thr.noteBlocked();
+
+const h3 = makeThrottleHarness({ dailyBudget: 5 }, { countToday: () => 5 });
+const budgetDenied = await safeAsync(() => h3.thr.run(async () => 'x'));
+const h4 = makeThrottleHarness({ dailyBudget: 5 }, { countToday: () => 4 });
+const budgetAllowed = await safeAsync(() => h4.thr.run(async () => 'x'));
+
+const throttleOut = {
+  slept: h1.slept,
+  err_msg: errRun.msg,
+  after_err: afterErr,
+  status1: h1.thr.status(),
+  blocks1,
+  trip_is_open: tripErr.ok === false && tripErr.msg.includes('circuit is OPEN'),
+  reopened_ok: reopenedOk,
+  streak_reset: streakReset,
+  budget_denied: budgetDenied.ok === false && budgetDenied.msg.includes('Daily request budget of 5'),
+  budget_allowed: budgetAllowed.val,
+};
+
+function fakeHttp(routes) {
+  const calls = [];
+  return {
+    calls,
+    async warmUp() {},
+    async getJson(url) {
+      calls.push(url);
+      for (const [pat, val] of routes) {
+        if (url.includes(pat)) {
+          if (val instanceof Error) throw val;
+          return typeof val === 'function' ? val(url) : structuredClone(val);
+        }
+      }
+      throw new Error(`No route for ${url}`);
+    },
+    async getText(url) {
+      calls.push(url);
+      return '<html>PUB;5bbd9e495f604c3682671a0e8920a188 and USER;747343354ba641a1973907f549b1cd10</html>';
+    },
+  };
+}
+
+const cfg = { ...baseConfig, dbPath: ':memory:', snippetChars: 120, harvestMaxScripts: 200 };
+function buildCtx(routes) {
+  const st = new Store(':memory:');
+  const th = new Throttle(cfg, { sleep: async () => {}, countToday: () => 0 });
+  const ht = fakeHttp(routes);
+  const tv = new TradingView({ config: cfg, http: ht, store: st });
+  const tl = createTools({ config: cfg, tv, store: st, throttle: th, http: ht });
+  return { st, th, ht, tv, tl };
+}
+
+const ctx1 = buildCtx([
+  ['/api/v1/scripts/', authFix],
+  ['editors-picks', edFix],
+  ['/scripts/', (url) => (url.includes('trend-following') && url.includes('page-3')) ? genFix : scalpFix],
+  ['pine-facade', (url) => url.includes('ba544ec71a3945549669f3babb981424') ? facProt : facOpen],
+]);
+const s1 = await ctx1.tl.search_scripts({ query: 'trend following', script_type: 'strategy', sort: 'latest_popular' });
+const s2 = await ctx1.tl.search_scripts({ query: 'trend following', script_type: 'strategy', sort: 'latest_popular' });
+const sTop = await ctx1.tl.search_scripts({ query: 'trend following', script_type: 'strategies', page: 3 });
+const sEd = await ctx1.tl.list_editors_picks({ script_type: 'indicator' });
+const sAuth = await ctx1.tl.list_author_scripts({ username: 'TraderlifestyleYT' });
+const srcChart = await ctx1.tl.get_script_source({ chart_url: 'https://www.tradingview.com/script/K0SEi3Ct-TL-PbD-Shape-Pro/' });
+const srcCache = await ctx1.tl.get_script_source({ script_id_part: 'PUB;5bbd9e495f604c3682671a0e8920a188' });
+const srcProt = await ctx1.tl.get_script_source({ script_id_part: 'PUB;ba544ec71a3945549669f3babb981424' });
+const srcProtAgain = await ctx1.tl.get_script_source({ script_id_part: 'PUB;ba544ec71a3945549669f3babb981424' });
+const qWide = ctx1.tl.query_corpus({ query: 'Scalping', limit: 50 });
+const qDeep = ctx1.tl.query_corpus({ limit: 50, include_source: true });
+const stStatus = ctx1.tl.fetch_status();
+
+const scalpProt = loadFix('slug-feed-scalping.json');
+scalpProt.data.ideas.data.items[0].script_access = 2;
+scalpProt.data.ideas.data.items[1].script_access = 3;
+const ctxProt = buildCtx([['/scripts/', scalpProt]]);
+const tvProtRes = await ctxProt.tv.searchScripts({ query: 'scalping' });
+
+const ctxErr = buildCtx([
+  ['/api/v1/scripts/', new HttpError(400, 'u', '')],
+  ['/scripts/', new HttpError(404, 'u', '')],
+]);
+const err404Slug = await safeAsync(() => ctxErr.tv.searchScripts({ query: 'not a real topic' }));
+const err400User = await safeAsync(() => ctxErr.tv.authorScripts({ username: 'baduser' }));
+const errBadType = await safeAsync(() => ctxErr.tv.searchScripts({ query: 'x', scriptType: 'nonsense' }));
+const errBadId = await safeAsync(() => ctxErr.tv.getSource({ scriptIdPart: 'K0SEi3Ct' }));
+const errEmptyGetSrc = await safeAsync(() => ctxErr.tl.get_script_source({}));
+
+const ctxH = buildCtx([
+  ['/scripts/', (url) => url.includes('page-') ? { data: { ideas: { data: { total: 0, items: [], next: null } } }, meta: { heading: 'none' } } : scalpFix],
+  ['pine-facade', facOpen],
+]);
+const hRes = await ctxH.tl.harvest_scripts({ query: 'scalping', max_scripts: 5 });
+const hAgain = await ctxH.tl.harvest_scripts({ harvest_id: hRes.harvest_id });
+const hUnknown = await safeAsync(() => ctxH.tl.harvest_scripts({ harvest_id: 'nope' }));
+const hNoAuthor = await safeAsync(() => ctxH.tl.harvest_scripts({ source: 'author' }));
+
+const normHarvest = (obj) => {
+  const c = structuredClone(obj);
+  if (typeof c.harvest_id === 'string') c.harvest_id = '<HARVEST_ID>';
+  return c;
+};
+
+const toolsOut = {
+  calls_ctx1: ctx1.ht.calls,
+  s1, s2, sTop, sEd, sAuth,
+  srcChart, srcCache, srcProt, srcProtAgain,
+  qWide, qDeep,
+  stStatus_keys_and_corpus: { corpus: stStatus.corpus, pacing: stStatus.pacing, throttle_budget: stStatus.throttle.daily_budget },
+  filtered_protected_count: tvProtRes.filtered_protected,
+  filtered_all_open: tvProtRes.items.every((i) => i.open_source),
+  errors: {
+    slug404: err404Slug.msg.includes('hyphenated'),
+    user400: err400User.msg.includes('rejected the username'),
+    badType: errBadType.msg.includes('Unknown script_type'),
+    badId: errBadId.msg.includes('not a script_id_part'),
+    emptySrc: errEmptyGetSrc.msg.includes('script_id_part or chart_url'),
+    hUnknown: hUnknown.msg.includes('Unknown harvest_id'),
+    hNoAuthor: hNoAuthor.msg.includes('requires a username'),
+  },
+  harvest_len_ok: typeof hRes.harvest_id === 'string' && hRes.harvest_id.length === 8,
+  hRes: normHarvest(hRes),
+  hAgain: normHarvest(hAgain),
+};
+
+fs.writeFileSync(outFile, JSON.stringify({ parsersOut, storeOut, throttleOut, toolsOut }, null, 2), 'utf8');
+"""
+m74_mjs_path.write_text(m74_mjs_code, encoding="utf-8")
+subprocess.check_call([node_exe, str(m74_mjs_path), str(m74_dir), str(m74_fix_dir), str(m74_out_path)], cwd=str(iso))
+m074_out = json.loads(m74_out_path.read_text(encoding="utf-8"))
+m74_mjs_path.unlink()
+m74_out_path.unlink()
+
 (iso / "oracle_outputs.json").write_text(
     json.dumps(
-        {"m044": m044_out, "m050": m050_out, "m056": m056_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
+        {"m044": m044_out, "m050": m050_out, "m056": m056_out, "m074": m074_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
         ensure_ascii=False,
         indent=2,
     ),
@@ -978,11 +1289,13 @@ sha = sys.argv[1]
 
 sys.path.insert(0, str(iso / "01_Forkable/FKB00_Runtime/00_A0_Core"))
 sys.path.insert(0, str(iso / "01_Forkable/FKB07_Money_Maker/02_Video"))
+sys.path.insert(0, str(iso / "01_Forkable/FKB07_Money_Maker/01_Trading"))
 import aspace_foundation_kernel as fk
 import aspace_fkb02_memory_organ as f02
 import aspace_fkb04_anything_organ as f04
 import aspace_discovery_catalog as cat
 import aspace_video_studio_foundation as vsf
+import aspace_trading_copilot_foundation as trd
 
 # Aucune source supprimée ne doit subsister sous iso_root
 for _gone in (
@@ -990,6 +1303,7 @@ for _gone in (
     "01_Forkable/FKB02_Memory/knowledge-catalog",
     "01_Forkable/FKB04_Tools_Anything/CLI-Anything",
     "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
+    "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
     "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
     "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
 ):
@@ -1321,11 +1635,266 @@ def verify_m118() -> int:
     return 2 + len(inputs["m118"]["opp_ids"]) + 1 + len(expected_qual)
 
 
+
+def verify_m074() -> int:
+    fix_dir = iso / "test_input_m074_fixtures"
+    load_fix = lambda fn: json.loads((fix_dir / fn).read_text(encoding="utf-8"))
+    gen_fix = load_fix("slug-feed-general.json")
+    ed_fix = load_fix("slug-feed-editors.json")
+    scalp_fix = load_fix("slug-feed-scalping.json")
+    auth_fix = load_fix("author-feed.json")
+    fac_open = load_fix("facade-open.json")
+    fac_prot = load_fix("facade-protected.json")
+
+    def _sc_ok(fn):
+        try:
+            fn()
+            return True
+        except Exception:
+            return False
+
+    def _sc_msg(fn):
+        try:
+            return {"ok": True, "val": fn(), "msg": ""}
+        except Exception as exc:
+            return {"ok": False, "err": type(exc).__name__, "msg": str(exc)}
+
+    slug_gen = trd.tv_parse_slug_feed(gen_fix)
+    slug_ed = trd.tv_parse_slug_feed(ed_fix)
+    slug_scalp = trd.tv_parse_slug_feed(scalp_fix)
+    auth_parsed = trd.tv_parse_author_feed(auth_fix)
+    long_item = {"script_id_part": "PUB;a", "name": "Long Winded Indicator", "description": "word " * 2000}
+
+    py_parsers = {
+        "slugify": [trd.tv_slugify(x) for x in ["trend following", "  Order   Blocks  ", "Elliott's Wave", "Elliott\u2019s Wave", "RSI/MACD combo", "   ", "!!!", None, ""]],
+        "script_types": [trd.tv_normalize_script_type(x) for x in ["indicator", "indicators", "STRATEGY", "libraries", "all", "nonsense", "", None]],
+        "pine_versions": [trd.tv_detect_pine_version(x) for x in ['//@version=5\nstudy("x")', "// @version = 6\n", "no pragma here", None]],
+        "chart_ids": [trd.tv_extract_id_from_chart_url(x) for x in ["https://www.tradingview.com/script/K0SEi3Ct-TL-PbD/", "https://www.tradingview.com/script/abc123/", "nonsense", None]],
+        "snippets": [trd.tv_snippet("a\n\n  b   c", 100), trd.tv_snippet("x" * 500, 10), trd.tv_snippet("hello   ", 10), trd.tv_snippet("", 10)],
+        "listings": [trd.tv_to_listing(slug_gen["items"][0], 300), trd.tv_to_listing(long_item, 300)],
+        "slug_general": slug_gen,
+        "slug_editors": slug_ed,
+        "slug_scalping": slug_scalp,
+        "slug_invalid": _sc_ok(lambda: trd.tv_parse_slug_feed({"data": {}})),
+        "author_feed": auth_parsed,
+        "author_invalid": _sc_ok(lambda: trd.tv_parse_author_feed({"count": 3})),
+        "facade_cases": [
+            trd.tv_parse_facade(fac_open, script_id_part="PUB;abc"),
+            trd.tv_parse_facade(fac_prot, script_id_part="PUB;xyz"),
+            trd.tv_parse_facade(None),
+            trd.tv_parse_facade({}),
+            trd.tv_parse_facade({"source": 123}),
+            trd.tv_parse_facade({"source": '//@version=4\nstrategy("s")', "extra": {"kind": "strategy", "is_price_study": False}, "lastVersionMaj": "3"}, script_id_part="PUB;s1"),
+        ],
+        "utc_days": [trd.tv_utc_day(1784973600000), trd.tv_utc_day(1785060000000), trd.tv_utc_day(0)],
+    }
+    assert py_parsers == oracle["m074"]["parsersOut"], "M074 parsers mismatch"
+
+    store = trd.TradingViewIndicatorStore(":memory:")
+    t_base = 1784973600000
+    uc = store.upsert_scripts([
+        {"script_id_part": "PUB;a", "name": "Supertrend Pro", "author": "alice", "script_type": "strategy", "likes": 100, "open_source": True, "script_access": 1, "description": "A trend following strategy"},
+        {"script_id_part": "PUB;b", "name": "RSI Basic", "author": "bob", "script_type": "indicator", "likes": 10, "open_source": True, "script_access": 1, "description": "A mean reversion oscillator"},
+    ], t_base)
+    store.upsert_script({"script_id_part": "PUB;a", "name": "Supertrend Pro", "author": "alice", "script_type": "strategy", "likes": 120, "open_source": True, "script_access": 1, "description": "A trend following strategy"}, t_base + 1)
+    store.put_source({"script_id_part": "PUB;a", "version": "1", "source": '//@version=5\nstrategy("x")\nta.supertrend(3, 10)', "pine_version": 5, "kind": "strategy", "script_name": "Supertrend Pro"}, t_base + 2)
+    store.mark_protected("PUB;closed", t_base + 3)
+    d1, d2 = 1784973600000, 1785060000000
+    store.log_request(host="h", path="/a", status=200, ms=5, outcome="ok", now=d1)
+    store.log_request(host="h", path="/b", status=200, ms=5, outcome="ok", now=d1)
+    store.log_request(host="h", path="/c", status=200, ms=5, outcome="ok", now=d2)
+    store.put_cached_search("k", "search", {"q": "supertrend"}, {"total": 1, "items": []}, 1_000_000)
+    store.put_cookie_jar("h", "a=1; b=2", 1000)
+
+    py_store = {
+        "upsert_count": uc,
+        "has_source_a": store.has_source("PUB;a"),
+        "has_source_b": store.has_source("PUB;b"),
+        "source_a_latest": (store.get_source("PUB;a") or {}).get("source"),
+        "source_a_v1": (store.get_source("PUB;a", "1") or {}).get("source"),
+        "source_missing": store.get_source("PUB;missing"),
+        "closed_open_source": (store.get_script("PUB;closed") or {}).get("open_source"),
+        "closed_access": (store.get_script("PUB;closed") or {}).get("script_access"),
+        "req_day1": store.count_requests_today(d1),
+        "req_day2": store.count_requests_today(d2),
+        "cache_hit": store.get_cached_search("k", 5000, 1_001_000) is not None,
+        "cache_miss": store.get_cached_search("k", 5000, 1_009_000) is None,
+        "cookie_hit": store.get_cookie_jar("h", 5000, 2000),
+        "cookie_miss": store.get_cookie_jar("h", 500, 2000),
+        "q_fts_name": [r["script_id_part"] for r in store.query_corpus(query="supertrend")],
+        "q_fts_desc": [r["script_id_part"] for r in store.query_corpus(query="reversion")],
+        "q_source_contains": [r["script_id_part"] for r in store.query_corpus(source_contains="ta.supertrend")],
+        "q_type": [r["script_id_part"] for r in store.query_corpus(script_type="strategy")],
+        "q_author": [r["script_id_part"] for r in store.query_corpus(author="ALICE")],
+        "q_likes": [r["script_id_part"] for r in store.query_corpus(min_likes=50)],
+        "q_with_source": [r["script_id_part"] for r in store.query_corpus(with_source_only=True)],
+        "q_sorted_likes": [r["likes"] for r in store.query_corpus()],
+    }
+    store.close()
+    assert py_store == oracle["m074"]["storeOut"], "M074 store mismatch"
+
+    def _mk_th(overrides=None, **deps):
+        st = {"now": 0}
+        slept = []
+        cfg = {
+            "minDelayMs": 1000, "maxDelayMs": 3000, "breakEvery": 3,
+            "breakMinMs": 20000, "breakMaxMs": 30000, "dailyBudget": 100,
+            "breakerThreshold": 3, "breakerCooldownMs": 900000, **(overrides or {}),
+        }
+        def _adv(ms):
+            st["now"] += ms
+        def _slp(ms):
+            slept.append(ms)
+            st["now"] += ms
+        return trd.TradingViewThrottle(cfg, now=lambda: st["now"], sleep=_slp, random_fn=lambda: 0.5, **deps), slept, _adv
+
+    th1, sl1, adv1 = _mk_th()
+    th1.run(lambda: "ok1")
+    th1.run(lambda: "ok2")
+    adv1(10_000)
+    th1.run(lambda: "ok3")
+    th1.run(lambda: "ok4")
+    er1 = _sc_msg(lambda: th1.run(lambda: (_ for _ in ()).throw(RuntimeError("boom"))))
+    aft = th1.run(lambda: "still works")
+
+    th2, _, adv2 = _mk_th({"breakerThreshold": 3})
+    b1 = [th2.note_blocked(), th2.note_blocked(), th2.note_blocked()]
+    trp = _sc_msg(lambda: th2.run(lambda: "nope"))
+    adv2(900_001)
+    reop = th2.run(lambda: "reopened")
+    th2.note_blocked()
+    th2.note_ok()
+    sr = th2.note_blocked()
+
+    th3, _, _ = _mk_th({"dailyBudget": 5}, count_today=lambda: 5)
+    bden = _sc_msg(lambda: th3.run(lambda: "x"))
+    th4, _, _ = _mk_th({"dailyBudget": 5}, count_today=lambda: 4)
+    ball = _sc_msg(lambda: th4.run(lambda: "x"))
+
+    py_thr = {
+        "slept": sl1,
+        "err_msg": er1["msg"],
+        "after_err": aft,
+        "status1": th1.status(),
+        "blocks1": b1,
+        "trip_is_open": (not trp["ok"]) and ("circuit is OPEN" in trp["msg"]),
+        "reopened_ok": reop,
+        "streak_reset": sr,
+        "budget_denied": (not bden["ok"]) and ("Daily request budget of 5" in bden["msg"]),
+        "budget_allowed": ball["val"],
+    }
+    assert py_thr == oracle["m074"]["throttleOut"], "M074 throttle mismatch"
+
+    def _fake_http(routes):
+        calls = []
+        class _H:
+            def get_json(self, url, **kw):
+                calls.append(url)
+                for pat, val in routes:
+                    if pat in url:
+                        if isinstance(val, Exception):
+                            raise val
+                        return copy.deepcopy(val(url) if callable(val) else val)
+                raise RuntimeError(f"No route for {url}")
+            def get_text(self, url, **kw):
+                calls.append(url)
+                return "<html>PUB;5bbd9e495f604c3682671a0e8920a188 and USER;747343354ba641a1973907f549b1cd10</html>"
+        return calls, _H()
+
+    cfg_t = {**trd.DEFAULT_TRADINGVIEW_CONFIG, "snippetChars": 120, "harvestMaxScripts": 200}
+    def _build_ctx(routes):
+        st = trd.TradingViewIndicatorStore(":memory:")
+        th = trd.TradingViewThrottle(cfg_t, sleep=lambda _m: None, count_today=lambda: 0)
+        calls, ht = _fake_http(routes)
+        tv = trd.TradingViewClient(config=cfg_t, http=ht, store=st)
+        tl = trd.create_tradingview_tools(config=cfg_t, tv=tv, store=st, throttle=th, http=ht)
+        return st, calls, tv, tl
+
+    st1, calls1, tv1, tl1 = _build_ctx([
+        ("/api/v1/scripts/", auth_fix),
+        ("editors-picks", ed_fix),
+        ("/scripts/", lambda url: gen_fix if ("trend-following" in url and "page-3" in url) else scalp_fix),
+        ("pine-facade", lambda url: fac_prot if "ba544ec71a3945549669f3babb981424" in url else fac_open),
+    ])
+    s1 = tl1["search_scripts"](query="trend following", script_type="strategy", sort="latest_popular")
+    s2 = tl1["search_scripts"](query="trend following", script_type="strategy", sort="latest_popular")
+    s_top = tl1["search_scripts"](query="trend following", script_type="strategies", page=3)
+    s_ed = tl1["list_editors_picks"](script_type="indicator")
+    s_auth = tl1["list_author_scripts"](username="TraderlifestyleYT")
+    src_chart = tl1["get_script_source"](chart_url="https://www.tradingview.com/script/K0SEi3Ct-TL-PbD-Shape-Pro/")
+    src_cache = tl1["get_script_source"](script_id_part="PUB;5bbd9e495f604c3682671a0e8920a188")
+    src_prot = tl1["get_script_source"](script_id_part="PUB;ba544ec71a3945549669f3babb981424")
+    src_prot2 = tl1["get_script_source"](script_id_part="PUB;ba544ec71a3945549669f3babb981424")
+    q_wide = tl1["query_corpus"](query="Scalping", limit=50)
+    q_deep = tl1["query_corpus"](limit=50, include_source=True)
+    st_status = tl1["fetch_status"]()
+    st1.close()
+
+    scalp_p = copy.deepcopy(scalp_fix)
+    scalp_p["data"]["ideas"]["data"]["items"][0]["script_access"] = 2
+    scalp_p["data"]["ideas"]["data"]["items"][1]["script_access"] = 3
+    st_p, _, tv_p, _ = _build_ctx([("/scripts/", scalp_p)])
+    tv_p_res = tv_p.search_scripts(query="scalping")
+    st_p.close()
+
+    st_e, _, tv_e, tl_e = _build_ctx([
+        ("/api/v1/scripts/", trd.TradingViewHttpError(400, "u", "")),
+        ("/scripts/", trd.TradingViewHttpError(404, "u", "")),
+    ])
+    e404 = _sc_msg(lambda: tv_e.search_scripts(query="not a real topic"))
+    e400 = _sc_msg(lambda: tv_e.author_scripts(username="baduser"))
+    ebadt = _sc_msg(lambda: tv_e.search_scripts(query="x", script_type="nonsense"))
+    ebadi = _sc_msg(lambda: tv_e.get_source(script_id_part="K0SEi3Ct"))
+    eempt = _sc_msg(lambda: tl_e["get_script_source"]())
+    st_e.close()
+
+    st_h, _, _, tl_h = _build_ctx([
+        ("/scripts/", lambda url: {"data": {"ideas": {"data": {"total": 0, "items": [], "next": None}}}, "meta": {"heading": "none"}} if "page-" in url else scalp_fix),
+        ("pine-facade", fac_open),
+    ])
+    hr = tl_h["harvest_scripts"](query="scalping", max_scripts=5)
+    ha = tl_h["harvest_scripts"](harvest_id=hr["harvest_id"])
+    hu = _sc_msg(lambda: tl_h["harvest_scripts"](harvest_id="nope"))
+    hna = _sc_msg(lambda: tl_h["harvest_scripts"](source="author"))
+    st_h.close()
+
+    def _norm_h(o):
+        c = copy.deepcopy(o)
+        if isinstance(c.get("harvest_id"), str):
+            c["harvest_id"] = "<HARVEST_ID>"
+        return c
+
+    py_tools = {
+        "calls_ctx1": calls1,
+        "s1": s1, "s2": s2, "sTop": s_top, "sEd": s_ed, "sAuth": s_auth,
+        "srcChart": src_chart, "srcCache": src_cache, "srcProt": src_prot, "srcProtAgain": src_prot2,
+        "qWide": q_wide, "qDeep": q_deep,
+        "stStatus_keys_and_corpus": {"corpus": st_status["corpus"], "pacing": st_status["pacing"], "throttle_budget": st_status["throttle"]["daily_budget"]},
+        "filtered_protected_count": tv_p_res["filtered_protected"],
+        "filtered_all_open": all(i["open_source"] for i in tv_p_res["items"]),
+        "errors": {
+            "slug404": "hyphenated" in e404["msg"],
+            "user400": "rejected the username" in e400["msg"],
+            "badType": "Unknown script_type" in ebadt["msg"],
+            "badId": "not a script_id_part" in ebadi["msg"],
+            "emptySrc": "script_id_part or chart_url" in eempt["msg"],
+            "hUnknown": "Unknown harvest_id" in hu["msg"],
+            "hNoAuthor": "requires a username" in hna["msg"],
+        },
+        "harvest_len_ok": isinstance(hr["harvest_id"], str) and len(hr["harvest_id"]) == 8,
+        "hRes": _norm_h(hr),
+        "hAgain": _norm_h(ha),
+    }
+    assert py_tools == oracle["m074"]["toolsOut"], "M074 tools/TradingViewClient mismatch"
+    return len(py_parsers) + len(py_store) + len(py_thr) + len(py_tools)
+
+
 def verify_all() -> dict[str, int]:
     return {
         "context-language-models": verify_m044(),
         "knowledge-catalog": verify_m050(),
         "CLI-Anything": verify_m056(),
+        "tradingview-indicator-search-mcp-server": verify_m074(),
         "video-director": verify_m084(),
         "00_Marketplace_YoutubeSkills": verify_m117(),
         "04_Inference_Youtube_Discovery_Registry": verify_m118(),
@@ -1396,6 +1965,27 @@ def run_sabotage_suite() -> int:
         # M118
         ("M118:get_opportunity_dossier", verify_m118, cat, "get_opportunity_dossier", lambda o: {}),
         ("M118:qualify_inference_opportunity", verify_m118, cat, "qualify_inference_opportunity", lambda c, known_platforms=None: {}),
+        # M074 (toutes fonctions + méthodes + émoji UTF-16 + clé parasite)
+        ("M074:tv_slugify", verify_m074, trd, "tv_slugify", lambda q: "broken-slug"),
+        ("M074:tv_normalize_item", verify_m074, trd, "tv_normalize_item", lambda r: {"script_id_part": None}),
+        ("M074:tv_parse_slug_feed", verify_m074, trd, "tv_parse_slug_feed", lambda p: {"total": 0, "has_more": False, "next_path": None, "heading": None, "items": []}),
+        ("M074:tv_parse_author_feed", verify_m074, trd, "tv_parse_author_feed", lambda p: {"total": 0, "page_count": 1, "has_more": False, "next_path": None, "items": []}),
+        ("M074:tv_parse_facade", verify_m074, trd, "tv_parse_facade", lambda p, **kw: {"ok": False, "protected": True, "reason": "sabotaged", "script_id_part": None}),
+        ("M074:tv_detect_pine_version", verify_m074, trd, "tv_detect_pine_version", lambda s: None),
+        ("M074:tv_extract_id_from_chart_url", verify_m074, trd, "tv_extract_id_from_chart_url", lambda u: None),
+        ("M074:tv_snippet", verify_m074, trd, "tv_snippet", lambda t, m: "SABOTAGED"),
+        ("M074:_js_slice_utf16", verify_m074, trd, "_js_slice", lambda t, e: t[:e]),
+        ("M074:tv_to_listing", verify_m074, trd, "tv_to_listing", lambda i, n: {}),
+        ("M074:tv_to_listing_extra_key", verify_m074, trd, "tv_to_listing", lambda i, n, _o=trd.tv_to_listing: {**_o(i, n), "extra_parasite_key": "must_fail"}),
+        ("M074:tv_normalize_script_type", verify_m074, trd, "tv_normalize_script_type", lambda t: None),
+        ("M074:tv_utc_day", verify_m074, trd, "tv_utc_day", lambda ts=None: "1999-01-01"),
+        ("M074:Store.query_corpus", verify_m074, trd.TradingViewIndicatorStore, "query_corpus", lambda self, **kw: []),
+        ("M074:Store.mark_protected", verify_m074, trd.TradingViewIndicatorStore, "mark_protected", lambda self, sid, now=None: None),
+        ("M074:Store.get_cached_search", verify_m074, trd.TradingViewIndicatorStore, "get_cached_search", lambda self, k, ttl, now=None: None),
+        ("M074:Throttle.note_blocked", verify_m074, trd.TradingViewThrottle, "note_blocked", lambda self: False),
+        ("M074:Throttle.run", verify_m074, trd.TradingViewThrottle, "run", lambda self, fn: "sabotaged"),
+        ("M074:TradingViewClient.get_source", verify_m074, trd.TradingViewClient, "get_source", lambda self, **kw: {"ok": False, "protected": True, "reason": "sabotaged", "script_id_part": None}),
+        ("M074:create_tradingview_tools", verify_m074, trd, "create_tradingview_tools", lambda **kw: {k: (lambda *_a, **_kw: {}) for k in ("search_scripts", "list_editors_picks", "list_author_scripts", "get_script_source", "harvest_scripts", "query_corpus", "fetch_status")}),
     ]
     for label, cfn, mod, attr, fake in sabotages:
         _assert_breaks(label, cfn, mod, attr, fake)
@@ -1438,10 +2028,12 @@ verify_all()
 r04 = f04.run_fkb04_self_test(head_sha40=sha, repo_root=iso)
 r02 = f02.run_fkb02_self_test(repo_root=iso, head_sha40=sha)
 rcat = cat.run_self_test(head_sha40=sha, repo_root=iso)
+rtrd = trd.run_trading_copilot_self_test(head_sha40=sha, repo_root=iso)
 
 assert r04["source_parity_verified"] == [], f"Auto-déclaration interdite: {r04['source_parity_verified']}"
 assert r02["source_parity_verified"] == [], f"Auto-déclaration interdite: {r02['source_parity_verified']}"
 assert rcat["source_parity_verified"] == [], f"Auto-déclaration interdite: {rcat['source_parity_verified']}"
+assert rtrd["source_parity_verified"] == [], f"Auto-déclaration interdite: {rtrd['source_parity_verified']}"
 assert "headless-fallback" not in json.dumps(r04) and "HeadlessDesktopSession" not in json.dumps(r04)
 assert r04["desktop_live_verified"] is False or r04["desktop_live_windows"] >= 1
 
@@ -1471,12 +2063,18 @@ recvd = vsf.consign_video_director_parity_receipt(
     sha,
     repo_root=iso,
 )
+rectrd = trd.consign_trading_parity_receipt(
+    {"tradingview-indicator-search-mcp-server": {"compared_against_source": True, "cases_compared": case_counts["tradingview-indicator-search-mcp-server"], "cases_matched": case_counts["tradingview-indicator-search-mcp-server"]}},
+    sha,
+    repo_root=iso,
+)
 
 proven_mods = (
     rec04["verified_modules"]
     + rec02["verified_modules"]
     + reccat["verified_modules"]
     + recvd["verified_modules"]
+    + rectrd["verified_modules"]
 )
 
 print(json.dumps({
@@ -1484,7 +2082,7 @@ print(json.dumps({
     "sabotages_detected": sabotage_detected_count,
     "case_counts": case_counts,
     "desktop_live_verified": bool(r04["desktop_live_verified"]),
-    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"]},
+    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"], "trd": rectrd["r10_entry_id"]},
 }))
 '''
 
@@ -1580,13 +2178,17 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py",
             "01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py",
             "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
-            # Sources réelles M044, M050, M056, M084, M117, M118 pour Phase A avant suppression
+            "01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py",
+            # Sources réelles M044, M050, M056, M074, M084, M117, M118 pour Phase A avant suppression
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/clm",
             "01_Forkable/FKB02_Memory/knowledge-catalog/okf",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/cli-anything-plugin",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/zotero/agent-harness",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/audacity/agent-harness",
             "01_Forkable/FKB07_Money_Maker/02_Video/video-director/video-director/scripts",
+            "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/src",
+            "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/test/fixtures",
+            "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/package.json",
             "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
             "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
         )
@@ -1608,6 +2210,11 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
                 iso_root / "test_input_harnesses" / sw / "agent-harness",
                 ignore=ign,
             )
+        shutil.copytree(
+            ROOT / "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server/test/fixtures",
+            iso_root / "test_input_m074_fixtures",
+            ignore=ign,
+        )
 
         (iso_root / "diff_inputs.json").write_text(json.dumps(diff_inputs, ensure_ascii=False), encoding="utf-8")
 
@@ -1632,8 +2239,8 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             text=True,
         )
         parsed = json.loads(iso_out)
-        assert parsed["sabotages_detected"] >= 44, (
-            f"Couverture sabotage insuffisante : attendu >= 44, obtenu {parsed['sabotages_detected']}"
+        assert parsed["sabotages_detected"] >= 64, (
+            f"Couverture sabotage insuffisante : attendu >= 64, obtenu {parsed['sabotages_detected']}"
         )
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])
@@ -1645,6 +2252,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
             ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
             ("01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py", []),
+            ("01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py", []),
         ]:
             subprocess.check_call([sys.executable, str(iso_root / rel_script), *extra_args], cwd=str(iso_root), stdout=subprocess.DEVNULL)
 
@@ -1658,10 +2266,11 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         ("01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/neuro_symbolic_bridge.py", []),
         ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
         ("01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py", []),
+        ("01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py", []),
     ]:
         subprocess.check_call([sys.executable, str(ROOT / rel_script), *extra_args], cwd=str(ROOT), stdout=subprocess.DEVNULL)
     after_lines = len(journal_path.read_text(encoding="utf-8").splitlines())
-    assert after_lines >= before_lines + 6
+    assert after_lines >= before_lines + 7
 
     assert "llm-wiki" not in diff_proven, "M120 llm-wiki ne doit jamais être auto-ajouté à diff_proven"
     print(
@@ -1896,15 +2505,21 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
 
     assert len(reg_id_to_name) == 120
     assert carte_id_to_name == reg_id_to_name, "Divergence ID<->Module entre CARTE-DES-PRINCIPES et REGISTRE-DE-FUSION"
+    assert reg_id_to_name["M074"] == "tradingview-indicator-search-mcp-server"
     assert reg_id_to_name["M084"] == "video-director"
     assert reg_id_to_name["M095"] == "BlenderWorld"
     assert reg_id_to_name["M120"] == "llm-wiki"
 
     name_to_id = {v: k for k, v in reg_id_to_name.items()}
     diff_ids = {name_to_id[m] for m in (proven_fusionne - RIG_INFINITY_PROVEN_F8)}
-    assert diff_ids == {"M044", "M050", "M056", "M084", "M117", "M118"}, (
-        f"Les 6 preuves différentielles attendues sont {{M044, M050, M056, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
+    assert diff_ids == {"M044", "M050", "M056", "M074", "M084", "M117", "M118"}, (
+        f"Les 7 preuves différentielles attendues sont {{M044, M050, M056, M074, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
     )
+
+    assert by_name["TradingView-Unified-MCP"][0] == "**PARTIEL**", (
+        f"M066 TradingView-Unified-MCP doit rester PARTIEL (CDP live hors invariants M074): {by_name['TradingView-Unified-MCP']}"
+    )
+    assert "TradingView-Unified-MCP" not in registry_fusionne and "TradingView-Unified-MCP" not in proven_fusionne
 
     assert by_name["BlenderWorld"][0] == "**PARTIEL**", (
         f"M095 BlenderWorld doit rester PARTIEL: {by_name['BlenderWorld']}"
@@ -1946,6 +2561,7 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "REGISTRE-DE-FUSION.md",
         "RAPPORT-CORRECTION-M120.md",
         "DECISIONS.md",
+        "CORPS-CARTE.md",
     ]
     for fn in required:
         p = FUSION_DIR / fn
@@ -1982,6 +2598,7 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "01_Forkable/check-modules-lock.py",
         "pwsh -NoProfile -ExecutionPolicy Bypass -File 02_Factory/checks.ps1",
         "95e95f9b7a60b4e8e45564842bf380ee5d0c2aa4",
+        "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
         "upload-artifact",
     ):
         assert req_token in wf_txt, f"Jeton requis absent de foundation-proof.yml: {req_token}"

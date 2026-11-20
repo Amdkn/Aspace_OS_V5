@@ -59,7 +59,7 @@ okf_version: "0.2"
 - [DDD-CONTRATS-COMMUNS.md](fusion/DDD-CONTRATS-COMMUNS.md) — Contrats L0 communs (`EventJournal` C1, `R10Receipt` C2, `EpistemicFact` C3, `FiberContract` C4, `DeletionProof` C5).
 - [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 sous les 3 Noyaux (`ÂME`, `SYSTÈME NERVEUX`, `CORPS`).
 - [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2, pont Phase 2 Hybride Python↔Rust (`fondation-13-1`, `RigInfinity`) et preuves différentielles + sabotage Cycle 6.
-- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`15 FUSIONNÉ`, `86 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-15` sans exception et contrôle §5.5 (< 1/3).
+- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`16 FUSIONNÉ`, `85 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-15` sans exception et contrôle §5.5 (< 1/3).
 - [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
 - [JUGEMENT-EXTERNE-CYCLE-4.md](fusion/JUGEMENT-EXTERNE-CYCLE-4.md) — Verdict indépendant du Juge Externe Cycle 4 en lecture seule sur clone neuf de `fusion/cycle-4`.
 - [RAPPORT-CORRECTION-M120.md](fusion/RAPPORT-CORRECTION-M120.md) — Rapport d'audit Cycle 6 : provenance D-N048 V0 & rétrogradation M120 (`llm-wiki` -> `PARTIEL`, `15 / 86`), réconciliation canonique `M084` (`video-director`) / `M095` (`BlenderWorld` `PARTIEL`), et résultats des 3 vérifications.
