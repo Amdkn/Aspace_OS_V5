@@ -63,3 +63,5 @@ okf_version: "0.2"
 - [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
 - [JUGEMENT-EXTERNE-CYCLE-4.md](fusion/JUGEMENT-EXTERNE-CYCLE-4.md) — Verdict indépendant du Juge Externe Cycle 4 en lecture seule sur clone neuf de `fusion/cycle-4`.
 - [RAPPORT-CORRECTION-M120.md](fusion/RAPPORT-CORRECTION-M120.md) — Rapport d'audit Cycle 6 : provenance D-N048 V0 & rétrogradation M120 (`llm-wiki` -> `PARTIEL`, `15 / 86`), réconciliation canonique `M084` (`video-director`) / `M095` (`BlenderWorld` `PARTIEL`), et résultats des 3 vérifications.
+* [DECISIONS.md](fusion/DECISIONS.md) — Journal des décisions réversibles prises en autonomie durant le Cycle 7.
+* [CORPS-CARTE.md](fusion/CORPS-CARTE.md) — Cartographie des 62 modules du Noyau `CORPS` (`26 K2` + `36 K5`) regroupés en 11 familles avec dépendances, destinations canoniques et verdicts explicites.
