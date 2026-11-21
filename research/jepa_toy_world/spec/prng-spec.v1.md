@@ -31,7 +31,7 @@ The seed domain is integer [0, 2^64 - 1]. Reject values outside this range; do n
 For a uniform integer in [0, bound), require 1 <= bound <= 2^32. Use rejection sampling with threshold (2^32 - bound) % bound: draw 32-bit values until value >= threshold, then return value % bound. Do not use modulo-only sampling.
 
 ## 4. Stream consumption contract
-- The V1 layout generator consumes values in a documented, fixed order.
+- The V1 default layout generator consumes exactly one bounded draw, randbelow(4), to select one of four immutable layout templates in index order. No other random values are consumed.
 - Candidate inference and simulator transitions never share or advance the generator.
 - Adding a new random choice changes the generator protocol and requires a new version or an explicitly versioned generator substream.
 - A seed manifest records prng: "pcg32-xsh-rr-v1", the unsigned seed, layout-generator version, layout ID and canonical layout hash.
@@ -40,5 +40,5 @@ For a uniform integer in [0, bound), require 1 <= bound <= 2^32. Use rejection s
 ## 5. Conformance
 The implementation must publish known-answer tests covering initialization and at least ten successive outputs for seeds 0, 1 and 42, plus bounded-integer rejection cases. These vectors are implementation acceptance evidence and must be committed with simulator tests before dataset manifests are frozen.
 
-## 6. Versioning
+## 7. Versioning
 Any change to constants, initialization, output transformation, bounded sampling or consumption order requires a new PRNG protocol version. V1 benchmark manifests are immutable once frozen.
