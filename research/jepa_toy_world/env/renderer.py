@@ -44,8 +44,8 @@ def render_rgb(state: dict, layout: dict) -> RGBFrame:
         _rect(buf,gate["x"]*CELL+2,gate["y"]*CELL+6,12,4,color)
     for crate in state["crates"]:
         x,y=crate["x"]*CELL,crate["y"]*CELL
-        _rect(buf,x+2,y+2,12,12,PALETTE["crate"])
-        _rect(buf,x+4,y+4,8,8,PALETTE["crate_inset"])
+        _rect(buf,x+2,y+2,12,12,PALETTE["crate_inset"])
+        _rect(buf,x+4,y+4,8,8,PALETTE["crate"])
     ax,ay=state["agent"]["x"]*CELL,state["agent"]["y"]*CELL
     _rect(buf,ax+3,ay+3,10,10,PALETTE["agent"])
     facing=state["agent"]["facing"]
