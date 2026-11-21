@@ -74,6 +74,57 @@ class TransitionTests(unittest.TestCase):
             transition_state(state, layout, "FLY")
         self.assertEqual(state, before)
 
+    def test_closed_manual_gate_blocks_agent(self):
+        layout = {
+            "schema_version":"toy-world.layout.v1","layout_id":"closed-gate","width":12,"height":12,
+            "walls":[],"agent_spawn":{"x":2,"y":2,"facing":"E"},"crates":[],
+            "gates":[{"id":"gate-01","x":3,"y":2,"mode":"manual","initial_open":False}],
+            "plates":[],"goal":{"x":9,"y":9}
+        }
+        state=initial_state(layout,0)
+        result=transition_state(state,layout,"MOVE_E")
+        self.assertEqual((result["agent"]["x"],result["agent"]["y"]),(2,2))
+        self.assertEqual(result["agent"]["facing"],"E")
+        self.assertEqual(result["tick"],1)
+
+    def test_push_is_blocked_by_second_crate(self):
+        layout = {
+            "schema_version":"toy-world.layout.v1","layout_id":"double-crate","width":12,"height":12,
+            "walls":[],"agent_spawn":{"x":2,"y":3,"facing":"E"},
+            "crates":[{"id":"crate-01","x":3,"y":3},{"id":"crate-02","x":4,"y":3}],
+            "gates":[],"plates":[],"goal":{"x":9,"y":9}
+        }
+        state=initial_state(layout,0)
+        result=transition_state(state,layout,"MOVE_E")
+        self.assertEqual(result["agent"],state["agent"])
+        self.assertEqual(result["crates"],state["crates"])
+
+    def test_pressure_gate_closes_when_plate_is_released(self):
+        layout = {
+            "schema_version":"toy-world.layout.v1","layout_id":"pressure-release","width":12,"height":12,
+            "walls":[],"agent_spawn":{"x":2,"y":2,"facing":"E"},"crates":[],
+            "gates":[{"id":"gate-01","x":6,"y":2,"mode":"pressure","initial_open":False}],
+            "plates":[{"id":"plate-01","x":3,"y":2,"controls_gate_id":"gate-01"}],"goal":{"x":9,"y":9}
+        }
+        state=initial_state(layout,0)
+        on_plate=transition_state(state,layout,"MOVE_E")
+        self.assertTrue(on_plate["gates"][0]["open"])
+        off_plate=transition_state(on_plate,layout,"MOVE_W")
+        self.assertFalse(off_plate["gates"][0]["open"])
+        self.assertFalse(off_plate["plates"][0]["active"])
+
+    def test_terminal_state_rejects_additional_actions(self):
+        layout = {
+            "schema_version":"toy-world.layout.v1","layout_id":"terminal","width":12,"height":12,
+            "walls":[],"agent_spawn":{"x":4,"y":5,"facing":"E"},"crates":[],
+            "gates":[],"plates":[],"goal":{"x":5,"y":5}
+        }
+        state=initial_state(layout,0)
+        terminal=transition_state(state,layout,"MOVE_E")
+        self.assertTrue(terminal["terminal"])
+        with self.assertRaises(ValueError):
+            transition_state(terminal,layout,"NOOP")
+
     def test_oracle_matches_direct_transition(self):
         layout = generate_layout(17)
         state = initial_state(layout, 17)
@@ -111,7 +162,7 @@ class RendererAndEnvironmentTests(unittest.TestCase):
         self.assertEqual(len(frame_a.pixels), 192*192*3)
         self.assertEqual(frame_a.pixels, frame_b.pixels)
         self.assertEqual(hashlib.sha256(frame_a.pixels).hexdigest(), hashlib.sha256(frame_b.pixels).hexdigest())
-        print("TOY_WORLD_RENDERER_GOLDEN_SHA256=" + hashlib.sha256(frame_a.pixels).hexdigest())
+        self.assertEqual(hashlib.sha256(frame_a.pixels).hexdigest(), "84d27dff64030f19d0fd2739b17f4bbf390bc88821c92a85f3853481f8a48564")
 
     def test_persistence_baseline_returns_same_frame(self):
         env = ToyWorldEnv()
