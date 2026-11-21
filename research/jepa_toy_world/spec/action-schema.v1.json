@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/Amdkn/Aspace_OS_V5/blob/feat/jepa-cognitive-architecture-adr-v1/research/jepa_toy_world/spec/action-schema.v1.json",
+  "title": "JEPA Toy World Action Record v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "episode_id",
+    "tick",
+    "action"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "toy-world.action.v1"
+    },
+    "episode_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "tick": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "action": {
+      "enum": [
+        "NOOP",
+        "MOVE_N",
+        "MOVE_S",
+        "MOVE_E",
+        "MOVE_W",
+        "INTERACT"
+      ]
+    }
+  }
+}

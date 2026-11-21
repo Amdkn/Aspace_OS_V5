@@ -1,0 +1,518 @@
+{
+  "fixture_version": "toy-world.transition-fixtures.v1",
+  "transition_version": "toy-world.transition.v1",
+  "state_projection_note": "before and after contain dynamic state fields; immutable entity coordinates and collision geometry are supplied by each fixture layout.",
+  "fixtures": [
+    {
+      "id": "noop-increments-tick",
+      "description": "NOOP preserves positions and advances exactly one tick.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9
+        }
+      },
+      "before": {
+        "tick": 0,
+        "agent": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "NOOP",
+      "after": {
+        "tick": 1,
+        "agent": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      }
+    },
+    {
+      "id": "blocked-move-updates-facing",
+      "description": "A north move into a wall leaves position unchanged but updates facing.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [
+          {
+            "x": 3,
+            "y": 0
+          }
+        ],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9
+        }
+      },
+      "before": {
+        "tick": 4,
+        "agent": {
+          "x": 3,
+          "y": 1,
+          "facing": "S"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "MOVE_N",
+      "after": {
+        "tick": 5,
+        "agent": {
+          "x": 3,
+          "y": 1,
+          "facing": "N"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      }
+    },
+    {
+      "id": "push-single-crate",
+      "description": "A free crate is pushed one cell and the agent enters its previous cell.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [
+          {
+            "id": "crate-01",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9
+        }
+      },
+      "before": {
+        "tick": 2,
+        "agent": {
+          "x": 2,
+          "y": 3,
+          "facing": "E"
+        },
+        "crates": [
+          {
+            "id": "crate-01",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "MOVE_E",
+      "after": {
+        "tick": 3,
+        "agent": {
+          "x": 3,
+          "y": 3,
+          "facing": "E"
+        },
+        "crates": [
+          {
+            "id": "crate-01",
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      }
+    },
+    {
+      "id": "crate-push-blocked-by-wall",
+      "description": "A crate cannot be pushed into a wall; neither agent nor crate moves.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [
+          {
+            "x": 4,
+            "y": 3
+          }
+        ],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [
+          {
+            "id": "crate-01",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9
+        }
+      },
+      "before": {
+        "tick": 2,
+        "agent": {
+          "x": 2,
+          "y": 3,
+          "facing": "E"
+        },
+        "crates": [
+          {
+            "id": "crate-01",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "MOVE_E",
+      "after": {
+        "tick": 3,
+        "agent": {
+          "x": 2,
+          "y": 3,
+          "facing": "E"
+        },
+        "crates": [
+          {
+            "id": "crate-01",
+            "x": 3,
+            "y": 3
+          }
+        ],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      }
+    },
+    {
+      "id": "interact-toggles-front-manual-gate",
+      "description": "INTERACT toggles a manual gate directly in front of the agent.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [
+          {
+            "id": "gate-01",
+            "x": 3,
+            "y": 2,
+            "mode": "manual",
+            "initial_open": false
+          }
+        ],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9
+        }
+      },
+      "before": {
+        "tick": 1,
+        "agent": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [
+          {
+            "id": "gate-01",
+            "mode": "manual",
+            "open": false
+          }
+        ],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "INTERACT",
+      "after": {
+        "tick": 2,
+        "agent": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [
+          {
+            "id": "gate-01",
+            "mode": "manual",
+            "open": true
+          }
+        ],
+        "plates": [],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      }
+    },
+    {
+      "id": "pressure-plate-opens-linked-gate",
+      "description": "Occupying a pressure plate activates it and opens its linked pressure gate after movement.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [
+          {
+            "id": "gate-01",
+            "x": 6,
+            "y": 2,
+            "mode": "pressure",
+            "initial_open": false
+          }
+        ],
+        "plates": [
+          {
+            "id": "plate-01",
+            "x": 3,
+            "y": 2,
+            "controls_gate_id": "gate-01"
+          }
+        ],
+        "goal": {
+          "x": 9,
+          "y": 9
+        }
+      },
+      "before": {
+        "tick": 0,
+        "agent": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [
+          {
+            "id": "gate-01",
+            "mode": "pressure",
+            "open": false
+          }
+        ],
+        "plates": [
+          {
+            "id": "plate-01",
+            "controls_gate_id": "gate-01",
+            "active": false
+          }
+        ],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "MOVE_E",
+      "after": {
+        "tick": 1,
+        "agent": {
+          "x": 3,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [
+          {
+            "id": "gate-01",
+            "mode": "pressure",
+            "open": true
+          }
+        ],
+        "plates": [
+          {
+            "id": "plate-01",
+            "controls_gate_id": "gate-01",
+            "active": true
+          }
+        ],
+        "goal": {
+          "x": 9,
+          "y": 9,
+          "reached": false
+        },
+        "terminal": false
+      }
+    },
+    {
+      "id": "goal-sets-terminal",
+      "description": "Entering the goal marks both goal.reached and terminal true.",
+      "layout": {
+        "schema_version": "toy-world.layout.v1",
+        "layout_id": "fixture-layout",
+        "width": 12,
+        "height": 12,
+        "walls": [],
+        "agent_spawn": {
+          "x": 2,
+          "y": 2,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 5,
+          "y": 5
+        }
+      },
+      "before": {
+        "tick": 7,
+        "agent": {
+          "x": 4,
+          "y": 5,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 5,
+          "y": 5,
+          "reached": false
+        },
+        "terminal": false
+      },
+      "action": "MOVE_E",
+      "after": {
+        "tick": 8,
+        "agent": {
+          "x": 5,
+          "y": 5,
+          "facing": "E"
+        },
+        "crates": [],
+        "gates": [],
+        "plates": [],
+        "goal": {
+          "x": 5,
+          "y": 5,
+          "reached": true
+        },
+        "terminal": true
+      }
+    }
+  ]
+}
