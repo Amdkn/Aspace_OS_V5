@@ -1,4 +1,4 @@
-"""Deterministic action-trace recording and independent replay checks."""
+"""Deterministic action-trace recording and repeat-replay consistency checks."""
 from __future__ import annotations
 
 import hashlib
