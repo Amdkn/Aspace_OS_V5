@@ -30,7 +30,7 @@ One action is applied per tick.
 - If that cell contains a manual gate, toggle its `open` value.
 - If it contains no manual gate, the action has no effect.
 - Pressure gates cannot be toggled directly; their state is derived from their linked pressure plate.
-- Invalid or ineffective actions still consume one tick.
+- A valid action that is blocked or has no matching interaction target still consumes one tick. An unknown action value or malformed action record is rejected before transition and does not increment the tick.
 
 ## 4. Pressure plate rules
 
