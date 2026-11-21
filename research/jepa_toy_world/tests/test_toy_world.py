@@ -89,6 +89,17 @@ class TransitionTests(unittest.TestCase):
         self.assertEqual(sha256_id(layout_a), sha256_id(layout_b))
         self.assertEqual(sha256_id(initial_state(layout_a, 123)), sha256_id(initial_state(layout_b, 123)))
 
+    def test_layout_hash_ignores_nonsemantic_array_order(self):
+        from copy import deepcopy
+        from research.jepa_toy_world.env.toy_world import canonical_layout
+        layout_a = generate_layout(42)
+        layout_b = deepcopy(layout_a)
+        layout_b["walls"] = list(reversed(layout_b["walls"]))
+        layout_b["crates"] = list(reversed(layout_b["crates"]))
+        layout_b["gates"] = list(reversed(layout_b["gates"]))
+        layout_b["plates"] = list(reversed(layout_b["plates"]))
+        self.assertEqual(sha256_id(canonical_layout(layout_a)), sha256_id(canonical_layout(layout_b)))
+
 
 class RendererAndEnvironmentTests(unittest.TestCase):
     def test_renderer_contract_and_repeatability(self):
