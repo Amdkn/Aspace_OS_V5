@@ -51,7 +51,17 @@ If an entity shares a cell in an invalid state, rendering must not conceal the i
 - Identical state/layout/renderer version must produce byte-identical RGB arrays.
 - Renderer identity is toy-world.renderer.v1; any geometry, palette, draw-order or encoding change requires a version bump.
 
-## 5. Tests
+## 5. Golden reference
+
+For the canonical V1 seed-42 generated layout and initial state, renderer identity toy-world.renderer.v1 must produce RGB byte SHA-256:
+
+- Seed: 42
+- Layout: layout-03
+- SHA-256: 84d27dff64030f19d0fd2739b17f4bbf390bc88821c92a85f3853481f8a48564
+
+This digest is over the raw row-major RGB byte array, not the PNG encoding.
+
+## 6. Tests
 Required tests:
 - Exact dimensions, channel count and dtype.
 - Golden RGB byte hashes for at least one fixture containing each drawable element and gate state.
