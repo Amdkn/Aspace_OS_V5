@@ -55,8 +55,10 @@ class TransitionTests(unittest.TestCase):
                 state = initial_state(layout, 0)
                 state.update(fixture["before"])
                 result = transition_state(state, layout, fixture["action"])
+                oracle_result = symbolic_predict(state, layout, [fixture["action"]])
                 for key in ("tick","agent","crates","gates","plates","goal","terminal"):
                     self.assertEqual(result[key], fixture["after"][key], key)
+                    self.assertEqual(oracle_result[key], fixture["after"][key], "oracle " + key)
 
     def test_transition_is_pure_and_deterministic(self):
         layout = generate_layout(42)
