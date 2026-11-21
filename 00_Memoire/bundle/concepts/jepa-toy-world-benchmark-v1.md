@@ -47,7 +47,7 @@ The geometry is intentionally small enough for symbolic ground truth and rich en
 | `MOVE_W` | Attempt one-cell west movement |
 | `INTERACT` | Toggle an adjacent interactable gate or activate a context-defined mechanism |
 
-Invalid actions are still recorded and produce a deterministic no-op or blocked transition according to the environment rules. The exact rule is part of the versioned transition specification, not left to model interpretation.
+Unknown action values and malformed action records are rejected before transition. A valid action that is blocked by geometry or has no applicable interaction target is recorded and consumes exactly one tick, as defined by the versioned transition rules.
 
 ### 1.3 State schema
 
