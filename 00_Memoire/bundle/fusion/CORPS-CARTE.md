@@ -46,7 +46,7 @@ enonce_sha256: "41889edb9c468ea62ee4641328c0e6f4bac2c618b81da751eebd2af4c05f648d
   3. `F-CORPS-03` (`cubefarm` WebGL), `F-CORPS-04` (`M058` Windows UIA), `F-CORPS-07` (`M082` Swift macOS) et `F-CORPS-09`/`11` (LLM/Blender) sont bloquées ou hétérogènes en CI Linux.
 - **Vague 2 — Cible `K2` retenue** : **`F-CORPS-02` · `M001 a0-plugins`** (porté dans `01_Forkable/FKB00_Runtime/00_A0_Core/aspace_plugin_registry_organ.py`), en maintenant `M004/M019/M021/M022/M023/M116` en `PARTIEL` et `M017/M018/M020` en `RETENU`.
   1. `M001` rassemble l'ensemble de la logique Python pure du registre (`scripts/*` + `aspace-a0-plugins-adapter`) : sélection scopée `MAX_PLUGINS`, validation stricte (`title/description/github/tags/screenshots`, PNG carré `<= 20480` o, screenshot `<= 2 MiB`, YAML `<= 2000` car.), compilation complète des 235 dossiers/230 plugins du catalogue, orphelins, étoiles, publication/téléchargement atomique de release et audit d'hygiène (`{stdlib, pyyaml, pillow}`).
-  2. Vérifié par parité `==` exacte contre l'upstream `a0-plugins` (`fa8df85`) après suppression physique en `iso_root` + **41 sabotages** (fonctions publiques, bornes strictes et clé parasite) + reçu R10 mesuré.
+  2. Vérifié par parité `==` exacte contre l'upstream `a0-plugins` (`fa8df85`) après suppression physique en `iso_root` + **49 sabotages** (41 initiaux `2f09268` + 8 mutations `47220ee` : fonctions publiques, bornes strictes, retries et clé parasite) + reçu R10 mesuré.
 
 ## 4. Inventaire Détaillé des 62 Modules du Noyau `CORPS`
 
