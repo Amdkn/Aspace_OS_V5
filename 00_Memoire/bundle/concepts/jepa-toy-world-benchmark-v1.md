@@ -294,9 +294,13 @@ The initial contracts and transition rules are committed alongside this specific
 
 - [Canonical evaluator state schema](../../../research/jepa_toy_world/spec/state-schema.v1.json)
 - [Action record schema](../../../research/jepa_toy_world/spec/action-schema.v1.json)
+- [Immutable layout schema](../../../research/jepa_toy_world/spec/layout-schema.v1.json)
 - [Deterministic transition rules](../../../research/jepa_toy_world/spec/transition-rules.v1.md)
+- [PRNG and seed protocol](../../../research/jepa_toy_world/spec/prng-spec.v1.md)
+- [RGB renderer contract](../../../research/jepa_toy_world/spec/renderer-spec.v1.md)
+- [Hand-authored transition fixtures](../../../research/jepa_toy_world/spec/transition-fixtures.v1.json)
 
-Implementation is deliberately deferred until the benchmark specification and these contracts are reviewed:
+Implementation remains isolated under research/jepa_toy_world. The contracts above are proposed and must pass executable conformance tests before the dataset manifests are frozen:
 
 ```text
 research/
@@ -304,7 +308,12 @@ research/
     README.md
     spec/
       state-schema.v1.json
+      action-schema.v1.json
+      layout-schema.v1.json
       transition-rules.v1.md
+      prng-spec.v1.md
+      renderer-spec.v1.md
+      transition-fixtures.v1.json
       benchmark-manifest.v1.json
     env/
       toy_world.py
