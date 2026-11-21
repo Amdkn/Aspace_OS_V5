@@ -30,6 +30,14 @@ def sha256_id(value: Any) -> str:
     return "sha256:" + hashlib.sha256(canonical_json(value)).hexdigest()
 
 
+def canonical_layout(layout: dict[str, Any]) -> dict[str, Any]:
+    result = copy.deepcopy(layout)
+    result["walls"] = sorted(result["walls"], key=lambda p: (p["y"], p["x"]))
+    for key in ("crates", "gates", "plates"):
+        result[key] = sorted(result[key], key=lambda entity: entity["id"])
+    return result
+
+
 class PCG32:
     """PCG-XSH-RR 64/32 with the V1 fixed stream selector."""
     MULTIPLIER = 6364136223846793005
@@ -134,8 +142,10 @@ def validate_layout(layout: dict[str, Any]) -> None:
 
 def initial_state(layout: dict[str, Any], seed: int) -> dict[str, Any]:
     validate_layout(layout)
+    layout = canonical_layout(layout)
+    validate_layout(layout)
     layout_copy = copy.deepcopy(layout)
-    gates = [{"id":g["id"],"mode":g["mode"],"open":bool(g["initial_open"])} for g in sorted(layout["gates"],key=lambda x:x["id"])]
+    gates = [{"id":g["id"],"mode":g["mode"],"open":bool(g["initial_open"])} for g in layout["gates"]]
     plates = [{"id":p["id"],"controls_gate_id":p["controls_gate_id"],"active":False} for p in sorted(layout["plates"],key=lambda x:x["id"])]
     state = {
         "schema_version":"toy-world.state.v1",
@@ -242,7 +252,7 @@ class ToyWorldEnv:
                 raise ValueError("seed must be an unsigned 64-bit integer")
             self._seed=seed
         layout=(options or {}).get("layout",self._provided_layout)
-        self._layout=copy.deepcopy(layout) if layout is not None else generate_layout(self._seed)
+        self._layout=canonical_layout(layout) if layout is not None else generate_layout(self._seed)
         self._state=initial_state(self._layout,self._seed)
         self._observation_count=0
         return render_rgb(self._state,self._layout), {}
