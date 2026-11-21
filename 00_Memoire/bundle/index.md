@@ -59,7 +59,7 @@ okf_version: "0.2"
 - [DDD-CONTRATS-COMMUNS.md](fusion/DDD-CONTRATS-COMMUNS.md) — Contrats L0 communs (`EventJournal` C1, `R10Receipt` C2, `EpistemicFact` C3, `FiberContract` C4, `DeletionProof` C5).
 - [PRD-FONDATION.md](fusion/PRD-FONDATION.md) — Spécification produit de la Fondation A'Space OS V5 sous les 3 Noyaux (`ÂME`, `SYSTÈME NERVEUX`, `CORPS`).
 - [SDD-FONDATION.md](fusion/SDD-FONDATION.md) — Architecture logicielle L0/L1/L2, pont Phase 2 Hybride Python↔Rust (`fondation-13-1`, `RigInfinity`) et preuves différentielles + sabotage Cycle 6.
-- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`17 FUSIONNÉ`, `84 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-15` sans exception et contrôle §5.5 (< 1/3).
+- [REGISTRE-DE-FUSION.md](fusion/REGISTRE-DE-FUSION.md) — Statut mesuré dynamiquement (`18 FUSIONNÉ`, `83 PARTIEL`, `17 RETENU`, `2 ÉCARTÉ`), noyau `ADR-15` sans exception et contrôle §5.5 (< 1/3).
 - [JUGEMENT-EXTERNE.md](fusion/JUGEMENT-EXTERNE.md) — Verdict indépendant du Juge-comparateur (`e5d708e7`) sur les Cycles 1 à 3 (`PARTIEL` + blocage local `cargo`, rapport d'écart Cycle 4).
 - [JUGEMENT-EXTERNE-CYCLE-4.md](fusion/JUGEMENT-EXTERNE-CYCLE-4.md) — Verdict indépendant du Juge Externe Cycle 4 en lecture seule sur clone neuf de `fusion/cycle-4`.
 - [RAPPORT-CORRECTION-M120.md](fusion/RAPPORT-CORRECTION-M120.md) — Rapport d'audit Cycle 6 : provenance D-N048 V0 & rétrogradation M120 (`llm-wiki` -> `PARTIEL`, `15 / 86`), réconciliation canonique `M084` (`video-director`) / `M095` (`BlenderWorld` `PARTIEL`), et résultats des 3 vérifications.
@@ -68,5 +68,6 @@ okf_version: "0.2"
 * [FUSION-FACTORY-PROTOCOL-V1.md](fusion/FUSION-FACTORY-PROTOCOL-V1.md) — Standard Fusion Factory V1 : consolidation Cycle 7 (`47220ee`), pipeline en 5 étapes, dimensions Security/Observability/Lifecycle et limites de factorisation.
 * [THRESHOLD-AND-PARITY-SPEC.md](fusion/THRESHOLD-AND-PARITY-SPEC.md) — Protocole des 8 dimensions (bornes, arrondis, types/UTF-16, retries, erreurs, payloads, isolation, mutation) validé sur 129 sabotages (`M001`/`M074`/etc.).
 * [ORGAN-CERTIFICATION-CONTRACT.md](fusion/ORGAN-CERTIFICATION-CONTRACT.md) — Contrat normatif de certification d'un organe natif (Gate d'entrée Phase 4, zéro auto-certification L0/R10, critères `PARTIEL -> FUSIONNÉ`).
+* [M071-CERTIFICATION-REPORT.md](fusion/M071-CERTIFICATION-REPORT.md) — Rapport de certification Wave 2 `K5` de `M071 financial-services` (`aspace_financial_services_organ.py`, oracle dual Python + Node v24, 42 sabotages dédiés / 171 total, `18/120` `FUSIONNÉ`).
 * [WAVE-2-SELECTION.md](fusion/WAVE-2-SELECTION.md) — Évaluation technique comparative de `M069`, `M071`, `M077` et `M093` avec sélection prioritaire de `M071 financial-services` (#1 devant `M093` #2).
 * [WAVE-2-READINESS.md](fusion/WAVE-2-READINESS.md) — Dossier complet de readiness, vérification des 5 conditions bloquantes et mandat d'exécution pour la vague `M071`.

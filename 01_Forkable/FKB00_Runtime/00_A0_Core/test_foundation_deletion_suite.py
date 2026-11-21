@@ -112,6 +112,10 @@ SUBMODULE_SENTINELS = (
         "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
         "src/parse.js",
     ),
+    (
+        "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services",
+        "scripts/check.py",
+    ),
 )
 
 SOURCE_DIRS_TO_DELETE_FOR_TEST = [
@@ -136,9 +140,10 @@ SOURCE_DIRS_TO_DELETE_FOR_TEST = [
     "01_Forkable/FKB02_Memory/infinite-brain-harness",
     "01_Forkable/FKB02_Memory/infinite-brain-os",
     "01_Forkable/FKB02_Memory/knowledge-catalog",
-    # FKB07 M084 video-director + M074 tradingview-indicator-search + Extra FKB natifs absorbés (M117, M118)
+    # FKB07 M084 video-director + M074 tradingview-indicator-search + M071 financial-services + Extra FKB (M117, M118)
     "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
     "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
+    "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services",
     "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
     "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
 ]
@@ -612,6 +617,153 @@ def _build_differential_inputs() -> dict:
                 {"platform": "ttl7.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": True, "estimated_ttl_days": 7},
                 {"platform": "ttl29.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 29},
                 {"platform": "ttl30.example", "requires_credit_card": False, "direct_openai_or_anthropic_api": False, "estimated_ttl_days": 30},
+            ],
+        },
+        "m071": {
+            "dcf_specs": [
+                {
+                    "name": "ok_60pct.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.025), ("A2", "WACC"), ("B2", 0.10), ("A3", "PV of Terminal Value"), ("B3", 600.0), ("A4", "Enterprise Value"), ("B4", 1000.0), ("A5", "Check"), ("B5", "=SUM(B3:B4)")],
+                        "WACC": [("A1", "WACC"), ("B1", 0.10)],
+                        "Sensitivity": [("A1", "Grid")],
+                    },
+                },
+                {
+                    "name": "eq_g_wacc.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.10), ("A2", "WACC"), ("B2", 0.10), ("A3", "PV of Terminal Value"), ("B3", 500.0), ("A4", "Enterprise Value"), ("B4", 1000.0)],
+                        "WACC": [],
+                        "Sensitivity": [],
+                    },
+                },
+                {
+                    "name": "below_g_wacc.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.0999), ("A2", "WACC"), ("B2", 0.10), ("A3", "PV of Terminal Value"), ("B3", 500.0), ("A4", "Enterprise Value"), ("B4", 1000.0)],
+                        "WACC": [],
+                        "Sensitivity": [],
+                    },
+                },
+                {
+                    "name": "prop_03999.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.02), ("A2", "WACC"), ("B2", 0.08), ("A3", "PV of Terminal Value"), ("B3", 399.9), ("A4", "Enterprise Value"), ("B4", 1000.0)],
+                        "WACC": [],
+                        "Sensitivity": [],
+                    },
+                },
+                {
+                    "name": "prop_04000.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.02), ("A2", "WACC"), ("B2", 0.08), ("A3", "PV of Terminal Value"), ("B3", 400.0), ("A4", "Enterprise Value"), ("B4", 1000.0)],
+                        "WACC": [],
+                        "Sensitivity": [],
+                    },
+                },
+                {
+                    "name": "prop_08000.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.02), ("A2", "WACC"), ("B2", 0.08), ("A3", "PV of Terminal Value"), ("B3", 800.0), ("A4", "Enterprise Value"), ("B4", 1000.0)],
+                        "WACC": [],
+                        "Sensitivity": [],
+                    },
+                },
+                {
+                    "name": "prop_08001.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.02), ("A2", "WACC"), ("B2", 0.08), ("A3", "PV of Terminal Value"), ("B3", 800.1), ("A4", "Enterprise Value"), ("B4", 1000.0)],
+                        "WACC": [],
+                        "Sensitivity": [],
+                    },
+                },
+                {
+                    "name": "err_and_missing.xlsx",
+                    "sheets": {
+                        "DCF": [("A1", "Terminal Growth"), ("B1", 0.0), ("A2", "WACC"), ("B2", 1.0), ("A3", "Err1"), ("B3", "#DIV/0!"), ("A4", "Err2"), ("B4", "#REF!"), ("A5", "F"), ("B5", "=A1/0")],
+                    },
+                },
+            ],
+            "wacc_range_vals": [0.0499, 0.05, 0.20, 0.2001],
+            "normalize_cases": [
+                ("1,250.5", "M"),
+                ("2.5", "billion"),
+                ("3", "bn"),
+                ("4", "mm"),
+                ("5", "mn"),
+                ("6", "million"),
+                ("7", "K"),
+                ("8", "thousand"),
+                ("9", "T"),
+                ("10", "B"),
+                ("150", "bps"),
+                ("bad", "M"),
+            ],
+            "category_cases": [
+                ("Total revenue grew 12%", "USD_M"),
+                ("Adjusted EBITDA margin expanded", "%"),
+                ("Consolidated EBITDA rose", "USD_M"),
+                ("Gross profit improved", "%"),
+                ("YoY CAGR growth target", "%"),
+                ("EV/EBITDA trading multiple", "x"),
+                ("Implied enterprise value", "USD_B"),
+                ("Effective tax rate", "%"),
+                ("Headcount total", "none"),
+            ],
+            "deck_markdown": (
+                "# Slide 1\n"
+                "Total revenue in 1899 1900 2099 2100 was $100M (single digit 5 vs 10 vs 5% vs $1950 vs 2000M).\n"
+                "Euro turnover €50M, UK £1.2B, Japan ¥100M, Gross margin 20% and adjusted 20.99%.\n"
+                "<!-- Slide 2 -->\n"
+                "Headline revenue reached $104.9M in FY25.\n"
+                "Revised revenue guidance $105.0M; operating margin dropped to 21.0%.\n"
+            ),
+            "handoff_cases": [
+                'prefix {"type": "handoff_request", "target_agent": "pitch-agent", "payload": {"event": "ready", "context_ref": "doc:1"}} tail',
+                '{"type": "handoff_request", "target_agent": "evil-agent", "payload": {"event": "x"}}',
+                '{"type": "handoff_request", "target_agent": "pitch-agent", "payload": {"event": "' + ("e" * 2000) + '"}}',
+                '{"type": "handoff_request", "target_agent": "pitch-agent", "payload": {"event": "' + ("e" * 2001) + '"}}',
+                '{"type": "handoff_request", "target_agent": "pitch-agent", "payload": {"event": "ok", "context_ref": "' + ("c" * 256) + '"}}',
+                '{"type": "handoff_request", "target_agent": "pitch-agent", "payload": {"event": "ok", "context_ref": "' + ("c" * 257) + '"}}',
+                '{"type": "handoff_request", "target_agent": "pitch-agent", "payload": {"event": "ok", "extra": 1}}',
+                '{"type": "handoff_request", broken json',
+            ],
+            "semver_cases": {
+                "parse": ["1.2.3", "0.0.1", "1.2", "1.2.3.4", "1.a.3", None],
+                "bump": ["1.2.3", "0.0.0", "bad", None],
+                "ahead": [
+                    ("1.2.3", "1.2.3"),
+                    ("1.2.4", "1.2.3"),
+                    ("2.0.0", "1.9.9"),
+                    ("1.0.0", None),
+                    ("v1.0", "v1.0"),
+                    ("v1.1", "v1.0"),
+                ],
+            },
+            "m365_templates": {
+                "valid": '<OfficeApp><DefaultSettings><SourceLocation DefaultValue="https://pivot.claude.ai/app?m=tag1"/></DefaultSettings><R><bt:Url id="Taskpane.Url" DefaultValue="https://pivot.claude.ai/tp?m=tag2"/></R></OfficeApp>',
+                "valid_no_q": '<OfficeApp><DefaultSettings><SourceLocation DefaultValue="https://pivot.claude.ai/app"/></DefaultSettings><R><bt:Url id="Taskpane.Url" DefaultValue="https://pivot.claude.ai/tp"/></R></OfficeApp>',
+                "has_hash": '<OfficeApp><DefaultSettings><SourceLocation DefaultValue="https://pivot.claude.ai/app#frag"/></DefaultSettings><R><bt:Url id="Taskpane.Url" DefaultValue="https://pivot.claude.ai/tp"/></R></OfficeApp>',
+                "noslot": '<OfficeApp><DefaultSettings><SourceLocation DefaultValue="https://pivot.claude.ai/app?m=1"/></DefaultSettings></OfficeApp>',
+            },
+            "m365_cases": [
+                ("office", ["gcp_project_id=acme-prod-1", "gcp_region=us-east5", "gateway_token=tok~!*()_.-/\u00e9", "otlp_headers=tok~!*()_.-/\u00e9", "azure_api_key=AbCdEf01234567890123", "gateway_token=tok_final"], "valid"),
+                ("office", ["gcp_project_id=acme-prod-1", "mcp_servers=[{\"url\":\"https://x.test\"}]"], "valid_no_q"),
+                ("outlook", ["gcp_project_id=acme-prod-1", "entra_sso=1", "graph_client_id=12345678-1234-1234-1234-1234567890ab"], "valid"),
+                ("outlook", ["aws_role_arn=arn:aws:iam::123456789012:role/R", "entra_sso=1"], "valid"),
+                ("office", ["bad_pair_without_eq"], "valid"),
+                ("office", ["unknown_k=1"], "valid"),
+                ("office", ["gcp_project_id="], "valid"),
+                ("office", ["aws_role_arn=arn:aws:iam::123456789012:role/R", "entra_sso=0"], "valid"),
+                ("office", ["entra_sso=1", "entra_scope=api://x/.default"], "valid"),
+                ("office", ["entra_sso=1", "graph_client_id=12345678-1234-1234-1234-1234567890ab", "gateway_auth_source=entra"], "valid"),
+                ("office", ["entra_sso=1", "graph_client_id=12345678-1234-1234-1234-1234567890ab", "entra_scope=api://x/.default", "gateway_auth_source=entra", "gateway_token=old"], "valid"),
+                ("office", ["graph_cloud=us-gov-high"], "valid"),
+                ("office", ["entra_sso=1", "graph_cloud=us-gov-high", "graph_client_id=12345678-1234-1234-1234-1234567890ab"], "valid"),
+                ("office", ["available_models=a,,b", "access_policies=[{\"effect\":\"allow\",\"action\":\"read\",\"resource\":{\"type\":\"uploaded_file\",\"identifiers\":[{\"type\":\"file_path\",\"equals\":\"/x\"}]}},{\"effect\":\"deny\",\"action\":\"write\",\"resource\":{\"type\":\"open_file\",\"identifiers\":[{\"type\":\"mip_label_guid\",\"startsWith\":\"ab\"},{\"type\":\"mip_label_name\",\"exists\":\"yes\"},{\"type\":\"mip_label_name\"}]}}]"], "valid"),
+                ("office", ["available_models={bad json"], "valid"),
+                ("office", ["gcp_region=global"], "has_hash"),
+                ("office", ["gcp_region=global"], "noslot"),
             ],
         },
     }
@@ -1915,9 +2067,372 @@ tmp_u = {"version": 1, "plugins": {"alpha": {"stars": 42, "version": "1.2.3", "c
 up_sync._upsert_index_plugin(tmp_u, "alpha", {"title": "Alpha", "github": "https://github.com/u/r"})
 m001_out["upsert_preserve"] = tmp_u["plugins"]["alpha"]
 
+# M071: financial-services upstream (Python + Node v24)
+import http.server as _m071_http_server
+import importlib.util as _m071_imp_util
+import threading as _m071_threading
+import types as _m071_types
+import zipfile as _m071_zipfile
+import openpyxl as _m071_openpyxl
+
+_m071_in = inputs["m071"]
+_m071_root = iso / "01_Forkable" / "FKB07_Money_Maker" / "01_Trading" / "financial-services"
+assert _m071_root.is_dir(), f"Source M071 absente pour Phase A: {_m071_root}"
+
+def _m071_load_mod(name: str, path: Path):
+    _spec = _m071_imp_util.spec_from_file_location(name, str(path))
+    assert _spec and _spec.loader
+    _mod = _m071_imp_util.module_from_spec(_spec)
+    _spec.loader.exec_module(_mod)
+    return _mod
+
+_m071_sc_dir = _m071_root / "plugins" / "vertical-plugins" / "financial-analysis" / "skills" / "skill-creator" / "scripts"
+if str(_m071_sc_dir) not in sys.path:
+    sys.path.insert(0, str(_m071_sc_dir))
+
+_dcf_mod = _m071_load_mod(
+    "_up_m071_dcf",
+    _m071_root / "plugins" / "vertical-plugins" / "financial-analysis" / "skills" / "dcf-model" / "scripts" / "validate_dcf.py",
+)
+_num_mod = _m071_load_mod(
+    "_up_m071_num",
+    _m071_root / "plugins" / "vertical-plugins" / "financial-analysis" / "skills" / "ib-check-deck" / "scripts" / "extract_numbers.py",
+)
+_ver_mod = _m071_load_mod("_up_m071_ver", _m071_root / "scripts" / "version_bump.py")
+_qv_mod = _m071_load_mod("_up_m071_qv", _m071_sc_dir / "quick_validate.py")
+_init_mod = _m071_load_mod("_up_m071_init", _m071_sc_dir / "init_skill.py")
+_pkg_mod = _m071_load_mod("_up_m071_pkg", _m071_sc_dir / "package_skill.py")
+
+_had_anthropic = "anthropic" in sys.modules
+if not _had_anthropic:
+    sys.modules["anthropic"] = _m071_types.SimpleNamespace()
+_orch_mod = _m071_load_mod("_up_m071_orch", _m071_root / "scripts" / "orchestrate.py")
+if not _had_anthropic:
+    sys.modules.pop("anthropic", None)
+
+# 1. DCF models + _check_wacc_range bounds
+_m071_dcf_dir = iso / "_m071_oracle_dcf"
+_m071_dcf_dir.mkdir(parents=True, exist_ok=True)
+_m071_dcf_models = []
+for _dspec in _m071_in["dcf_specs"]:
+    _wb = _m071_openpyxl.Workbook()
+    _first_sh = True
+    for _sname, _cells in _dspec["sheets"].items():
+        if _first_sh:
+            _ws = _wb.active
+            _ws.title = _sname
+            _first_sh = False
+        else:
+            _ws = _wb.create_sheet(_sname)
+        for _coord, _val in _cells:
+            _ws[_coord] = _val
+    _xp = _m071_dcf_dir / _dspec["name"]
+    _wb.save(_xp)
+    _dres = _dcf_mod.validate_dcf_model(str(_xp))
+    _dres["file"] = Path(_dres["file"]).name
+    _dres.pop("validation_date", None)
+    _m071_dcf_models.append(_dres)
+
+_m071_wacc_bounds = []
+for _wi, _wval in enumerate(_m071_in["wacc_range_vals"]):
+    _wb = _m071_openpyxl.Workbook()
+    _ws = _wb.active
+    _ws.title = "WACC"
+    _ws["A1"] = "WACC"
+    _ws["B1"] = _wval
+    _wp = _m071_dcf_dir / f"wacc_bound_{_wi}.xlsx"
+    _wb.save(_wp)
+    _dv = _dcf_mod.DCFModelValidator(str(_wp))
+    _dv.workbook_values = {"WACC": _dv.workbook_values["WACC"]}
+    _dv._check_wacc_range()
+    _m071_wacc_bounds.append({"wacc": _wval, "warnings": list(_dv.warnings), "info": list(_dv.info)})
+
+# 2. extract_numbers
+_m071_deck_path = iso / "_m071_deck.md"
+_m071_deck_path.write_text(_m071_in["deck_markdown"], encoding="utf-8")
+_up_nums = _num_mod.extract_numbers(_m071_in["deck_markdown"])
+_m071_ext_out = iso / "_m071_ext_out.json"
+subprocess.run(
+    [
+        sys.executable,
+        str(_m071_root / "plugins" / "vertical-plugins" / "financial-analysis" / "skills" / "ib-check-deck" / "scripts" / "extract_numbers.py"),
+        str(_m071_deck_path),
+        "--output",
+        str(_m071_ext_out),
+        "--check",
+    ],
+    capture_output=True,
+    text=True,
+    encoding="utf-8",
+    errors="replace",
+    check=False,
+)
+_m071_numbers_out = {
+    "normalize": [_num_mod.normalize_number(v, u) for v, u in _m071_in["normalize_cases"]],
+    "category": [_num_mod.detect_category(c, u) for c, u in _m071_in["category_cases"]],
+    "extracted": [dataclasses.asdict(x) for x in _up_nums],
+    "inconsistencies": _num_mod.find_inconsistencies(_up_nums),
+    "cli_json": json.loads(_m071_ext_out.read_text(encoding="utf-8")),
+}
+
+# 3. catalog_lint (snapshot réel 82 fichiers + catalogue synthétique muté)
+_m071_cat_copy = iso / "test_input_m071_catalog"
+if _m071_cat_copy.exists():
+    shutil.rmtree(_m071_cat_copy)
+for _sub in ("plugins", "managed-agent-cookbooks", ".claude-plugin", "claude-for-msft-365-install"):
+    if (_m071_root / _sub).exists():
+        shutil.copytree(_m071_root / _sub, _m071_cat_copy / _sub)
+for _ps1 in sorted(_m071_root.rglob("*.ps1")):
+    if any(part in {".git", "node_modules"} for part in _ps1.parts):
+        continue
+    _rel_ps = _ps1.relative_to(_m071_root)
+    (_m071_cat_copy / _rel_ps).parent.mkdir(parents=True, exist_ok=True)
+    shutil.copy2(_ps1, _m071_cat_copy / _rel_ps)
+
+_m071_mut_cat = iso / "_m071_mut_cat"
+if _m071_mut_cat.exists():
+    shutil.rmtree(_m071_mut_cat)
+(_m071_mut_cat / ".claude-plugin").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / ".claude-plugin" / "marketplace.json").write_text(
+    json.dumps({"plugins": [{"name": "missing-src", "source": "./plugins/vertical-plugins/nope"}]}),
+    encoding="utf-8",
+)
+(_m071_mut_cat / "plugins" / "vertical-plugins" / "vp1" / "skills" / "good-sk").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "plugins" / "vertical-plugins" / "vp1" / "skills" / "good-sk" / "SKILL.md").write_text("---\nname: good-sk\ndescription: ok\n---\n", encoding="utf-8")
+(_m071_mut_cat / "plugins" / "vertical-plugins" / "vp1" / "skills" / "unbundled-sk").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "plugins" / "vertical-plugins" / "vp1" / "skills" / "unbundled-sk" / "SKILL.md").write_text("---\nname: unbundled-sk\ndescription: ok\n---\n", encoding="utf-8")
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / ".claude-plugin").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / ".claude-plugin" / "plugin.json").write_text("{bad json", encoding="utf-8")
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "agents").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "agents" / "no-fm.md").write_text("hello", encoding="utf-8")
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "agents" / "bad-ref.md").write_text("---\nname: bad-ref\n---\nUse `unbundled-sk`.\n", encoding="utf-8")
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "skills" / "good-sk").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "skills" / "good-sk" / "SKILL.md").write_text("DRIFTED", encoding="utf-8")
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "skills" / "orphan-sk").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "plugins" / "agent-plugins" / "ag1" / "skills" / "orphan-sk" / "SKILL.md").write_text("---\nname: orphan-sk\ndescription: o\n---\n", encoding="utf-8")
+(_m071_mut_cat / "managed-agent-cookbooks" / "ma1").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "managed-agent-cookbooks" / "ma1" / "broken.yaml").write_text("a: [1, 2\n", encoding="utf-8")
+(_m071_mut_cat / "managed-agent-cookbooks" / "ma1" / "agent.yaml").write_text(
+    "system:\n  file: missing.md\nskills:\n  - path: missing_skill\n  - from_plugin: missing_plug\ncallable_agents:\n  - manifest: missing_sub.yaml\n",
+    encoding="utf-8",
+)
+(_m071_mut_cat / "managed-agent-cookbooks" / "ma2").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "scripts").mkdir(parents=True, exist_ok=True)
+shutil.copy2(_m071_root / "scripts" / "check.py", _m071_mut_cat / "scripts" / "check.py")
+(_m071_mut_cat / "claude-for-msft-365-install" / "scripts").mkdir(parents=True, exist_ok=True)
+(_m071_mut_cat / "claude-for-msft-365-install" / "scripts" / "bad.ps1").write_bytes(b"# \xe2\x80\x94 em dash\n")
+(_m071_mut_cat / "claude-for-msft-365-install" / "scripts" / "bom.ps1").write_bytes(b"\xef\xbb\xbf# \xe2\x80\x94 ok with bom\n")
+
+def _run_check_py(_script_path: Path):
+    _env = os.environ.copy()
+    _env["PYTHONUTF8"] = "1"
+    _p = subprocess.run([sys.executable, str(_script_path)], capture_output=True, text=True, encoding="utf-8", errors="replace", env=_env, check=False)
+    _checked = 0
+    _errs = []
+    _all_out = _p.stderr + "\n" + _p.stdout
+    _m = re.search(r"(\d+)\s+file\(s\)", _all_out)
+    if _m:
+        _checked = int(_m.group(1))
+    if "\n  ✗ " in ("\n" + _p.stderr):
+        _parts = ("\n" + _p.stderr).split("\n  ✗ ")[1:]
+        _errs = [_part.rstrip("\r\n") for _part in _parts]
+    return {"ok": _p.returncode == 0, "checked": _checked, "errors": _errs}
+
+_real_check = _run_check_py(_m071_root / "scripts" / "check.py")
+_mut_check = _run_check_py(_m071_mut_cat / "scripts" / "check.py")
+shutil.rmtree(_m071_mut_cat / "scripts")
+_m071_catalog_out = {"real": _real_check, "mut": _mut_check}
+
+# 4. schema_validate (scripts/validate.py)
+_m071_val_dir = iso / "_m071_val"
+_m071_val_dir.mkdir(parents=True, exist_ok=True)
+_m071_schema_cases = [
+    ({"a": {"b": [1]}}, {"type": "object", "additionalProperties": False, "required": ["a"], "properties": {"a": {"type": "object", "properties": {"b": {"type": "array", "items": {"type": "integer"}}}}}}),
+    ({}, {"type": "object", "required": ["a"], "properties": {"a": {"type": "string"}}}),
+    ({"a": {"b": ["bad"]}}, {"type": "object", "properties": {"a": {"type": "object", "properties": {"b": {"type": "array", "items": {"type": "integer"}}}}}}),
+    ({"a": 1, "extra": 2}, {"type": "object", "additionalProperties": False, "properties": {"a": {"type": "integer"}}}),
+]
+_m071_schema_out = []
+for _vi, (_inst, _sch) in enumerate(_m071_schema_cases):
+    _ip = _m071_val_dir / f"inst_{_vi}.json"
+    _sp = _m071_val_dir / f"sch_{_vi}.json"
+    _ip.write_text(json.dumps(_inst), encoding="utf-8")
+    _sp.write_text(json.dumps(_sch), encoding="utf-8")
+    _vp = subprocess.run([sys.executable, str(_m071_root / "scripts" / "validate.py"), str(_ip), str(_sp)], capture_output=True, text=True, encoding="utf-8", errors="replace", check=False)
+    _msg = (_vp.stderr.rstrip("\r\n") or _vp.stdout.rstrip("\r\n"))
+    _m071_schema_out.append([_vp.returncode == 0, _msg])
+
+# 5. handoff (orchestrate.py::extract_handoff — comportement brut + contrôle allowlist/schema via regex imbriquée)
+_orig_up_handoff_re = _orch_mod.HANDOFF_RE
+_handoff_default = [_orch_mod.extract_handoff(c) for c in _m071_in["handoff_cases"]]
+try:
+    _orch_mod.HANDOFF_RE = re.compile(r'\{"type":\s*"handoff_request".*?\}\s*\}', re.DOTALL)
+    _handoff_nested = [_orch_mod.extract_handoff(c) for c in _m071_in["handoff_cases"]]
+finally:
+    _orch_mod.HANDOFF_RE = _orig_up_handoff_re
+_m071_handoff_out = {
+    "default": _handoff_default,
+    "nested_re": _handoff_nested,
+    "allowed_targets": sorted(_orch_mod.ALLOWED_TARGETS),
+    "schema": _orch_mod.HANDOFF_PAYLOAD_SCHEMA,
+}
+
+# 6. semver (version_bump.py)
+_m071_semver_out = {
+    "parse": [_ver_mod.parse_semver(x) for x in _m071_in["semver_cases"]["parse"]],
+    "bump": [_ver_mod.patch_bump(x) for x in _m071_in["semver_cases"]["bump"]],
+    "ahead": [_ver_mod.is_ahead(w, b) for w, b in _m071_in["semver_cases"]["ahead"]],
+}
+
+# 7. sync-agent-skills.py
+_m071_sync_in = iso / "_m071_sync_in"
+if _m071_sync_in.exists():
+    shutil.rmtree(_m071_sync_in)
+shutil.copytree(_m071_mut_cat / "plugins", _m071_sync_in / "plugins")
+_m071_sync_a = iso / "_m071_sync_a"
+if _m071_sync_a.exists():
+    shutil.rmtree(_m071_sync_a)
+shutil.copytree(_m071_sync_in, _m071_sync_a)
+(_m071_sync_a / "scripts").mkdir(parents=True, exist_ok=True)
+shutil.copy2(_m071_root / "scripts" / "sync-agent-skills.py", _m071_sync_a / "scripts" / "sync-agent-skills.py")
+_m071_sync_proc = subprocess.run([sys.executable, str(_m071_sync_a / "scripts" / "sync-agent-skills.py")], check=False, capture_output=True, text=True)
+assert _m071_sync_proc.returncode == 1, f"Expected rc=1 on orphan-sk: {_m071_sync_proc.returncode} {_m071_sync_proc.stderr}"
+_m071_sync_out = {
+    "files": {
+        str(_f.relative_to(_m071_sync_a / "plugins")): _f.read_text(encoding="utf-8")
+        for _f in sorted((_m071_sync_a / "plugins").rglob("*"))
+        if _f.is_file()
+    }
+}
+
+# 8. skill_tools (quick_validate, init_skill, package_skill)
+_m071_skills_in = iso / "_m071_skills_in"
+if _m071_skills_in.exists():
+    shutil.rmtree(_m071_skills_in)
+_m071_skill_fixtures = {
+    "valid_skill": "---\nname: valid-skill\ndescription: Good skill\nlicense: Apache-2.0\n---\n# Valid\n",
+    "missing_md": None,
+    "no_fm": "No frontmatter",
+    "bad_fm": "---\nname: x\n",
+    "bad_yaml": "---\nname: [unclosed\n---\n",
+    "bad_yaml_scalar": "---\njust a string\n---\n",
+    "extra_key": "---\nname: x\ndescription: d\nfoo: bar\n---\n",
+    "no_name": "---\ndescription: d\n---\n",
+    "no_desc": "---\nname: x\n---\n",
+    "bad_name_upper": "---\nname: BadName\ndescription: d\n---\n",
+    "bad_name_hyph": "---\nname: -bad\ndescription: d\n---\n",
+    "bad_name_dbl": "---\nname: bad--name\ndescription: d\n---\n",
+    "bad_name_len": f"---\nname: {'a' * 65}\ndescription: d\n---\n",
+    "bad_desc_angle": "---\nname: x\ndescription: bad <tag>\n---\n",
+    "bad_desc_len": f"---\nname: x\ndescription: {'d' * 1025}\n---\n",
+}
+for _sk_name, _sk_body in _m071_skill_fixtures.items():
+    (_m071_skills_in / _sk_name).mkdir(parents=True, exist_ok=True)
+    if _sk_body is not None:
+        (_m071_skills_in / _sk_name / "SKILL.md").write_text(_sk_body, encoding="utf-8")
+
+_m071_init_a = iso / "_m071_init_a"
+_m071_pkg_a = iso / "_m071_pkg_a"
+_m071_init_a.mkdir(parents=True, exist_ok=True)
+_m071_pkg_a.mkdir(parents=True, exist_ok=True)
+(_m071_skills_in / "valid_skill" / "scripts").mkdir(parents=True, exist_ok=True)
+(_m071_skills_in / "valid_skill" / "scripts" / "run.py").write_text("print(1)\n", encoding="utf-8")
+
+_m071_made_dir = _init_mod.init_skill("my-fsi-skill", _m071_init_a)
+assert _m071_made_dir is not None
+_m071_raw_zip = _pkg_mod.package_skill(_m071_made_dir, _m071_pkg_a)
+_m071_made_zip = _pkg_mod.package_skill(_m071_skills_in / "valid_skill", _m071_pkg_a)
+assert _m071_made_zip is not None
+with _m071_zipfile.ZipFile(_m071_made_zip, "r") as _zf:
+    _m071_zip_entries = {name: _zf.read(name).decode("utf-8", errors="replace") for name in sorted(_zf.namelist())}
+_m071_skill_tools_out = {
+    "validate": {k: list(_qv_mod.validate_skill(_m071_skills_in / k)) for k in sorted(_m071_skill_fixtures)},
+    "title": _init_mod.title_case_skill_name("my-fsi-skill"),
+    "init_contents": {
+        str(p.relative_to(_m071_made_dir)): p.read_text(encoding="utf-8")
+        for p in sorted(_m071_made_dir.rglob("*"))
+        if p.is_file()
+    },
+    "raw_init_zip_is_none": (_m071_raw_zip is None),
+    "bad_zip_is_none": (_pkg_mod.package_skill(_m071_skills_in / "no_fm", _m071_pkg_a) is None),
+    "zip_entries": _m071_zip_entries,
+}
+
+# 9. m365_manifest via Node v24 réel (build-manifest.mjs)
+_node_exe = shutil.which("node")
+assert _node_exe, "Node.js introuvable pour oracle Phase A M071 build-manifest.mjs"
+_m071_templates = _m071_in["m365_templates"]
+
+class _M365TplHandler(_m071_http_server.BaseHTTPRequestHandler):
+    def do_GET(self):
+        key = self.path.lstrip("/").split("?", 1)[0].removesuffix(".xml")
+        body = _m071_templates.get(key)
+        if body is None:
+            self.send_response(404)
+            self.end_headers()
+            return
+        data = body.encode("utf-8")
+        self.send_response(200)
+        self.send_header("Content-Type", "application/xml; charset=utf-8")
+        self.send_header("Content-Length", str(len(data)))
+        self.end_headers()
+        self.wfile.write(data)
+    def log_message(self, fmt, *args):
+        return
+
+_m365_srv = _m071_http_server.ThreadingHTTPServer(("127.0.0.1", 0), _M365TplHandler)
+_m365_port = _m365_srv.server_address[1]
+_m365_th = _m071_threading.Thread(target=_m365_srv.serve_forever, daemon=True)
+_m365_th.start()
+_m071_m365_dir = iso / "_m071_m365_a"
+_m071_m365_dir.mkdir(parents=True, exist_ok=True)
+_m071_m365_out = []
+try:
+    for _ci, (_host, _pairs, _tpl_key) in enumerate(_m071_in["m365_cases"]):
+        _out_xml = _m071_m365_dir / f"case_{_ci}.xml"
+        _env = os.environ.copy()
+        _env["MANIFEST_URL"] = f"http://127.0.0.1:{_m365_port}/{_tpl_key}.xml"
+        _np = subprocess.run(
+            [_node_exe, str(_m071_root / "claude-for-msft-365-install" / "scripts" / "build-manifest.mjs"), _host, str(_out_xml), *_pairs],
+            capture_output=True,
+            text=True,
+            encoding="utf-8",
+            errors="replace",
+            env=_env,
+            check=False,
+        )
+        _lines = [ln.rstrip() for ln in _np.stderr.splitlines() if ln.strip()]
+        _warns = [ln.strip() for ln in _lines if ln.lstrip().startswith(("warn:", "note:"))]
+        _errs = [ln for ln in _lines if not ln.lstrip().startswith(("warn:", "note:"))]
+        _err_txt = "\n".join(_errs) if _np.returncode != 0 else None
+        if _err_txt and "is not valid JSON:" in _err_txt:
+            _err_txt = _err_txt.split("is not valid JSON:", 1)[0] + "is not valid JSON:"
+        _m071_m365_out.append({
+            "ok": _np.returncode == 0,
+            "xml": _out_xml.read_text(encoding="utf-8") if _np.returncode == 0 else None,
+            "warnings": _warns,
+            "error": _err_txt,
+        })
+finally:
+    _m365_srv.shutdown()
+    _m365_srv.server_close()
+
+m071_out = {
+    "dcf_models": _m071_dcf_models,
+    "wacc_bounds": _m071_wacc_bounds,
+    "numbers": _m071_numbers_out,
+    "catalog_lint": _m071_catalog_out,
+    "schema_validate": _m071_schema_out,
+    "handoff": _m071_handoff_out,
+    "semver": _m071_semver_out,
+    "sync": _m071_sync_out,
+    "skill_tools": _m071_skill_tools_out,
+    "m365_manifest": _m071_m365_out,
+}
+
 (iso / "oracle_outputs.json").write_text(
     json.dumps(
-        {"m001": m001_out, "m044": m044_out, "m050": m050_out, "m056": m056_out, "m074": m074_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
+        {"m001": m001_out, "m044": m044_out, "m050": m050_out, "m056": m056_out, "m071": m071_out, "m074": m074_out, "m084": m084_out, "m117": m117_out, "m118": m118_out},
         ensure_ascii=False,
         indent=2,
     ),
@@ -1953,6 +2468,7 @@ import aspace_discovery_catalog as cat
 import aspace_plugin_registry_organ as reg
 import aspace_video_studio_foundation as vsf
 import aspace_trading_copilot_foundation as trd
+import aspace_financial_services_organ as fsi
 
 # Aucune source supprimée ne doit subsister sous iso_root
 for _gone in (
@@ -1961,6 +2477,7 @@ for _gone in (
     "01_Forkable/FKB02_Memory/knowledge-catalog",
     "01_Forkable/FKB04_Tools_Anything/CLI-Anything",
     "01_Forkable/FKB07_Money_Maker/02_Video/video-director",
+    "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services",
     "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
     "01_Forkable/FKB07_Money_Maker/00_Marketplace_YoutubeSkills",
     "01_Forkable/FKB01_Inference/04_Inference_Youtube_Discovery_Registry",
@@ -3081,12 +3598,196 @@ def verify_m001() -> int:
     )
 
 
+def verify_m071() -> int:
+    import dataclasses as _m071_dc
+    import shutil as _m071_sh
+    import zipfile as _m071_zf
+    import openpyxl as _m071_ox
+
+    o = oracle["m071"]
+    _in = inputs["m071"]
+
+    # 1. DCF models & _check_wacc_range bounds
+    _dcf_dir = iso / "_m071_organ_dcf"
+    _dcf_dir.mkdir(parents=True, exist_ok=True)
+    _dcf_models = []
+    for _dspec in _in["dcf_specs"]:
+        _wb = _m071_ox.Workbook()
+        _first_sh = True
+        for _sname, _cells in _dspec["sheets"].items():
+            if _first_sh:
+                _ws = _wb.active
+                _ws.title = _sname
+                _first_sh = False
+            else:
+                _ws = _wb.create_sheet(_sname)
+            for _coord, _val in _cells:
+                _ws[_coord] = _val
+        _xp = _dcf_dir / _dspec["name"]
+        _wb.save(_xp)
+        _dres = fsi.validate_dcf_model(str(_xp))
+        assert "_parasite" not in _dres, f"Clé parasite dans DCF: {_dres}"
+        _dres["file"] = Path(_dres["file"]).name
+        _dres.pop("validation_date", None)
+        _dcf_models.append(_dres)
+    assert _dcf_models == o["dcf_models"], f"M071 dcf_models divergence: {_dcf_models!r} vs {o['dcf_models']!r}"
+
+    _wacc_bounds = []
+    for _wi, _wval in enumerate(_in["wacc_range_vals"]):
+        _wb = _m071_ox.Workbook()
+        _ws = _wb.active
+        _ws.title = "WACC"
+        _ws["A1"] = "WACC"
+        _ws["B1"] = _wval
+        _wp = _dcf_dir / f"wacc_bound_{_wi}.xlsx"
+        _wb.save(_wp)
+        _dv = fsi.DCFModelValidator(str(_wp))
+        _dv.workbook_values = {"WACC": _dv.workbook_values["WACC"]}
+        _dv._check_wacc_range()
+        _wacc_bounds.append({"wacc": _wval, "warnings": list(_dv.warnings), "info": list(_dv.info)})
+        _ev = fsi.evaluate_wacc_range(_wval)
+        _exp_status = "OK" if 0.05 <= _wval <= 0.20 else "WARN"
+        assert _ev["status"] == _exp_status, f"WACC eval mismatch for {_wval}: {_ev}"
+    assert _wacc_bounds == o["wacc_bounds"], f"M071 wacc_bounds divergence: {_wacc_bounds!r} vs {o['wacc_bounds']!r}"
+
+    # 2. extract_numbers
+    _org_nums = fsi.extract_numbers(_in["deck_markdown"])
+    _org_cli = fsi.analyze_presentation_numbers(_in["deck_markdown"], check=True)
+    _org_numbers_out = {
+        "normalize": [fsi.normalize_number(v, u) for v, u in _in["normalize_cases"]],
+        "category": [fsi.detect_category(c, u) for c, u in _in["category_cases"]],
+        "extracted": [_m071_dc.asdict(x) for x in _org_nums],
+        "inconsistencies": fsi.find_inconsistencies(_org_nums),
+        "cli_json": _org_cli,
+    }
+    assert _org_numbers_out == o["numbers"], f"M071 numbers divergence"
+
+    # 3. catalog_lint
+    _real_cat = fsi.lint_fsi_catalog(iso / "test_input_m071_catalog")
+    _mut_cat = fsi.lint_fsi_catalog(iso / "_m071_mut_cat")
+    assert {"real": _real_cat, "mut": _mut_cat} == o["catalog_lint"], (
+        f"M071 catalog_lint divergence: real={_real_cat!r} mut={_mut_cat!r} vs {o['catalog_lint']!r}"
+    )
+
+    # 4. schema_validate
+    _schema_cases = [
+        ({"a": {"b": [1]}}, {"type": "object", "additionalProperties": False, "required": ["a"], "properties": {"a": {"type": "object", "properties": {"b": {"type": "array", "items": {"type": "integer"}}}}}}),
+        ({}, {"type": "object", "required": ["a"], "properties": {"a": {"type": "string"}}}),
+        ({"a": {"b": ["bad"]}}, {"type": "object", "properties": {"a": {"type": "object", "properties": {"b": {"type": "array", "items": {"type": "integer"}}}}}}),
+        ({"a": 1, "extra": 2}, {"type": "object", "additionalProperties": False, "properties": {"a": {"type": "integer"}}}),
+    ]
+    _org_schema = [list(fsi.validate_json_schema(_inst, _sch)) for _inst, _sch in _schema_cases]
+    assert _org_schema == o["schema_validate"], f"M071 schema divergence: {_org_schema!r} vs {o['schema_validate']!r}"
+
+    # 5. handoff
+    import re as _m071_re
+    _orig_fsi_handoff_re = fsi.HANDOFF_RE
+    _org_handoff_default = [fsi.extract_handoff(c) for c in _in["handoff_cases"]]
+    try:
+        fsi.HANDOFF_RE = _m071_re.compile(r'\{"type":\s*"handoff_request".*?\}\s*\}', _m071_re.DOTALL)
+        _org_handoff_nested = [fsi.extract_handoff(c) for c in _in["handoff_cases"]]
+    finally:
+        fsi.HANDOFF_RE = _orig_fsi_handoff_re
+    _org_handoff = {
+        "default": _org_handoff_default,
+        "nested_re": _org_handoff_nested,
+        "allowed_targets": sorted(fsi.ALLOWED_HANDOFF_TARGETS),
+        "schema": fsi.HANDOFF_PAYLOAD_SCHEMA,
+    }
+    assert _org_handoff == o["handoff"], f"M071 handoff divergence: {_org_handoff!r} vs {o['handoff']!r}"
+
+    # 6. semver
+    _org_semver = {
+        "parse": [list(x) if x is not None else None for x in (fsi.parse_semver(v) for v in _in["semver_cases"]["parse"])],
+        "bump": [fsi.patch_bump(v) for v in _in["semver_cases"]["bump"]],
+        "ahead": [fsi.is_ahead(w, b) for w, b in _in["semver_cases"]["ahead"]],
+    }
+    assert _org_semver == o["semver"], f"M071 semver divergence: {_org_semver!r} vs {o['semver']!r}"
+
+    # 7. sync_agent_skills
+    _sync_c = iso / "_m071_sync_c"
+    if _sync_c.exists():
+        _m071_sh.rmtree(_sync_c)
+    _m071_sh.copytree(iso / "_m071_sync_in", _sync_c)
+    _synced_cnt, _sync_missing = fsi.sync_agent_skills(_sync_c)
+    assert _synced_cnt == 1 and len(_sync_missing) == 1, f"sync count unexpected: {_synced_cnt}, {_sync_missing}"
+    _org_sync = {
+        "files": {
+            str(_f.relative_to(_sync_c / "plugins")): _f.read_text(encoding="utf-8")
+            for _f in sorted((_sync_c / "plugins").rglob("*"))
+            if _f.is_file()
+        }
+    }
+    assert _org_sync == o["sync"], f"M071 sync divergence"
+
+    # 8. skill_tools
+    _init_c = iso / "_m071_init_c"
+    _pkg_c = iso / "_m071_pkg_c"
+    if _init_c.exists():
+        _m071_sh.rmtree(_init_c)
+    if _pkg_c.exists():
+        _m071_sh.rmtree(_pkg_c)
+    _init_c.mkdir(parents=True, exist_ok=True)
+    _pkg_c.mkdir(parents=True, exist_ok=True)
+    _made_dir = fsi.init_skill("my-fsi-skill", _init_c)
+    assert _made_dir is not None, "init_skill returned None"
+    _raw_zip = fsi.package_skill(_made_dir, _pkg_c)
+    _made_zip = fsi.package_skill(iso / "_m071_skills_in" / "valid_skill", _pkg_c)
+    assert _made_zip is not None, "package_skill returned None"
+    with _m071_zf.ZipFile(_made_zip, "r") as _zf:
+        _zip_entries = {name: _zf.read(name).decode("utf-8", errors="replace") for name in sorted(_zf.namelist())}
+    _org_skill_tools = {
+        "validate": {k: list(fsi.validate_skill(iso / "_m071_skills_in" / k)) for k in sorted(o["skill_tools"]["validate"])},
+        "title": fsi.title_case_skill_name("my-fsi-skill"),
+        "init_contents": {
+            str(_p.relative_to(_made_dir)): _p.read_text(encoding="utf-8")
+            for _p in sorted(_made_dir.rglob("*"))
+            if _p.is_file()
+        },
+        "raw_init_zip_is_none": (_raw_zip is None),
+        "bad_zip_is_none": (fsi.package_skill(iso / "_m071_skills_in" / "no_fm", _pkg_c) is None),
+        "zip_entries": _zip_entries,
+    }
+    assert _org_skill_tools == o["skill_tools"], f"M071 skill_tools divergence"
+
+    # 9. m365_manifest + direct validator checks
+    assert fsi.m365_validate_identifier({"type": "bad"}, "id0"), "m365_validate_identifier must reject invalid"
+    assert fsi.m365_validate_statement({"effect": "bad", "action": ""}, "st0"), "m365_validate_statement must reject invalid"
+    assert fsi.m365_validate_available_models("a,,b") == ["blank entry in comma-separated id list"], "m365_validate_available_models mismatch"
+
+    _org_m365 = []
+    for _host, _pairs, _tpl_key in _in["m365_cases"]:
+        _res = fsi.m365_build_manifest_xml(_host, _pairs, _in["m365_templates"][_tpl_key])
+        _err_txt = _res.get("error")
+        if _err_txt and "is not valid JSON:" in _err_txt:
+            _err_txt = _err_txt.split("is not valid JSON:", 1)[0] + "is not valid JSON:"
+        _org_m365.append({
+            "ok": _res["ok"],
+            "xml": _res["xml"],
+            "warnings": _res["warnings"],
+            "error": _err_txt,
+        })
+    assert _org_m365 == o["m365_manifest"], f"M071 m365_manifest divergence: {_org_m365!r} vs {o['m365_manifest']!r}"
+
+    return (
+        len(_dcf_models)
+        + len(_wacc_bounds)
+        + len(_org_nums)
+        + len(_in["normalize_cases"])
+        + len(_in["category_cases"])
+        + len(_schema_cases)
+        + len(_org_handoff)
+        + len(_in["m365_cases"])
+    )
+
+
 def verify_all() -> dict[str, int]:
     return {
         "a0-plugins": verify_m001(),
         "context-language-models": verify_m044(),
         "knowledge-catalog": verify_m050(),
         "CLI-Anything": verify_m056(),
+        "financial-services": verify_m071(),
         "tradingview-indicator-search-mcp-server": verify_m074(),
         "video-director": verify_m084(),
         "00_Marketplace_YoutubeSkills": verify_m117(),
@@ -3384,7 +4085,105 @@ def run_sabotage_suite() -> int:
         reg.compile_catalog_index = _orig_compile_cat
     assert broke_m001_extra, "SABOTAGE CLÉ EN TROP M001 NON DÉTECTÉ !"
 
-    return len(sabotages) + 3
+    def _run_m071_sabotage_checks() -> int:
+        import inspect as _m071_ins
+        import textwrap as _m071_tw
+
+        _cnt = 0
+
+        def _chk_stub(label, owner, attr, repl):
+            nonlocal _cnt
+            orig = getattr(owner, attr)
+            setattr(owner, attr, repl)
+            broke = False
+            try:
+                verify_m071()
+            except Exception:
+                broke = True
+            finally:
+                setattr(owner, attr, orig)
+            assert broke, f"SABOTAGE M071 NON DÉTECTÉ ({label})"
+            _cnt += 1
+
+        def _chk_mut(label, owner, attr, old_s, new_s):
+            nonlocal _cnt
+            orig = getattr(owner, attr)
+            src = _m071_tw.dedent(_m071_ins.getsource(orig))
+            assert old_s in src, f"Cible mutation absente dans {attr}: {old_s!r}"
+            mutated_src = src.replace(old_s, new_s, 1)
+            ns = fsi.__dict__.copy()
+            exec(compile(mutated_src, f"<sabotage:{label}>", "exec"), ns)
+            setattr(owner, attr, ns[orig.__name__])
+            broke = False
+            try:
+                verify_m071()
+            except Exception:
+                broke = True
+            finally:
+                setattr(owner, attr, orig)
+            assert broke, f"MUTATION M071 NON DÉTECTÉE ({label})"
+            _cnt += 1
+
+        # 31 stub sabotages sur tous les symboles publics M071
+        for _lbl, _own, _att, _fn in [
+            ("dcf_sheet_struct", fsi.DCFModelValidator, "check_sheet_structure", lambda self: None),
+            ("dcf_formula_err", fsi.DCFModelValidator, "check_formula_errors", lambda self: ({}, 0)),
+            ("dcf_tg_wacc", fsi.DCFModelValidator, "_check_terminal_growth_vs_wacc", lambda self: None),
+            ("dcf_wacc_range", fsi.DCFModelValidator, "_check_wacc_range", lambda self: None),
+            ("dcf_tv_prop", fsi.DCFModelValidator, "_check_terminal_value_proportion", lambda self: None),
+            ("validate_dcf_model", fsi, "validate_dcf_model", lambda xp: {"status": "BAD"}),
+            ("evaluate_wacc_range", fsi, "evaluate_wacc_range", lambda w: {"status": "OK", "message": "x"}),
+            ("normalize_number", fsi, "normalize_number", lambda v, u: 0.0),
+            ("detect_category", fsi, "detect_category", lambda c, u: "other"),
+            ("extract_numbers", fsi, "extract_numbers", lambda c: []),
+            ("find_inconsistencies", fsi, "find_inconsistencies", lambda n: []),
+            ("analyze_presentation_numbers", fsi, "analyze_presentation_numbers", lambda c, check=False: {"total_numbers": 0, "by_category": {}, "inconsistencies": []}),
+            ("lint_fsi_catalog", fsi, "lint_fsi_catalog", lambda r: {"ok": True, "checked": 0, "errors": []}),
+            ("validate_json_schema", fsi, "validate_json_schema", lambda i, s: (True, "OK")),
+            ("extract_handoff", fsi, "extract_handoff", lambda t: None),
+            ("parse_semver", fsi, "parse_semver", lambda v: None),
+            ("patch_bump", fsi, "patch_bump", lambda v: "0.0.0"),
+            ("is_ahead", fsi, "is_ahead", lambda w, b: False),
+            ("sync_agent_skills", fsi, "sync_agent_skills", lambda r: (0, [])),
+            ("validate_skill", fsi, "validate_skill", lambda p: (True, "Skill is valid!")),
+            ("title_case_skill_name", fsi, "title_case_skill_name", lambda s: "X"),
+            ("init_skill", fsi, "init_skill", lambda n, p: None),
+            ("package_skill", fsi, "package_skill", lambda s, o=None: None),
+            ("_js_urlencode", fsi, "_js_urlencode", lambda pairs: ""),
+            ("m365_validate_identifier", fsi, "m365_validate_identifier", lambda i, a: []),
+            ("m365_validate_statement", fsi, "m365_validate_statement", lambda s, a: []),
+            ("m365_validate_available_models", fsi, "m365_validate_available_models", lambda v: []),
+            ("m365_split_params", fsi, "m365_split_params", lambda p: ([], [])),
+            ("m365_xml_escape", fsi, "m365_xml_escape", lambda s: s),
+            ("m365_append_params", fsi, "m365_append_params", lambda u, q, f: u),
+            ("m365_build_manifest_xml", fsi, "m365_build_manifest_xml", lambda h, p, t: {"ok": False, "xml": None, "warnings": [], "error": "sabotage"}),
+        ]:
+            _chk_stub(_lbl, _own, _att, _fn)
+
+        # 9 mutations de bornes/opérateurs
+        _chk_mut("tg_ge_gt", fsi.DCFModelValidator, "_check_terminal_growth_vs_wacc", "if terminal_growth >= wacc:", "if terminal_growth > wacc:")
+        _chk_mut("tv_hi_ge", fsi.DCFModelValidator, "_check_terminal_value_proportion", "if proportion > 0.80:", "if proportion >= 0.80:")
+        _chk_mut("tv_lo_le", fsi.DCFModelValidator, "_check_terminal_value_proportion", "elif proportion < 0.40:", "elif proportion <= 0.40:")
+        _chk_mut("wacc_lo_le", fsi, "evaluate_wacc_range", "if wacc < 0.05", "if wacc <= 0.05")
+        _chk_mut("wacc_hi_ge", fsi, "evaluate_wacc_range", "wacc > 0.20:", "wacc >= 0.20:")
+        _chk_mut("incon_pct", fsi, "find_inconsistencies", "if diff_pct < 0.05:", "if diff_pct < 0.0001:")
+        _chk_mut("year_bounds", fsi, "extract_numbers", "if 1900 <= num_val <= 2099", "if 1899 <= num_val <= 2100")
+        _chk_mut("js_safe_star", fsi, "_js_urlencode", 'safe="*-._"', 'safe="-._"')
+        _chk_mut("js_safe_tilde", fsi, "_js_urlencode", '.replace("~", "%7E")', '.replace("~", "~")')
+        _chk_mut("is_ahead_eq", fsi, "is_ahead", "return wv > bv", "return wv >= bv")
+
+        # 1 sabotage clé parasite dans validate_dcf_model
+        _orig_vdcf = fsi.validate_dcf_model
+        def _bad_vdcf_parasite(xp):
+            res = _orig_vdcf(xp)
+            res["_parasite"] = 1
+            return res
+        _chk_stub("dcf_parasite", fsi, "validate_dcf_model", _bad_vdcf_parasite)
+
+        return _cnt
+
+    _m071_sab_cnt = _run_m071_sabotage_checks()
+    return len(sabotages) + 3 + _m071_sab_cnt
 
 
 # Phase C : parité stricte -> sabotage complet -> auto-tests honnêtes -> reçus R10 mesurés
@@ -3399,12 +4198,15 @@ r02 = f02.run_fkb02_self_test(repo_root=iso, head_sha40=sha)
 rcat = cat.run_self_test(head_sha40=sha, repo_root=iso)
 rtrd = trd.run_trading_copilot_self_test(head_sha40=sha, repo_root=iso)
 rreg = reg.run_plugin_registry_self_test(head_sha40=sha, repo_root=iso)
+rfsi = fsi.run_financial_services_self_test(head_sha40=sha, repo_root=iso)
 
 assert r04["source_parity_verified"] == [], f"Auto-déclaration interdite: {r04['source_parity_verified']}"
 assert r02["source_parity_verified"] == [], f"Auto-déclaration interdite: {r02['source_parity_verified']}"
 assert rcat["source_parity_verified"] == [], f"Auto-déclaration interdite: {rcat['source_parity_verified']}"
 assert rtrd["source_parity_verified"] == [], f"Auto-déclaration interdite: {rtrd['source_parity_verified']}"
 assert rreg["source_parity_verified"] == [], f"Auto-déclaration interdite: {rreg['source_parity_verified']}"
+assert rfsi["source_parity_verified"] == [], f"Auto-déclaration interdite: {rfsi['source_parity_verified']}"
+assert rfsi["read_only_veto_s0"] is True, "Veto S0 M071 absent"
 assert "headless-fallback" not in json.dumps(r04) and "HeadlessDesktopSession" not in json.dumps(r04)
 assert r04["desktop_live_verified"] is False or r04["desktop_live_windows"] >= 1
 
@@ -3444,6 +4246,11 @@ recreg = reg.consign_plugin_registry_parity_receipt(
     sha,
     repo_root=iso,
 )
+recfsi = fsi.consign_financial_services_parity_receipt(
+    {"financial-services": {"compared_against_source": True, "cases_compared": case_counts["financial-services"], "cases_matched": case_counts["financial-services"]}},
+    sha,
+    repo_root=iso,
+)
 
 proven_mods = (
     rec04["verified_modules"]
@@ -3452,6 +4259,7 @@ proven_mods = (
     + recvd["verified_modules"]
     + rectrd["verified_modules"]
     + recreg["verified_modules"]
+    + recfsi["verified_modules"]
 )
 
 print(json.dumps({
@@ -3459,7 +4267,7 @@ print(json.dumps({
     "sabotages_detected": sabotage_detected_count,
     "case_counts": case_counts,
     "desktop_live_verified": bool(r04["desktop_live_verified"]),
-    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"], "trd": rectrd["r10_entry_id"], "reg": recreg["r10_entry_id"]},
+    "r10": {"f04": rec04["r10_entry_id"], "f02": rec02["r10_entry_id"], "cat": reccat["r10_entry_id"], "vd": recvd["r10_entry_id"], "trd": rectrd["r10_entry_id"], "reg": recreg["r10_entry_id"], "fsi": recfsi["r10_entry_id"]},
 }))
 '''
 
@@ -3557,8 +4365,10 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             "01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py",
             "01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py",
             "01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py",
-            # Sources réelles M001, M044, M050, M056, M074, M084, M117, M118 pour Phase A avant suppression
+            "01_Forkable/FKB07_Money_Maker/01_Trading/aspace_financial_services_organ.py",
+            # Sources réelles M001, M044, M050, M056, M071, M074, M084, M117, M118 pour Phase A avant suppression
             "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
+            "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services",
             "01_Forkable/FKB02_Memory/01_BillionContxtLanguage_AutoOnthology/context-language-models/clm",
             "01_Forkable/FKB02_Memory/knowledge-catalog/okf",
             "01_Forkable/FKB04_Tools_Anything/CLI-Anything/cli-anything-plugin",
@@ -3604,7 +4414,8 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
 
         # PHASE A : exécution des sources amont dans iso_root AVANT suppression
         (iso_root / "oracle_runner.py").write_text(_ORACLE_RUNNER_CODE, encoding="utf-8")
-        subprocess.check_call([sys.executable, str(iso_root / "oracle_runner.py")], cwd=str(iso_root))
+        _py_utf8_env = {**os.environ, "PYTHONUTF8": "1"}
+        subprocess.check_call([sys.executable, str(iso_root / "oracle_runner.py")], cwd=str(iso_root), env=_py_utf8_env)
         (iso_root / "oracle_runner.py").unlink()
         assert (iso_root / "oracle_outputs.json").exists()
 
@@ -3620,11 +4431,12 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         iso_out = subprocess.check_output(
             [sys.executable, str(iso_root / "organ_runner.py"), head_sha],
             cwd=str(iso_root),
+            env=_py_utf8_env,
             text=True,
         )
         parsed = json.loads(iso_out)
-        assert parsed["sabotages_detected"] >= 129, (
-            f"Couverture sabotage insuffisante : attendu >= 129, obtenu {parsed['sabotages_detected']}"
+        assert parsed["sabotages_detected"] >= 165, (
+            f"Couverture sabotage insuffisante : attendu >= 165, obtenu {parsed['sabotages_detected']}"
         )
         diff_proven = set(parsed["differential_proven"])
         desktop_live = bool(parsed["desktop_live_verified"])
@@ -3638,6 +4450,7 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
             ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
             ("01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py", []),
             ("01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py", []),
+            ("01_Forkable/FKB07_Money_Maker/01_Trading/aspace_financial_services_organ.py", []),
         ]:
             subprocess.check_call([sys.executable, str(iso_root / rel_script), *extra_args], cwd=str(iso_root), stdout=subprocess.DEVNULL)
 
@@ -3653,10 +4466,11 @@ def test_real_differential_deletion_and_lazy_import() -> tuple[set[str], bool]:
         ("01_Forkable/FKB07_Money_Maker/aspace_marketplace_engine.py", []),
         ("01_Forkable/FKB07_Money_Maker/02_Video/aspace_video_studio_foundation.py", []),
         ("01_Forkable/FKB07_Money_Maker/01_Trading/aspace_trading_copilot_foundation.py", []),
+        ("01_Forkable/FKB07_Money_Maker/01_Trading/aspace_financial_services_organ.py", []),
     ]:
         subprocess.check_call([sys.executable, str(ROOT / rel_script), *extra_args], cwd=str(ROOT), stdout=subprocess.DEVNULL)
     after_lines = len(journal_path.read_text(encoding="utf-8").splitlines())
-    assert after_lines >= before_lines + 8
+    assert after_lines >= before_lines + 9
 
     assert "llm-wiki" not in diff_proven, "M120 llm-wiki ne doit jamais être auto-ajouté à diff_proven"
     print(
@@ -3899,8 +4713,8 @@ def test_carte_and_registre_adr15_and_dynamic_counts(proven_fusionne: set[str], 
 
     name_to_id = {v: k for k, v in reg_id_to_name.items()}
     diff_ids = {name_to_id[m] for m in (proven_fusionne - RIG_INFINITY_PROVEN_F8)}
-    assert diff_ids == {"M001", "M044", "M050", "M056", "M074", "M084", "M117", "M118"}, (
-        f"Les 8 preuves différentielles attendues sont {{M001, M044, M050, M056, M074, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
+    assert diff_ids == {"M001", "M044", "M050", "M056", "M071", "M074", "M084", "M117", "M118"}, (
+        f"Les 9 preuves différentielles attendues sont {{M001, M044, M050, M056, M071, M074, M084, M117, M118}}, obtenu: {sorted(diff_ids)}"
     )
 
     assert by_name["TradingView-Unified-MCP"][0] == "**PARTIEL**", (
@@ -3949,6 +4763,7 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "RAPPORT-CORRECTION-M120.md",
         "DECISIONS.md",
         "CORPS-CARTE.md",
+        "M071-CERTIFICATION-REPORT.md",
     ]
     for fn in required:
         p = FUSION_DIR / fn
@@ -3988,6 +4803,10 @@ def test_required_spad_artifacts_and_windows_clone_lf() -> None:
         "01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins",
         "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa",
         "01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server",
+        "01_Forkable/FKB07_Money_Maker/01_Trading/financial-services",
+        "4b7d7e5dbc9de0187eb21c49d7a0de7a2859eed1",
+        "openpyxl",
+        "jsonschema",
         "upload-artifact",
     ):
         assert req_token in wf_txt, f"Jeton requis absent de foundation-proof.yml: {req_token}"

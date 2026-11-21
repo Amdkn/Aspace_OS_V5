@@ -40,5 +40,5 @@ amends: "ADR-14"
 |---|---|---|---|---|
 | **`ÂME`** | `Automaton` | `K1` (11) + `K4` (18) | **29** | `1` F8 (`prime-agent`) + `2` différentiels durcis (`M044`, `M050`) = **3 `FUSIONNÉ`** ; `M120 llm-wiki` maintenu `PARTIEL` |
 | **`SYSTÈME NERVEUX`** | `Infinity` | Bus L0 (7) + `K3` (15) + `K3-ML` (7) | **29** | `1` F8 (`infinity`) + `M118` = **2 `FUSIONNÉ`** (total `9` F8 Rust sur `RigInfinity`) |
-| **`CORPS`** | `OpenRig` | `K2` (26) + `K5 · Métabolisme` (36) | **62** | `7` F8 + `M001` (`a0-plugins`, Cycle 7 Vague 2) + `M056` + `M074` (Cycle 7 Vague 1) + `M084` (`video-director`) + `M117` = **12 `FUSIONNÉ`** |
-| **Total** | — | **Tous les organes** | **120** | **17 `FUSIONNÉ`** (`9` F8 Rust + `8` parité/sabotage stricts, zéro auto-certification) |
+| **`CORPS`** | `OpenRig` | `K2` (26) + `K5 · Métabolisme` (36) | **62** | `7` F8 + `M001` (`a0-plugins`) + `M056` + `M071` (`financial-services`, Wave 2 `K5`) + `M074` (`tradingview`) + `M084` (`video-director`) + `M117` = **13 `FUSIONNÉ`** |
+| **Total** | — | **Tous les organes** | **120** | **18 `FUSIONNÉ`** (`9` F8 Rust + `9` parité/sabotage stricts, zéro auto-certification) |

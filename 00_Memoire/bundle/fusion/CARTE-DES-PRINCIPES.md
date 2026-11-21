@@ -595,10 +595,10 @@ Les documents historiques du dépôt annoncent des chiffres divergents. La mesur
 
 ### M071 — `financial-services` (GITLINK)
 - **Provenance & Sources Brutes Lues** : chemin `01_Forkable/FKB07_Money_Maker/01_Trading/financial-services` | repo `https://github.com/Amdkn/financial-services.git` | SHA/pin `4b7d7e5dbc9d` | licence `LICENSE fichier lu` | sources : `01_Forkable/FKB07_Money_Maker/01_Trading/financial-services/README.md`
-- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`PARTIEL`** (Actif FKB07/01_Trading ; reste intégration des grilles de valorisation et d'analyse financière dans K5/K4 et retrait gitlink.)
-- **Principe** : Protocoles institutionnels de recherche actions, modélisation de valorisation, revue de résultats et due diligence.
-- **Invariants** : Sourcing chiffré obligatoire des ratios financiers ; zéro chiffre inventé.
-- **Interfaces** : Skills & connecteurs d'analyse financière institutionnelle.
+- **Noyau Cible & Destination ÉNONCÉ §1(1)** : **CORPS · Organe K5 (Métabolisme B2B, Vidéo & Finance S0)** · Destination : **`FUSIONNÉ`** · Statut Vérifié (§5.8) : **`FUSIONNÉ`** (Portage 1:1 des 4 sous-systèmes déterministes dans `01_Forkable/FKB07_Money_Maker/01_Trading/aspace_financial_services_organ.py` sous `READ_ONLY_VETO_S0 = True` + preuve différentielle `==` vs oracle dual Python & Node v24 après suppression physique en `iso_root` + 42 sabotages/mutations + reçu R10 `D-FSI-PARITY` ; Entra/CMA live hors périmètre offline ; gitlink conservé uniquement pour rejeu Phase A.)
+- **Principe** : Protocoles institutionnels de recherche actions, validation DCF `.xlsx`, extraction chiffrée de pitch decks, lint catalogue FSI/skills/handoff/semver et génération de manifestes XML M365.
+- **Invariants** : Veto strict lecture seule `READ_ONLY_VETO_S0 = True` ; zéro chiffre inventé ; parité exacte des seuils/quirks amont et encodage WHATWG `URLSearchParams` (`~` -> `%7E`).
+- **Interfaces** : `DCFModelValidator`, `validate_dcf_model`, `evaluate_wacc_range`, `extract_numbers`, `find_inconsistencies`, `analyze_presentation_numbers`, `lint_fsi_catalog`, `validate_json_schema`, `extract_handoff`, `parse_semver`, `patch_bump`, `is_ahead`, `sync_agent_skills`, `validate_skill`, `init_skill`, `package_skill`, `m365_build_manifest_xml`, `run_financial_services_self_test`, `consign_financial_services_parity_receipt` (`aspace_financial_services_organ.py`).
 - **Perte au Retrait & Conflits** : Perte sans fusion : perte des standards de modélisation financière pro pour LD02/B2B. Conflit : aucun -> ADR-07. (*Arbitrage : ADR-07*)
 
 ### M072 — `freqtrade` (GITLINK)

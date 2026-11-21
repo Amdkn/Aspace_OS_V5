@@ -36,7 +36,7 @@ jobs:
       - name: Install Python proof dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install pyyaml numpy pillow jinja2
+          pip install pyyaml numpy pillow jinja2 openpyxl jsonschema
 
       - name: Setup Node.js 24 (SQLite & JS oracles)
         uses: actions/setup-node@v4
@@ -53,6 +53,7 @@ jobs:
             01_Forkable/FKB02_Memory/knowledge-catalog \
             01_Forkable/FKB04_Tools_Anything/CLI-Anything \
             01_Forkable/FKB07_Money_Maker/02_Video/video-director \
+            01_Forkable/FKB07_Money_Maker/01_Trading/financial-services \
             01_Forkable/FKB07_Money_Maker/01_Trading/tradingview-indicator-search-mcp-server
           RIG_HEAD="$(git -C 01_Forkable/FKB00_Runtime/01_Holo_TriptyqueCore/RigInfinity rev-parse HEAD)"
           echo "RigInfinity HEAD=${RIG_HEAD}"
@@ -60,6 +61,9 @@ jobs:
           A0_PLUGINS_HEAD="$(git -C 01_Forkable/FKB00_Runtime/00_A0_Core/a0-plugins rev-parse HEAD)"
           echo "a0-plugins HEAD=${A0_PLUGINS_HEAD}"
           test "${A0_PLUGINS_HEAD}" = "fa8df8527a3c3a90a16906996ea5dc37f6f7a1fa"
+          FSI_HEAD="$(git -C 01_Forkable/FKB07_Money_Maker/01_Trading/financial-services rev-parse HEAD)"
+          echo "financial-services HEAD=${FSI_HEAD}"
+          test "${FSI_HEAD}" = "4b7d7e5dbc9de0187eb21c49d7a0de7a2859eed1"
 
       - name: Execute 3 mandatory foundation proofs (fail-closed, save logs & exit codes)
         run: |
