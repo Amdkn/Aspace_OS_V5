@@ -1,6 +1,6 @@
 # JEPA Toy World — Transition Rules V1
 
-Status: Proposed, paired with `state-schema.v1.json` and `action-schema.v1.json`.
+Status: Proposed, paired with state, action and layout schemas; PRNG, renderer and fixture contracts.
 
 ## 1. Coordinate and map rules
 
@@ -78,10 +78,19 @@ The environment does not accept another action after terminal=true; caller must 
 - Goal position is static for the episode.
 - Terminal is true if and only if goal.reached is true.
 
-## 8. Open items before implementation
+## 8. Versioned supporting contracts
 
-- [ ] Freeze a canonical layout schema and serializer.
-- [ ] Choose and pin the PRNG algorithm and version.
-- [ ] Freeze renderer palette, sprite geometry and image encoding.
-- [ ] Add hand-authored transition fixtures for every rule and collision edge case.
-- [ ] Ratify these rules before writing the simulator.
+- Layout structure: [layout-schema.v1.json](layout-schema.v1.json).
+- Seeded episode generation: [prng-spec.v1.md](prng-spec.v1.md).
+- Candidate-visible pixels: [renderer-spec.v1.md](renderer-spec.v1.md).
+- Hand-authored expected transitions: [transition-fixtures.v1.json](transition-fixtures.v1.json).
+
+The immutable layout owns positions of walls, gates, pressure plates and the goal. The dynamic state stores entity identity and changing properties; gate and plate coordinates are resolved by stable ID through the episode layout. The layout artifact is canonicalized before SHA-256 hashing and is never sent to candidate models.
+
+## 9. Remaining implementation gates
+
+- [ ] Implement and validate the layout canonical serializer and hash.
+- [ ] Implement PCG32 and publish known-answer vectors.
+- [ ] Implement the renderer and golden RGB hashes.
+- [ ] Convert every fixture into executable transition tests.
+- [ ] Ratify the combined contracts before simulator implementation.
