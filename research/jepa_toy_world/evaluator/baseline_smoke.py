@@ -32,7 +32,7 @@ def run_smoke() -> dict:
         if len(actual_states)<=max(HORIZONS):
             raise AssertionError("smoke action sequence terminated before H10")
         if not verify_replay(layout,seed,list(ACTIONS)):
-            raise AssertionError("independent replay mismatch")
+            raise AssertionError("repeat-replay determinism mismatch")
         for horizon in HORIZONS:
             predicted_state=symbolic_predict(initial_state,layout,list(ACTIONS[:horizon]))
             predicted_frame=render_rgb(predicted_state,layout)
