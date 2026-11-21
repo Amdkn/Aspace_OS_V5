@@ -28,6 +28,10 @@ python -m research.jepa_toy_world.evaluator.baseline_smoke
 
 The smoke report compares the persistence baseline with the symbolic oracle at H1/H3/H5/H10 across four deterministic layouts. It is only a plumbing and correctness check. It is not a model benchmark, not a statistical result, and not evidence that a JEPA candidate outperforms persistence.
 
+## First smoke evidence
+
+The first CI smoke run covered four seeded layouts and H1/H3/H5/H10 (16 horizon evaluations). The independent symbolic oracle matched simulator dynamic state and rendered RGB exactly in all 16 evaluations. Persistence mean pixel MAE was 0.2922453704. This is plumbing evidence only, not a JEPA result or full benchmark. See [baseline-smoke-v1.md](reports/baseline-smoke-v1.md) for the exact run and limitations.
+
 ## Versioned contracts
 
 See spec/ for the canonical state, action and layout schemas, transition order, PCG32 seed protocol, renderer specification and hand-authored transition fixtures.
