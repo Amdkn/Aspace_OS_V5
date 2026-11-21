@@ -111,6 +111,7 @@ class RendererAndEnvironmentTests(unittest.TestCase):
         self.assertEqual(len(frame_a.pixels), 192*192*3)
         self.assertEqual(frame_a.pixels, frame_b.pixels)
         self.assertEqual(hashlib.sha256(frame_a.pixels).hexdigest(), hashlib.sha256(frame_b.pixels).hexdigest())
+        print("TOY_WORLD_RENDERER_GOLDEN_SHA256=" + hashlib.sha256(frame_a.pixels).hexdigest())
 
     def test_persistence_baseline_returns_same_frame(self):
         env = ToyWorldEnv()
