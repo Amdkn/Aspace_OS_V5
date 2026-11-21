@@ -1,27 +1,201 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://github.com/Amdkn/Aspace_OS_V5/blob/feat/jepa-cognitive-architecture-adr-v1/research/jepa_toy_world/spec/layout-schema.v1.json",
-  "title": "JEPA Toy World Layout v1",
+  "title": "JEPA Toy World Immutable Layout v1",
   "type": "object",
   "additionalProperties": false,
-  "required": ["schema_version", "layout_id", "width", "height", "walls", "agent_spawn", "crates", "gates", "plates", "goal"],
+  "required": [
+    "schema_version",
+    "layout_id",
+    "width",
+    "height",
+    "walls",
+    "agent_spawn",
+    "crates",
+    "gates",
+    "plates",
+    "goal"
+  ],
   "properties": {
-    "schema_version": { "const": "toy-world.layout.v1" },
-    "layout_id": { "type": "string", "minLength": 1 },
-    "width": { "const": 12 },
-    "height": { "const": 12 },
-    "walls": { "type": "array", "uniqueItems": true, "items": { "$ref": "#/$defs/coordinate" } },
-    "agent_spawn": {
-      "type": "object", "additionalProperties": false, "required": ["x", "y", "facing"],
-      "properties": {"x":{"type":"integer","minimum":0,"maximum":11},"y":{"type":"integer","minimum":0,"maximum":11},"facing":{"enum":["N","S","E","W"]}}
+    "schema_version": {
+      "const": "toy-world.layout.v1"
     },
-    "crates": {"type":"array","maxItems":2,"items":{"$ref":"#/$defs/entity"}},
-    "gates": {"type":"array","maxItems":2,"items":{"allOf":[{"$ref":"#/$defs/entity"},{"type":"object","required":["mode","initial_open"],"properties":{"mode":{"enum":["manual","pressure"]},"initial_open":{"type":"boolean"}}}]}},
-    "plates": {"type":"array","maxItems":2,"items":{"allOf":[{"$ref":"#/$defs/entity"},{"type":"object","required":["controls_gate_id"],"properties":{"controls_gate_id":{"type":"string","minLength":1}}}]}},
-    "goal": {"$ref":"#/$defs/coordinate"}
+    "layout_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "width": {
+      "const": 12
+    },
+    "height": {
+      "const": 12
+    },
+    "walls": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/coordinate"
+      }
+    },
+    "agent_spawn": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y",
+        "facing"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "facing": {
+          "enum": [
+            "N",
+            "S",
+            "E",
+            "W"
+          ]
+        }
+      }
+    },
+    "crates": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "$ref": "#/$defs/entity"
+      }
+    },
+    "gates": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "x",
+          "y",
+          "mode",
+          "initial_open"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "mode": {
+            "enum": [
+              "manual",
+              "pressure"
+            ]
+          },
+          "initial_open": {
+            "type": "boolean"
+          }
+        }
+      }
+    },
+    "plates": {
+      "type": "array",
+      "maxItems": 2,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "x",
+          "y",
+          "controls_gate_id"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "x": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "y": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 11
+          },
+          "controls_gate_id": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "goal": {
+      "$ref": "#/$defs/coordinate"
+    }
   },
   "$defs": {
-    "coordinate":{"type":"object","additionalProperties":false,"required":["x","y"],"properties":{"x":{"type":"integer","minimum":0,"maximum":11},"y":{"type":"integer","minimum":0,"maximum":11}}},
-    "entity":{"type":"object","additionalProperties":false,"required":["id","x","y"],"properties":{"id":{"type":"string","minLength":1},"x":{"type":"integer","minimum":0,"maximum":11},"y":{"type":"integer","minimum":0,"maximum":11}}}
+    "coordinate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "x",
+        "y"
+      ],
+      "properties": {
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        }
+      }
+    },
+    "entity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "x",
+        "y"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "x": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        },
+        "y": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 11
+        }
+      }
+    }
   }
 }
