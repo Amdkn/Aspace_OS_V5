@@ -12,6 +12,7 @@ from research.jepa_toy_world.env.toy_world import (
 from research.jepa_toy_world.env.renderer import render_rgb
 from research.jepa_toy_world.baselines.persistence import predict as persistence_predict
 from research.jepa_toy_world.baselines.symbolic_oracle import predict as symbolic_predict
+from research.jepa_toy_world.evaluator.baseline_smoke import run_smoke
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -153,6 +154,13 @@ class TransitionTests(unittest.TestCase):
 
 
 class RendererAndEnvironmentTests(unittest.TestCase):
+    def test_baseline_smoke_oracle_is_exact(self):
+        report=run_smoke()
+        self.assertEqual(report["episodes"],4)
+        self.assertEqual(report["evaluations"],16)
+        self.assertEqual(report["oracle_state_exact_rate"],1.0)
+        self.assertEqual(report["oracle_pixel_exact_rate"],1.0)
+
     def test_renderer_contract_and_repeatability(self):
         layout = generate_layout(42)
         state = initial_state(layout, 42)
