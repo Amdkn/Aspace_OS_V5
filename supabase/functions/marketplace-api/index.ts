@@ -91,6 +91,20 @@ async function listOrders(user: User, body: Record<string, unknown>) {
     `;
   });
 }
+
+async function listProviderListings(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id, 'organization_id');
+  return await withServiceRole(async (tx) => {
+    await requireOrgRole(tx, user.id, orgId);
+    return await tx`
+      SELECT id, listing_key, title, description, price_amount, currency,
+        listing_status, created_at, published_at
+      FROM catalog.listings
+      WHERE owner_organization_id=${orgId}::uuid
+      ORDER BY created_at DESC
+    `;
+  });
+}
 async function createOrganization(user: User, body: Record<string, unknown>) {
   const name = requiredString(body.name, 'name', 160);
   const key = requiredString(body.organization_key, 'organization_key', 64).toUpperCase();
@@ -264,6 +278,7 @@ Deno.serve(async (req: Request) => {
       case 'list_organizations': data = await listOrganizations(user); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
       case 'list_orders': data = await listOrders(user, body); break;
+      case 'list_provider_listings': data = await listProviderListings(user, body); break;
       case 'create_organization': data = await createOrganization(user, body); break;
       case 'register_agent': data = await registerAgent(user, body); break;
       case 'create_capability': data = await createCapability(user, body); break;
