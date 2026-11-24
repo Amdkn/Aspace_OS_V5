@@ -66,19 +66,41 @@ ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public
 ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA public
   REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC, anon, authenticated;
 
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA identity
-  REVOKE ALL ON TABLES FROM PUBLIC, anon, authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA identity
-  REVOKE ALL ON SEQUENCES FROM PUBLIC, anon, authenticated;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA identity
-  REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC, anon, authenticated;
-
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA identity
-  GRANT ALL ON TABLES TO service_role;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA identity
-  GRANT ALL ON SEQUENCES TO service_role;
-ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA identity
-  GRANT EXECUTE ON FUNCTIONS TO service_role;
+DO $default_acl$
+DECLARE
+  schema_name text;
+BEGIN
+  FOREACH schema_name IN ARRAY ARRAY[
+    'identity', 'areas', 'enterprise', 'catalog', 'commerce',
+    'operations', 'trust', 'integration', 'finance', 'api'
+  ] LOOP
+    EXECUTE format(
+      'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA %I REVOKE ALL ON TABLES FROM PUBLIC, anon, authenticated',
+      schema_name
+    );
+    EXECUTE format(
+      'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA %I REVOKE ALL ON SEQUENCES FROM PUBLIC, anon, authenticated',
+      schema_name
+    );
+    EXECUTE format(
+      'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA %I REVOKE EXECUTE ON FUNCTIONS FROM PUBLIC, anon, authenticated',
+      schema_name
+    );
+    EXECUTE format(
+      'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA %I GRANT ALL ON TABLES TO service_role',
+      schema_name
+    );
+    EXECUTE format(
+      'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA %I GRANT ALL ON SEQUENCES TO service_role',
+      schema_name
+    );
+    EXECUTE format(
+      'ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA %I GRANT EXECUTE ON FUNCTIONS TO service_role',
+      schema_name
+    );
+  END LOOP;
+END
+$default_acl$;
 
 CREATE TABLE identity.organizations (
   id uuid PRIMARY KEY DEFAULT gen_random_uuid(),
@@ -153,7 +175,9 @@ CREATE TABLE identity.delegations (
     (delegation_status = 'REVOKED' AND revoked_at IS NOT NULL)
     OR (delegation_status <> 'REVOKED')
   ),
-  CONSTRAINT delegation_parties_differ CHECK (grantor_user_id <> grantee_user_id)
+  CONSTRAINT delegation_parties_differ CHECK (grantor_user_id <> grantee_user_id),
+  CONSTRAINT delegations_id_org_grantee_unique
+    UNIQUE (id, organization_id, grantee_user_id)
 );
 
 CREATE INDEX delegations_grantor_idx
@@ -173,13 +197,16 @@ CREATE TABLE identity.role_bindings (
   )),
   scope_id uuid,
   granted_by_user_id uuid NOT NULL REFERENCES auth.users(id) ON DELETE RESTRICT,
-  source_delegation_id uuid
-    REFERENCES identity.delegations(id) ON DELETE RESTRICT,
+  source_delegation_id uuid,
   binding_status text NOT NULL DEFAULT 'ACTIVE'
     CHECK (binding_status IN ('ACTIVE', 'SUSPENDED', 'REVOKED', 'EXPIRED')),
   starts_at timestamptz NOT NULL DEFAULT now(),
   expires_at timestamptz,
   created_at timestamptz NOT NULL DEFAULT now(),
+  CONSTRAINT role_binding_source_delegation_scope_fk
+    FOREIGN KEY (source_delegation_id, organization_id, subject_user_id)
+    REFERENCES identity.delegations (id, organization_id, grantee_user_id)
+    ON DELETE RESTRICT,
   CONSTRAINT role_binding_scope_shape CHECK (
     (scope_type IN ('PLATFORM', 'ORGANIZATION') AND scope_id IS NULL)
     OR (scope_type IN ('AREA', 'ENTERPRISE', 'DEPARTMENT', 'PROJECT', 'RESOURCE')
