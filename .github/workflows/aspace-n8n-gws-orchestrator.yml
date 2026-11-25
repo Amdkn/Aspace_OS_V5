@@ -41,7 +41,7 @@ jobs:
 
     steps:
       - name: "Scion Sparse Checkout (00_Memoire, 01_Forkable/FKB00_Runtime/00_A0_Core & 02_Factory uniquement)"
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           sparse-checkout: |
             00_Memoire
