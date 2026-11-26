@@ -46,10 +46,28 @@ Requires workspace role OWNER or ADMIN. The selected provider/version must have 
 }
 ```
 
-For `BEARER`, `API_KEY_HEADER` and `BASIC` manifests, the request may include the matching `credentials` object. The function stores only the selected credential fields in Supabase Vault and stores the Vault UUID reference in the connection row. Raw credentials are never returned or logged. OAuth manifests are rejected until the OAuth callback lifecycle is deployed. The connection remains `PENDING_AUTH` until a health check succeeds.
+For `BEARER`, `API_KEY_HEADER` and `BASIC` manifests, the request may include the matching `credentials` object. The function stores only the selected credential fields in Supabase Vault and stores the Vault UUID reference in the connection row. Raw credentials are never returned or logged. For OAUTH2_AUTH_CODE, omit credentials; credentials are provisioned only by the server-side OAuth callback. The connection remains `PENDING_AUTH` until a health check succeeds.
+
+
+### start_oauth_authorization
+Requires workspace role OWNER or ADMIN and an existing tenant connection whose active manifest uses OAUTH2_AUTH_CODE. Generates 256-bit random state and a PKCE S256 verifier/challenge. Only the SHA-256 state digest is stored in the OAuth transaction; the verifier is stored in Vault. The authorization endpoint must be HTTPS and its hostname must be present in the manifest oauth_allowed_hosts. The server requires provider-specific client ID and client secret environment variables before returning an authorization URL.
+
+```json
+{
+  "action": "start_oauth_authorization",
+  "organization_id": "00000000-0000-4000-8000-000000000001",
+  "workspace_id": "00000000-0000-4000-8000-000000000002",
+  "connection_id": "00000000-0000-4000-8000-000000000003"
+}
+```
+
+The response contains an authorization_url and a 600-second expiry. Treat the URL as a short-lived capability: do not log it or persist it in analytics.
+
+### OAuth callback
+The public GET /functions/v1/adapter-oauth-callback function has gateway JWT verification disabled because the provider redirects the browser without a Supabase user JWT. The callback validates the 43-character state, hashes it, and atomically changes a matching unexpired transaction from PENDING to PROCESSING before exchanging the code. A consumed state cannot be replayed. It uses the exact stored redirect URI and PKCE verifier, validates the token endpoint against the manifest host allowlist, checks the returned scopes and stores tokens only in Vault. The callback does not return tokens or provider error details.
 
 ### `revoke_connection`
-Requires workspace role OWNER or ADMIN. Revokes the connection and cancels queued/retry-wait jobs with append-only cancellation events. Running jobs are not silently rewritten; the future worker must re-check connection status before dispatch.
+Requires workspace role OWNER or ADMIN. Revokes the connection and cancels queued/retry-wait jobs with append-only cancellation events. For OAuth connections, it attempts the manifest-declared HTTPS provider revocation endpoint before local credential detachment. Local revocation remains authoritative even if remote revocation is unavailable; the response reports provider_revocation as REVOKED, FAILED, NOT_CONFIGURED or NOT_APPLICABLE. Running jobs are not silently rewritten; the worker re-checks connection status before execution.
 
 ```json
 {
@@ -113,15 +131,16 @@ Requires an active workspace role. Returns the latest 100 job summaries without 
 
 ## Current implementation boundary
 
-The API and schema foundation are deployed, but the adapter runtime is not complete:
+The adapter runtime is deployed, but no provider has passed an authorized provider E2E:
 
-- No provider manifest is currently ACTIVE.
-- No tenant connection currently exists.
-- `create_connection` deliberately stops at `PENDING_AUTH`; OAuth/credential provisioning and connection health verification are not yet exposed.
-- A private `adapter-worker` Edge Function is deployed with JWT gateway verification disabled but a strict service-role bearer check in the function body. Only the authenticated adapter API dispatches it internally.
-- The worker claims durable jobs, retrieves Vault secrets in memory, enforces HTTPS host allowlists and manifest-declared methods/paths, rejects redirects, applies timeouts, caps response size, redacts sensitive response fields/known secret values, and records success/failure/retry outcomes.
-- Health-check jobs can promote a connection to CONNECTED only after a successful provider response. Retryable upstream errors use bounded retry delays and the database attempt limit.
+- No provider manifest is ACTIVE; Google Drive v1.0.0 exists as DRAFT.
+- No tenant connection or OAuth transaction currently exists.
+- OAuth Authorization Code + PKCE initiation, callback completion, Vault token storage, token refresh/rotation and local/provider revocation paths are implemented and deployed.
+- OAuth2 client-credentials remains unsupported.
+- Google Drive v1.0.0 currently declares six metadata operations: health check, list files, get file, create folder, update metadata and delete file. Binary content upload/download and resumable transfer are not in this contract.
+- Google Drive uses drive.readonly + drive.file; it does not request the unrestricted drive scope.
+- A real Google OAuth Web Client, exact callback configuration, authenticated OWNER/ADMIN tenant and full consent/API/refresh/revoke round-trip are still required before the manifest can become ACTIVE.
+- The private adapter-worker Edge Function has gateway JWT verification disabled but enforces an exact service-role bearer in its handler. Only the authenticated adapter API dispatches it internally.
 - Webhook receipt storage exists, but provider-specific webhook signature verification and replay-protected webhook ingress remain open.
-- OAuth2 authorization-code/client-credentials flows are not yet supported by the API/worker; current credential provisioning supports NONE, BEARER, API_KEY_HEADER and BASIC.
 
-Do not present any provider as executable until the worker and provider-specific manifest have been tested against a real authorized provider account.
+Do not present Google Drive or any other provider as executable until the worker and provider-specific manifest have been tested against a real authorized provider account.
