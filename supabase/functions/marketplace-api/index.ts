@@ -581,25 +581,46 @@ async function installCapability(user: User, body: Record<string, unknown>) {
       SELECT c.owner_organization_id FROM catalog.capabilities c
       JOIN catalog.capability_versions v ON v.capability_id=c.id
       WHERE c.id=${capabilityId}::uuid AND v.id=${versionId}::uuid
-        AND c.owner_organization_id=${orgId}::uuid AND c.capability_status='ACTIVE' AND v.version_status='ACTIVE'
+        AND c.capability_status='ACTIVE' AND v.version_status='ACTIVE'
     `;
-    if (!capability.length) throw new Error('Only active capabilities owned by this organization can be installed until marketplace entitlement is implemented');
+    if (!capability.length) throw new Error('Active capability version not found');
+    const capabilityOwnerOrgId = String(capability[0].owner_organization_id);
+    let entitlementId: string | null = null;
+    if (capabilityOwnerOrgId !== orgId) {
+      entitlementId = requiredString(body.entitlement_id,'entitlement_id');
+      const entitlement = await tx`
+        SELECT id FROM commerce.capability_entitlements
+        WHERE id=${entitlementId}::uuid
+          AND buyer_organization_id=${orgId}::uuid
+          AND seller_organization_id=${capabilityOwnerOrgId}::uuid
+          AND capability_id=${capabilityId}::uuid
+          AND capability_version_id=${versionId}::uuid
+          AND entitlement_status='ACTIVE'
+          AND (expires_at IS NULL OR expires_at > now())
+      `;
+      if (!entitlement.length) throw new Error('Active matching marketplace entitlement required');
+    } else if (body.entitlement_id !== undefined && body.entitlement_id !== null) {
+      throw new Error('First-party capability installation must not include entitlement_id');
+    }
     const rows = await tx`
       INSERT INTO catalog.capability_installations
         (organization_id,workspace_id,target_entity_type,target_installation_id,capability_id,
-         capability_owner_organization_id,capability_version_id,configuration,installed_by_user_id)
+         capability_owner_organization_id,capability_version_id,entitlement_id,configuration,installed_by_user_id)
       VALUES (${orgId}::uuid,${workspaceId}::uuid,${targetType},${targetId}::uuid,${capabilityId}::uuid,
-        ${orgId}::uuid,${versionId}::uuid,${JSON.stringify(configuration)}::jsonb,${user.id}::uuid)
+        ${capabilityOwnerOrgId}::uuid,${versionId}::uuid,${entitlementId}::uuid,
+        ${JSON.stringify(configuration)}::jsonb,${user.id}::uuid)
       ON CONFLICT (workspace_id,target_entity_type,target_installation_id,capability_id,capability_version_id)
-      DO UPDATE SET installation_status='ACTIVE',removed_at=NULL,configuration=EXCLUDED.configuration
-      RETURNING id,target_entity_type,target_installation_id,capability_id,capability_version_id,installation_status,configuration
+      DO UPDATE SET installation_status='ACTIVE',removed_at=NULL,configuration=EXCLUDED.configuration,
+        entitlement_id=EXCLUDED.entitlement_id
+      RETURNING id,target_entity_type,target_installation_id,capability_id,capability_version_id,
+        entitlement_id,installation_status,configuration
     `;
     const installation = rows[0];
     await tx`
       INSERT INTO enterprise.structure_installation_events
         (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
       VALUES (${orgId}::uuid,${workspaceId}::uuid,'CAPABILITY_INSTALLED','CAPABILITY',${installation.id}::uuid,${user.id}::uuid,
-        ${JSON.stringify({target_entity_type:targetType,target_installation_id:targetId,capability_id:capabilityId,capability_version_id:versionId})}::jsonb)
+        ${JSON.stringify({target_entity_type:targetType,target_installation_id:targetId,capability_id:capabilityId,capability_version_id:versionId,entitlement_id:entitlementId})}::jsonb)
     `;
     return installation;
   });
@@ -643,6 +664,23 @@ async function listCapabilities(user: User, body: Record<string, unknown>) {
     `;
   });
 }
+async function listCapabilityEntitlements(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id,'organization_id');
+  return await withServiceRole(async (tx) => {
+    await requireOrgRole(tx,user.id,orgId);
+    return await tx`
+      SELECT e.id,e.order_id,e.seller_organization_id,e.listing_id,e.capability_id,
+        e.capability_version_id,e.entitlement_status,e.granted_at,e.expires_at,e.revoked_at,
+        o.listing_title_snapshot
+      FROM commerce.capability_entitlements e
+      JOIN commerce.orders o ON o.id=e.order_id
+      WHERE e.buyer_organization_id=${orgId}::uuid
+      ORDER BY e.granted_at DESC
+      LIMIT 200
+    `;
+  });
+}
+
 async function listOrders(user: User, body: Record<string, unknown>) {
   const orgId = requiredString(body.organization_id, 'organization_id');
   return await withServiceRole(async (tx) => {
@@ -868,6 +906,7 @@ Deno.serve(async (req: Request) => {
       case 'remove_capability_installation': data = await removeCapabilityInstallation(user, body); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
       case 'list_orders': data = await listOrders(user, body); break;
+      case 'list_capability_entitlements': data = await listCapabilityEntitlements(user, body); break;
       case 'list_provider_listings': data = await listProviderListings(user, body); break;
       case 'create_organization': data = await createOrganization(user, body); break;
       case 'register_agent': data = await registerAgent(user, body); break;
