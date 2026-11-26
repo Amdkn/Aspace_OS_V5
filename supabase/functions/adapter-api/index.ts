@@ -170,8 +170,10 @@ async function createConnection(user: User, body: Record<string, unknown>) {
         throw new Error('credentials.username and credentials.password are required for BASIC authentication');
       }
       secretJson = JSON.stringify({ username: credentials.username, password: credentials.password });
+    } else if (authMethod === 'OAUTH2_AUTH_CODE') {
+      if (credentials) throw new Error('OAuth credentials are provisioned only through the authorization callback');
     } else {
-      throw new Error('OAuth credential provisioning requires the OAuth callback lifecycle and is not enabled yet');
+      throw new Error('Unsupported provider authentication method');
     }
 
     const existing = await tx`
@@ -237,6 +239,98 @@ async function createConnection(user: User, body: Record<string, unknown>) {
     `;
     return rows[0];
   });
+}
+
+
+function base64Url(bytes: Uint8Array): string {
+  let binary = '';
+  for (const byte of bytes) binary += String.fromCharCode(byte);
+  return btoa(binary).replace(/\\+/g,'-').replace(/\\//g,'_').replace(/=+$/,'');
+}
+function envSuffix(providerKey: string): string {
+  return providerKey.toUpperCase().replace(/[^A-Z0-9]/g,'_');
+}
+function validateHttpsEndpoint(value: unknown, allowedHosts: unknown): URL {
+  if (typeof value !== 'string' || !Array.isArray(allowedHosts) ||
+      !allowedHosts.every((host) => typeof host === 'string')) throw new Error('OAUTH_MANIFEST_INVALID');
+  const endpoint = new URL(value);
+  if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password ||
+      endpoint.search || endpoint.hash || !allowedHosts.includes(endpoint.hostname.toLowerCase())) {
+    throw new Error('OAUTH_ENDPOINT_NOT_ALLOWED');
+  }
+  return endpoint;
+}
+
+async function startOAuthAuthorization(user: User, body: Record<string, unknown>) {
+  const orgId = uuid(body.organization_id, 'organization_id');
+  const workspaceId = uuid(body.workspace_id, 'workspace_id');
+  const connectionId = uuid(body.connection_id, 'connection_id');
+  const callbackUri = Deno.env.get('ADAPTER_OAUTH_CALLBACK_URL') ?? '';
+  const redirect = new URL(callbackUri);
+  if (redirect.protocol !== 'https:' || redirect.username || redirect.password || redirect.search || redirect.hash) {
+    throw new Error('OAuth callback URL is not configured as a valid HTTPS URL');
+  }
+  const random = new Uint8Array(32);
+  crypto.getRandomValues(random);
+  const state = base64Url(random);
+  const verifierBytes = new Uint8Array(64);
+  crypto.getRandomValues(verifierBytes);
+  const verifier = base64Url(verifierBytes);
+  const challengeDigest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(verifier));
+  const challenge = base64Url(new Uint8Array(challengeDigest));
+  const stateDigest = Array.from(new Uint8Array(await crypto.subtle.digest('SHA-256', new TextEncoder().encode(state))))
+    .map((byte) => byte.toString(16).padStart(2,'0')).join('');
+  const transactionId = crypto.randomUUID();
+
+  const authorizationUrl = await withServiceRole(async (tx) => {
+    await requireWorkspaceRole(tx,user.id,orgId,workspaceId,['OWNER','ADMIN']);
+    const rows = await tx`
+      SELECT c.provider_key,c.manifest_version,c.auth_method,c.connection_status,
+        m.auth_config,m.default_scopes,m.manifest_status
+      FROM integration.tenant_connections c
+      JOIN integration.provider_adapter_manifests m
+        ON m.provider_key=c.provider_key AND m.manifest_version=c.manifest_version
+      WHERE c.id=${connectionId}::uuid AND c.organization_id=${orgId}::uuid
+        AND c.workspace_id=${workspaceId}::uuid LIMIT 1
+    `;
+    if (!rows.length || rows[0].manifest_status !== 'ACTIVE' ||
+        rows[0].auth_method !== 'OAUTH2_AUTH_CODE' || rows[0].connection_status === 'REVOKED') {
+      throw new Error('OAuth connection or active authorization-code manifest not found');
+    }
+    const config = rows[0].auth_config ?? {};
+    const endpoint = validateHttpsEndpoint(config.authorization_url,config.oauth_allowed_hosts);
+    const clientId = Deno.env.get('OAUTH_' + envSuffix(rows[0].provider_key) + '_CLIENT_ID') ?? '';
+    if (!clientId) throw new Error('OAuth client ID is not configured for this provider');
+    const scopes = Array.isArray(rows[0].default_scopes)
+      ? rows[0].default_scopes.filter((scope: unknown) => typeof scope === 'string' && scope.length > 0)
+      : [];
+    if (!scopes.length) throw new Error('OAuth manifest must declare least-privilege default scopes');
+    const secret = await tx`
+      SELECT vault.create_secret(
+        ${JSON.stringify({ verifier })},
+        ${'aspace-oauth-pkce-' + transactionId},
+        'Short-lived PKCE verifier for one OAuth authorization transaction',NULL
+      ) AS id
+    `;
+    await tx`
+      INSERT INTO integration.adapter_oauth_transactions
+        (id,organization_id,workspace_id,provider_key,manifest_version,connection_id,
+         initiated_by_user_id,state_digest,pkce_secret_id,redirect_uri,expires_at)
+      VALUES (${transactionId}::uuid,${orgId}::uuid,${workspaceId}::uuid,
+        ${rows[0].provider_key},${rows[0].manifest_version},${connectionId}::uuid,
+        ${user.id}::uuid,decode(${stateDigest},'hex'),${secret[0].id}::uuid,
+        ${callbackUri},now()+interval '10 minutes')
+    `;
+    endpoint.searchParams.set('response_type','code');
+    endpoint.searchParams.set('client_id',clientId);
+    endpoint.searchParams.set('redirect_uri',callbackUri);
+    endpoint.searchParams.set('scope',scopes.join(' '));
+    endpoint.searchParams.set('state',state);
+    endpoint.searchParams.set('code_challenge',challenge);
+    endpoint.searchParams.set('code_challenge_method','S256');
+    return endpoint.toString();
+  });
+  return { authorization_url: authorizationUrl, expires_in_seconds: 600 };
 }
 
 async function revokeConnection(user: User, body: Record<string, unknown>) {
@@ -510,6 +604,7 @@ Deno.serve(async (req: Request) => {
       case 'list_manifests': data = await listManifests(user); break;
       case 'list_connections': data = await listConnections(user, body); break;
       case 'create_connection': data = await createConnection(user, body); break;
+      case 'start_oauth_authorization': data = await startOAuthAuthorization(user, body); break;
       case 'test_connection': data = await testConnection(user, body); break;
       case 'revoke_connection': data = await revokeConnection(user, body); break;
       case 'rotate_connection_credentials': data = await rotateConnectionCredentials(user, body); break;
