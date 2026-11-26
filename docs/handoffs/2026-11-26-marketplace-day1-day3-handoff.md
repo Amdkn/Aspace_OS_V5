@@ -1014,3 +1014,95 @@ However, fresh source inspection confirms:
 5. Re-run Supabase security/performance advisors after schema/runtime changes and update this handoff with evidence.
 
 **Acceptance boundary:** the OAuth schema and adapter worker/API are present, but no OAuth provider is connected. Day 2 remains PARTIAL. Day 1 remains OPEN until a real authorized Auth identity can complete tenant and workspace lifecycle tests.
+
+
+---
+
+## 10.17 Continuation audit — OAuth / Google Drive readiness (2026-11-26 05:06 UTC)
+
+This section supersedes older counts where the live project has since advanced. It is a fresh read of Supabase project `swegnrvaxxgfrnshdpxx` and GitHub branch `feat/marketplace-taxonomy-blueprints`.
+
+### Live project and migration ledger
+
+- Project status: `ACTIVE_HEALTHY`; PostgreSQL `17.12.0.000` (engine 17), region `us-west-2`.
+- Migration ledger: **21 applied migrations**, latest three adapter-execution migrations:
+  - `20261126044855_adapter_execution_engine_foundation`
+  - `20261126044914_adapter_execution_claim_result_shape_fix`
+  - `20261126044938_adapter_execution_integrity_guards`
+- Live table inventory: 29 application tables returned by the inspected schemas; all returned tables have RLS enabled. A broader catalog query found 35 RLS-enabled ordinary tables across the selected application schemas, including adopted Coach content objects.
+- Current live counts:
+  - `auth.users`: 0
+  - `identity.organizations`: 0
+  - `enterprise.workspaces`: 0
+  - organization memberships: 0
+  - workspace memberships: 0
+  - active provider manifests: 0
+  - tenant connections: 0
+  - OAuth transactions: 0
+  - execution jobs: 0
+  - webhook receipts: 0
+
+### Fresh Edge Function inventory
+
+| Function | Version | Gateway JWT | Handler-level control |
+|---|---:|---|---|
+| `marketplace-api` | 15 | required | User JWT + workspace authorization |
+| `adapter-api` | 4 | required | User JWT via Auth `getUser` + OWNER/ADMIN checks |
+| `adapter-worker` | 4 | disabled | Exact service-role bearer secret, constant-time comparison |
+
+The worker's `verify_jwt=false` is intentional for internal dispatch; its handler rejects requests unless the Authorization bearer equals the configured service-role key. Do not remove this check or expose the key. The deployed API and worker source files were fetched; their deployed SHA-256 fingerprints and repository source blobs match the branch's previously verified versions.
+
+### OAuth implementation gap confirmed from deployed source
+
+- `adapter-api` currently supports `list_manifests`, `list_connections`, `create_connection`, `test_connection`, `revoke_connection`, `rotate_connection_credentials`, `enqueue_execution`, and `list_executions`.
+- `create_connection` supports NONE, BEARER, API_KEY_HEADER and BASIC only. OAuth creation is explicitly rejected pending the callback lifecycle.
+- There is no `start_oauth` action and no public callback function.
+- `adapter-worker` rejects OAuth in `buildHeaders` with `OAUTH_FLOW_NOT_IMPLEMENTED`. Token refresh is not implemented.
+- Existing `integration.adapter_oauth_transactions` already stores only a unique SHA-256 state digest, Vault PKCE-secret reference, exact HTTPS redirect URI, expiry and transaction status. Its status constraint currently has no `EXCHANGING` state.
+- Existing `integration.provider_adapter_manifests` forbids credential values in `auth_config`; this is correct and must remain. There is no provider OAuth client registry yet.
+
+### Provider identity confirmed
+
+Live registry row:
+- provider key: `files-knowledge-google-drive`
+- family: `files-knowledge`
+- provider name: Google Drive
+- blueprint version: `0.1.0`
+- implementation: `PLANNED`
+- auth contract: `UNSPECIFIED`
+
+No Google Drive manifest, OAuth client, authorized tenant, credential or connection exists. Therefore Google Drive is not yet executable.
+
+### Advisor snapshot and interpretation
+
+- Security advisor: 28 `rls_enabled_no_policy` findings, all `INFO`. These correspond to private service-role-only schemas; no public browser access is intended for those tables. Identity profile and adopted CMS tables are a deliberate separate RLS-scoped access surface.
+- Performance advisor: 58 unindexed foreign-key notices and 48 unused-index notices, all `INFO`. Do not bulk-create/drop indexes. The database has no tenant or workload rows yet, so unused-index observations are not sufficient evidence for deletion. Review FK coverage against expected joins, write cost and query plans before adding indexes.
+- Health advisor: no findings.
+- A live grant check found browser access only on the deliberately scoped identity profile and adopted CMS surfaces; it did not reveal grants on the private Marketplace data schemas. Preserve the regression test that distinguishes these surfaces.
+
+### OAuth / Google Drive contract committed
+
+New repository document:
+`docs/integrations/google-drive-oauth-adapter-contract.md`
+
+It specifies:
+- OAuth Authorization Code + PKCE S256; 256-bit state; SHA-256-only state storage; Vault-only verifier and client secret.
+- A private `integration.provider_oauth_clients` registry for non-secret endpoint/client metadata plus a Vault secret reference.
+- Authenticated OWNER/ADMIN start action and unauthenticated-but-state-validated callback boundary.
+- Atomic one-use state claim, exact redirect URI validation, bounded token exchange, secret redaction and refresh-token rotation.
+- Google Drive manifest identity and initial operation set, plus a safe dynamic-path requirement.
+- Separate scope profiles: restricted `drive.file`, read-only `drive.readonly`, and elevated full `drive`; never silently escalate.
+- Unit, database, API, callback, worker and real-provider E2E acceptance gates.
+
+**Status remains DESIGN LOCKED / IMPLEMENTATION NOT DEPLOYED.** No OAuth schema or Edge Function was changed in this continuation. The contract intentionally does not fabricate a Google OAuth client ID/secret or mark a provider as ready.
+
+### Immediate execution sequence
+
+1. Implement and migrate `provider_oauth_clients`; extend the OAuth transaction lifecycle with an atomic in-progress state and expiry/replay guards.
+2. Extend `adapter-api` with OAuth connection initiation, keeping platform OAuth client provisioning separate from workspace OWNER/ADMIN permissions.
+3. Add a dedicated callback Edge Function with gateway JWT disabled but strict one-use state + PKCE + redirect validation.
+4. Extend the worker for OAuth bearer tokens, refresh and token rotation before activating any OAuth manifest.
+5. Add the Google Drive v1.0.0 manifest, dynamic file-ID path binding, pagination, metadata operations and separate media/resumable transfer protocols.
+6. Configure the actual Google Cloud OAuth Web client and exact callback URI in the owner's Google Cloud project; store the client secret in Vault, never Git or chat.
+7. Obtain an authorized Auth user and tenant/workspace OWNER membership, then run the full Google consent → Drive API → refresh → revoke E2E.
+8. Keep Day 1 OPEN and PR #63 Draft until the real identity/tenant and all Day 1–3 gates pass.
