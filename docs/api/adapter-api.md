@@ -87,7 +87,7 @@ Requires workspace role OWNER or ADMIN. Queues the manifest-declared `health_che
 ```
 
 ### `enqueue_execution`
-Requires workspace role OWNER, ADMIN or MEMBER. Requires a CONNECTED connection, ACTIVE manifest, and an operation key declared by that manifest. The idempotency key is unique per connection. Request payload is limited to 64 KB.
+Requires workspace role OWNER, ADMIN or MEMBER. Requires a CONNECTED connection, ACTIVE manifest, and an operation key declared by that manifest. The idempotency key is unique per connection. Request payload is limited to 64 KB and rejects credential-like field names (token, secret, password, API key, authorization, cookie, private key).
 
 ```json
 {
