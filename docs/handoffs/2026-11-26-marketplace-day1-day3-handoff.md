@@ -846,3 +846,38 @@ The security advisor now reports **28** `rls_enabled_no_policy` INFO findings. T
 
 **Scope status: PARTIAL — authenticated connection/queue control plane deployed; provider credential lifecycle and execution worker remain OPEN.**
 
+
+
+### 10.13 Day 2 — private adapter worker and Vault credential lifecycle deployed
+
+The adapter engine now includes the private execution worker and a credential lifecycle for non-OAuth provider types.
+
+**Edge Functions**
+- `adapter-api`: ACTIVE version **4**, `verify_jwt=true`.
+- `adapter-worker`: ACTIVE version **3**, `verify_jwt=false` at the gateway, with a mandatory constant-time comparison of the Authorization bearer against the server-only `SUPABASE_SERVICE_ROLE_KEY` inside the function. The API dispatches the worker internally; the service key is never returned to clients.
+- Both deployed `index.ts` files were fetched and compared byte-for-byte with the current GitHub branch source: exact matches (API 25,876 characters; worker 15,000 characters).
+
+**Credential lifecycle**
+- `create_connection` supports `NONE`, `BEARER`, `API_KEY_HEADER` and `BASIC` auth manifests.
+- Credentials are written through `vault.create_secret`; only the returned UUID reference is stored on `integration.tenant_connections`. The API never returns the reference or secret.
+- `rotate_connection_credentials` uses `vault.update_secret`, resets the connection to `PENDING_AUTH`, and requires a new health check.
+- `revoke_connection` detaches the Vault reference and deletes the Vault secret when no other connection/OAuth transaction references it; queued/retry-wait jobs are cancelled with append-only events.
+- `test_connection` queues the manifest-declared `health_check`; only a successful provider response promotes the connection to `CONNECTED`.
+- OAuth2 authorization-code and client-credentials flows remain unsupported until callback/state/PKCE lifecycle endpoints are implemented.
+
+**Worker execution controls**
+- Claims jobs using the service-role-only `api.claim_adapter_execution_jobs` function and completes them through `api.finish_adapter_execution_job`.
+- Supports manifest-declared HTTPS operations with strict host allowlists, fixed method/path contracts, no redirects, bounded timeouts, bounded response reads, bounded retry delays and database attempt limits.
+- Supports NONE, BEARER, API_KEY_HEADER and BASIC auth. OAuth auth methods are rejected.
+- Sensitive static headers are rejected; request payloads reject credential-like field names and are limited to 64 KB.
+- Provider JSON results are recursively redacted for sensitive keys and known secret values. Non-JSON response bodies are not persisted.
+- Webhook receipt table is present, but signed webhook ingress, replay checks and provider-specific verification remain open.
+
+**Vault smoke evidence**
+- Confirmed `service_role` has the required Vault access.
+- A transaction-scoped create → update → decrypt/read → delete smoke test completed without error and was rolled back.
+- A follow-up query confirmed **0** lingering smoke-test secrets.
+- No real provider credentials, manifests, tenant connections or production jobs were created during this work.
+
+**Current maturity: PARTIAL, but the runtime path is now implemented.** The API, Vault lifecycle, queue, worker and provider request executor are deployed. The system is not yet live against a provider because no provider-specific manifest has been activated and no authorized tenant connection exists. Do not mark any of the 73 provider blueprints AVAILABLE or claim provider E2E acceptance until a real provider account, manifest test and full health-check/operation round trip are completed.
+
