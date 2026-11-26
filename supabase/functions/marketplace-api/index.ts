@@ -277,7 +277,7 @@ async function installStructure(user: User, body: Record<string, unknown>) {
     ` : [];
     if (departments.length !== departmentKeys.length) throw new Error('One or more selected department blueprints are unavailable');
 
-    const installedDomains: Array<{ id: string; domain_code: string }> = [];
+    const installedDomains: Array<{ id: string; domain_code: string; created: boolean }> = [];
     for (const item of domains) {
       const rows = await tx`
         INSERT INTO areas.domain_installations
@@ -286,13 +286,14 @@ async function installStructure(user: User, body: Record<string, unknown>) {
         ON CONFLICT (workspace_id,domain_code) DO NOTHING
         RETURNING id,domain_code
       `;
+      const created = rows.length > 0;
       const installed = rows[0] ?? (await tx`
         SELECT id,domain_code FROM areas.domain_installations
         WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid AND domain_code=${item.domain_code}
       `)[0];
-      installedDomains.push(installed);
+      installedDomains.push({ ...installed, created });
     }
-    const installedDepartments: Array<{ id: string; department_key: string }> = [];
+    const installedDepartments: Array<{ id: string; department_key: string; created: boolean }> = [];
     for (const item of departments) {
       const rows = await tx`
         INSERT INTO enterprise.department_installations
@@ -301,14 +302,15 @@ async function installStructure(user: User, body: Record<string, unknown>) {
         ON CONFLICT (workspace_id,department_key) DO NOTHING
         RETURNING id,department_key
       `;
+      const created = rows.length > 0;
       const installed = rows[0] ?? (await tx`
         SELECT id,department_key FROM enterprise.department_installations
         WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid AND department_key=${item.department_key}
       `)[0];
-      installedDepartments.push(installed);
+      installedDepartments.push({ ...installed, created });
     }
 
-    const installedHolons: Array<{ id: string; holon_code: string }> = [];
+    const installedHolons: Array<{ id: string; holon_code: string; created: boolean }> = [];
     if (includeLd01Holarchy) {
       const ld01 = installedDomains.find((item) => item.domain_code === 'LD01');
       if (!ld01) throw new Error('LD01 installation is required for its holarchy');
@@ -328,19 +330,21 @@ async function installStructure(user: User, body: Record<string, unknown>) {
           ON CONFLICT (domain_installation_id,holon_code) DO NOTHING
           RETURNING id,holon_code
         `;
+        const created = rows.length > 0;
         const installed = rows[0] ?? (await tx`
           SELECT id,holon_code FROM areas.holon_installations
           WHERE domain_installation_id=${ld01.id}::uuid AND holon_code=${item.holon_code}
         `)[0];
         parentIds.set(item.holon_code, installed.id);
-        installedHolons.push(installed);
+        installedHolons.push({ ...installed, created });
       }
     }
 
     const result = {
       organization_id: orgId, workspace_id: workspaceId, idempotency_key: idempotencyKey,
-      installed_domains: installedDomains, installed_departments: installedDepartments,
-      installed_holons: installedHolons,
+      installed_domains: installedDomains.map(({ id, domain_code }) => ({ id, domain_code })),
+      installed_departments: installedDepartments.map(({ id, department_key }) => ({ id, department_key })),
+      installed_holons: installedHolons.map(({ id, holon_code }) => ({ id, holon_code })),
       counts: { domains: installedDomains.length, departments: installedDepartments.length, holons: installedHolons.length },
     };
     const requests = await tx`
@@ -350,19 +354,19 @@ async function installStructure(user: User, body: Record<string, unknown>) {
       RETURNING id
     `;
     const requestId = requests[0].id;
-    for (const item of installedDomains) await tx`
+    for (const item of installedDomains) if (item.created) await tx`
       INSERT INTO enterprise.structure_installation_events
         (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
       VALUES (${orgId}::uuid,${workspaceId}::uuid,${requestId}::uuid,'DOMAIN_INSTALLED','DOMAIN',${item.id}::uuid,${user.id}::uuid,
         ${JSON.stringify({ domain_code: item.domain_code })}::jsonb)
     `;
-    for (const item of installedDepartments) await tx`
+    for (const item of installedDepartments) if (item.created) await tx`
       INSERT INTO enterprise.structure_installation_events
         (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
       VALUES (${orgId}::uuid,${workspaceId}::uuid,${requestId}::uuid,'DEPARTMENT_INSTALLED','DEPARTMENT',${item.id}::uuid,${user.id}::uuid,
         ${JSON.stringify({ department_key: item.department_key })}::jsonb)
     `;
-    for (const item of installedHolons) await tx`
+    for (const item of installedHolons) if (item.created) await tx`
       INSERT INTO enterprise.structure_installation_events
         (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
       VALUES (${orgId}::uuid,${workspaceId}::uuid,${requestId}::uuid,'HOLON_INSTALLED','HOLON',${item.id}::uuid,${user.id}::uuid,
