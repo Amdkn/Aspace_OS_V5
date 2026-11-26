@@ -163,8 +163,9 @@ function oauthTokenEndpoint(config: any): URL {
   if (typeof auth.token_url !== 'string' || !Array.isArray(hosts) ||
       !hosts.every((host: unknown) => typeof host === 'string')) throw new Error('OAUTH_MANIFEST_INVALID');
   const endpoint = new URL(auth.token_url);
+  const normalizedHosts=hosts.map((host: string)=>host.toLowerCase());
   if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password ||
-      endpoint.search || endpoint.hash || !hosts.includes(endpoint.hostname.toLowerCase())) {
+      endpoint.search || endpoint.hash || !normalizedHosts.includes(endpoint.hostname.toLowerCase())) {
     throw new Error('OAUTH_ENDPOINT_NOT_ALLOWED');
   }
   return endpoint;
