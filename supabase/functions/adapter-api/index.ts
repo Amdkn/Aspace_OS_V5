@@ -324,6 +324,18 @@ async function startOAuthAuthorization(user: User, body: Record<string, unknown>
         ${user.id}::uuid,decode(${stateDigest},'hex'),${secret[0].id}::uuid,
         ${callbackUri},now()+interval '10 minutes')
     `;
+    const extraParams = config.authorization_params ?? {};
+    const allowedExtraParams = new Set(['access_type','prompt','include_granted_scopes']);
+    if (extraParams && typeof extraParams === 'object' && !Array.isArray(extraParams)) {
+      for (const [key,value] of Object.entries(extraParams)) {
+        if (!allowedExtraParams.has(key) || typeof value !== 'string' || value.length > 80) {
+          throw new Error('OAUTH_AUTHORIZATION_PARAMETER_NOT_ALLOWED');
+        }
+        endpoint.searchParams.set(key,value);
+      }
+    } else if (extraParams !== undefined && extraParams !== null) {
+      throw new Error('OAUTH_AUTHORIZATION_PARAMETER_NOT_ALLOWED');
+    }
     endpoint.searchParams.set('response_type','code');
     endpoint.searchParams.set('client_id',clientId);
     endpoint.searchParams.set('redirect_uri',callbackUri);
