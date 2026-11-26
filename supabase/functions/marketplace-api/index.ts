@@ -148,11 +148,11 @@ async function requireWorkspaceMember(tx: Tx, userId: string, orgId: string, wor
   const rows = await tx`
     SELECT w.id
     FROM enterprise.workspaces w
-    JOIN identity.organization_memberships m ON m.organization_id=w.organization_id
+    JOIN enterprise.workspace_memberships wm ON wm.workspace_id=w.id AND wm.organization_id=w.organization_id
     JOIN identity.organizations o ON o.id=w.organization_id
     WHERE o.status='ACTIVE' AND w.id=${workspaceId}::uuid AND w.organization_id=${orgId}::uuid
-      AND w.workspace_status='ACTIVE' AND m.user_id=${userId}::uuid
-      AND m.membership_status='ACTIVE'
+      AND w.workspace_status='ACTIVE' AND wm.user_id=${userId}::uuid
+      AND wm.membership_status='ACTIVE'
   `;
   if (!rows.length) throw new Error('Active workspace membership required');
 }
@@ -168,10 +168,10 @@ async function listWorkspaces(user: User, body: Record<string, unknown>) {
     const rows = await tx`
       SELECT w.id,w.organization_id,w.workspace_key,w.name,w.description,w.workspace_status,w.created_at
       FROM enterprise.workspaces w
-      JOIN identity.organization_memberships m ON m.organization_id=w.organization_id
+      JOIN enterprise.workspace_memberships wm ON wm.workspace_id=w.id AND wm.organization_id=w.organization_id
       JOIN identity.organizations o ON o.id=w.organization_id
-      WHERE o.status='ACTIVE' AND w.organization_id=${orgId}::uuid AND m.user_id=${user.id}::uuid
-        AND m.membership_status='ACTIVE'
+      WHERE o.status='ACTIVE' AND w.organization_id=${orgId}::uuid AND wm.user_id=${user.id}::uuid
+        AND wm.membership_status='ACTIVE'
       ORDER BY w.created_at ASC
     `;
     return rows;
@@ -224,6 +224,11 @@ async function createWorkspace(user: User, body: Record<string, unknown>) {
       RETURNING id,organization_id,workspace_key,name,description,workspace_status,created_at
     `;
     const workspace = rows[0];
+    await tx`
+      INSERT INTO enterprise.workspace_memberships
+        (organization_id,workspace_id,user_id,membership_status,workspace_role,granted_by_user_id)
+      VALUES (${orgId}::uuid,${workspace.id}::uuid,${user.id}::uuid,'ACTIVE','OWNER',${user.id}::uuid)
+    `;
     await tx`
       INSERT INTO enterprise.structure_installation_events
         (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
@@ -325,8 +330,8 @@ async function installStructure(user: User, body: Record<string, unknown>) {
         if (item.parent_holon_code && !parentId) throw new Error('LD01 holon parent blueprint is unresolved');
         const rows = await tx`
           INSERT INTO areas.holon_installations
-            (organization_id,workspace_id,domain_installation_id,holon_code,parent_installation_id,installed_by_user_id)
-          VALUES (${orgId}::uuid,${workspaceId}::uuid,${ld01.id}::uuid,${item.holon_code},${parentId}::uuid,${user.id}::uuid)
+            (organization_id,workspace_id,domain_installation_id,domain_code,holon_code,parent_installation_id,installed_by_user_id)
+          VALUES (${orgId}::uuid,${workspaceId}::uuid,${ld01.id}::uuid,'LD01',${item.holon_code},${parentId}::uuid,${user.id}::uuid)
           ON CONFLICT (domain_installation_id,holon_code) DO NOTHING
           RETURNING id,holon_code
         `;
