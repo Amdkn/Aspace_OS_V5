@@ -340,8 +340,58 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
   const orgId = uuid(body.organization_id, 'organization_id');
   const workspaceId = uuid(body.workspace_id, 'workspace_id');
   const connectionId = uuid(body.connection_id, 'connection_id');
-  return await withServiceRole(async (tx) => {
-    await requireWorkspaceRole(tx, user.id, orgId, workspaceId, ['OWNER','ADMIN']);
+
+  const preflight = await withServiceRole(async (tx) => {
+    await requireWorkspaceRole(tx,user.id,orgId,workspaceId,['OWNER','ADMIN']);
+    const rows = await tx`
+      SELECT c.secret_id,c.auth_method,c.provider_key,m.auth_config,s.decrypted_secret
+      FROM integration.tenant_connections c
+      JOIN integration.provider_adapter_manifests m
+        ON m.provider_key=c.provider_key AND m.manifest_version=c.manifest_version
+      LEFT JOIN vault.decrypted_secrets s ON s.id=c.secret_id
+      WHERE c.id=${connectionId}::uuid AND c.organization_id=${orgId}::uuid
+        AND c.workspace_id=${workspaceId}::uuid
+      LIMIT 1
+    `;
+    if(!rows.length) throw new Error('Connection not found');
+    return rows[0];
+  });
+
+  let providerRevocation = 'NOT_APPLICABLE';
+  if(preflight.auth_method === 'OAUTH2_AUTH_CODE') {
+    providerRevocation = 'NOT_CONFIGURED';
+    let credentials: Record<string,unknown> = {};
+    if(typeof preflight.decrypted_secret === 'string') {
+      try { credentials=JSON.parse(preflight.decrypted_secret); } catch { credentials={}; }
+    }
+    const config=preflight.auth_config ?? {};
+    if(typeof config.revocation_url === 'string' &&
+       (typeof credentials.refresh_token === 'string' || typeof credentials.access_token === 'string')) {
+      try {
+        const endpoint=validateHttpsEndpoint(config.revocation_url,config.oauth_allowed_hosts);
+        const prefix='OAUTH_'+envSuffix(preflight.provider_key);
+        const clientId=Deno.env.get(prefix+'_CLIENT_ID') ?? '';
+        const clientSecret=Deno.env.get(prefix+'_CLIENT_SECRET') ?? '';
+        if(!clientId || !clientSecret) throw new Error('OAUTH_CLIENT_CONFIGURATION_MISSING');
+        const token=typeof credentials.refresh_token==='string' && credentials.refresh_token
+          ? credentials.refresh_token : credentials.access_token as string;
+        const form=new URLSearchParams({
+          token,token_type_hint:typeof credentials.refresh_token==='string'?'refresh_token':'access_token',
+          client_id:clientId,client_secret:clientSecret,
+        });
+        const upstream=await fetch(endpoint,{
+          method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'},
+          body:form,signal:AbortSignal.timeout(12000),redirect:'error',
+        });
+        providerRevocation=upstream.ok?'REVOKED':'FAILED';
+      } catch {
+        providerRevocation='FAILED';
+      }
+    }
+  }
+
+  const result = await withServiceRole(async (tx) => {
+    await requireWorkspaceRole(tx,user.id,orgId,workspaceId,['OWNER','ADMIN']);
     const current = await tx`
       SELECT secret_id FROM integration.tenant_connections
       WHERE id=${connectionId}::uuid AND organization_id=${orgId}::uuid
@@ -387,6 +437,7 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
     }
     return { connection: rows[0], cancelled_jobs: cancelled.length, credential_reference_detached: Boolean(secretId) };
   });
+  return { ...result, provider_revocation: providerRevocation };
 }
 
 async function rotateConnectionCredentials(user: User, body: Record<string, unknown>) {
