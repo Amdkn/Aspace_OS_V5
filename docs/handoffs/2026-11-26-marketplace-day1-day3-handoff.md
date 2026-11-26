@@ -1166,3 +1166,74 @@ The live provider blueprint registry contains:
 - `supported_operations = []`
 
 Google Drive remains the selected first OAuth provider because it is already represented in the canonical 73-provider inventory and is the Life OS document SSOT target. No provider manifest or tenant connection has been created. Next implementation must define the narrowest justified Drive scopes, exact API operations, OAuth endpoints, token refresh/revocation, and a real account-authorized test. Keep Google Drive PLANNED until that round-trip passes.
+
+
+### 12.13 OAuth generic runtime — implemented, deployed, E2E pending (2026-11-26 05:19 UTC)
+
+This addendum supersedes the earlier §12.6 and §12.7 statements that the OAuth runtime was not implemented. It does **not** change the Google Drive provider's PLANNED status or close any Day acceptance gate.
+
+#### Repository changes
+
+- Added migration `20261126050000_adapter_oauth_runtime_guards.sql`:
+  - Adds `PROCESSING` as the atomic one-time callback claim state.
+  - Enforces that `PROCESSING`, `COMPLETED` and `FAILED` transactions have a non-null `consumed_at`.
+  - Enforces that `PENDING`, `EXPIRED` and `REVOKED` transactions have a null `consumed_at`.
+  - Adds a partial index for pending transaction expiry.
+- Extended `supabase/functions/adapter-api/index.ts`:
+  - `create_connection` accepts `OAUTH2_AUTH_CODE` without accepting user-supplied token credentials.
+  - New `start_oauth_authorization` action requires workspace OWNER/ADMIN.
+  - Generates 256-bit state and PKCE verifier using Web Crypto; persists only the SHA-256 state digest and a Vault reference to the verifier.
+  - Uses the manifest's HTTPS authorization endpoint and explicit host allowlist; callback URL and provider client credentials come from server environment configuration.
+  - OAuth client credentials must exist before an authorization URL is issued.
+  - OAuth revocation now attempts the provider's configured revocation endpoint before local credential detachment; response reports `REVOKED`, `FAILED`, `NOT_CONFIGURED` or `NOT_APPLICABLE`. Local revocation and queued-job cancellation remain enforced even if remote revocation is unavailable.
+- Added `supabase/functions/adapter-oauth-callback/index.ts`:
+  - Separate public GET callback; state digest is atomically changed from PENDING to PROCESSING before any external token exchange.
+  - Rejects missing, malformed, expired, mismatched and replayed state.
+  - Exchanges the authorization code server-side with the stored PKCE verifier and exact recorded redirect URI.
+  - Enforces HTTPS and the manifest host allowlist for the token endpoint.
+  - Checks Bearer token response shape, bounded token sizes, expiry bounds and returned scopes against the requested scopes.
+  - Stores access/refresh tokens and expiry metadata only in Vault; deletes the PKCE verifier secret after completion/failure.
+  - Does not echo provider errors, codes, tokens or raw state.
+- Extended `supabase/functions/adapter-worker/index.ts`:
+  - OAuth bearer execution uses the Vault access token.
+  - Refresh occurs under a per-connection PostgreSQL advisory transaction lock, re-reads the current Vault value after acquiring the lock, and persists refresh-token rotation.
+  - Missing/invalid refresh credentials transition the connection to ERROR with a reauthorization-required code.
+  - OAuth secrets remain excluded from execution results and logs.
+
+#### Cloud application and verification
+
+- Applied migration `adapter_oauth_runtime_guards`; cloud migration registry now has **22 entries**.
+- Added `supabase/tests/adapter_oauth_runtime.sql`; executed its structural regression DO block against the live project. Result: **PASS** (no exception).
+- Structural assertions cover:
+  - OAuth transaction table RLS remains enabled.
+  - `anon` and `authenticated` cannot SELECT OAuth transaction rows.
+  - PROCESSING/COMPLETED/FAILED and consumed_at invariants are present.
+  - Pending-expiry index exists.
+  - State digest uniqueness remains enforced.
+- Deployed Edge Functions:
+  | Function | Version | Gateway JWT | Status |
+  |---|---:|---|---|
+  | `adapter-api` | 6 | enabled | ACTIVE |
+  | `adapter-worker` | 5 | disabled; exact service-role bearer check in handler | ACTIVE |
+  | `adapter-oauth-callback` | 1 | disabled; state-capability validation in handler | ACTIVE |
+- Fetched all three deployed function sources and compared their complete `index.ts` contents to the branch files. All three were **exact matches**.
+- Live cloud counts after deployment: 0 OAuth transactions, 0 tenant connections, 0 active OAuth manifests, 0 pending transactions and 0 processing transactions. No fake tenant or provider connection was created.
+
+#### Explicit limitations / remaining gates
+
+- No Google OAuth client ID or client secret is configured in the project. The required environment keys for the first provider are:
+  - `OAUTH_FILES_KNOWLEDGE_GOOGLE_DRIVE_CLIENT_ID`
+  - `OAUTH_FILES_KNOWLEDGE_GOOGLE_DRIVE_CLIENT_SECRET`
+  - `ADAPTER_OAUTH_CALLBACK_URL` = exact deployed callback URL.
+- No Google Drive manifest is active, and no authorized Auth user/workspace exists. Therefore the consent → callback → Drive API → refresh → revoke round-trip is **NOT RUN**.
+- `OAUTH2_CLIENT_CREDENTIALS` remains unsupported and must not be treated as implemented.
+- The SQL regression test is structural. It is not a provider E2E, and no automated browser/API OAuth flow has yet been executed.
+- Remote provider revocation is attempted only when the manifest declares a validated `revocation_url`; if absent or failing, local revocation still removes the credential reference, and the result reports that remote status.
+- Full automated tests for callback state mismatch/replay, expiry, role denial, endpoint rejection, token endpoint failure, refresh rotation and redaction remain required before Google Drive activation.
+
+#### Current PR / continuation checkpoint
+
+- PR #63 remains OPEN, DRAFT and unmerged.
+- At this checkpoint the PR head is `2c7f2cebfc1264d96f8224c123313e9eb92b7629`; 89 commits and 28 changed files were reported by GitHub.
+- Do not claim CI green from the docs-only/PR-filtered workflow lookup; the latest lookup returned no PR-triggered workflow runs for that specific commit.
+- Keep Google Drive `PLANNED`, keep PR #63 Draft, and keep Day 1/2/3 acceptance statuses open until the real authorized OAuth and tenant lifecycle gates pass.
