@@ -825,3 +825,24 @@ The expanded test file was fetched from the branch and executed against the live
 
 The security advisor now reports **28** `rls_enabled_no_policy` INFO findings. This count increased because the six new integration tables are also RLS-enabled and intentionally have no browser-role policies or grants. The test suite verifies the private-schema boundary; do not add blanket policies to reduce the INFO count.
 
+
+
+### 10.12 Day 2 — authenticated adapter connection API deployed
+
+- Added `supabase/functions/adapter-api/index.ts` and deployed Edge Function `adapter-api` to the existing Marketplace project.
+- Cloud status: **ACTIVE**, version **1**, `verify_jwt=true`.
+- Deployed source was fetched from Supabase and compared byte-for-byte with the GitHub branch source: **exact match, 14,595 characters**.
+- Added contract documentation: `docs/api/adapter-api.md`.
+- Actions implemented:
+  - `list_manifests` — active manifests and operation keys only.
+  - `list_connections` — workspace-member scoped listing; secret IDs/values omitted.
+  - `create_connection` — OWNER/ADMIN only; requires an ACTIVE manifest; creates PENDING_AUTH.
+  - `revoke_connection` — OWNER/ADMIN only; revokes and cancels queued/retry-wait jobs with append-only events.
+  - `enqueue_execution` — OWNER/ADMIN/MEMBER; requires CONNECTED connection, ACTIVE manifest and declared operation; idempotent key per connection; request payload capped at 64 KB.
+  - `list_executions` — workspace-member scoped job summaries.
+- Every action authenticates the Supabase Auth access token and re-checks workspace membership/role server-side before using service_role. No user metadata role claims are trusted.
+- No raw credentials are accepted by `create_connection`; new connections remain `PENDING_AUTH`. No API action can mark a connection CONNECTED without a future verified credential/health lifecycle.
+- No provider manifest is ACTIVE, no connection exists, and no adapter worker is deployed. The execution queue is therefore not yet operational end-to-end.
+
+**Scope status: PARTIAL — authenticated connection/queue control plane deployed; provider credential lifecycle and execution worker remain OPEN.**
+
