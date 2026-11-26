@@ -59,6 +59,18 @@ async function listOrganizations(user: User) {
     ORDER BY o.created_at ASC
   `);
 }
+async function listAdapterFamilies() {
+  return await withServiceRole(async (tx) => {
+    return await tx`
+      SELECT family_key, family_name, provider_examples, icon_key, sort_order,
+        taxonomy_version, implementation_status
+      FROM integration.adapter_family_blueprints
+      WHERE implementation_status <> 'DEPRECATED'
+      ORDER BY sort_order
+    `;
+  });
+}
+
 async function listTaxonomyBlueprints() {
   return await withServiceRole(async (tx) => {
     const areasDomains = await tx`
@@ -286,7 +298,7 @@ Deno.serve(async (req: Request) => {
   try {
     if (req.method === 'GET') {
       const health = await withServiceRole(async (tx) => (await tx`SELECT current_database() AS database_name, now() AS checked_at`)[0]);
-      return response({ status: 'ok', service: 'marketplace-api', version: '0.4.0', persistence: 'supabase-cloud', database: health });
+      return response({ status: 'ok', service: 'marketplace-api', version: '0.5.0', persistence: 'supabase-cloud', database: health });
     }
     if (req.method !== 'POST') return response({ error: 'Method not allowed' }, 405);
     const body = await req.json() as Record<string, unknown>;
@@ -295,6 +307,7 @@ Deno.serve(async (req: Request) => {
     // Global reference taxonomies are intentionally public, read-only catalog data.
     // They contain no tenant records or secrets; the private schemas remain server-only.
     if (action === 'list_taxonomy_blueprints') return response({ data: await listTaxonomyBlueprints() });
+    if (action === 'list_adapter_families') return response({ data: await listAdapterFamilies() });
     const user = await authenticate(req);
     let data: unknown;
     switch (action) {
