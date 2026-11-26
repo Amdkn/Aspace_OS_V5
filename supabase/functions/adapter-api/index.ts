@@ -279,7 +279,7 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
         await tx`DELETE FROM vault.secrets WHERE id=${secretId}::uuid`;
       }
     }
-    return { connection: rows[0], cancelled_jobs: cancelled.length, credential_reference_removed: Boolean(secretId) };
+    return { connection: rows[0], cancelled_jobs: cancelled.length, credential_reference_detached: Boolean(secretId) };
   });
 }
 
