@@ -54,3 +54,18 @@ The migration set inserted exactly eight rows in each table. These are global bl
 The canonical V5 LD01 source separately defines B1 Book (OwnerBook), eight B2 tactical DC Managers (Operations, Tresorerie, Legal, R&D, Alliances, Infra, IT, Gouvernance), and eight B3 Marvel execution squads (each with seven specialists plus an operational runbook). The frontend shows this hierarchy inside LD01 details; it is not mislabeled as the Marketplace department taxonomy. The LD01 holarchy is not yet persisted as a separate blueprint table.
 
 The Edge Function exposes `list_taxonomy_blueprints` and `browse_listings` as public, read-only actions, reports API version `0.4.0`, and is deployed as function version 7 / ACTIVE. Both actions were invoked with the publishable/anon key and returned HTTP 200; taxonomy returned exactly 8+8 records, while the published catalogue returned an empty array.
+
+
+## Adapter family blueprints — 2026-11-26
+
+**Migration:** `20261126025300_adapter_family_blueprints`  
+**Table:** `integration.adapter_family_blueprints`  
+**Status:** applied to `swegnrvaxxgfrnshdpxx`, 20 rows verified.
+
+The table stores 20 global integration-family blueprints with stable keys, display names, provider examples, icon keys, ordering, taxonomy version and an explicit implementation lifecycle. All 20 are currently `PLANNED`.
+
+The table is private, RLS-enabled and service-role-only. The public read-only `marketplace-api/list_adapter_families` action exposes only the reference family catalog. It does not expose credentials, tenant connections, OAuth state or runtime health.
+
+The endpoint was invoked with the publishable/anon key and returned HTTP 200 with exactly 20 records. This is a family registry, not 20 shipped provider adapters. Provider-specific manifests, scopes, credentials, tenant connections, sync/webhook runtime and health checks remain unimplemented.
+
+The Edge Function is deployed as version 8 / ACTIVE and reports API version `0.5.0`.
