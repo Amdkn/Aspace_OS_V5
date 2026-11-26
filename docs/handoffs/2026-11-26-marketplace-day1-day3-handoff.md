@@ -1143,7 +1143,7 @@ This closes the ambiguity recorded in §12.4. It is a **STRUCTURAL ACCESS-CONTRO
 
 
 ### 12.11 Foreign-key index reconciliation — classified, not yet changed
-A catalog-level check compared every FK's referencing-column sequence against valid, non-partial indexes on the same table. It independently confirmed 62? **58** missing covering indexes, matching the current performance advisor count. Distribution:
+A catalog-level check compared every FK's referencing-column sequence against valid, non-partial indexes on the same table. It independently confirmed **58** missing covering indexes, matching the current performance advisor count. Distribution:
 | Schema | Missing FK indexes | Affected tables |
 |---|---:|---:|
 | areas | 11 | 3 |
