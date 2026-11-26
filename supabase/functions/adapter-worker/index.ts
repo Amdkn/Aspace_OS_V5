@@ -92,7 +92,7 @@ function safeHeaderName(value: unknown): string {
   return value;
 }
 function buildTarget(baseUrl: string, allowedHosts: string[], path: string): URL {
-  if (!path.startsWith('/') || path.includes('..') || path.includes('\\') || path.includes('?') || path.includes('#')) {
+  if (!path.startsWith('/') || path.includes('..') || path.includes('\\') || /%(?:2e|2f|5c|00)/i.test(path) || path.includes('?') || path.includes('#')) {
     throw new Error('INVALID_MANIFEST_PATH');
   }
   const base = new URL(baseUrl);
