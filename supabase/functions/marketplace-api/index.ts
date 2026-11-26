@@ -143,6 +143,197 @@ async function listTaxonomyBlueprints() {
   });
 }
 
+async function requireWorkspaceMember(tx: Tx, userId: string, orgId: string, workspaceId: string) {
+  const rows = await tx`
+    SELECT w.id
+    FROM enterprise.workspaces w
+    JOIN identity.organization_memberships m ON m.organization_id=w.organization_id
+    WHERE w.id=${workspaceId}::uuid AND w.organization_id=${orgId}::uuid
+      AND w.workspace_status='ACTIVE' AND m.user_id=${userId}::uuid
+      AND m.membership_status='ACTIVE'
+  `;
+  if (!rows.length) throw new Error('Active workspace membership required');
+}
+function stringArray(value: unknown, field: string, pattern: RegExp, maxItems = 32): string[] {
+  if (!Array.isArray(value) || value.length > maxItems) throw new Error(`Invalid ${field}`);
+  const values = value.map((item) => requiredString(item, field, 100));
+  if (values.some((item) => !pattern.test(item)) || new Set(values).size !== values.length) throw new Error(`Invalid or duplicate ${field}`);
+  return values;
+}
+async function listWorkspaces(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id, 'organization_id');
+  return await withServiceRole(async (tx) => {
+    const rows = await tx`
+      SELECT w.id,w.organization_id,w.workspace_key,w.name,w.description,w.workspace_status,w.created_at
+      FROM enterprise.workspaces w
+      JOIN identity.organization_memberships m ON m.organization_id=w.organization_id
+      WHERE w.organization_id=${orgId}::uuid AND m.user_id=${user.id}::uuid
+        AND m.membership_status='ACTIVE'
+      ORDER BY w.created_at ASC
+    `;
+    return rows;
+  });
+}
+async function createWorkspace(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id, 'organization_id');
+  const key = requiredString(body.workspace_key, 'workspace_key', 96).toLowerCase();
+  const name = requiredString(body.name, 'name', 160);
+  const description = body.description === undefined ? '' : requiredString(body.description, 'description', 2000);
+  if (!/^[a-z0-9][a-z0-9._-]{1,95}$/.test(key)) throw new Error('Invalid workspace_key format');
+  return await withServiceRole(async (tx) => {
+    await requireOrgRole(tx, user.id, orgId);
+    const rows = await tx`
+      INSERT INTO enterprise.workspaces (organization_id,workspace_key,name,description,created_by_user_id)
+      VALUES (${orgId}::uuid,${key},${name},${description},${user.id}::uuid)
+      RETURNING id,organization_id,workspace_key,name,description,workspace_status,created_at
+    `;
+    const workspace = rows[0];
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspace.id}::uuid,'WORKSPACE_CREATED','WORKSPACE',${workspace.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({ workspace_key: key })}::jsonb)
+    `;
+    return workspace;
+  });
+}
+async function installStructure(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id, 'organization_id');
+  const workspaceId = requiredString(body.workspace_id, 'workspace_id');
+  const idempotencyKey = requiredString(body.idempotency_key, 'idempotency_key', 200);
+  const domainCodes = stringArray(body.domain_codes, 'domain_codes', /^LD0[1-8]$/, 8);
+  const departmentKeys = stringArray(body.department_keys, 'department_keys', /^[a-z0-9]+(-[a-z0-9]+)*$/, 8);
+  const includeLd01Holarchy = body.include_ld01_holarchy === true;
+  if (!domainCodes.length && !departmentKeys.length) throw new Error('Select at least one domain or department');
+  if (includeLd01Holarchy && !domainCodes.includes('LD01')) throw new Error('LD01 must be selected before installing its holarchy');
+  const payload = { domain_codes: [...domainCodes].sort(), department_keys: [...departmentKeys].sort(), include_ld01_holarchy: includeLd01Holarchy };
+  return await withServiceRole(async (tx) => {
+    await requireOrgRole(tx, user.id, orgId);
+    await requireWorkspaceMember(tx, user.id, orgId, workspaceId);
+    await tx`SELECT pg_advisory_xact_lock(hashtextextended(${orgId + ':' + workspaceId + ':' + idempotencyKey}, 0))`;
+    const previous = await tx`
+      SELECT id,request_payload,result_payload FROM enterprise.structure_installation_requests
+      WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid AND idempotency_key=${idempotencyKey}
+      LIMIT 1
+    `;
+    if (previous.length) {
+      if (JSON.stringify(previous[0].request_payload) !== JSON.stringify(payload)) throw new Error('Idempotency key already used with a different installation payload');
+      await tx`
+        INSERT INTO enterprise.structure_installation_events
+          (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+        VALUES (${orgId}::uuid,${workspaceId}::uuid,${previous[0].id}::uuid,'INSTALLATION_REPLAYED','WORKSPACE',${workspaceId}::uuid,${user.id}::uuid,
+          ${JSON.stringify({ idempotency_key: idempotencyKey })}::jsonb)
+      `;
+      return previous[0].result_payload;
+    }
+
+    const domains = domainCodes.length ? await tx`
+      SELECT domain_code FROM areas.domain_blueprints
+      WHERE domain_code = ANY(${domainCodes}) AND status='ACTIVE'
+      ORDER BY sort_order
+    ` : [];
+    if (domains.length !== domainCodes.length) throw new Error('One or more selected domain blueprints are unavailable');
+    const departments = departmentKeys.length ? await tx`
+      SELECT department_key FROM enterprise.department_blueprints
+      WHERE department_key = ANY(${departmentKeys}) AND status='ACTIVE'
+      ORDER BY sort_order
+    ` : [];
+    if (departments.length !== departmentKeys.length) throw new Error('One or more selected department blueprints are unavailable');
+
+    const installedDomains: Array<{ id: string; domain_code: string }> = [];
+    for (const item of domains) {
+      const rows = await tx`
+        INSERT INTO areas.domain_installations
+          (organization_id,workspace_id,domain_code,installed_by_user_id)
+        VALUES (${orgId}::uuid,${workspaceId}::uuid,${item.domain_code},${user.id}::uuid)
+        ON CONFLICT (workspace_id,domain_code) DO NOTHING
+        RETURNING id,domain_code
+      `;
+      const installed = rows[0] ?? (await tx`
+        SELECT id,domain_code FROM areas.domain_installations
+        WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid AND domain_code=${item.domain_code}
+      `)[0];
+      installedDomains.push(installed);
+    }
+    const installedDepartments: Array<{ id: string; department_key: string }> = [];
+    for (const item of departments) {
+      const rows = await tx`
+        INSERT INTO enterprise.department_installations
+          (organization_id,workspace_id,department_key,installed_by_user_id)
+        VALUES (${orgId}::uuid,${workspaceId}::uuid,${item.department_key},${user.id}::uuid)
+        ON CONFLICT (workspace_id,department_key) DO NOTHING
+        RETURNING id,department_key
+      `;
+      const installed = rows[0] ?? (await tx`
+        SELECT id,department_key FROM enterprise.department_installations
+        WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid AND department_key=${item.department_key}
+      `)[0];
+      installedDepartments.push(installed);
+    }
+
+    const installedHolons: Array<{ id: string; holon_code: string }> = [];
+    if (includeLd01Holarchy) {
+      const ld01 = installedDomains.find((item) => item.domain_code === 'LD01');
+      if (!ld01) throw new Error('LD01 installation is required for its holarchy');
+      const blueprints = await tx`
+        SELECT holon_code,parent_holon_code FROM areas.holon_blueprints
+        WHERE area_code='LD01' AND status='ACTIVE' ORDER BY sort_order
+      `;
+      if (blueprints.length !== 17) throw new Error('Canonical LD01 holarchy blueprint is incomplete');
+      const parentIds = new Map<string, string>();
+      for (const item of blueprints) {
+        const parentId = item.parent_holon_code ? parentIds.get(item.parent_holon_code) ?? null : null;
+        if (item.parent_holon_code && !parentId) throw new Error('LD01 holon parent blueprint is unresolved');
+        const rows = await tx`
+          INSERT INTO areas.holon_installations
+            (organization_id,workspace_id,domain_installation_id,holon_code,parent_installation_id,installed_by_user_id)
+          VALUES (${orgId}::uuid,${workspaceId}::uuid,${ld01.id}::uuid,${item.holon_code},${parentId}::uuid,${user.id}::uuid)
+          ON CONFLICT (domain_installation_id,holon_code) DO NOTHING
+          RETURNING id,holon_code
+        `;
+        const installed = rows[0] ?? (await tx`
+          SELECT id,holon_code FROM areas.holon_installations
+          WHERE domain_installation_id=${ld01.id}::uuid AND holon_code=${item.holon_code}
+        `)[0];
+        parentIds.set(item.holon_code, installed.id);
+        installedHolons.push(installed);
+      }
+    }
+
+    const result = {
+      organization_id: orgId, workspace_id: workspaceId, idempotency_key: idempotencyKey,
+      installed_domains: installedDomains, installed_departments: installedDepartments,
+      installed_holons: installedHolons,
+      counts: { domains: installedDomains.length, departments: installedDepartments.length, holons: installedHolons.length },
+    };
+    const requests = await tx`
+      INSERT INTO enterprise.structure_installation_requests
+        (organization_id,workspace_id,idempotency_key,request_payload,result_payload,created_by_user_id)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${idempotencyKey},${JSON.stringify(payload)}::jsonb,${JSON.stringify(result)}::jsonb,${user.id}::uuid)
+      RETURNING id
+    `;
+    const requestId = requests[0].id;
+    for (const item of installedDomains) await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${requestId}::uuid,'DOMAIN_INSTALLED','DOMAIN',${item.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({ domain_code: item.domain_code })}::jsonb)
+    `;
+    for (const item of installedDepartments) await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${requestId}::uuid,'DEPARTMENT_INSTALLED','DEPARTMENT',${item.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({ department_key: item.department_key })}::jsonb)
+    `;
+    for (const item of installedHolons) await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${requestId}::uuid,'HOLON_INSTALLED','HOLON',${item.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({ holon_code: item.holon_code })}::jsonb)
+    `;
+    return result;
+  });
+}
 async function listCapabilities(user: User, body: Record<string, unknown>) {
   const orgId = requiredString(body.organization_id, 'organization_id');
   return await withServiceRole(async (tx) => {
@@ -350,7 +541,7 @@ Deno.serve(async (req: Request) => {
   try {
     if (req.method === 'GET') {
       const health = await withServiceRole(async (tx) => (await tx`SELECT current_database() AS database_name, now() AS checked_at`)[0]);
-      return response({ status: 'ok', service: 'marketplace-api', version: '0.7.0', persistence: 'supabase-cloud', database: health });
+      return response({ status: 'ok', service: 'marketplace-api', version: '0.8.0', persistence: 'supabase-cloud', database: health });
     }
     if (req.method !== 'POST') return response({ error: 'Method not allowed' }, 405);
     const body = await req.json() as Record<string, unknown>;
@@ -372,6 +563,9 @@ Deno.serve(async (req: Request) => {
     let data: unknown;
     switch (action) {
       case 'list_organizations': data = await listOrganizations(user); break;
+      case 'list_workspaces': data = await listWorkspaces(user, body); break;
+      case 'create_workspace': data = await createWorkspace(user, body); break;
+      case 'install_structure': data = await installStructure(user, body); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
       case 'list_orders': data = await listOrders(user, body); break;
       case 'list_provider_listings': data = await listProviderListings(user, body); break;
