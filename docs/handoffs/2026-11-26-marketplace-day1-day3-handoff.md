@@ -1140,3 +1140,17 @@ This closes the ambiguity recorded in §12.4. It is a **STRUCTURAL ACCESS-CONTRO
 ### 12.10 Remaining advisor interpretation
 - Security advisor's 28 no-policy findings remain INFO. The security baseline passes because the relevant private tables/schemas have no browser-role access; the five scoped identity SELECT policies and the profile self policies are present.
 - Performance advisor currently reports 58 unindexed foreign keys and 48 unused indexes. These remain review items; no bulk index DDL was applied.
+
+
+### 12.11 Foreign-key index reconciliation — classified, not yet changed
+A catalog-level check compared every FK's referencing-column sequence against valid, non-partial indexes on the same table. It independently confirmed 62? **58** missing covering indexes, matching the current performance advisor count. Distribution:
+| Schema | Missing FK indexes | Affected tables |
+|---|---:|---:|
+| areas | 11 | 3 |
+| catalog | 9 | 4 |
+| commerce | 7 | 2 |
+| enterprise | 12 | 7 |
+| identity | 9 | 5 |
+| integration | 14 | 5 |
+
+No index DDL was applied during this audit. This avoids blind remediation. Before applying a dedicated migration, review the exact FK column order, existing unique/compound indexes, query paths and write amplification. The current database has almost no tenant data, so the advisor's unused-index count is not a valid basis for dropping useful indexes.
