@@ -881,3 +881,26 @@ The adapter engine now includes the private execution worker and a credential li
 
 **Current maturity: PARTIAL, but the runtime path is now implemented.** The API, Vault lifecycle, queue, worker and provider request executor are deployed. The system is not yet live against a provider because no provider-specific manifest has been activated and no authorized tenant connection exists. Do not mark any of the 73 provider blueprints AVAILABLE or claim provider E2E acceptance until a real provider account, manifest test and full health-check/operation round trip are completed.
 
+
+
+### 10.14 Adapter runtime hardening — latest deployed revisions
+
+The previous 10.13 deployment snapshot is superseded by these current revisions:
+
+- `adapter-api`: ACTIVE **v4**, JWT required. Current source blob: `d8968b5903d3f1f66313c8292b1ef48d8f5b333d` (25,876 characters).
+- `adapter-worker`: ACTIVE **v4**, gateway JWT disabled but the function enforces an exact service-role bearer check with constant-time comparison. Current source blob: `1868f7dd691a6b80aaf4915a0bb6efe02dd4ecf7` (15,383 characters).
+- Both deployed sources were fetched again and compared byte-for-byte with the branch: exact matches.
+
+Additional implementation:
+- Credential provisioning writes only the selected BEARER/API_KEY_HEADER/BASIC credential fields into Vault; the tenant row stores the Vault UUID reference.
+- Credential rotation updates the existing Vault secret and resets the connection to `PENDING_AUTH`.
+- Revocation detaches the reference and deletes the Vault secret when no other tenant connection/OAuth transaction references it.
+- `test_connection` queues a `health_check`; only a successful 2xx response promotes the connection to `CONNECTED`.
+- Adapter execution payloads reject credential-like keys and are capped at 64 KB.
+- Worker rejects sensitive static headers, encoded path traversal, redirects and non-HTTPS/unauthorized hosts; supports UTF-8 BASIC auth, known-secret value redaction, bounded response reads and up to 50 jobs per dispatch.
+- API dispatches the worker after health-check or execution jobs are enqueued.
+
+Vault lifecycle smoke test: create → update → decrypt/read → delete completed inside a transaction followed by ROLLBACK; a separate count query confirmed **0** residual smoke-test secrets.
+
+No provider manifest, connection, credential or production execution job was created. Therefore the worker's actual provider HTTP round trip remains **NOT VERIFIED** until a provider manifest and authorized tenant account exist.
+
