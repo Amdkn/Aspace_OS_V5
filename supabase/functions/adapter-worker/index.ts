@@ -294,20 +294,64 @@ async function execute(job: Job, workerId: string) {
     }
     const method = typeof operation.method === 'string' ? operation.method.toUpperCase() : '';
     if (!['GET','POST','PUT','PATCH','DELETE'].includes(method)) throw new Error('INVALID_MANIFEST_METHOD');
-    const path = typeof operation.path === 'string' ? operation.path : '';
+    let path = typeof operation.path === 'string' ? operation.path : '';
+    const payload: Record<string,unknown> = { ...(job.request_payload ?? {}) };
+    const pathParameters = operation.path_parameters ?? [];
+    if (!Array.isArray(pathParameters) || !pathParameters.every((name: unknown) =>
+        typeof name === 'string' && /^[A-Za-z][A-Za-z0-9_]{0,39}$/.test(name))) {
+      throw new Error('INVALID_MANIFEST_PATH_PARAMETERS');
+    }
+    for (const name of pathParameters as string[]) {
+      const placeholder = '{' + name + '}';
+      const value = payload[name];
+      if (!path.includes(placeholder) || typeof value !== 'string' ||
+          !/^[A-Za-z0-9_-]{1,256}$/.test(value)) {
+        throw new Error('INVALID_PATH_PARAMETER');
+      }
+      path = path.replace(placeholder,encodeURIComponent(value));
+      delete payload[name];
+    }
+    if (/[{}]/.test(path)) throw new Error('INVALID_MANIFEST_PATH_PARAMETERS');
     const target = buildTarget(config.base_url,config.allowed_hosts,path);
     const inputMode = operation.input_mode ?? (method === 'GET' || method === 'DELETE' ? 'query' : 'body');
     if (!['query','body','none'].includes(inputMode)) throw new Error('INVALID_MANIFEST_INPUT_MODE');
     if (inputMode === 'query') {
-      for (const [key,value] of Object.entries(job.request_payload ?? {})) {
+      const allowed = operation.allowed_query_params;
+      if (!Array.isArray(allowed) || !allowed.every((name: unknown) =>
+          typeof name === 'string' && /^[A-Za-z][A-Za-z0-9_.-]{0,63}$/.test(name))) {
+        throw new Error('INVALID_MANIFEST_QUERY_ALLOWLIST');
+      }
+      const defaults = operation.query_defaults && typeof operation.query_defaults === 'object'
+        ? operation.query_defaults : {};
+      for (const [key,value] of Object.entries(defaults)) {
+        if (!allowed.includes(key)) throw new Error('INVALID_MANIFEST_QUERY_DEFAULT');
+        target.searchParams.set(key,typeof value === 'string' ? value : JSON.stringify(value));
+      }
+      for (const [key,value] of Object.entries(payload)) {
+        if (!allowed.includes(key)) throw new Error('QUERY_PARAMETER_NOT_ALLOWED');
         target.searchParams.set(key,typeof value === 'string' ? value : JSON.stringify(value));
       }
     }
     const headers = buildHeaders(config,operation,secret);
     let body: string | undefined;
     if (inputMode === 'body') {
+      const allowed = operation.allowed_body_fields;
+      if (!Array.isArray(allowed) || !allowed.every((name: unknown) =>
+          typeof name === 'string' && /^[A-Za-z][A-Za-z0-9_.-]{0,63}$/.test(name))) {
+        throw new Error('INVALID_MANIFEST_BODY_ALLOWLIST');
+      }
+      const defaults = operation.body_defaults && typeof operation.body_defaults === 'object'
+        ? operation.body_defaults : {};
+      for (const key of Object.keys(payload)) if (!allowed.includes(key)) {
+        throw new Error('BODY_FIELD_NOT_ALLOWED');
+      }
+      for (const key of Object.keys(defaults)) if (!allowed.includes(key)) {
+        throw new Error('INVALID_MANIFEST_BODY_DEFAULT');
+      }
       headers.set('Content-Type','application/json');
-      body = JSON.stringify(job.request_payload ?? {});
+      body = JSON.stringify({ ...defaults, ...payload });
+    } else if (inputMode === 'none' && Object.keys(payload).length) {
+      throw new Error('REQUEST_PAYLOAD_NOT_ALLOWED');
     }
     const timeout = Math.max(1000,Math.min(120000,Number(config.timeout_ms)||30000));
     const upstream = await fetch(target,{
@@ -370,7 +414,10 @@ async function execute(job: Job, workerId: string) {
     const retryable = ['CONNECTION_NOT_CONNECTED','CONNECTION_REVOKED','MANIFEST_NOT_ACTIVE',
       'OPERATION_NOT_DECLARED','INVALID_MANIFEST_PATH','MANIFEST_HOST_NOT_ALLOWED',
       'MANIFEST_TARGET_NOT_ALLOWED','INVALID_MANIFEST_METHOD','INVALID_MANIFEST_INPUT_MODE',
-      'INVALID_MANIFEST_HEADER','INVALID_MANIFEST_HEADER_VALUE','SENSITIVE_STATIC_HEADER_FORBIDDEN','OAUTH_REAUTH_REQUIRED','OAUTH_ENDPOINT_NOT_ALLOWED','OAUTH_MANIFEST_INVALID',
+      'INVALID_MANIFEST_HEADER','INVALID_MANIFEST_HEADER_VALUE','SENSITIVE_STATIC_HEADER_FORBIDDEN',
+      'INVALID_MANIFEST_PATH_PARAMETERS','INVALID_PATH_PARAMETER','INVALID_MANIFEST_QUERY_ALLOWLIST',
+      'INVALID_MANIFEST_QUERY_DEFAULT','QUERY_PARAMETER_NOT_ALLOWED','INVALID_MANIFEST_BODY_ALLOWLIST',
+      'BODY_FIELD_NOT_ALLOWED','INVALID_MANIFEST_BODY_DEFAULT','REQUEST_PAYLOAD_NOT_ALLOWED','OAUTH_REAUTH_REQUIRED','OAUTH_ENDPOINT_NOT_ALLOWED','OAUTH_MANIFEST_INVALID',
       'OAUTH_CLIENT_CONFIGURATION_MISSING','OAUTH_CREDENTIAL_REFERENCE_MISSING','OAUTH_CREDENTIAL_FORMAT_INVALID',
       'OAUTH_ACCESS_TOKEN_MISSING','OAUTH_TOKEN_RESPONSE_INVALID','OAUTH_REFRESH_RESPONSE_INVALID',
       'OAUTH_EXPIRY_INVALID','OAUTH_SCOPE_ESCALATION_REJECTED',
