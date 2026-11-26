@@ -35,18 +35,22 @@ This is the canonical applied migration. Future schema changes must be added as 
 
 ## Marketplace taxonomy blueprints — 2026-11-26
 
-**Migration:** `20261126024200_marketplace_taxonomy_blueprints`  
-**Status:** applied to `swegnrvaxxgfrnshdpxx` and verified.
+**Initial migration:** `20261126024200_marketplace_taxonomy_blueprints`  
+**Corrective migration:** `20261126024800_correct_marketplace_department_taxonomy`  
+**Project:** `swegnrvaxxgfrnshdpxx`  
+**Status:** both migrations applied and verified.
 
-Two independent global reference tables now exist:
+Two independent global reference tables exist:
 
 - `areas.domain_blueprints`: eight Areas OS mission portfolios, LD01–LD08.
-- `enterprise.department_blueprints`: eight Business Marketplace departments, B2.1–B2.8.
+- `enterprise.department_blueprints`: eight Marketplace operating departments, keyed by stable slugs such as `product-ip` and `growth-distribution`.
 
-Both tables are in private schemas, have RLS enabled, and grant no table access to `PUBLIC`, `anon`, or `authenticated`. The server-side `marketplace-api` Edge Function reads them using its service-role database connection and exposes only the two static reference lists through a public, read-only action. This action is intentionally available to the app's publishable/anon client because the blueprints contain no tenant data or secrets. All table access remains private; the client never queries these schemas directly.
+The initial migration briefly seeded the department table with B2.1–B2.8. A source review of the canonical LD01 files showed those codes actually belong to LD01's internal delegation hierarchy, not to the Marketplace department list. The corrective migration renamed the key to `department_key`, removed the erroneous B2 rows, and seeded the eight actual operating departments. This correction was applied and verified; department taxonomy version is now `1.0.1`.
 
-The migration inserted exactly eight rows in each table. These are global blueprints, not organization installations. It did not create tenants, mutate memberships, add role bindings, or link any customer capability to a domain.
+Both tables are in private schemas, have RLS enabled, and grant no table access to `PUBLIC`, `anon`, or `authenticated`. The server-side `marketplace-api` Edge Function reads them using its service-role database connection and exposes only the two static reference lists through public, read-only actions. This is intentionally available to the app's publishable/anon client because the blueprints contain no tenant data or secrets. All table access remains private; the client never queries these schemas directly.
 
-The Edge Function now exposes the authenticated read action `list_taxonomy_blueprints` and reports version `0.4.0`. Deployment metadata reports version 4 / ACTIVE; its unauthenticated health endpoint returned HTTP 200 and version 0.4.0.
+The migration set inserted exactly eight rows in each table. These are global blueprints, not organization installations. It did not create tenants, mutate memberships, add role bindings, or link any customer capability to a domain.
 
-**Not yet verified:** the authenticated `list_taxonomy_blueprints` call from a real signed-in browser session. The app integration will show a Supabase-source label only after the function returns the expected 8+8 payload; otherwise it retains the clearly labeled local reference fallback.
+The canonical V5 LD01 source separately defines B1 Book (OwnerBook), eight B2 tactical DC Managers (Operations, Tresorerie, Legal, R&D, Alliances, Infra, IT, Gouvernance), and eight B3 Marvel execution squads (each with seven specialists plus an operational runbook). The frontend shows this hierarchy inside LD01 details; it is not mislabeled as the Marketplace department taxonomy. The LD01 holarchy is not yet persisted as a separate blueprint table.
+
+The Edge Function exposes `list_taxonomy_blueprints` and `browse_listings` as public, read-only actions, reports API version `0.4.0`, and is deployed as function version 7 / ACTIVE. Both actions were invoked with the publishable/anon key and returned HTTP 200; taxonomy returned exactly 8+8 records, while the published catalogue returned an empty array.
