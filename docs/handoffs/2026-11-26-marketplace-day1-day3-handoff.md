@@ -927,3 +927,90 @@ For current handoff commit `0ef8637d58143020a4e9db8b704609e5a81603fe`:
 - Security Triage run **#651**: completed / success.
 - Continuous Integration Matrix run **#633**: still **in_progress** at the last poll. Do not report the complete latest commit CI matrix as green until this run concludes.
 
+
+
+---
+
+## 12. Continuation audit — live reconciliation at 2026-11-26 05:08 UTC
+
+This addendum supersedes earlier snapshot counts where they differ. It records a fresh read of the linked production project and the current PR branch; it does not imply that any Day is accepted.
+
+### 12.1 Repository / PR
+- Canonical repository: `Amdkn/Aspace_OS_V5`.
+- Working branch: `feat/marketplace-taxonomy-blueprints`.
+- PR #63 remains OPEN, DRAFT, not merged, mergeable.
+- Current PR snapshot: 68 commits, 24 changed files.
+- Preserve Draft state until integrated acceptance gates pass.
+
+### 12.2 Supabase project and migration history
+- Project `swegnrvaxxgfrnshdpxx` remains `ACTIVE_HEALTHY`.
+- PostgreSQL 17.12.0.000.
+- Fresh cloud migration history contains **21 entries**, not 18. The latest three entries are:
+  - `20261126044855_adapter_execution_engine_foundation`
+  - `20261126044914_adapter_execution_claim_result_shape_fix`
+  - `20261126044938_adapter_execution_integrity_guards`
+- The cloud history includes `coach_schema_adoption_20261124` as its fourth entry. The PR contains the reconstructed source at `supabase/migrations/20261124024550_coach_schema_adoption_20261124.sql`; do not replay this migration against the live project.
+
+### 12.3 Live Edge Function inventory
+| Function | Active version | Gateway JWT |
+|---|---:|---|
+| `marketplace-api` | 15 | enabled |
+| `adapter-api` | 4 | enabled |
+| `adapter-worker` | 4 | disabled; function body enforces exact service-role bearer |
+
+The deployed `adapter-api` and `adapter-worker` source files are retrievable from Supabase. Repository copies exist at `supabase/functions/adapter-api/index.ts` and `supabase/functions/adapter-worker/index.ts`.
+
+### 12.4 Fresh schema / access-control inventory
+A fresh read found 33 tables across the six application schemas:
+- `areas`: 4/4 RLS enabled
+- `catalog`: 4/4 RLS enabled
+- `commerce`: 2/2 RLS enabled
+- `enterprise`: 8/8 RLS enabled
+- `identity`: 7/7 RLS enabled
+- `integration`: 8/8 RLS enabled
+
+Schema usage and direct table SELECT:
+- `areas`, `catalog`, `commerce`, `enterprise`, `integration`: no schema USAGE for `anon` or `authenticated`; no direct SELECT for either browser role.
+- `identity`: no schema USAGE for `anon`; `authenticated` has schema USAGE and one direct SELECT table grant. The exact granted table and its row policy must be explicitly reconciled before calling the identity boundary fully accepted.
+- RLS policies currently exist on five identity tables; the remaining private tables intentionally have no direct browser policies/grants. The adapter/marketplace APIs use server-side service-role transactions and perform explicit authorization.
+
+### 12.5 Supabase advisor snapshot
+- Security advisor: 28 INFO findings named `rls_enabled_no_policy`. These are not automatically vulnerabilities because the affected application schemas are private to browser roles; retain the no-browser-access architecture and verify every server API path.
+- Performance advisor: 58 INFO findings for unindexed foreign keys and 48 INFO findings for unused indexes. Do not mass-create or drop indexes. Reconcile actual FK column order against existing indexes and query patterns; the unused-index findings are expected to be noisy while the database is nearly empty.
+- Earlier handoff references to 22 RLS findings / 44 FK findings are stale and must not be repeated as current counts.
+
+### 12.6 OAuth / PKCE correction — data foundation exists; lifecycle does not
+The adapter execution migration already created `integration.adapter_oauth_transactions` with:
+- tenant/workspace/provider/manifest binding;
+- initiating Auth user;
+- SHA-256 state digest;
+- optional Vault reference for PKCE verifier;
+- HTTPS redirect URI;
+- PENDING/COMPLETED/FAILED/EXPIRED/REVOKED state;
+- ten-minute expiry and one-time consumption timestamp.
+
+However, fresh source inspection confirms:
+- `adapter-api` rejects OAuth credential provisioning and has no start-authorization or callback-completion action.
+- `adapter-worker` explicitly rejects OAuth execution with `OAUTH_FLOW_NOT_IMPLEMENTED`.
+- There is no deployed OAuth callback function.
+- Therefore OAuth2 Authorization Code + PKCE is **SCHEMA-READY / RUNTIME-NOT-IMPLEMENTED**, not an absent schema and not an operational feature.
+- `OAUTH2_CLIENT_CREDENTIALS` is also declared in the schema enum but not implemented. Do not treat it as supported.
+
+### 12.7 Next implementation order
+1. Resolve the exact authenticated SELECT grant in `identity` and verify it is constrained by the intended user-scoped policy.
+2. Design and implement OAuth Authorization Code + PKCE as a separate public callback boundary, with:
+   - authenticated, workspace OWNER/ADMIN initiation;
+   - provider/manifest allowlisted authorization and token endpoints;
+   - cryptographically random state and PKCE S256;
+   - state digest only in the transaction row, verifier held in Vault;
+   - strict redirect URI matching and one-time transaction consumption;
+   - authorization-code exchange server-side;
+   - access/refresh token storage only in Vault;
+   - no tokens in URLs, logs, responses or Git;
+   - provider token refresh and revocation lifecycle;
+   - worker support only for manifests whose OAuth configuration has passed validation.
+3. Implement Google Drive as the first provider only after the generic OAuth lifecycle is tested. Require configured Google OAuth client credentials and an authorized Google account; do not fabricate a provider connection.
+4. Add integration tests for state mismatch, expired/replayed state, wrong workspace role, callback provider mismatch, invalid redirect URI, token endpoint failure, refresh rotation and secret redaction.
+5. Re-run Supabase security/performance advisors after schema/runtime changes and update this handoff with evidence.
+
+**Acceptance boundary:** the OAuth schema and adapter worker/API are present, but no OAuth provider is connected. Day 2 remains PARTIAL. Day 1 remains OPEN until a real authorized Auth identity can complete tenant and workspace lifecycle tests.
