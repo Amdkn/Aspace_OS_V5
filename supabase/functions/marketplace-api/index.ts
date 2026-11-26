@@ -148,7 +148,8 @@ async function requireWorkspaceMember(tx: Tx, userId: string, orgId: string, wor
     SELECT w.id
     FROM enterprise.workspaces w
     JOIN identity.organization_memberships m ON m.organization_id=w.organization_id
-    WHERE w.id=${workspaceId}::uuid AND w.organization_id=${orgId}::uuid
+    JOIN identity.organizations o ON o.id=w.organization_id
+    WHERE o.status='ACTIVE' AND w.id=${workspaceId}::uuid AND w.organization_id=${orgId}::uuid
       AND w.workspace_status='ACTIVE' AND m.user_id=${userId}::uuid
       AND m.membership_status='ACTIVE'
   `;
@@ -167,7 +168,8 @@ async function listWorkspaces(user: User, body: Record<string, unknown>) {
       SELECT w.id,w.organization_id,w.workspace_key,w.name,w.description,w.workspace_status,w.created_at
       FROM enterprise.workspaces w
       JOIN identity.organization_memberships m ON m.organization_id=w.organization_id
-      WHERE w.organization_id=${orgId}::uuid AND m.user_id=${user.id}::uuid
+      JOIN identity.organizations o ON o.id=w.organization_id
+      WHERE o.status='ACTIVE' AND w.organization_id=${orgId}::uuid AND m.user_id=${user.id}::uuid
         AND m.membership_status='ACTIVE'
       ORDER BY w.created_at ASC
     `;
