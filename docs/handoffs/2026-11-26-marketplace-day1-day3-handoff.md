@@ -1154,3 +1154,15 @@ A catalog-level check compared every FK's referencing-column sequence against va
 | integration | 14 | 5 |
 
 No index DDL was applied during this audit. This avoids blind remediation. Before applying a dedicated migration, review the exact FK column order, existing unique/compound indexes, query paths and write amplification. The current database has almost no tenant data, so the advisor's unused-index count is not a valid basis for dropping useful indexes.
+
+
+### 12.12 First provider selection — Google Drive registry record confirmed
+The live provider blueprint registry contains:
+- `provider_key = files-knowledge-google-drive`
+- `provider_name = Google Drive`
+- `family_key = files-knowledge`
+- `implementation_status = PLANNED`
+- `auth_contract_status = UNSPECIFIED`
+- `supported_operations = []`
+
+Google Drive remains the selected first OAuth provider because it is already represented in the canonical 73-provider inventory and is the Life OS document SSOT target. No provider manifest or tenant connection has been created. Next implementation must define the narrowest justified Drive scopes, exact API operations, OAuth endpoints, token refresh/revocation, and a real account-authorized test. Keep Google Drive PLANNED until that round-trip passes.
