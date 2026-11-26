@@ -754,3 +754,12 @@ Day 1 remains **OPEN / NOT ACCEPTED**. The structural security posture is substa
 5. Complete Day 3 tenant installation, Areas OS/departments/holarchy provisioning, agent runtime, workflows, four platform cores and Control Tower operations.
 6. Keep PR #63 in Draft until all acceptance gates are met.
 
+
+
+### 10.9 Security baseline regression test committed
+
+- Added `supabase/tests/marketplace_security_baseline.sql` (commit `8e7141667fb5874df24434a58434881f404d721b`).
+- The read-only DO-block asserts: RLS enabled across the inspected application schemas; private schemas have no browser-role USAGE; private tables have no anon/authenticated grants; SECURITY DEFINER functions have a configured search_path and no browser-role EXECUTE; and the four identity read-policy boundaries remain present.
+- Executed the same SQL against the live cloud project through the native Supabase connection. It completed without an assertion exception and made no persistent changes.
+- This is a structural security regression test, not an authenticated tenant-isolation E2E test. It does not close the real-user/tenant blocker in D1.03–D1.04.
+
