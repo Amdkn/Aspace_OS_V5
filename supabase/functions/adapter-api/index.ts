@@ -31,6 +31,15 @@ function uuid(value: unknown, field: string): string {
   }
   return s;
 }
+function containsCredentialField(value: unknown, depth = 0): boolean {
+  if (depth > 8 || value === null || typeof value !== 'object') return false;
+  if (Array.isArray(value)) return value.some((item) => containsCredentialField(item,depth+1));
+  for (const [key,child] of Object.entries(value as Record<string,unknown>)) {
+    if (/(token|secret|password|api[_-]?key|authorization|cookie|private[_-]?key)/i.test(key)) return true;
+    if (containsCredentialField(child,depth+1)) return true;
+  }
+  return false;
+}
 async function authenticate(req: Request): Promise<User> {
   const header = req.headers.get('Authorization') ?? '';
   if (!header.startsWith('Bearer ')) throw new Error('Authentication required');
@@ -413,6 +422,7 @@ async function enqueueExecution(user: User, body: Record<string, unknown>) {
   const payload = (body.request_payload ?? {}) as Record<string, unknown>;
   const payloadJson = JSON.stringify(payload);
   if (payloadJson.length > 65536) throw new Error('request_payload exceeds 64 KB');
+  if (containsCredentialField(payload)) throw new Error('request_payload cannot contain credential or secret fields');
   if (idempotencyKey.length < 8) throw new Error('idempotency_key must contain at least 8 characters');
   if (!/^[a-z][a-z0-9._-]{1,95}$/.test(operationKey)) throw new Error('Invalid operation_key');
 
