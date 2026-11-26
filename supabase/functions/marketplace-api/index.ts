@@ -71,6 +71,31 @@ async function listAdapterFamilies() {
   });
 }
 
+async function listProviderAdapterBlueprints(familyKey: string | null) {
+  return await withServiceRole(async (tx) => {
+    if (familyKey) {
+      return await tx`
+        SELECT p.provider_key, p.family_key, f.family_name, p.provider_name,
+          p.manifest_version, p.implementation_status, p.auth_contract_status,
+          p.supported_operations, p.documentation_uri
+        FROM integration.provider_adapter_blueprints p
+        JOIN integration.adapter_family_blueprints f USING (family_key)
+        WHERE p.implementation_status <> 'DEPRECATED' AND p.family_key = ${familyKey}
+        ORDER BY p.provider_name
+      `;
+    }
+    return await tx`
+      SELECT p.provider_key, p.family_key, f.family_name, p.provider_name,
+        p.manifest_version, p.implementation_status, p.auth_contract_status,
+        p.supported_operations, p.documentation_uri
+      FROM integration.provider_adapter_blueprints p
+      JOIN integration.adapter_family_blueprints f USING (family_key)
+      WHERE p.implementation_status <> 'DEPRECATED'
+      ORDER BY f.sort_order, p.provider_name
+    `;
+  });
+}
+
 async function listTaxonomyBlueprints() {
   return await withServiceRole(async (tx) => {
     const areasDomains = await tx`
@@ -298,7 +323,7 @@ Deno.serve(async (req: Request) => {
   try {
     if (req.method === 'GET') {
       const health = await withServiceRole(async (tx) => (await tx`SELECT current_database() AS database_name, now() AS checked_at`)[0]);
-      return response({ status: 'ok', service: 'marketplace-api', version: '0.5.0', persistence: 'supabase-cloud', database: health });
+      return response({ status: 'ok', service: 'marketplace-api', version: '0.6.0', persistence: 'supabase-cloud', database: health });
     }
     if (req.method !== 'POST') return response({ error: 'Method not allowed' }, 405);
     const body = await req.json() as Record<string, unknown>;
@@ -308,6 +333,10 @@ Deno.serve(async (req: Request) => {
     // They contain no tenant records or secrets; the private schemas remain server-only.
     if (action === 'list_taxonomy_blueprints') return response({ data: await listTaxonomyBlueprints() });
     if (action === 'list_adapter_families') return response({ data: await listAdapterFamilies() });
+    if (action === 'list_provider_adapter_blueprints') {
+      const familyKey = body.family_key === undefined ? null : requiredString(body.family_key, 'family_key', 100);
+      return response({ data: await listProviderAdapterBlueprints(familyKey) });
+    }
     const user = await authenticate(req);
     let data: unknown;
     switch (action) {
