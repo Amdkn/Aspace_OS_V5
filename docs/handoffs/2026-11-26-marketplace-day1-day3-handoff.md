@@ -1346,3 +1346,12 @@ This is a provider contract milestone, not an activation or successful Google ac
 4. Run Google consent → callback → `about.get` health check → list/read/create-folder/update/delete tests → refresh-token rotation → provider revocation.
 5. Review Google OAuth consent-screen verification requirements for the restricted `drive.readonly` scope.
 6. Only after that evidence, promote the manifest to ACTIVE and update the provider blueprint implementation status. Until then, keep it DRAFT / PLANNED.
+
+
+### 12.17 Adapter API contract documentation updated (2026-11-26 05:25 UTC)
+
+- Updated `docs/api/adapter-api.md` to reflect the deployed runtime rather than the former OAuth-not-implemented boundary.
+- Documented `start_oauth_authorization`, the public callback boundary, one-time state/PKCE handling, Vault token storage, refresh/rotation and provider revocation reporting.
+- Documented Google Drive v1.0.0 DRAFT and its six metadata operations, scope profile, and explicit binary transfer limitations.
+- Documented worker manifest path/query/body allowlists and fail-closed behavior.
+- Latest documentation commit: `28f859b669cf821f73daf1ef939684a16a67f559`. This is documentation-only; the preceding Google Drive code/test commit `728bdd868cc54e0582535879442c1f3bba218db0` had all three CI workflows complete successfully.
