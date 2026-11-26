@@ -42,7 +42,8 @@ async function requireOrgRole(tx: Tx, userId: string, orgId: string) {
     FROM identity.organization_memberships m
     JOIN identity.role_bindings rb
       ON rb.organization_id = m.organization_id AND rb.subject_user_id = m.user_id
-    WHERE m.organization_id = ${orgId}::uuid AND m.user_id = ${userId}::uuid
+    JOIN identity.organizations o ON o.id = m.organization_id
+    WHERE o.status = 'ACTIVE' AND m.organization_id = ${orgId}::uuid AND m.user_id = ${userId}::uuid
       AND m.membership_status = 'ACTIVE' AND rb.binding_status = 'ACTIVE'
       AND rb.starts_at <= now() AND (rb.expires_at IS NULL OR rb.expires_at > now())
       AND rb.role_code IN ('S0_SOVEREIGN','B1_CEO','A3_PICARD','B2_MANAGER')
@@ -55,7 +56,7 @@ async function listOrganizations(user: User) {
     SELECT o.id,o.organization_key,o.name,o.organization_type,o.status
     FROM identity.organizations o
     JOIN identity.organization_memberships m ON m.organization_id=o.id
-    WHERE m.user_id=${user.id}::uuid AND m.membership_status='ACTIVE'
+    WHERE o.status='ACTIVE' AND m.user_id=${user.id}::uuid AND m.membership_status='ACTIVE'
     ORDER BY o.created_at ASC
   `);
 }
