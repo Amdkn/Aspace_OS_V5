@@ -1116,3 +1116,15 @@ It specifies:
 - PR #63: OPEN, Draft, unmerged; 25 changed files, 71 commits; head matches the branch head above.
 - Latest commit has 7 GitHub Actions check runs. At the last poll, the checks were still `in_progress`; the commit status endpoint reported `pending` with no legacy statuses. Do not report this commit's CI as green until all seven check runs complete successfully.
 - No production Supabase schema or Edge Function was changed during this OAuth-readiness continuation.
+
+
+### 12.8 Identity schema grant reconciliation — resolved
+A follow-up catalog query identified the one direct browser SELECT grant:
+- `authenticated` has schema USAGE on `identity`.
+- The only identity table with direct `authenticated` SELECT is `identity.profiles`.
+- `identity.profiles` has `profiles_read_self` for SELECT, plus self-scoped INSERT and UPDATE policies.
+- `anon` has no schema USAGE and no SELECT grants in the six application schemas.
+- The remaining identity tables have no direct SELECT grants to `anon` or `authenticated`; their RLS policies do not create access without table grants.
+- `areas`, `catalog`, `commerce`, `enterprise` and `integration` remain inaccessible directly to browser roles at schema level.
+
+This closes the ambiguity recorded in §12.4. It is a **STRUCTURAL ACCESS-CONTROL CHECK**, not a substitute for authenticated cross-tenant E2E testing.
