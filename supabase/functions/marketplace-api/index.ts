@@ -179,33 +179,31 @@ async function listWorkspaceStructure(user: User, body: Record<string, unknown>)
   const workspaceId = requiredString(body.workspace_id, 'workspace_id');
   return await withServiceRole(async (tx) => {
     await requireWorkspaceMember(tx, user.id, orgId, workspaceId);
-    const [domains, departments, holons] = await Promise.all([
-      tx`
-        SELECT i.id,i.domain_code,b.domain_name,b.description,i.parent_installation_id,
-          i.owner_user_id,i.installation_status,i.installed_at
-        FROM areas.domain_installations i
-        JOIN areas.domain_blueprints b ON b.domain_code=i.domain_code
-        WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
-        ORDER BY b.sort_order
-      `,
-      tx`
-        SELECT i.id,i.department_key,b.department_name,b.description,i.owner_user_id,
-          i.installation_status,i.installed_at
-        FROM enterprise.department_installations i
-        JOIN enterprise.department_blueprints b USING (department_key)
-        WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
-        ORDER BY b.sort_order
-      `,
-      tx`
-        SELECT i.id,i.holon_code,b.display_name,b.holon_level,b.holon_type,
-          b.parent_holon_code,i.parent_installation_id,i.owner_user_id,
-          i.installation_status,i.installed_at
-        FROM areas.holon_installations i
-        JOIN areas.holon_blueprints b USING (holon_code)
-        WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
-        ORDER BY b.sort_order
-      `,
-    ]);
+    const domains = await tx`
+      SELECT i.id,i.domain_code,b.domain_name,b.description,i.parent_installation_id,
+        i.owner_user_id,i.installation_status,i.installed_at
+      FROM areas.domain_installations i
+      JOIN areas.domain_blueprints b ON b.domain_code=i.domain_code
+      WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
+      ORDER BY b.sort_order
+    `;
+    const departments = await tx`
+      SELECT i.id,i.department_key,b.department_name,b.description,i.owner_user_id,
+        i.installation_status,i.installed_at
+      FROM enterprise.department_installations i
+      JOIN enterprise.department_blueprints b USING (department_key)
+      WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
+      ORDER BY b.sort_order
+    `;
+    const holons = await tx`
+      SELECT i.id,i.holon_code,b.display_name,b.holon_level,b.holon_type,
+        b.parent_holon_code,i.parent_installation_id,i.owner_user_id,
+        i.installation_status,i.installed_at
+      FROM areas.holon_installations i
+      JOIN areas.holon_blueprints b USING (holon_code)
+      WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
+      ORDER BY b.sort_order
+    `;
     return { organization_id: orgId, workspace_id: workspaceId, domains, departments, holons };
   });
 }
@@ -248,12 +246,12 @@ async function installStructure(user: User, body: Record<string, unknown>) {
     await requireWorkspaceMember(tx, user.id, orgId, workspaceId);
     await tx`SELECT pg_advisory_xact_lock(hashtextextended(${orgId + ':' + workspaceId + ':' + idempotencyKey}, 0))`;
     const previous = await tx`
-      SELECT id,request_payload,result_payload FROM enterprise.structure_installation_requests
+      SELECT id,request_payload,result_payload,(request_payload = ${JSON.stringify(payload)}::jsonb) AS payload_matches FROM enterprise.structure_installation_requests
       WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid AND idempotency_key=${idempotencyKey}
       LIMIT 1
     `;
     if (previous.length) {
-      if (JSON.stringify(previous[0].request_payload) !== JSON.stringify(payload)) throw new Error('Idempotency key already used with a different installation payload');
+      if (!previous[0].payload_matches) throw new Error('Idempotency key already used with a different installation payload');
       await tx`
         INSERT INTO enterprise.structure_installation_events
           (organization_id,workspace_id,request_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
