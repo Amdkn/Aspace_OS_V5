@@ -14,8 +14,9 @@ function validateEndpoint(value: unknown, hosts: unknown): URL {
   if (typeof value !== 'string' || !Array.isArray(hosts) ||
       !hosts.every((host) => typeof host === 'string')) throw new Error('OAUTH_MANIFEST_INVALID');
   const endpoint = new URL(value);
+  const normalizedHosts=hosts.map((host:string)=>host.toLowerCase());
   if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password ||
-      endpoint.search || endpoint.hash || !hosts.includes(endpoint.hostname.toLowerCase())) {
+      endpoint.search || endpoint.hash || !normalizedHosts.includes(endpoint.hostname.toLowerCase())) {
     throw new Error('OAUTH_ENDPOINT_NOT_ALLOWED');
   }
   return endpoint;
