@@ -141,6 +141,9 @@ async function createConnection(user: User, body: Record<string, unknown>) {
         existing[0].display_name !== name) {
       throw new Error('connection_key already exists with a different payload');
     }
+    if (existing[0].connection_status === 'REVOKED') {
+      throw new Error('Revoked connection keys cannot be reused; create a new connection_key');
+    }
     return existing[0];
   });
 }
@@ -155,7 +158,7 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
       UPDATE integration.tenant_connections
       SET connection_status='REVOKED', revoked_at=coalesce(revoked_at,now()), updated_at=now()
       WHERE id=${connectionId}::uuid AND organization_id=${orgId}::uuid
-        AND workspace_id=${workspaceId}::uuid AND connection_status <> 'REVOKED'
+        AND workspace_id=${workspaceId}::uuid
       RETURNING id,organization_id,workspace_id,provider_key,connection_key,connection_status,revoked_at
     `;
     if (!rows.length) throw new Error('Active connection not found');
@@ -185,8 +188,13 @@ async function enqueueExecution(user: User, body: Record<string, unknown>) {
   const connectionId = uuid(body.connection_id, 'connection_id');
   const operationKey = requiredString(body.operation_key, 'operation_key', 96);
   const idempotencyKey = requiredString(body.idempotency_key, 'idempotency_key', 200);
-  const payload = body.request_payload && typeof body.request_payload === 'object' && !Array.isArray(body.request_payload)
-    ? body.request_payload : {};
+  if (body.request_payload !== undefined &&
+      (!body.request_payload || typeof body.request_payload !== 'object' || Array.isArray(body.request_payload))) {
+    throw new Error('request_payload must be a JSON object');
+  }
+  const payload = (body.request_payload ?? {}) as Record<string, unknown>;
+  const payloadJson = JSON.stringify(payload);
+  if (payloadJson.length > 65536) throw new Error('request_payload exceeds 64 KB');
   if (idempotencyKey.length < 8) throw new Error('idempotency_key must contain at least 8 characters');
   if (!/^[a-z][a-z0-9._-]{1,95}$/.test(operationKey)) throw new Error('Invalid operation_key');
 
@@ -231,13 +239,13 @@ async function enqueueExecution(user: User, body: Record<string, unknown>) {
     const existing = await tx`
       SELECT id,organization_id,workspace_id,connection_id,provider_key,
         manifest_version,operation_key,idempotency_key,request_payload,job_status,
-        attempt_count,max_attempts,correlation_id,created_at
+        attempt_count,max_attempts,correlation_id,created_at,
+        (request_payload=${payloadJson}::jsonb) AS payload_matches
       FROM integration.adapter_execution_jobs
       WHERE connection_id=${connectionId}::uuid AND idempotency_key=${idempotencyKey}
       LIMIT 1
     `;
-    if (!existing.length || existing[0].operation_key !== operationKey ||
-        JSON.stringify(existing[0].request_payload) !== JSON.stringify(payload)) {
+    if (!existing.length || existing[0].operation_key !== operationKey || !existing[0].payload_matches) {
       throw new Error('Idempotency key already used with a different execution payload');
     }
     const { request_payload: _discard, ...safe } = existing[0];
