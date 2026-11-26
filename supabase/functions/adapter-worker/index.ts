@@ -389,6 +389,12 @@ async function execute(job: Job, workerId: string) {
                 last_error_code=${rows[0].error_code},updated_at=now()
             WHERE id=${job.connection_id}::uuid
           `;
+        } else if (message === 'OAUTH_REAUTH_REQUIRED') {
+          await tx`
+            UPDATE integration.tenant_connections
+            SET connection_status='ERROR',last_error_code='OAUTH_REAUTH_REQUIRED',updated_at=now()
+            WHERE id=${job.connection_id}::uuid AND connection_status<>'REVOKED'
+          `;
         }
         return rows[0];
       });
