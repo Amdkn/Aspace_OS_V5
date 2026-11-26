@@ -43,7 +43,7 @@ Two independent global reference tables now exist:
 - `areas.domain_blueprints`: eight Areas OS mission portfolios, LD01–LD08.
 - `enterprise.department_blueprints`: eight Business Marketplace departments, B2.1–B2.8.
 
-Both tables are in private schemas, have RLS enabled, and grant no table access to `PUBLIC`, `anon`, or `authenticated`. The server-side `marketplace-api` Edge Function reads them using its service-role database connection after JWT authentication. The client never queries these private schemas directly.
+Both tables are in private schemas, have RLS enabled, and grant no table access to `PUBLIC`, `anon`, or `authenticated`. The server-side `marketplace-api` Edge Function reads them using its service-role database connection and exposes only the two static reference lists through a public, read-only action. This action is intentionally available to the app's publishable/anon client because the blueprints contain no tenant data or secrets. All table access remains private; the client never queries these schemas directly.
 
 The migration inserted exactly eight rows in each table. These are global blueprints, not organization installations. It did not create tenants, mutate memberships, add role bindings, or link any customer capability to a domain.
 
