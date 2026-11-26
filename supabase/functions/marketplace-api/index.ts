@@ -411,9 +411,8 @@ async function listInstallationEngines(tx: Tx, orgId: string, workspaceId: strin
   const ownership = await tx`
     SELECT a.id,a.entity_type,a.installation_id,a.principal_type,a.user_id,a.agent_principal_id,
       a.assignment_role,a.assignment_status,a.starts_at,a.expires_at,
-      u.email AS user_email,ap.agent_key,ap.display_name AS agent_name
+      ap.agent_key,ap.display_name AS agent_name
     FROM enterprise.installation_ownership_assignments a
-    LEFT JOIN auth.users u ON u.id=a.user_id
     LEFT JOIN identity.agent_principals ap ON ap.id=a.agent_principal_id
     WHERE a.organization_id=${orgId}::uuid AND a.workspace_id=${workspaceId}::uuid
     ORDER BY a.created_at
