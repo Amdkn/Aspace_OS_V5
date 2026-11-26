@@ -207,7 +207,8 @@ async function listWorkspaceStructure(user: User, body: Record<string, unknown>)
       WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
       ORDER BY b.sort_order
     `;
-    return { organization_id: orgId, workspace_id: workspaceId, domains, departments, holons };
+    const engines = await listInstallationEngines(tx,orgId,workspaceId);
+    return { organization_id: orgId, workspace_id: workspaceId, domains, departments, holons, ...engines };
   });
 }
 async function createWorkspace(user: User, body: Record<string, unknown>) {
@@ -395,6 +396,237 @@ async function installStructure(user: User, body: Record<string, unknown>) {
     return result;
   });
 }
+async function requireWorkspaceAdmin(tx: Tx, userId: string, orgId: string, workspaceId: string) {
+  const rows = await tx`
+    SELECT wm.workspace_role
+    FROM enterprise.workspace_memberships wm
+    JOIN enterprise.workspaces w ON w.id=wm.workspace_id AND w.organization_id=wm.organization_id
+    WHERE wm.organization_id=${orgId}::uuid AND wm.workspace_id=${workspaceId}::uuid
+      AND wm.user_id=${userId}::uuid AND wm.membership_status='ACTIVE'
+      AND w.workspace_status='ACTIVE' AND wm.workspace_role IN ('OWNER','ADMIN')
+  `;
+  if (!rows.length) throw new Error('Workspace OWNER or ADMIN role required');
+}
+async function listInstallationEngines(tx: Tx, orgId: string, workspaceId: string) {
+  const ownership = await tx`
+    SELECT a.id,a.entity_type,a.installation_id,a.principal_type,a.user_id,a.agent_principal_id,
+      a.assignment_role,a.assignment_status,a.starts_at,a.expires_at,
+      u.email AS user_email,ap.agent_key,ap.display_name AS agent_name
+    FROM enterprise.installation_ownership_assignments a
+    LEFT JOIN auth.users u ON u.id=a.user_id
+    LEFT JOIN identity.agent_principals ap ON ap.id=a.agent_principal_id
+    WHERE a.organization_id=${orgId}::uuid AND a.workspace_id=${workspaceId}::uuid
+    ORDER BY a.created_at
+  `;
+  const dependencies = await tx`
+    SELECT id,source_entity_type,source_installation_id,depends_on_entity_type,
+      depends_on_installation_id,dependency_type,dependency_status,created_at,removed_at
+    FROM enterprise.installation_dependencies
+    WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid
+    ORDER BY created_at
+  `;
+  const capabilities = await tx`
+    SELECT ci.id,ci.target_entity_type,ci.target_installation_id,ci.capability_id,
+      c.capability_key,ci.capability_version_id,cv.version,cv.name,
+      ci.installation_status,ci.configuration,ci.installed_at,ci.removed_at
+    FROM catalog.capability_installations ci
+    JOIN catalog.capabilities c ON c.id=ci.capability_id
+    JOIN catalog.capability_versions cv ON cv.id=ci.capability_version_id
+    WHERE ci.organization_id=${orgId}::uuid AND ci.workspace_id=${workspaceId}::uuid
+    ORDER BY ci.installed_at
+  `;
+  return { ownership_assignments: ownership, dependencies, capability_installations: capabilities };
+}
+async function assignInstallationOwnership(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id, 'organization_id');
+  const workspaceId = requiredString(body.workspace_id, 'workspace_id');
+  const entityType = requiredString(body.entity_type, 'entity_type', 16);
+  const installationId = requiredString(body.installation_id, 'installation_id');
+  const principalType = requiredString(body.principal_type, 'principal_type', 8);
+  const assignmentRole = requiredString(body.assignment_role, 'assignment_role', 20);
+  if (!['DOMAIN','DEPARTMENT','HOLON'].includes(entityType) ||
+      !['USER','AGENT'].includes(principalType) ||
+      !['OWNER','MANAGER','TECHNICIAN','STEWARD','OBSERVER'].includes(assignmentRole)) {
+    throw new Error('Invalid ownership assignment dimensions');
+  }
+  const userId = principalType === 'USER' ? requiredString(body.user_id, 'user_id') : null;
+  const agentId = principalType === 'AGENT' ? requiredString(body.agent_principal_id, 'agent_principal_id') : null;
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceAdmin(tx,user.id,orgId,workspaceId);
+    if (assignmentRole === 'OWNER') {
+      const current = await tx`
+        SELECT id,principal_type,user_id,agent_principal_id FROM enterprise.installation_ownership_assignments
+        WHERE organization_id=${orgId}::uuid AND workspace_id=${workspaceId}::uuid
+          AND entity_type=${entityType} AND installation_id=${installationId}::uuid
+          AND assignment_role='OWNER' AND assignment_status='ACTIVE'
+        FOR UPDATE
+      `;
+      if (current.length && current[0].principal_type===principalType &&
+          current[0].user_id===userId && current[0].agent_principal_id===agentId) return current[0];
+      for (const prior of current) {
+        await tx`UPDATE enterprise.installation_ownership_assignments SET assignment_status='REVOKED',revoked_at=now() WHERE id=${prior.id}::uuid`;
+        await tx`
+          INSERT INTO enterprise.structure_installation_events
+            (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+          VALUES (${orgId}::uuid,${workspaceId}::uuid,'OWNERSHIP_REVOKED','OWNERSHIP',${prior.id}::uuid,${user.id}::uuid,
+            ${JSON.stringify({reason:'OWNER_TRANSFER'})}::jsonb)
+        `;
+      }
+    }
+    const rows = await tx`
+      INSERT INTO enterprise.installation_ownership_assignments
+        (organization_id,workspace_id,entity_type,installation_id,principal_type,user_id,agent_principal_id,
+         assignment_role,assigned_by_user_id)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${entityType},${installationId}::uuid,${principalType},
+        ${userId}::uuid,${agentId}::uuid,${assignmentRole},${user.id}::uuid)
+      RETURNING id,entity_type,installation_id,principal_type,user_id,agent_principal_id,assignment_role,assignment_status,created_at
+    `;
+    const assignment = rows[0];
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,'OWNERSHIP_ASSIGNED','OWNERSHIP',${assignment.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({entity_type:entityType,installation_id:installationId,principal_type:principalType,assignment_role:assignmentRole,user_id:userId,agent_principal_id:agentId})}::jsonb)
+    `;
+    return assignment;
+  });
+}
+async function revokeInstallationOwnership(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id,'organization_id');
+  const workspaceId = requiredString(body.workspace_id,'workspace_id');
+  const assignmentId = requiredString(body.assignment_id,'assignment_id');
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceAdmin(tx,user.id,orgId,workspaceId);
+    const rows = await tx`
+      UPDATE enterprise.installation_ownership_assignments
+      SET assignment_status='REVOKED',revoked_at=now()
+      WHERE id=${assignmentId}::uuid AND organization_id=${orgId}::uuid
+        AND workspace_id=${workspaceId}::uuid AND assignment_status='ACTIVE'
+      RETURNING id,entity_type,installation_id,assignment_role,assignment_status
+    `;
+    if (!rows.length) throw new Error('Active ownership assignment not found');
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,'OWNERSHIP_REVOKED','OWNERSHIP',${assignmentId}::uuid,${user.id}::uuid,
+        ${JSON.stringify({reason:body.reason ?? 'REVOKED_BY_ADMIN'})}::jsonb)
+    `;
+    return rows[0];
+  });
+}
+async function addInstallationDependency(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id,'organization_id');
+  const workspaceId = requiredString(body.workspace_id,'workspace_id');
+  const sourceType = requiredString(body.source_entity_type,'source_entity_type',16);
+  const sourceId = requiredString(body.source_installation_id,'source_installation_id');
+  const targetType = requiredString(body.depends_on_entity_type,'depends_on_entity_type',16);
+  const targetId = requiredString(body.depends_on_installation_id,'depends_on_installation_id');
+  const dependencyType = body.dependency_type === undefined ? 'REQUIRES' : requiredString(body.dependency_type,'dependency_type',20);
+  if (!['DOMAIN','DEPARTMENT','HOLON'].includes(sourceType) || !['DOMAIN','DEPARTMENT','HOLON'].includes(targetType) ||
+      !['REQUIRES','BLOCKS','INFORMS','CONTAINS'].includes(dependencyType)) throw new Error('Invalid dependency dimensions');
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceAdmin(tx,user.id,orgId,workspaceId);
+    const rows = await tx`
+      INSERT INTO enterprise.installation_dependencies
+        (organization_id,workspace_id,source_entity_type,source_installation_id,
+         depends_on_entity_type,depends_on_installation_id,dependency_type,created_by_user_id)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${sourceType},${sourceId}::uuid,
+        ${targetType},${targetId}::uuid,${dependencyType},${user.id}::uuid)
+      ON CONFLICT (workspace_id,source_entity_type,source_installation_id,depends_on_entity_type,depends_on_installation_id,dependency_type)
+      DO UPDATE SET dependency_status='ACTIVE',removed_at=NULL,created_by_user_id=EXCLUDED.created_by_user_id
+      RETURNING id,source_entity_type,source_installation_id,depends_on_entity_type,depends_on_installation_id,dependency_type,dependency_status
+    `;
+    const dependency = rows[0];
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,'DEPENDENCY_ADDED','DEPENDENCY',${dependency.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({source_entity_type:sourceType,source_installation_id:sourceId,depends_on_entity_type:targetType,depends_on_installation_id:targetId,dependency_type:dependencyType})}::jsonb)
+    `;
+    return dependency;
+  });
+}
+async function removeInstallationDependency(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id,'organization_id');
+  const workspaceId = requiredString(body.workspace_id,'workspace_id');
+  const dependencyId = requiredString(body.dependency_id,'dependency_id');
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceAdmin(tx,user.id,orgId,workspaceId);
+    const rows = await tx`
+      UPDATE enterprise.installation_dependencies SET dependency_status='REMOVED',removed_at=now()
+      WHERE id=${dependencyId}::uuid AND organization_id=${orgId}::uuid
+        AND workspace_id=${workspaceId}::uuid AND dependency_status='ACTIVE'
+      RETURNING id,source_entity_type,source_installation_id,depends_on_entity_type,depends_on_installation_id
+    `;
+    if (!rows.length) throw new Error('Active dependency not found');
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,'DEPENDENCY_REMOVED','DEPENDENCY',${dependencyId}::uuid,${user.id}::uuid,'{}'::jsonb)
+    `;
+    return rows[0];
+  });
+}
+async function installCapability(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id,'organization_id');
+  const workspaceId = requiredString(body.workspace_id,'workspace_id');
+  const targetType = requiredString(body.target_entity_type,'target_entity_type',16);
+  const targetId = requiredString(body.target_installation_id,'target_installation_id');
+  const capabilityId = requiredString(body.capability_id,'capability_id');
+  const versionId = requiredString(body.capability_version_id,'capability_version_id');
+  const configuration = body.configuration && typeof body.configuration==='object' && !Array.isArray(body.configuration) ? body.configuration : {};
+  if (!['DOMAIN','DEPARTMENT','HOLON'].includes(targetType)) throw new Error('Invalid capability target type');
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceAdmin(tx,user.id,orgId,workspaceId);
+    const capability = await tx`
+      SELECT c.owner_organization_id FROM catalog.capabilities c
+      JOIN catalog.capability_versions v ON v.capability_id=c.id
+      WHERE c.id=${capabilityId}::uuid AND v.id=${versionId}::uuid
+        AND c.owner_organization_id=${orgId}::uuid AND c.capability_status='ACTIVE' AND v.version_status='ACTIVE'
+    `;
+    if (!capability.length) throw new Error('Only active capabilities owned by this organization can be installed until marketplace entitlement is implemented');
+    const rows = await tx`
+      INSERT INTO catalog.capability_installations
+        (organization_id,workspace_id,target_entity_type,target_installation_id,capability_id,
+         capability_owner_organization_id,capability_version_id,configuration,installed_by_user_id)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,${targetType},${targetId}::uuid,${capabilityId}::uuid,
+        ${orgId}::uuid,${versionId}::uuid,${JSON.stringify(configuration)}::jsonb,${user.id}::uuid)
+      ON CONFLICT (workspace_id,target_entity_type,target_installation_id,capability_id,capability_version_id)
+      DO UPDATE SET installation_status='ACTIVE',removed_at=NULL,configuration=EXCLUDED.configuration
+      RETURNING id,target_entity_type,target_installation_id,capability_id,capability_version_id,installation_status,configuration
+    `;
+    const installation = rows[0];
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,'CAPABILITY_INSTALLED','CAPABILITY',${installation.id}::uuid,${user.id}::uuid,
+        ${JSON.stringify({target_entity_type:targetType,target_installation_id:targetId,capability_id:capabilityId,capability_version_id:versionId})}::jsonb)
+    `;
+    return installation;
+  });
+}
+async function removeCapabilityInstallation(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id,'organization_id');
+  const workspaceId = requiredString(body.workspace_id,'workspace_id');
+  const installationId = requiredString(body.capability_installation_id,'capability_installation_id');
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceAdmin(tx,user.id,orgId,workspaceId);
+    const rows = await tx`
+      UPDATE catalog.capability_installations SET installation_status='REMOVED',removed_at=now()
+      WHERE id=${installationId}::uuid AND organization_id=${orgId}::uuid
+        AND workspace_id=${workspaceId}::uuid AND installation_status='ACTIVE'
+      RETURNING id,target_entity_type,target_installation_id,capability_id,capability_version_id
+    `;
+    if (!rows.length) throw new Error('Active capability installation not found');
+    await tx`
+      INSERT INTO enterprise.structure_installation_events
+        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+      VALUES (${orgId}::uuid,${workspaceId}::uuid,'CAPABILITY_REMOVED','CAPABILITY',${installationId}::uuid,${user.id}::uuid,'{}'::jsonb)
+    `;
+    return rows[0];
+  });
+}
+
 async function listCapabilities(user: User, body: Record<string, unknown>) {
   const orgId = requiredString(body.organization_id, 'organization_id');
   return await withServiceRole(async (tx) => {
@@ -603,7 +835,7 @@ Deno.serve(async (req: Request) => {
   try {
     if (req.method === 'GET') {
       const health = await withServiceRole(async (tx) => (await tx`SELECT current_database() AS database_name, now() AS checked_at`)[0]);
-      return response({ status: 'ok', service: 'marketplace-api', version: '0.8.0', persistence: 'supabase-cloud', database: health });
+      return response({ status: 'ok', service: 'marketplace-api', version: '0.9.0', persistence: 'supabase-cloud', database: health });
     }
     if (req.method !== 'POST') return response({ error: 'Method not allowed' }, 405);
     const body = await req.json() as Record<string, unknown>;
@@ -629,6 +861,12 @@ Deno.serve(async (req: Request) => {
       case 'list_workspace_structure': data = await listWorkspaceStructure(user, body); break;
       case 'create_workspace': data = await createWorkspace(user, body); break;
       case 'install_structure': data = await installStructure(user, body); break;
+      case 'assign_installation_ownership': data = await assignInstallationOwnership(user, body); break;
+      case 'revoke_installation_ownership': data = await revokeInstallationOwnership(user, body); break;
+      case 'add_installation_dependency': data = await addInstallationDependency(user, body); break;
+      case 'remove_installation_dependency': data = await removeInstallationDependency(user, body); break;
+      case 'install_capability': data = await installCapability(user, body); break;
+      case 'remove_capability_installation': data = await removeCapabilityInstallation(user, body); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
       case 'list_orders': data = await listOrders(user, body); break;
       case 'list_provider_listings': data = await listProviderListings(user, body); break;
