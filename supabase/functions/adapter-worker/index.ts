@@ -153,6 +153,87 @@ async function loadJob(job: Job) {
     return { config, operation, secret };
   });
 }
+
+function oauthEnvSuffix(providerKey: string): string {
+  return providerKey.toUpperCase().replace(/[^A-Z0-9]/g,'_');
+}
+function oauthTokenEndpoint(config: any): URL {
+  const auth = config.auth_config ?? {};
+  const hosts = auth.oauth_allowed_hosts;
+  if (typeof auth.token_url !== 'string' || !Array.isArray(hosts) ||
+      !hosts.every((host: unknown) => typeof host === 'string')) throw new Error('OAUTH_MANIFEST_INVALID');
+  const endpoint = new URL(auth.token_url);
+  if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password ||
+      endpoint.search || endpoint.hash || !hosts.includes(endpoint.hostname.toLowerCase())) {
+    throw new Error('OAUTH_ENDPOINT_NOT_ALLOWED');
+  }
+  return endpoint;
+}
+async function refreshOAuthSecret(job: Job, config: any): Promise<Record<string, unknown>> {
+  return await db.begin(async (tx) => {
+    await tx`SET LOCAL ROLE service_role`;
+    await tx`SELECT pg_advisory_xact_lock(hashtextextended(${job.connection_id},0))`;
+    const rows = await tx`
+      SELECT c.secret_id,s.decrypted_secret
+      FROM integration.tenant_connections c
+      JOIN vault.decrypted_secrets s ON s.id=c.secret_id
+      WHERE c.id=${job.connection_id}::uuid
+        AND c.organization_id=${job.organization_id}::uuid
+        AND c.workspace_id=${job.workspace_id}::uuid
+        AND c.connection_status<>'REVOKED'
+      LIMIT 1
+    `;
+    if (!rows.length || typeof rows[0].decrypted_secret !== 'string') throw new Error('OAUTH_CREDENTIAL_REFERENCE_MISSING');
+    let current: Record<string, unknown>;
+    try { current = JSON.parse(rows[0].decrypted_secret); } catch { throw new Error('OAUTH_CREDENTIAL_FORMAT_INVALID'); }
+    const expiresAt = typeof current.expires_at === 'string' ? Date.parse(current.expires_at) : 0;
+    if (typeof current.access_token === 'string' && expiresAt > Date.now()+60000) return current;
+    if (typeof current.refresh_token !== 'string' || !current.refresh_token) throw new Error('OAUTH_REAUTH_REQUIRED');
+    const endpoint = oauthTokenEndpoint(config);
+    const suffix = oauthEnvSuffix(job.provider_key);
+    const clientId = Deno.env.get('OAUTH_'+suffix+'_CLIENT_ID') ?? '';
+    const clientSecret = Deno.env.get('OAUTH_'+suffix+'_CLIENT_SECRET') ?? '';
+    if (!clientId || !clientSecret) throw new Error('OAUTH_CLIENT_CONFIGURATION_MISSING');
+    const form = new URLSearchParams({
+      grant_type:'refresh_token',refresh_token:current.refresh_token,
+      client_id:clientId,client_secret:clientSecret,
+    });
+    const upstream = await fetch(endpoint,{
+      method:'POST',headers:{'Content-Type':'application/x-www-form-urlencoded','Accept':'application/json'},
+      body:form,signal:AbortSignal.timeout(15000),redirect:'error',
+    });
+    const bytes = await readLimited(upstream,65536);
+    if (!upstream.ok) throw new Error('OAUTH_REAUTH_REQUIRED');
+    let tokens: any;
+    try { tokens=JSON.parse(new TextDecoder().decode(bytes)); } catch { throw new Error('OAUTH_REFRESH_RESPONSE_INVALID'); }
+    if (!tokens || typeof tokens.access_token!=='string' || !tokens.access_token ||
+        tokens.access_token.length>8192 || String(tokens.token_type ?? 'Bearer').toLowerCase()!=='bearer') {
+      throw new Error('OAUTH_REFRESH_RESPONSE_INVALID');
+    }
+    const expiresIn=Number(tokens.expires_in ?? 3600);
+    if (!Number.isFinite(expiresIn) || expiresIn<1 || expiresIn>31536000) throw new Error('OAUTH_EXPIRY_INVALID');
+    const nextScopes = typeof tokens.scope==='string' && tokens.scope.trim()
+      ? tokens.scope.trim().split(/\\s+/) : (Array.isArray(current.scopes)?current.scopes:[]);
+    const allowedScopes = Array.isArray(current.scopes)?current.scopes:[];
+    if (nextScopes.some((scope: string)=>!allowedScopes.includes(scope))) throw new Error('OAUTH_SCOPE_ESCALATION_REJECTED');
+    const next = {
+      access_token:tokens.access_token,
+      refresh_token:typeof tokens.refresh_token==='string' && tokens.refresh_token ? tokens.refresh_token : current.refresh_token,
+      token_type:'Bearer',
+      expires_at:new Date(Date.now()+expiresIn*1000).toISOString(),
+      scopes:nextScopes,
+    };
+    await tx`
+      SELECT vault.update_secret(
+        ${rows[0].secret_id}::uuid,${JSON.stringify(next)},
+        ${'aspace-oauth-' + job.organization_id + '-' + job.workspace_id + '-' + job.connection_id},
+        'Tenant-scoped OAuth access and refresh tokens',NULL
+      )
+    `;
+    return next;
+  });
+}
+
 function buildHeaders(config: any, operation: any, secret: Record<string, unknown> | null): Headers {
   const headers = new Headers();
   headers.set('Accept','application/json');
@@ -190,15 +271,26 @@ function buildHeaders(config: any, operation: any, secret: Record<string, unknow
       headers.set('Authorization',`Basic ${btoa(binary)}`);
       break;
     }
+    case 'OAUTH2_AUTH_CODE': {
+      const token = secret?.access_token;
+      if (typeof token !== 'string' || !token) throw new Error('OAUTH_ACCESS_TOKEN_MISSING');
+      headers.set('Authorization',`Bearer ${token}`);
+      break;
+    }
     default:
-      throw new Error('OAUTH_FLOW_NOT_IMPLEMENTED');
+      throw new Error('UNSUPPORTED_AUTH_METHOD');
   }
   return headers;
 }
 async function execute(job: Job, workerId: string) {
   let isHealthCheck = job.operation_key === 'health_check';
   try {
-    const { config, operation, secret } = await loadJob(job);
+    const loaded = await loadJob(job);
+    const { config, operation } = loaded;
+    let secret = loaded.secret;
+    if (config.manifest_auth_method === 'OAUTH2_AUTH_CODE') {
+      secret = await refreshOAuthSecret(job,config);
+    }
     const method = typeof operation.method === 'string' ? operation.method.toUpperCase() : '';
     if (!['GET','POST','PUT','PATCH','DELETE'].includes(method)) throw new Error('INVALID_MANIFEST_METHOD');
     const path = typeof operation.path === 'string' ? operation.path : '';
@@ -277,7 +369,7 @@ async function execute(job: Job, workerId: string) {
     const retryable = ['CONNECTION_NOT_CONNECTED','CONNECTION_REVOKED','MANIFEST_NOT_ACTIVE',
       'OPERATION_NOT_DECLARED','INVALID_MANIFEST_PATH','MANIFEST_HOST_NOT_ALLOWED',
       'MANIFEST_TARGET_NOT_ALLOWED','INVALID_MANIFEST_METHOD','INVALID_MANIFEST_INPUT_MODE',
-      'INVALID_MANIFEST_HEADER','INVALID_MANIFEST_HEADER_VALUE','SENSITIVE_STATIC_HEADER_FORBIDDEN','OAUTH_FLOW_NOT_IMPLEMENTED',
+      'INVALID_MANIFEST_HEADER','INVALID_MANIFEST_HEADER_VALUE','SENSITIVE_STATIC_HEADER_FORBIDDEN','OAUTH_FLOW_NOT_IMPLEMENTED','OAUTH_REAUTH_REQUIRED','OAUTH_ENDPOINT_NOT_ALLOWED',
       'CREDENTIAL_REFERENCE_MISSING','VAULT_SECRET_NOT_FOUND','VAULT_SECRET_FORMAT_INVALID',
       'BEARER_TOKEN_MISSING','API_KEY_MISSING','BASIC_CREDENTIALS_MISSING'].includes(message) ? false : true;
     try {
