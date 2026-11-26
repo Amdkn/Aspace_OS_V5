@@ -174,6 +174,41 @@ async function listWorkspaces(user: User, body: Record<string, unknown>) {
     return rows;
   });
 }
+async function listWorkspaceStructure(user: User, body: Record<string, unknown>) {
+  const orgId = requiredString(body.organization_id, 'organization_id');
+  const workspaceId = requiredString(body.workspace_id, 'workspace_id');
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceMember(tx, user.id, orgId, workspaceId);
+    const [domains, departments, holons] = await Promise.all([
+      tx`
+        SELECT i.id,i.domain_code,b.domain_name,b.description,i.parent_installation_id,
+          i.owner_user_id,i.installation_status,i.installed_at
+        FROM areas.domain_installations i
+        JOIN areas.domain_blueprints b ON b.domain_code=i.domain_code
+        WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
+        ORDER BY b.sort_order
+      `,
+      tx`
+        SELECT i.id,i.department_key,b.department_name,b.description,i.owner_user_id,
+          i.installation_status,i.installed_at
+        FROM enterprise.department_installations i
+        JOIN enterprise.department_blueprints b USING (department_key)
+        WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
+        ORDER BY b.sort_order
+      `,
+      tx`
+        SELECT i.id,i.holon_code,b.display_name,b.holon_level,b.holon_type,
+          b.parent_holon_code,i.parent_installation_id,i.owner_user_id,
+          i.installation_status,i.installed_at
+        FROM areas.holon_installations i
+        JOIN areas.holon_blueprints b USING (holon_code)
+        WHERE i.organization_id=${orgId}::uuid AND i.workspace_id=${workspaceId}::uuid
+        ORDER BY b.sort_order
+      `,
+    ]);
+    return { organization_id: orgId, workspace_id: workspaceId, domains, departments, holons };
+  });
+}
 async function createWorkspace(user: User, body: Record<string, unknown>) {
   const orgId = requiredString(body.organization_id, 'organization_id');
   const key = requiredString(body.workspace_key, 'workspace_key', 96).toLowerCase();
@@ -201,6 +236,7 @@ async function installStructure(user: User, body: Record<string, unknown>) {
   const orgId = requiredString(body.organization_id, 'organization_id');
   const workspaceId = requiredString(body.workspace_id, 'workspace_id');
   const idempotencyKey = requiredString(body.idempotency_key, 'idempotency_key', 200);
+  if (idempotencyKey.length < 8) throw new Error('idempotency_key must contain at least 8 characters');
   const domainCodes = stringArray(body.domain_codes, 'domain_codes', /^LD0[1-8]$/, 8);
   const departmentKeys = stringArray(body.department_keys, 'department_keys', /^[a-z0-9]+(-[a-z0-9]+)*$/, 8);
   const includeLd01Holarchy = body.include_ld01_holarchy === true;
@@ -564,6 +600,7 @@ Deno.serve(async (req: Request) => {
     switch (action) {
       case 'list_organizations': data = await listOrganizations(user); break;
       case 'list_workspaces': data = await listWorkspaces(user, body); break;
+      case 'list_workspace_structure': data = await listWorkspaceStructure(user, body); break;
       case 'create_workspace': data = await createWorkspace(user, body); break;
       case 'install_structure': data = await installStructure(user, body); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
