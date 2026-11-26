@@ -1029,7 +1029,7 @@ This section supersedes older counts where the live project has since advanced. 
   - `20261126044855_adapter_execution_engine_foundation`
   - `20261126044914_adapter_execution_claim_result_shape_fix`
   - `20261126044938_adapter_execution_integrity_guards`
-- Live table inventory: 29 application tables returned by the inspected schemas; all returned tables have RLS enabled. A broader catalog query found 35 RLS-enabled ordinary tables across the selected application schemas, including adopted Coach content objects.
+- Live table inventory: 35 application tables returned by the inspected schemas; all returned tables have RLS enabled. The independent catalog query also found 35 RLS-enabled ordinary tables across the selected application schemas, including adopted Coach content objects.
 - Current live counts:
   - `auth.users`: 0
   - `identity.organizations`: 0
