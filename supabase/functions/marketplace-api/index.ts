@@ -446,8 +446,9 @@ async function createOrganization(user: User, body: Record<string, unknown>) {
   const key = requiredString(body.organization_key, 'organization_key', 64).toUpperCase();
   const type = requiredString(body.organization_type, 'organization_type', 40);
   if (!/^[A-Z0-9][A-Z0-9_-]{2,63}$/.test(key)) throw new Error('Invalid organization_key format');
-  const allowed = ['MARKETPLACE_OPERATOR','INTERNAL_VENTURE','EXTERNAL_ENTERPRISE','SUPPLIER','CUSTOMER','PARTNER'];
-  if (!allowed.includes(type)) throw new Error('Invalid organization_type');
+  // Platform-operator bootstrap is deliberately excluded from self-service tenant creation.
+  const allowed = ['INTERNAL_VENTURE','EXTERNAL_ENTERPRISE','SUPPLIER','CUSTOMER','PARTNER'];
+  if (!allowed.includes(type)) throw new Error('Invalid organization_type; platform operator bootstrap is restricted');
   return await withServiceRole(async (tx) => {
     const rows = await tx`
       INSERT INTO identity.organizations (organization_key,name,organization_type,created_by_user_id)
@@ -464,7 +465,7 @@ async function createOrganization(user: User, body: Record<string, unknown>) {
         (organization_id,subject_user_id,role_code,scope_type,scope_id,granted_by_user_id)
       VALUES (
         ${org.id}::uuid,${user.id}::uuid,
-        ${type === 'MARKETPLACE_OPERATOR' ? 'S0_SOVEREIGN' : 'B1_CEO'},
+        'B1_CEO',
         'ORGANIZATION',NULL,${user.id}::uuid
       )
     `;
