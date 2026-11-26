@@ -292,11 +292,13 @@ Deno.serve(async (req: Request) => {
     const body = await req.json() as Record<string, unknown>;
     const action = requiredString(body.action, 'action', 60);
     if (action === 'browse_listings') return response({ data: await browseListings() });
+    // Global reference taxonomies are intentionally public, read-only catalog data.
+    // They contain no tenant records or secrets; the private schemas remain server-only.
+    if (action === 'list_taxonomy_blueprints') return response({ data: await listTaxonomyBlueprints() });
     const user = await authenticate(req);
     let data: unknown;
     switch (action) {
       case 'list_organizations': data = await listOrganizations(user); break;
-      case 'list_taxonomy_blueprints': data = await listTaxonomyBlueprints(); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
       case 'list_orders': data = await listOrders(user, body); break;
       case 'list_provider_listings': data = await listProviderListings(user, body); break;
