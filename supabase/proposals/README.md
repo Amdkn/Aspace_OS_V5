@@ -91,3 +91,28 @@ No authentication method, OAuth scope, API endpoint, webhook or permission is in
 The table is private, RLS-enabled and service-role-only. The public read-only `marketplace-api/list_provider_adapter_blueprints` action returns the 73 catalog records and supports an optional `family_key` filter. An anonymous invocation returned HTTP 200 with 73 records. A database integrity query confirmed 73 providers across all 20 families, all planned, all auth contracts unspecified and all supported-operation arrays empty.
 
 Provider-specific auth/scope contracts, executable manifests, tenant connections, secret references, sync/webhook execution and health checks remain separate implementation work.
+
+
+## LD01 B1/B2/B3 holon blueprints — 2026-11-26
+
+**Migration:** `20261126030500_ld01_holon_blueprints`  
+**Table:** `areas.holon_blueprints`  
+**API:** `marketplace-api` v0.7.0 / deployed function version 10  
+**Status:** applied and verified.
+
+This registry is grounded in the canonical V5 source files:
+- `00_Memoire/bundle/areas_os/B_LD01_Business_AMP/README.md` — B1-BOOK / OwnerBook B1, LD01, the B1→B2/B3 hierarchy and the C0–C3 commercial strata.
+- `00_Memoire/bundle/areas_os/B_LD01_Business_AMP/AGENTS.md` — B1's direct subordinates are the eight B2 DC Managers and eight B3 Marvel squads.
+- `00_Memoire/bundle/areas_os/B_LD01_Business_AMP/B2_DC_Managers_Playbooks/README.md` — the eight exact B2 names.
+- `00_Memoire/bundle/areas_os/B_LD01_Business_AMP/B3_Marvel_Squads_Runbooks/README.md` — B3.1–B3.8, each with seven specialists plus an operational runbook.
+
+The table contains exactly 17 LD01 records:
+- B1: one OwnerBook.
+- B2: eight tactical DC Managers (Operations, Trésorerie, Legal, R&D, Alliances, Infra, IT, Gouvernance).
+- B3: eight Marvel execution squads, each with `specialist_count = 7` and `runbook_required = true`.
+
+B2 and B3 are modeled as direct B1 subordinates because that is what the canonical B1 AGENTS source specifies. No unsupported one-to-one B2→B3 pairing or individual specialist identities are invented.
+
+The table is in the private `areas` schema, RLS-enabled and service-role-only. The public read-only `list_holon_blueprints` action supports an optional `area_code` filter. An anonymous call for `LD01` returned HTTP 200 with 17 rows. The structural query verified 1/8/8 records across levels 1/2/3 and all eight B3 specialist/runbook invariants. Direct SELECT is denied to `anon` and `authenticated`; service_role can SELECT.
+
+The Control Plane's LD01 detail now loads the canonical hierarchy through this API. The registry is still a global reference blueprint, not a tenant-installed holarchy or provisioned set of agents.
