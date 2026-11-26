@@ -59,6 +59,26 @@ async function listOrganizations(user: User) {
     ORDER BY o.created_at ASC
   `);
 }
+async function listTaxonomyBlueprints() {
+  return await withServiceRole(async (tx) => {
+    const areasDomains = await tx`
+      SELECT domain_code AS code, domain_name AS name, description, mission AS responsibility,
+        sort_order, taxonomy_version
+      FROM areas.domain_blueprints
+      WHERE status = 'ACTIVE'
+      ORDER BY sort_order
+    `;
+    const businessDepartments = await tx`
+      SELECT department_code AS code, department_name AS name, description, mandate AS responsibility,
+        sort_order, taxonomy_version
+      FROM enterprise.department_blueprints
+      WHERE status = 'ACTIVE'
+      ORDER BY sort_order
+    `;
+    return { areas_domains: areasDomains, business_departments: businessDepartments };
+  });
+}
+
 async function listCapabilities(user: User, body: Record<string, unknown>) {
   const orgId = requiredString(body.organization_id, 'organization_id');
   return await withServiceRole(async (tx) => {
@@ -266,7 +286,7 @@ Deno.serve(async (req: Request) => {
   try {
     if (req.method === 'GET') {
       const health = await withServiceRole(async (tx) => (await tx`SELECT current_database() AS database_name, now() AS checked_at`)[0]);
-      return response({ status: 'ok', service: 'marketplace-api', version: '0.3.0', persistence: 'supabase-cloud', database: health });
+      return response({ status: 'ok', service: 'marketplace-api', version: '0.4.0', persistence: 'supabase-cloud', database: health });
     }
     if (req.method !== 'POST') return response({ error: 'Method not allowed' }, 405);
     const body = await req.json() as Record<string, unknown>;
@@ -276,6 +296,7 @@ Deno.serve(async (req: Request) => {
     let data: unknown;
     switch (action) {
       case 'list_organizations': data = await listOrganizations(user); break;
+      case 'list_taxonomy_blueprints': data = await listTaxonomyBlueprints(); break;
       case 'list_capabilities': data = await listCapabilities(user, body); break;
       case 'list_orders': data = await listOrders(user, body); break;
       case 'list_provider_listings': data = await listProviderListings(user, body); break;
