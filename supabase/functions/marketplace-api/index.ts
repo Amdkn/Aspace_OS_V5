@@ -69,7 +69,7 @@ async function listTaxonomyBlueprints() {
       ORDER BY sort_order
     `;
     const businessDepartments = await tx`
-      SELECT department_code AS code, department_name AS name, description, mandate AS responsibility,
+      SELECT department_key AS key, department_name AS name, description, mandate AS responsibility,
         sort_order, taxonomy_version
       FROM enterprise.department_blueprints
       WHERE status = 'ACTIVE'
