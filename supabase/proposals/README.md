@@ -69,3 +69,25 @@ The table is private, RLS-enabled and service-role-only. The public read-only `m
 The endpoint was invoked with the publishable/anon key and returned HTTP 200 with exactly 20 records. This is a family registry, not 20 shipped provider adapters. Provider-specific manifests, scopes, credentials, tenant connections, sync/webhook runtime and health checks remain unimplemented.
 
 The Edge Function is deployed as version 8 / ACTIVE and reports API version `0.5.0`.
+
+
+## Provider-level adapter blueprints — 2026-11-26
+
+**Migration:** `20261126030000_provider_adapter_blueprints`  
+**Table:** `integration.provider_adapter_blueprints`  
+**API:** `marketplace-api` v0.6.0 / deployed function version 9  
+**Status:** applied and verified.
+
+The migration generated 73 provider-level blueprint records from the provider examples stored in the 20 adapter-family records. Each provider record has a stable family-scoped key, family reference, provider name and manifest version.
+
+All 73 records deliberately remain:
+- `implementation_status = PLANNED`
+- `auth_contract_status = UNSPECIFIED`
+- `supported_operations = {}`
+- `documentation_uri = NULL`
+
+No authentication method, OAuth scope, API endpoint, webhook or permission is inferred from a provider name. These are normalized design inventory records, not executable adapters or tenant connections.
+
+The table is private, RLS-enabled and service-role-only. The public read-only `marketplace-api/list_provider_adapter_blueprints` action returns the 73 catalog records and supports an optional `family_key` filter. An anonymous invocation returned HTTP 200 with 73 records. A database integrity query confirmed 73 providers across all 20 families, all planned, all auth contracts unspecified and all supported-operation arrays empty.
+
+Provider-specific auth/scope contracts, executable manifests, tenant connections, secret references, sync/webhook execution and health checks remain separate implementation work.
