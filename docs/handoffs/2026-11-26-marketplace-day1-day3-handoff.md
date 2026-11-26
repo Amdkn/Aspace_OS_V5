@@ -803,3 +803,25 @@ Verification performed after the migrations:
 
 **Scope status: PARTIAL — database and queue foundation only.** No provider manifest has been activated, no tenant connection or credential exists, and no adapter worker / HTTP execution endpoint / OAuth callback / health-check runtime has yet been deployed. Do not label any provider executable. Next implementation slice is the authenticated connection-management API plus a private worker that reads Vault secrets only in memory, enforces manifest host/operation allowlists, executes provider calls, sanitizes outputs, records attempts and verifies webhook signatures/replay protection.
 
+
+
+### 10.11 Reconciliation correction — Coach adoption source restored; adapter migrations included
+
+- The earlier 10.1 note that the Coach adoption file was not found is now superseded. The repository now contains `supabase/migrations/20261124024550_coach_schema_adoption_20261124.sql` (commit `42733a34371e83c031fdb0326164675d8ed0300b`).
+- Important provenance qualification: the original migration body was not recoverable from the repository branch or connector migration registry. The committed file is explicitly labelled **RECONSTRUCTED CANONICAL SOURCE**, based on the live Marketplace catalog: table columns, keys, foreign keys, RLS policies, grants, indexes and comments. It is not represented as the original byte-identical SQL.
+- Reconstructed scope is limited to `identity.profiles`, `content.cms_collections`, and `content.cms_items`; no records were transferred. The source project was not modified, resumed or re-applied during this session. A live status check of the legacy Coach project returned a connector permission error; its current state must not be inferred from that failed read.
+- Do not apply the reconstructed historical migration to the already-migrated Marketplace cloud. Its version `20261124024550` already exists in the cloud migration registry.
+
+The live Marketplace cloud migration registry now contains **21 entries**, including the three adapter execution migrations at versions `20261126044855`, `20261126044914` and `20261126044938`.
+
+The committed `supabase/tests/marketplace_security_baseline.sql` was expanded (commit `3c4c9b2ce5c7abfc7000029fa0516e8f6a995012`) to cover:
+- identity profile self-read/self-insert/self-update policies;
+- tenant-scoped Coach CMS collection/item policies;
+- presence of all six adapter foundation tables;
+- adapter event-ledger TRUNCATE guard;
+- provider-manifest raw-secret-key guard.
+
+The expanded test file was fetched from the branch and executed against the live Marketplace database after all three adapter migrations. It completed without assertion exceptions and made no persistent changes.
+
+The security advisor now reports **28** `rls_enabled_no_policy` INFO findings. This count increased because the six new integration tables are also RLS-enabled and intentionally have no browser-role policies or grants. The test suite verifies the private-schema boundary; do not add blanket policies to reduce the INFO count.
+
