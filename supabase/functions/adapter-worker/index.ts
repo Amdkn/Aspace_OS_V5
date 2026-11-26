@@ -349,7 +349,7 @@ async function execute(job: Job, workerId: string) {
         throw new Error('INVALID_MANIFEST_BODY_DEFAULT');
       }
       headers.set('Content-Type','application/json');
-      body = JSON.stringify({ ...defaults, ...payload });
+      body = JSON.stringify({ ...payload, ...defaults });
     } else if (inputMode === 'none' && Object.keys(payload).length) {
       throw new Error('REQUEST_PAYLOAD_NOT_ALLOWED');
     }
