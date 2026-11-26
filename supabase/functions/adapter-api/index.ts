@@ -44,6 +44,28 @@ async function withServiceRole<T>(work: (tx: any) => Promise<T>): Promise<T> {
     return await work(tx);
   });
 }
+async function dispatchWorker() {
+  const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? '';
+  if (!serviceRoleKey) {
+    console.error('adapter-worker dispatch unavailable: service key is not configured');
+    return;
+  }
+  try {
+    const result = await fetch(`${url}/functions/v1/adapter-worker`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${serviceRoleKey}`,
+        'apikey': anonKey,
+        'Content-Type': 'application/json',
+      },
+      body: '{}',
+    });
+    if (!result.ok) console.error('adapter-worker dispatch failed', result.status);
+  } catch (error) {
+    console.error('adapter-worker dispatch failed', error instanceof Error ? error.message : 'unknown error');
+  }
+}
+
 async function requireWorkspaceRole(
   tx: any, userId: string, orgId: string, workspaceId: string, allowed: string[],
 ) {
@@ -116,35 +138,95 @@ async function createConnection(user: User, body: Record<string, unknown>) {
       LIMIT 1
     `;
     if (!manifests.length) throw new Error('Active provider manifest not found');
-    const rows = await tx`
-      INSERT INTO integration.tenant_connections
-        (organization_id,workspace_id,provider_key,manifest_version,connection_key,
-         display_name,auth_method,connection_status,created_by_user_id)
-      VALUES
-        (${orgId}::uuid,${workspaceId}::uuid,${providerKey},${manifestVersion},${key},
-         ${name},${manifests[0].auth_method},'PENDING_AUTH',${user.id}::uuid)
-      ON CONFLICT (workspace_id,connection_key) DO NOTHING
-      RETURNING id,organization_id,workspace_id,provider_key,manifest_version,
-        connection_key,display_name,auth_method,connection_status,created_at
-    `;
-    if (rows.length) return rows[0];
+    const authMethod = manifests[0].auth_method as string;
+    const credentials = body.credentials && typeof body.credentials === 'object' && !Array.isArray(body.credentials)
+      ? body.credentials as Record<string, unknown> : null;
+    let secretJson: string | null = null;
+
+    if (authMethod === 'NONE') {
+      if (credentials) throw new Error('This provider manifest does not accept credentials');
+    } else if (authMethod === 'BEARER') {
+      if (!credentials || typeof credentials.token !== 'string' || !credentials.token.trim()) {
+        throw new Error('credentials.token is required for BEARER authentication');
+      }
+      secretJson = JSON.stringify({ token: credentials.token });
+    } else if (authMethod === 'API_KEY_HEADER') {
+      if (!credentials || typeof credentials.api_key !== 'string' || !credentials.api_key.trim()) {
+        throw new Error('credentials.api_key is required for API_KEY_HEADER authentication');
+      }
+      secretJson = JSON.stringify({ api_key: credentials.api_key });
+    } else if (authMethod === 'BASIC') {
+      if (!credentials || typeof credentials.username !== 'string' || !credentials.username.trim() ||
+          typeof credentials.password !== 'string' || !credentials.password) {
+        throw new Error('credentials.username and credentials.password are required for BASIC authentication');
+      }
+      secretJson = JSON.stringify({ username: credentials.username, password: credentials.password });
+    } else {
+      throw new Error('OAuth credential provisioning requires the OAuth callback lifecycle and is not enabled yet');
+    }
+
     const existing = await tx`
       SELECT id,organization_id,workspace_id,provider_key,manifest_version,
-        connection_key,display_name,auth_method,connection_status,created_at
+        connection_key,display_name,auth_method,connection_status,secret_id,created_at
       FROM integration.tenant_connections
       WHERE workspace_id=${workspaceId}::uuid AND connection_key=${key}
       LIMIT 1
     `;
-    if (!existing.length || existing[0].organization_id !== orgId ||
-        existing[0].provider_key !== providerKey ||
-        existing[0].manifest_version !== manifestVersion ||
-        existing[0].display_name !== name) {
-      throw new Error('connection_key already exists with a different payload');
+    if (existing.length) {
+      const current = existing[0];
+      if (current.organization_id !== orgId || current.provider_key !== providerKey ||
+          current.manifest_version !== manifestVersion || current.display_name !== name) {
+        throw new Error('connection_key already exists with a different payload');
+      }
+      if (current.connection_status === 'REVOKED') {
+        throw new Error('Revoked connection keys cannot be reused; create a new connection_key');
+      }
+      if (secretJson && !current.secret_id) {
+        const secret = await tx`
+          SELECT vault.create_secret(
+            ${secretJson},
+            ${'aspace-adapter-' + orgId + '-' + workspaceId + '-' + key},
+            ${'Aspace Marketplace provider credential reference; tenant-scoped'},
+            NULL
+          ) AS id
+        `;
+        await tx`
+          UPDATE integration.tenant_connections
+          SET secret_id=${secret[0].id}::uuid, updated_at=now()
+          WHERE id=${current.id}::uuid
+        `;
+      }
+      const safe = await tx`
+        SELECT id,organization_id,workspace_id,provider_key,manifest_version,
+          connection_key,display_name,auth_method,connection_status,created_at
+        FROM integration.tenant_connections WHERE id=${current.id}::uuid
+      `;
+      return safe[0];
     }
-    if (existing[0].connection_status === 'REVOKED') {
-      throw new Error('Revoked connection keys cannot be reused; create a new connection_key');
+
+    let secretId: string | null = null;
+    if (secretJson) {
+      const secret = await tx`
+        SELECT vault.create_secret(
+          ${secretJson},
+          ${'aspace-adapter-' + orgId + '-' + workspaceId + '-' + key},
+          ${'Aspace Marketplace provider credential reference; tenant-scoped'},
+          NULL
+        ) AS id
+      `;
+      secretId = secret[0].id;
     }
-    return existing[0];
+    const rows = await tx`
+      INSERT INTO integration.tenant_connections
+        (organization_id,workspace_id,provider_key,manifest_version,connection_key,
+         display_name,auth_method,secret_id,connection_status,created_by_user_id)
+      VALUES
+        (${orgId}::uuid,${workspaceId}::uuid,${providerKey},${manifestVersion},${key},
+         ${name},${authMethod},${secretId}::uuid,'PENDING_AUTH',${user.id}::uuid)
+      RETURNING id,organization_id,workspace_id,provider_key,manifest_version,
+        connection_key,display_name,auth_method,connection_status,created_at
+    `;
+    return rows[0];
   });
 }
 
@@ -180,6 +262,68 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
     }
     return { connection: rows[0], cancelled_jobs: cancelled.length };
   });
+}
+
+async function testConnection(user: User, body: Record<string, unknown>) {
+  const orgId = uuid(body.organization_id, 'organization_id');
+  const workspaceId = uuid(body.workspace_id, 'workspace_id');
+  const connectionId = uuid(body.connection_id, 'connection_id');
+  const idempotencyKey = requiredString(body.idempotency_key, 'idempotency_key', 200);
+  if (idempotencyKey.length < 8) throw new Error('idempotency_key must contain at least 8 characters');
+
+  const result = await withServiceRole(async (tx) => {
+    await requireWorkspaceRole(tx, user.id, orgId, workspaceId, ['OWNER','ADMIN']);
+    const connections = await tx`
+      SELECT c.id,c.connection_status,m.operations
+      FROM integration.tenant_connections c
+      JOIN integration.provider_adapter_manifests m
+        ON m.provider_key=c.provider_key AND m.manifest_version=c.manifest_version
+      WHERE c.id=${connectionId}::uuid AND c.organization_id=${orgId}::uuid
+        AND c.workspace_id=${workspaceId}::uuid AND m.manifest_status='ACTIVE'
+      LIMIT 1
+    `;
+    if (!connections.length) throw new Error('Tenant connection or active manifest not found');
+    if (!['PENDING_AUTH','DEGRADED','ERROR'].includes(connections[0].connection_status)) {
+      throw new Error('Connection is not in a testable state');
+    }
+    if (!connections[0].operations || !Object.prototype.hasOwnProperty.call(connections[0].operations,'health_check')) {
+      throw new Error('Provider manifest does not declare health_check');
+    }
+    const jobs = await tx`
+      INSERT INTO integration.adapter_execution_jobs
+        (organization_id,workspace_id,connection_id,provider_key,manifest_version,
+         operation_key,idempotency_key,request_payload,created_by_user_id)
+      SELECT c.organization_id,c.workspace_id,c.id,c.provider_key,c.manifest_version,
+        'health_check',${idempotencyKey},'{}'::jsonb,${user.id}::uuid
+      FROM integration.tenant_connections c
+      WHERE c.id=${connectionId}::uuid
+      ON CONFLICT (connection_id,idempotency_key) DO NOTHING
+      RETURNING id,organization_id,workspace_id,connection_id,operation_key,
+        job_status,attempt_count,max_attempts,correlation_id,created_at
+    `;
+    if (jobs.length) {
+      await tx`
+        INSERT INTO integration.adapter_execution_events
+          (job_id,organization_id,workspace_id,event_type,event_payload)
+        VALUES (${jobs[0].id}::uuid,${orgId}::uuid,${workspaceId}::uuid,
+          'ENQUEUED','{"operation_key":"health_check"}'::jsonb)
+      `;
+      return jobs[0];
+    }
+    const previous = await tx`
+      SELECT id,organization_id,workspace_id,connection_id,operation_key,
+        job_status,attempt_count,max_attempts,correlation_id,created_at
+      FROM integration.adapter_execution_jobs
+      WHERE connection_id=${connectionId}::uuid AND idempotency_key=${idempotencyKey}
+      LIMIT 1
+    `;
+    if (!previous.length || previous[0].operation_key !== 'health_check') {
+      throw new Error('Idempotency key already used for another operation');
+    }
+    return previous[0];
+  });
+  await dispatchWorker();
+  return result;
 }
 
 async function enqueueExecution(user: User, body: Record<string, unknown>) {
@@ -234,6 +378,7 @@ async function enqueueExecution(user: User, body: Record<string, unknown>) {
         VALUES (${inserted[0].id}::uuid,${orgId}::uuid,${workspaceId}::uuid,
           'ENQUEUED',${JSON.stringify({ operation_key: operationKey })}::jsonb)
       `;
+      await dispatchWorker();
       return inserted[0];
     }
     const existing = await tx`
@@ -281,6 +426,7 @@ Deno.serve(async (req: Request) => {
       case 'list_manifests': data = await listManifests(user); break;
       case 'list_connections': data = await listConnections(user, body); break;
       case 'create_connection': data = await createConnection(user, body); break;
+      case 'test_connection': data = await testConnection(user, body); break;
       case 'revoke_connection': data = await revokeConnection(user, body); break;
       case 'enqueue_execution': data = await enqueueExecution(user, body); break;
       case 'list_executions': data = await listExecutions(user, body); break;
