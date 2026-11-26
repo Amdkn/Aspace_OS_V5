@@ -904,3 +904,17 @@ Vault lifecycle smoke test: create → update → decrypt/read → delete comple
 
 No provider manifest, connection, credential or production execution job was created. Therefore the worker's actual provider HTTP round trip remains **NOT VERIFIED** until a provider manifest and authorized tenant account exist.
 
+
+
+### 10.15 CI and PR evidence after adapter runtime work
+
+The GitHub Actions runs associated with the adapter API code commit `21106f8b9a2ce8cdfed02b923034a227512f7755`, worker hardening commit `3461d4d5515cca47a1040ffce2ebe1efe582bb3b`, and latest handoff commit `d037e190ef7fd052a4499b75a95614ec29aeb47a` were checked. All returned `completed / success`:
+
+| Commit scope | CI matrix | Gate & Security | Security Triage |
+|---|---:|---:|---:|
+| Adapter API | #626 | #704 | #644 |
+| Adapter worker | #630 | #708 | #648 |
+| Handoff/docs | #631 | #709 | #649 |
+
+PR #63 currently reports **24 changed files** on `feat/marketplace-taxonomy-blueprints`. No merge was performed in this session. Preserve the PR's Draft / unmerged posture until all Day 1, Day 2 and Day 3 acceptance gates are satisfied.
+
