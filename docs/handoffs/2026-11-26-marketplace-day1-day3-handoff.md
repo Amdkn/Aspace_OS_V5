@@ -1128,3 +1128,15 @@ A follow-up catalog query identified the one direct browser SELECT grant:
 - `areas`, `catalog`, `commerce`, `enterprise` and `integration` remain inaccessible directly to browser roles at schema level.
 
 This closes the ambiguity recorded in §12.4. It is a **STRUCTURAL ACCESS-CONTROL CHECK**, not a substitute for authenticated cross-tenant E2E testing.
+
+
+### 12.9 Security baseline execution — PASS
+- Fetched `supabase/tests/marketplace_security_baseline.sql` from the working branch (blob SHA `76a1cf637f559103562de5799b2b0df7866aafdc`).
+- Executed the complete read-only DO-block test against project `swegnrvaxxgfrnshdpxx` using the native Supabase connection.
+- Result: **PASS** — no exception; the test returned an empty result set as expected.
+- Assertions covered RLS across application/content tables, private schema exposure, browser-role grants, SECURITY DEFINER search_path/EXECUTE ACLs, scoped identity read policies, Coach-adopted profile/CMS policies, all six adapter foundation tables, the append-only execution event TRUNCATE guard, and the provider-manifest no-secret-key constraint.
+- This is structural security regression evidence. It does not establish authenticated tenant isolation or OAuth runtime acceptance.
+
+### 12.10 Remaining advisor interpretation
+- Security advisor's 28 no-policy findings remain INFO. The security baseline passes because the relevant private tables/schemas have no browser-role access; the five scoped identity SELECT policies and the profile self policies are present.
+- Performance advisor currently reports 58 unindexed foreign keys and 48 unused indexes. These remain review items; no bulk index DDL was applied.
