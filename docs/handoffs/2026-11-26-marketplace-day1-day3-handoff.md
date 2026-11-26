@@ -1106,3 +1106,13 @@ It specifies:
 6. Configure the actual Google Cloud OAuth Web client and exact callback URI in the owner's Google Cloud project; store the client secret in Vault, never Git or chat.
 7. Obtain an authorized Auth user and tenant/workspace OWNER membership, then run the full Google consent → Drive API → refresh → revoke E2E.
 8. Keep Day 1 OPEN and PR #63 Draft until the real identity/tenant and all Day 1–3 gates pass.
+
+
+### 10.18 Repository and CI checkpoint after OAuth contract commit
+
+- Branch head: `dad594135125fe203cbd7bc8bd00602966dc85e4`.
+- New Google Drive contract commit: `e17470e5a3baecfec966090a6972d237948c89f4`.
+- Latest handoff/audit commit: `dad594135125fe203cbd7bc8bd00602966dc85e4`.
+- PR #63: OPEN, Draft, unmerged; 25 changed files, 71 commits; head matches the branch head above.
+- Latest commit has 7 GitHub Actions check runs. At the last poll, the checks were still `in_progress`; the commit status endpoint reported `pending` with no legacy statuses. Do not report this commit's CI as green until all seven check runs complete successfully.
+- No production Supabase schema or Edge Function was changed during this OAuth-readiness continuation.
