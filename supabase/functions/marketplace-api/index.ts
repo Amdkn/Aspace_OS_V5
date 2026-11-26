@@ -221,20 +221,35 @@ async function createWorkspace(user: User, body: Record<string, unknown>) {
     const rows = await tx`
       INSERT INTO enterprise.workspaces (organization_id,workspace_key,name,description,created_by_user_id)
       VALUES (${orgId}::uuid,${key},${name},${description},${user.id}::uuid)
-      RETURNING id,organization_id,workspace_key,name,description,workspace_status,created_at
+      ON CONFLICT (organization_id,workspace_key) DO NOTHING
+      RETURNING id,organization_id,workspace_key,name,description,workspace_status,created_at,created_by_user_id
     `;
-    const workspace = rows[0];
-    await tx`
-      INSERT INTO enterprise.workspace_memberships
-        (organization_id,workspace_id,user_id,membership_status,workspace_role,granted_by_user_id)
-      VALUES (${orgId}::uuid,${workspace.id}::uuid,${user.id}::uuid,'ACTIVE','OWNER',${user.id}::uuid)
-    `;
-    await tx`
-      INSERT INTO enterprise.structure_installation_events
-        (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
-      VALUES (${orgId}::uuid,${workspace.id}::uuid,'WORKSPACE_CREATED','WORKSPACE',${workspace.id}::uuid,${user.id}::uuid,
-        ${JSON.stringify({ workspace_key: key })}::jsonb)
-    `;
+    let workspace = rows[0];
+    if (!workspace) {
+      const existing = await tx`
+        SELECT id,organization_id,workspace_key,name,description,workspace_status,created_at,created_by_user_id
+        FROM enterprise.workspaces
+        WHERE organization_id=${orgId}::uuid AND workspace_key=${key}
+        LIMIT 1
+      `;
+      if (!existing.length || existing[0].created_by_user_id !== user.id ||
+          existing[0].name !== name || existing[0].description !== description) {
+        throw new Error('workspace_key already exists with a different owner or payload');
+      }
+      workspace = existing[0];
+    } else {
+      await tx`
+        INSERT INTO enterprise.workspace_memberships
+          (organization_id,workspace_id,user_id,membership_status,workspace_role,granted_by_user_id)
+        VALUES (${orgId}::uuid,${workspace.id}::uuid,${user.id}::uuid,'ACTIVE','OWNER',${user.id}::uuid)
+      `;
+      await tx`
+        INSERT INTO enterprise.structure_installation_events
+          (organization_id,workspace_id,event_type,entity_type,entity_id,actor_user_id,event_payload)
+        VALUES (${orgId}::uuid,${workspace.id}::uuid,'WORKSPACE_CREATED','WORKSPACE',${workspace.id}::uuid,${user.id}::uuid,
+          ${JSON.stringify({ workspace_key: key })}::jsonb)
+      `;
+    }
     return workspace;
   });
 }
