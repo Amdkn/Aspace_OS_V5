@@ -27,11 +27,15 @@ async function withServiceRole<T>(work: (tx: any) => Promise<T>): Promise<T> {
     return await work(tx);
   });
 }
-function sanitize(value: unknown, depth = 0): unknown {
+function sanitize(value: unknown, depth = 0, secretValues: string[] = []): unknown {
   if (depth > 6) return '[DEPTH_LIMIT]';
   if (value === null || typeof value === 'boolean' || typeof value === 'number') return value;
-  if (typeof value === 'string') return value.length > 8000 ? value.slice(0,8000) : value;
-  if (Array.isArray(value)) return value.slice(0,100).map((v) => sanitize(v,depth+1));
+  if (typeof value === 'string') {
+    let safe = value;
+    for (const secret of secretValues) if (secret.length > 3) safe = safe.split(secret).join('[REDACTED]');
+    return safe.length > 8000 ? safe.slice(0,8000) : safe;
+  }
+  if (Array.isArray(value)) return value.slice(0,100).map((v) => sanitize(v,depth+1,secretValues));
   if (typeof value === 'object') {
     const out: Record<string, unknown> = {};
     const entries = Object.entries(value as Record<string, unknown>).slice(0,100);
@@ -39,7 +43,7 @@ function sanitize(value: unknown, depth = 0): unknown {
       if (/(token|secret|password|api[_-]?key|authorization|cookie|private[_-]?key)/i.test(key)) {
         out[key] = '[REDACTED]';
       } else {
-        out[key] = sanitize(child,depth+1);
+        out[key] = sanitize(child,depth+1,secretValues);
       }
     }
     return out;
@@ -154,6 +158,9 @@ function buildHeaders(config: any, operation: any, secret: Record<string, unknow
   const staticHeaders = operation.headers && typeof operation.headers === 'object' ? operation.headers : {};
   for (const [key,value] of Object.entries(staticHeaders)) {
     if (typeof value !== 'string') throw new Error('INVALID_MANIFEST_HEADER_VALUE');
+    if (/(authorization|cookie|token|secret|api[_-]?key|password)/i.test(key)) {
+      throw new Error('SENSITIVE_STATIC_HEADER_FORBIDDEN');
+    }
     headers.set(safeHeaderName(key),value);
   }
   const authConfig = config.auth_config ?? {};
@@ -213,7 +220,8 @@ async function execute(job: Job, workerId: string) {
     const contentType = upstream.headers.get('content-type') ?? '';
     let data: unknown = null;
     if (contentType.toLowerCase().includes('application/json') && bytes.byteLength) {
-      try { data = sanitize(JSON.parse(new TextDecoder().decode(bytes))); }
+      const secretValues = Object.values(secret ?? {}).filter((value): value is string => typeof value === 'string');
+      try { data = sanitize(JSON.parse(new TextDecoder().decode(bytes)),0,secretValues); }
       catch { data = { body_omitted: true, reason: 'invalid_json_response', bytes: bytes.byteLength }; }
     } else if (bytes.byteLength) {
       data = { body_omitted: true, reason: 'non_json_response', bytes: bytes.byteLength };
