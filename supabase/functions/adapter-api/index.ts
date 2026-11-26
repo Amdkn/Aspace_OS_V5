@@ -254,8 +254,9 @@ function validateHttpsEndpoint(value: unknown, allowedHosts: unknown): URL {
   if (typeof value !== 'string' || !Array.isArray(allowedHosts) ||
       !allowedHosts.every((host) => typeof host === 'string')) throw new Error('OAUTH_MANIFEST_INVALID');
   const endpoint = new URL(value);
+  const normalizedHosts = allowedHosts.map((host) => host.toLowerCase());
   if (endpoint.protocol !== 'https:' || endpoint.username || endpoint.password ||
-      endpoint.search || endpoint.hash || !allowedHosts.includes(endpoint.hostname.toLowerCase())) {
+      endpoint.search || endpoint.hash || !normalizedHosts.includes(endpoint.hostname.toLowerCase())) {
     throw new Error('OAUTH_ENDPOINT_NOT_ALLOWED');
   }
   return endpoint;
@@ -299,8 +300,10 @@ async function startOAuthAuthorization(user: User, body: Record<string, unknown>
     }
     const config = rows[0].auth_config ?? {};
     const endpoint = validateHttpsEndpoint(config.authorization_url,config.oauth_allowed_hosts);
-    const clientId = Deno.env.get('OAUTH_' + envSuffix(rows[0].provider_key) + '_CLIENT_ID') ?? '';
-    if (!clientId) throw new Error('OAuth client ID is not configured for this provider');
+    const envPrefix = 'OAUTH_' + envSuffix(rows[0].provider_key);
+    const clientId = Deno.env.get(envPrefix + '_CLIENT_ID') ?? '';
+    const clientSecret = Deno.env.get(envPrefix + '_CLIENT_SECRET') ?? '';
+    if (!clientId || !clientSecret) throw new Error('OAuth client credentials are not configured for this provider');
     const scopes = Array.isArray(rows[0].default_scopes)
       ? rows[0].default_scopes.filter((scope: unknown) => typeof scope === 'string' && scope.length > 0)
       : [];
