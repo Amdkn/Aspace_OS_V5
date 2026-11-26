@@ -96,7 +96,8 @@ function buildTarget(baseUrl: string, allowedHosts: string[], path: string): URL
     throw new Error('INVALID_MANIFEST_PATH');
   }
   const base = new URL(baseUrl);
-  if (base.protocol !== 'https:' || !allowedHosts.includes(base.hostname.toLowerCase())) {
+  if (base.protocol !== 'https:' || base.username || base.password || base.search || base.hash ||
+      !allowedHosts.includes(base.hostname.toLowerCase())) {
     throw new Error('MANIFEST_HOST_NOT_ALLOWED');
   }
   const target = new URL(path,base);
@@ -183,7 +184,10 @@ function buildHeaders(config: any, operation: any, secret: Record<string, unknow
     case 'BASIC': {
       const username = secret?.username, password = secret?.password;
       if (typeof username !== 'string' || typeof password !== 'string') throw new Error('BASIC_CREDENTIALS_MISSING');
-      headers.set('Authorization',`Basic ${btoa(`${username}:${password}`)}`);
+      const bytes = new TextEncoder().encode(`${username}:${password}`);
+      let binary = '';
+      for (const byte of bytes) binary += String.fromCharCode(byte);
+      headers.set('Authorization',`Basic ${btoa(binary)}`);
       break;
     }
     default:
@@ -312,17 +316,21 @@ Deno.serve(async (req: Request) => {
   }
   try {
     const workerId = `adapter-worker:${crypto.randomUUID()}`;
-    const jobs = await withServiceRole(async (tx) =>
-      await tx`SELECT * FROM api.claim_adapter_execution_jobs(${workerId},10)`
-    );
-    let succeeded = 0, failed = 0, retrying = 0;
-    for (const job of jobs as Job[]) {
-      const result = await execute(job,workerId);
-      if (result.status === 'SUCCEEDED') succeeded++;
-      else if (result.status === 'RETRY_WAIT') retrying++;
-      else failed++;
+    let claimed = 0, succeeded = 0, failed = 0, retrying = 0;
+    for (let batch = 0; batch < 5; batch++) {
+      const jobs = await withServiceRole(async (tx) =>
+        await tx`SELECT * FROM api.claim_adapter_execution_jobs(${workerId},10)`
+      );
+      claimed += jobs.length;
+      for (const job of jobs as Job[]) {
+        const result = await execute(job,workerId);
+        if (result.status === 'SUCCEEDED') succeeded++;
+        else if (result.status === 'RETRY_WAIT') retrying++;
+        else failed++;
+      }
+      if (jobs.length < 10) break;
     }
-    return response({ claimed: jobs.length, succeeded, failed, retrying });
+    return response({ claimed, succeeded, failed, retrying });
   } catch (error) {
     console.error('adapter-worker run failed',error instanceof Error ? error.message : 'unknown error');
     return response({ error: 'Worker execution failed' },500);
