@@ -1253,3 +1253,16 @@ This addendum supersedes the earlier §12.6 and §12.7 statements that the OAuth
   - Health: 0 findings.
 - OAuth structural SQL test remains PASS. Live OAuth and tenant counts remain zero; no provider credentials or OAuth manifest have been provisioned.
 - Google Drive is still PLANNED. The runtime supports OAuth Authorization Code + PKCE only; `OAUTH2_CLIENT_CREDENTIALS` remains unsupported.
+
+
+### 12.15 OAuth code commit CI result (2026-11-26 05:22 UTC)
+
+The three PR-triggered GitHub Actions runs associated with OAuth implementation code commit `cf9dd37837187814b28f9223c180ad356cd13231` have now all completed successfully:
+
+| Workflow | Run | Result |
+|---|---:|---|
+| Continuous Integration Matrix | #657 | **completed / success** |
+| Gate & Security | #735 | **completed / success** |
+| Security Triage | #675 | **completed / success** |
+
+This validates the repository's configured CI gates for that code commit. The later handoff/PR-description updates are documentation-only and their commit-specific lookup returned no PR-triggered runs. This does not replace a real OAuth provider E2E or authenticated tenant lifecycle test.
