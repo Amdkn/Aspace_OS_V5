@@ -1266,3 +1266,83 @@ The three PR-triggered GitHub Actions runs associated with OAuth implementation 
 | Security Triage | #675 | **completed / success** |
 
 This validates the repository's configured CI gates for that code commit. The later handoff/PR-description updates are documentation-only and their commit-specific lookup returned no PR-triggered runs. This does not replace a real OAuth provider E2E or authenticated tenant lifecycle test.
+
+
+### 12.16 Google Drive v1.0.0 draft contract — registry and worker support added (2026-11-26 05:24 UTC)
+
+This is a provider contract milestone, not an activation or successful Google account connection.
+
+#### Provider blueprint and manifest
+
+- Added and applied `20261126052200_google_drive_adapter_manifest_draft.sql`.
+- Added and applied `20261126052300_google_drive_blueprint_contract_status.sql`.
+- The canonical provider blueprint now reads:
+  - `implementation_status = PLANNED`
+  - `auth_contract_status = SPECIFIED`
+  - `supported_operations` contains six operations.
+- Added `integration.provider_adapter_manifests` row:
+  - `provider_key = files-knowledge-google-drive`
+  - `manifest_version = 1.0.0`
+  - `manifest_status = DRAFT`
+  - `auth_method = OAUTH2_AUTH_CODE`
+  - API host: `www.googleapis.com`
+  - Authorization host: `accounts.google.com`
+  - Token/revocation host: `oauth2.googleapis.com`
+  - OAuth client ID/secret are not stored in this manifest.
+- Declared scopes:
+  - `https://www.googleapis.com/auth/drive.readonly`
+  - `https://www.googleapis.com/auth/drive.file`
+  This pair enables reading Drive metadata/content while write operations remain limited to files the app creates or the user explicitly opens/selects; it is not the unrestricted `drive` scope.
+- Declared operations:
+  1. `health_check`
+  2. `list_files` (query allowlist + pagination inputs)
+  3. `get_file` (validated dynamic fileId path parameter)
+  4. `create_folder` (fixed folder MIME type enforced by manifest body defaults)
+  5. `update_file_metadata` (allowlisted metadata fields)
+  6. `delete_file` (validated fileId path parameter)
+- Binary media upload/download, resumable upload and export conversion are **not** declared or implemented in v1.0.0.
+
+#### Worker contract hardening
+
+- Extended `adapter-worker` to support manifest-declared path parameters with strict identifier validation and URL encoding.
+- Query operations now require an explicit `allowed_query_params` list; body operations require `allowed_body_fields`.
+- Manifest query/body defaults are applied; body defaults take precedence over caller input, preserving fixed fields such as Google Drive folder MIME type.
+- Unknown path, query or body fields fail closed.
+- Deployed `adapter-worker` as ACTIVE v7. Its full deployed source matches the branch file exactly.
+- `adapter-api` remains ACTIVE v7 and `adapter-oauth-callback` ACTIVE v1; all three deployed source files were re-fetched and exact-match verified.
+
+#### Tests and current cloud state
+
+- `supabase/tests/google_drive_adapter_manifest.sql`: executed against the live project — **PASS** (no exception). It checks DRAFT status, PLANNED blueprint status, SPECIFIED auth contract, six-operation contract, endpoint allowlists, scope pair and absence of credential fields.
+- `supabase/tests/adapter_oauth_runtime.sql`: re-executed — **PASS**.
+- `supabase/tests/marketplace_security_baseline.sql`: re-executed after both Google Drive migrations — **PASS**.
+- Current cloud migration registry: **24 applied migrations**.
+- Current Google Drive / tenant counts:
+  - Draft Google Drive manifests: 1
+  - Active Google Drive manifests: 0
+  - Tenant connections: 0
+  - OAuth transactions: 0
+- Supabase advisors:
+  - Security: 28 INFO `rls_enabled_no_policy`
+  - Performance: 58 INFO unindexed foreign keys; 47 INFO unused indexes
+  - Health: 0 findings
+- No mass index changes were applied.
+
+#### CI and branch state
+
+- GitHub Actions for worker implementation commit `dfb47e64f6fd4bbefff2e08687c25d0621f0b206`: CI Matrix #662, Gate & Security #740, Security Triage #680 — all **completed / success**.
+- At the last poll, checks for the later Google Drive SQL test commit `728bdd868cc54e0582535879442c1f3bba218db0` were still running: CI Matrix #668 and Gate & Security #746 in progress; Security Triage #686 succeeded.
+- PR #63 remains OPEN, DRAFT, unmerged and mergeable. Latest branch head at this checkpoint: `728bdd868cc54e0582535879442c1f3bba218db0`; 99 commits and 31 changed files.
+- Repository hygiene correction: a migration file was briefly created on `master` by omitting the branch argument, then deleted immediately. The final `master` tree has no such migration file; the corrected source exists on `feat/marketplace-taxonomy-blueprints`. The branch itself was not rebased or merged.
+
+#### Remaining Google Drive activation gates
+
+1. Configure the exact callback URL `https://swegnrvaxxgfrnshdpxx.supabase.co/functions/v1/adapter-oauth-callback` in the Google Cloud OAuth Web Client.
+2. Supply/configure server-side Edge Function secrets:
+   - `ADAPTER_OAUTH_CALLBACK_URL`
+   - `OAUTH_FILES_KNOWLEDGE_GOOGLE_DRIVE_CLIENT_ID`
+   - `OAUTH_FILES_KNOWLEDGE_GOOGLE_DRIVE_CLIENT_SECRET`
+3. Obtain a real authenticated Supabase user with organization and workspace OWNER/ADMIN membership.
+4. Run Google consent → callback → `about.get` health check → list/read/create-folder/update/delete tests → refresh-token rotation → provider revocation.
+5. Review Google OAuth consent-screen verification requirements for the restricted `drive.readonly` scope.
+6. Only after that evidence, promote the manifest to ACTIVE and update the provider blueprint implementation status. Until then, keep it DRAFT / PLANNED.
