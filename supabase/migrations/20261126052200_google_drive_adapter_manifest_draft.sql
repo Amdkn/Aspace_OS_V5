@@ -1,0 +1,89 @@
+BEGIN;
+
+-- Google Drive is the first concrete provider contract, but remains DRAFT until
+-- a real Google OAuth client and authorized tenant round-trip are verified.
+INSERT INTO integration.provider_adapter_manifests
+  (provider_key,manifest_version,family_key,base_url,allowed_hosts,auth_method,
+   auth_config,default_scopes,operations,timeout_ms,manifest_status)
+VALUES
+  (
+    'files-knowledge-google-drive',
+    '1.0.0',
+    'files-knowledge',
+    'https://www.googleapis.com',
+    ARRAY['www.googleapis.com']::text[],
+    'OAUTH2_AUTH_CODE',
+    '{
+      "authorization_url":"https://accounts.google.com/o/oauth2/v2/auth",
+      "token_url":"https://oauth2.googleapis.com/token",
+      "revocation_url":"https://oauth2.googleapis.com/revoke",
+      "oauth_allowed_hosts":["accounts.google.com","oauth2.googleapis.com"],
+      "authorization_params":{
+        "access_type":"offline",
+        "prompt":"consent",
+        "include_granted_scopes":"true"
+      }
+    }'::jsonb,
+    ARRAY[
+      'https://www.googleapis.com/auth/drive.readonly',
+      'https://www.googleapis.com/auth/drive.file'
+    ]::text[],
+    '{
+      "health_check":{
+        "method":"GET",
+        "path":"/drive/v3/about",
+        "input_mode":"query",
+        "allowed_query_params":["fields"],
+        "query_defaults":{"fields":"user(displayName,emailAddress)"}
+      },
+      "list_files":{
+        "method":"GET",
+        "path":"/drive/v3/files",
+        "input_mode":"query",
+        "allowed_query_params":[
+          "q","pageSize","pageToken","orderBy","fields","spaces","corpora",
+          "includeItemsFromAllDrives","supportsAllDrives"
+        ],
+        "query_defaults":{
+          "pageSize":100,
+          "fields":"files(id,name,mimeType,modifiedTime,webViewLink,parents),nextPageToken"
+        }
+      },
+      "get_file":{
+        "method":"GET",
+        "path":"/drive/v3/files/{fileId}",
+        "path_parameters":["fileId"],
+        "input_mode":"query",
+        "allowed_query_params":["fields","supportsAllDrives","acknowledgeAbuse"],
+        "query_defaults":{"fields":"id,name,mimeType,modifiedTime,webViewLink,parents,description"}
+      },
+      "create_folder":{
+        "method":"POST",
+        "path":"/drive/v3/files",
+        "input_mode":"body",
+        "allowed_body_fields":["name","mimeType","parents","description","properties","appProperties"],
+        "body_defaults":{"mimeType":"application/vnd.google-apps.folder"}
+      },
+      "update_file_metadata":{
+        "method":"PATCH",
+        "path":"/drive/v3/files/{fileId}",
+        "path_parameters":["fileId"],
+        "input_mode":"body",
+        "allowed_body_fields":["name","description","starred","trashed","properties","appProperties"]
+      },
+      "delete_file":{
+        "method":"DELETE",
+        "path":"/drive/v3/files/{fileId}",
+        "path_parameters":["fileId"],
+        "input_mode":"query",
+        "allowed_query_params":["supportsAllDrives"]
+      }
+    }'::jsonb,
+    30000,
+    'DRAFT'
+  );
+
+COMMENT ON TABLE integration.provider_adapter_manifests IS
+  'Versioned provider execution manifests. Google Drive v1.0.0 is deliberately DRAFT until a real OAuth and API round-trip passes.';
+
+COMMIT;
