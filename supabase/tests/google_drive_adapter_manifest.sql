@@ -2,6 +2,8 @@ DO $test$
 DECLARE
   v_manifest integration.provider_adapter_manifests%ROWTYPE;
   v_blueprint_status text;
+  v_auth_contract_status text;
+  v_supported_operations text[];
 BEGIN
   SELECT * INTO v_manifest
   FROM integration.provider_adapter_manifests
@@ -10,11 +12,13 @@ BEGIN
   IF v_manifest.manifest_status <> 'DRAFT' OR v_manifest.auth_method <> 'OAUTH2_AUTH_CODE' THEN
     RAISE EXCEPTION 'FAIL: Google Drive manifest must remain DRAFT with Authorization Code auth';
   END IF;
-  SELECT implementation_status INTO v_blueprint_status
+  SELECT implementation_status,auth_contract_status,supported_operations
+  INTO v_blueprint_status,v_auth_contract_status,v_supported_operations
   FROM integration.provider_adapter_blueprints
   WHERE provider_key='files-knowledge-google-drive';
-  IF v_blueprint_status <> 'PLANNED' THEN
-    RAISE EXCEPTION 'FAIL: Google Drive provider blueprint must remain PLANNED';
+  IF v_blueprint_status <> 'PLANNED' OR v_auth_contract_status <> 'SPECIFIED'
+     OR cardinality(v_supported_operations) <> 6 THEN
+    RAISE EXCEPTION 'FAIL: Google Drive blueprint must be PLANNED with specified six-operation contract';
   END IF;
   IF v_manifest.base_url <> 'https://www.googleapis.com'
      OR v_manifest.allowed_hosts <> ARRAY['www.googleapis.com']::text[] THEN
