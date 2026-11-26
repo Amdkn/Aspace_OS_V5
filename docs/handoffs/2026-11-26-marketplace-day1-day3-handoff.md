@@ -677,3 +677,80 @@ Every stage must have a success test and an authorization-denial test. Capture c
 ## 9. First task statement for the next session
 
 **Continue A’Space Marketplace implementation from this handoff in `Amdkn/Aspace_OS_V5`. Use the native Supabase connection `Aspace marketplace` and existing project `swegnrvaxxgfrnshdpxx` only. Start with targeted Day 1 closure evidence, then continue the full Day 2 Integration Engine and commerce/entitlement work, then Day 3 Enterprise Factory. Reuse the existing PR #63 branch and artifacts; do not create a parallel architecture, reduce scope, use Composio for Supabase, invent test tenants, or claim completion without integrated evidence. Produce code, migrations, tests and durable GitHub commits—not another presentation.**
+
+
+---
+
+## 10. Session continuation — cloud reconciliation evidence (2026-11-26 04:44 UTC)
+
+This section records a fresh read-only audit performed after the original handoff commit. It supersedes any earlier assumptions where the live cloud evidence below differs.
+
+### 10.1 Live project and migration registry
+
+- Supabase project `swegnrvaxxgfrnshdpxx` remains `ACTIVE_HEALTHY`, PostgreSQL 17.12, region `us-west-2`.
+- Cloud migration registry contains **18 entries**.
+- One registry entry is named `coach_schema_adoption_20261124` (version `20261124024550`). Its migration file was not found at the expected path `supabase/migrations/20261124024550_coach_schema_adoption_20261124.sql` in the working branch or repository default path during this audit. **Do not reapply it or recreate its effects blindly.** Locate its canonical source / original commit and reconcile its SQL against the cloud schema before calling migration history fully aligned.
+- The remaining migration registry entries include the identity/tenant foundation, marketplace catalog/commerce/order API, taxonomy/provider/holon blueprints, tenant structure installations, workspace membership integrity, and the installation ownership/dependency/capability and append-only guard migrations.
+
+### 10.2 Identity and tenant state
+
+Live row counts at audit time:
+
+| Resource | Rows |
+|---|---:|
+| `auth.users` | 0 |
+| `identity.organizations` | 0 |
+| `identity.organization_memberships` | 0 |
+| `enterprise.workspaces` | 0 |
+| `enterprise.workspace_memberships` | 0 |
+
+No non-internal trigger was found on the `auth` schema tables during the inspection. This is not, by itself, proof of an auth defect; inspect the actual signup/profile requirements before adding a trigger. The critical acceptance blocker remains the absence of an authorized real test identity and tenant. Do not seed a fabricated production identity.
+
+### 10.3 RLS, schema exposure and function ACLs
+
+- All **29 inspected application tables** in `identity`, `enterprise`, `catalog`, `commerce`, `integration`, `areas` and `content` have RLS enabled.
+- The advisor reports 22 `rls_enabled_no_policy` INFO findings. The SQL inventory confirms that the affected tables in the private application schemas have no direct `anon` or `authenticated` table grants; `enterprise`, `catalog`, `commerce`, `integration`, `areas` and `api` have no browser-role schema USAGE. Access is intended to flow through the Edge Function's service-role transaction boundary.
+- `identity` exposes schema USAGE to `authenticated`, but direct table grants are limited to SELECT on organizations, organization memberships, delegations and role bindings, each with scoped RLS policies; profile access is separately limited to self.
+- `content` has its own policies and grants and must be audited separately from the Marketplace tenant core.
+- Inspected SECURITY DEFINER functions in `enterprise`, `catalog` and `api` have hardened `search_path` settings where applicable and execution ACLs limited to `postgres` / `service_role`; no PUBLIC, anon or authenticated execution grant was observed.
+- Preserve this private-schema/server-gateway model. Do not add blanket RLS policies simply to silence the advisor. Reassess policy needs if a schema is ever exposed directly through PostgREST.
+
+### 10.4 Runtime parity and CI
+
+- Supabase Vault extension is installed at version `0.3.2`; `vault.secrets` and `vault.decrypted_secrets` are present. No provider credentials or tenant connections were created by this audit.
+- Edge Function `marketplace-api` is ACTIVE at version **15**, with `verify_jwt=true`.
+- The deployed Edge Function `index.ts` content was compared byte-for-byte with `supabase/functions/marketplace-api/index.ts` on `feat/marketplace-taxonomy-blueprints`: **exact match (50,898 characters)**.
+- The handoff commit `7b251ed12951c4adf447f62ad2e8f6aeb5a45d74` has three associated completed GitHub Actions runs, all with conclusion `success`: CI matrix run 604, Security Triage run 622, Gate & Security run 682. No PR review submissions or inline review threads were returned by the review audit.
+
+### 10.5 Marketplace integration maturity
+
+- `integration.adapter_family_blueprints`: **20** rows, all `PLANNED`.
+- `integration.provider_adapter_blueprints`: **73** rows, all `PLANNED`.
+- Provider auth contracts are not specified, supported operations are empty, and no tenant connections or credentials are present. These rows remain design blueprints, not integrations.
+- Supabase Vault is available as the secret-storage primitive. Future adapter work must persist secret references only; never put raw credentials in provider manifests, tenant rows, logs, API responses or Git.
+
+### 10.6 Performance advisor findings
+
+- The current performance advisor reports **44 unindexed foreign-key findings** and **41 unused-index findings**.
+- The database is effectively empty, so unused indexes are expected at this stage and are not evidence that the indexes should be dropped.
+- Do not generate 44 indexes blindly: reconcile the advisor findings against existing composite/partial indexes and query patterns, then add only the justified supporting indexes in a reviewed migration before meaningful tenant scale.
+
+### 10.7 Updated Day 1 gate
+
+Day 1 remains **OPEN / NOT ACCEPTED**. The structural security posture is substantially evidenced, but acceptance still requires:
+1. locating and reconciling the cloud-only Coach schema migration;
+2. confirming the auth/signup/session/recovery lifecycle and its intended profile behavior;
+3. using an authorized real test identity to create an organization and workspace;
+4. proving organization/workspace membership, role enforcement and cross-tenant denial paths;
+5. collecting backup/PITR configuration and a documented restore drill (not verified through the current connector audit);
+6. validating telemetry, alerting and incident response beyond the existence of logs.
+
+### 10.8 Next execution order
+
+1. Resolve the cloud-only migration source and reconcile the full migration registry to Git.
+2. Complete the Day 1 auth/tenant lifecycle tests as soon as an authorized real test identity is available; keep the E2E gate explicitly BLOCKED until then.
+3. Continue Day 2 by implementing the versioned adapter manifest, tenant connection lifecycle, managed secret references, executable operation registry, job/attempt ledger, idempotency, retry policy, health checks and webhook verification. The 20/73 blueprint records must not be upgraded to AVAILABLE without provider-specific implementation and tests.
+4. Complete Day 2 commercial entitlements, payment/ledger/payout/reconciliation and discovery/publication lifecycle.
+5. Complete Day 3 tenant installation, Areas OS/departments/holarchy provisioning, agent runtime, workflows, four platform cores and Control Tower operations.
+6. Keep PR #63 in Draft until all acceptance gates are met.
+
