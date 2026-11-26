@@ -763,3 +763,43 @@ Day 1 remains **OPEN / NOT ACCEPTED**. The structural security posture is substa
 - Executed the same SQL against the live cloud project through the native Supabase connection. It completed without an assertion exception and made no persistent changes.
 - This is a structural security regression test, not an authenticated tenant-isolation E2E test. It does not close the real-user/tenant blocker in D1.03–D1.04.
 
+
+
+### 10.10 Day 2 — adapter execution data foundation deployed
+
+Three additional cloud migrations were applied to the existing Marketplace project and their source files committed to this branch:
+
+| Cloud version | Migration | Repository file |
+|---|---|---|
+| `20261126044855` | `adapter_execution_engine_foundation` | `supabase/migrations/20261126044855_adapter_execution_engine_foundation.sql` |
+| `20261126044914` | `adapter_execution_claim_result_shape_fix` | `supabase/migrations/20261126044914_adapter_execution_claim_result_shape_fix.sql` |
+| `20261126044938` | `adapter_execution_integrity_guards` | `supabase/migrations/20261126044938_adapter_execution_integrity_guards.sql` |
+
+New `integration` tables:
+- `provider_adapter_manifests`: provider/version-specific manifest, endpoint host allowlist, auth method, safe auth configuration, scopes, operations and lifecycle.
+- `tenant_connections`: organization/workspace-scoped connection, status, granted scopes and Vault secret UUID reference only.
+- `adapter_oauth_transactions`: short-lived OAuth transaction ledger storing a SHA-256 state digest and Vault references, never raw state/code/token.
+- `adapter_execution_jobs`: idempotent durable job queue, bounded attempts, schedule, worker lease, correlation ID and sanitized result/error fields.
+- `adapter_execution_events`: append-only execution audit events.
+- `adapter_webhook_receipts`: webhook deduplication by provider event ID and payload hash, with signature-verification state.
+
+Security and integrity:
+- RLS is enabled on all six new tables.
+- No `anon` or `authenticated` schema/table grants were added; the integration schema remains service-role-only.
+- `api.claim_adapter_execution_jobs(text, integer)` and `api.finish_adapter_execution_job(uuid,text,text,jsonb,text,text,integer)` are SECURITY DEFINER with fixed search_path and execute grants restricted to `service_role`.
+- Claiming uses `FOR UPDATE SKIP LOCKED`, bounded worker leases, bounded attempt count and expired-lease recovery.
+- Execution events reject UPDATE, DELETE and TRUNCATE.
+- Manifest auth configuration rejects common raw-secret keys; secret material is not stored in provider manifests or tenant connection rows.
+- The first claim-function implementation exposed a 26-vs-25 return-shape defect during the empty-queue test; the follow-up migration corrected the return shape before any jobs or connections existed.
+- A further integrity migration corrected semantic-version validation, guarded NULL outcomes and added statement-level TRUNCATE protection.
+
+Verification performed after the migrations:
+- All six tables exist; all six have RLS enabled.
+- Browser-role table grants across the six new tables: **0**.
+- Both worker functions have ACLs limited to `postgres` and `service_role`.
+- Empty queue claim returned zero jobs without error.
+- Negative assertions for NULL execution outcome and event-ledger TRUNCATE were caught as expected.
+- The read-only security baseline DO-block was rerun after the migration set and completed without assertion exceptions.
+
+**Scope status: PARTIAL — database and queue foundation only.** No provider manifest has been activated, no tenant connection or credential exists, and no adapter worker / HTTP execution endpoint / OAuth callback / health-check runtime has yet been deployed. Do not label any provider executable. Next implementation slice is the authenticated connection-management API plus a private worker that reads Vault secrets only in memory, enforces manifest host/operation allowlists, executes provider calls, sanitizes outputs, records attempts and verifies webhook signatures/replay protection.
+
