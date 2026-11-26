@@ -1237,3 +1237,19 @@ This addendum supersedes the earlier §12.6 and §12.7 statements that the OAuth
 - At this checkpoint the PR head is `2c7f2cebfc1264d96f8224c123313e9eb92b7629`; 89 commits and 28 changed files were reported by GitHub.
 - Do not claim CI green from the docs-only/PR-filtered workflow lookup; the latest lookup returned no PR-triggered workflow runs for that specific commit.
 - Keep Google Drive `PLANNED`, keep PR #63 Draft, and keep Day 1/2/3 acceptance statuses open until the real authorized OAuth and tenant lifecycle gates pass.
+
+
+### 12.14 OAuth runtime final checkpoint — latest API v7 and advisor review (2026-11-26 05:21 UTC)
+
+- Extended `start_oauth_authorization` to accept only bounded manifest-provided authorization parameters from the explicit allowlist `access_type`, `prompt` and `include_granted_scopes`. This supports provider requirements such as Google's offline refresh-token request without permitting arbitrary parameter injection.
+- Redeployed `adapter-api` as **ACTIVE v7** with gateway JWT enabled. `adapter-worker` remains ACTIVE v5; `adapter-oauth-callback` remains ACTIVE v1.
+- Re-fetched deployed Edge Function source and confirmed exact complete-file matches against the working branch for all three functions.
+- Latest code commit before this handoff update: `cf9dd37837187814b28f9223c180ad356cd13231`.
+- PR #63 remained OPEN / DRAFT / unmerged at that code head. GitHub reported 91 commits and 28 changed files before this handoff update.
+- GitHub Actions associated with the code head were still queued/in progress at the last poll (CI matrix #657, Gate & Security #735, Security Triage #675). Do not call CI green until all three complete successfully.
+- Supabase advisors after the OAuth schema change:
+  - Security: 28 INFO `rls_enabled_no_policy` findings; no new severity increase identified. These private application tables remain inaccessible to browser roles by grants/schema usage.
+  - Performance: 58 INFO unindexed-FK findings and 47 INFO unused-index findings. The unused-index count has shifted from the prior snapshot; do not mass-drop indexes.
+  - Health: 0 findings.
+- OAuth structural SQL test remains PASS. Live OAuth and tenant counts remain zero; no provider credentials or OAuth manifest have been provisioned.
+- Google Drive is still PLANNED. The runtime supports OAuth Authorization Code + PKCE only; `OAUTH2_CLIENT_CREDENTIALS` remains unsupported.
