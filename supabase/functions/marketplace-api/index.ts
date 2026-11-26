@@ -96,6 +96,33 @@ async function listProviderAdapterBlueprints(familyKey: string | null) {
   });
 }
 
+async function listHolonBlueprints(areaCode: string | null) {
+  return await withServiceRole(async (tx) => {
+    if (areaCode) {
+      return await tx`
+        SELECT h.holon_code, h.area_code, d.domain_name AS area_name,
+          h.holon_level, h.holon_type, h.display_name, h.mandate,
+          h.parent_holon_code, h.specialist_count, h.runbook_required,
+          h.source_path, h.sort_order, h.taxonomy_version, h.status
+        FROM areas.holon_blueprints h
+        JOIN areas.domain_blueprints d ON d.domain_code = h.area_code
+        WHERE h.status = 'ACTIVE' AND h.area_code = ${areaCode}
+        ORDER BY h.sort_order
+      `;
+    }
+    return await tx`
+      SELECT h.holon_code, h.area_code, d.domain_name AS area_name,
+        h.holon_level, h.holon_type, h.display_name, h.mandate,
+        h.parent_holon_code, h.specialist_count, h.runbook_required,
+        h.source_path, h.sort_order, h.taxonomy_version, h.status
+      FROM areas.holon_blueprints h
+      JOIN areas.domain_blueprints d ON d.domain_code = h.area_code
+      WHERE h.status = 'ACTIVE'
+      ORDER BY d.sort_order, h.sort_order
+    `;
+  });
+}
+
 async function listTaxonomyBlueprints() {
   return await withServiceRole(async (tx) => {
     const areasDomains = await tx`
@@ -323,7 +350,7 @@ Deno.serve(async (req: Request) => {
   try {
     if (req.method === 'GET') {
       const health = await withServiceRole(async (tx) => (await tx`SELECT current_database() AS database_name, now() AS checked_at`)[0]);
-      return response({ status: 'ok', service: 'marketplace-api', version: '0.6.0', persistence: 'supabase-cloud', database: health });
+      return response({ status: 'ok', service: 'marketplace-api', version: '0.7.0', persistence: 'supabase-cloud', database: health });
     }
     if (req.method !== 'POST') return response({ error: 'Method not allowed' }, 405);
     const body = await req.json() as Record<string, unknown>;
@@ -336,6 +363,10 @@ Deno.serve(async (req: Request) => {
     if (action === 'list_provider_adapter_blueprints') {
       const familyKey = body.family_key === undefined ? null : requiredString(body.family_key, 'family_key', 100);
       return response({ data: await listProviderAdapterBlueprints(familyKey) });
+    }
+    if (action === 'list_holon_blueprints') {
+      const areaCode = body.area_code === undefined ? null : requiredString(body.area_code, 'area_code', 4);
+      return response({ data: await listHolonBlueprints(areaCode) });
     }
     const user = await authenticate(req);
     let data: unknown;
