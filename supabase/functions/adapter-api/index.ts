@@ -236,14 +236,22 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
   const connectionId = uuid(body.connection_id, 'connection_id');
   return await withServiceRole(async (tx) => {
     await requireWorkspaceRole(tx, user.id, orgId, workspaceId, ['OWNER','ADMIN']);
+    const current = await tx`
+      SELECT secret_id FROM integration.tenant_connections
+      WHERE id=${connectionId}::uuid AND organization_id=${orgId}::uuid
+        AND workspace_id=${workspaceId}::uuid
+      LIMIT 1
+    `;
+    if (!current.length) throw new Error('Connection not found');
+    const secretId = current[0].secret_id as string | null;
     const rows = await tx`
       UPDATE integration.tenant_connections
-      SET connection_status='REVOKED', revoked_at=coalesce(revoked_at,now()), updated_at=now()
+      SET connection_status='REVOKED', revoked_at=coalesce(revoked_at,now()),
+          secret_id=NULL, updated_at=now()
       WHERE id=${connectionId}::uuid AND organization_id=${orgId}::uuid
         AND workspace_id=${workspaceId}::uuid
       RETURNING id,organization_id,workspace_id,provider_key,connection_key,connection_status,revoked_at
     `;
-    if (!rows.length) throw new Error('Active connection not found');
     const cancelled = await tx`
       UPDATE integration.adapter_execution_jobs
       SET job_status='CANCELLED', completed_at=now(), updated_at=now(),
@@ -260,7 +268,73 @@ async function revokeConnection(user: User, body: Record<string, unknown>) {
           'CANCELLED',${JSON.stringify({ reason: 'CONNECTION_REVOKED', attempt: job.attempt_count })}::jsonb)
       `;
     }
-    return { connection: rows[0], cancelled_jobs: cancelled.length };
+    if (secretId) {
+      const references = await tx`
+        SELECT
+          (SELECT count(*) FROM integration.tenant_connections WHERE secret_id=${secretId}::uuid) +
+          (SELECT count(*) FROM integration.adapter_oauth_transactions WHERE pkce_secret_id=${secretId}::uuid)
+          AS reference_count
+      `;
+      if (Number(references[0].reference_count) === 0) {
+        await tx`DELETE FROM vault.secrets WHERE id=${secretId}::uuid`;
+      }
+    }
+    return { connection: rows[0], cancelled_jobs: cancelled.length, credential_reference_removed: Boolean(secretId) };
+  });
+}
+
+async function rotateConnectionCredentials(user: User, body: Record<string, unknown>) {
+  const orgId = uuid(body.organization_id, 'organization_id');
+  const workspaceId = uuid(body.workspace_id, 'workspace_id');
+  const connectionId = uuid(body.connection_id, 'connection_id');
+  const credentials = body.credentials && typeof body.credentials === 'object' && !Array.isArray(body.credentials)
+    ? body.credentials as Record<string, unknown> : null;
+  if (!credentials) throw new Error('credentials object is required');
+
+  return await withServiceRole(async (tx) => {
+    await requireWorkspaceRole(tx, user.id, orgId, workspaceId, ['OWNER','ADMIN']);
+    const rows = await tx`
+      SELECT c.id,c.connection_key,c.auth_method,c.secret_id,c.connection_status,
+        c.provider_key,c.manifest_version
+      FROM integration.tenant_connections c
+      WHERE c.id=${connectionId}::uuid AND c.organization_id=${orgId}::uuid
+        AND c.workspace_id=${workspaceId}::uuid
+      LIMIT 1
+    `;
+    if (!rows.length || rows[0].connection_status === 'REVOKED') throw new Error('Active connection not found');
+    const current = rows[0];
+    let secretJson: string;
+    if (current.auth_method === 'BEARER' && typeof credentials.token === 'string' && credentials.token.trim()) {
+      secretJson = JSON.stringify({ token: credentials.token });
+    } else if (current.auth_method === 'API_KEY_HEADER' && typeof credentials.api_key === 'string' && credentials.api_key.trim()) {
+      secretJson = JSON.stringify({ api_key: credentials.api_key });
+    } else if (current.auth_method === 'BASIC' &&
+      typeof credentials.username === 'string' && credentials.username.trim() &&
+      typeof credentials.password === 'string' && credentials.password) {
+      secretJson = JSON.stringify({ username: credentials.username, password: credentials.password });
+    } else {
+      throw new Error('Credentials do not match the connection auth method or OAuth is not enabled');
+    }
+    const secretName = 'aspace-adapter-' + orgId + '-' + workspaceId + '-' + current.connection_key;
+    const description = 'Aspace Marketplace provider credential reference; tenant-scoped';
+    let secretId = current.secret_id as string | null;
+    if (secretId) {
+      await tx`SELECT vault.update_secret(${secretId}::uuid,${secretJson},${secretName},${description},NULL)`;
+    } else {
+      const created = await tx`
+        SELECT vault.create_secret(${secretJson},${secretName},${description},NULL) AS id
+      `;
+      secretId = created[0].id;
+    }
+    const updated = await tx`
+      UPDATE integration.tenant_connections
+      SET secret_id=${secretId}::uuid,connection_status='PENDING_AUTH',
+          connected_at=NULL,last_health_check_at=NULL,last_error_code=NULL,updated_at=now()
+      WHERE id=${connectionId}::uuid
+      RETURNING id,organization_id,workspace_id,provider_key,manifest_version,
+        connection_key,display_name,auth_method,connection_status,created_at,updated_at
+    `;
+    return updated[0];
   });
 }
 
@@ -428,6 +502,7 @@ Deno.serve(async (req: Request) => {
       case 'create_connection': data = await createConnection(user, body); break;
       case 'test_connection': data = await testConnection(user, body); break;
       case 'revoke_connection': data = await revokeConnection(user, body); break;
+      case 'rotate_connection_credentials': data = await rotateConnectionCredentials(user, body); break;
       case 'enqueue_execution': data = await enqueueExecution(user, body); break;
       case 'list_executions': data = await listExecutions(user, body); break;
       default: return response({ error: 'Unknown action', action }, 404);
