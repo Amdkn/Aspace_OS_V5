@@ -1,0 +1,27 @@
+name: JEPA Toy World V1 Conformance
+
+on:
+  pull_request:
+    paths:
+      - "research/jepa_toy_world/**"
+      - ".github/workflows/jepa-toy-world-conformance.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  conformance:
+    name: Deterministic simulator and renderer tests
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Run Toy World conformance suite
+        run: python -m unittest discover -s research/jepa_toy_world/tests -t . -v
+      - name: Run persistence and symbolic-oracle smoke evaluation
+        run: python -m research.jepa_toy_world.evaluator.baseline_smoke
