@@ -31,7 +31,7 @@ jobs:
           python3 02_Factory/01_Kernel_Gates/daemon_supervisor_cordis.py > dist-cockpit/cordis-daemon-status.json
 
       - name: Upload Cockpit Telemetry Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: aspace-v5-factory-cockpit
           path: dist-cockpit/
