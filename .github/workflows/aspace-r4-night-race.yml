@@ -36,7 +36,7 @@ jobs:
       SNAPSHOT_SHA256: 305c5a28ec0b1076bcd636efe6d158119d404cae093dcb6c5f663ac06cba3595
     steps:
       - name: Checkout R4 branch
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           ref: ${{ env.R4_BRANCH }}
           fetch-depth: 0
